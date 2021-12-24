@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:rattle/components/SideMenu.dart';
+import 'package:rattle/components/Tabs.dart';
+
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key, required this.title}) : super(key: key);
@@ -10,20 +11,18 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Column(
         children: [
           Expanded(
-            flex: 2,
-            child: SideMenu(),
+            flex: 10,
+            child: Tabs(),
           ),
           Expanded(
-            flex: 8,
-            child:
-              Text("BODY",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)), //loadingScreen,
-            ),
-          ],
-        ),
+            flex: 1,
+            child: Text("FOOTER")
+          ),
+        ],
+      ),
     );
   }
 }
