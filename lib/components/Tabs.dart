@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:rattle/components/LogTab.dart';
 
 // https://blog.logrocket.com/flutter-tabbar-a-complete-tutorial-with-examples/
 
@@ -11,6 +12,7 @@ class Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var process, cmd;
+
     return DefaultTabController(
       initialIndex: 0,
       length: 7,
@@ -125,7 +127,7 @@ class Tabs extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: <Widget>[
             Center(
               child: Text("DATA"),
@@ -146,7 +148,7 @@ class Tabs extends StatelessWidget {
               child: Text("EVALUATE"),
             ),
             Center(
-              child: Text("LOG"),
+              child: LogTab(),
             ),
           ],
         ),

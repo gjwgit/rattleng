@@ -10,9 +10,6 @@ import 'package:rattle/screens/main/MainScreen.dart';
 
 
 void main() {
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    setWindowTitle("Rattle for Data Science");
-  }
   runApp(const MyApp());
 }
 
@@ -22,6 +19,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      setWindowTitle("Rattle for Data Science");
+    }
+  
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Rattling Data for Scientist',
