@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:rattle/components/LogTab.dart';
+import 'package:rattle/components/log_tab.dart';
 
 // https://blog.logrocket.com/flutter-tabbar-a-complete-tutorial-with-examples/
 
