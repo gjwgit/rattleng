@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:window_size/window_size.dart';
 
 import 'package:rattle/helpers/constants.dart';
-import 'package:rattle/screens/main/MainScreen.dart';
+import 'package:rattle/screens/main/main_screen.dart';
 
 
 void main() {
@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Rattling Data for Scientist',
       theme: ThemeData(
-        primarySwatch: createMaterialColor(Color(0xff45035e)),
+        primarySwatch: createMaterialColor(const Color(0xff45035e)),
         fontFamily: GoogleFonts.openSans().fontFamily,
       ),
-      home: MainScreen(title: 'Rattle New Generation')
+      home: const MainScreen(title: 'Rattle New Generation')
     );
   }
 }

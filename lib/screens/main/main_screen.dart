@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:rattle/components/Tabs.dart';
+import 'package:rattle/components/tabs.dart';
 
 
 class MainScreen extends StatelessWidget {
