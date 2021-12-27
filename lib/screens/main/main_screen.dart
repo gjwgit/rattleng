@@ -12,7 +12,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [
+        children: const [
           Expanded(
             flex: 10,
             child: Tabs(),

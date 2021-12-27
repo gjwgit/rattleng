@@ -1,12 +1,12 @@
-var cmd_log_intro = """\
+const cmdLogIntro = """\
 The log captures all interactions with Rattle as an R script.
 
-You can Save the log to a file (e.g., 'model.R') to run in R, independent of\
-Rattle.To run the file as an R script use the Rscript command. Alternatively,\
+You can Save the log to a file (e.g., 'model.R') to run in R, independent of
+Rattle.To run the file as an R script use the Rscript command. Alternatively,
 through the R Console or RStudio run the command using "source('model.R')".
 """;
 
-var cmd_initial_message = """\
+var cmdInitialMessage = """\
 #=======================================================================
 #
 # Rattle is Copyright (c) 2006-${DateTime.now().year} Togaware Pty Ltd.

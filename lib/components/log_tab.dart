@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../helpers/rcmd.dart' show cmd_initial_message, cmd_log_intro;
+import '../helpers/rcmd.dart' show cmdInitialMessage, cmdLogIntro;
 
 
 class LogTab extends StatelessWidget {
@@ -47,12 +47,12 @@ class LogTab extends StatelessWidget {
               },
             ),
             const SizedBox(height: 10),
-            Text(cmd_log_intro),
+            Text(cmdLogIntro),
           ],
         ),
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: SelectableText(cmd_initial_message,
+          child: SelectableText(cmdInitialMessage,
             key: const Key('log_text'),
             style: const TextStyle(
               fontFamily: 'UbuntuMono',
