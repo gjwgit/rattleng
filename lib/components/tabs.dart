@@ -11,7 +11,8 @@ class Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var process, cmd;
+    var process;
+    String cmd = "";
 
     return DefaultTabController(
       initialIndex: 0,
@@ -22,7 +23,7 @@ class Tabs extends StatelessWidget {
             icon: const Icon(Icons.menu),
             onPressed: () {},
           ),
-          title: Text("Rattle for the Data Scientist"),
+          title: const Text("Rattle for the Data Scientist"),
           actions: [
             IconButton(
               icon: const Icon(Icons.directions_run),
@@ -81,13 +82,13 @@ class Tabs extends StatelessWidget {
             PopupMenuButton<Text>(
               itemBuilder: (context) {
                 return [
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     child: Text("About Rattle"),
                   ),
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     child: Text("Browse Rattle Survival Guide"),
                   ),
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     child: Text("Browse Togaware"),
                   ),
                 ];
@@ -127,7 +128,7 @@ class Tabs extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: <Widget>[
             Center(
               child: Text("DATA"),
