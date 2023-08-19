@@ -23,26 +23,22 @@ class Tabs extends StatelessWidget {
             icon: const Icon(Icons.menu),
             onPressed: () {},
           ),
-          title: const Text("Rattle for the Data Scientist"),
+          title:
+              const Text("Rattle the Next Generation for the Data Scientist"),
           actions: [
             IconButton(
               icon: const Icon(Icons.directions_run),
               onPressed: () async {
-
                 process = await Process.start('killall', ["R"]);
                 process = await Process.start('R', ["--no-save"]);
-                process.stdout
-                  .transform(utf8.decoder)
-                  .forEach(print);
-                process.stderr
-                  .transform(utf8.decoder)
-                  .forEach(print);
+                process.stdout.transform(utf8.decoder).forEach(print);
+                process.stderr.transform(utf8.decoder).forEach(print);
 
                 cmd = 'library(tidyverse)';
                 process.stdin.writeln(cmd);
-
               },
-              tooltip: "Once a tab is configured click here to have it run.",
+              tooltip: "Start R and load tidyverse.",
+              // tooltip: "Once a tab is configured click here to have it run.",
             ),
             IconButton(
               icon: const Icon(Icons.open_in_new),
@@ -58,38 +54,38 @@ class Tabs extends StatelessWidget {
                 cmd = 'ggsave("myplot.pdf", width=11, height=7)';
                 process.stdin.writeln(cmd);
               },
-              tooltip: "Start a new project.",
+              tooltip: "Load weather.csv, summarise and save plot to file.",
+              // tooltip: "Start a new project.",
             ),
             IconButton(
               icon: const Icon(Icons.open_in_browser_outlined),
               onPressed: () {
                 Process.run("xdg-open", ["myplot.pdf"]);
               },
-              tooltip: "Load an existing project from file.",
+              tooltip: "View the plot.",
+              // tooltip: "Load an existing project from file.",
             ),
             IconButton(
               icon: const Icon(Icons.save_alt_outlined),
-              onPressed: () {
-              },
-             tooltip: "Save the current project to file.",
+              onPressed: () {},
+              tooltip: "TODO Save the current project to file.",
             ),
             IconButton(
               icon: const Icon(Icons.exit_to_app_outlined),
-              onPressed: () {
-              },
-              tooltip: "Exit the application.",
+              onPressed: () {},
+              tooltip: "TODO Exit the application.",
             ),
             PopupMenuButton<Text>(
               itemBuilder: (context) {
                 return [
                   const PopupMenuItem(
-                    child: Text("About Rattle"),
+                    child: Text("TODO About Rattle"),
                   ),
                   const PopupMenuItem(
-                    child: Text("Browse Rattle Survival Guide"),
+                    child: Text("TODO Browse Rattle Survival Guide"),
                   ),
                   const PopupMenuItem(
-                    child: Text("Browse Togaware"),
+                    child: Text("TODO Browse Togaware"),
                   ),
                 ];
               },
@@ -99,31 +95,31 @@ class Tabs extends StatelessWidget {
             tabs: <Widget>[
               Tab(
                 icon: Icon(Icons.input),
-                text: "data",
+                text: "Data",
               ),
               Tab(
                 icon: Icon(Icons.insights),
-                text: "explore",
+                text: "Explore",
               ),
               Tab(
                 icon: Icon(Icons.task),
-                text: "test",
+                text: "Test",
               ),
               Tab(
                 icon: Icon(Icons.transform),
-                text: "transform",
+                text: "Transform",
               ),
               Tab(
                 icon: Icon(Icons.model_training),
-                text: "model",
+                text: "Model",
               ),
               Tab(
                 icon: Icon(Icons.leaderboard),
-                text: "evaluate",
+                text: "Evaluate",
               ),
               Tab(
                 icon: Icon(Icons.code),
-                text: "log",
+                text: "Log",
               ),
             ],
           ),
@@ -131,7 +127,8 @@ class Tabs extends StatelessWidget {
         body: const TabBarView(
           children: <Widget>[
             Center(
-              child: Text("DATA"),
+              child: Text(
+                  "DATA - Click the top right buttons for some R activity."),
             ),
             Center(
               child: Text("EXPLORE"),

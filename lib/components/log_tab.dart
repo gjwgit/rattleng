@@ -1,16 +1,23 @@
+// MLHub demonstrator and toolkit for kmeans.
+//
+// Time-stamp: <Wednesday 2021-12-29 07:41:43 +1100 $U63R>
+//
+// Authors: Gefei Shan, Graham.Williams@togaware.com
+// License: General Public License v3 GPLv3
+// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+// Copyright: (c) Gefei Shan, Graham Williams. All rights reserved.
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/rcmd.dart' show cmdInitialMessage, cmdLogIntro;
 
-
 class LogTab extends StatelessWidget {
   const LogTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -36,14 +43,14 @@ class LogTab extends StatelessWidget {
                 ts = ts.replaceAll(RegExp(r"\\n   "), '');
                 print(ts);
                 File('script.R').writeAsString(ts);
-                
+
                 //var tv = find.byKey(Key('log_text')).evaluate().first.widget; => "LogTab"
                 //var tv = find.byKey(Key('log_text')).evaluate().first;
                 //var tv = find.byKey(Key('log_text')).evaluate();
                 //File('script.R').writeAsString(tv.toString());
                 //var tx = tv.evaluate().first.widget;
                 //print(tx);
-               // File('script.R').writeAsString(tx);
+                // File('script.R').writeAsString(tx);
               },
             ),
             const SizedBox(height: 10),
@@ -52,7 +59,8 @@ class LogTab extends StatelessWidget {
         ),
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: SelectableText(cmdInitialMessage,
+          child: SelectableText(
+            cmdInitialMessage,
             key: const Key('log_text'),
             style: const TextStyle(
               fontFamily: 'UbuntuMono',
