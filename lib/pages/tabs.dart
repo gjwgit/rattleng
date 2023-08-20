@@ -2,7 +2,8 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:rattle/components/log_tab.dart';
+import 'package:rattle/pages/log_tab.dart';
+import 'package:rattle/pages/data_tab.dart';
 
 // https://blog.logrocket.com/flutter-tabbar-a-complete-tutorial-with-examples/
 
@@ -126,10 +127,11 @@ class Tabs extends StatelessWidget {
         ),
         body: const TabBarView(
           children: <Widget>[
-            Center(
-              child: Text(
-                  "DATA - Click the top right buttons for some R activity."),
-            ),
+            DataTabPage(),
+            // Center(
+            //   child: Text(
+            //       "DATA - Click the top right buttons for some R activity."),
+            // ),
             Center(
               child: Text("EXPLORE"),
             ),
