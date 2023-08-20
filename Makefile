@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2021-12-22 15:26:47 AEDT Graham Williams>
+# Time-stamp: <Thursday 2023-08-17 10:44:18 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -10,12 +10,14 @@
 #
 ########################################################################
 
+# App is often the current directory name.
+#
 # App version numbers
 #   Major release
 #   Minor update
 #   Trivial update or bug fix
 
-APP=rattle
+APP=$(shell pwd | xargs basename)
 VER=0.0.1
 DATE=$(shell date +%Y-%m-%d)
 
@@ -26,6 +28,8 @@ DATE=$(shell date +%Y-%m-%d)
 # else installed in the local user's shares.
 
 INC_BASE=$(HOME)/.local/share/make
+INC_BASE=support
+
 
 # Specific Makefiles will be loaded if they are found in
 # INC_BASE. Sometimes the INC_BASE is shared by multiple local
@@ -50,7 +54,9 @@ endif
 define HELP
 $(APP):
 
-  locals	E.g., install $(APP)
+  docs		Generate doc and install to ecosysl.
+  test		Run the integration test suite.
+  ignore	Look for usage of ignore: directives.
 
 endef
 export HELP
@@ -63,3 +69,11 @@ help::
 
 locals:
 	@echo "This might be the instructions to install $(APP)"
+
+docs: doc
+	chmod -R go+rX doc
+	rsync -avzh doc/api/ root@ecosysl.net:/var/www/html/bstim/
+
+.PHONY: ignore
+ignore:
+	@rgrep -C 2 ignore: lib

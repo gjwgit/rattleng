@@ -47,8 +47,10 @@ void main() async {
 
     WindowOptions windowOptions = const WindowOptions(
       alwaysOnTop: true,
-      size: Size(450, 700),
-      title: "RattleNG",
+      // The size is overriden in the first instance by linux/my_application.cc
+      // but then does has effect when Retarting the app.
+      size: Size(950, 600),
+      title: "RattleNG - Data Science with R",
     );
 
     windowManager.waitUntilReadyToShow(windowOptions, () async {
@@ -67,11 +69,16 @@ class RattleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Rattling Data for Scientist',
-        theme: ThemeData(
-          primarySwatch: createMaterialColor(const Color(0xff45035e)),
-        ),
-        home: const HomePage(title: 'Rattle New Generation'));
+      debugShowCheckedModeBanner: false,
+      title: 'Rattling Data for Scientist',
+      theme: ThemeData(
+        primarySwatch: createMaterialColor(const Color(0xff45035e)),
+        textTheme: Theme.of(context).textTheme.apply(
+              fontSizeFactor: 1.1,
+              fontSizeDelta: 2.0,
+            ),
+      ),
+      home: const HomePage(title: 'Rattle New Generation'),
+    );
   }
 }
