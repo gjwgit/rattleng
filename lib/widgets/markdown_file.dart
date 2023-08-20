@@ -44,10 +44,10 @@ FutureBuilder sunkenMarkdownFileBuilder(String markDownFilePath) {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3),
+                color: Colors.grey.withOpacity(1),
+                spreadRadius: 10,
+                blurRadius: 10,
+                offset: Offset(10, 10),
               ),
             ],
           ),
