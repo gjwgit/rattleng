@@ -4,20 +4,17 @@ Welcome to **RattleNG** the *Next Generation of Rattle*
 Specify a CSV file then click the 🏃 Run button or just click Run to
 load the sample Australian weather dataset.
 
-Rattle is a free graphical user interface for Data Science 📊,
-developed using R. R is a free software environment for statistical
-computing, graphics, machine learning and artificial
-intelligence. Together Rattle and R provide a sophisticated
-environment for data science, statistical analyses, and data
-visualisation. Visit the R Project (https://rproject.org) to install
-R.
+RattleNG is a sophisticated application for data science, statistical
+analyses, and data visualisation 📊. It is implemented in Flutter with
+R as the back end. Flutter is a cross-platform framework implemented
+in Dart (https://flutter.dev). R is a powerful software environment
+for statistical computing (https://rproject.org).
 
-See the Help menu ℹ for extensive support in using Rattle. The two
-books Data Mining with Rattle and R
-(https://bit.ly/rattle_data_mining) and The Essentials of Data Science
-(https://bit.ly/essentials_data_science) are available from
-Amazon. The Togaware Desktop Data Mining Survival Guide includes
-Rattle documentation and is available from Togaware
+See the Help menu ℹ for support in using Rattle. The two books Data
+Mining with Rattle and R (https://bit.ly/rattle_data_mining) and The
+Essentials of Data Science (https://bit.ly/essentials_data_science)
+are available from Amazon. The Togaware Desktop Data Mining Survival
+Guide includes Rattle documentation and is available from Togaware
 (https://datamining.togaware.com).
 
 Rattle is licensed 🪪 under the GNU General Public License,
