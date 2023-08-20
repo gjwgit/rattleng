@@ -24,8 +24,7 @@ class Tabs extends StatelessWidget {
             icon: const Icon(Icons.menu),
             onPressed: () {},
           ),
-          title:
-              const Text("Rattle the Next Generation for the Data Scientist"),
+          title: const Text("Rattle the Next Generation Data Scientist"),
           actions: [
             IconButton(
               icon: const Icon(Icons.directions_run),
