@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2023-08-21 08:41:41 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-21 19:35:10 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -68,6 +68,7 @@ class _DataTabPageState extends State<DataTabPage> {
 
               Expanded(
                 child: TextField(
+                  key: Key('ds_path_text'),
                   controller: _textController,
                   decoration: InputDecoration(
                     hintText: 'Path to dataset file.',

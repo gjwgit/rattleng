@@ -24,6 +24,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_test/flutter_test.dart' show find;
 
 class FilePickerDS extends StatefulWidget {
   @override
@@ -31,7 +32,6 @@ class FilePickerDS extends StatefulWidget {
 }
 
 class _FilePickerDSState extends State<FilePickerDS> {
-  String? _fileName;
   String? _directoryPath;
   List<PlatformFile>? _paths;
   bool _userAborted = false;
@@ -42,7 +42,7 @@ class _FilePickerDSState extends State<FilePickerDS> {
       _directoryPath = null;
       _paths = (await FilePicker.platform.pickFiles(
         //type: _pickingType,
-        //allowMultiple: _multiPick,
+        allowMultiple: false,
         onFileLoading: (FilePickerStatus status) => print(status),
         allowedExtensions: ["csv", "tsv", "arff", "rdata"],
         dialogTitle: "Please Select Your Dataset File",
@@ -51,10 +51,20 @@ class _FilePickerDSState extends State<FilePickerDS> {
     } catch (e) {
       print(e.toString());
     }
+
     setState(() {
-      _fileName =
-          _paths != null ? _paths!.map((e) => e.name).toString() : '...';
+      _directoryPath =
+          _paths != null ? _paths!.map((e) => e.path).toString() : null;
+
       _userAborted = _paths == null;
+
+      final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
+      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+
+      // 20230821 gjw A little ugly using `?.` and ?? to deal with the nullable
+      // differences between the Strings. It works.
+
+      dsPathText.controller?.text = _directoryPath ?? '';
     });
   }
 
@@ -62,13 +72,12 @@ class _FilePickerDSState extends State<FilePickerDS> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 120,
-      child: //FloatingActionButton.small(
-          ElevatedButton(
-              onPressed: () => _pickFiles(),
-              //shape: StadiumBorder(),
-              //foregroundColor: Colors.white,
-              //child: const Icon(Icons.description)),
-              child: const Text("Filename:")),
+      child: ElevatedButton(
+          onPressed: () => _pickFiles(),
+          //shape: StadiumBorder(),
+          //foregroundColor: Colors.white,
+          //child: const Icon(Icons.description)),
+          child: const Text("Filename:")),
     );
   }
 }
