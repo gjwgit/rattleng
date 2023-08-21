@@ -1,8 +1,9 @@
 Welcome to **RattleNG** the *Next Generation of Rattle*
 (https://rattle.togaware.com).
 
-Specify a CSV file then click the 🏃 Run button or just click Run to
-load the sample Australian weather dataset.
+Click the `Filename:` button to pick a file then click the 🏃 Run
+button. If you click Run without specifying a file that we will load
+the sample Australian weather dataset.
 
 RattleNG is a sophisticated application for data science, statistical
 analyses, and data visualisation 📊. It is implemented in Flutter with
@@ -18,7 +19,7 @@ Guide includes Rattle documentation and is available from Togaware
 (https://datamining.togaware.com).
 
 Rattle is licensed 🪪 under the GNU General Public License,
-Version 2. Rattle comes with ABSOLUTELY NO WARRANTY. See Help -> About
+Version 3. Rattle comes with ABSOLUTELY NO WARRANTY. See Help -> About
 for details.
 
 RattleNG Version 0.0.1 and it's collection of R scripts that derive
