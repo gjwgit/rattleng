@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-22 09:14:12 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-08-22 09:27:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,8 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/pages/home_page.dart';
-import 'package:rattle/pages/tabs.dart';
+import 'package:rattle/pages/tabs_page.dart';
 import 'package:rattle/widgets/material_color.dart';
 
 void main() async {
@@ -80,7 +79,7 @@ class RattleApp extends StatelessWidget {
               fontSizeDelta: 2.0,
             ),
       ),
-      home: Tabs(),
+      home: const Tabs(),
     );
   }
 }
