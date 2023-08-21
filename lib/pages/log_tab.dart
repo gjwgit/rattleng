@@ -1,11 +1,26 @@
-// MLHub demonstrator and toolkit for kmeans.
+/// The LOG tab page.
+///
+/// Copyright (C) 2023, Togaware Pty Ltd.
+///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-08-21 06:04:49 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-21 08:44:27 +1000 Graham Williams>
 //
-// Authors: Gefei Shan, Graham.Williams@togaware.com
-// License: General Public License v3 GPLv3
-// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-// Copyright: (c) Gefei Shan, Graham Williams. All rights reserved.
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program.  If not, see <https://www.gnu.org/licenses/>.
+///
+/// Authors: Graham Williams
 
 import 'dart:io';
 
@@ -15,6 +30,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/widgets/save_log_button.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
 class LogTab extends StatelessWidget {
@@ -31,35 +47,7 @@ class LogTab extends StatelessWidget {
                 padding: EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    ElevatedButton(
-                      child: const Text("Save Log"),
-                      onPressed: () {
-                        print("DEBUG we will save the script to script.R");
-                        print("Prompt for the name to save to.");
-                        print("Extract text for Log Tab's Text Widget.");
-                        //var tv = find.byType(Text);
-                        //var tv = find.textContaining(RegExp(r"^#===.*"));
-                        var tv = find.byKey(const Key('log_text'));
-                        //print(tv.evaluate());
-                        // How to extract the text????
-                        //File('script.R').writeAsString(tv.evaluate().toString());
-
-                        var ts = tv.evaluate().toString();
-                        ts = ts.replaceFirst(RegExp(r"^[^#]*#"), '    #');
-                        ts = ts.replaceFirst(RegExp(r"  , style:.*"), '');
-                        ts = ts.replaceAll(RegExp(r"\\n   "), '');
-                        print(ts);
-                        File('script.R').writeAsString(ts);
-
-                        //var tv = find.byKey(Key('log_text')).evaluate().first.widget; => "LogTab"
-                        //var tv = find.byKey(Key('log_text')).evaluate().first;
-                        //var tv = find.byKey(Key('log_text')).evaluate();
-                        //File('script.R').writeAsString(tv.toString());
-                        //var tx = tv.evaluate().first.widget;
-                        //print(tx);
-                        // File('script.R').writeAsString(tx);
-                      },
-                    ),
+                    SaveLogButton(),
                     SizedBox(height: 10),
                     // Markdown(data: File(logIntro).readAsStringSync()),
                     // sunkenMarkdownFileBuilder(logIntro),

@@ -4,6 +4,9 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
+//
+// Time-stamp: <Monday 2023-08-21 08:41:08 +1000 Graham Williams>
+//
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 // This program is free software: you can redistribute it and/or modify it under
