@@ -59,7 +59,7 @@ class _FilePickerDSState extends State<FilePickerDS> {
       _userAborted = _paths == null;
 
       final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
-      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+      var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
 
       // 20230821 gjw A little ugly using `?.` and ?? to deal with the nullable
       // differences between the Strings. It works.
