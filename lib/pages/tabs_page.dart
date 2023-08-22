@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-22 09:19:20 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-08-22 20:56:39 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,18 +29,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
+import 'package:rattle/helpers/load_dataset.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
 
-// final List<String> _tabs = [
-//   'Data',
-//   'Explore',
-//   'Test',
-//   'Transform',
-//   'Model',
-//   'Evaluate',
-//   'Log'
-// ];
+/// Mapping for Tabs, title:icon:widget.
 
 final List<Map<String, dynamic>> _tabs = [
   {'title': "Data", "icon": Icons.input, "widget": DataTabPage()},
@@ -111,6 +104,8 @@ class _TabsState extends State<Tabs> with SingleTickerProviderStateMixin {
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
+          // INFO
+
           IconButton(
             onPressed: () {
               print(_tabs[_tabController.index]['title']);
@@ -119,10 +114,19 @@ class _TabsState extends State<Tabs> with SingleTickerProviderStateMixin {
             icon: Icon(Icons.info),
             tooltip: "Information.",
           ),
+
+          // RUN
+
           IconButton(
             icon: const Icon(Icons.directions_run),
             onPressed: () {
-              print("TODO LOAD THE DATASET IF THE DATA TAB IS ACTIVE");
+              if (_tabs[_tabController.index]['title'] == "Data") {
+                print("LOADING THE DATASET AS THE DATA TAB IS ACTIVE");
+
+                loadDataset();
+              } else {
+                print("RUN NOT YET IMPLEMENTED AS IT IS NOT ON THE DATA TAB");
+              }
             },
             tooltip: "Run the configured tab.",
           ),
