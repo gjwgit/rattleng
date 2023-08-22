@@ -1,20 +1,15 @@
-# rattle
+# Rattle the Next Generation Data Scientist
 
-A new Flutter project.
+Rattle has been taken up by educators, consultants, industry, and
+government as an application for the data scientist. After over 15
+years it is time for a refresh. RattleNG adheres to the familiar
+Rattle style with a modern user interface refresh implemented in
+Flutter. Don't worry, the underlying R foundations remain. The R
+rattle package will be updated to support template scripts that will
+be utilised in RattleNG for its powerful functionality.
 
-## Getting Started
+Some teasers:
 
-This project is a starting point for a Flutter application.
+![](assets/screenshots/home_page.png)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-## Example Flutter Desktop Apps
-
-* [flokk](https://blog.gskinner.com/archives/2020/09/flokk-how-we-built-a-desktop-app-using-flutter.html)
+![](assets/screenshots/log_page.png)
