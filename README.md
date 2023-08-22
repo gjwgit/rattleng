@@ -10,6 +10,14 @@ be utilised in RattleNG for its powerful functionality.
 
 Some teasers:
 
-![](assets/screenshots/home_page.png)
+**The traditional Rattle Welcome**
+
+![](assets/screenshots/data_page.png)
+
+**Exploring Data Visually**
+
+![](assets/screenshots/explore_plot.png)
+
+**Everything Captured as Scripts**
 
 ![](assets/screenshots/log_page.png)
