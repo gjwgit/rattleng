@@ -8,22 +8,27 @@ Flutter. Don't worry, the underlying R foundations remain. The R
 rattle package will be updated to support template scripts that will
 be utilised in RattleNG for its powerful functionality.
 
-Some teasers:
+My original Rattle book, *Data Mining with Rattle and R*
+(https://bit.ly/rattle_data_mining) describes the original Rattle
+application and user interface. RattleNG will be symphathetic to that
+interface. My later book, *The Essentials of Data Science*
+(https://bit.ly/essentials_data_science) introduced templates for data
+science and provides the foundations for the templates being used in
+RattleNG. Both are available from Amazon. The Togaware Desktop Data
+Mining Survival Guide includes Rattle documentation and is available
+from Togaware (https://datamining.togaware.com).
 
-<hr>
 
-**The traditional Rattle Welcome**
+## Some RattleNG teasers
+
+### The traditional Rattle Welcome
 
 ![](assets/screenshots/data_page.png)
 
-<hr>
-
-**Exploring Data Visually**
+### Exploring Data Visually
 
 ![](assets/screenshots/explore_plot.png)
 
-<hr>
-
-**Everything Captured as Scripts**
+### Everything Captured as Scripts
 
 ![](assets/screenshots/log_page.png)
