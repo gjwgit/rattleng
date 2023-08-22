@@ -64,7 +64,17 @@ class _FilePickerDSState extends State<FilePickerDS> {
       // 20230821 gjw A little ugly using `?.` and ?? to deal with the nullable
       // differences between the Strings. It works.
 
-      dsPathText.controller?.text = _directoryPath ?? '';
+      String filename = _directoryPath ?? '';
+
+      // The filename has brackets around it. Not sure why!
+
+      if (filename.isNotEmpty &&
+          filename.startsWith("(") &&
+          filename.endsWith(")")) {
+        filename = filename.substring(1, filename.length - 1);
+      }
+
+      dsPathText.controller?.text = filename;
     });
   }
 
