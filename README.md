@@ -10,13 +10,19 @@ be utilised in RattleNG for its powerful functionality.
 
 Some teasers:
 
+<hr><br><br>
+
 **The traditional Rattle Welcome**
 
 ![](assets/screenshots/data_page.png)
 
+<hr><br><br>
+
 **Exploring Data Visually**
 
 ![](assets/screenshots/explore_plot.png)
+
+<hr><br><br>
 
 **Everything Captured as Scripts**
 
