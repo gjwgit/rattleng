@@ -2,16 +2,17 @@ Welcome to **RattleNG** the *Next Generation of Rattle*
 (https://rattle.togaware.com).
 
 Click the `Filename:` button to pick a file then click the 🏃 Run
-button. If you click Run without specifying a file that we will load
-the sample Australian weather dataset.
+button. Clicking Run without specifying a file will load the sample
+Australian weather dataset.
 
 RattleNG is a sophisticated application for data science, statistical
-analyses, and data visualisation 📊. It is implemented in Flutter with
-R as the back end. Flutter is a cross-platform framework implemented
-in Dart (https://flutter.dev). R is a powerful software environment
-for statistical computing (https://rproject.org).
+analyses, data visualisation 📊, machine learning, and *soon to come,*
+the latest in AI. It is implemented in **Flutter** with **R** as the
+back end. Flutter is a cross-platform framework implemented in Dart
+(https://flutter.dev). R is a powerful software environment for
+statistical computing (https://rproject.org).
 
-See the Help menu ℹ for support in using Rattle. The two books Data
+See the Help menu ℹ for support using Rattle. The two books Data
 Mining with Rattle and R (https://bit.ly/rattle_data_mining) and The
 Essentials of Data Science (https://bit.ly/essentials_data_science)
 are available from Amazon. The Togaware Desktop Data Mining Survival
