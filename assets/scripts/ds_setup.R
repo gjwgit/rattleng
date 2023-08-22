@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-08-23 05:55:00 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-08-23 08:58:05 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,9 +23,13 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Graham Williams
+#
+##
 
-# Initialise the template variables for the dataset as per the
-# templates introduced in @williams:2017:essentials.  Also see
+# Designed to be run after the variable `ds` (dataset) has been
+# instantiated, this script will initialise the template variables for
+# the dataset as per the templates introduced in
+# @williams:2017:essentials.  Also see
 # https://survivor.togaware.com/datascience/data-template.html for
 # details.
 
