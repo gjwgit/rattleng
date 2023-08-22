@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-22 20:56:39 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-08-23 09:08:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,14 +61,15 @@ final List<Map<String, dynamic>> _tabs = [
   {'title': "Log", "icon": Icons.code, "widget": LogTab()},
 ];
 
-class Tabs extends StatefulWidget {
-  const Tabs({Key? key}) : super(key: key);
+class RattleHomePage extends StatefulWidget {
+  const RattleHomePage({Key? key}) : super(key: key);
 
   @override
-  _TabsState createState() => _TabsState();
+  _RattleHomePageState createState() => _RattleHomePageState();
 }
 
-class _TabsState extends State<Tabs> with SingleTickerProviderStateMixin {
+class _RattleHomePageState extends State<RattleHomePage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
