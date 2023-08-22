@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2023-08-21 19:35:10 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-08-22 12:41:48 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -56,6 +56,10 @@ class _DataTabPageState extends State<DataTabPage> {
         children: [
           Row(
             children: [
+              // Some fixed space so the widgets aren't crowded.
+
+              SizedBox(width: 5),
+
               // Widget to select the dataset filename.
 
               FilePickerDS(),
