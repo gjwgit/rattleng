@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Monday 2023-08-21 08:43:07 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-08-23 20:52:54 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -51,8 +51,9 @@ class SaveLogButton extends StatelessWidget {
           ts = ts.replaceFirst(RegExp(r"^[^#]*#"), '    #');
           ts = ts.replaceFirst(RegExp(r"  , style:.*"), '');
           ts = ts.replaceAll(RegExp(r"\\n   "), '');
-          print(ts);
+
           File('script.R').writeAsString(ts);
+          print("LOG WRITTEN TO script.R");
 
           //var tv = find.byKey(Key('log_text')).evaluate().first.widget; => "LogTab"
           //var tv = find.byKey(Key('log_text')).evaluate().first;
