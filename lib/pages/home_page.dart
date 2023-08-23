@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-08-23 09:08:02 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-08-23 14:50:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/helpers/load_dataset.dart';
+import 'package:rattle/helpers/r.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
 
@@ -135,13 +136,13 @@ class _RattleHomePageState extends State<RattleHomePage>
             icon: const Icon(Icons.open_in_new),
             onPressed: () async {
               print("KILL ALL R");
-              process = await Process.start('killall', ["R"]);
-              process = await Process.start('R', ["--no-save"]);
-              process.stdout.transform(utf8.decoder).forEach(print);
-              process.stderr.transform(utf8.decoder).forEach(print);
+              // process = await Process.start('killall', ["R"]);
+              // process = await Process.start('R', ["--no-save"]);
+              // process.stdout.transform(utf8.decoder).forEach(print);
+              // process.stderr.transform(utf8.decoder).forEach(print);
 
-              cmd = 'library(tidyverse)';
-              process.stdin.writeln(cmd);
+              // cmd = 'library(tidyverse)';
+              // process.stdin.writeln(cmd);
             },
             tooltip: "Start R and load tidyverse.",
             // tooltip: "Start a new project.",
@@ -149,16 +150,18 @@ class _RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(Icons.open_in_browser_outlined),
             onPressed: () {
-              cmd = "getwd()";
-              process.stdin.writeln(cmd);
-              cmd = 'ds <- read_csv("weather.csv")';
-              process.stdin.writeln(cmd);
-              cmd = 'summary(ds)';
-              process.stdin.writeln(cmd);
-              cmd = 'ds %>% ggplot(aes(x=WindDir3pm)) + geom_bar()';
-              process.stdin.writeln(cmd);
-              cmd = 'ggsave("myplot.pdf", width=11, height=7)';
-              process.stdin.writeln(cmd);
+              print("SOURCE AUS WEATHER DATASET");
+              rSource('load_demo_weather_aus_dataset');
+              // cmd = "getwd()";
+              // process.stdin.writeln(cmd);
+              // cmd = 'ds <- read_csv("weather.csv")';
+              // process.stdin.writeln(cmd);
+              // cmd = 'summary(ds)';
+              // process.stdin.writeln(cmd);
+              // cmd = 'ds %>% ggplot(aes(x=WindDir3pm)) + geom_bar()';
+              // process.stdin.writeln(cmd);
+              // cmd = 'ggsave("myplot.pdf", width=11, height=7)';
+              // process.stdin.writeln(cmd);
             },
             tooltip: "Load weather.csv, summarise and save plot to file.",
             // tooltip: "Load an existing project from file.",
