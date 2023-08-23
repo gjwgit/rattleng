@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-08-23 09:08:17 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-08-23 12:00:12 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -60,6 +60,8 @@ void main() async {
       await windowManager.setAlwaysOnTop(false);
     });
   }
+
+  print("STARTUP THE R PROCESS HERE AND `source('assets/scripts/main.R')`");
 
   runApp(const RattleApp());
 }
