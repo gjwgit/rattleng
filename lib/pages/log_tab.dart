@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-08-21 08:44:27 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-08-23 12:02:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,7 +42,7 @@ class LogTab extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-            flex: 3,
+            flex: 4,
             child: Container(
                 padding: EdgeInsets.all(10.0),
                 child: Column(
@@ -51,7 +51,9 @@ class LogTab extends StatelessWidget {
                     SizedBox(height: 10),
                     // Markdown(data: File(logIntro).readAsStringSync()),
                     // sunkenMarkdownFileBuilder(logIntro),
-                    Text(File(logIntro).readAsStringSync()),
+                    Text(
+                      File(logIntro).readAsStringSync(),
+                    ),
                   ],
                 ))),
         Expanded(
@@ -59,11 +61,14 @@ class LogTab extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: SelectableText(
-                cmdInitialMessage,
+                // TODO AVOID FILENAME LITERALS IN THE CODE
+                File("assets/scripts/main.R").readAsStringSync(),
                 key: const Key('log_text'),
                 style: const TextStyle(
-                  fontFamily: 'UbuntuMono',
-                  fontSize: 18,
+                  // fontFamily: 'UbuntuMono',
+                  // fontSize: 14,
+                  fontFamily: 'RobotoMono',
+                  fontSize: 12,
                 ),
               ),
             )),
