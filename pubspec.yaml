@@ -85,10 +85,19 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+
+  # Use a fixed width Ubuntu font for the Log tab.
   fonts:
     - family: UbuntuMono
       fonts:
         - asset: assets/fonts/UbuntuMono-R.ttf
+      # Google font family https://fonts.google.com/
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
