@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2023-08-23 09:41:55 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-08-24 08:57:53 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -24,10 +24,14 @@
 ///
 /// Authors: Graham Williams
 
-/// Project assets folder path used in the app.
+/// Project assets folder path used in the APP.
 
 const String assetsPath = 'assets';
 
-const String rattleWelcome = '$assetsPath/markdown/rattle_welcome.md';
+/// Location of the markdown file containing the welcome message for the APP.
+
+const String welcomeMsg = '$assetsPath/markdown/welcome.md';
+
+/// Location of the markdown file containing instructions for the LOG tab.
 
 const String logIntro = '$assetsPath/markdown/log_intro.md';
