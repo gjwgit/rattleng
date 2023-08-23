@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-08-22 12:41:48 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-08-24 08:59:36 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -43,10 +43,12 @@ class DataTabPage extends StatefulWidget {
 }
 
 class _DataTabPageState extends State<DataTabPage> {
-  // Declare a variable to store the text entered by the user
+  // A variable to store the text entered by the user.
+
   String _dsPath = '';
 
-  // Declare a controller for the text field
+  // A controller for the text field so it can be updated programmatically.
+
   TextEditingController _textController = TextEditingController();
 
   @override
@@ -94,7 +96,7 @@ class _DataTabPageState extends State<DataTabPage> {
           Expanded(
             child: Center(
               key: Key("rattle_welcome"),
-              child: sunkenMarkdownFileBuilder(rattleWelcome),
+              child: sunkenMarkdownFileBuilder(welcomeMsg),
             ),
           ),
         ],
