@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-08-23 08:57:21 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-08-23 09:39:14 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,11 +26,21 @@
 #
 ##
 
-# The concept of the templates was introduced in my book, Graham
-# Williams, The Essentials of Data Science, 2017, CRC Press,
-# referenced below as @williams:2017:essentials
+# Rattle timestamp: <<TIMESTAMP>>
+#
+# Rattle version <<VERSION>> user '<<USER>>'
+
+# The concept of templates for data science was introduced in my book,
+# The Essentials of Data Science, 2017, CRC Press, referenced
+# throughout this script as @williams:2017:essentials
 # (https://bit.ly/essentials_data_science). Also see
 # https://survivor.togaware.com/datascience/ for further details.
+
+# We begin most scripts by loading the required packages.  Here are
+# some initial packages to load and others will be identified as we
+# proceed through the script. When writing our own scripts we often
+# collect together the library commands at the beginning of the script
+# here.
 
 # Load required packages from the local library into the R session.
 
@@ -38,3 +48,8 @@ library(rattle)       # Access the weather dataset and utilities.
 library(magrittr)     # Utilise %>% and %<>% pipeline operators.
 library(janitor)      # Cleanup: clean_names() remove_constant().
 library(tidyverse)    # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+
+# A pre-defined value for the random seed ensures that results are
+# repeatable.
+
+set.seed(42)
