@@ -26,6 +26,27 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
+## How you can Help
+
+RattleNG will remain an open source application, free for anyone to
+use in any way they like. Contributions are welcome and the simplest
+is to make them through pull requests on github. You can fork my
+repository, make your changes, and push them back as a pull request to
+my repository where I can review and merge into the main product.
+
+There is plenty to do, and if you have a favourite part of Rattle,
+consider either implementing the GUI in Flutter for that component, or
+else write a simple template R script that takes a dataset `ds` and
+any other template parameters (as ``<<PARAMETER>>`` in the script) to
+then do it's stuff! The `<<PARAMETER>>` strings are filled in by the
+Flutter interface. See the growing number of scripts in `assets/scripts/`
+
+Suggested tasks can be found as github issues.
+
+## Rattle Resources
+
++ Bob Meunchen's review of Rattle: https://r4stats.com/articles/software-reviews/rattle/
+
 ## Some RattleNG teasers
 
 ### The traditional Rattle Welcome
