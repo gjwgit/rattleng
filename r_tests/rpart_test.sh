@@ -12,9 +12,8 @@ s|<<DATA_SPLIT_TR_TU_TE>>|0.70, 0.15, 0.15|g;
 print unless /^#|^$|^<</
 ' \
      ${RSCRIPTS}/main.R \
-     ${RSCRIPTS}/ds_load_weather.R \
+     ${RSCRIPTS}/data_load_weather.R \
      ${RSCRIPTS}/data_template.R \
      ${RSCRIPTS}/model_template.R \
      ${RSCRIPTS}/rpart_build.R \
-     | cat
-#     | R --no-save
+     | R --no-save
