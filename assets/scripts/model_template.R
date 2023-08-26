@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2023-08-26 14:23:46 +1000 Graham Williams>
+# Time-stamp: <Saturday 2023-08-26 20:53:49 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -63,8 +63,11 @@ ds %>% slice(tr) %>% pull(target) -> actual_tr
 ds %>% slice(tu) %>% pull(target) -> actual_tu
 ds %>% slice(te) %>% pull(target) -> actual_te
 
-ds %>% slice(tr) %>% pull(risk) -> risk_tr
-ds %>% slice(tu) %>% pull(risk) -> risk_tu
-ds %>% slice(te) %>% pull(risk) -> risk_te
+if (!is.null(risk))
+{
+  ds %>% slice(tr) %>% pull(risk) -> risk_tr
+  ds %>% slice(tu) %>% pull(risk) -> risk_tu
+  ds %>% slice(te) %>% pull(risk) -> risk_te
+}
 
 <<END_SPLIT_DATASET>>
