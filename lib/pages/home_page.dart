@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-08-23 14:50:51 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-08-26 19:17:28 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'package:rattle/helpers/load_dataset.dart';
+import 'package:rattle/helpers/build_model.dart' show buildModel;
+import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
 import 'package:rattle/helpers/r.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
@@ -122,20 +123,36 @@ class _RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(Icons.directions_run),
             onPressed: () {
-              if (_tabs[_tabController.index]['title'] == "Data") {
-                print("LOADING THE DATASET AS THE DATA TAB IS ACTIVE");
+              var currentTab = _tabs[_tabController.index]['title'];
 
-                loadDataset();
-              } else {
-                print("RUN NOT YET IMPLEMENTED AS IT IS NOT ON THE DATA TAB");
+              //   if (currentTab == "Data") {
+              //     print("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
+
+              //     loadDataset();
+              //   } else {
+              //     print("HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
+              //   }
+              // },
+              switch (currentTab) {
+                case "Data":
+                  print("HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET");
+
+                  loadDataset();
+                case "Model":
+                  print("HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART");
+
+                  buildModel();
+                default:
+                  print(
+                      "HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
               }
             },
-            tooltip: "Run the configured tab.",
+            tooltip: "Run the current tab.",
           ),
           IconButton(
             icon: const Icon(Icons.open_in_new),
             onPressed: () async {
-              print("KILL ALL R");
+              print("ALL R");
               // process = await Process.start('killall', ["R"]);
               // process = await Process.start('R', ["--no-save"]);
               // process.stdout.transform(utf8.decoder).forEach(print);
@@ -150,7 +167,6 @@ class _RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(Icons.open_in_browser_outlined),
             onPressed: () {
-              print("SOURCE AUS WEATHER DATASET");
               rSource('load_demo_weather_aus_dataset');
               // cmd = "getwd()";
               // process.stdin.writeln(cmd);
@@ -163,7 +179,7 @@ class _RattleHomePageState extends State<RattleHomePage>
               // cmd = 'ggsave("myplot.pdf", width=11, height=7)';
               // process.stdin.writeln(cmd);
             },
-            tooltip: "Load weather.csv, summarise and save plot to file.",
+            tooltip: "Load weather dataset.",
             // tooltip: "Load an existing project from file.",
           ),
           IconButton(
