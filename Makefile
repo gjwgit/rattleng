@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2023-08-17 10:44:18 +1000 Graham Williams>
+# Time-stamp: <Saturday 2023-08-26 11:18:52 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -58,6 +58,8 @@ $(APP):
   test		Run the integration test suite.
   ignore	Look for usage of ignore: directives.
 
+  r_test       Run the R script tests.
+
 endef
 export HELP
 
@@ -77,3 +79,7 @@ docs: doc
 .PHONY: ignore
 ignore:
 	@rgrep -C 2 ignore: lib
+
+.PHONY: r_test
+r_test:
+	@bash r_tests/rpart_test.sh
