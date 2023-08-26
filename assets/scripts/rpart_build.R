@@ -1,11 +1,11 @@
-# Rattle Scripts: The main setup.
+# Rattle Scripts: From dataset ds build an rpart decision tree.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2023-08-26 11:14:44 +1000 Graham Williams>
+# Time-stamp: <Saturday 2023-08-26 19:42:47 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,16 +26,15 @@
 #
 ##
 #
+# Decision Tree using RPART
+#
 # Rattle timestamp: <<TIMESTAMP>>
 #
-# Rattle version <<VERSION>> user '<<USER>>'
+# References
 #
-# The concept of templates for data science was introduced in my book,
-# The Essentials of Data Science, 2017, CRC Press, referenced
-# throughout this script as @williams:2017:essentials
-# (https://bit.ly/essentials_data_science). On-line examples are
-# available from my Data science Desktop Survival Guide
-# https://survivor.togaware.com/datascience/.
+# @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/rpart.html
+# https://survivor.togaware.com/datascience/ for further details.
 
 # We begin most scripts by loading the required packages.  Here are
 # some initial packages to load and others will be identified as we
@@ -45,12 +44,28 @@
 
 # Load required packages from the local library into the R session.
 
-library(rattle)       # Access the weather dataset and utilities.
-library(magrittr)     # Utilise %>% and %<>% pipeline operators.
-library(janitor)      # Cleanup: clean_names() remove_constant().
-library(tidyverse)    # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+# The 'rpart' package provides the 'rpart' function.
 
-# A pre-defined value for the random seed ensures that results are
-# repeatable.
+library(rpart)        # ML: decision tree rpart().
+
+# For repeatable results.
 
 set.seed(42)
+
+mtype <- "rpart"
+mdesc <- "decision tree"
+
+model_rpart <- rpart(
+  form,
+  data=ds[tr, vars],
+  method="class",
+  parms=list(split="information"),
+  control=rpart.control(usesurrogate=0, 
+                        maxsurrogate=0),
+  model=TRUE)
+
+# Generate a textual view of the Decision Tree model.
+
+print(model_rpart)
+printcp(model_rpart)
+cat("\n")
