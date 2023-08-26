@@ -1,11 +1,11 @@
-# Rattle Scripts: Setup the dataset template variables.
+# Rattle Scripts: Setup the data template variables.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-08-23 08:58:05 +1000 Graham Williams>
+# Time-stamp: <Saturday 2023-08-26 14:16:07 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,20 +25,31 @@
 # Author: Graham Williams
 #
 ##
-
+#
 # Designed to be run after the variable `ds` (dataset) has been
-# instantiated, this script will initialise the template variables for
-# the dataset as per the templates introduced in
-# @williams:2017:essentials.  Also see
-# https://survivor.togaware.com/datascience/data-template.html for
-# details.
+# instantiated, this script will initialise the data template variables. for
+#
+# References:
+#
+# @williams:2017:essentials Chapter 3
+#
+# https://survivor.togaware.com/datascience/data-template.html
+
+# Identify variable roles.
+
+target <- "<<VAR_TARGET>>"
+risk   <- "<<VAR_RISK>>"
+id     <- c(<<VARS_ID>>)
+
+# Record the number of observations.
 
 nobs   <- nrow(ds)
 
-vnames <- names(ds)
-ds    %<>% clean_names(numerals="right")
-names(vnames) <- names(ds)
+# Note the variable names.
 
 vars   <- names(ds)
-target <- "rain_tomorrow"
+
+# Make the target variable the last one.
+
 vars   <- c(target, vars) %>% unique() %>% rev()
+

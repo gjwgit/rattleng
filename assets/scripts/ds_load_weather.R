@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-08-23 05:53:42 +1000 Graham Williams>
+# Time-stamp: <Saturday 2023-08-26 14:18:43 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,18 +23,39 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Graham Williams
-
-# Initialise the dataset as per the templates introduced in
-# @williams:2017:essentials.  Also see
-# https://survivor.togaware.com/datascience/dataset-setup.html for
-# further details.
-
-weatherAUS <- rattle::weatherAUS # Ensure we have the original version.
+#
+# Initialise the dataset as per the templates.
+#
+# References:
+#
+# @williams:2017:essentials Chapter 3
+#
+# https://survivor.togaware.com/datascience/data-template.html
 
 # The `r Rdataset(weatherAUS)` dataset is loaded into the template
-# variable `ds`.  and further template variables are setup as
-# introduced by @williams:2017:essentials. See
-# Chapter&nbsp;\@ref(data-template) for details.
+# variable `ds` and further template variables are initialised.
+
+weatherAUS <- rattle::weather # Ensure we have the original version.
 
 dsname <- "weatherAUS"
+
 ds     <- get(dsname)
+
+# Capture the original variable names if later required.
+
+vnames <- names(ds)
+
+#<<BEGIN_NORMALISE_NAMES>>
+#
+# Normalise the variable names using janitor::clean_names(). This is
+# done on the dataset load and the DATA tab has an option to normalise
+# the variable names on loading the data. It is set on by default.
+
+ds    %<>% clean_names(numerals="right")
+
+#<<END_NORMALISE_NAMES>>
+
+# Index the original variable names by the new names.
+
+names(vnames) <- names(ds)
+
