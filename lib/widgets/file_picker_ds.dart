@@ -24,17 +24,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
 class FilePickerDS extends StatefulWidget {
+  const FilePickerDS({Key? key}) : super(key: key);
+
   @override
-  _FilePickerDSState createState() => _FilePickerDSState();
+  FilePickerDSState createState() => FilePickerDSState();
 }
 
-class _FilePickerDSState extends State<FilePickerDS> {
+class FilePickerDSState extends State<FilePickerDS> {
   String? _directoryPath;
   List<PlatformFile>? _paths;
-  bool _userAborted = false;
 
   void _pickFiles() async {
     try {
@@ -55,8 +57,6 @@ class _FilePickerDSState extends State<FilePickerDS> {
     setState(() {
       _directoryPath =
           _paths != null ? _paths!.map((e) => e.path).toString() : null;
-
-      _userAborted = _paths == null;
 
       final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
       var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
@@ -81,6 +81,7 @@ class _FilePickerDSState extends State<FilePickerDS> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      key: const Key("file_picker_ds"),
       width: 120,
       child: ElevatedButton(
         onPressed: () => _pickFiles(),
