@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RSCRIPTS=assets/scripts
+RSCRIPTS=assets/r
 
 perl -ne '
 s/\s*#.*//;
