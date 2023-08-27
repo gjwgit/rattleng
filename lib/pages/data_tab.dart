@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Thursday 2023-08-24 08:59:36 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-08-27 21:20:05 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -24,12 +24,7 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/widgets/file_picker_ds.dart';
@@ -39,17 +34,13 @@ class DataTabPage extends StatefulWidget {
   const DataTabPage({Key? key}) : super(key: key);
 
   @override
-  _DataTabPageState createState() => _DataTabPageState();
+  DataTabPageState createState() => DataTabPageState();
 }
 
-class _DataTabPageState extends State<DataTabPage> {
-  // A variable to store the text entered by the user.
-
-  String _dsPath = '';
-
+class DataTabPageState extends State<DataTabPage> {
   // A controller for the text field so it can be updated programmatically.
 
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,30 +51,25 @@ class _DataTabPageState extends State<DataTabPage> {
             children: [
               // Some fixed space so the widgets aren't crowded.
 
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
 
               // Widget to select the dataset filename.
 
-              FilePickerDS(),
+              const FilePickerDS(),
 
               // Some fixed space so the widgets aren't crowded.
 
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
 
               // A text field to display the selected dataset name.
 
               Expanded(
                 child: TextField(
-                  key: Key('ds_path_text'),
+                  key: const Key('ds_path_text'),
                   controller: _textController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Path to dataset file.',
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _dsPath = value;
-                    });
-                  },
                 ),
               ),
             ],
@@ -95,7 +81,7 @@ class _DataTabPageState extends State<DataTabPage> {
 
           Expanded(
             child: Center(
-              key: Key("rattle_welcome"),
+              key: const Key("rattle_welcome"),
               child: sunkenMarkdownFileBuilder(welcomeMsg),
             ),
           ),

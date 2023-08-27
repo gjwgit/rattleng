@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-08-26 19:17:28 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-28 09:03:32 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,12 +23,12 @@
 /// Authors: Graham Williams
 
 import 'dart:io' show Process;
-import 'dart:convert' show utf8;
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
+import 'package:rattle/constants/app.dart' show appTitle;
 import 'package:rattle/helpers/build_model.dart' show buildModel;
 import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
 import 'package:rattle/helpers/r.dart';
@@ -38,39 +38,51 @@ import 'package:rattle/pages/data_tab.dart';
 /// Mapping for Tabs, title:icon:widget.
 
 final List<Map<String, dynamic>> _tabs = [
-  {'title': "Data", "icon": Icons.input, "widget": DataTabPage()},
+  {
+    'title': "Data",
+    "icon": Icons.input,
+    "widget": const DataTabPage(),
+  },
   {
     'title': "Explore",
     "icon": Icons.insights,
-    "widget": Center(child: Text("EXPLORE"))
+    "widget": const Center(child: Text("EXPLORE")),
   },
-  {'title': "Test", "icon": Icons.task, "widget": Center(child: Text("TEST"))},
+  {
+    'title': "Test",
+    "icon": Icons.task,
+    "widget": const Center(child: Text("TEST")),
+  },
   {
     'title': "Transform",
     "icon": Icons.transform,
-    "widget": Center(child: Text("TRANSFORM"))
+    "widget": const Center(child: Text("TRANSFORM")),
   },
   {
     'title': "Model",
     "icon": Icons.model_training,
-    "widget": Center(child: Text("MODEL"))
+    "widget": const Center(child: Text("MODEL")),
   },
   {
     'title': "Evaluate",
     "icon": Icons.leaderboard,
-    "widget": Center(child: Text("EVALUATE"))
+    "widget": const Center(child: Text("EVALUATE")),
   },
-  {'title': "Log", "icon": Icons.code, "widget": LogTab()},
+  {
+    'title': "Log",
+    "icon": Icons.code,
+    "widget": const LogTab(),
+  },
 ];
 
 class RattleHomePage extends StatefulWidget {
   const RattleHomePage({Key? key}) : super(key: key);
 
   @override
-  _RattleHomePageState createState() => _RattleHomePageState();
+  RattleHomePageState createState() => RattleHomePageState();
 }
 
-class _RattleHomePageState extends State<RattleHomePage>
+class RattleHomePageState extends State<RattleHomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -88,21 +100,20 @@ class _RattleHomePageState extends State<RattleHomePage>
 
   @override
   Widget build(BuildContext context) {
-    var process;
-    String cmd = "";
-
     return Scaffold(
       appBar: AppBar(
         // The left side menu item. May not be required.
 
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: () {},
+          onPressed: () {
+            debugPrint("MENU PRESSED NO ACTION YET");
+          },
         ),
 
         // The title aligned to the left.
 
-        title: const Text("Rattle the Next Generation Data Scientist"),
+        title: const Text(appTitle),
 
         // Deploy the buttons aligned to the top right for actions.
 
@@ -111,40 +122,46 @@ class _RattleHomePageState extends State<RattleHomePage>
 
           IconButton(
             onPressed: () {
-              print(_tabs[_tabController.index]['title']);
-              print(_tabs[_tabController.index]['widget']);
+              debugPrint(_tabs[_tabController.index]['title']);
+              debugPrint(_tabs[_tabController.index]['widget']);
             },
-            icon: Icon(Icons.info),
+            icon: const Icon(Icons.info),
             tooltip: "Information.",
           ),
 
           // RUN
 
           IconButton(
+            key: const Key("run_button"),
             icon: const Icon(Icons.directions_run),
             onPressed: () {
               var currentTab = _tabs[_tabController.index]['title'];
 
               //   if (currentTab == "Data") {
-              //     print("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
+              //     debugPrint("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
 
               //     loadDataset();
               //   } else {
-              //     print("HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
+              //     debugPrint("HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
               //   }
               // },
               switch (currentTab) {
                 case "Data":
-                  print("HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET");
-
-                  loadDataset();
+                  {
+                    debugPrint(
+                      "HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET",
+                    );
+                    loadDataset();
+                  }
                 case "Model":
-                  print("HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART");
-
+                  debugPrint(
+                    "HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART",
+                  );
                   buildModel();
                 default:
-                  print(
-                      "HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
+                  debugPrint(
+                    "HOME PAGE: RUN NOT IMPLEMENTED FOR $currentTab TAB",
+                  );
               }
             },
             tooltip: "Run the current tab.",
@@ -152,7 +169,7 @@ class _RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(Icons.open_in_new),
             onPressed: () async {
-              print("ALL R");
+              debugPrint("ALL R");
               // process = await Process.start('killall', ["R"]);
               // process = await Process.start('R', ["--no-save"]);
               // process.stdout.transform(utf8.decoder).forEach(print);
@@ -192,7 +209,9 @@ class _RattleHomePageState extends State<RattleHomePage>
           ),
           IconButton(
             icon: const Icon(Icons.exit_to_app_outlined),
-            onPressed: () {},
+            onPressed: () {
+              debugPrint("EXIT PRESSED NO ACTION YET");
+            },
             tooltip: "TODO Exit the application.",
           ),
           PopupMenuButton<Text>(
@@ -234,17 +253,49 @@ class _RattleHomePageState extends State<RattleHomePage>
           return tab['widget'] as Widget;
         }).toList(),
       ),
+
+      // Tried this 20230827 gjw but did not work.
+
+      // body: Container(
+      //   children: [
+      //     TabBarView(
+      //       controller: _tabController,
+      //       children: _tabs.map((tab) {
+      //         return tab['widget'] as Widget;
+      //       }).toList(),
+      //     ),
+      //     Markdown(
+      //       data: 'Welcome to **RattleNG**. To begin, pick a file '
+      //           '(e.g., CSV) containing your dataset, then click the '
+      //           '🏃 Run button.',
+      //       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+      //     ),
+      //   ],
+      // ),
+
+      // bottomNavigationBar: Row(
+      //   // I am setting the height for the bottom bar but this does not really
+      //   // seem to be the way to do this.
+      //   children: <Widget>[
+      //     Markdown(
+      //       data: 'Welcome to **RattleNG**. To begin, pick a file '
+      //           '(e.g., CSV) containing your dataset, then click the '
+      //           '🏃 Run button.',
+      //       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+      //     ),
+      //   ],
+      // ),
+
+      // ignore: sized_box_for_whitespace
       bottomNavigationBar: Container(
-        height: 40,
-
-        // 20230822 gjw I don't think I need padding any more on moving to the
-        // Markdown() from Text(). Keep it for now in case I revert to Text().
-
+        // I am setting the height for the bottom bar but this does not really
+        // seem to be the way to do this.
+        height: 50,
         child: Padding(
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: Markdown(
-            data: 'Welcome to **RattleNG**. To begin, pick a file ' +
-                '(e.g., CSV) containing your dataset, then click the ' +
+            data: 'Welcome to **RattleNG**. To begin, pick a file '
+                '(e.g., CSV) containing your dataset, then click the '
                 '🏃 Run button.',
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
           ),
