@@ -26,16 +26,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/assets_load.dart';
+import 'package:rattle/helpers/load_asset.dart';
 
 /// A scrolling widget that parses and displays Markdown file,
-/// which is located under the path [markDownFilePath].
+/// which is located under the path [markdownFilePath].
 /// It allows handling asynchronous loading of markdown file.
 
-FutureBuilder markdownFileBuilder(String markDownFilePath) {
+FutureBuilder markdownFileBuilder(String markdownFilePath) {
   return FutureBuilder(
     key: const Key('markdown_file'),
-    future: loadMarkdownFromAsset(markDownFilePath),
+    future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Markdown(
@@ -52,10 +52,10 @@ FutureBuilder markdownFileBuilder(String markDownFilePath) {
   );
 }
 
-FutureBuilder sunkenMarkdownFileBuilder(String markDownFilePath) {
+FutureBuilder sunkenMarkdownFileBuilder(String markdownFilePath) {
   return FutureBuilder(
     key: const Key('sunken_markdown_file'),
-    future: loadMarkdownFromAsset(markDownFilePath),
+    future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
