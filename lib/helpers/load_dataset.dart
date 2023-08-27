@@ -27,7 +27,7 @@ void loadDataset() {
     rSource("data_load_weather");
     dsPathText.controller?.text = 'rattle::weather';
   } else {
-    print('LOAD_DATASET: FILENAME IS NOT EMPTY SO FOR NOW:');
+    debugPrint('LOAD_DATASET: FILENAME IS NOT EMPTY SO FOR NOW:');
     rSource(
       "data_template",
       // {
@@ -36,7 +36,7 @@ void loadDataset() {
       //   "VARS_ID": '"date", "location"'
       // }
     );
-    print('LOAD_DATASET: OTHERWISE WE SHOULD RUN APPROPRIATE R SCRIPT ' +
+    debugPrint('LOAD_DATASET: OTHERWISE WE SHOULD RUN APPROPRIATE R SCRIPT ' +
         'TO LOAD DATA FROM -> "$filename";');
   }
 }
