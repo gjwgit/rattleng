@@ -66,7 +66,7 @@ FutureBuilder sunkenMarkdownFileBuilder(String markdownFilePath) {
                 color: Colors.grey.withOpacity(1),
                 spreadRadius: 10,
                 blurRadius: 10,
-                offset: Offset(10, 10),
+                offset: const Offset(10, 10),
               ),
             ],
           ),
