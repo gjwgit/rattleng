@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-08-26 19:17:28 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-08-27 16:54:45 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -111,8 +111,8 @@ class _RattleHomePageState extends State<RattleHomePage>
 
           IconButton(
             onPressed: () {
-              print(_tabs[_tabController.index]['title']);
-              print(_tabs[_tabController.index]['widget']);
+              debugPrint(_tabs[_tabController.index]['title']);
+              debugPrint(_tabs[_tabController.index]['widget']);
             },
             icon: Icon(Icons.info),
             tooltip: "Information.",
@@ -121,29 +121,30 @@ class _RattleHomePageState extends State<RattleHomePage>
           // RUN
 
           IconButton(
+            key: Key("run_button"),
             icon: const Icon(Icons.directions_run),
             onPressed: () {
               var currentTab = _tabs[_tabController.index]['title'];
 
               //   if (currentTab == "Data") {
-              //     print("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
+              //     debugPrint("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
 
               //     loadDataset();
               //   } else {
-              //     print("HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
+              //     debugPrint("HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
               //   }
               // },
               switch (currentTab) {
                 case "Data":
-                  print("HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET");
+                  debugPrint("HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET");
 
                   loadDataset();
                 case "Model":
-                  print("HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART");
+                  debugPrint("HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART");
 
                   buildModel();
                 default:
-                  print(
+                  debugPrint(
                       "HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
               }
             },
@@ -152,7 +153,7 @@ class _RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(Icons.open_in_new),
             onPressed: () async {
-              print("ALL R");
+              debugPrint("ALL R");
               // process = await Process.start('killall', ["R"]);
               // process = await Process.start('R', ["--no-save"]);
               // process.stdout.transform(utf8.decoder).forEach(print);
