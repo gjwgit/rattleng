@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-08-27 16:31:46 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-28 09:10:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,6 +25,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/widgets/log/log_save_button.dart';
 
 /// Create a log info widget with a Save button and displaying markdown.
@@ -40,24 +41,22 @@ class LogInfo extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return FutureBuilder(
-            future: rootBundle.loadString('assets/markdown/log_intro.md'),
+            future: rootBundle.loadString(logIntro),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      const LogSaveButton(),
-                      const SizedBox(height: 10),
-                      // Markdown(data: File(logIntro).readAsStringSync()),
-                      // sunkenMarkdownFileBuilder(logIntro),
-                      Text(snapshot.data!),
-                    ],
-                  ),
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
+              return snapshot.hasData
+                  ? Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          const LogSaveButton(),
+                          const SizedBox(height: 10),
+                          // Markdown(data: File(logIntro).readAsStringSync()),
+                          // sunkenMarkdownFileBuilder(logIntro),
+                          Text(snapshot.data!),
+                        ],
+                      ),
+                    )
+                  : const CircularProgressIndicator();
             },
           );
         },
