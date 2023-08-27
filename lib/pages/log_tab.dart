@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-08-27 15:11:09 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-08-27 18:54:14 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,19 +22,10 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/load_asset.dart';
-import 'package:rattle/helpers/r.dart';
 import 'package:rattle/widgets/log/log_info.dart';
 import 'package:rattle/widgets/log/log_text.dart';
-import 'package:rattle/widgets/markdown_file.dart';
 
 final logController = TextEditingController();
 
@@ -43,7 +34,7 @@ class LogTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
