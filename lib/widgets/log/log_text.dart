@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-08-27 13:57:34 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-08-27 15:47:18 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,6 +30,8 @@ import 'package:flutter/services.dart' show rootBundle;
 /// The contents is intialised from the main.R script asset.
 
 class LogText extends StatelessWidget {
+  const LogText({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -50,7 +52,7 @@ class LogText extends StatelessWidget {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             },
           );
