@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Wednesday 2023-08-23 20:52:54 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-08-27 15:12:28 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,8 +28,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart' show find;
 
-class SaveLogButton extends StatelessWidget {
-  const SaveLogButton({Key? key}) : super(key: key);
+class LogSaveButton extends StatelessWidget {
+  const LogSaveButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
