@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2023-08-28 08:30:43 +1000 Graham Williams>
+# Time-stamp: <Monday 2023-08-28 08:59:35 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -84,5 +84,4 @@ ignore:
 r_test:
 	@bash r_test/rpart_test.sh
 
-.PHONY: tests
-tests: r_test test qtest
+tests:: r_test
