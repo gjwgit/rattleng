@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+// ignore: prefer_typing_uninitialized_variables
 var process;
 
 void rStart() async {
@@ -23,15 +23,15 @@ void rStart() async {
 
   process = await Process.start('R', ["--no-save"]);
 
-  // Output generted by the process is sent to stderr (or stdout if desired) to
-  // capture everything to the Logging tab of Flutter DevTools.
+  // Output generted by the process' stderr and stdout is
+  // captured here to the Logging tab of Flutter DevTools.
   //
   // 20230824 TODO gjw How to stop it being displayed onto the console? It's
   // okay during development but for production it should not be displaying this
   // on the console. Just in DevTools is good.
 
-  // process.stdout.transform(utf8.decoder).forEach(print);
-  process.stderr.transform(utf8.decoder).forEach(print);
+  process.stdout.transform(utf8.decoder).forEach(debugPrint);
+  process.stderr.transform(utf8.decoder).forEach(debugPrint);
 
   // Read the main R startup code from the script file.
 
