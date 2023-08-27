@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Rattle
+Comment=Rattle Data Scientist
+Exec=rattle
+Icon=${SNAP}/meta/gui/rattle.png # replace name to your app name
+Terminal=false
+Type=Application
+Categories=Education; #adjust accordingly your snap category

@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Thursday 2023-08-24 08:57:53 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-28 06:55:14 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -23,6 +23,10 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
+/// The Rattle app's title.
+
+const String appTitle = 'Rattle the Next Generation Data Scientist';
 
 /// Project assets folder path used in the APP.
 

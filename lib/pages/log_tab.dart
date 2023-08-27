@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-08-23 15:22:08 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-28 08:55:26 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,66 +22,29 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:rattle/widgets/log/log_info.dart';
+import 'package:rattle/widgets/log/log_text.dart';
 
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/r.dart';
-import 'package:rattle/widgets/save_log_button.dart';
-import 'package:rattle/widgets/markdown_file.dart';
-
-final logController = TextEditingController();
+// TESTING CAN BE REMOVED? final logController = TextEditingController();
 
 class LogTab extends StatelessWidget {
   const LogTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-            flex: 4,
-            child: Container(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    SaveLogButton(),
-                    SizedBox(height: 10),
-                    // Markdown(data: File(logIntro).readAsStringSync()),
-                    // sunkenMarkdownFileBuilder(logIntro),
-                    Text(
-                      File(logIntro).readAsStringSync(),
-                    ),
-                  ],
-                ))),
+          flex: 4,
+          child: LogInfo(),
+        ),
         Expanded(
-            flex: 7,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-
-              // A SelectableText to allow for the widget contents to be added
-              // to.
-
-              child: SelectableText(
-                //child: TextField(
-                // TODO AVOID FILENAME LITERALS IN THE CODE
-                File("assets/scripts/main.R").readAsStringSync(),
-                // WANT THIS BUT HOW????   controller: logController,
-                key: const Key('log_text'),
-                //readOnly: true,
-                style: const TextStyle(
-                  // fontFamily: 'UbuntuMono',
-                  // fontSize: 14,
-                  fontFamily: 'RobotoMono',
-                  fontSize: 12,
-                ),
-              ),
-            )),
+          flex: 7,
+          child: LogText(),
+        ),
       ],
     );
   }

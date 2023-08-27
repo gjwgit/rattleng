@@ -1,43 +1,67 @@
+/// Suport for running R scripts.
+///
+/// Copyright (C) 2023, Togaware Pty Ltd.
+///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// Time-stamp: <Monday 2023-08-28 08:40:07 +1000 Graham Williams>
+//
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program.  If not, see <https://www.gnu.org/licenses/>.
+///
+/// Authors: Graham Williams
+
 import 'dart:convert' show utf8;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+// ignore: prefer_typing_uninitialized_variables
 var process;
 
 void rStart() async {
   // A little unfriendly to kill all R instances. Might only work on Linux
   // too. Only do this for now!
 
-  print("R: KILLING ALL EXISTING R WHICH MAY NOT BE A NICE THING TO DO");
+  debugPrint("R: KILLING ALL EXISTING R WHICH MAY NOT BE A NICE THING TO DO");
 
   process = await Process.start('killall', ["R"]);
 
   // Start up an R process from the command line.
 
-  print("R: STARTING UP A NEW R PROCESS");
+  debugPrint("R: STARTING UP A NEW R PROCESS");
 
   process = await Process.start('R', ["--no-save"]);
 
-  // Output generted by the process is sent to stderr (or stdout if desired) to
-  // capture everything to the Logging tab of Flutter DevTools.
+  // Output generted by the process' stderr and stdout is
+  // captured here to the Logging tab of Flutter DevTools.
   //
   // 20230824 TODO gjw How to stop it being displayed onto the console? It's
   // okay during development but for production it should not be displaying this
   // on the console. Just in DevTools is good.
 
-  // process.stdout.transform(utf8.decoder).forEach(print);
-  process.stderr.transform(utf8.decoder).forEach(print);
+  process.stdout.transform(utf8.decoder).forEach(debugPrint);
+  process.stderr.transform(utf8.decoder).forEach(debugPrint);
 
   // Read the main R startup code from the script file.
 
-  print("R: SOURCE 'main.R'");
+  debugPrint("R: SOURCE 'main.R'");
 
-  String code = File("assets/scripts/main.R").readAsStringSync();
+  String code = File("assets/r/main.R").readAsStringSync();
 
   // Populate the <<TIMESTAMP>>.
 
@@ -75,19 +99,26 @@ void rSource(String script) {
 
   // First obtain the text from the script.
 
-  print("R: RUNNING THE CODE IN SCRIPT FILE '$script.R'");
+  debugPrint("R: RUNNING THE CODE IN SCRIPT FILE '$script.R'");
 
-  var code = File("assets/scripts/$script.R").readAsStringSync();
+  var code = File("assets/r/$script.R").readAsStringSync();
 
-  // Process template variables.
+  // Process template variables. HARD CODED FOR NOW UNTIL WE PASS IN THE
+  // KEY:VALUE MAPPINGS.
 
   code = code.replaceAll('<<VAR_TARGET>>', "rain_tomorrow");
   code = code.replaceAll('<<VAR_RISK>>', "risk_mm");
   code = code.replaceAll('<<VARS_ID>>', '"date", "location"');
 
+  code = code.replaceAll('<<DATA_SPLIT_TR_TU_TE>>', '0.7, 0.15, 0.15');
+
+  // SIMPLY REMOVE THESE DIRECTIVES FOR NOW UNTIL WE PASS IN A DIRECTIVE TO OR
+  // NOT TO INCLUDE THESE BLOCKS.
+
+  code = code.replaceAll('<<BEGIN_NORMALISE_NAMES>>', "");
+  code = code.replaceAll('<<END_NORMALISE_NAMES>>', "");
   code = code.replaceAll('<<BEGIN_SPLIT_DATASET>>', "");
   code = code.replaceAll('<<END_SPLIT_DATASET>>', "");
-  code = code.replaceAll('<<DATA_SPLIT_TR_TU_TE>>', '0.7, 0.15, 0.15');
 
   // Run the code.
 
@@ -98,7 +129,7 @@ void rSource(String script) {
   //var log = find.byKey(const Key('log_text'));
   //var elog = log.evaluate().first.widget as TextField;
 
-  //elog.controller?.text += File("assets/scripts/$script.R").readAsStringSync();
+  //elog.controller?.text += File("assets/r/$script.R").readAsStringSync();
 }
 
 //               cmd = "getwd()";

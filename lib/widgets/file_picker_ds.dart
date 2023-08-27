@@ -24,39 +24,39 @@
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
 class FilePickerDS extends StatefulWidget {
+  const FilePickerDS({Key? key}) : super(key: key);
+
   @override
-  _FilePickerDSState createState() => _FilePickerDSState();
+  FilePickerDSState createState() => FilePickerDSState();
 }
 
-class _FilePickerDSState extends State<FilePickerDS> {
+class FilePickerDSState extends State<FilePickerDS> {
   String? _directoryPath;
   List<PlatformFile>? _paths;
-  bool _userAborted = false;
 
-  @override
   void _pickFiles() async {
     try {
       _directoryPath = null;
       _paths = (await FilePicker.platform.pickFiles(
         //type: _pickingType,
         allowMultiple: false,
+        // ignore: avoid_print
         onFileLoading: (FilePickerStatus status) => print(status),
         allowedExtensions: ["csv", "tsv", "arff", "rdata"],
         dialogTitle: "Please Select Your Dataset File",
       ))
           ?.files;
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
 
     setState(() {
       _directoryPath =
           _paths != null ? _paths!.map((e) => e.path).toString() : null;
-
-      _userAborted = _paths == null;
 
       final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
       var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
@@ -81,13 +81,15 @@ class _FilePickerDSState extends State<FilePickerDS> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      key: const Key("file_picker_ds"),
       width: 120,
       child: ElevatedButton(
-          onPressed: () => _pickFiles(),
-          //shape: StadiumBorder(),
-          //foregroundColor: Colors.white,
-          //child: const Icon(Icons.description)),
-          child: const Text("Filename:")),
+        onPressed: () => _pickFiles(),
+        //shape: StadiumBorder(),
+        //foregroundColor: Colors.white,
+        //child: const Icon(Icons.description)),
+        child: const Text("Filename:"),
+      ),
     );
   }
 }

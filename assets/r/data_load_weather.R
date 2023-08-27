@@ -1,11 +1,11 @@
-# Rattle Scripts: Load the default rattle demo dataset. 
+# Rattle Scripts: Load Rattle's default weather demo dataset. 
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2023-08-26 14:18:43 +1000 Graham Williams>
+# Time-stamp: <Monday 2023-08-28 08:37:24 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -37,7 +37,7 @@
 
 weatherAUS <- rattle::weather # Ensure we have the original version.
 
-dsname <- "weatherAUS"
+dsname <- "weather"
 
 ds     <- get(dsname)
 
@@ -45,7 +45,7 @@ ds     <- get(dsname)
 
 vnames <- names(ds)
 
-#<<BEGIN_NORMALISE_NAMES>>
+<<BEGIN_NORMALISE_NAMES>>
 #
 # Normalise the variable names using janitor::clean_names(). This is
 # done on the dataset load and the DATA tab has an option to normalise
@@ -53,7 +53,7 @@ vnames <- names(ds)
 
 ds    %<>% clean_names(numerals="right")
 
-#<<END_NORMALISE_NAMES>>
+<<END_NORMALISE_NAMES>>
 
 # Index the original variable names by the new names.
 

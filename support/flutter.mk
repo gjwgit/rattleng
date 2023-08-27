@@ -18,7 +18,7 @@ flutter:
 
   doc	    Run `dart doc` to create documentation.
 
-  check     Run all checks over the code base 
+  checks    Run all checks over the code base 
     format        Run `dart format`.
     nullable	  Check NULLs from dart_code_metrics.
     unused_code   Check unused code from dart_code_metrics.
@@ -96,8 +96,11 @@ doc:
 format:
 	dart format lib/
 
-.PHONY: check
-check: format nullable unused_code unused_files metrics analyze
+.PHONY: tests
+tests:: test qtest
+
+.PHONY: checks
+checks: format nullable unused_code unused_files metrics analyze
 
 .PHONY: nullable
 nullable:
