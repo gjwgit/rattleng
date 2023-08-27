@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-08-26 16:25:34 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-28 08:29:46 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -74,7 +74,6 @@ class RattleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Rattling Data for Scientist',
       theme: ThemeData(
         primarySwatch: createMaterialColor(const Color(0xff45035e)),
         textTheme: Theme.of(context).textTheme.apply(
