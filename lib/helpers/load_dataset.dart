@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
 import 'package:rattle/helpers/r.dart' show rSource;
@@ -36,7 +37,9 @@ void loadDataset() {
       //   "VARS_ID": '"date", "location"'
       // }
     );
-    debugPrint('LOAD_DATASET: OTHERWISE WE SHOULD RUN APPROPRIATE R SCRIPT ' +
-        'TO LOAD DATA FROM -> "$filename";');
+    debugPrint(
+      'LOAD_DATASET: OTHERWISE WE SHOULD RUN APPROPRIATE R SCRIPT '
+      'TO LOAD DATA FROM -> "$filename";',
+    );
   }
 }
