@@ -1,3 +1,27 @@
+/// Suport for running R scripts.
+///
+/// Copyright (C) 2023, Togaware Pty Ltd.
+///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// Time-stamp: <Monday 2023-08-28 08:40:07 +1000 Graham Williams>
+//
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program.  If not, see <https://www.gnu.org/licenses/>.
+///
+/// Authors: Graham Williams
+
 import 'dart:convert' show utf8;
 import 'dart:io';
 
@@ -37,7 +61,7 @@ void rStart() async {
 
   debugPrint("R: SOURCE 'main.R'");
 
-  String code = File("assets/scripts/main.R").readAsStringSync();
+  String code = File("assets/r/main.R").readAsStringSync();
 
   // Populate the <<TIMESTAMP>>.
 
@@ -77,17 +101,24 @@ void rSource(String script) {
 
   debugPrint("R: RUNNING THE CODE IN SCRIPT FILE '$script.R'");
 
-  var code = File("assets/scripts/$script.R").readAsStringSync();
+  var code = File("assets/r/$script.R").readAsStringSync();
 
-  // Process template variables.
+  // Process template variables. HARD CODED FOR NOW UNTIL WE PASS IN THE
+  // KEY:VALUE MAPPINGS.
 
   code = code.replaceAll('<<VAR_TARGET>>', "rain_tomorrow");
   code = code.replaceAll('<<VAR_RISK>>', "risk_mm");
   code = code.replaceAll('<<VARS_ID>>', '"date", "location"');
 
+  code = code.replaceAll('<<DATA_SPLIT_TR_TU_TE>>', '0.7, 0.15, 0.15');
+
+  // SIMPLY REMOVE THESE DIRECTIVES FOR NOW UNTIL WE PASS IN A DIRECTIVE TO OR
+  // NOT TO INCLUDE THESE BLOCKS.
+
+  code = code.replaceAll('<<BEGIN_NORMALISE_NAMES>>', "");
+  code = code.replaceAll('<<END_NORMALISE_NAMES>>', "");
   code = code.replaceAll('<<BEGIN_SPLIT_DATASET>>', "");
   code = code.replaceAll('<<END_SPLIT_DATASET>>', "");
-  code = code.replaceAll('<<DATA_SPLIT_TR_TU_TE>>', '0.7, 0.15, 0.15');
 
   // Run the code.
 
@@ -98,7 +129,7 @@ void rSource(String script) {
   //var log = find.byKey(const Key('log_text'));
   //var elog = log.evaluate().first.widget as TextField;
 
-  //elog.controller?.text += File("assets/scripts/$script.R").readAsStringSync();
+  //elog.controller?.text += File("assets/r/$script.R").readAsStringSync();
 }
 
 //               cmd = "getwd()";
