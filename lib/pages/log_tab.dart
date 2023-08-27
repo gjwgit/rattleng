@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-08-27 18:54:14 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-08-28 08:55:26 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,7 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:rattle/widgets/log/log_info.dart';
 import 'package:rattle/widgets/log/log_text.dart';
 
-final logController = TextEditingController();
+// TESTING CAN BE REMOVED? final logController = TextEditingController();
 
 class LogTab extends StatelessWidget {
   const LogTab({Key? key}) : super(key: key);
