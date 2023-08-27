@@ -13,13 +13,13 @@ void rStart() async {
   // A little unfriendly to kill all R instances. Might only work on Linux
   // too. Only do this for now!
 
-  print("R: KILLING ALL EXISTING R WHICH MAY NOT BE A NICE THING TO DO");
+  debugPrint("R: KILLING ALL EXISTING R WHICH MAY NOT BE A NICE THING TO DO");
 
   process = await Process.start('killall', ["R"]);
 
   // Start up an R process from the command line.
 
-  print("R: STARTING UP A NEW R PROCESS");
+  debugPrint("R: STARTING UP A NEW R PROCESS");
 
   process = await Process.start('R', ["--no-save"]);
 
@@ -35,7 +35,7 @@ void rStart() async {
 
   // Read the main R startup code from the script file.
 
-  print("R: SOURCE 'main.R'");
+  debugPrint("R: SOURCE 'main.R'");
 
   String code = File("assets/scripts/main.R").readAsStringSync();
 
@@ -75,7 +75,7 @@ void rSource(String script) {
 
   // First obtain the text from the script.
 
-  print("R: RUNNING THE CODE IN SCRIPT FILE '$script.R'");
+  debugPrint("R: RUNNING THE CODE IN SCRIPT FILE '$script.R'");
 
   var code = File("assets/scripts/$script.R").readAsStringSync();
 
