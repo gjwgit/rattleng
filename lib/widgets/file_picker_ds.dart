@@ -36,20 +36,20 @@ class _FilePickerDSState extends State<FilePickerDS> {
   List<PlatformFile>? _paths;
   bool _userAborted = false;
 
-  @override
   void _pickFiles() async {
     try {
       _directoryPath = null;
       _paths = (await FilePicker.platform.pickFiles(
         //type: _pickingType,
         allowMultiple: false,
+        // ignore: avoid_print
         onFileLoading: (FilePickerStatus status) => print(status),
         allowedExtensions: ["csv", "tsv", "arff", "rdata"],
         dialogTitle: "Please Select Your Dataset File",
       ))
           ?.files;
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
 
     setState(() {
@@ -83,11 +83,12 @@ class _FilePickerDSState extends State<FilePickerDS> {
     return SizedBox(
       width: 120,
       child: ElevatedButton(
-          onPressed: () => _pickFiles(),
-          //shape: StadiumBorder(),
-          //foregroundColor: Colors.white,
-          //child: const Icon(Icons.description)),
-          child: const Text("Filename:")),
+        onPressed: () => _pickFiles(),
+        //shape: StadiumBorder(),
+        //foregroundColor: Colors.white,
+        //child: const Icon(Icons.description)),
+        child: const Text("Filename:"),
+      ),
     );
   }
 }
