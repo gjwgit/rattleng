@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-08-27 15:12:07 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-08-27 16:31:46 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,8 @@ import 'package:rattle/widgets/log/log_save_button.dart';
 /// The contents is intialised from log_intro.md markdown asset.
 
 class LogInfo extends StatelessWidget {
+  const LogInfo({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -42,11 +44,11 @@ class LogInfo extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               if (snapshot.hasData) {
                 return Container(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      LogSaveButton(),
-                      SizedBox(height: 10),
+                      const LogSaveButton(),
+                      const SizedBox(height: 10),
                       // Markdown(data: File(logIntro).readAsStringSync()),
                       // sunkenMarkdownFileBuilder(logIntro),
                       Text(snapshot.data!),
@@ -54,7 +56,7 @@ class LogInfo extends StatelessWidget {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             },
           );
