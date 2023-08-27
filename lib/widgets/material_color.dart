@@ -42,5 +42,6 @@ MaterialColor createMaterialColor(Color color) {
       1,
     );
   }
+
   return MaterialColor(color.value, swatch);
 }
