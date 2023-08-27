@@ -18,7 +18,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/main.dart' as rattle;
 import 'package:rattle/widgets/file_picker_ds.dart';
 
@@ -33,7 +32,7 @@ import 'package:rattle/widgets/file_picker_ds.dart';
 /// 20230712 gjw
 
 const String envPAUSE = String.fromEnvironment("PAUSE", defaultValue: "0");
-final Duration PAUSE = Duration(seconds: int.parse(envPAUSE));
+final Duration pause = Duration(seconds: int.parse(envPAUSE));
 
 void main() {
   group('Basic App Test:', () {
@@ -48,7 +47,7 @@ void main() {
 
       // Leave time to see the first page.
 
-      await tester.pump(PAUSE);
+      await tester.pump(pause);
 
       // Verify that rattle starts on the home page.
 
@@ -60,16 +59,16 @@ void main() {
 
       // Leave time to see the first page.
 
-      await tester.pump(PAUSE);
+      await tester.pump(pause);
 
       // Find the Run button and start pressing it.
 
       var runButton = find.byKey(const Key("run_button"));
       expect(runButton, findsOneWidget);
-      await tester.pump(PAUSE);
+      await tester.pump(pause);
       await tester.tap(runButton);
       await tester.pumpAndSettle();
-      await tester.pump(PAUSE);
+      await tester.pump(pause);
 
       // After the first tap we should see the default dataset loaded.
 
