@@ -32,25 +32,27 @@ import 'package:rattle/helpers/load_asset.dart';
 /// which is located under the path [markdownFilePath].
 /// It allows handling asynchronous loading of markdown file.
 
-FutureBuilder markdownFileBuilder(String markdownFilePath) {
-  return FutureBuilder(
-    key: const Key('markdown_file'),
-    future: loadAsset(markdownFilePath),
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return Markdown(
-          data: snapshot.data!,
-          // Custom image builder to load assets.
-          imageBuilder: (uri, title, alt) {
-            return Image.asset('$assetsPath/${uri.toString()}');
-          },
-        );
-      }
+// 20230828 gjw NOT CURRENTLY USED SO COMMENT OUT FOR NOW.
 
-      return const Center(child: CircularProgressIndicator());
-    },
-  );
-}
+// FutureBuilder markdownFileBuilder(String markdownFilePath) {
+//   return FutureBuilder(
+//     key: const Key('markdown_file'),
+//     future: loadAsset(markdownFilePath),
+//     builder: (context, snapshot) {
+//       if (snapshot.hasData) {
+//         return Markdown(
+//           data: snapshot.data!,
+//           // Custom image builder to load assets.
+//           imageBuilder: (uri, title, alt) {
+//             return Image.asset('$assetsPath/${uri.toString()}');
+//           },
+//         );
+//       }
+
+//       return const Center(child: CircularProgressIndicator());
+//     },
+//   );
+// }
 
 FutureBuilder sunkenMarkdownFileBuilder(String markdownFilePath) {
   return FutureBuilder(
