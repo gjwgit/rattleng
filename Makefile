@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2023-08-28 08:59:35 +1000 Graham Williams>
+# Time-stamp: <Monday 2023-08-28 19:05:36 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -80,8 +80,8 @@ docs: doc
 ignore:
 	@rgrep -C 2 ignore: lib
 
-.PHONY: r_test
-r_test:
+.PHONY: rtest
+rtest:
 	@bash r_test/rpart_test.sh
 
-tests:: r_test
+tests:: rtest
