@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2023-08-24 09:37:56 +1000 Graham Williams>
+# Time-stamp: <Monday 2023-08-28 17:15:50 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,7 +28,7 @@
 
 # PROBABLY we will summarise the dataset in a form that Flutter can
 # parse and create the required metadata in a Data class. This is then
-# used to create and populate the data matrix of the DATA tabb
+# used to create and populate the data matrix of the DATA tab
 
 # Here's some starting points:
 
