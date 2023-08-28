@@ -37,6 +37,7 @@ void loadDataset() {
       //   "VARS_ID": '"date", "location"'
       // }
     );
+    rSource('ds_summarise');
     debugPrint(
       'LOAD_DATASET: OTHERWISE WE SHOULD RUN APPROPRIATE R SCRIPT '
       'TO LOAD DATA FROM -> "$filename";',
