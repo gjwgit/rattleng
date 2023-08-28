@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-08-23 09:01:38 +1000 Graham Williams>
+# Time-stamp: <Monday 2023-08-28 17:09:49 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,3 +35,13 @@
 
 
 print("TODO READ CSV FROM <<FILENAME>>")
+
+<<BEGIN_NORMALISE_NAMES>>
+#
+# Normalise the variable names using janitor::clean_names(). This is
+# done on the dataset load and the DATA tab has an option to normalise
+# the variable names on loading the data. It is set on by default.
+
+ds    %<>% clean_names(numerals="right")
+
+<<END_NORMALISE_NAMES>>
