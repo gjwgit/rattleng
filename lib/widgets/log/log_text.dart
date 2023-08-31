@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-08-28 09:16:48 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-08-29 07:34:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,6 +25,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'package:rattle/constants/widgets.dart';
+
 /// Create a log text viewer that can scroll the text of the log widget.
 ///
 /// The contents is intialised from the main.R script asset.
@@ -43,7 +45,7 @@ class LogText extends StatelessWidget {
               return snapshot.hasData
                   ? SelectableText(
                       snapshot.data!,
-                      key: const Key('log_text'),
+                      key: logTextKey,
                       style: const TextStyle(
                         // fontFamily: 'UbuntuMono',
                         // fontSize: 14,
