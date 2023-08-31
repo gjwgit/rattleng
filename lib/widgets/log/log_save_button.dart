@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Sunday 2023-08-27 15:53:29 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-08-29 08:20:49 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -37,9 +37,9 @@ class LogSaveButton extends StatelessWidget {
     return ElevatedButton(
       child: const Text("Save Log"),
       onPressed: () {
-        debugPrint("DEBUG we will save the script to script.R");
-        debugPrint("Prompt for the name to save to.");
-        debugPrint("Extract text for Log Tab's Text Widget.");
+        debugPrint("SAVE SCRIPT TO SCRIPT.R");
+        debugPrint("TODO PROMPT FOR THE NAME TO SAVE TO.");
+
         //var tv = find.byType(Text);
         //var tv = find.textContaining(RegExp(r"^#===.*"));
         var tv = find.byKey(const Key('log_text'));
@@ -47,13 +47,14 @@ class LogSaveButton extends StatelessWidget {
         // How to extract the text????
         //File('script.R').writeAsString(tv.evaluate().toString());
 
+        //var ts = tv.data;
         var ts = tv.evaluate().toString();
-        ts = ts.replaceFirst(RegExp(r"^[^#]*#"), '    #');
-        ts = ts.replaceFirst(RegExp(r"  , style:.*"), '');
-        ts = ts.replaceAll(RegExp(r"\\n   "), '');
+        // ts = ts.replaceFirst(RegExp(r"^[^#]*#"), '    #');
+        // ts = ts.replaceFirst(RegExp(r"  , style:.*"), '');
+        // ts = ts.replaceAll(RegExp(r"\\n   "), '');
 
         File('script.R').writeAsString(ts);
-        debugPrint("LOG WRITTEN TO script.R");
+        debugPrint("LOG WRITTEN TO `script.R`");
 
         //var tv = find.byKey(Key('log_text')).evaluate().first.widget; => "LogTab"
         //var tv = find.byKey(Key('log_text')).evaluate().first;
