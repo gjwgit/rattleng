@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-08-28 08:40:07 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-08-29 08:34:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -50,12 +50,16 @@ void rStart() async {
   // Output generted by the process' stderr and stdout is
   // captured here to the Logging tab of Flutter DevTools.
   //
-  // 20230824 TODO gjw How to stop it being displayed onto the console? It's
-  // okay during development but for production it should not be displaying this
-  // on the console. Just in DevTools is good.
+  // 20230824 TODO gjw Currently it also goes to the console. How to stop it
+  // being displayed onto the console? It's okay during development but for
+  // production it should not be displaying this on the console. Just in
+  // DevTools is good.
+  //
+  // Comment out the following to then only print debugPrint messages to the
+  // console.
 
-  process.stdout.transform(utf8.decoder).forEach(debugPrint);
-  process.stderr.transform(utf8.decoder).forEach(debugPrint);
+  // process.stdout.transform(utf8.decoder).forEach(debugPrint);
+  // process.stderr.transform(utf8.decoder).forEach(debugPrint);
 
   // Read the main R startup code from the script file.
 
