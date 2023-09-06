@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-29 08:34:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-09-07 09:20:17 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -58,8 +58,8 @@ void rStart() async {
   // Comment out the following to then only print debugPrint messages to the
   // console.
 
-  // process.stdout.transform(utf8.decoder).forEach(debugPrint);
-  // process.stderr.transform(utf8.decoder).forEach(debugPrint);
+  process.stdout.transform(utf8.decoder).forEach(debugPrint);
+  process.stderr.transform(utf8.decoder).forEach(debugPrint);
 
   // Read the main R startup code from the script file.
 
