@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2023-08-28 19:05:36 +1000 Graham Williams>
+# Time-stamp: <Thursday 2023-09-07 09:02:59 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -54,12 +54,13 @@ endif
 define HELP
 $(APP):
 
-  docs		Generate doc and install to ecosysl.
-  test		Run the integration test suite.
-  ignore	Look for usage of ignore: directives.
+  docs         Generate doc and install to ecosysl.
+  bmacos       Build macos binary
+  test         Run the integration test suite.
+  ignore       Look for usage of ignore directives.
+  pr           Run tests, checks, docs in prep of merging a PR.
 
-  r_test       Run the R script tests.
-
+  rtest       Run the R script tests.
 endef
 export HELP
 
@@ -72,6 +73,10 @@ help::
 locals:
 	@echo "This might be the instructions to install $(APP)"
 
+bmacos:
+	flutter build macos
+	zip bstim_$(VER).zip build/macos/Build/Products/Release/bstim_$(VER).app
+
 docs: doc
 	chmod -R go+rX doc
 	rsync -avzh doc/api/ root@ecosysl.net:/var/www/html/bstim/
@@ -80,8 +85,10 @@ docs: doc
 ignore:
 	@rgrep -C 2 ignore: lib
 
-.PHONY: rtest
-rtest:
+.PHONY: rtests
+rtests:
 	@bash r_test/rpart_test.sh
 
-tests:: rtest
+.PHONY: pr
+pr: rtests checks tests docs
+
