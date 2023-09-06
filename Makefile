@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2023-09-07 09:02:59 +1000 Graham Williams>
+# Time-stamp: <Thursday 2023-09-07 09:16:07 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -58,7 +58,7 @@ $(APP):
   bmacos       Build macos binary
   test         Run the integration test suite.
   ignore       Look for usage of ignore directives.
-  pr           Run tests, checks, docs in prep of merging a PR.
+  prep         Prep for PR by running tests, checks, docs.
 
   rtest       Run the R script tests.
 endef
@@ -89,6 +89,6 @@ ignore:
 rtests:
 	@bash r_test/rpart_test.sh
 
-.PHONY: pr
-pr: rtests checks tests docs
+.PHONY: prep
+prep: rtests checks tests docs
 
