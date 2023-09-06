@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-29 08:28:14 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-04 12:48:37 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,9 +35,15 @@ import 'package:rattle/helpers/r.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
 
+// 20230904 gjw Testing xterm but not yet working.
+
+// import 'package:xterm/xterm.dart';
+
+// final terminal = Terminal();
+
 /// Mapping for Tabs, title:icon:widget.
 
-final List<Map<String, dynamic>> _tabs = [
+final List<Map<String, dynamic>> tabs = [
   {
     'title': "Data",
     "icon": Icons.input,
@@ -69,7 +75,13 @@ final List<Map<String, dynamic>> _tabs = [
     "widget": const Center(child: Text("EVALUATE")),
   },
   {
-    'title': "Log",
+    'title': "Terminal",
+    "icon": Icons.terminal,
+    "widget": const Center(child: Text("TERMINAL")),
+    // "widget": const TerminalView(terminal),
+  },
+  {
+    'title': "Script",
     "icon": Icons.code,
     "widget": const LogTab(),
   },
@@ -84,17 +96,17 @@ class RattleHomePage extends StatefulWidget {
 
 class RattleHomePageState extends State<RattleHomePage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  late TabController tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _tabs.length, vsync: this);
+    tabController = TabController(length: tabs.length, vsync: this);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
@@ -124,7 +136,7 @@ class RattleHomePageState extends State<RattleHomePage>
             key: const Key("run_button"),
             icon: const Icon(Icons.directions_run),
             onPressed: () {
-              var currentTab = _tabs[_tabController.index]['title'];
+              var currentTab = tabs[tabController.index]['title'];
 
               //   if (currentTab == "Data") {
               //     debugPrint("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
@@ -220,8 +232,8 @@ class RattleHomePageState extends State<RattleHomePage>
 
           IconButton(
             onPressed: () {
-              debugPrint(_tabs[_tabController.index]['title']);
-              debugPrint(_tabs[_tabController.index]['widget']);
+              debugPrint(tabs[tabController.index]['title']);
+              debugPrint(tabs[tabController.index]['widget']);
             },
             icon: const Icon(Icons.info),
             tooltip: "Information.",
@@ -250,8 +262,14 @@ class RattleHomePageState extends State<RattleHomePage>
         // icon.
 
         bottom: TabBar(
-          controller: _tabController,
-          tabs: _tabs.map((tab) {
+          controller: tabController,
+          indicatorColor: Colors.white,
+          labelColor: Colors.orange,
+          unselectedLabelColor: Colors.grey,
+          // dividerColor: Colors.green,
+          tabAlignment: TabAlignment.fill,
+          isScrollable: false,
+          tabs: tabs.map((tab) {
             return Tab(
               icon: Icon(tab['icon']),
               text: tab['title'],
@@ -263,8 +281,8 @@ class RattleHomePageState extends State<RattleHomePage>
       // Associate the Widgets with each of the bodies.
 
       body: TabBarView(
-        controller: _tabController,
-        children: _tabs.map((tab) {
+        controller: tabController,
+        children: tabs.map((tab) {
           return tab['widget'] as Widget;
         }).toList(),
       ),
@@ -274,8 +292,8 @@ class RattleHomePageState extends State<RattleHomePage>
       // body: Container(
       //   children: [
       //     TabBarView(
-      //       controller: _tabController,
-      //       children: _tabs.map((tab) {
+      //       controller: tabController,
+      //       children: tabs.map((tab) {
       //         return tab['widget'] as Widget;
       //       }).toList(),
       //     ),
