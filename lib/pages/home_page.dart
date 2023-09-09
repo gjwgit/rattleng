@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 14:36:21 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 17:00:10 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,7 +27,6 @@ import 'dart:io' show Process;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:xterm/xterm.dart';
 
 import 'package:rattle/constants/app.dart' show appTitle;
 import 'package:rattle/helpers/build_model.dart' show buildModel;
@@ -36,8 +35,6 @@ import 'package:rattle/helpers/r.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
 import 'package:rattle/widgets/r_console.dart';
-
-final terminal = Terminal();
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
 
@@ -76,7 +73,7 @@ final List<Map<String, dynamic>> tabs = [
     'title': "Console",
     "icon": Icons.terminal,
 //    "widget": TerminalView(terminal),
-    "widget": RConsole(),
+    "widget": const RConsole(),
   },
   {
     'title': "Script",
@@ -322,14 +319,14 @@ class RattleHomePageState extends State<RattleHomePage>
         // I am setting the height for the bottom bar but this does not really
         // seem to be the way to do this.
         height: 50,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 0),
-          child: Markdown(
-            data: 'Welcome to **RattleNG**. To begin, pick a file '
-                '(e.g., CSV) containing your dataset, then click the '
-                '🏃 Run button.',
-            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-          ),
+        padding: const EdgeInsets.only(left: 0),
+        color: Color(0x5545035e),
+        child: Markdown(
+          selectable: true,
+          data: 'Welcome to **RattleNG**. To begin, pick a file '
+              '(e.g., CSV) containing your dataset, then click the '
+              '🏃 Run button.',
+          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
         ),
       ),
     );
