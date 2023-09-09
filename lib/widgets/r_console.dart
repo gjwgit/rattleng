@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 16:39:35 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 17:05:26 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,7 +23,8 @@
 /// Authors: Graham Williams
 
 // STATUS 20230909: COPIED FROM XTERM EXAMPLE FOR NOW. IT CREATES A NEW WIDGET
-// EACH TIME THE TAB IS ENTERED!!!!
+// EACH TIME THE TAB IS ENTERED!!!! AND WOSRE STILL A NEW R PROCESS WITHOUT
+// REMOVING THE OLD ONE :-) THEY ALL GO ON EXITTING THE APP.
 
 import 'dart:convert';
 
