@@ -49,13 +49,23 @@ Suggested tasks can be found as github issues.
 
 ## Some RattleNG teasers
 
-### The traditional Rattle Welcome
+### Traditional Rattle Welcome
 
 ![](assets/screenshots/data_page.png)
 
 ### Exploring Data Visually
 
 ![](assets/screenshots/explore_plot.png)
+
+### The R Console
+
+The R console is where everything in R happens. The user can review
+the contents of the console and even run R commands themselves. Click
+the EXPORT button to have the history of R commands from the console
+saved to file. Compare this EXPORT to that of the LOG page where a
+documented and formatted script is saved to file.
+
+![](assets/screenshots/console_page.png)
 
 ### Everything Captured as Scripts
 
