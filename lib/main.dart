@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 17:56:25 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 20:25:39 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,10 +26,9 @@ import 'package:flutter/material.dart';
 
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/helpers/create_material_color.dart';
 import 'package:rattle/helpers/r.dart' show rStart;
 import 'package:rattle/helpers/utils.dart';
-import 'package:rattle/pages/home_page.dart';
+import 'package:rattle/rattle_app.dart';
 
 void main() async {
   // The `main` entry point into any dart app.
@@ -83,23 +82,4 @@ void main() async {
   rStart();
 
   runApp(const RattleApp());
-}
-
-class RattleApp extends StatelessWidget {
-  const RattleApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: createMaterialColor(const Color(0xff45035e)),
-        textTheme: Theme.of(context).textTheme.apply(
-              fontSizeFactor: 1.1,
-              fontSizeDelta: 2.0,
-            ),
-      ),
-      home: const RattleHomePage(),
-    );
-  }
 }
