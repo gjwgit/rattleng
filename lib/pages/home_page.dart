@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-04 12:48:37 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 09:59:04 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -37,9 +37,9 @@ import 'package:rattle/pages/data_tab.dart';
 
 // 20230904 gjw Testing xterm but not yet working.
 
-// import 'package:xterm/xterm.dart';
+import 'package:xterm/xterm.dart';
 
-// final terminal = Terminal();
+final terminal = Terminal();
 
 /// Mapping for Tabs, title:icon:widget.
 
@@ -75,10 +75,10 @@ final List<Map<String, dynamic>> tabs = [
     "widget": const Center(child: Text("EVALUATE")),
   },
   {
-    'title': "Terminal",
+    'title': "Console",
     "icon": Icons.terminal,
-    "widget": const Center(child: Text("TERMINAL")),
-    // "widget": const TerminalView(terminal),
+    // "widget": const Center(child: Text("CONSOLE")),
+    "widget": TerminalView(terminal),
   },
   {
     'title': "Script",
