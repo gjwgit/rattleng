@@ -1,11 +1,11 @@
-/// A widget to run an interactive and controllable and readable R console.
+/// A widget to run an interactive, writable, readable R console.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 16:15:50 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 16:39:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,20 +22,23 @@
 ///
 /// Authors: Graham Williams
 
-// STATUS: COPIED FROM XTERM EXAMPLE FOR NOW. IT CREATES A NEW WIDGET EACH TIME
-// THE TAB IS ENTERED!!!!
+// STATUS 20230909: COPIED FROM XTERM EXAMPLE FOR NOW. IT CREATES A NEW WIDGET
+// EACH TIME THE TAB IS ENTERED!!!!
 
 import 'dart:convert';
-// import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_pty/flutter_pty.dart';
+import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 
+/// The R Console widget where the R subprocess runs and executes commands sent
+/// to it and where the results are read from.
+
 class RConsole extends StatefulWidget {
-  RConsole({Key? key}) : super(key: key);
+  const RConsole({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -71,7 +74,7 @@ class _RConsoleState extends State<RConsole> {
 
     pty.output
         .cast<List<int>>()
-        .transform(Utf8Decoder())
+        .transform(const Utf8Decoder())
         .listen(terminal.write);
 
     pty.exitCode.then((code) {
@@ -96,9 +99,19 @@ class _RConsoleState extends State<RConsole> {
           terminal,
           controller: terminalController,
           autofocus: true,
+
+          // Set the background to be black.
+
           backgroundOpacity: 1.0,
-          padding: EdgeInsets.all(8.0),
+
+          // A buffer around the edge of the console.
+
+          padding: const EdgeInsets.all(8.0),
+
+          // This is how we can control the text size if desired.
+
           textScaleFactor: 1,
+
           onSecondaryTapDown: (details, offset) async {
             final selection = terminalController.selection;
             if (selection != null) {
@@ -119,6 +132,11 @@ class _RConsoleState extends State<RConsole> {
   }
 }
 
+/// We are only interested in running R on whichever desktop.
+///
+/// Linux and MacOS desktops initiate R simply through the R command. Windows
+/// does an R.exe.
+
 String get shell {
-  return 'R';
+  return Platform.isWindows ? 'R.exe' : 'R';
 }
