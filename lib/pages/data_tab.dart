@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-08-27 21:20:05 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 17:32:34 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -82,7 +82,7 @@ class DataTabPageState extends State<DataTabPage> {
           Expanded(
             child: Center(
               key: const Key("rattle_welcome"),
-              child: sunkenMarkdownFileBuilder(welcomeMsg),
+              child: sunkenMarkdownFileBuilder(welcomeMsgFile),
             ),
           ),
         ],
