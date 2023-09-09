@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 20:25:39 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 21:08:30 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,7 +33,7 @@ import 'package:rattle/rattle_app.dart';
 void main() async {
   // The `main` entry point into any dart app.
   //
-  // We use async because WHY TODO.
+  // TODO WHY We use async.
 
   // Use debugPrint() to print trace messages and backtraces in preference to
   // print(). Use print() for human readable messages to the console for errors,
@@ -43,12 +43,13 @@ void main() async {
   // through a Makefile. 20220512 gjw
 
   if (DebugPrintConfig.debugPrint == 'FALSE') {
-    // ignore: no-empty-block
-    debugPrint = (String? message, {int? wrapWidth}) {};
+    debugPrint = (String? message, {int? wrapWidth}) {
+      null;
+    };
   }
 
-  // Tune the window manager before runApp to avoid a lag in the UI. For desktop
-  // (non-web) versions re-size to a comfortable initial window.
+  // Tune the window manager before runApp() to avoid a lag in the UI. For
+  // desktop (non-web) versions re-size to a comfortable initial window.
 
   if (isDesktop) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +80,12 @@ void main() async {
     });
   }
 
+  // Initialise the R process.
+
   rStart();
+
+  // The runApp() function takes the given Widget and makes it the root of the
+  // widget tree.
 
   runApp(const RattleApp());
 }
