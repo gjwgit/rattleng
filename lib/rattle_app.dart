@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 20:26:51 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 21:08:59 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,8 +27,17 @@ import 'package:flutter/material.dart';
 import 'package:rattle/helpers/create_material_color.dart';
 import 'package:rattle/pages/home_page.dart';
 
+/// A widget for the root of the Rattle App.
+///
+/// The root widget covers the screen of the app. This widget is stateless so
+/// that it does not manage any state.
+
 class RattleApp extends StatelessWidget {
   const RattleApp({super.key});
+
+  /// We build the root widget as a MaterialApp() widget, turning off the
+  /// default debug corner banner, setting up the app theme, and populating the
+  /// widget with the Rattle home page widget.
 
   @override
   Widget build(BuildContext context) {
