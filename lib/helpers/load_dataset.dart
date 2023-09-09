@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
-import 'package:rattle/helpers/r.dart' show rSource;
+import 'r.dart' show rSource;
 
 /// Load the specified dataset using the appropriate R script.
 ///

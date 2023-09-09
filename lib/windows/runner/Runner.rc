@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "A new Flutter project." "\0"
+            VALUE "FileDescription", "lib" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "rattle" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2021 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "rattle.exe" "\0"
-            VALUE "ProductName", "rattle" "\0"
+            VALUE "InternalName", "lib" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
+            VALUE "OriginalFilename", "lib.exe" "\0"
+            VALUE "ProductName", "lib" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
