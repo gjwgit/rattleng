@@ -1,11 +1,11 @@
-/// The main tabs page interface.
+/// The main tabs-based page interface.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 17:29:59 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 21:24:04 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -109,15 +109,6 @@ class RattleHomePageState extends State<RattleHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // The left side menu item. May not be required.
-
-        // leading: IconButton(
-        //   icon: const Icon(Icons.menu),
-        //   onPressed: () {
-        //     debugPrint("MENU PRESSED NO ACTION YET");
-        //   },
-        // ),
-
         // The title aligned to the left.
 
         title: const Text(appTitle),
@@ -133,14 +124,6 @@ class RattleHomePageState extends State<RattleHomePage>
             onPressed: () {
               var currentTab = tabs[tabController.index]['title'];
 
-              //   if (currentTab == "Data") {
-              //     debugPrint("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
-
-              //     loadDataset();
-              //   } else {
-              //     debugPrint("HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
-              //   }
-              // },
               switch (currentTab) {
                 case "Data":
                   {
@@ -166,91 +149,43 @@ class RattleHomePageState extends State<RattleHomePage>
           // PLACEHOLDER
 
           IconButton(
-            icon: const Icon(Icons.open_in_new),
+            icon: const Icon(Icons.autorenew),
             onPressed: () async {
-              debugPrint("ALL R");
-              // process = await Process.start('killall', ["R"]);
-              // process = await Process.start('R', ["--no-save"]);
-              // process.stdout.transform(utf8.decoder).forEach(print);
-              // process.stderr.transform(utf8.decoder).forEach(print);
-
-              // cmd = 'library(tidyverse)';
-              // process.stdin.writeln(cmd);
+              debugPrint("NEW PRESSED NO ACTION YET");
             },
-            tooltip: "Start R and load tidyverse.",
-            // tooltip: "Start a new project.",
+            tooltip: "TODO: Start a new project.",
           ),
 
           // PLACEHOLDER
 
           IconButton(
-            icon: const Icon(Icons.open_in_browser_outlined),
+            icon: const Icon(Icons.download),
             onPressed: () {
-              rSource('load_demo_weather_aus_dataset');
-              // cmd = "getwd()";
-              // process.stdin.writeln(cmd);
-              // cmd = 'ds <- read_csv("weather.csv")';
-              // process.stdin.writeln(cmd);
-              // cmd = 'summary(ds)';
-              // process.stdin.writeln(cmd);
-              // cmd = 'ds %>% ggplot(aes(x=WindDir3pm)) + geom_bar()';
-              // process.stdin.writeln(cmd);
-              // cmd = 'ggsave("myplot.pdf", width=11, height=7)';
-              // process.stdin.writeln(cmd);
+              debugPrint("LOAD PRESSED NO ACTION YET");
             },
-            tooltip: "Load weather dataset.",
-            // tooltip: "Load an existing project from file.",
+            tooltip: "TODO Load an existing project from file.",
           ),
 
           // PLACEHOLDER
 
           IconButton(
-            icon: const Icon(Icons.save_alt_outlined),
+            icon: const Icon(Icons.upload),
             onPressed: () {
               Process.run("xdg-open", ["myplot.pdf"]);
             },
-            tooltip: "View the plot.",
-            // tooltip: "TODO Save the current project to file.",
-          ),
-
-          // PLACEHOLDER
-
-          IconButton(
-            icon: const Icon(Icons.exit_to_app_outlined),
-            onPressed: () {
-              debugPrint("EXIT PRESSED NO ACTION YET");
-            },
-            tooltip: "TODO Exit the application.",
+            tooltip: "FOR NOW: View the plot. "
+                "TODO: Save the current project to file.",
           ),
 
           // INFO
 
           IconButton(
             onPressed: () {
-              debugPrint(tabs[tabController.index]['title']);
-              debugPrint(tabs[tabController.index]['widget']);
+              debugPrint("TAB is ${tabs[tabController.index]['title']}");
             },
             icon: const Icon(Icons.info),
-            tooltip: "Information.",
+            tooltip: "FOR NOW: Report the current TAB.",
           ),
-
-          // 20230829 gjw Probably not needed.
-
-          // PopupMenuButton<Text>(
-          //   itemBuilder: (context) {
-          //     return [
-          //       const PopupMenuItem(
-          //         child: Text("TODO About Rattle"),
-          //       ),
-          //       const PopupMenuItem(
-          //         child: Text("TODO Browse Rattle Survival Guide"),
-          //       ),
-          //       const PopupMenuItem(
-          //         child: Text("TODO Browse Togaware"),
-          //       ),
-          //     ];
-          //   },
-          // ),
         ],
 
         // Build the tab bar from the list of tabs, noting the tab title and
@@ -281,38 +216,6 @@ class RattleHomePageState extends State<RattleHomePage>
           return tab['widget'] as Widget;
         }).toList(),
       ),
-
-      // Tried this 20230827 gjw but did not work.
-
-      // body: Container(
-      //   children: [
-      //     TabBarView(
-      //       controller: tabController,
-      //       children: tabs.map((tab) {
-      //         return tab['widget'] as Widget;
-      //       }).toList(),
-      //     ),
-      //     Markdown(
-      //       data: 'Welcome to **RattleNG**. To begin, pick a file '
-      //           '(e.g., CSV) containing your dataset, then click the '
-      //           '🏃 Run button.',
-      //       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-      //     ),
-      //   ],
-      // ),
-
-      // bottomNavigationBar: Row(
-      //   // I am setting the height for the bottom bar but this does not really
-      //   // seem to be the way to do this.
-      //   children: <Widget>[
-      //     Markdown(
-      //       data: 'Welcome to **RattleNG**. To begin, pick a file '
-      //           '(e.g., CSV) containing your dataset, then click the '
-      //           '🏃 Run button.',
-      //       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-      //     ),
-      //   ],
-      // ),
 
       // ignore: sized_box_for_whitespace
       bottomNavigationBar: Container(
