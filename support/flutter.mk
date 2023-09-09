@@ -15,6 +15,7 @@ flutter:
   chrome    Run with the chrome device;
   emu	    Run with the android emulator;
   linux     Run with the linux device;
+  qlinux    Run with the linux device and debugPrint() turned off;
 
   doc	    Run `dart doc` to create documentation.
 
@@ -66,6 +67,12 @@ pubspec.lock:
 .PHONY: linux
 linux: pubspec.lock $(BUILD_RUNNER)
 	flutter run -d linux
+
+# Turn off debugPrint() output.
+
+.PHONY: qlinux
+qlinux: pubspec.lock $(BUILD_RUNNER)
+	flutter run --dart-define DEBUG_PRINT="FALSE" --device-id linux
 
 .PHONY: macos
 macos: $(BUILD_RUNNER)

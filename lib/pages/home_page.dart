@@ -1,11 +1,11 @@
-/// Main tabs page interface.
+/// The main tabs page interface.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 09:59:04 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 14:36:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ import 'dart:io' show Process;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:xterm/xterm.dart';
 
 import 'package:rattle/constants/app.dart' show appTitle;
 import 'package:rattle/helpers/build_model.dart' show buildModel;
@@ -34,14 +35,11 @@ import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
 import 'package:rattle/helpers/r.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
-
-// 20230904 gjw Testing xterm but not yet working.
-
-import 'package:xterm/xterm.dart';
+import 'package:rattle/widgets/r_console.dart';
 
 final terminal = Terminal();
 
-/// Mapping for Tabs, title:icon:widget.
+/// Define a mapping for the tabs in the GUI on to title:icon:widget.
 
 final List<Map<String, dynamic>> tabs = [
   {
@@ -77,8 +75,8 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Console",
     "icon": Icons.terminal,
-    // "widget": const Center(child: Text("CONSOLE")),
-    "widget": TerminalView(terminal),
+//    "widget": TerminalView(terminal),
+    "widget": RConsole(),
   },
   {
     'title': "Script",
