@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2023-09-07 09:16:07 +1000 Graham Williams>
+# Time-stamp: <Thursday 2023-09-07 10:52:27 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -79,7 +79,7 @@ bmacos:
 
 docs: doc
 	chmod -R go+rX doc
-	rsync -avzh doc/api/ root@ecosysl.net:/var/www/html/bstim/
+	rsync -avzh doc/api/ root@ecosysl.net:/var/www/html/rattleng/
 
 .PHONY: ignore
 ignore:
