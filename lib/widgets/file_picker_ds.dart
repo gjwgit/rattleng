@@ -27,6 +27,8 @@ import 'package:file_picker/file_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
+import 'package:rattle/constants/app.dart';
+
 class FilePickerDS extends StatefulWidget {
   const FilePickerDS({Key? key}) : super(key: key);
 
@@ -85,10 +87,11 @@ class FilePickerDSState extends State<FilePickerDS> {
       width: 120,
       child: ElevatedButton(
         onPressed: () => _pickFiles(),
-        //shape: StadiumBorder(),
-        //foregroundColor: Colors.white,
-        //child: const Icon(Icons.description)),
         child: const Text("Dataset:"),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: appBodyColour,
+          foregroundColor: Colors.black,
+        ),
       ),
     );
   }
