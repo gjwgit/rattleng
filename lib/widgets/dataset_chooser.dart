@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 13:59:43 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 18:20:30 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -43,6 +43,15 @@ class DatasetChooser extends StatefulWidget {
 }
 
 class _DatasetChooserState extends State<DatasetChooser> {
+  // The [datasetPath] lives here as the parent widget of both DatasetPicker (a
+  // button for choosing a file) and the dataset path text field (which should
+  // probably be a separate widget class. When the DatasetPicker updates the
+  // [datasetPath] then the TextField needs to be rebuilt from here
+  // (above). Currently 20230910 in DatasetPicker I am using find() to get the
+  // TextField widget and to update it - bad approach - imperative rather than
+  // declarative. Instead DatasetPicker should update the datasetPath and and
+  // then this class somehow knows to rebuild the TextField.
+
   String datasetPath = "";
 
   // A controller for the text field so it can be updated programmatically.
