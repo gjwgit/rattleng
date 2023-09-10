@@ -30,9 +30,9 @@ import 'package:flutter/material.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:window_manager/window_manager.dart';
 
-import 'helpers/r.dart' show rStart;
-import 'pages/home_page.dart';
-import 'widgets/material_color.dart';
+import 'package:rattle/helpers/r.dart' show rStart;
+import 'package:rattle/pages/home_page.dart';
+import 'package:rattle/widgets/material_color.dart';
 
 void main() async {
   // Use debugPrint() to print trace messages and backtraces in preference to
