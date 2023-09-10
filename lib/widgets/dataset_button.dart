@@ -27,14 +27,14 @@ import 'package:file_picker/file_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
-class DatasetPicker extends StatefulWidget {
-  const DatasetPicker({Key? key}) : super(key: key);
+class DatasetButton extends StatefulWidget {
+  const DatasetButton({Key? key}) : super(key: key);
 
   @override
-  DatasetPickerState createState() => DatasetPickerState();
+  DatasetButtonState createState() => DatasetButtonState();
 }
 
-class DatasetPickerState extends State<DatasetPicker> {
+class DatasetButtonState extends State<DatasetButton> {
   String? _directoryPath;
   List<PlatformFile>? _paths;
 

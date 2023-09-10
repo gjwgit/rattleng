@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-10 18:18:22 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 08:12:13 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -30,14 +30,14 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/widgets/dataset_chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
-class DataTabPage extends StatefulWidget {
-  const DataTabPage({Key? key}) : super(key: key);
+class DataTab extends StatefulWidget {
+  const DataTab({Key? key}) : super(key: key);
 
   @override
-  DataTabPageState createState() => DataTabPageState();
+  DataTabState createState() => DataTabState();
 }
 
-class DataTabPageState extends State<DataTabPage> {
+class DataTabState extends State<DataTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
