@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 21:24:04 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 13:25:46 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,7 +31,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/build_model.dart' show buildModel;
 import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
-import 'package:rattle/helpers/r.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
 import 'package:rattle/widgets/r_console.dart';
@@ -120,7 +119,10 @@ class RattleHomePageState extends State<RattleHomePage>
 
           IconButton(
             key: const Key("run_button"),
-            icon: const Icon(Icons.directions_run),
+            icon: const Icon(
+              Icons.directions_run,
+              color: Colors.yellow,
+            ),
             onPressed: () {
               var currentTab = tabs[tabController.index]['title'];
 
@@ -146,30 +148,39 @@ class RattleHomePageState extends State<RattleHomePage>
             tooltip: "Run the current tab.",
           ),
 
-          // PLACEHOLDER
+          // RESET
 
           IconButton(
-            icon: const Icon(Icons.autorenew),
+            icon: const Icon(
+              Icons.autorenew,
+              color: Colors.green,
+            ),
             onPressed: () async {
-              debugPrint("NEW PRESSED NO ACTION YET");
+              debugPrint("RESET PRESSED NO ACTION YET");
             },
             tooltip: "TODO: Start a new project.",
           ),
 
-          // PLACEHOLDER
+          // LOAD PROJECT
 
           IconButton(
-            icon: const Icon(Icons.download),
+            icon: const Icon(
+              Icons.download,
+              color: Colors.pink,
+            ),
             onPressed: () {
               debugPrint("LOAD PRESSED NO ACTION YET");
             },
             tooltip: "TODO Load an existing project from file.",
           ),
 
-          // PLACEHOLDER
+          // SAVE PROJECT
 
           IconButton(
-            icon: const Icon(Icons.upload),
+            icon: const Icon(
+              Icons.upload,
+              color: Colors.red,
+            ),
             onPressed: () {
               Process.run("xdg-open", ["myplot.pdf"]);
             },
@@ -183,7 +194,10 @@ class RattleHomePageState extends State<RattleHomePage>
             onPressed: () {
               debugPrint("TAB is ${tabs[tabController.index]['title']}");
             },
-            icon: const Icon(Icons.info),
+            icon: const Icon(
+              Icons.info,
+              color: Colors.blue,
+            ),
             tooltip: "FOR NOW: Report the current TAB.",
           ),
         ],
@@ -193,8 +207,8 @@ class RattleHomePageState extends State<RattleHomePage>
 
         bottom: TabBar(
           controller: tabController,
-          indicatorColor: Colors.white,
-          labelColor: Colors.orange,
+          indicatorColor: Colors.yellow,
+          labelColor: Colors.yellow,
           unselectedLabelColor: Colors.grey,
           // dividerColor: Colors.green,
           tabAlignment: TabAlignment.fill,
@@ -223,7 +237,7 @@ class RattleHomePageState extends State<RattleHomePage>
         // seem to be the way to do this.
         height: 50,
         padding: const EdgeInsets.only(left: 0),
-        color: statusBarColour,
+        color: appBodyColour,
         child: Markdown(
           selectable: true,
           data: statusWelcomeMsg,
