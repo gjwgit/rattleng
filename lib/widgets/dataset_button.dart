@@ -23,74 +23,23 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:file_picker/file_picker.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_test/flutter_test.dart' show find;
+import 'package:provider/provider.dart';
 
-class DatasetButton extends StatefulWidget {
-  const DatasetButton({Key? key}) : super(key: key);
+import 'package:rattle/models/dataset_model.dart';
 
-  @override
-  DatasetButtonState createState() => DatasetButtonState();
-}
-
-class DatasetButtonState extends State<DatasetButton> {
-  String? _directoryPath;
-  List<PlatformFile>? _paths;
-
-  void _pickFiles() async {
-    try {
-      _directoryPath = null;
-      _paths = (await FilePicker.platform.pickFiles(
-        //type: _pickingType,
-        allowMultiple: false,
-        // ignore: avoid_print
-        onFileLoading: (FilePickerStatus status) => print(status),
-        allowedExtensions: ["csv", "tsv", "arff", "rdata"],
-        dialogTitle: "Please Select Your Dataset File",
-      ))
-          ?.files;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    // setState(() {
-    //   _directoryPath =
-    //       _paths != null ? _paths!.map((e) => e.path).toString() : null;
-
-    //   final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
-    //   var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-
-    //   // 20230821 gjw A little ugly using `?.` and ?? to deal with the nullable
-    //   // differences between the Strings. It works.
-
-    //   String filename = _directoryPath ?? '';
-
-    //   // The filename has brackets around it. Not sure why!
-
-    //   if (filename.isNotEmpty &&
-    //       filename.startsWith("(") &&
-    //       filename.endsWith(")")) {
-    //     filename = filename.substring(1, filename.length - 1);
-    //   }
-
-    //   dsPathText.controller?.text = filename;
-    // });
-  }
-
+class DatasetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      key: const Key("file_picker_ds"),
-      width: 120,
-      child: ElevatedButton(
-        onPressed: () => _pickFiles(),
-        style: ElevatedButton.styleFrom(
-            //backgroundColor: Color(0x4445035e), //appBodyColour,
-            //foregroundColor: Colors.black,
-            ),
-        child: const Text("Dataset:"),
-      ),
+    return ElevatedButton(
+      onPressed: () async {
+        // Simulate selecting a file (you can use file picker libraries here).
+        String selectedFileName = "rattle::weather";
+
+        // Update the selected filename using Provider.
+        Provider.of<DatasetModel>(context, listen: false)
+            .setPath(selectedFileName);
+      },
+      child: Text("Dataset:"),
     );
   }
 }

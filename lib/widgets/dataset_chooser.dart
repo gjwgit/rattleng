@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 07:55:47 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 09:37:30 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,9 +24,6 @@
 
 import 'package:flutter/material.dart';
 
-//import 'package:provider/provider.dart';
-
-import 'package:rattle/models/dataset.dart';
 import 'package:rattle/widgets/dataset_button.dart';
 import 'package:rattle/widgets/dataset_text_field.dart';
 
@@ -53,10 +50,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
   @override
   Widget build(BuildContext context) {
-    return //ChangeNotifierProvider(
-        //create: (context) => DatasetModel(),
-        //child:
-        Row(
+    return Row(
       children: [
         // Some fixed space so the widgets aren't crowded.
 
@@ -64,7 +58,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         // Widget to select the dataset filename.
 
-        const DatasetButton(),
+        DatasetButton(),
 
         // Some fixed space so the widgets aren't crowded.
 
@@ -75,6 +69,5 @@ class _DatasetChooserState extends State<DatasetChooser> {
         DatasetTextField(),
       ],
     );
-    //);
   }
 }

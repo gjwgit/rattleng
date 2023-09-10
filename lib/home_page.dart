@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 19:39:50 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 08:41:49 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -41,12 +41,16 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Data",
     "icon": Icons.input,
-    "widget": const DataTabPage(),
+    "widget": const DataTab(),
   },
   {
     'title': "Explore",
     "icon": Icons.insights,
-    "widget": const Center(child: Text("EXPLORE")),
+    "widget": Center(
+      child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Image.asset("assets/images/myplot.png")),
+    )
   },
   {
     'title': "Test",
@@ -153,12 +157,12 @@ class RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(
               Icons.autorenew,
-              color: Colors.green,
+              color: Colors.grey,
             ),
-            onPressed: () async {
+            onPressed: () {
               debugPrint("RESET PRESSED NO ACTION YET");
             },
-            tooltip: "TODO: Start a new project.",
+            tooltip: "TODO: Reset to start a new project.",
           ),
 
           // LOAD PROJECT
@@ -166,12 +170,12 @@ class RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(
               Icons.download,
-              color: Colors.pink,
+              color: Colors.grey,
             ),
             onPressed: () {
               debugPrint("LOAD PRESSED NO ACTION YET");
             },
-            tooltip: "TODO Load an existing project from file.",
+            tooltip: "TODO: Load an existing project from file.",
           ),
 
           // SAVE PROJECT
@@ -179,13 +183,12 @@ class RattleHomePageState extends State<RattleHomePage>
           IconButton(
             icon: const Icon(
               Icons.upload,
-              color: Colors.red,
+              color: Colors.grey,
             ),
             onPressed: () {
-              Process.run("xdg-open", ["myplot.pdf"]);
+              debugPrint("SAVE PRESSED NO ACTION YET");
             },
-            tooltip: "FOR NOW: View the plot. "
-                "TODO: Save the current project to file.",
+            tooltip: "TODO: Save the current project to file.",
           ),
 
           // INFO
