@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 07:38:27 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 09:07:54 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,20 +36,15 @@ class DatasetModel extends ChangeNotifier {
   // declarative. Instead DatasetButton should update the datasetPath and and
   // then this class somehow knows to rebuild the TextField.
 
-  String path = "";
+  String _path = "";
+
+  String get path => _path;
 
   /// Record the dataset path as [setPath].
 
   void setPath(String newPath) {
-    path = newPath;
+    _path = newPath;
     // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
-  }
-
-  /// Return the current value of the dataset path.
-
-  String getPath() {
-    notifyListeners();
-    return path;
   }
 }

@@ -1,4 +1,4 @@
-/// A file picker to choose the dataset for analysis.
+/// An  text field file picker to choose the dataset for analysis.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,26 +23,29 @@
 
 import 'package:flutter/material.dart';
 
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
-//import 'package:rattle/models/dataset.dart';
+import 'package:rattle/models/dataset_model.dart';
 
 class DatasetTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: //Consumer<DatasetModel>(
-          //builder: (context, dataset, child) {
-          TextField(
-        key: const Key('ds_path_text'),
-        //controller: _textController,
-        decoration: const InputDecoration(
-          hintText:
-              'Path to dataset file or named dataset from a package. {dataset}',
-        ),
-      ),
-      //},
-      //),
+    return Consumer<DatasetModel>(
+      builder: (context, dataset, child) {
+        return Expanded(
+          child: TextField(
+            key: const Key('ds_path_text'),
+            onChanged: (newPath) {
+              dataset.setPath(newPath);
+            },
+            decoration: const InputDecoration(
+              hintText:
+                  'Path to dataset file or named dataset from a package. {dataset}',
+            ),
+            controller: TextEditingController(text: dataset.path),
+          ),
+        );
+      },
     );
   }
 }
