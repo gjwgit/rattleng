@@ -27,8 +27,6 @@ import 'package:file_picker/file_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
-import 'package:rattle/constants/app.dart';
-
 class DatasetPicker extends StatefulWidget {
   const DatasetPicker({Key? key}) : super(key: key);
 
@@ -87,11 +85,11 @@ class DatasetPickerState extends State<DatasetPicker> {
       width: 120,
       child: ElevatedButton(
         onPressed: () => _pickFiles(),
-        child: const Text("Dataset:"),
         style: ElevatedButton.styleFrom(
             //backgroundColor: Color(0x4445035e), //appBodyColour,
             //foregroundColor: Colors.black,
             ),
+        child: const Text("Dataset:"),
       ),
     );
   }
