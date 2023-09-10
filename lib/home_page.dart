@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 13:47:41 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 19:39:50 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,8 +31,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/build_model.dart' show buildModel;
 import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
-import 'package:rattle/pages/log_tab.dart';
-import 'package:rattle/pages/data_tab.dart';
+import 'package:rattle/tabs/log_tab.dart';
+import 'package:rattle/tabs/data_tab.dart';
 import 'package:rattle/widgets/r_console.dart';
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
