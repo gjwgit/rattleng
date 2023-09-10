@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 18:20:30 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 08:06:19 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,7 +24,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/dataset_picker.dart';
+import 'package:rattle/widgets/dataset_button.dart';
 
 /// The dataset chooser to allow selection of the data for Rattle.
 ///
@@ -43,13 +43,13 @@ class DatasetChooser extends StatefulWidget {
 }
 
 class _DatasetChooserState extends State<DatasetChooser> {
-  // The [datasetPath] lives here as the parent widget of both DatasetPicker (a
+  // The [datasetPath] lives here as the parent widget of both DatasetButton (a
   // button for choosing a file) and the dataset path text field (which should
-  // probably be a separate widget class. When the DatasetPicker updates the
+  // probably be a separate widget class. When the DatasetButton updates the
   // [datasetPath] then the TextField needs to be rebuilt from here
-  // (above). Currently 20230910 in DatasetPicker I am using find() to get the
+  // (above). Currently 20230910 in DatasetButton I am using find() to get the
   // TextField widget and to update it - bad approach - imperative rather than
-  // declarative. Instead DatasetPicker should update the datasetPath and and
+  // declarative. Instead DatasetButton should update the datasetPath and and
   // then this class somehow knows to rebuild the TextField.
 
   String datasetPath = "";
@@ -68,7 +68,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         // Widget to select the dataset filename.
 
-        const DatasetPicker(),
+        const DatasetButton(),
 
         // Some fixed space so the widgets aren't crowded.
 
