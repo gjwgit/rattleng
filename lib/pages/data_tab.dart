@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2023-09-09 17:32:34 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 08:23:54 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -27,7 +27,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/widgets/file_picker_ds.dart';
+import 'package:rattle/widgets/dataset_chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
 class DataTabPage extends StatefulWidget {
@@ -38,42 +38,12 @@ class DataTabPage extends StatefulWidget {
 }
 
 class DataTabPageState extends State<DataTabPage> {
-  // A controller for the text field so it can be updated programmatically.
-
-  final TextEditingController _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Row(
-            children: [
-              // Some fixed space so the widgets aren't crowded.
-
-              const SizedBox(width: 5),
-
-              // Widget to select the dataset filename.
-
-              const FilePickerDS(),
-
-              // Some fixed space so the widgets aren't crowded.
-
-              const SizedBox(width: 5),
-
-              // A text field to display the selected dataset name.
-
-              Expanded(
-                child: TextField(
-                  key: const Key('ds_path_text'),
-                  controller: _textController,
-                  decoration: const InputDecoration(
-                    hintText: 'Path to dataset file.',
-                  ),
-                ),
-              ),
-            ],
-          ),
+          DatasetChooser(),
 
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
