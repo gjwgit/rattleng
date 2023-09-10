@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2023-09-09 17:55:00 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 13:18:44 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -55,4 +55,4 @@ const String statusWelcomeMsg =
 /// contrast to the darker purple used for the control area at the top of the
 /// app.
 
-const statusBarColour = Color(0x5545035e);
+const appBodyColour = Color(0x5545035e);
