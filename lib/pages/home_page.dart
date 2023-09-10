@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 13:25:46 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 13:47:41 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -237,7 +237,7 @@ class RattleHomePageState extends State<RattleHomePage>
         // seem to be the way to do this.
         height: 50,
         padding: const EdgeInsets.only(left: 0),
-        color: appBodyColour,
+        color: statusBarColour,
         child: Markdown(
           selectable: true,
           data: statusWelcomeMsg,
