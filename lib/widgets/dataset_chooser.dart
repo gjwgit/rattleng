@@ -1,11 +1,11 @@
-/// Widget to choose a dataset consisting of a button and text field..
+/// Widget to choose a dataset consisting of a button and text field.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 13:32:41 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 13:59:43 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,7 +24,16 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/file_picker_ds.dart';
+import 'package:rattle/widgets/dataset_picker.dart';
+
+/// The dataset chooser to allow selection of the data for Rattle.
+///
+/// The widget consists of a button to allow picking the dataset and a text
+/// field where the dataset path or name is displayed or entered by the user
+/// typing it in.
+///
+/// This is a StatefulWidget to record the name of the chosen dataset. TODO THE
+/// DATASET NAME MAY NEED TO BE PUSHED HIGHR FOR ACCESS FROM OTHER PAGES.
 
 class DatasetChooser extends StatefulWidget {
   const DatasetChooser({super.key});
@@ -34,7 +43,7 @@ class DatasetChooser extends StatefulWidget {
 }
 
 class _DatasetChooserState extends State<DatasetChooser> {
-  String dataName = "";
+  String datasetPath = "";
 
   // A controller for the text field so it can be updated programmatically.
 
@@ -50,7 +59,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         // Widget to select the dataset filename.
 
-        const FilePickerDS(),
+        const DatasetPicker(),
 
         // Some fixed space so the widgets aren't crowded.
 
@@ -63,7 +72,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
             key: const Key('ds_path_text'),
             controller: _textController,
             decoration: const InputDecoration(
-              hintText: 'Path to dataset file.',
+              hintText: 'Path to dataset file or named dataset from a package.',
             ),
           ),
         ),
