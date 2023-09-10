@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-09-07 09:20:17 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-09 17:24:38 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,14 +33,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 // ignore: prefer_typing_uninitialized_variables
 var process;
 
+// TODO 20230909 gjw HOW TO INSTEAD PUSH COMMANDS TO THE terminal FROM
+// r_console.dart AND THEN READ THE OUTPUT FROM THERE.
+
 void rStart() async {
-  // A little unfriendly to kill all R instances. Might only work on Linux
-  // too. Only do this for now!
-
-  debugPrint("R: KILLING ALL EXISTING R WHICH MAY NOT BE A NICE THING TO DO");
-
-  process = await Process.start('killall', ["R"]);
-
   // Start up an R process from the command line.
 
   debugPrint("R: STARTING UP A NEW R PROCESS");
@@ -115,6 +111,14 @@ void rSource(String script) {
   code = code.replaceAll('<<VARS_ID>>', '"date", "location"');
 
   code = code.replaceAll('<<DATA_SPLIT_TR_TU_TE>>', '0.7, 0.15, 0.15');
+
+  // RPART_BUILD.R
+
+  code = code.replaceAll('<<PRIORS>>', '');
+  code = code.replaceAll('<<LOSS>>', '');
+  code = code.replaceAll('<<MINSPLIT>>', '');
+  code = code.replaceAll('<<MINBUCKET>>', '');
+  code = code.replaceAll('<<CP>>', '');
 
   // SIMPLY REMOVE THESE DIRECTIVES FOR NOW UNTIL WE PASS IN A DIRECTIVE TO OR
   // NOT TO INCLUDE THESE BLOCKS.

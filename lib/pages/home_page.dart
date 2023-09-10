@@ -1,11 +1,11 @@
-/// Main tabs page interface.
+/// The main tabs-based page interface.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-04 12:48:37 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 13:47:41 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,20 +28,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'package:rattle/constants/app.dart' show appTitle;
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/build_model.dart' show buildModel;
 import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
-import 'package:rattle/helpers/r.dart';
 import 'package:rattle/pages/log_tab.dart';
 import 'package:rattle/pages/data_tab.dart';
+import 'package:rattle/widgets/r_console.dart';
 
-// 20230904 gjw Testing xterm but not yet working.
-
-// import 'package:xterm/xterm.dart';
-
-// final terminal = Terminal();
-
-/// Mapping for Tabs, title:icon:widget.
+/// Define a mapping for the tabs in the GUI on to title:icon:widget.
 
 final List<Map<String, dynamic>> tabs = [
   {
@@ -75,10 +69,10 @@ final List<Map<String, dynamic>> tabs = [
     "widget": const Center(child: Text("EVALUATE")),
   },
   {
-    'title': "Terminal",
+    'title': "Console",
     "icon": Icons.terminal,
-    "widget": const Center(child: Text("TERMINAL")),
-    // "widget": const TerminalView(terminal),
+//    "widget": TerminalView(terminal),
+    "widget": const RConsole(),
   },
   {
     'title': "Script",
@@ -114,15 +108,6 @@ class RattleHomePageState extends State<RattleHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // The left side menu item. May not be required.
-
-        // leading: IconButton(
-        //   icon: const Icon(Icons.menu),
-        //   onPressed: () {
-        //     debugPrint("MENU PRESSED NO ACTION YET");
-        //   },
-        // ),
-
         // The title aligned to the left.
 
         title: const Text(appTitle),
@@ -134,18 +119,13 @@ class RattleHomePageState extends State<RattleHomePage>
 
           IconButton(
             key: const Key("run_button"),
-            icon: const Icon(Icons.directions_run),
+            icon: const Icon(
+              Icons.directions_run,
+              color: Colors.yellow,
+            ),
             onPressed: () {
               var currentTab = tabs[tabController.index]['title'];
 
-              //   if (currentTab == "Data") {
-              //     debugPrint("HOME PAGE: THE DATA TAB IS ACTIVE SO LOAD THE DATASET");
-
-              //     loadDataset();
-              //   } else {
-              //     debugPrint("HOME PAGE: RUN NOT YET IMPLEMENTED FOR $currentTab TAB");
-              //   }
-              // },
               switch (currentTab) {
                 case "Data":
                   {
@@ -168,94 +148,58 @@ class RattleHomePageState extends State<RattleHomePage>
             tooltip: "Run the current tab.",
           ),
 
-          // PLACEHOLDER
+          // RESET
 
           IconButton(
-            icon: const Icon(Icons.open_in_new),
+            icon: const Icon(
+              Icons.autorenew,
+              color: Colors.green,
+            ),
             onPressed: () async {
-              debugPrint("ALL R");
-              // process = await Process.start('killall', ["R"]);
-              // process = await Process.start('R', ["--no-save"]);
-              // process.stdout.transform(utf8.decoder).forEach(print);
-              // process.stderr.transform(utf8.decoder).forEach(print);
-
-              // cmd = 'library(tidyverse)';
-              // process.stdin.writeln(cmd);
+              debugPrint("RESET PRESSED NO ACTION YET");
             },
-            tooltip: "Start R and load tidyverse.",
-            // tooltip: "Start a new project.",
+            tooltip: "TODO: Start a new project.",
           ),
 
-          // PLACEHOLDER
+          // LOAD PROJECT
 
           IconButton(
-            icon: const Icon(Icons.open_in_browser_outlined),
+            icon: const Icon(
+              Icons.download,
+              color: Colors.pink,
+            ),
             onPressed: () {
-              rSource('load_demo_weather_aus_dataset');
-              // cmd = "getwd()";
-              // process.stdin.writeln(cmd);
-              // cmd = 'ds <- read_csv("weather.csv")';
-              // process.stdin.writeln(cmd);
-              // cmd = 'summary(ds)';
-              // process.stdin.writeln(cmd);
-              // cmd = 'ds %>% ggplot(aes(x=WindDir3pm)) + geom_bar()';
-              // process.stdin.writeln(cmd);
-              // cmd = 'ggsave("myplot.pdf", width=11, height=7)';
-              // process.stdin.writeln(cmd);
+              debugPrint("LOAD PRESSED NO ACTION YET");
             },
-            tooltip: "Load weather dataset.",
-            // tooltip: "Load an existing project from file.",
+            tooltip: "TODO Load an existing project from file.",
           ),
 
-          // PLACEHOLDER
+          // SAVE PROJECT
 
           IconButton(
-            icon: const Icon(Icons.save_alt_outlined),
+            icon: const Icon(
+              Icons.upload,
+              color: Colors.red,
+            ),
             onPressed: () {
               Process.run("xdg-open", ["myplot.pdf"]);
             },
-            tooltip: "View the plot.",
-            // tooltip: "TODO Save the current project to file.",
-          ),
-
-          // PLACEHOLDER
-
-          IconButton(
-            icon: const Icon(Icons.exit_to_app_outlined),
-            onPressed: () {
-              debugPrint("EXIT PRESSED NO ACTION YET");
-            },
-            tooltip: "TODO Exit the application.",
+            tooltip: "FOR NOW: View the plot. "
+                "TODO: Save the current project to file.",
           ),
 
           // INFO
 
           IconButton(
             onPressed: () {
-              debugPrint(tabs[tabController.index]['title']);
-              debugPrint(tabs[tabController.index]['widget']);
+              debugPrint("TAB is ${tabs[tabController.index]['title']}");
             },
-            icon: const Icon(Icons.info),
-            tooltip: "Information.",
+            icon: const Icon(
+              Icons.info,
+              color: Colors.blue,
+            ),
+            tooltip: "FOR NOW: Report the current TAB.",
           ),
-
-          // 20230829 gjw Probably not needed.
-
-          // PopupMenuButton<Text>(
-          //   itemBuilder: (context) {
-          //     return [
-          //       const PopupMenuItem(
-          //         child: Text("TODO About Rattle"),
-          //       ),
-          //       const PopupMenuItem(
-          //         child: Text("TODO Browse Rattle Survival Guide"),
-          //       ),
-          //       const PopupMenuItem(
-          //         child: Text("TODO Browse Togaware"),
-          //       ),
-          //     ];
-          //   },
-          // ),
         ],
 
         // Build the tab bar from the list of tabs, noting the tab title and
@@ -263,8 +207,8 @@ class RattleHomePageState extends State<RattleHomePage>
 
         bottom: TabBar(
           controller: tabController,
-          indicatorColor: Colors.white,
-          labelColor: Colors.orange,
+          indicatorColor: Colors.yellow,
+          labelColor: Colors.yellow,
           unselectedLabelColor: Colors.grey,
           // dividerColor: Colors.green,
           tabAlignment: TabAlignment.fill,
@@ -287,51 +231,17 @@ class RattleHomePageState extends State<RattleHomePage>
         }).toList(),
       ),
 
-      // Tried this 20230827 gjw but did not work.
-
-      // body: Container(
-      //   children: [
-      //     TabBarView(
-      //       controller: tabController,
-      //       children: tabs.map((tab) {
-      //         return tab['widget'] as Widget;
-      //       }).toList(),
-      //     ),
-      //     Markdown(
-      //       data: 'Welcome to **RattleNG**. To begin, pick a file '
-      //           '(e.g., CSV) containing your dataset, then click the '
-      //           '🏃 Run button.',
-      //       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-      //     ),
-      //   ],
-      // ),
-
-      // bottomNavigationBar: Row(
-      //   // I am setting the height for the bottom bar but this does not really
-      //   // seem to be the way to do this.
-      //   children: <Widget>[
-      //     Markdown(
-      //       data: 'Welcome to **RattleNG**. To begin, pick a file '
-      //           '(e.g., CSV) containing your dataset, then click the '
-      //           '🏃 Run button.',
-      //       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-      //     ),
-      //   ],
-      // ),
-
       // ignore: sized_box_for_whitespace
       bottomNavigationBar: Container(
         // I am setting the height for the bottom bar but this does not really
         // seem to be the way to do this.
         height: 50,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 0),
-          child: Markdown(
-            data: 'Welcome to **RattleNG**. To begin, pick a file '
-                '(e.g., CSV) containing your dataset, then click the '
-                '🏃 Run button.',
-            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-          ),
+        padding: const EdgeInsets.only(left: 0),
+        color: statusBarColour,
+        child: Markdown(
+          selectable: true,
+          data: statusWelcomeMsg,
+          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
         ),
       ),
     );
