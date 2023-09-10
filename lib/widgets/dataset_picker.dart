@@ -29,14 +29,14 @@ import 'package:flutter_test/flutter_test.dart' show find;
 
 import 'package:rattle/constants/app.dart';
 
-class FilePickerDS extends StatefulWidget {
-  const FilePickerDS({Key? key}) : super(key: key);
+class DatasetPicker extends StatefulWidget {
+  const DatasetPicker({Key? key}) : super(key: key);
 
   @override
-  FilePickerDSState createState() => FilePickerDSState();
+  DatasetPickerState createState() => DatasetPickerState();
 }
 
-class FilePickerDSState extends State<FilePickerDS> {
+class DatasetPickerState extends State<DatasetPicker> {
   String? _directoryPath;
   List<PlatformFile>? _paths;
 
