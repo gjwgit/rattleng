@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-08-28 09:19:46 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 18:20:10 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -48,7 +48,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:rattle/constants/app.dart' show appTitle;
-import 'package:rattle/main.dart';
+import 'package:rattle/rattle_app.dart';
+
 // 20230828 gjw R PROCESS NOT YET WORKING
 // import 'package:rattle/helpers/r.dart';
 

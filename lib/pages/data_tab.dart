@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-10 08:23:54 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-10 18:18:22 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -43,7 +43,7 @@ class DataTabPageState extends State<DataTabPage> {
     return Scaffold(
       body: Column(
         children: [
-          DatasetChooser(),
+          const DatasetChooser(),
 
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
