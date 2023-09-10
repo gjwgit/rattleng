@@ -27,14 +27,14 @@ import 'package:file_picker/file_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart' show find;
 
-class DatasetPicker extends StatefulWidget {
-  const DatasetPicker({Key? key}) : super(key: key);
+class DatasetButton extends StatefulWidget {
+  const DatasetButton({Key? key}) : super(key: key);
 
   @override
-  DatasetPickerState createState() => DatasetPickerState();
+  DatasetButtonState createState() => DatasetButtonState();
 }
 
-class DatasetPickerState extends State<DatasetPicker> {
+class DatasetButtonState extends State<DatasetButton> {
   String? _directoryPath;
   List<PlatformFile>? _paths;
 
@@ -54,28 +54,28 @@ class DatasetPickerState extends State<DatasetPicker> {
       debugPrint(e.toString());
     }
 
-    setState(() {
-      _directoryPath =
-          _paths != null ? _paths!.map((e) => e.path).toString() : null;
+    // setState(() {
+    //   _directoryPath =
+    //       _paths != null ? _paths!.map((e) => e.path).toString() : null;
 
-      final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
-      var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+    //   final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
+    //   var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
 
-      // 20230821 gjw A little ugly using `?.` and ?? to deal with the nullable
-      // differences between the Strings. It works.
+    //   // 20230821 gjw A little ugly using `?.` and ?? to deal with the nullable
+    //   // differences between the Strings. It works.
 
-      String filename = _directoryPath ?? '';
+    //   String filename = _directoryPath ?? '';
 
-      // The filename has brackets around it. Not sure why!
+    //   // The filename has brackets around it. Not sure why!
 
-      if (filename.isNotEmpty &&
-          filename.startsWith("(") &&
-          filename.endsWith(")")) {
-        filename = filename.substring(1, filename.length - 1);
-      }
+    //   if (filename.isNotEmpty &&
+    //       filename.startsWith("(") &&
+    //       filename.endsWith(")")) {
+    //     filename = filename.substring(1, filename.length - 1);
+    //   }
 
-      dsPathText.controller?.text = filename;
-    });
+    //   dsPathText.controller?.text = filename;
+    // });
   }
 
   @override

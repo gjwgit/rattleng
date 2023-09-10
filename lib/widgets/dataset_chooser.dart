@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 18:20:30 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 07:55:47 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,7 +24,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/dataset_picker.dart';
+//import 'package:provider/provider.dart';
+
+import 'package:rattle/models/dataset.dart';
+import 'package:rattle/widgets/dataset_button.dart';
+import 'package:rattle/widgets/dataset_text_field.dart';
 
 /// The dataset chooser to allow selection of the data for Rattle.
 ///
@@ -33,7 +37,7 @@ import 'package:rattle/widgets/dataset_picker.dart';
 /// typing it in.
 ///
 /// This is a StatefulWidget to record the name of the chosen dataset. TODO THE
-/// DATASET NAME MAY NEED TO BE PUSHED HIGHR FOR ACCESS FROM OTHER PAGES.
+/// DATASET NAME MAY NEED TO BE PUSHED HIGHER FOR ACCESS FROM OTHER PAGES.
 
 class DatasetChooser extends StatefulWidget {
   const DatasetChooser({super.key});
@@ -43,24 +47,16 @@ class DatasetChooser extends StatefulWidget {
 }
 
 class _DatasetChooserState extends State<DatasetChooser> {
-  // The [datasetPath] lives here as the parent widget of both DatasetPicker (a
-  // button for choosing a file) and the dataset path text field (which should
-  // probably be a separate widget class. When the DatasetPicker updates the
-  // [datasetPath] then the TextField needs to be rebuilt from here
-  // (above). Currently 20230910 in DatasetPicker I am using find() to get the
-  // TextField widget and to update it - bad approach - imperative rather than
-  // declarative. Instead DatasetPicker should update the datasetPath and and
-  // then this class somehow knows to rebuild the TextField.
-
-  String datasetPath = "";
-
   // A controller for the text field so it can be updated programmatically.
 
-  final TextEditingController _textController = TextEditingController();
+  // final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return //ChangeNotifierProvider(
+        //create: (context) => DatasetModel(),
+        //child:
+        Row(
       children: [
         // Some fixed space so the widgets aren't crowded.
 
@@ -68,7 +64,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         // Widget to select the dataset filename.
 
-        const DatasetPicker(),
+        const DatasetButton(),
 
         // Some fixed space so the widgets aren't crowded.
 
@@ -76,16 +72,9 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         // A text field to display the selected dataset name.
 
-        Expanded(
-          child: TextField(
-            key: const Key('ds_path_text'),
-            controller: _textController,
-            decoration: const InputDecoration(
-              hintText: 'Path to dataset file or named dataset from a package.',
-            ),
-          ),
-        ),
+        DatasetTextField(),
       ],
     );
+    //);
   }
 }
