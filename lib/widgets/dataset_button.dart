@@ -1,4 +1,4 @@
-/// A file picker to choose the dataset for analysis.
+/// A button to choose a dataset (from file or a package).
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -35,9 +35,11 @@ class DatasetButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () async {
         // Simulate selecting a file (you can use file picker libraries here).
+
         String selectedFileName = "rattle::weather";
 
-        // Update the selected filename using Provider.
+        // Update the selected filename using the Provider.
+
         Provider.of<DatasetModel>(context, listen: false)
             .setPath(selectedFileName);
       },

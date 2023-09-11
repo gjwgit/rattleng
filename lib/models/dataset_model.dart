@@ -1,11 +1,11 @@
-/// The dataset model to contain the state data.
+/// State data for the dataset.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 09:07:54 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 17:07:37 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,24 +27,25 @@ import 'package:flutter/foundation.dart';
 class DatasetModel extends ChangeNotifier {
   /// Internal dataset name.
 
-  // The [datasetPath] lives here as the parent widget of both DatasetButton (a
-  // button for choosing a file) and the dataset path text field (which should
-  // probably be a separate widget class. When the DatasetButton updates the
-  // [datasetPath] then the TextField needs to be rebuilt from here
-  // (above). Currently 20230910 in DatasetButton I am using find() to get the
-  // TextField widget and to update it - bad approach - imperative rather than
-  // declarative. Instead DatasetButton should update the datasetPath and and
-  // then this class somehow knows to rebuild the TextField.
+  // The [_path] lives here at the parent widget of both DatasetButton (a button
+  // for choosing a file) and the DatasetTextField. When the DatasetButton
+  // updates the [_path] through [setPath] the DatasetTextField consumes the new
+  // value and is rebuilt from above.
 
   String _path = "";
 
   String get path => _path;
 
-  /// Record the dataset path as [setPath].
+  /// Record the dataset path through [setPath].
 
   void setPath(String newPath) {
+    // First set the path to the new value.
+
     _path = newPath;
-    // This call tells the widgets that are listening to this model to rebuild.
+
+    // Then notify the widgets that are listening to this model to rebuild with
+    // the new bit of context, the new value of the path.
+
     notifyListeners();
   }
 }
