@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 09:37:30 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 13:02:29 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -50,11 +50,11 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
         // Some fixed space so the widgets aren't crowded.
 
-        const SizedBox(width: 5),
+        SizedBox(width: 5),
 
         // Widget to select the dataset filename.
 
@@ -62,7 +62,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         // Some fixed space so the widgets aren't crowded.
 
-        const SizedBox(width: 5),
+        SizedBox(width: 5),
 
         // A text field to display the selected dataset name.
 
