@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
 import 'package:rattle/models/dataset_model.dart';
 
 class DatasetButton extends StatelessWidget {
@@ -34,16 +35,29 @@ class DatasetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        // Simulate selecting a file (you can use file picker libraries here).
+        // Obtain the current path.
 
-        String selectedFileName = "rattle::weather";
+        String currentPath =
+            Provider.of<DatasetModel>(context, listen: false).path;
 
-        // Update the selected filename using the Provider.
+        if (currentPath == "") {
+          debugPrint("NO PATH SO POPUP A CHOICE OF FILE or PACKAGE or DEMO.");
+          // Obtain the dataset name
+          debugPrint("FOR NOW SET THE DATASET AS rattle::weather.");
+          String selectedFileName = "rattle::weather";
+          // Update the selected filename using the Provider.
 
-        Provider.of<DatasetModel>(context, listen: false)
-            .setPath(selectedFileName);
+          Provider.of<DatasetModel>(context, listen: false)
+              .setPath(selectedFileName);
+        } else {
+          debugPrint("PATH : ${currentPath}");
+        }
+
+        debugPrint("NOW LOAD THE DATASET THEN REPLACE THE WELCOME MESSAGE");
+
+        loadDataset(currentPath);
       },
-      child: const Text("Dataset:"),
+      child: const Text("Dataset"),
     );
   }
 }
