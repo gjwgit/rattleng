@@ -28,6 +28,8 @@ import 'package:provider/provider.dart';
 import 'package:rattle/models/dataset_model.dart';
 
 class DatasetButton extends StatelessWidget {
+  const DatasetButton({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -39,7 +41,7 @@ class DatasetButton extends StatelessWidget {
         Provider.of<DatasetModel>(context, listen: false)
             .setPath(selectedFileName);
       },
-      child: Text("Dataset:"),
+      child: const Text("Dataset:"),
     );
   }
 }
