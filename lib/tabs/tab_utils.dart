@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 15:00:00 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 22:18:45 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,9 +31,8 @@ void processTab(String currentTab) {
   switch (currentTab) {
     case "Data":
       debugPrint(
-        "HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET",
+        "NO LONGER IN USE: HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET",
       );
-      loadDataset();
     case "Model":
       debugPrint(
         "HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART",
