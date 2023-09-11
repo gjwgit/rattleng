@@ -28,6 +28,8 @@ import 'package:provider/provider.dart';
 import 'package:rattle/models/dataset_model.dart';
 
 class DatasetTextField extends StatelessWidget {
+  const DatasetTextField({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DatasetModel>(
@@ -39,8 +41,7 @@ class DatasetTextField extends StatelessWidget {
               dataset.setPath(newPath);
             },
             decoration: const InputDecoration(
-              hintText:
-                  'Path to dataset file or named dataset from a package. {dataset}',
+              hintText: 'Path to dataset file or named dataset from a package.',
             ),
             controller: TextEditingController(text: dataset.path),
           ),
