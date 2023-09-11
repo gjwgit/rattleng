@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 08:41:49 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 14:13:50 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,8 +22,6 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io' show Process;
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -33,6 +31,7 @@ import 'package:rattle/helpers/build_model.dart' show buildModel;
 import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
 import 'package:rattle/tabs/log_tab.dart';
 import 'package:rattle/tabs/data_tab.dart';
+import 'package:rattle/tabs/tab_utils.dart' show processTab;
 import 'package:rattle/widgets/r_console.dart';
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
@@ -48,9 +47,10 @@ final List<Map<String, dynamic>> tabs = [
     "icon": Icons.insights,
     "widget": Center(
       child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Image.asset("assets/images/myplot.png")),
-    )
+        padding: const EdgeInsets.all(16.0),
+        child: Image.asset("assets/images/myplot.png"),
+      ),
+    ),
   },
   {
     'title': "Test",
@@ -128,26 +128,7 @@ class RattleHomePageState extends State<RattleHomePage>
               color: Colors.yellow,
             ),
             onPressed: () {
-              var currentTab = tabs[tabController.index]['title'];
-
-              switch (currentTab) {
-                case "Data":
-                  {
-                    debugPrint(
-                      "HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET",
-                    );
-                    loadDataset();
-                  }
-                case "Model":
-                  debugPrint(
-                    "HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART",
-                  );
-                  buildModel();
-                default:
-                  debugPrint(
-                    "HOME PAGE: RUN NOT IMPLEMENTED FOR $currentTab TAB",
-                  );
-              }
+              processTab(tabs[tabController.index]['title']);
             },
             tooltip: "Run the current tab.",
           ),
