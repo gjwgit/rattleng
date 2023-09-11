@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 09:17:07 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 12:23:49 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -92,6 +92,8 @@ void main() async {
 
   runApp(
     ChangeNotifierProvider(
-        create: (context) => DatasetModel(), child: const RattleApp()),
+      create: (context) => DatasetModel(),
+      child: const RattleApp(),
+    ),
   );
 }
