@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
-import 'package:rattle/models/dataset_model.dart';
+import 'package:rattle/models/rattle_model.dart';
 
 class DatasetButton extends StatelessWidget {
   const DatasetButton({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class DatasetButton extends StatelessWidget {
       onPressed: () async {
         // Obtain the current path.
 
-        DatasetModel rattle = Provider.of<DatasetModel>(context, listen: false);
+        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
         String currentPath = rattle.path;
 
         if (currentPath == "") {
@@ -47,7 +47,7 @@ class DatasetButton extends StatelessWidget {
           String selectedFileName = "rattle::weather";
           // Update the selected filename using the Provider.
 
-          Provider.of<DatasetModel>(context, listen: false)
+          Provider.of<RattleModel>(context, listen: false)
               .setPath(selectedFileName);
         } else {
           debugPrint("PATH : $currentPath");

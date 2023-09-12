@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-09-12 15:55:06 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 19:21:53 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/models/dataset_model.dart';
+import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/dataset_chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
@@ -43,11 +43,11 @@ class DataTab extends StatefulWidget {
 class DataTabState extends State<DataTab> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DatasetModel>(
-      // Build a [Consumer] of the [DatasetModel] so we can access updated
+    return Consumer<RattleModel>(
+      // Build a [Consumer] of the [RattleModel] so we can access updated
       // values of the path variable.
 
-      builder: (context, dataset, child) {
+      builder: (context, rattle, child) {
         return Scaffold(
           body: Column(
             children: [
@@ -58,7 +58,7 @@ class DataTabState extends State<DataTab> {
               // overwritten once a dataset is loaded.
 
               Visibility(
-                visible: dataset.path == "",
+                visible: rattle.path == "",
                 child: Expanded(
                   child: Center(
                     key: const Key("rattle_welcome"),
@@ -67,7 +67,7 @@ class DataTabState extends State<DataTab> {
                 ),
               ),
               Visibility(
-                visible: dataset.path != "",
+                visible: rattle.path != "",
                 child: const Expanded(
                   child: Center(
                     child: Text(

@@ -25,20 +25,20 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/models/dataset_model.dart';
+import 'package:rattle/models/rattle_model.dart';
 
 class DatasetTextField extends StatelessWidget {
   const DatasetTextField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DatasetModel>(
-      // Build a [Consumer] of the [DatasetModel] so we can access updated
+    return Consumer<RattleModel>(
+      // Build a [Consumer] of the [RattleModel] so we can access updated
       // values of the path variable.
 
-      builder: (context, dataset, child) {
-        // The builder takes a context, a DatasetMode, and the child. It is the
-        // `dataset` that contains the state that we can access here.
+      builder: (context, rattle, child) {
+        // The builder takes a context, a RattleMode, and the child. It is the
+        // `rattle` that contains the state that we can access here.
 
         return Expanded(
           // Expand to fill the remainder of the row.
@@ -56,7 +56,7 @@ class DatasetTextField extends StatelessWidget {
               // off to the DatabaseModel.
 
               onChanged: (newPath) {
-                dataset.setPath(newPath);
+                rattle.setPath(newPath);
               },
 
               // For an empty value we show a helpful message.
@@ -69,7 +69,7 @@ class DatasetTextField extends StatelessWidget {
               // The controller displays the current path and accessing it from
               // the DatabaseModel ensures it is always the lates value displayed.
 
-              controller: TextEditingController(text: dataset.path),
+              controller: TextEditingController(text: rattle.path),
             ),
           ),
         );

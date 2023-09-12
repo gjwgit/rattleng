@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/models/dataset_model.dart';
+import 'package:rattle/models/rattle_model.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -36,14 +36,14 @@ class StatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DatasetModel>(
-      // As a [Consumer] of the [DatasetModel] recording the app's state we can
+    return Consumer<RattleModel>(
+      // As a [Consumer] of the [RattleModel] recording the app's state we can
       // access the status message as it gets updated, so that the status bar
       // remains up to date.
 
-      builder: (context, dataset, child) {
-        // The builder takes a context, a DatasetModel, and the child. It is the
-        // `dataset` that contains the state that we can access here.
+      builder: (context, rattle, child) {
+        // The builder takes a context, a RattleModel, and the child. It is the
+        // `rattle` that contains the state that we can access here.
 
         return Container(
           // I am setting the height for the bottom bar but this does not really
@@ -53,7 +53,7 @@ class StatusBar extends StatelessWidget {
           color: statusBarColour,
           child: Markdown(
             selectable: true,
-            data: dataset.status,
+            data: rattle.status,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
           ),
         );
