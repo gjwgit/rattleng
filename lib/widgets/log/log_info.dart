@@ -25,8 +25,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/widgets/log/log_save_button.dart';
+import 'log_save_button.dart';
 import 'markdown_widget.dart';
 
 /// Create a log info widget with a Save button and displaying markdown.
