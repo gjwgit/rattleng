@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-09-12 19:21:53 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 08:39:50 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -68,10 +68,12 @@ class DataTabState extends State<DataTab> {
               ),
               Visibility(
                 visible: rattle.path != "",
-                child: const Expanded(
+                child: Expanded(
                   child: Center(
                     child: Text(
-                      "DISPLAY OUTPUT OF glimpse(ds) HERE AS NEXT APPROXIMATION 20230912",
+                      "RATTLE output " + rattle.output,
+                      // Text(
+                      //"DISPLAY OUTPUT OF glimpse(ds) HERE AS NEXT APPROXIMATION 20230912",
                     ),
                   ),
                 ),
