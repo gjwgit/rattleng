@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-12 15:52:34 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 19:11:29 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -125,9 +125,12 @@ class RattleHomePageState extends State<RattleHomePage>
               color: Colors.grey,
             ),
             onPressed: () {
+              debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
+              // KEEP OPEN FOR NOT FOR THE MODEL TAB.
               processTab(tabs[tabController.index]['title']);
             },
-            tooltip: "Run the current tab.",
+            tooltip:
+                "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
           ),
 
           // RESET
