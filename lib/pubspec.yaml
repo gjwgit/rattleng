@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   universal_io: ^2.2.2
   window_manager: ^0.3.6
+  flutter_markdown: ^0.6.17+2
 
 dev_dependencies:
   flutter_test:
