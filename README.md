@@ -49,14 +49,44 @@ Suggested tasks can be found as github issues.
 
 ## Some RattleNG teasers
 
-### The traditional Rattle Welcome
+### Rattle's 4 Click First AI Model
+
+The traditional Rattle Welcome screen provides an overview of
+Rattle. To build your first ever AI model, simply click the Run
+button, which will load the `rattle::weather` dataset. Then click the
+Model tab and the Run to build your first decision tree (an AI
+model). Click the View button to see how the model is represented
+visually.
 
 ![](assets/screenshots/data_page.png)
 
+*More screenshots to come.*
+
 ### Exploring Data Visually
+
+All of the popular Rattle visualisations are available, modernised
+using `ggplot` and the `tidyverse`.
 
 ![](assets/screenshots/explore_plot.png)
 
+### The R Console
+
+The R console is where everything in R happens. The user can review
+the contents of the console and even run R commands themselves. Click
+the EXPORT button to have the history of R commands from the console
+saved to file. Compare this EXPORT to that of the LOG page where a
+documented and formatted script is saved to file.
+
+![](assets/screenshots/console_page.png)
+
 ### Everything Captured as Scripts
 
-![](assets/screenshots/log_page.png)
+An be assured, the most important of functionalities, the Script
+generator, remains a key feature of Rattle. All of your interactions
+with R through Rattle are captured as a documented and nicely
+formatted script that you can save to file and replicate your whole
+project simply by asking R to run the script. Or, it is the starting
+point for modifying a script to do precisely what you want, beyond
+what Rattle supports. No lock-in.
+
+![](assets/screenshots/script_page.png)
