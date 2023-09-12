@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-12 08:35:19 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 09:21:16 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,6 +31,7 @@ import 'package:rattle/tabs/data_tab.dart';
 import 'package:rattle/tabs/log_tab.dart';
 import 'package:rattle/tabs/tab_utils.dart' show processTab;
 import 'package:rattle/widgets/r_console.dart';
+import 'package:rattle/widgets/status_bar.dart';
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
 
@@ -214,18 +215,7 @@ class RattleHomePageState extends State<RattleHomePage>
       ),
 
       // ignore: sized_box_for_whitespace
-      bottomNavigationBar: Container(
-        // I am setting the height for the bottom bar but this does not really
-        // seem to be the way to do this.
-        height: 50,
-        padding: const EdgeInsets.only(left: 0),
-        color: statusBarColour,
-        child: Markdown(
-          selectable: true,
-          data: statusWelcomeMsg,
-          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-        ),
-      ),
+      bottomNavigationBar: StatusBar(),
     );
   }
 }
