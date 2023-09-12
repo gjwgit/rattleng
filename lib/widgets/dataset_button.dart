@@ -37,8 +37,8 @@ class DatasetButton extends StatelessWidget {
       onPressed: () async {
         // Obtain the current path.
 
-        String currentPath =
-            Provider.of<DatasetModel>(context, listen: false).path;
+        DatasetModel rattle = Provider.of<DatasetModel>(context, listen: false);
+        String currentPath = rattle.path;
 
         if (currentPath == "") {
           debugPrint("NO PATH SO POPUP A CHOICE OF FILE or PACKAGE or DEMO.");
@@ -56,8 +56,16 @@ class DatasetButton extends StatelessWidget {
         debugPrint("NOW LOAD THE DATASET THEN REPLACE THE WELCOME MESSAGE");
 
         loadDataset(currentPath);
+
+        rattle.setStatus("Choose **variable roles** and then proceed to "
+            "analyze and model your data via the other tabs.");
       },
-      child: const Text("Dataset"),
+      child: Tooltip(
+        message: "Click here to have the option to load the data from a file,\n"
+            "including CSV files, or from an R pacakge, or to load \n"
+            "the demo dataset, rattle::weather.",
+        child: const Text("Dataset"),
+      ),
     );
   }
 }
