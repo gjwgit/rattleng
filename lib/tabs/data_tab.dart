@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-09-12 08:31:46 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 15:55:06 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -68,10 +68,11 @@ class DataTabState extends State<DataTab> {
               ),
               Visibility(
                 visible: dataset.path != "",
-                child: Expanded(
+                child: const Expanded(
                   child: Center(
                     child: Text(
-                        "DISPLAY OUTPUT OF glimpse(ds) HERE AS NEXT APPROXIMATION 20230912"),
+                      "DISPLAY OUTPUT OF glimpse(ds) HERE AS NEXT APPROXIMATION 20230912",
+                    ),
                   ),
                 ),
               ),
