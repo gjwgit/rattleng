@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 17:05:26 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 08:44:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@
 // REMOVING THE OLD ONE :-) THEY ALL GO ON EXITTING THE APP.
 
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +35,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
+
+import 'package:provider/provider.dart';
+
+import 'package:rattle/models/rattle_model.dart';
 
 /// The R Console widget where the R subprocess runs and executes commands sent
 /// to it and where the results are read from.
@@ -84,6 +89,15 @@ class _RConsoleState extends State<RConsole> {
 
     terminal.onOutput = (data) {
       pty.write(const Utf8Encoder().convert(data));
+      RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+      // 20230913 data seems to be empty. probably not getting the right concept
+      // yet.
+      rattle.setOutput(DateFormat('hh:mm:ss').format(DateTime.now()) +
+          " => " +
+          data +
+          " <= ");
+      //rattle.setOutput(Utf8Encoder().convert(data));
+      //rattle.setOutput(Utf8Encoder().convert(data));
     };
 
     terminal.onResize = (w, h, pw, ph) {
