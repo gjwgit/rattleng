@@ -27,7 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
 
-import 'package:rattle/models/dataset_model.dart';
+import 'package:rattle/models/rattle_model.dart';
 
 import 'package:rattle/helpers/r.dart' show rStart;
 import 'package:rattle/helpers/utils.dart';
@@ -92,7 +92,7 @@ void main() async {
 
   runApp(
     ChangeNotifierProvider(
-      create: (context) => DatasetModel(),
+      create: (context) => RattleModel(),
       child: const RattleApp(),
     ),
   );

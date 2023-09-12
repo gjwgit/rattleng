@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/models/dataset_model.dart';
+import 'package:rattle/models/rattle_model.dart';
 
 class ClearDatasetTextField extends StatelessWidget {
   const ClearDatasetTextField({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class ClearDatasetTextField extends StatelessWidget {
       icon: const Icon(Icons.clear),
       tooltip: 'Clear the dataset.',
       onPressed: () {
-        Provider.of<DatasetModel>(context, listen: false).setPath("");
+        Provider.of<RattleModel>(context, listen: false).setPath("");
       },
     );
   }

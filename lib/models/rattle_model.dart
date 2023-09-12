@@ -1,11 +1,11 @@
-/// State data for the dataset.
+/// The Rattle state of affairs.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-12 18:57:20 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 19:16:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,7 +26,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:rattle/constants/app.dart';
 
-class DatasetModel extends ChangeNotifier {
+class RattleModel extends ChangeNotifier {
   /// Internal dataset name.
 
   // The [_path] lives here at the parent widget of both DatasetButton (a button
