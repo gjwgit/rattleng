@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-10 13:46:46 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 22:27:37 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -45,9 +45,8 @@ const String logIntroFile = '$assetsPath/markdown/log_intro.md';
 /// The status line welcome message.
 
 const String statusWelcomeMsg =
-    'Welcome to **RattleNG**. To begin, pick a file '
-    '(e.g., CSV) containing your dataset, then click the '
-    '🏃 Run button.';
+    'Welcome to **RattleNG**. Click the Dataset button '
+    'to load a dataset.';
 
 /// The default background colour of the status bar.
 ///

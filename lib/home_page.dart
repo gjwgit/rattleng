@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 08:41:49 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 19:11:29 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,18 +22,14 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io' show Process;
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
-
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/build_model.dart' show buildModel;
-import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
-import 'package:rattle/tabs/log_tab.dart';
 import 'package:rattle/tabs/data_tab.dart';
+import 'package:rattle/tabs/log_tab.dart';
+import 'package:rattle/tabs/tab_utils.dart' show processTab;
 import 'package:rattle/widgets/r_console.dart';
+import 'package:rattle/widgets/status_bar.dart';
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
 
@@ -48,9 +44,10 @@ final List<Map<String, dynamic>> tabs = [
     "icon": Icons.insights,
     "widget": Center(
       child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Image.asset("assets/images/myplot.png")),
-    )
+        padding: const EdgeInsets.all(16.0),
+        child: Image.asset("assets/images/myplot.png"),
+      ),
+    ),
   },
   {
     'title': "Test",
@@ -125,31 +122,15 @@ class RattleHomePageState extends State<RattleHomePage>
             key: const Key("run_button"),
             icon: const Icon(
               Icons.directions_run,
-              color: Colors.yellow,
+              color: Colors.grey,
             ),
             onPressed: () {
-              var currentTab = tabs[tabController.index]['title'];
-
-              switch (currentTab) {
-                case "Data":
-                  {
-                    debugPrint(
-                      "HOME PAGE: DATA TAB ACTIVE SO LOAD THE DATASET",
-                    );
-                    loadDataset();
-                  }
-                case "Model":
-                  debugPrint(
-                    "HOME PAGE: MODEL TAB ACTIVE SO BUILD RPART",
-                  );
-                  buildModel();
-                default:
-                  debugPrint(
-                    "HOME PAGE: RUN NOT IMPLEMENTED FOR $currentTab TAB",
-                  );
-              }
+              debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
+              // KEEP OPEN FOR NOT FOR THE MODEL TAB.
+              processTab(tabs[tabController.index]['title']);
             },
-            tooltip: "Run the current tab.",
+            tooltip:
+                "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
           ),
 
           // RESET
@@ -210,8 +191,8 @@ class RattleHomePageState extends State<RattleHomePage>
 
         bottom: TabBar(
           controller: tabController,
-          indicatorColor: Colors.yellow,
-          labelColor: Colors.yellow,
+          //indicatorColor: Colors.yellow,
+          //labelColor: Colors.yellow,
           unselectedLabelColor: Colors.grey,
           // dividerColor: Colors.green,
           tabAlignment: TabAlignment.fill,
@@ -235,18 +216,7 @@ class RattleHomePageState extends State<RattleHomePage>
       ),
 
       // ignore: sized_box_for_whitespace
-      bottomNavigationBar: Container(
-        // I am setting the height for the bottom bar but this does not really
-        // seem to be the way to do this.
-        height: 50,
-        padding: const EdgeInsets.only(left: 0),
-        color: statusBarColour,
-        child: Markdown(
-          selectable: true,
-          data: statusWelcomeMsg,
-          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-        ),
-      ),
+      bottomNavigationBar: const StatusBar(),
     );
   }
 }
