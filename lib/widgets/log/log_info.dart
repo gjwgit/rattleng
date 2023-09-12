@@ -51,13 +51,6 @@ class LogInfo extends StatelessWidget {
                         children: [
                           const LogSaveButton(),
                           const SizedBox(height: 10),
-                          // Markdown(data: "**Sample data**"),
-                          // sunkenMarkdownFileBuilder(logIntro),
-
-                          //Make a custom widget that renders markdown using the
-                          //Markdown package
-                          // Text(snapshot.data! +
-                          // " \n This has to be redered as markdown"),
                           MarkDownWidget(snapshot.data!)
                         ],
                       ),
