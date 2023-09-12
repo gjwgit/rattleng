@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2023-08-28 06:55:14 +1000 Graham Williams>
+// Time-stamp: <Monday 2023-09-11 22:27:37 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -24,6 +24,8 @@
 ///
 /// Authors: Graham Williams
 
+import 'package:flutter/material.dart';
+
 /// The Rattle app's title.
 
 const String appTitle = 'Rattle the Next Generation Data Scientist';
@@ -34,8 +36,22 @@ const String assetsPath = 'assets';
 
 /// Location of the markdown file containing the welcome message for the APP.
 
-const String welcomeMsg = '$assetsPath/markdown/welcome.md';
+const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 
 /// Location of the markdown file containing instructions for the LOG tab.
 
-const String logIntro = '$assetsPath/markdown/log_intro.md';
+const String logIntroFile = '$assetsPath/markdown/log_intro.md';
+
+/// The status line welcome message.
+
+const String statusWelcomeMsg =
+    'Welcome to **RattleNG**. Click the Dataset button '
+    'to load a dataset.';
+
+/// The default background colour of the status bar.
+///
+/// A light purple, suitable for black text, is 0x5545035e. This is a soft
+/// contrast to the darker purple used for the control area at the top of the
+/// app.
+
+const statusBarColour = Color(0x5545035e);

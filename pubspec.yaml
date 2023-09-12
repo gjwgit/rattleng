@@ -14,6 +14,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+
 version: 0.0.1
 
 environment:
@@ -25,6 +26,7 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+
 dependencies:
   flutter:
     sdk: flutter
@@ -38,6 +40,8 @@ dependencies:
   intl: ^0.18.1
   package_info_plus: ^4.1.0
   xterm: ^3.5.0
+  flutter_pty: ^0.4.0
+  provider: ^6.0.5
   
 dev_dependencies:
   flutter_test:
@@ -58,14 +62,17 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+
 flutter:
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+
   uses-material-design: true
 
   assets:
+    - assets/images/
     - assets/markdown/
     - assets/r/
 
