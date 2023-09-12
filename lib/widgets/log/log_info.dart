@@ -25,6 +25,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../../constants/app.dart';
 import 'log_save_button.dart';
 import 'markdown_widget.dart';
 
@@ -37,7 +38,6 @@ class LogInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Log info widget is created");
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
