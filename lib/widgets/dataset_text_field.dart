@@ -43,28 +43,34 @@ class DatasetTextField extends StatelessWidget {
         return Expanded(
           // Expand to fill the remainder of the row.
 
-          child: TextField(
-            // A text field to contain the name of the selected dataset.
+          child: Tooltip(
+            message: "You can type the actual path to a file containing\n"
+                "your dataset, perhaps as a CSV file, or the name of a\n"
+                "package dataset, like rattle::wattle.",
+            child: TextField(
+              // A text field to contain the name of the selected dataset.
 
-            key: const Key('ds_path_text'),
+              key: const Key('ds_path_text'),
 
-            // If the user updates the text then we need to send the new value
-            // off to the DatabaseModel.
+              // If the user updates the text then we need to send the new value
+              // off to the DatabaseModel.
 
-            onChanged: (newPath) {
-              dataset.setPath(newPath);
-            },
+              onChanged: (newPath) {
+                dataset.setPath(newPath);
+              },
 
-            // For an empty value we show a helpful message.
+              // For an empty value we show a helpful message.
 
-            decoration: const InputDecoration(
-              hintText: 'Path to dataset file or named dataset from a package.',
+              decoration: const InputDecoration(
+                hintText:
+                    'Path to dataset file or named dataset from a package.',
+              ),
+
+              // The controller displays the current path and accessing it from
+              // the DatabaseModel ensures it is always the lates value displayed.
+
+              controller: TextEditingController(text: dataset.path),
             ),
-
-            // The controller displays the current path and accessing it from
-            // the DatabaseModel ensures it is always the lates value displayed.
-
-            controller: TextEditingController(text: dataset.path),
           ),
         );
       },
