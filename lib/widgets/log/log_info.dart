@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 17:33:32 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 09:16:11 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/widgets/log/log_save_button.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 /// Create a log info widget with a Save button and displaying markdown.
 ///
@@ -40,6 +41,7 @@ class LogInfo extends StatelessWidget {
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
+          // WHY USING FUTURE BUILDER HERE?
           return FutureBuilder(
             future: rootBundle.loadString(logIntroFile),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
@@ -48,11 +50,9 @@ class LogInfo extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
+                          MarkdownBody(data: snapshot.data!),
+                          const SizedBox(height: 50),
                           const LogSaveButton(),
-                          const SizedBox(height: 10),
-                          // Markdown(data: File(logIntro).readAsStringSync()),
-                          // sunkenMarkdownFileBuilder(logIntro),
-                          Text(snapshot.data!),
                         ],
                       ),
                     )
