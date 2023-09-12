@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:rattle/main.dart' as rattle;
-import 'package:rattle/widgets/dataset_picker.dart';
+import 'package:rattle/widgets/dataset_button.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -51,11 +51,11 @@ void main() {
 
       // Verify that rattle starts on the home page.
 
-      var datasetPicker = find.byType(DatasetPicker);
+      var datasetButton = find.byType(DatasetButton);
 
       // A single filePicker - Filename:
 
-      expect(datasetPicker, findsOneWidget);
+      expect(datasetButton, findsOneWidget);
 
       // Leave time to see the first page.
 

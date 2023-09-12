@@ -1,4 +1,4 @@
-/// A file picker to choose the dataset for analysis.
+/// A button to choose a dataset (from file or a package).
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,73 +23,48 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:file_picker/file_picker.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_test/flutter_test.dart' show find;
+import 'package:provider/provider.dart';
 
-class DatasetButton extends StatefulWidget {
+import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
+import 'package:rattle/models/rattle_model.dart';
+
+class DatasetButton extends StatelessWidget {
   const DatasetButton({Key? key}) : super(key: key);
 
   @override
-  DatasetButtonState createState() => DatasetButtonState();
-}
-
-class DatasetButtonState extends State<DatasetButton> {
-  String? _directoryPath;
-  List<PlatformFile>? _paths;
-
-  void _pickFiles() async {
-    try {
-      _directoryPath = null;
-      _paths = (await FilePicker.platform.pickFiles(
-        //type: _pickingType,
-        allowMultiple: false,
-        // ignore: avoid_print
-        onFileLoading: (FilePickerStatus status) => print(status),
-        allowedExtensions: ["csv", "tsv", "arff", "rdata"],
-        dialogTitle: "Please Select Your Dataset File",
-      ))
-          ?.files;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    setState(() {
-      _directoryPath =
-          _paths != null ? _paths!.map((e) => e.path).toString() : null;
-
-      final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
-      var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-
-      // 20230821 gjw A little ugly using `?.` and ?? to deal with the nullable
-      // differences between the Strings. It works.
-
-      String filename = _directoryPath ?? '';
-
-      // The filename has brackets around it. Not sure why!
-
-      if (filename.isNotEmpty &&
-          filename.startsWith("(") &&
-          filename.endsWith(")")) {
-        filename = filename.substring(1, filename.length - 1);
-      }
-
-      dsPathText.controller?.text = filename;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      key: const Key("file_picker_ds"),
-      width: 120,
-      child: ElevatedButton(
-        onPressed: () => _pickFiles(),
-        style: ElevatedButton.styleFrom(
-            //backgroundColor: Color(0x4445035e), //appBodyColour,
-            //foregroundColor: Colors.black,
-            ),
-        child: const Text("Dataset:"),
+    return ElevatedButton(
+      onPressed: () async {
+        // Obtain the current path.
+
+        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+        String currentPath = rattle.path;
+
+        if (currentPath == "") {
+          debugPrint("NO PATH SO POPUP A CHOICE OF FILE or PACKAGE or DEMO.");
+          // Obtain the dataset name
+          debugPrint("FOR NOW SET THE DATASET AS rattle::weather.");
+          String selectedFileName = "rattle::weather";
+          // Update the selected filename using the Provider.
+
+          Provider.of<RattleModel>(context, listen: false)
+              .setPath(selectedFileName);
+        } else {
+          debugPrint("PATH : $currentPath");
+        }
+
+        debugPrint("NOW LOAD THE DATASET THEN REPLACE THE WELCOME MESSAGE");
+
+        loadDataset(currentPath);
+
+        rattle.setStatus("Choose **variable roles** and then proceed to "
+            "analyze and model your data via the other tabs.");
+      },
+      child: Tooltip(
+        message: "Click here to have the option to load the data from a file,\n"
+            "including CSV files, or from an R pacakge, or to load \n"
+            "the demo dataset, rattle::weather.",
+        child: const Text("Dataset"),
       ),
     );
   }
