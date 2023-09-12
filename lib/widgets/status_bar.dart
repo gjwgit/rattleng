@@ -53,7 +53,7 @@ class StatusBar extends StatelessWidget {
           color: statusBarColour,
           child: Markdown(
             selectable: true,
-            data: statusWelcomeMsg + dataset.path,
+            data: dataset.status,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
           ),
         );
