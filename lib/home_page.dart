@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-12 09:21:16 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 15:52:34 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,8 +23,6 @@
 /// Authors: Graham Williams
 
 import 'package:flutter/material.dart';
-
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/tabs/data_tab.dart';
@@ -215,7 +213,7 @@ class RattleHomePageState extends State<RattleHomePage>
       ),
 
       // ignore: sized_box_for_whitespace
-      bottomNavigationBar: StatusBar(),
+      bottomNavigationBar: const StatusBar(),
     );
   }
 }
