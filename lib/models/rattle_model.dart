@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-12 19:16:02 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 09:38:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,9 +22,12 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/helpers/load_asset.dart';
 
 class RattleModel extends ChangeNotifier {
   /// Internal dataset name.
@@ -57,6 +60,18 @@ class RattleModel extends ChangeNotifier {
 
   void setStatus(String newStatus) {
     _status = newStatus;
+    notifyListeners();
+  }
+
+  // Store the script being developed through the GUI. The initial value is
+  // main.R and it gets appended to only as new scripts are run.
+
+  String _script = ""; //File("$assetsPath/r/main.R").readAsString();
+
+  String get script => _script;
+
+  void appendScript(String newScript) {
+    _script = _script + newScript;
     notifyListeners();
   }
 }
