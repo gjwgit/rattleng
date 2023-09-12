@@ -37,11 +37,12 @@ class StatusBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<DatasetModel>(
-      // Build a [Consumer] of the [DatasetModel] so we can access updated
-      // values of the path variable.
+      // As a [Consumer] of the [DatasetModel] recording the app's state we can
+      // access the status message as it gets updated, so that the status bar
+      // remains up to date.
 
       builder: (context, dataset, child) {
-        // The builder takes a context, a DatasetMode, and the child. It is the
+        // The builder takes a context, a DatasetModel, and the child. It is the
         // `dataset` that contains the state that we can access here.
 
         return Container(
