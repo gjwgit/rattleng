@@ -50,7 +50,7 @@ class DatasetButton extends StatelessWidget {
           Provider.of<DatasetModel>(context, listen: false)
               .setPath(selectedFileName);
         } else {
-          debugPrint("PATH : ${currentPath}");
+          debugPrint("PATH : $currentPath");
         }
 
         debugPrint("NOW LOAD THE DATASET THEN REPLACE THE WELCOME MESSAGE");
