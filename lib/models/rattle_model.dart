@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-12 19:16:02 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 06:15:41 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -57,6 +57,15 @@ class RattleModel extends ChangeNotifier {
 
   void setStatus(String newStatus) {
     _status = newStatus;
+    notifyListeners();
+  }
+
+  String _output = "";
+
+  String get output => _output;
+
+  void setOutput(String newOutput) {
+    _output = newOutput;
     notifyListeners();
   }
 }
