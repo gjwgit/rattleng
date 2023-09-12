@@ -1,4 +1,4 @@
-import 'package:rattle/helpers/r.dart' show rSource;
+import 'r.dart' show rSource;
 
 /// Load the specified dataset using the appropriate R script.
 ///
