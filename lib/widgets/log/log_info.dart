@@ -27,6 +27,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/widgets/log/log_save_button.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 /// Create a log info widget with a Save button and displaying markdown.
 ///
@@ -50,9 +51,13 @@ class LogInfo extends StatelessWidget {
                         children: [
                           const LogSaveButton(),
                           const SizedBox(height: 10),
-                          // Markdown(data: File(logIntro).readAsStringSync()),
+                          // Markdown(data: "**Sample data**"),
                           // sunkenMarkdownFileBuilder(logIntro),
-                          Text(snapshot.data!),
+
+                          //Make a custom widget that renders markdown using the
+                          //Markdown package
+                          Text(snapshot.data! +
+                              " \n This has to be redered as markdown"),
                         ],
                       ),
                     )
