@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 22:18:45 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-12 15:55:42 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,7 +25,6 @@
 import 'package:flutter/material.dart' show debugPrint;
 
 import 'package:rattle/helpers/build_model.dart' show buildModel;
-import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
 
 void processTab(String currentTab) {
   switch (currentTab) {
