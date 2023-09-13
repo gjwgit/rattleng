@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 17:15:01 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 19:13:37 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -75,8 +75,6 @@ class RattleModel extends ChangeNotifier {
   String get script => _script;
 
   void appendScript(String newScript) {
-    debugPrint("INSIDE appendScript AND ADDING $newScript <===");
-
     _script = _script + newScript;
     notifyListeners();
   }
