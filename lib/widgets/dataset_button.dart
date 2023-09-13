@@ -53,17 +53,10 @@ class DatasetButton extends StatelessWidget {
           debugPrint("PATH : $currentPath");
         }
 
-        debugPrint("NOW LOAD THE DATASET THEN REPLACE THE WELCOME MESSAGE");
-
-        // TODO 20230913 gjw PERHAPS REDESIGN FOR LOADDATASET TO RETURN THE
-        // SCRIPT AS A STRING. THEN PASS THE STRING TO THE r PROCESS TO RUN AND
-        // THE PASS THE STRING TO THE RATTLE MODEL TO PUBLISH IN THE SCRIPT.
+        // Request the dataset to be loaded, and pass the rattle model across so
+        // that the script can be added to it.
 
         rLoadDataset(currentPath, rattle);
-
-        // code = rLoadDataset(currentPath);
-        // process.stdin.writeln(code);
-        // rattle.appendScript(code);
 
         rattle.setStatus("Choose **variable roles** and then proceed to "
             "analyze and model your data via the other tabs.");
