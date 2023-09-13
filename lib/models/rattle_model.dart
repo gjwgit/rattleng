@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 09:38:52 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 17:15:01 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,20 +22,24 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/load_asset.dart';
+
+/// The global state of affairs for Rattle.
+///
+/// This [ChangeNotifier] records data that is maintained and access throughout
+/// the app. This includes:
+///
+/// + **path** the dataset path, either a filename or package dataset name;
+/// + **status** the current text to display in the status bar;
+/// + **script** the monotonically growing R script capuring the user's interactions.
 
 class RattleModel extends ChangeNotifier {
-  /// Internal dataset name.
-
-  // The [_path] lives here at the parent widget of both DatasetButton (a button
-  // for choosing a file) and the DatasetTextField. When the DatasetButton
-  // updates the [_path] through [setPath] the DatasetTextField consumes the new
-  // value and is rebuilt from above.
+  // The [_path] lives here at the parent widget of the app. When the
+  // [DatasetButton] updates the [_path] through [setPath] the
+  // [DatasetTextField] [Consumes] the new value and is rebuilt.
 
   String _path = "";
 
@@ -66,12 +70,32 @@ class RattleModel extends ChangeNotifier {
   // Store the script being developed through the GUI. The initial value is
   // main.R and it gets appended to only as new scripts are run.
 
-  String _script = ""; //File("$assetsPath/r/main.R").readAsString();
+  String _script = "";
 
   String get script => _script;
 
   void appendScript(String newScript) {
+    debugPrint("INSIDE appendScript AND ADDING $newScript <===");
+
     _script = _script + newScript;
     notifyListeners();
+  }
+
+  // Constructor to load the initial values, if required, from asset files.
+
+  RattleModel() {
+    _loadInitialValues();
+  }
+
+  Future<void> _loadInitialValues() async {
+    try {
+      final String assetContent =
+          '## -- main.R --\n\n${await rootBundle.loadString("$assetsPath/r/main.R")}';
+      _script = assetContent;
+      notifyListeners();
+    } catch (e) {
+      // Handle any exceptions here
+      debugPrint('Error loading asset: $e');
+    }
   }
 }
