@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/helpers/load_dataset.dart' show loadDataset;
+import 'package:rattle/helpers/r_load_dataset.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class DatasetButton extends StatelessWidget {
@@ -53,18 +53,19 @@ class DatasetButton extends StatelessWidget {
           debugPrint("PATH : $currentPath");
         }
 
-        debugPrint("NOW LOAD THE DATASET THEN REPLACE THE WELCOME MESSAGE");
+        // Request the dataset to be loaded, and pass the rattle model across so
+        // that the script can be added to it.
 
-        loadDataset(currentPath);
+        rLoadDataset(currentPath, rattle);
 
         rattle.setStatus("Choose **variable roles** and then proceed to "
             "analyze and model your data via the other tabs.");
       },
-      child: Tooltip(
+      child: const Tooltip(
         message: "Click here to have the option to load the data from a file,\n"
             "including CSV files, or from an R pacakge, or to load \n"
             "the demo dataset, rattle::weather.",
-        child: const Text("Dataset"),
+        child: Text("Dataset"),
       ),
     );
   }
