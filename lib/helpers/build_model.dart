@@ -1,4 +1,4 @@
-import 'package:rattle/helpers/r.dart' show rSource;
+import 'package:rattle/helpers/r_source.dart';
 
 /// Load the specified dataset using the appropriate R script.
 ///
@@ -9,6 +9,6 @@ import 'package:rattle/helpers/r.dart' show rSource;
 /// which is the default.
 
 void buildModel() {
-  rSource("model_template");
-  rSource("rpart_build");
+  //rSource("model_template");
+  //rSource("rpart_build");
 }
