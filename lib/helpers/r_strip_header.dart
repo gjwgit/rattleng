@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 15:22:57 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 17:16:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,7 +42,7 @@ String rStripHeader(String code) {
 
   // Join the lines.
 
-  String result = "\n" + lines.first + "\n#" + lines.sublist(index).join('\n');
+  String result = "\n${lines.first} \n#${lines.sublist(index).join('\n')}";
 
   return result;
 }
