@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2023-09-07 10:52:27 +1000 Graham Williams>
+# Time-stamp: <Thursday 2023-09-14 08:23:56 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -92,3 +92,15 @@ rtests:
 .PHONY: prep
 prep: rtests checks tests docs
 
+realclean::
+	snapcraft clean rattle
+
+.PHONY: snap
+snap:
+	flutter clean
+	snapcraft clean rattle
+	snapcraft
+
+.PHONY: isnap
+isnap:
+	snap install --dangerous rattle_0.0.1_amd64.snap 
