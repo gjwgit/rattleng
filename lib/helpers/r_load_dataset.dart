@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 16:02:04 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 17:07:48 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,8 +36,6 @@ import 'package:rattle/models/rattle_model.dart';
 /// which is the default.
 
 void rLoadDataset(String filename, RattleModel rattle) {
-  String code = "";
-
   // Get the filename from the corresponding widget.
 
   // final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
