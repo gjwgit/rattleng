@@ -1,5 +1,3 @@
-import 'package:rattle/helpers/r_source.dart';
-
 /// Load the specified dataset using the appropriate R script.
 ///
 /// The R script is expected to load the data into the template variable `ds`,
@@ -9,6 +7,7 @@ import 'package:rattle/helpers/r_source.dart';
 /// which is the default.
 
 void buildModel() {
+  null;
   //rSource("model_template");
   //rSource("rpart_build");
 }
