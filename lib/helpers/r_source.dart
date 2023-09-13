@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 16:19:35 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 16:37:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -50,8 +50,25 @@ void rSource(String script, RattleModel rattle) {
 
   var code = File("assets/r/$script.R").readAsStringSync();
 
-  // Process template variables. HARD CODED FOR NOW UNTIL WE PASS IN THE
+  // Process template variables.
+
+  // HARD CODED FOR NOW UNTIL WE PASS IN THE
   // KEY:VALUE MAPPINGS.
+
+  int currentTimeStamp = DateTime.now().millisecondsSinceEpoch;
+  String formattedTimeStamp = DateFormat('yyyy-MM-dd HH:mm:ss')
+      .format(DateTime.fromMillisecondsSinceEpoch(currentTimeStamp));
+
+  code = code.replaceAll('<<TIMESTAMP>>', formattedTimeStamp);
+
+  // Populate the <<VERSION>>.
+
+  //PackageInfo info = await PackageInfo.fromPlatform();
+  //code = code.replaceAll('<<VERSION>>', info.version);
+
+  // HARD CODE FOR NOW AS ABOVE REQUIRES ASYNC AND RETURNS FUTURE.
+
+  code = code.replaceAll('<<VERSION>>', '0.0.1');
 
   code = code.replaceAll('<<VAR_TARGET>>', "rain_tomorrow");
   code = code.replaceAll('<<VAR_RISK>>', "risk_mm");
