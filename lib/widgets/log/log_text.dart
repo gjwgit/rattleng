@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-29 07:34:51 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 11:32:49 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,9 +23,11 @@
 /// Authors: Graham Williams
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+
+import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/widgets.dart';
+import 'package:rattle/models/rattle_model.dart';
 
 /// Create a log text viewer that can scroll the text of the log widget.
 ///
@@ -39,21 +41,24 @@ class LogText extends StatelessWidget {
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
-          return FutureBuilder(
-            future: rootBundle.loadString('assets/r/main.R'),
-            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              return snapshot.hasData
-                  ? SelectableText(
-                      snapshot.data!,
-                      key: logTextKey,
-                      style: const TextStyle(
-                        // fontFamily: 'UbuntuMono',
-                        // fontSize: 14,
-                        fontFamily: 'RobotoMono',
-                        fontSize: 12,
-                      ),
-                    )
-                  : const CircularProgressIndicator();
+          return Consumer<RattleModel>(
+            // Build a [Consumer] of the [RattleModel] so we can access updated values
+            // of the script as it grows.
+
+            builder: (context, rattle, child) {
+              // The builder takes a context, a RattleMode, and the child. It is the
+              // `rattle` that contains the state that we can access here.
+
+              return SelectableText(
+                rattle.script,
+                key: logTextKey,
+                style: const TextStyle(
+                  // fontFamily: 'UbuntuMono',
+                  // fontSize: 14,
+                  fontFamily: 'RobotoMono',
+                  fontSize: 12,
+                ),
+              );
             },
           );
         },

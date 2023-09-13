@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2023-08-26 14:16:07 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-13 15:06:30 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,11 +23,9 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Graham Williams
-#
-##
-#
+
 # Designed to be run after the variable `ds` (dataset) has been
-# instantiated, this script will initialise the data template variables. for
+# instantiated, this script will initialise the data template variables.
 #
 # References:
 #

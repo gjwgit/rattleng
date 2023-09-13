@@ -1,11 +1,11 @@
-/// A button to save the log to file.
+/// Utility to strip header comments from an R script file.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
-///
-// Time-stamp: <Wednesday 2023-09-13 19:33:26 +1000 Graham Williams>
+//
+// Time-stamp: <Wednesday 2023-09-13 17:16:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,28 +22,27 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io' show File;
+/// The intention is to strip the initial copyright message from the script,
+/// though keeping the first line, assumened to be the script title, and then
+/// keeping all other lines from the script file supplied as the [String]
+/// [code].
 
-import 'package:flutter/material.dart';
+String rStripHeader(String code) {
+  // Keep first line then strip everything down to the first line not starting
+  // with a hash.
 
-import 'package:provider/provider.dart';
+  List<String> lines = code.split('\n');
 
-import 'package:rattle/models/rattle_model.dart';
+  // Find the index of the first line that doesn't start with '#'
 
-class LogSaveButton extends StatelessWidget {
-  const LogSaveButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      builder: (context, rattle, child) {
-        return ElevatedButton(
-          child: const Text("Export"),
-          onPressed: () {
-            File('script.R').writeAsString(rattle.script);
-          },
-        );
-      },
-    );
+  int index = 0;
+  while (index < lines.length && lines[index].trim().startsWith('#')) {
+    index++;
   }
+
+  // Join the lines.
+
+  String result = "\n${lines.first} \n#${lines.sublist(index).join('\n')}";
+
+  return result;
 }

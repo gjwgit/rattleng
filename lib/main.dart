@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 12:23:49 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 16:03:03 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/models/rattle_model.dart';
 
-import 'package:rattle/helpers/r.dart' show rStart;
+import 'package:rattle/helpers/r_start.dart';
 import 'package:rattle/helpers/utils.dart';
 import 'package:rattle/rattle_app.dart';
 
