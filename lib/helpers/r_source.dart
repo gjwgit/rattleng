@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 16:37:52 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-13 17:11:40 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,13 +22,12 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:convert' show utf8;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/helpers/r_process.dart';
 import 'package:rattle/helpers/r_strip_header.dart';
