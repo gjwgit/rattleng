@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2023-09-15 05:36:04 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 09:23:11 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/helpers/r_extract_glimpse.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/dataset_chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
@@ -68,10 +69,18 @@ class DatasetTabState extends State<DatasetTab> {
               ),
               Visibility(
                 visible: rattle.path != "",
-                child: const Expanded(
-                  child: Center(
-                    child: Text(
-                      "DISPLAY OUTPUT OF glimpse(ds) HERE AS NEXT APPROXIMATION 20230912",
+                child: Expanded(
+                  child: Container(
+                    // I am setting the height for the bottom bar but this does not really
+                    // seem to be the way to do this.
+                    //height: 50,
+                    padding: const EdgeInsets.only(left: 0),
+                    child: SelectableText(
+                      rExtractGlimpse(rattle.stdout),
+                      style: const TextStyle(
+                        fontFamily: 'RobotoMono',
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
