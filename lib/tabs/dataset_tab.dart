@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-09-12 19:21:53 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 05:36:04 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -33,14 +33,14 @@ import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/dataset_chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
-class DataTab extends StatefulWidget {
-  const DataTab({Key? key}) : super(key: key);
+class DatasetTab extends StatefulWidget {
+  const DatasetTab({Key? key}) : super(key: key);
 
   @override
-  DataTabState createState() => DataTabState();
+  DatasetTabState createState() => DatasetTabState();
 }
 
-class DataTabState extends State<DataTab> {
+class DatasetTabState extends State<DatasetTab> {
   @override
   Widget build(BuildContext context) {
     return Consumer<RattleModel>(
