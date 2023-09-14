@@ -23,10 +23,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
-import 'package:rattle/helpers/r_load_dataset.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/widgets/dataset_popup.dart';
 
 class DatasetButton extends StatelessWidget {
   const DatasetButton({Key? key}) : super(key: key);
@@ -35,31 +32,7 @@ class DatasetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        // Obtain the current path.
-
-        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-        String currentPath = rattle.path;
-
-        if (currentPath == "") {
-          debugPrint("NO PATH SO POPUP A CHOICE OF FILE or PACKAGE or DEMO.");
-          // Obtain the dataset name
-          debugPrint("FOR NOW SET THE DATASET AS rattle::weather.");
-          String selectedFileName = "rattle::weather";
-          // Update the selected filename using the Provider.
-
-          Provider.of<RattleModel>(context, listen: false)
-              .setPath(selectedFileName);
-        } else {
-          debugPrint("PATH : $currentPath");
-        }
-
-        // Request the dataset to be loaded, and pass the rattle model across so
-        // that the script can be added to it.
-
-        rLoadDataset(currentPath, rattle);
-
-        rattle.setStatus("Choose **variable roles** and then proceed to "
-            "analyze and model your data via the other tabs.");
+        _showPopup(context);
       },
       child: const Tooltip(
         message: "Click here to have the option to load the data from a file,\n"
@@ -67,6 +40,15 @@ class DatasetButton extends StatelessWidget {
             "the demo dataset, rattle::weather.",
         child: Text("Dataset"),
       ),
+    );
+  }
+
+  void _showPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const DatasetPopup();
+      },
     );
   }
 }
