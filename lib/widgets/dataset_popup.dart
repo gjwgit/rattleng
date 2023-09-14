@@ -59,12 +59,16 @@ class DatasetPopup extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  null;
+                },
                 child: const Text('Filename'),
               ),
               const SizedBox(width: 10), // Space between buttons.
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  null;
+                },
                 child: const Text('Package'),
               ),
               const SizedBox(width: 10), // Space between buttons.
