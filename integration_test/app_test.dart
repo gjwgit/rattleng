@@ -98,6 +98,19 @@ void main() {
       String filename = dsPathText.controller?.text ?? '';
       expect(filename, "rattle::weather");
 
+      // Check the Scripts
+
+      final scriptTab = find.text('Script');
+      expect(scriptTab, findsOneWidget);
+      await tester.tap(scriptTab);
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
+
+      // Check the script contains '-- data_load_weather.R --'
+
+      // final scriptTextField = find.text(contains('-- data_load_weather.R --'));
+      // expect(scriptTextField, findsOneWidget);
+
       // Tap again to have some R scripts run to set up the data template.
 
       // await tester.tap(runButton);

@@ -28,8 +28,8 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 
-class ClearDatasetTextField extends StatelessWidget {
-  const ClearDatasetTextField({Key? key}) : super(key: key);
+class DatasetClearTextField extends StatelessWidget {
+  const DatasetClearTextField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
