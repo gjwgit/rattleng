@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 19:39:34 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 05:36:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -50,7 +50,7 @@ class RattleApp extends StatelessWidget {
               fontSizeDelta: 2.0,
             ),
       ),
-      home: const RattleHomePage(),
+      home: const HomePage(),
     );
   }
 }
