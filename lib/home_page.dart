@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 05:37:51 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 07:27:00 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,10 +26,11 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/tabs/dataset_tab.dart';
-import 'package:rattle/tabs/log_tab.dart';
+import 'package:rattle/tabs/script_tab.dart';
 import 'package:rattle/tabs/tab_utils.dart' show processTab;
 import 'package:rattle/widgets/r_console.dart';
 import 'package:rattle/widgets/status_bar.dart';
+import 'package:rattle/widgets/test_widget.dart';
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
 
@@ -52,7 +53,8 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Test",
     "icon": Icons.task,
-    "widget": const Center(child: Text("TEST")),
+    "widget": const TestWidget(),
+    // "widget": const Center(child: Text("TEST")),
   },
   {
     'title': "Transform",
@@ -78,7 +80,7 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Script",
     "icon": Icons.code,
-    "widget": const LogTab(),
+    "widget": const ScriptTab(),
   },
 ];
 
