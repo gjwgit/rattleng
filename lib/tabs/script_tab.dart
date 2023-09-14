@@ -1,11 +1,11 @@
-/// The LOG tab page.
+/// The SCRIPT tab page where the R script is captured.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-29 08:18:30 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 06:51:24 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,13 +24,13 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/log/log_info.dart';
-import 'package:rattle/widgets/log/log_text.dart';
+import 'package:rattle/widgets/script/script_info.dart';
+import 'package:rattle/widgets/script/script_text.dart';
 
-// TESTING CAN BE REMOVED? final logController = TextEditingController();
+// TESTING CAN BE REMOVED? final scriptController = TextEditingController();
 
-class LogTab extends StatelessWidget {
-  const LogTab({Key? key}) : super(key: key);
+class ScriptTab extends StatelessWidget {
+  const ScriptTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,11 @@ class LogTab extends StatelessWidget {
       children: [
         Expanded(
           flex: 4,
-          child: LogInfo(),
+          child: ScriptInfo(),
         ),
         Expanded(
           flex: 7,
-          child: LogText(),
+          child: ScriptText(),
         ),
       ],
     );
