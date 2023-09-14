@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 17:11:40 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 07:05:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,7 +32,7 @@ import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/helpers/r_process.dart';
 import 'package:rattle/helpers/r_strip_header.dart';
 
-/// Run the R [script] and append the script to the [rattle] script log.
+/// Run the R [script] and append to the [rattle] script.
 
 void rSource(String script, RattleModel rattle) {
   // TODO ANOTHER ARGUMENT AS A LIST OF MAPS FROM STRING TO STRING LIKE

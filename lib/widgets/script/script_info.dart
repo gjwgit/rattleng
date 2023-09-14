@@ -1,11 +1,11 @@
-/// A LOG info with a save button widget for the LOG tab page.
+/// A SCRIPT info with a save button widget for the SCRIPT tab page.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 09:16:11 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 06:57:10 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,15 +26,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/widgets/log/log_save_button.dart';
+import 'package:rattle/widgets/script/script_save_button.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-/// Create a log info widget with a Save button and displaying markdown.
+/// Create a script info widget with a Save button and displaying markdown.
 ///
-/// The contents is intialised from log_intro.md markdown asset.
+/// The contents is intialised from script_intro.md markdown asset.
 
-class LogInfo extends StatelessWidget {
-  const LogInfo({Key? key}) : super(key: key);
+class ScriptInfo extends StatelessWidget {
+  const ScriptInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class LogInfo extends StatelessWidget {
         builder: (BuildContext context) {
           // WHY USING FUTURE BUILDER HERE?
           return FutureBuilder(
-            future: rootBundle.loadString(logIntroFile),
+            future: rootBundle.loadString(scriptIntroFile),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               return snapshot.hasData
                   ? Container(
@@ -52,7 +52,7 @@ class LogInfo extends StatelessWidget {
                         children: [
                           MarkdownBody(data: snapshot.data!),
                           const SizedBox(height: 50),
-                          const LogSaveButton(),
+                          const ScriptSaveButton(),
                         ],
                       ),
                     )

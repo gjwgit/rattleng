@@ -1,11 +1,11 @@
-/// A LOG text widget for the LOG tab page.
+/// A SCRIPT text widget for the SCRIPT tab page.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 11:32:49 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 06:57:37 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,12 +29,12 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/widgets.dart';
 import 'package:rattle/models/rattle_model.dart';
 
-/// Create a log text viewer that can scroll the text of the log widget.
+/// Create a script text viewer that can scroll the text of the script widget.
 ///
 /// The contents is intialised from the main.R script asset.
 
-class LogText extends StatelessWidget {
-  const LogText({Key? key}) : super(key: key);
+class ScriptText extends StatelessWidget {
+  const ScriptText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class LogText extends StatelessWidget {
 
               return SelectableText(
                 rattle.script,
-                key: logTextKey,
+                key: scriptTextKey,
                 style: const TextStyle(
                   // fontFamily: 'UbuntuMono',
                   // fontSize: 14,

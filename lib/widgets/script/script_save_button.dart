@@ -1,11 +1,11 @@
-/// A button to save the log to file.
+/// A button to save the script to file.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Wednesday 2023-09-13 19:33:26 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 06:57:22 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,8 +30,8 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/models/rattle_model.dart';
 
-class LogSaveButton extends StatelessWidget {
-  const LogSaveButton({Key? key}) : super(key: key);
+class ScriptSaveButton extends StatelessWidget {
+  const ScriptSaveButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

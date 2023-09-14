@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 05:36:51 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 07:17:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,6 +25,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/helpers/create_material_color.dart';
+import 'package:rattle/helpers/r_start.dart';
 import 'package:rattle/home_page.dart';
 
 /// A widget for the root of the Rattle App.
@@ -41,6 +42,10 @@ class RattleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Initialise the R process.
+
+    rStart(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
