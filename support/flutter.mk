@@ -17,7 +17,9 @@ flutter:
   linux     Run with the linux device;
   qlinux    Run with the linux device and debugPrint() turned off;
 
-  doc	    Run `dart doc` to create documentation.
+  prep       Prep for PR by running tests, checks, docs.
+
+docs	    Run `dart doc` to create documentation.
 
   checks    Run all checks over the code base 
     format        Run `dart format`.
@@ -26,6 +28,8 @@ flutter:
     unused_files  Check unused files from dart_code_metrics.
     metrics	  Run analyze from dart_code_metrics.
     analyze       Run flutter analyze.
+    ignore        Look for usage of ignore directives.
+    license	  Look for missing top license in source code.
 
 
   test	    Run `flutter test` for testing.
@@ -55,11 +59,11 @@ chrome:
 # List the files that are automatically generated. Then they will get 
 # built as required.
 
-BUILD_RUNNER = \
-#	lib/models/synchronise_time.g.dart
+# BUILD_RUNNER = \
+# 	lib/models/synchronise_time.g.dart
 
-$(BUILD_RUNNER):
-	dart run build_runner build --delete-conflicting-outputs
+# $(BUILD_RUNNER):
+# 	dart run build_runner build --delete-conflicting-outputs
 
 pubspec.lock:
 	flutter pub get
@@ -95,9 +99,13 @@ emu:
 linux_config:
 	flutter config --enable-linux-desktop
 
-.PHONY: doc
-doc:
+.PHONY: prep
+prep: checks tests docs
+
+.PHONY: docs
+docs::
 	dart doc
+	chmod -R go+rX doc
 
 .PHONY: format
 format:
@@ -107,7 +115,7 @@ format:
 tests:: test qtest
 
 .PHONY: checks
-checks: format nullable unused_code unused_files metrics analyze
+checks: format nullable unused_code unused_files metrics analyze ignore license
 
 .PHONY: nullable
 nullable:
@@ -128,6 +136,15 @@ metrics:
 .PHONY: analyze 
 analyze:
 	flutter analyze
+
+.PHONY: ignore
+ignore:
+	@rgrep -C 2 ignore: lib
+
+.PHONY: license
+license:
+	@echo "--\nFiles without a license:"
+	@find lib -type f ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
 
 ########################################################################
 # INTEGRATION TESTING
