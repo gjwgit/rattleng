@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-09-14 13:48:37 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 07:25:06 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,15 +22,18 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:convert' show utf8;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:rattle/helpers/r_process.dart';
+import 'package:rattle/models/rattle_model.dart';
 
 /// Start up the R process and
 
-void rStart() async {
+void rStart(context) async {
   // Start up an R process from the command line.
 
   debugPrint("R: STARTING UP A NEW R PROCESS");
@@ -38,7 +41,7 @@ void rStart() async {
   process = await Process.start('R', ["--no-save"]);
 
   // Output generted by the process' stderr and stdout is
-  // captured here to the Logging tab of Flutter DevTools.
+  // captured here to the SCRIPT tab of Flutter DevTools.
   //
   // 20230824 TODO gjw Currently it also goes to the console. How to stop it
   // being displayed onto the console? It's okay during development but for
@@ -50,6 +53,11 @@ void rStart() async {
 
   //process.stdout.transform(utf8.decoder).forEach(debugPrint);
   //process.stderr.transform(utf8.decoder).forEach(debugPrint);
+
+  RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+
+  process.stdout.transform(utf8.decoder).forEach(rattle.appendStdout);
+  process.stderr.transform(utf8.decoder).forEach(rattle.appendStderr);
 
   // Read the main R startup code from the script file.
 
