@@ -48,7 +48,8 @@ class TestWidget extends StatelessWidget {
           height: 50,
           padding: const EdgeInsets.only(left: 0),
           child: SelectableText(
-            rExtractGlimpse(rattle.stdout),
+            rattle.stdout,
+            // rExtractGlimpse(rattle.stdout),
             style: const TextStyle(
               // fontFamily: 'UbuntuMono',
               // fontSize: 14,

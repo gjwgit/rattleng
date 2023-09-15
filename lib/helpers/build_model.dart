@@ -6,8 +6,11 @@
 /// different in the case where the dataset variables have been normalised,
 /// which is the default.
 
+import 'package:rattle/helpers/r_source.dart';
+
 void buildModel() {
   null;
+  // THESE NEED TO PASS RATTLE TO IT
   //rSource("model_template");
   //rSource("rpart_build");
 }
