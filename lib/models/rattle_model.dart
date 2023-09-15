@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 19:13:37 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 07:23:40 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -76,6 +76,40 @@ class RattleModel extends ChangeNotifier {
 
   void appendScript(String newScript) {
     _script = _script + newScript;
+    notifyListeners();
+  }
+
+  // Store the script being developed through the GUI. The initial value is
+  // main.R and it gets appended to only as new scripts are run.
+
+  String _stdout = "";
+
+  String get stdout => _stdout;
+
+  void appendStdout(String newStdout) {
+    _stdout = _stdout + newStdout;
+    notifyListeners();
+  }
+
+  void clearStdout() {
+    _stdout = "";
+    notifyListeners();
+  }
+
+  // Store the script being developed through the GUI. The initial value is
+  // main.R and it gets appended to only as new scripts are run.
+
+  String _stderr = "";
+
+  String get stderr => _stderr;
+
+  void appendStderr(String newStderr) {
+    _stderr = _stderr + newStderr;
+    notifyListeners();
+  }
+
+  void clearStderr() {
+    _stderr = "";
     notifyListeners();
   }
 
