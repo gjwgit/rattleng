@@ -25,7 +25,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/helpers/r_extract_glimpse.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class TestWidget extends StatelessWidget {
