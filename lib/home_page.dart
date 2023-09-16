@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 20:43:06 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-16 08:27:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -66,7 +66,7 @@ final List<Map<String, dynamic>> tabs = [
     'title': "Model",
     "icon": Icons.model_training,
     // "widget": const Center(child: Text("MODEL")),
-    "widget": ModelTab(),
+    "widget": const ModelTab(),
   },
   {
     'title': "Evaluate",
