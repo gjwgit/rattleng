@@ -43,6 +43,14 @@ Flutter interface. See the growing number of scripts in `assets/scripts/`
 
 Suggested tasks can be found as github issues.
 
+## Current Status 2023-09-17
+
++ Startup the app
++ Click the Script tab to see the R code that has already been run
++ Click the Dataset tab and then choose Demo to load the
+  `rattle::weather` dataset and view the dataset summary.
++ Click the Model tab
+
 ## Rattle Resources
 
 + Bob Meunchen's review of Rattle: https://r4stats.com/articles/software-reviews/rattle/
