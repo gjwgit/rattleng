@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-17 05:58:52 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-17 08:33:28 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/r_extract.dart';
 import 'package:rattle/helpers/r_source.dart';
 import 'package:rattle/models/rattle_model.dart';
@@ -64,10 +65,7 @@ class ModelTabState extends State<ModelTab> {
                           "\n" +
                           rExtract(rattle.stdout, "> printcp(model_rpart)") +
                           "\n",
-                      style: const TextStyle(
-                        fontFamily: 'RobotoMono',
-                        fontSize: 16,
-                      ),
+                      style: monoTextStyle,
                     ),
                   ),
                 ),
