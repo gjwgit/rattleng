@@ -1,4 +1,4 @@
-/// Radio buttons to choose the model ti build.
+/// Radio buttons to choose the model to build.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -52,21 +52,32 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
+        SizedBox(width: 5), // Add some spacing
+        Consumer<RattleModel>(
+          builder: (context, rattle, child) {
+            return ElevatedButton(
+              onPressed: () {
+                // Handle button click here
+                debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
+                    "$selectedValue = ${modellers[selectedValue]}");
+
+                rSource("model_template", rattle);
+
+                if (modellers[selectedValue] == "Tree") {
+                  rSource("rpart_build", rattle);
+                }
+              },
+              child: Text('Build'),
+            );
+          },
+        ),
+        SizedBox(width: 5), // Add some spacing
         Row(
           children: modellers.asMap().entries.map((entry) {
             int index = entry.key;
             String label = entry.value;
             return buildRadioTile(index, label);
           }).toList(),
-        ),
-        SizedBox(width: 20), // Add some spacing
-        ElevatedButton(
-          onPressed: () {
-            // Handle button click here
-            debugPrint("BUTTON CLICKED! SELECTED VALUE "
-                "$selectedValue = ${modellers[selectedValue]}");
-          },
-          child: Text('Build'),
         ),
       ],
     );
