@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/helpers/r_extract_glimpse.dart';
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class TestWidget extends StatelessWidget {
@@ -48,13 +48,9 @@ class TestWidget extends StatelessWidget {
           height: 50,
           padding: const EdgeInsets.only(left: 0),
           child: SelectableText(
-            rExtractGlimpse(rattle.stdout),
-            style: const TextStyle(
-              // fontFamily: 'UbuntuMono',
-              // fontSize: 14,
-              fontFamily: 'RobotoMono',
-              fontSize: 14,
-            ),
+            rattle.stdout,
+            // rExtractGlimpse(rattle.stdout),
+            style: monoTextStyle,
           ),
         );
       },

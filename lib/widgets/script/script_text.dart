@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 06:57:37 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-17 08:36:03 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/widgets.dart';
 import 'package:rattle/models/rattle_model.dart';
 
@@ -52,12 +53,7 @@ class ScriptText extends StatelessWidget {
               return SelectableText(
                 rattle.script,
                 key: scriptTextKey,
-                style: const TextStyle(
-                  // fontFamily: 'UbuntuMono',
-                  // fontSize: 14,
-                  fontFamily: 'RobotoMono',
-                  fontSize: 12,
-                ),
+                style: monoTextStyle,
               );
             },
           );

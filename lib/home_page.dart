@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 07:27:00 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-16 08:27:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,8 +26,9 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/tabs/dataset_tab.dart';
+import 'package:rattle/tabs/model_tab.dart';
 import 'package:rattle/tabs/script_tab.dart';
-import 'package:rattle/tabs/tab_utils.dart' show processTab;
+import 'package:rattle/tabs/process_tab.dart';
 import 'package:rattle/widgets/r_console.dart';
 import 'package:rattle/widgets/status_bar.dart';
 import 'package:rattle/widgets/test_widget.dart';
@@ -64,7 +65,8 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Model",
     "icon": Icons.model_training,
-    "widget": const Center(child: Text("MODEL")),
+    // "widget": const Center(child: Text("MODEL")),
+    "widget": const ModelTab(),
   },
   {
     'title': "Evaluate",
@@ -128,7 +130,7 @@ class HomePageState extends State<HomePage>
             ),
             onPressed: () {
               debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
-              // KEEP OPEN FOR NOT FOR THE MODEL TAB.
+              // KEEP OPEN FOR NOW FOR THE MODEL TAB.
               processTab(tabs[tabController.index]['title']);
             },
             tooltip:
