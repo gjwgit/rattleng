@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-16 05:36:56 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-16 07:39:06 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,7 +22,10 @@
 ///
 /// Authors: Graham Williams
 
-String rExtractPrintRpart(String txt) {
+// TODO 20230916 gjw ADD EXTRA PARAMETER AS THE PATTERN TO EXTRACT SINCE ALL
+// THREE SO FAR ARE BASICALLY THE SAME
+
+String rExtract(String txt, String pat) {
   // Split the string into lines.
 
   List<String> lines = txt.split('\n');
@@ -34,7 +37,7 @@ String rExtractPrintRpart(String txt) {
   int startIndex = -1;
 
   for (int i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].contains("> print(model_rpart)")) {
+    if (lines[i].contains(pat)) {
       startIndex = i;
       break;
     }
