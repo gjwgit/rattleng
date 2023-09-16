@@ -1,11 +1,11 @@
-/// First and Dataset page for the first Data tab.
+/// Dataset tab for home page.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2023-09-15 09:23:11 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-16 08:05:23 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -34,6 +34,8 @@ import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/dataset_chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
+// TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
+
 class DatasetTab extends StatefulWidget {
   const DatasetTab({Key? key}) : super(key: key);
 
@@ -47,7 +49,6 @@ class DatasetTabState extends State<DatasetTab> {
     return Consumer<RattleModel>(
       // Build a [Consumer] of the [RattleModel] so we can access updated
       // values of the path variable.
-
       builder: (context, rattle, child) {
         return Scaffold(
           body: Column(
