@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart' show Key;
 
-const logTextKey = Key("log_text");
+const scriptTextKey = Key("script_text");

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2023-08-26 11:14:44 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-13 16:36:50 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,12 +23,6 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Graham Williams
-#
-##
-#
-# Rattle timestamp: <<TIMESTAMP>>
-#
-# Rattle version <<VERSION>> user '<<USER>>'
 #
 # The concept of templates for data science was introduced in my book,
 # The Essentials of Data Science, 2017, CRC Press, referenced

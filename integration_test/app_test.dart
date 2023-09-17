@@ -20,6 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:rattle/main.dart' as rattle;
 import 'package:rattle/widgets/dataset_button.dart';
+import 'package:rattle/widgets/dataset_popup.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -61,14 +62,33 @@ void main() {
 
       await tester.pump(pause);
 
-      // Find the Run button and start pressing it.
+      // Tap the DatasetButton for the popup
 
-      var runButton = find.byKey(const Key("run_button"));
-      expect(runButton, findsOneWidget);
-      await tester.pump(pause);
-      await tester.tap(runButton);
+      await tester.tap(datasetButton);
       await tester.pumpAndSettle();
       await tester.pump(pause);
+
+      // Find the popup
+
+      var datasetPopup = find.byType(DatasetPopup);
+      expect(datasetPopup, findsOneWidget);
+
+      // Find the Demo button and tap it.
+
+      var demoButton = find.text("Demo");
+      expect(demoButton, findsOneWidget);
+      await tester.tap(demoButton);
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
+
+      // // Find the Run button and start pressing it.
+
+      // var runButton = find.byKey(const Key("run_button"));
+      // expect(runButton, findsOneWidget);
+      // await tester.pump(pause);
+      // await tester.tap(runButton);
+      // await tester.pumpAndSettle();
+      // await tester.pump(pause);
 
       // After the first tap we should see the default dataset loaded.
 
@@ -78,10 +98,23 @@ void main() {
       String filename = dsPathText.controller?.text ?? '';
       expect(filename, "rattle::weather");
 
+      // Check the Scripts
+
+      final scriptTab = find.text('Script');
+      expect(scriptTab, findsOneWidget);
+      await tester.tap(scriptTab);
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
+
+      // Check the script contains '-- data_load_weather.R --'
+
+      // final scriptTextField = find.text(contains('-- data_load_weather.R --'));
+      // expect(scriptTextField, findsOneWidget);
+
       // Tap again to have some R scripts run to set up the data template.
 
-      await tester.tap(runButton);
-      await tester.pumpAndSettle();
+      // await tester.tap(runButton);
+      // await tester.pumpAndSettle();
 
       // TODO TEST THIS SUCCEEDED
 

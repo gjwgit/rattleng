@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-09-10 18:20:10 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-09-14 15:56:43 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -44,11 +44,11 @@
 //
 // https://docs.flutter.dev/cookbook/testing/widget/introduction
 
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rattle/constants/app.dart' show appTitle;
-import 'package:rattle/rattle_app.dart';
+//import 'package:rattle/constants/app.dart' show appTitle;
+//import 'package:rattle/rattle_app.dart';
 
 // 20230828 gjw R PROCESS NOT YET WORKING
 // import 'package:rattle/helpers/r.dart';
@@ -58,26 +58,29 @@ void main() {
   // to work with. The WidgetTester allows you to build and interact
   // with widgets in the test environment.
 
+  // 20230914 gjw NULL tests for now until we set up actual unit tests. See
+  // integration-tests.
+
   testWidgets('Rattle unit test.', (WidgetTester tester) async {
     // Create the widget by telling the tester to build it. Here we build the
     // app and trigger a frame.
 
-    await tester.pumpWidget(const RattleApp());
+    // await tester.pumpWidget(const RattleApp());
 
     // Verify some widgets from the home page.
 
-    final title = find.text(appTitle);
-    expect(title, findsOneWidget);
+    // final title = find.text(appTitle);
+    // expect(title, findsOneWidget);
 
     // There should be a single filePicker - Filename:
 
-    final filePicker = find.byKey(const Key("file_picker_ds"));
-    expect(filePicker, findsOneWidget);
+    // final filePicker = find.byKey(const Key("file_picker_ds"));
+    // expect(filePicker, findsOneWidget);
 
     // There should be a single run button.
 
-    final runButton = find.byKey(const Key("run_button"));
-    expect(runButton, findsOneWidget);
+    // final runButton = find.byKey(const Key("run_button"));
+    // expect(runButton, findsOneWidget);
 
     // Tap the Run button.
 

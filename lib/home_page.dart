@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-12 19:11:29 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-16 08:27:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,19 +25,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/tabs/data_tab.dart';
-import 'package:rattle/tabs/log_tab.dart';
-import 'package:rattle/tabs/tab_utils.dart' show processTab;
+import 'package:rattle/tabs/dataset_tab.dart';
+import 'package:rattle/tabs/model_tab.dart';
+import 'package:rattle/tabs/script_tab.dart';
+import 'package:rattle/tabs/process_tab.dart';
 import 'package:rattle/widgets/r_console.dart';
 import 'package:rattle/widgets/status_bar.dart';
+import 'package:rattle/widgets/test_widget.dart';
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
 
 final List<Map<String, dynamic>> tabs = [
   {
-    'title': "Data",
+    'title': "Dataset",
     "icon": Icons.input,
-    "widget": const DataTab(),
+    "widget": const DatasetTab(),
   },
   {
     'title': "Explore",
@@ -52,7 +54,8 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Test",
     "icon": Icons.task,
-    "widget": const Center(child: Text("TEST")),
+    "widget": const TestWidget(),
+    // "widget": const Center(child: Text("TEST")),
   },
   {
     'title': "Transform",
@@ -62,7 +65,8 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Model",
     "icon": Icons.model_training,
-    "widget": const Center(child: Text("MODEL")),
+    // "widget": const Center(child: Text("MODEL")),
+    "widget": const ModelTab(),
   },
   {
     'title': "Evaluate",
@@ -78,18 +82,18 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Script",
     "icon": Icons.code,
-    "widget": const LogTab(),
+    "widget": const ScriptTab(),
   },
 ];
 
-class RattleHomePage extends StatefulWidget {
-  const RattleHomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  RattleHomePageState createState() => RattleHomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class RattleHomePageState extends State<RattleHomePage>
+class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
@@ -126,7 +130,7 @@ class RattleHomePageState extends State<RattleHomePage>
             ),
             onPressed: () {
               debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
-              // KEEP OPEN FOR NOT FOR THE MODEL TAB.
+              // KEEP OPEN FOR NOW FOR THE MODEL TAB.
               processTab(tabs[tabController.index]['title']);
             },
             tooltip:
