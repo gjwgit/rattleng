@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-17 08:37:26 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-17 14:25:41 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -61,4 +61,8 @@ const statusBarColour = Color(0x5545035e);
 const monoTextStyle = TextStyle(
   fontFamily: 'RobotoMono',
   fontSize: 16,
+);
+const monoSmallTextStyle = TextStyle(
+  fontFamily: 'RobotoMono',
+  fontSize: 12,
 );
