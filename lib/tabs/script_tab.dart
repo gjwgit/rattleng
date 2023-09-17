@@ -1,11 +1,11 @@
-/// Script tab got home page where the R script is captured.
+/// Script tab for home page where the R script is captured.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-16 08:05:39 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-17 14:25:18 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
