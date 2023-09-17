@@ -46,10 +46,14 @@ Suggested tasks can be found as github issues.
 ## Current Status 2023-09-17
 
 + Startup the app
-+ Click the Script tab to see the R code that has already been run
-+ Click the Dataset tab and then choose Demo to load the
++ Click the **Script** tab to see the R code that has already been run
++ Click the **Dataset** tab and then choose **Demo** to load the
   `rattle::weather` dataset and view the dataset summary.
-+ Click the Model tab
++ Click the **Model** tab and then the **Build** button to build and view a
+  decision tree.
++ Click the **Script** tab and the Export button to save the full script
+  to `script.R`
++ From your own command line run `Rscript script.R`
 
 ## Rattle Resources
 
