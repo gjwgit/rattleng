@@ -1,9 +1,9 @@
 Welcome to **RattleNG** the *Next Generation of Rattle*
 (https://rattle.togaware.com).
 
-Click the `Dataset` button to pick a dataset to load from a file or
-package. An option to load the sample Canberra weather dataset from
-the rattle package `rattle::weather` is a good place to start.
+Click the `Dataset` button to pick a dataset to load from file or
+package, or to load the demo Canberra weather dataset
+`rattle::weather`. Visit the **Script** tab to see the **R** code.
 
 RattleNG is an application for data science, statistical analyses,
 data visualisation 📊, machine learning, and artificial

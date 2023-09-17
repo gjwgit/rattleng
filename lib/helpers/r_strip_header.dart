@@ -1,11 +1,11 @@
-/// The LOG tab page.
+/// Utility to strip header comments from an R script file.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-08-29 08:18:30 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 09:17:56 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,30 +22,27 @@
 ///
 /// Authors: Graham Williams
 
-import 'package:flutter/material.dart';
+/// The intention is to strip the initial copyright message from the script,
+/// though keeping the first line, assumened to be the script title, and then
+/// keeping all other lines from the script file supplied as the [String]
+/// [code].
 
-import 'package:rattle/widgets/log/log_info.dart';
-import 'package:rattle/widgets/log/log_text.dart';
+String rStripHeader(String code) {
+  // Keep first line then strip everything down to the first line not starting
+  // with a hash.
 
-// TESTING CAN BE REMOVED? final logController = TextEditingController();
+  List<String> lines = code.split('\n');
 
-class LogTab extends StatelessWidget {
-  const LogTab({Key? key}) : super(key: key);
+  // Find the index of the first line that doesn't start with '#'
 
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          flex: 4,
-          child: LogInfo(),
-        ),
-        Expanded(
-          flex: 7,
-          child: LogText(),
-        ),
-      ],
-    );
+  int index = 0;
+  while (index < lines.length && lines[index].trim().startsWith('#')) {
+    index++;
   }
+
+  // Join the lines.
+
+  String result = "\n${lines.first} \n#${lines.sublist(index).join('\n')}";
+
+  return result;
 }

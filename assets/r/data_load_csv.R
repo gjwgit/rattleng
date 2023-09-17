@@ -1,11 +1,11 @@
-# Rattle Scripts: Load a CSV file as FILENAME into the session as `ds`
+# Rattle Scripts: Load a CSV file into the session as `ds`.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2023-08-28 17:09:49 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-13 15:05:12 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,8 +23,6 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Graham Williams
-#
-##
 
 # Given a FILENAME we load it as a CSV file into the template variable
 # `ds` (dataset) as per the templates introduced in

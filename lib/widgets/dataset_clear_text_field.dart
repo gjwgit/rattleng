@@ -1,4 +1,4 @@
-/// A button to choose a dataset (from file or a package).
+/// A button to clear the dataset textfield.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,31 +23,23 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/dataset_popup.dart';
+import 'package:provider/provider.dart';
 
-class DatasetButton extends StatelessWidget {
-  const DatasetButton({Key? key}) : super(key: key);
+import 'package:rattle/constants/app.dart';
+import 'package:rattle/models/rattle_model.dart';
+
+class DatasetClearTextField extends StatelessWidget {
+  const DatasetClearTextField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        _showPopup(context);
-      },
-      child: const Tooltip(
-        message: "Click here to have the option to load the data from a file,\n"
-            "including CSV files, or from an R pacakge, or to load \n"
-            "the demo dataset, rattle::weather.",
-        child: Text("Dataset"),
-      ),
-    );
-  }
-
-  void _showPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const DatasetPopup();
+    return IconButton(
+      icon: const Icon(Icons.clear),
+      tooltip: 'Clear the dataset.',
+      onPressed: () {
+        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+        rattle.setPath("");
+        rattle.setStatus(statusWelcomeMsg);
       },
     );
   }
