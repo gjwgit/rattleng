@@ -1,11 +1,11 @@
-/// First and Dataset page for the first Data tab.
+/// Model tab for home page.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-09-12 19:21:53 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-17 08:33:28 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,49 +29,43 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/helpers/r_extract.dart';
+import 'package:rattle/helpers/r_source.dart';
 import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/widgets/dataset_chooser.dart';
-import 'package:rattle/widgets/markdown_file.dart';
+import 'package:rattle/widgets/model_radio_buttons.dart';
+import 'package:rattle/widgets/model_buttons.dart';
 
-class DataTab extends StatefulWidget {
-  const DataTab({Key? key}) : super(key: key);
+// TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
+
+class ModelTab extends StatefulWidget {
+  const ModelTab({Key? key}) : super(key: key);
 
   @override
-  DataTabState createState() => DataTabState();
+  ModelTabState createState() => ModelTabState();
 }
 
-class DataTabState extends State<DataTab> {
+class ModelTabState extends State<ModelTab> {
   @override
   Widget build(BuildContext context) {
     return Consumer<RattleModel>(
-      // Build a [Consumer] of the [RattleModel] so we can access updated
-      // values of the path variable.
-
+      // A [Consumer] of the [RattleModel] so we can access updated values of
+      // the stdout variable.
       builder: (context, rattle, child) {
         return Scaffold(
           body: Column(
             children: [
-              const DatasetChooser(),
-
-              // A text view that takes up the remaining space and displays the
-              // Rattle welcome and getting started message. This will be
-              // overwritten once a dataset is loaded.
-
-              Visibility(
-                visible: rattle.path == "",
-                child: Expanded(
-                  child: Center(
-                    key: const Key("rattle_welcome"),
-                    child: sunkenMarkdownFileBuilder(welcomeMsgFile),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: rattle.path != "",
-                child: const Expanded(
-                  child: Center(
-                    child: Text(
-                      "DISPLAY OUTPUT OF glimpse(ds) HERE AS NEXT APPROXIMATION 20230912",
+              ModelRadioButtons(),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(left: 0),
+                  child: SingleChildScrollView(
+                    child: SelectableText(
+                      // ignore: prefer_interpolation_to_compose_strings
+                      rExtract(rattle.stdout, "> print(model_rpart)") +
+                          "\n" +
+                          rExtract(rattle.stdout, "> printcp(model_rpart)") +
+                          "\n",
+                      style: monoTextStyle,
                     ),
                   ),
                 ),

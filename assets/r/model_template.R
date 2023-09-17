@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2023-08-26 20:53:49 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-13 15:06:57 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,7 +23,7 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Graham Williams
-##
+
 # Rattle timestamp: <<TIMESTAMP>>
 #
 # Run this script after the variable `ds` (dataset) and other data

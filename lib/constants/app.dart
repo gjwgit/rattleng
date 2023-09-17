@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2023-09-11 22:27:37 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-09-17 08:37:26 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -38,9 +38,9 @@ const String assetsPath = 'assets';
 
 const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 
-/// Location of the markdown file containing instructions for the LOG tab.
+/// Location of the markdown file containing instructions for the SCRIPT tab.
 
-const String logIntroFile = '$assetsPath/markdown/log_intro.md';
+const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
 /// The status line welcome message.
 
@@ -55,3 +55,10 @@ const String statusWelcomeMsg =
 /// app.
 
 const statusBarColour = Color(0x5545035e);
+
+/// A mono font used for displaying R script and output.
+
+const monoTextStyle = TextStyle(
+  fontFamily: 'RobotoMono',
+  fontSize: 16,
+);

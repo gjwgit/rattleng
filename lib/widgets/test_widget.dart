@@ -1,4 +1,4 @@
-/// A button to clear the dataset textfield.
+/// A test widget showing, temporarily, on the TEST tab.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -28,18 +28,31 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 
-class ClearDatasetTextField extends StatelessWidget {
-  const ClearDatasetTextField({Key? key}) : super(key: key);
+class TestWidget extends StatelessWidget {
+  const TestWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.clear),
-      tooltip: 'Clear the dataset.',
-      onPressed: () {
-        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-        rattle.setPath("");
-        rattle.setStatus(statusWelcomeMsg);
+    return Consumer<RattleModel>(
+      // As a [Consumer] of the [RattleModel] recording the app's state we can
+      // access the status message as it gets updated, so that the status bar
+      // remains up to date.
+
+      builder: (context, rattle, child) {
+        // The builder takes a context, a RattleModel, and the child. It is the
+        // `rattle` that contains the state that we can access here.
+
+        return Container(
+          // I am setting the height for the bottom bar but this does not really
+          // seem to be the way to do this.
+          height: 50,
+          padding: const EdgeInsets.only(left: 0),
+          child: SelectableText(
+            rattle.stdout,
+            // rExtractGlimpse(rattle.stdout),
+            style: monoTextStyle,
+          ),
+        );
       },
     );
   }

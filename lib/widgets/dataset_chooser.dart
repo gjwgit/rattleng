@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-09-11 22:03:55 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-15 05:30:04 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/widgets/dataset_button.dart';
 import 'package:rattle/widgets/dataset_text_field.dart';
-import 'package:rattle/widgets/clear_dataset_text_field.dart';
+import 'package:rattle/widgets/dataset_clear_text_field.dart';
 
 /// The dataset chooser to allow selection of the data for Rattle.
 ///
@@ -69,7 +69,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         // Clear the textfield entry.
 
-        ClearDatasetTextField(),
+        DatasetClearTextField(),
 
         SizedBox(width: 5),
       ],
