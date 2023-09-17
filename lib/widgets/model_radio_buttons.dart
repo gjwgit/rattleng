@@ -52,7 +52,7 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        SizedBox(width: 5), // Add some spacing
+        const SizedBox(width: 5), // Add some spacing
         Consumer<RattleModel>(
           builder: (context, rattle, child) {
             return ElevatedButton(
@@ -63,15 +63,20 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
 
                 rSource("model_template", rattle);
 
-                if (modellers[selectedValue] == "Tree") {
-                  rSource("rpart_build", rattle);
+                switch (modellers[selectedValue]) {
+                  case "Tree":
+                    rSource("model_build_rpart", rattle);
+                  case "Forest":
+                    rSource("model_build_random_forest", rattle);
+                  default:
+                    debugPrint("NO ACTION FOR THIS BUTTON");
                 }
               },
-              child: Text('Build'),
+              child: const Text('Build'),
             );
           },
         ),
-        SizedBox(width: 5), // Add some spacing
+        const SizedBox(width: 5), // Add some spacing
         Row(
           children: modellers.asMap().entries.map((entry) {
             int index = entry.key;
