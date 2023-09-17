@@ -26,6 +26,35 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
+## Installation
+
+### Latest Code
+
+RattleNG is currently under active development. To get the current app
+you can install flutter on your local computer, then clone the github
+repository, to your local disk, and from a command line change to the
+directory where you cloned the rattle repository (it should contain a
+`lib` sub-directory) and type the following command, changing `<os>`
+to be one of `windows`, `macos`, or `linux`.
+
+```
+flutter run -d <os>
+```
+
+### Windows
+
+Download https://access.togaware.com/rattle.msix. Right mouse button
+on the downloaded file to open the *Properties*. Choose the *Digital
+Signatures* tab. Highlight the *Togaware* line, then click
+*Details*. Click *View Certificate...* then *Install
+Certificate...*. Choose *Local Machine* and then *Next*. Choose *Place
+all certificates in the following store* and and *Browse...* to select
+**Trusted Root Certification Authorities** and click *OK*. Then click
+*Next* and *Finish*. You should see a popup that says **The import was
+successful**. Then open the downloaded `rattle.msix` to install and
+run rattle.
+
+
 ## How you can Help
 
 RattleNG will remain an open source application, free for anyone to
