@@ -60,11 +60,11 @@ class DatasetButton extends StatelessWidget {
         rattle.setStatus("Choose **variable roles** and then proceed to "
             "analyze and model your data via the other tabs.");
       },
-      child: Tooltip(
+      child: const Tooltip(
         message: "Click here to have the option to load the data from a file,\n"
             "including CSV files, or from an R pacakge, or to load \n"
             "the demo dataset, rattle::weather.",
-        child: const Text("Dataset"),
+        child: Text("Dataset"),
       ),
     );
   }
