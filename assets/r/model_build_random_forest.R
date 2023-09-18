@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build an rpart decision tree.
+# Rattle Scripts: From dataset ds build a random forest model.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-13 15:07:17 +1000 Graham Williams>
+# Time-stamp: <Sunday 2023-09-17 19:14:20 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,46 +24,52 @@
 #
 # Author: Graham Williams
 
-# Decision Tree using RPART
+# Random Forest using randomForest
 #
 # Rattle timestamp: <<TIMESTAMP>>
 #
 # References
 #
-# @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/rpart.html
+# @williams:2017:essentials Chapter 8.
 # https://survivor.togaware.com/datascience/ for further details.
-
-# We begin most scripts by loading the required packages.  Here are
-# some initial packages to load and others will be identified as we
-# proceed through the script. When writing our own scripts we often
-# collect together the library commands at the beginning of the script
-# here.
 
 # Load required packages from the local library into the R session.
 
-# The 'rpart' package provides the 'rpart' function.
-
-library(rpart)        # ML: decision tree rpart().
+library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 
 # For repeatable results.
 
 set.seed(42)
 
-mtype <- "rpart"
-mdesc <- "decision tree"
 
-model_rpart <- rpart(
+mtype <- "ranomdForest"
+mdesc <- "random forest"
+
+model_randomForest <- randomForest(
   form,
-  data=ds[tr, vars],
-  method="class",
-  parms=list(split="information"<<PRIORS>><<LOSS>>),
-  control=rpart.control(usesurrogate=0,
-                        maxsurrogate=0<<MINSPLIT>><<MINBUCKET>><<CP>>),
-  model=TRUE)
+  data=ds[tr, vars], 
+  ntree=<<RF_NUM_TREES>>,
+  mtry=<<RF_MTRY>>,
+  importance=TRUE,
+  na.action=<<RF_NA_ACTION>>,
+  replace=FALSE)
 
-# Generate a textual view of the Decision Tree model.
+# Generate textual output of the 'Random Forest' model.
 
-print(model_rpart)
-printcp(model_rpart)
-cat("\n")
+print(model_randomForest)
+
+# The `pROC' package implements various AUC functions.
+
+# Calculate the Area Under the Curve (AUC).
+
+##### print(pROC::roc(crs$rf$y, as.numeric(crs$rf$predicted)))
+
+# Calculate the AUC Confidence Interval.
+
+##### print(pROC::ci.auc(crs$rf$y, as.numeric(crs$rf$predicted)))
+
+# List the importance of the variables.
+
+##### rn <- round(randomForest::importance(crs$rf), 2)
+##### print(rn[order(rn[,3], decreasing=TRUE),])
+
