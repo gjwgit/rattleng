@@ -57,6 +57,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.2
   dart_code_metrics: ^5.7.6
+  msix: ^3.16.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -114,3 +115,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+#Settings for creating .msix file, that can be installed in a windows machine
+#This can be customized , see https://pub.dev/packages/msix/example  for reference
+msix_config:
+  display_name: rattle
+  msix_version: 1.0.0.0
+  certificate_path: CERTIFICATE.pfx
+  certificate_password: rattle1234
+
