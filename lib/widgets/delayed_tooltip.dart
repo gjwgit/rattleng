@@ -1,4 +1,4 @@
-/// A button to choose a dataset (from file or a package).
+/// A delayed tooltip to avoid clutter of tooltips.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,33 +23,23 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/dataset_popup.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+class DelayedTooltip extends StatelessWidget {
+  final Widget child;
+  final String message;
+  final Duration wait;
 
-class DatasetButton extends StatelessWidget {
-  const DatasetButton({Key? key}) : super(key: key);
+  DelayedTooltip({
+    required this.child,
+    required this.message,
+    this.wait = const Duration(seconds: 1),
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        _showPopup(context);
-      },
-      child: DelayedTooltip(
-        message: "Click here to have the option to load the data from a file,\n"
-            "including CSV files, or from an R pacakge, or to load \n"
-            "the demo dataset, rattle::weather.",
-        child: Text("Dataset"),
-      ),
-    );
-  }
-
-  void _showPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const DatasetPopup();
-      },
+    return Tooltip(
+      message: message,
+      waitDuration: wait,
+      child: child,
     );
   }
 }

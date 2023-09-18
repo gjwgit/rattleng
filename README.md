@@ -26,7 +26,7 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
-## Installation
+## Installing RattleNG
 
 ### Latest Code
 
@@ -41,19 +41,60 @@ to be one of `windows`, `macos`, or `linux`.
 flutter run -d <os>
 ```
 
+### Linux
+
++ Download https://access.togaware.com/rattle.snap
++ Install with `snap install --dangerous rattle.snap`
+
+The *dangerous* refers to side-loading the app from outside of the
+snap store. This is not required for the snap store version.
+
 ### Windows
 
-Download https://access.togaware.com/rattle.msix. Right mouse button
-on the downloaded file to open the *Properties*. Choose the *Digital
-Signatures* tab. Highlight the *Togaware* line, then click
-*Details*. Click *View Certificate...* then *Install
-Certificate...*. Choose *Local Machine* and then *Next*. Choose *Place
-all certificates in the following store* and and *Browse...* to select
-**Trusted Root Certification Authorities** and click *OK*. Then click
-*Next* and *Finish*. You should see a popup that says **The import was
-successful**. Then open the downloaded `rattle.msix` to install and
-run rattle.
++ Download and install R itself
+  + Visit https://cloud.r-project.org/ and navigate to Windows install
+  + Click on *Download R for Windows*
+  + Open the downloaded file to install R into *C:\Program Files\R*
+  + Add *C:\Program Files\R\bin* to the PATH environment variable
+    + Open *Edit the system environment variables* from Control panel
+	+ Click *Environment Variables...*
+	+ Click the *Path* entry and then *Edit...*
+    + Click *New* and then add *C:\Program Files\R\bin*
+    + Click *OK* a few times to close the windows.
++ Download https://access.togaware.com/rattle.msix
++ Add the rattle certificate to your store:
+  + Right click the downloaded file in Explorer
+  + Choose *Properties*
+  + Choose the *Digital Signatures* tab. 
+  + Highlight the *Togaware* line
+  + Click *Details*. 
+  + Click *View Certificate...* 
+  + Click *Install Certificate...*
+  + Choose *Local Machine*
+  + Click *Next*
+  + Choose *Place all certificates in the following store*
+  + Click *Browse...*
+  + Select **Trusted Root Certification Authorities**
+  + Click *OK*
+  + Click *Next* and *Finish*.
+  + A popup says **The import was successful**
++ Open the downloaded `rattle.msix` to install and run rattle
 
+## Current Status 2023-09-17
+
+When you start up the app you can work through the following
+scenario. Development is happening at a pace so the scenarios will be updated
+regularly.
+
++ Startup the app
++ Click the **Script** tab to see the R code that has already been run
++ Click the **Dataset** tab and then choose **Demo** to load the
+  `rattle::weather` dataset and view the dataset summary.
++ Click the **Model** tab and then the **Build** button to build and view a
+  decision tree.
++ Click the **Script** tab and the Export button to save the full script
+  to `script.R`
++ From your own command line run `Rscript script.R`
 
 ## How you can Help
 
@@ -71,18 +112,6 @@ then do it's stuff! The `<<PARAMETER>>` strings are filled in by the
 Flutter interface. See the growing number of scripts in `assets/scripts/`
 
 Suggested tasks can be found as github issues.
-
-## Current Status 2023-09-17
-
-+ Startup the app
-+ Click the **Script** tab to see the R code that has already been run
-+ Click the **Dataset** tab and then choose **Demo** to load the
-  `rattle::weather` dataset and view the dataset summary.
-+ Click the **Model** tab and then the **Build** button to build and view a
-  decision tree.
-+ Click the **Script** tab and the Export button to save the full script
-  to `script.R`
-+ From your own command line run `Rscript script.R`
 
 ## Rattle Resources
 
