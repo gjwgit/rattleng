@@ -113,6 +113,16 @@ Flutter interface. See the growing number of scripts in `assets/scripts/`
 
 Suggested tasks can be found as github issues.
 
+### Install Flutter on Windows
+
++ Download the flutter sdk
++ Unzip it to your home folder
++ Add C:\Users\<user>\flutter\bin to Path
++ In a CMD console run `flutter help`
+
+Currently (20230918), on Azure Windows VM, `flutter doctor` just sits
+there!
+
 ## Rattle Resources
 
 + Bob Meunchen's review of Rattle: https://r4stats.com/articles/software-reviews/rattle/
@@ -130,6 +140,15 @@ visually.
 
 ![](assets/screenshots/data_page.png)
 
+Click the Dataset button to have options to load the data from a file,
+from an R package, or the demo weather dataset.
+
+![](assets/screenshots/data_source.png)
+
+After the data is loaded we are presented with a summary.
+
+![](assets/screenshots/data_summary.png)
+
 *More screenshots to come.*
 
 ### Exploring Data Visually
@@ -138,6 +157,12 @@ All of the popular Rattle visualisations are available, modernised
 using `ggplot` and the `tidyverse`.
 
 ![](assets/screenshots/explore_plot.png)
+
+### Building Models
+
+A decision tree model is one of the most widely built AI models.
+
+![](assets/screenshots/model_rpart.png)
 
 ### The R Console
 
