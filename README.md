@@ -28,6 +28,19 @@ available from Togaware (https://datamining.togaware.com).
 
 ## Installing RattleNG
 
+### Latest Code
+
+RattleNG is currently under active development. To get the current app
+you can install flutter on your local computer, then clone the github
+repository, to your local disk, and from a command line change to the
+directory where you cloned the rattle repository (it should contain a
+`lib` sub-directory) and type the following command, changing `<os>`
+to be one of `windows`, `macos`, or `linux`.
+
+```
+flutter run -d <os>
+```
+
 ### Linux
 
 + Download https://access.togaware.com/rattle.snap
