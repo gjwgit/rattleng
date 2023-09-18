@@ -27,6 +27,7 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetClearTextField extends StatelessWidget {
   const DatasetClearTextField({Key? key}) : super(key: key);
@@ -35,7 +36,6 @@ class DatasetClearTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.clear),
-      tooltip: 'Clear the dataset.',
       onPressed: () {
         RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
         rattle.setPath("");

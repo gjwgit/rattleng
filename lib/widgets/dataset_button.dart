@@ -24,6 +24,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/widgets/dataset_popup.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetButton extends StatelessWidget {
   const DatasetButton({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class DatasetButton extends StatelessWidget {
       onPressed: () async {
         _showPopup(context);
       },
-      child: const Tooltip(
+      child: DelayedTooltip(
         message: "Click here to have the option to load the data from a file,\n"
             "including CSV files, or from an R pacakge, or to load \n"
             "the demo dataset, rattle::weather.",
