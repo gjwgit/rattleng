@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends StatelessWidget {
   const DatasetTextField({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class DatasetTextField extends StatelessWidget {
         return Expanded(
           // Expand to fill the remainder of the row.
 
-          child: Tooltip(
+          child: DelayedTooltip(
             message: "You can type the actual path to a file containing\n"
                 "your dataset, perhaps as a CSV file, or the name of a\n"
                 "package dataset, like rattle::wattle.",
