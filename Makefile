@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Friday 2023-09-15 08:45:07 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2023-09-19 07:55:38 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -96,3 +96,10 @@ snap:
 .PHONY: isnap
 isnap:
 	snap install --dangerous rattle_0.0.1_amd64.snap 
+
+rattle.zip:
+	rm -f rattle.zip
+	flutter build linux
+	rsync -avzh build/linux/x64/release/bundle/ rattle/
+	zip -r rattle.zip rattle
+	rm -rf rattle
