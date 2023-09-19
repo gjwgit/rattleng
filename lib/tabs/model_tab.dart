@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-09-19 19:47:58 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 06:44:37 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -30,6 +30,8 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/r_extract.dart';
+import 'package:rattle/helpers/r_extract_forest.dart';
+import 'package:rattle/helpers/r_extract_tree.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/model_radio_buttons.dart';
 
@@ -54,17 +56,27 @@ class ModelTabState extends State<ModelTab> {
             children: [
               ModelRadioButtons(),
               Visibility(
-                visible: rattle.model == "rpart",
+                visible: rattle.model == "Tree",
                 child: Expanded(
                   child: Container(
                     padding: const EdgeInsets.only(left: 0),
                     child: SingleChildScrollView(
                       child: SelectableText(
-                        // ignore: prefer_interpolation_to_compose_strings
-                        rExtract(rattle.stdout, "> print(model_rpart)") +
-                            "\n" +
-                            rExtract(rattle.stdout, "> printcp(model_rpart)") +
-                            "\n",
+                        rExtractTree(rattle.stdout),
+                        style: monoTextStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: rattle.model == "Forest",
+                child: Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: SingleChildScrollView(
+                      child: SelectableText(
+                        rExtractForest(rattle.stdout),
                         style: monoTextStyle,
                       ),
                     ),
