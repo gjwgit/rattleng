@@ -40,6 +40,8 @@ class DatasetClearTextField extends StatelessWidget {
         RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
         rattle.setPath("");
         rattle.setStatus(statusWelcomeMsg);
+        rattle.clearStdout();
+        rattle.clearStderr();
       },
     );
   }
