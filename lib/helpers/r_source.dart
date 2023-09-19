@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 07:05:02 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 08:09:13 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,6 +31,7 @@ import 'package:intl/intl.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/helpers/r_process.dart';
 import 'package:rattle/helpers/r_strip_header.dart';
+import 'package:rattle/helpers/timestamp.dart';
 
 /// Run the R [script] and append to the [rattle] script.
 
@@ -54,11 +55,7 @@ void rSource(String script, RattleModel rattle) {
   // HARD CODED FOR NOW UNTIL WE PASS IN THE
   // KEY:VALUE MAPPINGS.
 
-  int currentTimeStamp = DateTime.now().millisecondsSinceEpoch;
-  String formattedTimeStamp = DateFormat('yyyy-MM-dd HH:mm:ss')
-      .format(DateTime.fromMillisecondsSinceEpoch(currentTimeStamp));
-
-  code = code.replaceAll('<<TIMESTAMP>>', formattedTimeStamp);
+  code = code.replaceAll('<<TIMESTAMP>>', timestamp());
 
   // Populate the <<VERSION>>.
 
@@ -82,6 +79,12 @@ void rSource(String script, RattleModel rattle) {
   code = code.replaceAll('<<MINSPLIT>>', '');
   code = code.replaceAll('<<MINBUCKET>>', '');
   code = code.replaceAll('<<CP>>', '');
+
+  // RANDOM_FOREST_BUILD.R
+
+  code = code.replaceAll('<<RF_NUM_TREES>>', '500');
+  code = code.replaceAll('<<RF_MTRY>>', '4');
+  code = code.replaceAll('<<RF_NA_ACTION>>', 'randomForest::na.roughfix');
 
   // SIMPLY REMOVE THESE DIRECTIVES FOR NOW UNTIL WE PASS IN A DIRECTIVE TO OR
   // NOT TO INCLUDE THESE BLOCKS.
