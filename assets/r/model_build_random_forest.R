@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2023-09-17 19:14:20 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-20 05:07:11 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,7 +28,7 @@
 #
 # Rattle timestamp: <<TIMESTAMP>>
 #
-# References
+# References:
 #
 # @williams:2017:essentials Chapter 8.
 # https://survivor.togaware.com/datascience/ for further details.
@@ -37,13 +37,8 @@
 
 library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 
-# For repeatable results.
-
-set.seed(42)
-
-
-mtype <- "ranomdForest"
-mdesc <- "random forest"
+mtype <- "randomForest"
+mdesc <- "Forest"
 
 model_randomForest <- randomForest(
   form,
@@ -62,7 +57,8 @@ print(model_randomForest)
 
 # Calculate the Area Under the Curve (AUC).
 
-##### print(pROC::roc(crs$rf$y, as.numeric(crs$rf$predicted)))
+print(pROC::roc(model_randomForest$y,
+                as.numeric(model_randomForest$predicted)))
 
 # Calculate the AUC Confidence Interval.
 
