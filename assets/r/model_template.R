@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-13 15:06:57 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-20 08:14:29 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,6 +45,8 @@ inputs <- setdiff(vars, target)
 # Generate the formula to be used for predictive modelling.
 
 form   <- formula(target %s+% " ~ .")
+
+print(form)
 
 <<BEGIN_SPLIT_DATASET>>
 
