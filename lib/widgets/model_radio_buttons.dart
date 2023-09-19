@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/helpers/r_source.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class ModelRadioButtons extends StatefulWidget {

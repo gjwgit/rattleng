@@ -28,7 +28,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:rattle/helpers/r_process.dart';
+import 'package:rattle/r/process.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 /// Start up the R process and

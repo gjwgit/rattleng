@@ -23,7 +23,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/dataset_popup.dart';
+import 'package:rattle/dataset/popup.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetButton extends StatelessWidget {

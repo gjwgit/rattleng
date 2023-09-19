@@ -24,7 +24,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/helpers/r_source.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 /// Load the specified dataset using the appropriate R script.

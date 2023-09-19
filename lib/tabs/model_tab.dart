@@ -29,9 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/r_extract.dart';
-import 'package:rattle/helpers/r_extract_forest.dart';
-import 'package:rattle/helpers/r_extract_tree.dart';
+import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_forest.dart';
+import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/model_radio_buttons.dart';
 
