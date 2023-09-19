@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-13 15:17:13 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-20 05:01:04 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,6 +25,8 @@
 # Author: Graham Williams
 
 # Initialise the dataset as per the templates.
+#
+# Rattle timestamp: <<TIMESTAMP>>
 #
 # References:
 #
