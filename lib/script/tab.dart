@@ -24,8 +24,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/script/script_info.dart';
-import 'package:rattle/widgets/script/script_text.dart';
+import 'package:rattle/script/info.dart';
+import 'package:rattle/script/text.dart';
 
 // TESTING CAN BE REMOVED? final scriptController = TextEditingController();
 
