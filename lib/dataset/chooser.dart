@@ -24,9 +24,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/dataset_button.dart';
-import 'package:rattle/widgets/dataset_text_field.dart';
-import 'package:rattle/widgets/dataset_clear_text_field.dart';
+import 'package:rattle/dataset/button.dart';
+import 'package:rattle/dataset/text_field.dart';
+import 'package:rattle/dataset/clear_text_field.dart';
 
 /// The dataset chooser to allow selection of the data for Rattle.
 ///
