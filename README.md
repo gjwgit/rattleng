@@ -79,6 +79,7 @@ snap store. This is not required for the snap store version.
   + Click *Next* and *Finish*.
   + A popup says **The import was successful**
 + Open the downloaded `rattle.msix` to install and run rattle
+  + Or in PowerShell: `Add-AppxPackage -Path .\rattle.msix`
 
 ## Current Status 2023-09-17
 
