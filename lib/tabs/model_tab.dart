@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-17 13:59:11 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-09-19 19:47:58 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -53,17 +53,20 @@ class ModelTabState extends State<ModelTab> {
           body: Column(
             children: [
               ModelRadioButtons(),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(left: 0),
-                  child: SingleChildScrollView(
-                    child: SelectableText(
-                      // ignore: prefer_interpolation_to_compose_strings
-                      rExtract(rattle.stdout, "> print(model_rpart)") +
-                          "\n" +
-                          rExtract(rattle.stdout, "> printcp(model_rpart)") +
-                          "\n",
-                      style: monoTextStyle,
+              Visibility(
+                visible: rattle.model == "rpart",
+                child: Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: SingleChildScrollView(
+                      child: SelectableText(
+                        // ignore: prefer_interpolation_to_compose_strings
+                        rExtract(rattle.stdout, "> print(model_rpart)") +
+                            "\n" +
+                            rExtract(rattle.stdout, "> printcp(model_rpart)") +
+                            "\n",
+                        style: monoTextStyle,
+                      ),
                     ),
                   ),
                 ),
