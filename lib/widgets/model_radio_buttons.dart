@@ -66,10 +66,13 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
                 switch (modellers[selectedValue]) {
                   case "Tree":
                     rSource("model_build_rpart", rattle);
+                    rattle.setModel("Tree");
                   case "Forest":
                     rSource("model_build_random_forest", rattle);
+                    rattle.setModel("Forest");
                   default:
                     debugPrint("NO ACTION FOR THIS BUTTON");
+                    rattle.setModel("");
                 }
               },
               child: const Text('Build'),
@@ -100,6 +103,8 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
             groupValue: selectedValue,
             onChanged: (int? newValue) {
               selectRadio(newValue!);
+              // rattle.setModel(modellers[value]);
+              debugPrint("SET MODEL RADIO BUTTON TO ${modellers[value]}");
             },
           ),
           Text(label),
