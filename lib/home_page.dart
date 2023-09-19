@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-16 08:27:21 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 09:39:44 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,11 +25,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/tabs/dataset_tab.dart';
-import 'package:rattle/tabs/model_tab.dart';
-import 'package:rattle/tabs/script_tab.dart';
-import 'package:rattle/tabs/process_tab.dart';
-import 'package:rattle/widgets/r_console.dart';
+import 'package:rattle/dataset/tab.dart';
+import 'package:rattle/model/tab.dart';
+import 'package:rattle/script/tab.dart';
+import 'package:rattle/helpers/process_tab.dart';
+import 'package:rattle/r/console.dart';
 import 'package:rattle/widgets/status_bar.dart';
 import 'package:rattle/widgets/test_widget.dart';
 

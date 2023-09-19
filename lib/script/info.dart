@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/widgets/script/script_save_button.dart';
+import 'package:rattle/script/save_button.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 /// Create a script info widget with a Save button and displaying markdown.
