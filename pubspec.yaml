@@ -116,11 +116,13 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
-#Settings for creating .msix file, that can be installed in a windows machine
-#This can be customized , see https://pub.dev/packages/msix/example  for reference
+# Settings for creating .msix file, that can be installed in a windows
+# machine This can be customized, see
+# https://pub.dev/packages/msix/example for reference
+
 msix_config:
   display_name: rattle
   msix_version: 1.0.0.0
   certificate_path: CERTIFICATE.pfx
   certificate_password: rattle1234
-
+  execution_alias: rattle
