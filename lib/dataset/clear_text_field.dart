@@ -27,7 +27,6 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetClearTextField extends StatelessWidget {
   const DatasetClearTextField({Key? key}) : super(key: key);
@@ -37,6 +36,8 @@ class DatasetClearTextField extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.clear),
       onPressed: () {
+        // TODO 20230920 gjw POPUP TO ASK IF WANT TO SAVE CURRENT PROJECT.
+
         RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
         rattle.setPath("");
         rattle.setStatus(statusWelcomeMsg);
