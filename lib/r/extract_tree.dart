@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-20 09:08:09 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 14:39:23 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,30 +22,24 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io';
-
-import 'package:intl/intl.dart';
-
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/helpers/timestamp.dart';
+
+String _basicTemplate(String log) {
+  const String hd = "Summary of the Decision Tree model for Classification";
+  const String md = "(built using 'rpart'):";
+  final String fm = rExtract(log, "> print(form)");
+  final String pr = rExtract(log, "> print(model_rpart)");
+  final String cp = rExtract(log, "> printcp(model_rpart)");
+  final String ts = timestamp();
+
+  return "$hd $md\n\nFormula: $fm\n\n$pr\n$cp\n\nRattle timestamp: $ts";
+}
 
 /// Extract from the R [log] lines of output from the decision tree.
 
 String rExtractTree(String log) {
-  // ignore: prefer_interpolation_to_compose_strings
-
-  String extract = "Summary of the Decision Tree model for Classification " +
-      "(built using 'rpart'):" +
-      "\n\n" +
-      "Formula: " +
-      rExtract(log, "> print(form)") +
-      "\n\n" +
-      rExtract(log, "> print(model_rpart)") +
-      "\n" +
-      rExtract(log, "> printcp(model_rpart)") +
-      "\n\n" +
-      "Rattle timestamp: " +
-      timestamp();
+  String extract = _basicTemplate(log);
 
   extract = extract.replaceAllMapped(
     RegExp(r'\nn= '),
@@ -86,7 +80,7 @@ String rExtractTree(String log) {
 
       txt = txt.replaceAll(' = ', '=');
 
-      return "\n${txt}\n)";
+      return "\n$txt\n)";
     },
   );
 
@@ -97,16 +91,5 @@ String rExtractTree(String log) {
     },
   );
 
-  List<String> lines = extract.split('\n');
-
-  List<String> result = [];
-
-  for (int i = 0; i < lines.length; i++) {
-    // if (lines[i].startsWith("Call:")) {
-    //   continue;
-    // }
-    result.add(lines[i]);
-  }
-
-  return result.join('\n');
+  return extract;
 }
