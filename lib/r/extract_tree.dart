@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-20 14:39:23 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 21:42:39 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,7 +33,13 @@ String _basicTemplate(String log) {
   final String cp = rExtract(log, "> printcp(model_rpart)");
   final String ts = timestamp();
 
-  return "$hd $md\n\nFormula: $fm\n\n$pr\n$cp\n\nRattle timestamp: $ts";
+  String result = "\n\n\n\n\nNo Tree model has been built.";
+
+  if (pr != "") {
+    result = "$hd $md\n\nFormula: $fm\n\n$pr\n$cp\n\nRattle timestamp: $ts";
+  }
+
+  return result;
 }
 
 /// Extract from the R [log] lines of output from the decision tree.
