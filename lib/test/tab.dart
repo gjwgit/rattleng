@@ -28,8 +28,8 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 
-class TestWidget extends StatelessWidget {
-  const TestWidget({Key? key}) : super(key: key);
+class TestTab extends StatelessWidget {
+  const TestTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
