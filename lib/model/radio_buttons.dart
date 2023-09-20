@@ -29,11 +29,13 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class ModelRadioButtons extends StatefulWidget {
+  const ModelRadioButtons({Key? key}) : super(key: key);
+
   @override
-  _ModelRadioButtonsState createState() => _ModelRadioButtonsState();
+  ModelRadioButtonsState createState() => ModelRadioButtonsState();
 }
 
-class _ModelRadioButtonsState extends State<ModelRadioButtons> {
+class ModelRadioButtonsState extends State<ModelRadioButtons> {
   // List of modellers we support.
 
   List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost'];
@@ -84,6 +86,7 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
           children: modellers.asMap().entries.map((entry) {
             int index = entry.key;
             String label = entry.value;
+
             return buildRadioTile(index, label);
           }).toList(),
         ),
