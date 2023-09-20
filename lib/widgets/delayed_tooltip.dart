@@ -28,6 +28,8 @@ class DelayedTooltip extends StatelessWidget {
   final String message;
   final Duration wait;
 
+//  const StatusBar({Key? key}) : super(key: key);
+
   DelayedTooltip({
     required this.child,
     required this.message,
