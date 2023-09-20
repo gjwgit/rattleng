@@ -39,7 +39,7 @@ class DatasetButton extends StatelessWidget {
         message: "Click here to have the option to load the data from a file,\n"
             "including CSV files, or from an R pacakge, or to load \n"
             "the demo dataset, rattle::weather.",
-        child: Text("Dataset"),
+        child: const Text("Dataset"),
       ),
     );
   }
