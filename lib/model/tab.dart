@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2023-09-20 14:48:00 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 21:00:37 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -47,8 +47,6 @@ class ModelTabState extends State<ModelTab> {
   @override
   Widget build(BuildContext context) {
     return Consumer<RattleModel>(
-      // A [Consumer] of the [RattleModel] so we can access updated values of
-      // the stdout variable.
       builder: (context, rattle, child) {
         return Scaffold(
           body: Column(
