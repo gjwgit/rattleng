@@ -48,7 +48,7 @@ class StdoutText extends StatelessWidget {
           height: 50,
           padding: const EdgeInsets.only(left: 0),
           child: SelectableText(
-            rattle.stdout,
+            "STDOUT from the R Process:\n ${rattle.stdout}",
             // rExtractGlimpse(rattle.stdout),
             style: monoTextStyle,
           ),
