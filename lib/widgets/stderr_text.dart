@@ -48,7 +48,7 @@ class StderrText extends StatelessWidget {
           height: 50,
           padding: const EdgeInsets.only(left: 0),
           child: SelectableText(
-            rattle.stderr,
+            "STDERR from the R Process:\n\n${rattle.stderr}",
             // rExtractGlimpse(rattle.stdout),
             style: monoTextStyle,
           ),
