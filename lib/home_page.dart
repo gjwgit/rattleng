@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-20 16:21:49 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 16:31:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,8 +30,8 @@ import 'package:rattle/helpers/process_tab.dart';
 import 'package:rattle/model/tab.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/script/tab.dart';
-import 'package:rattle/test/tab.dart';
-import 'package:rattle/transform/tab.dart';
+import 'package:rattle/widgets/stderr_text.dart';
+import 'package:rattle/widgets/stdout_text.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 /// Define a mapping for the tabs in the GUI on to title:icon:widget.
@@ -55,13 +55,13 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Test",
     "icon": Icons.task,
-    "widget": const TestTab(),
+    "widget": const StdoutText(),
     // "widget": const Center(child: Text("TEST")),
   },
   {
     'title': "Transform",
     "icon": Icons.transform,
-    "widget": const TransformTab(),
+    "widget": const StderrText(),
     // "widget": const Center(child: Text("TRANSFORM")),
   },
   {

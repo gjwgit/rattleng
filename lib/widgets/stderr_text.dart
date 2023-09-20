@@ -1,4 +1,4 @@
-/// A test widget showing, temporarily, on the TEST tab.
+/// A text widget showing the stderr from the R process.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -28,8 +28,8 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 
-class TransformTab extends StatelessWidget {
-  const TransformTab({Key? key}) : super(key: key);
+class StderrText extends StatelessWidget {
+  const StderrText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
