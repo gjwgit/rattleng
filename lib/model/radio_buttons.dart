@@ -65,7 +65,7 @@ class ModelRadioButtonsState extends State<ModelRadioButtons> {
 
                 rSource("model_template", rattle);
 
-                switch (modellers[selectedValue]) {
+                switch (rattle.model) {
                   case "Tree":
                     rSource("model_build_rpart", rattle);
                     rattle.setModel("Tree");
@@ -99,19 +99,23 @@ class ModelRadioButtonsState extends State<ModelRadioButtons> {
       onTap: () {
         selectRadio(value);
       },
-      child: Row(
-        children: [
-          Radio(
-            value: value,
-            groupValue: selectedValue,
-            onChanged: (int? newValue) {
-              selectRadio(newValue!);
-              // rattle.setModel(modellers[value]);
-              debugPrint("SET MODEL RADIO BUTTON TO ${modellers[value]}");
-            },
-          ),
-          Text(label),
-        ],
+      child: Consumer<RattleModel>(
+        builder: (context, rattle, child) {
+          return Row(
+            children: [
+              Radio(
+                value: value,
+                groupValue: selectedValue,
+                onChanged: (int? newValue) {
+                  selectRadio(newValue!);
+                  rattle.setModel(label);
+                  debugPrint("SET MODEL RADIO BUTTON TO ${modellers[value]}");
+                },
+              ),
+              Text(label),
+            ],
+          );
+        },
       ),
     );
   }
