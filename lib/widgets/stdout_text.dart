@@ -1,4 +1,4 @@
-/// A test widget showing, temporarily, on the TEST tab.
+/// A text widget showing the stdout from the R process.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -28,8 +28,8 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 
-class TestWidget extends StatelessWidget {
-  const TestWidget({Key? key}) : super(key: key);
+class StdoutText extends StatelessWidget {
+  const StdoutText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
