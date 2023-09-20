@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2023-09-20 09:34:30 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 14:48:00 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/model/radio_buttons.dart';
@@ -54,12 +53,13 @@ class ModelTabState extends State<ModelTab> {
         return Scaffold(
           body: Column(
             children: [
-              ModelRadioButtons(),
+              const ModelRadioButtons(),
               Visibility(
                 visible: rattle.model == "Tree",
                 child: Expanded(
                   child: Container(
-                    padding: const EdgeInsets.only(left: 0),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(left: 10),
                     child: SingleChildScrollView(
                       child: SelectableText(
                         rExtractTree(rattle.stdout),
@@ -73,7 +73,8 @@ class ModelTabState extends State<ModelTab> {
                 visible: rattle.model == "Forest",
                 child: Expanded(
                   child: Container(
-                    padding: const EdgeInsets.only(left: 0),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(left: 10),
                     child: SingleChildScrollView(
                       child: SelectableText(
                         rExtractForest(rattle.stdout),
