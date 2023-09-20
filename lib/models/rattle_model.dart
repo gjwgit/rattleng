@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-19 19:49:41 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 21:34:37 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -115,7 +115,7 @@ class RattleModel extends ChangeNotifier {
 
   // Store the currently selected model type.
 
-  String _model = "";
+  String _model = "Tree";
 
   String get model => _model;
 
