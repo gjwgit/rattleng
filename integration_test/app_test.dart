@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:rattle/main.dart' as rattle;
-import 'package:rattle/widgets/dataset_button.dart';
-import 'package:rattle/widgets/dataset_popup.dart';
+import 'package:rattle/dataset/button.dart';
+import 'package:rattle/dataset/popup.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
