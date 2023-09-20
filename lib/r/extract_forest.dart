@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-20 06:42:47 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2023-09-20 14:52:53 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,30 +23,64 @@
 /// Authors: Graham Williams
 
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/helpers/timestamp.dart';
+
+String _basicTemplate(String log) {
+  const String hd = "Summary of the Random Forest model for Classification";
+  const String md = "(built using 'randomForest'):";
+  final String fm = rExtract(log, "> print(form)");
+  final String pr = rExtract(log, "> print(model_randomForest)");
+  final String pe = rExtract(
+    log,
+    "+                 as.numeric(model_randomForest\$predicted))",
+  );
+  final String ts = timestamp();
+
+  return "$hd $md\n\nFormula: $fm\n$pr \n$pe\n\nRattle timestamp: $ts";
+}
 
 /// Extract from the R [log] lines of output from the random forest.
 
 String rExtractForest(String log) {
-  // ignore: prefer_interpolation_to_compose_strings
+  String extract = _basicTemplate(log);
 
-  String rfLog = rExtract(log, "> print(model_randomForest)") +
-      "\n" +
-      rExtract(log,
-          '+                 as.numeric(model_randomForest\$predicted)))') +
-      "\n";
+  extract = extract.replaceAll("Call:\n", "");
 
-  List<String> lines = rfLog.split('\n');
+  // Nicely format the call to randomForest.
 
-  List<String> result = [];
+  extract = extract.replaceAllMapped(
+    RegExp(
+      r'\n (randomForest\(.*?)\)',
+      multiLine: true,
+      dotAll: false,
+    ),
+    (match) {
+      // The first group is then the whole randomForest(...) call.
 
-  for (int i = 0; i < lines.length; i++) {
-    if (lines[i].startsWith("Call:")) {
-      continue;
-    }
-    result.add(lines[i]);
-  }
+      String txt = match.group(1) ?? "";
 
-  return result.join('\n');
+      txt = txt.replaceAll('\n', '');
+      txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
+
+      txt = txt.replaceAllMapped(
+        RegExp(r'(\w+)\s*=\s*([^,]+),'),
+        (match) {
+          return "\n    ${match.group(1)}=${match.group(2)},";
+        },
+      );
+
+      txt = txt.replaceAll(' = ', '=');
+
+      return "\n$txt\n)\n";
+    },
+  );
+
+  extract =
+      extract.replaceAll("\nConfusion matrix:\n", "\n\nConfusion matrix:\n\n");
+
+  extract = extract.replaceAll("\nArea under", "\n\nArea under");
+
+  return extract;
 }
 
 //   // Initialize with a value that indicates no start index found.
