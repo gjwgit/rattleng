@@ -1,4 +1,4 @@
-/// A button to choose a dataset (from file or a package).
+/// Generate the current timestamp.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -21,34 +21,13 @@
 ///
 /// Authors: Graham Williams
 
-import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-import 'package:rattle/widgets/dataset_popup.dart';
+String timestamp() {
+  int current = DateTime.now().millisecondsSinceEpoch;
 
-class DatasetButton extends StatelessWidget {
-  const DatasetButton({Key? key}) : super(key: key);
+  String result = DateFormat('yyyy-MM-dd HH:mm:ss')
+      .format(DateTime.fromMillisecondsSinceEpoch(current));
 
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        _showPopup(context);
-      },
-      child: const Tooltip(
-        message: "Click here to have the option to load the data from a file,\n"
-            "including CSV files, or from an R pacakge, or to load \n"
-            "the demo dataset, rattle::weather.",
-        child: Text("Dataset"),
-      ),
-    );
-  }
-
-  void _showPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const DatasetPopup();
-      },
-    );
-  }
+  return result;
 }

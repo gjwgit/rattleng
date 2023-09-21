@@ -25,15 +25,17 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/helpers/r_source.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class ModelRadioButtons extends StatefulWidget {
+  const ModelRadioButtons({Key? key}) : super(key: key);
+
   @override
-  _ModelRadioButtonsState createState() => _ModelRadioButtonsState();
+  ModelRadioButtonsState createState() => ModelRadioButtonsState();
 }
 
-class _ModelRadioButtonsState extends State<ModelRadioButtons> {
+class ModelRadioButtonsState extends State<ModelRadioButtons> {
   // List of modellers we support.
 
   List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost'];
@@ -52,7 +54,7 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        SizedBox(width: 5), // Add some spacing
+        const SizedBox(width: 5), // Add some spacing
         Consumer<RattleModel>(
           builder: (context, rattle, child) {
             return ElevatedButton(
@@ -63,19 +65,25 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
 
                 rSource("model_template", rattle);
 
-                if (modellers[selectedValue] == "Tree") {
-                  rSource("rpart_build", rattle);
+                switch (rattle.model) {
+                  case "Tree":
+                    rSource("model_build_rpart", rattle);
+                  case "Forest":
+                    rSource("model_build_random_forest", rattle);
+                  default:
+                    debugPrint("NO ACTION FOR THIS BUTTON ${rattle.model}");
                 }
               },
-              child: Text('Build'),
+              child: const Text('Build'),
             );
           },
         ),
-        SizedBox(width: 5), // Add some spacing
+        const SizedBox(width: 5), // Add some spacing
         Row(
           children: modellers.asMap().entries.map((entry) {
             int index = entry.key;
             String label = entry.value;
+
             return buildRadioTile(index, label);
           }).toList(),
         ),
@@ -88,17 +96,23 @@ class _ModelRadioButtonsState extends State<ModelRadioButtons> {
       onTap: () {
         selectRadio(value);
       },
-      child: Row(
-        children: [
-          Radio(
-            value: value,
-            groupValue: selectedValue,
-            onChanged: (int? newValue) {
-              selectRadio(newValue!);
-            },
-          ),
-          Text(label),
-        ],
+      child: Consumer<RattleModel>(
+        builder: (context, rattle, child) {
+          return Row(
+            children: [
+              Radio(
+                value: value,
+                groupValue: selectedValue,
+                onChanged: (int? newValue) {
+                  selectRadio(newValue!);
+                  rattle.setModel(label);
+                  debugPrint("SET MODEL RADIO BUTTON TO $label");
+                },
+              ),
+              Text(label),
+            ],
+          );
+        },
       ),
     );
   }

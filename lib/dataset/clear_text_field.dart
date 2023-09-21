@@ -1,12 +1,11 @@
-/// Script tab got home page where the R script is captured.
+/// A button to clear the dataset textfield.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Saturday 2023-09-16 08:05:39 +1000 Graham Williams>
-//
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
+// Licensed under the GNU General Public License, Version 3 (the "License");
+///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -24,28 +23,27 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/widgets/script/script_info.dart';
-import 'package:rattle/widgets/script/script_text.dart';
+import 'package:provider/provider.dart';
 
-// TESTING CAN BE REMOVED? final scriptController = TextEditingController();
+import 'package:rattle/constants/app.dart';
+import 'package:rattle/models/rattle_model.dart';
 
-class ScriptTab extends StatelessWidget {
-  const ScriptTab({Key? key}) : super(key: key);
+class DatasetClearTextField extends StatelessWidget {
+  const DatasetClearTextField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          flex: 4,
-          child: ScriptInfo(),
-        ),
-        Expanded(
-          flex: 7,
-          child: ScriptText(),
-        ),
-      ],
+    return IconButton(
+      icon: const Icon(Icons.clear),
+      onPressed: () {
+        // TODO 20230920 gjw POPUP TO ASK IF WANT TO SAVE CURRENT PROJECT.
+
+        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+        rattle.setPath("");
+        rattle.setStatus(statusWelcomeMsg);
+        rattle.clearStdout();
+        rattle.clearStderr();
+      },
     );
   }
 }

@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-17 08:36:42 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-09-21 15:19:25 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,9 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/r_extract_glimpse.dart';
+import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/widgets/dataset_chooser.dart';
+import 'package:rattle/dataset/chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
@@ -72,10 +72,8 @@ class DatasetTabState extends State<DatasetTab> {
                 visible: rattle.path != "",
                 child: Expanded(
                   child: Container(
-                    // I am setting the height for the bottom bar but this does not really
-                    // seem to be the way to do this.
-                    //height: 50,
-                    padding: const EdgeInsets.only(left: 0),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(left: 10),
                     child: SelectableText(
                       rExtractGlimpse(rattle.stdout),
                       style: monoTextStyle,

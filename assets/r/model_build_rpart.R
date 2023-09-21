@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-13 15:07:17 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2023-09-20 05:04:35 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,17 +28,12 @@
 #
 # Rattle timestamp: <<TIMESTAMP>>
 #
-# References
+# References:
 #
 # @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
-
-# We begin most scripts by loading the required packages.  Here are
-# some initial packages to load and others will be identified as we
-# proceed through the script. When writing our own scripts we often
-# collect together the library commands at the beginning of the script
-# here.
 
 # Load required packages from the local library into the R session.
 
@@ -46,12 +41,8 @@
 
 library(rpart)        # ML: decision tree rpart().
 
-# For repeatable results.
-
-set.seed(42)
-
 mtype <- "rpart"
-mdesc <- "decision tree"
+mdesc <- "Tree"
 
 model_rpart <- rpart(
   form,
