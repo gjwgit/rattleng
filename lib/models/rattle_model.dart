@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-20 21:34:37 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-22 08:59:03 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -37,8 +37,12 @@ import 'package:rattle/constants/app.dart';
 /// + **script** the monotonically growing R script capuring the user's interactions.
 
 class RattleModel extends ChangeNotifier {
-  // The [_path] lives here at the parent widget of the app. When the
-  // [DatasetButton] updates the [_path] through [setPath] the
+  // These global variables live here at the parent widget of the app.
+
+  ////////////////////////////////////////////////////////////////////////
+  // PATH
+  //
+  // When the [DatasetButton] updates the [_path] through [setPath] the
   // [DatasetTextField] [Consumes] the new value and is rebuilt.
 
   String _path = "";
@@ -58,6 +62,9 @@ class RattleModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  // STATUS - the content of the status bar at the bottom of the app.
+
   String _status = statusWelcomeMsg;
 
   String get status => _status;
@@ -67,6 +74,9 @@ class RattleModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  // SCRIPT - the developing script.
+  //
   // Store the script being developed through the GUI. The initial value is
   // main.R and it gets appended to only as new scripts are run.
 
@@ -79,8 +89,8 @@ class RattleModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Store the script being developed through the GUI. The initial value is
-  // main.R and it gets appended to only as new scripts are run.
+  ////////////////////////////////////////////////////////////////////////
+  // STDOUT - the ongoing output capture of standard output.
 
   String _stdout = "";
 
@@ -96,8 +106,8 @@ class RattleModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Store the script being developed through the GUI. The initial value is
-  // main.R and it gets appended to only as new scripts are run.
+  ////////////////////////////////////////////////////////////////////////
+  // STDERR - the ongoing output capture of standard error.
 
   String _stderr = "";
 
@@ -113,7 +123,10 @@ class RattleModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Store the currently selected model type.
+  ////////////////////////////////////////////////////////////////////////
+  // MODEL - the currently active model type.
+  //
+  // Store the currently selected model type. This is one of Tree, Forest, etc.
 
   String _model = "Tree";
 
@@ -124,6 +137,33 @@ class RattleModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  // NORMALISE - Should we normalise the dataset on loading.
+
+  bool _normalise = true;
+
+  bool get normalise => _normalise;
+
+  void setNormalise(bool newNormalise) {
+    _normalise = newNormalise;
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // PARTITION - Should we partition the dataset for analysis.
+
+  bool _partition = true;
+
+  bool get partition => _partition;
+
+  void setPartition(bool newPartition) {
+    _partition = newPartition;
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // INITIALISATION
+  //
   // Constructor to load the initial values, if required, from asset files.
 
   RattleModel() {

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-09-21 08:45:34 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-22 09:01:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,8 +26,8 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/dataset/button.dart';
 import 'package:rattle/dataset/clear_text_field.dart';
-import 'package:rattle/dataset/normalise.dart';
 import 'package:rattle/dataset/text_field.dart';
+import 'package:rattle/dataset/toggles.dart';
 
 /// The dataset chooser to allow selection of the data for Rattle.
 ///
@@ -74,7 +74,7 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         SizedBox(width: 5),
 
-        DatasetNormalise(),
+        DatasetToggles(),
       ],
     );
   }
