@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-17 08:36:42 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-09-21 15:19:25 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -72,10 +72,8 @@ class DatasetTabState extends State<DatasetTab> {
                 visible: rattle.path != "",
                 child: Expanded(
                   child: Container(
-                    // I am setting the height for the bottom bar but this does not really
-                    // seem to be the way to do this.
-                    //height: 50,
-                    padding: const EdgeInsets.only(left: 0),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(left: 10),
                     child: SelectableText(
                       rExtractGlimpse(rattle.stdout),
                       style: monoTextStyle,
