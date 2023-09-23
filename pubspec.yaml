@@ -123,6 +123,6 @@ flutter:
 msix_config:
   display_name: rattle
   msix_version: 1.0.0.0
-  certificate_path: CERTIFICATE.pfx
+  certificate_path: rattle_certificate.pfx
   certificate_password: rattle1234
   execution_alias: rattle
