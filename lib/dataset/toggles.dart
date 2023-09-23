@@ -29,23 +29,32 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
-class DatasetNormalise extends StatefulWidget {
-  const DatasetNormalise({super.key});
+// This has to be a stateful widget otherwise the buttons don't visually toggle
+// - i.e., the widget does not seem to get updated even though the values get
+// updated.
+
+class DatasetToggles extends StatefulWidget {
+  const DatasetToggles({super.key});
 
   @override
-  State<DatasetNormalise> createState() => _DatasetNormaliseState();
+  State<DatasetToggles> createState() => _DatasetTogglesState();
 }
 
-class _DatasetNormaliseState extends State<DatasetNormalise> {
-  List<bool> isSelected = [true, false];
-
+class _DatasetTogglesState extends State<DatasetToggles> {
   @override
   Widget build(BuildContext context) {
+    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+
     return ToggleButtons(
-      isSelected: isSelected,
+      isSelected: [rattle.normalise, rattle.partition],
       onPressed: (int index) {
         setState(() {
-          isSelected[index] = !isSelected[index];
+          switch (index) {
+            case 0:
+              rattle.setNormalise(!rattle.normalise);
+            case 1:
+              rattle.setPartition(!rattle.partition);
+          }
         });
       },
       children: <Widget>[
