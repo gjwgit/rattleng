@@ -28,6 +28,18 @@ available from Togaware (https://datamining.togaware.com).
 
 ## Installing RattleNG
 
+### R Dependency
+
+The R statistical software needs to be installed first. Then install
+these prerequisite packages:
+
+```
+> install.packages(c("rattle", "tidyverse", "janitor"))
+```
+
+RattleNG will eventually check for these and prompt if they are not
+available.
+
 ### Latest Code
 
 RattleNG is currently under active development. To get the current app
