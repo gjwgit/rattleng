@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-13 15:06:30 +1000 Graham Williams>
+# Time-stamp: <Friday 2023-09-22 11:26:19 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,14 +24,28 @@
 #
 # Author: Graham Williams
 
-# Designed to be run after the variable `ds` (dataset) has been
-# instantiated, this script will initialise the data template variables.
+# Run this after the variable `ds` (dataset) has been instantiated.
+# This script will initialise the data template variables.
 #
 # References:
 #
 # @williams:2017:essentials Chapter 3
 #
 # https://survivor.togaware.com/datascience/data-template.html
+
+<<BEGIN_NORMALISE_NAMES>>
+# Normalise the variable names using janitor::clean_names(). This is
+# done after any dataset load. The DATASET tab has an option to
+# normalise the variable names on loading the data. It is set on by
+# default.
+
+ds %<>% clean_names(numerals="right")
+
+<<END_NORMALISE_NAMES>>
+# Index the original variable names by the new names. The vnames must
+# be set in the data_load scripts.
+
+names(vnames) <- names(ds)
 
 # Identify variable roles.
 
@@ -50,4 +64,3 @@ vars   <- names(ds)
 # Make the target variable the last one.
 
 vars   <- c(target, vars) %>% unique() %>% rev()
-
