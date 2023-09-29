@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-13 15:05:12 +1000 Graham Williams>
+# Time-stamp: <Friday 2023-09-22 11:07:10 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,22 +24,23 @@
 #
 # Author: Graham Williams
 
-# Given a FILENAME we load it as a CSV file into the template variable
-# `ds` (dataset) as per the templates introduced in
-# @williams:2017:essentials.
+# The file `<<FILENAME>>` is loaded as a CSV file into the template
+# variable `ds` (dataset), intialising the `dsname` (a printable name
+# for the dataset) and `vnames` (the variable names).
 #
-# Also see
+# Rattle timestamp: <<TIMESTAMP>>
+#
+# References:
+#
+# @williams:2017:essentials Chapter 3
+#
 # https://survivor.togaware.com/datascience/csv-data-reading.html
 
 
 print("TODO READ CSV FROM <<FILENAME>>")
 
-<<BEGIN_NORMALISE_NAMES>>
-#
-# Normalise the variable names using janitor::clean_names(). This is
-# done on the dataset load and the DATA tab has an option to normalise
-# the variable names on loading the data. It is set on by default.
+dsname <- "BASENAME OF <<FILENAME>>"
 
-ds    %<>% clean_names(numerals="right")
+ds <- "READ <<FILENAME>>"
 
-<<END_NORMALISE_NAMES>>
+vnames <- names(ds)
