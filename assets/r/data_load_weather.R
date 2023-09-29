@@ -1,11 +1,11 @@
-# Rattle Scripts: Load Rattle's default weather demo dataset. 
+# Rattle Scripts: Load Rattle's default weather demo dataset as `ds`. 
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-20 05:01:04 +1000 Graham Williams>
+# Time-stamp: <Friday 2023-09-22 11:22:52 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Initialise the dataset as per the templates.
+# Load the demo weather dataset from rattle as per templates.
 #
 # Rattle timestamp: <<TIMESTAMP>>
 #
@@ -34,10 +34,11 @@
 #
 # https://survivor.togaware.com/datascience/data-template.html
 
-# The `r Rdataset(weatherAUS)` dataset is loaded into the template
-# variable `ds` and further template variables are initialised.
+# The `r Rdataset(weather)` dataset is loaded into the template
+# variable `ds` (dataset), intialising the `dsname` (a printable name
+# for the dataset) and `vnames` (the variable names).
 
-weatherAUS <- rattle::weather # Ensure we have the original version.
+weather <- rattle::weather # Ensure we have the original version.
 
 dsname <- "weather"
 
@@ -46,17 +47,3 @@ ds     <- get(dsname)
 # Capture the original variable names if later required.
 
 vnames <- names(ds)
-
-<<BEGIN_NORMALISE_NAMES>>
-#
-# Normalise the variable names using janitor::clean_names(). This is
-# done on the dataset load and the DATA tab has an option to normalise
-# the variable names on loading the data. It is set on by default.
-
-ds    %<>% clean_names(numerals="right")
-
-<<END_NORMALISE_NAMES>>
-
-# Index the original variable names by the new names.
-
-names(vnames) <- names(ds)
