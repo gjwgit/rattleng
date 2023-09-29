@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-20 10:56:47 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-22 11:20:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -48,21 +48,22 @@ void rSource(String script, RattleModel rattle) {
 
   var code = File("assets/r/$script.R").readAsStringSync();
 
-  // Process template variables.
-
-  // HARD CODED FOR NOW UNTIL WE PASS IN THE
-  // KEY:VALUE MAPPINGS.
+  // Process template variables. This is done here rather than passing the
+  // TIMESTAMP parameter through the map.
 
   code = code.replaceAll('<<TIMESTAMP>>', timestamp());
 
   // Populate the <<VERSION>>.
 
-  //PackageInfo info = await PackageInfo.fromPlatform();
-  //code = code.replaceAll('<<VERSION>>', info.version);
-
-  // HARD CODE FOR NOW AS ABOVE REQUIRES ASYNC AND RETURNS FUTURE.
-
+  // PackageInfo info = await PackageInfo.fromPlatform();
+  // code = code.replaceAll('<<VERSION>>', info.version);
+  //
+  // THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE VERSION FOR NOW
+  //
   code = code.replaceAll('<<VERSION>>', '0.0.1');
+
+  // HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE FUNCTION CALL AS A
+  // MAP AS DESCRIBED ABOVE..
 
   code = code.replaceAll('<<VAR_TARGET>>', "rain_tomorrow");
   code = code.replaceAll('<<VAR_RISK>>', "risk_mm");
@@ -87,10 +88,10 @@ void rSource(String script, RattleModel rattle) {
   // SIMPLY REMOVE THESE DIRECTIVES FOR NOW UNTIL WE PASS IN A DIRECTIVE TO OR
   // NOT TO INCLUDE THESE BLOCKS.
 
-  code = code.replaceAll('<<BEGIN_NORMALISE_NAMES>>', "");
-  code = code.replaceAll('<<END_NORMALISE_NAMES>>', "");
-  code = code.replaceAll('<<BEGIN_SPLIT_DATASET>>', "");
-  code = code.replaceAll('<<END_SPLIT_DATASET>>', "");
+  code = code.replaceAll('\n<<BEGIN_NORMALISE_NAMES>>', "");
+  code = code.replaceAll('\n<<END_NORMALISE_NAMES>>', "");
+  code = code.replaceAll('\n<<BEGIN_SPLIT_DATASET>>', "");
+  code = code.replaceAll('\n<<END_SPLIT_DATASET>>', "");
 
   // Run the code.
 
