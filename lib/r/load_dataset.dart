@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-13 17:07:48 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-09-22 11:30:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,7 +64,7 @@ void rLoadDataset(String filename, RattleModel rattle) {
     //   "VARS_ID": '"date", "location"'
     // }
   );
-  rSource('ds_summarise', rattle);
+  rSource('ds_glimpse', rattle);
   debugPrint(
     'LOAD_DATASET: OTHERWISE WE SHOULD RUN APPROPRIATE R SCRIPT '
     'TO LOAD DATA FROM -> "$filename";',
