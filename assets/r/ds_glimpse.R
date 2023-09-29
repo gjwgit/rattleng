@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2023-08-28 17:15:50 +1000 Graham Williams>
+# Time-stamp: <Friday 2023-09-22 11:29:42 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,18 +24,6 @@
 #
 # Author: Graham Williams
 
-# UNDER DEVELOPMENT
-
-# PROBABLY we will summarise the dataset in a form that Flutter can
-# parse and create the required metadata in a Data class. This is then
-# used to create and populate the data matrix of the DATA tab
-
-# Here's some starting points:
-
-names(ds)
-
-ds %>% sample_frac()
+# Glimpse the dataset.
 
 glimpse(ds)
-
-summarise(ds)
