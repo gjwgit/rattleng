@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-09 17:05:26 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-30 16:34:50 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,9 +31,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:provider/provider.dart';
+
+import 'package:rattle/models/rattle_model.dart';
+
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
+
+// 20230930 gjw TDOD HOW TO PROPERLY HANDLE THE CONSOLE?
 
 /// The R Console widget where the R subprocess runs and executes commands sent
 /// to it and where the results are read from.
@@ -47,11 +53,11 @@ class RConsole extends StatefulWidget {
 }
 
 class _RConsoleState extends State<RConsole> {
-  final terminal = Terminal(
+  Terminal terminal = Terminal(
     maxLines: 10000,
   );
 
-  final terminalController = TerminalController();
+  TerminalController terminalController = TerminalController();
 
   late final Pty pty;
 
@@ -93,42 +99,49 @@ class _RConsoleState extends State<RConsole> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: TerminalView(
-          terminal,
-          controller: terminalController,
-          autofocus: true,
+    return Consumer<RattleModel>(
+      builder: (context, rattle, child) {
+        terminal = rattle.rterm;
+        // terminalController = rattle.rtermController;
 
-          // Set the background to be black.
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: TerminalView(
+              terminal,
+              controller: terminalController,
+              autofocus: true,
 
-          backgroundOpacity: 1.0,
+              // Set the background to be black.
 
-          // A buffer around the edge of the console.
+              backgroundOpacity: 1.0,
 
-          padding: const EdgeInsets.all(8.0),
+              // A buffer around the edge of the console.
 
-          // This is how we can control the text size if desired.
+              padding: const EdgeInsets.all(8.0),
 
-          textScaleFactor: 1,
+              // This is how we can control the text size if desired.
 
-          onSecondaryTapDown: (details, offset) async {
-            final selection = terminalController.selection;
-            if (selection != null) {
-              final text = terminal.buffer.getText(selection);
-              terminalController.clearSelection();
-              await Clipboard.setData(ClipboardData(text: text));
-            } else {
-              final data = await Clipboard.getData('text/plain');
-              final text = data?.text;
-              if (text != null) {
-                terminal.paste(text);
-              }
-            }
-          },
-        ),
-      ),
+              textScaleFactor: 1,
+
+              onSecondaryTapDown: (details, offset) async {
+                final selection = terminalController.selection;
+                if (selection != null) {
+                  final text = terminal.buffer.getText(selection);
+                  terminalController.clearSelection();
+                  await Clipboard.setData(ClipboardData(text: text));
+                } else {
+                  final data = await Clipboard.getData('text/plain');
+                  final text = data?.text;
+                  if (text != null) {
+                    terminal.paste(text);
+                  }
+                }
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
