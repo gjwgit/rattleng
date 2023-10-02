@@ -30,11 +30,12 @@ class DelayedTooltip extends StatelessWidget {
 
 //  const StatusBar({Key? key}) : super(key: key);
 
-  DelayedTooltip({
+  const DelayedTooltip({
+    Key? key,
     required this.child,
     required this.message,
     this.wait = const Duration(seconds: 1),
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
