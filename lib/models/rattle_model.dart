@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-22 08:59:03 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-09-30 16:34:33 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,6 +26,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/app.dart';
+import 'package:xterm/xterm.dart';
 
 /// The global state of affairs for Rattle.
 ///
@@ -160,6 +161,29 @@ class RattleModel extends ChangeNotifier {
     _partition = newPartition;
     notifyListeners();
   }
+
+  ////////////////////////////////////////////////////////////////////////
+  // PROCESS
+
+  // 20230930 gjw TDOD HOW TO PROPERLY HANDLE THE CONSOLE?
+
+  Terminal _rterm = Terminal(maxLines: 10000);
+
+  Terminal get rterm => _rterm;
+
+  void setRterm(Terminal newRterm) {
+    _rterm = newRterm;
+    notifyListeners();
+  }
+
+  // TerminalController _rtermController = TerminalController();
+
+  // TerminalController get rtermController => _rtermController;
+
+  // void setRtermController(TerminalController newRtermController) {
+  //   _rtermController = newRtermController;
+  //   notifyListeners();
+  // }
 
   ////////////////////////////////////////////////////////////////////////
   // INITIALISATION
