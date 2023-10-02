@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Thursday 2023-09-21 06:24:53 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-10-03 09:06:53 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -54,18 +54,18 @@ class ModelTabState extends State<ModelTab> {
               const ModelRadioButtons(),
               Visibility(
                 visible: rattle.model == "Cluster",
-                child: Column(
+                child: const Column(
                   children: <Widget>[
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50),
                     Text("NOT YET IMPLEMENTED"),
                   ],
                 ),
               ),
               Visibility(
                 visible: rattle.model == "Associate",
-                child: Column(
+                child: const Column(
                   children: <Widget>[
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50),
                     Text("NOT YET IMPLEMENTED"),
                   ],
                 ),
@@ -102,36 +102,36 @@ class ModelTabState extends State<ModelTab> {
               ),
               Visibility(
                 visible: rattle.model == "Boost",
-                child: Column(
+                child: const Column(
                   children: <Widget>[
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50),
                     Text("NOT YET IMPLEMENTED"),
                   ],
                 ),
               ),
               Visibility(
                 visible: rattle.model == "SVM",
-                child: Column(
+                child: const Column(
                   children: <Widget>[
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50),
                     Text("NOT YET IMPLEMENTED"),
                   ],
                 ),
               ),
               Visibility(
                 visible: rattle.model == "Linear",
-                child: Column(
+                child: const Column(
                   children: <Widget>[
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50),
                     Text("NOT YET IMPLEMENTED"),
                   ],
                 ),
               ),
               Visibility(
                 visible: rattle.model == "Neural",
-                child: Column(
+                child: const Column(
                   children: <Widget>[
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50),
                     Text("NOT YET IMPLEMENTED"),
                   ],
                 ),
