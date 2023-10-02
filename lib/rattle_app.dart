@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-09-20 09:27:51 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2023-10-03 08:47:29 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,6 +24,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/create_material_color.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/home_page.dart';
@@ -49,7 +50,7 @@ class RattleApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: createMaterialColor(const Color(0xff45035e)),
+        primarySwatch: createMaterialColor(headerBarColour),
         textTheme: Theme.of(context).textTheme.apply(
               fontSizeFactor: 1.1,
               fontSizeDelta: 2.0,
