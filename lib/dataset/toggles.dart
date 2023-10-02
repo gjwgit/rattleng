@@ -25,7 +25,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
@@ -57,7 +56,7 @@ class _DatasetTogglesState extends State<DatasetToggles> {
           }
         });
       },
-      children: <Widget>[
+      children: const <Widget>[
         // NORMALISE
         DelayedTooltip(
           message: "The variables/column names are normalised by default.\n"
