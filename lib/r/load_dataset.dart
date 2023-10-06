@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-22 11:30:51 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-10-05 08:34:32 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -53,9 +53,9 @@ void rLoadDataset(String filename, RattleModel rattle) {
     debugPrint('LOAD_DATASET: rattle::weather');
     rSource("data_load_weather", rattle);
   } else {
-    debugPrint('LOAD_DATASET: FILENAME IS NOT RECOGNISED SO ABORT');
+    debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT.');
   }
-  debugPrint('LOAD_DATASET: FILENAME IS NOT EMPTY SO FOR NOW:');
+  debugPrint('LOAD_DATASET: DATASET LOADED. NOM PROCESS.');
   rSource(
     "data_template", rattle,
     // {
@@ -65,8 +65,5 @@ void rLoadDataset(String filename, RattleModel rattle) {
     // }
   );
   rSource('ds_glimpse', rattle);
-  debugPrint(
-    'LOAD_DATASET: OTHERWISE WE SHOULD RUN APPROPRIATE R SCRIPT '
-    'TO LOAD DATA FROM -> "$filename";',
-  );
+  debugPrint('LOAD_DATASET: LOADED "$filename";');
 }
