@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 07:18:30 +1000 Graham Williams>
+// Time-stamp: <Friday 2023-10-06 11:54:03 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -66,9 +66,13 @@ void main() async {
       alwaysOnTop: true,
 
       // The size is overriden in the first instance by linux/my_application.cc
-      // but setting it here then does have effect when Retarting the app.
+      // but setting it here then does have effect when Restarting the app.
 
-      size: Size(950, 600),
+      // Windows has 1280x720 by default in windows/runner/main.cpp line 29 so
+      // best not to override it here since under windows the 950x600 is too
+      // small.
+
+      // size: Size(950, 600),
 
       // The [title] is used for the window manager's window title.
 
