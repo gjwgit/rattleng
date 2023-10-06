@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-10-03 10:59:45 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-05 08:33:39 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -44,7 +44,7 @@ void rSource(String script, RattleModel rattle) {
 
   // First obtain the text from the script.
 
-  debugPrint("R: RUNNING THE CODE IN SCRIPT FILE '$script.R'");
+  debugPrint("R_SOURCE: '$script.R'");
 
   var code = File("assets/r/$script.R").readAsStringSync();
 
