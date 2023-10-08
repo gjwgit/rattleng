@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-08 15:24:14 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-08 15:50:43 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -75,7 +75,9 @@ void rSource(String script, RattleModel rattle) {
   // MAP AS DESCRIBED ABOVE..
 
   code = code.replaceAll(
-      'VAR_TARGET', rattle.normalise ? "rain_tomorrow" : "RainTomorrow");
+    'VAR_TARGET',
+    rattle.normalise ? "rain_tomorrow" : "RainTomorrow",
+  );
   code = code.replaceAll('VAR_RISK', rattle.normalise ? "risk_mm" : "RISK_MM");
   code = code.replaceAll('VARS_ID', '"date", "location"');
 
