@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2023-09-22 11:07:10 +1000 Graham Williams>
+# Time-stamp: <Sunday 2023-10-08 15:09:45 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,11 +24,11 @@
 #
 # Author: Graham Williams
 
-# The file `<<FILENAME>>` is loaded as a CSV file into the template
+# The file `FILENAME` is loaded as a CSV file into the template
 # variable `ds` (dataset), intialising the `dsname` (a printable name
 # for the dataset) and `vnames` (the variable names).
 #
-# Rattle timestamp: <<TIMESTAMP>>
+# Rattle timestamp: TIMESTAMP
 #
 # References:
 #
@@ -37,10 +37,10 @@
 # https://survivor.togaware.com/datascience/csv-data-reading.html
 
 
-print("TODO READ CSV FROM <<FILENAME>>")
+print("TODO Read csv from FILENAME")
 
-dsname <- "BASENAME OF <<FILENAME>>"
+dsname <- "Basename of FILENAME"
 
-ds <- "READ <<FILENAME>>"
+ds <- "Read FILENAME"
 
 vnames <- names(ds)
