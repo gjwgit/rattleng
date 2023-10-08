@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Thursday 2023-09-21 15:19:25 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-10-08 16:25:08 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/widgets.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/dataset/chooser.dart';
@@ -63,7 +64,7 @@ class DatasetTabState extends State<DatasetTab> {
                 visible: rattle.path == "",
                 child: Expanded(
                   child: Center(
-                    key: const Key("rattle_welcome"),
+                    key: welcomeTextKey,
                     child: sunkenMarkdownFileBuilder(welcomeMsgFile),
                   ),
                 ),
