@@ -39,7 +39,7 @@ final Duration pause = Duration(seconds: int.parse(envPAUSE));
 void main() {
   group('Basic App Test:', () {
     testWidgets('Home page loads okay.', (WidgetTester tester) async {
-      print("TESTER: Start up the app");
+      debugPrint("TESTER: Start up the app");
 
       rattle.main();
 
@@ -51,7 +51,7 @@ void main() {
 
       await tester.pump(pause);
 
-      print("TESTER: Find the DatasetButton, tap, then tap Demo.");
+      debugPrint("TESTER: Find the DatasetButton, tap, then tap Demo.");
 
       var datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
@@ -95,7 +95,7 @@ void main() {
 
       // TODO TEST THIS SUCCEEDED
 
-      print("TESTER: Finished.");
+      debugPrint("TESTER: Finished.");
     });
   });
 }

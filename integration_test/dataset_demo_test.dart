@@ -23,7 +23,6 @@ import 'package:rattle/constants/widgets.dart';
 import 'package:rattle/main.dart' as rattle;
 import 'package:rattle/dataset/button.dart';
 import 'package:rattle/dataset/popup.dart';
-import 'package:rattle/script/text.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -41,7 +40,7 @@ final Duration pause = Duration(seconds: int.parse(envPAUSE));
 void main() {
   group('Basic App Test:', () {
     testWidgets('Home page loads okay.', (WidgetTester tester) async {
-      print("TESTER: Start up the app");
+      debugPrint("TESTER: Start up the app");
 
       rattle.main();
 
@@ -53,7 +52,7 @@ void main() {
 
       await tester.pump(pause);
 
-      print("TESTER: Find the DatasetButton and tap.");
+      debugPrint("TESTER: Find the DatasetButton and tap.");
 
       var datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
@@ -62,7 +61,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      print("TESTER: Check and tap Demo button.");
+      debugPrint("TESTER: Check and tap Demo button.");
 
       var datasetPopup = find.byType(DatasetPopup);
       expect(datasetPopup, findsOneWidget);
@@ -72,7 +71,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      print("TESTER: Check the default demo dataset is loaded.");
+      debugPrint("TESTER: Check the default demo dataset is loaded.");
 
       var dsPathTextFinder = find.byKey(const Key('ds_path_text'));
       expect(dsPathTextFinder, findsOneWidget);
@@ -80,7 +79,7 @@ void main() {
       String filename = dsPathText.controller?.text ?? '';
       expect(filename, "rattle::weather");
 
-      print("TESTER: Check the R script contains the expected code.");
+      debugPrint("TESTER: Check the R script contains the expected code.");
 
       final scriptTabFinder = find.text('Script');
       expect(scriptTabFinder, findsOneWidget);
@@ -89,13 +88,22 @@ void main() {
       await tester.pump(pause);
 
       final scriptTextFinder = find.byKey(scriptTextKey);
-      expect(scriptTextFinder.first.toString(), contains('## -- main.R --'));
-      expect(scriptTextFinder.first.toString(),
-          contains('## -- data_load_weather.R --'));
-      expect(scriptTextFinder.first.toString(),
-          contains('## -- data_template.R --'));
       expect(
-          scriptTextFinder.first.toString(), contains('## -- ds_glimpse.R --'));
+        scriptTextFinder.first.toString(),
+        contains('## -- main.R --'),
+      );
+      expect(
+        scriptTextFinder.first.toString(),
+        contains('## -- data_load_weather.R --'),
+      );
+      expect(
+        scriptTextFinder.first.toString(),
+        contains('## -- data_template.R --'),
+      );
+      expect(
+        scriptTextFinder.first.toString(),
+        contains('## -- ds_glimpse.R --'),
+      );
 
       // TODO TAP THE EXPORT BUTTON
 
@@ -103,7 +111,7 @@ void main() {
 
       // RUN THE SCRIPT?
 
-      print("TESTER: Finished.");
+      debugPrint("TESTER: Finished.");
     });
   });
 }
