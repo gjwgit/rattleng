@@ -1,4 +1,4 @@
-/// Testing: Basic app startup test.
+/// Testing: Test the dataset demo functionality.
 ///
 /// Copyright (C) 2023, Software Innovation Institute, ANU.
 ///
@@ -15,14 +15,10 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rattle/constants/widgets.dart';
 import 'package:rattle/main.dart' as rattle;
 import 'package:rattle/dataset/button.dart';
 import 'package:rattle/dataset/popup.dart';
@@ -43,7 +39,7 @@ final Duration pause = Duration(seconds: int.parse(envPAUSE));
 void main() {
   group('Basic App Test:', () {
     testWidgets('Home page loads okay.', (WidgetTester tester) async {
-      // Run app.
+      print("TESTER: Start up the app");
 
       rattle.main();
 
@@ -55,39 +51,51 @@ void main() {
 
       await tester.pump(pause);
 
-      // Verify that rattle starts on the home page.
+      print("TESTER: Find the DatasetButton, tap, then tap Demo.");
 
-      var datasetButtonFinder = find.byType(DatasetButton);
-
-      // A single filePicker - Filename:
-
-      expect(datasetButtonFinder, findsOneWidget);
-
-      // Leave time to see the first page.
-
+      var datasetButton = find.byType(DatasetButton);
+      expect(datasetButton, findsOneWidget);
+      await tester.pump(pause);
+      await tester.tap(datasetButton);
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
+      var datasetPopup = find.byType(DatasetPopup);
+      expect(datasetPopup, findsOneWidget);
+      var demoButton = find.text("Demo");
+      expect(demoButton, findsOneWidget);
+      await tester.tap(demoButton);
+      await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // Check the welcome widget has been created.
+      // // Find the Run button and start pressing it.
 
-      var welcomeTextFinder = find.byKey(welcomeTextKey);
-      expect(welcomeTextFinder, findsOneWidget);
+      // var runButton = find.byKey(const Key("run_button"));
+      // expect(runButton, findsOneWidget);
+      // await tester.pump(pause);
+      // await tester.tap(runButton);
+      // await tester.pumpAndSettle();
+      // await tester.pump(pause);
 
-      // Confirm the introductory text is as expected from the welcome.md
-      // file. We find all the Markdown widgets (currently 20231008 there are 2)
-      // and get the first one, hopefully as the welcome widget? Instead of
-      // findNWidgets(2) we could use findAtLeastNWidgets(2).
+      // Tap again to have some R scripts run to set up the data template.
 
-      var welcomeMarkdownFinder = find.byType(Markdown);
-      expect(welcomeMarkdownFinder, findsNWidgets(2));
+      // await tester.tap(runButton);
+      // await tester.pumpAndSettle();
 
-      var welcomeWidget =
-          welcomeMarkdownFinder.evaluate().first.widget as Markdown;
-      String welcome = welcomeWidget.data;
-      expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
+      // TODO TEST THIS SUCCEEDED
 
-      // TODO Check the status bar has the expected contents
+      // TODO TAP TO THE MODEL TAB
 
-      // TODO Check we have a X and the two toggles for normalise and partition.
+      // TODO TEST THIS SUCCEEDED
+
+      // TODO TAP THE RUN BUTTON AGAIN
+
+      // TODO TEST THIS SUCCEEDED
+
+      // GO TO LOG TAB
+
+      // TODO TEST THIS SUCCEEDED
+
+      print("TESTER: Finished.");
     });
   });
 }
