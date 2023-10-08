@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:rattle/constants/keys.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
@@ -51,7 +52,7 @@ class DatasetTextField extends StatelessWidget {
             child: TextField(
               // A text field to contain the name of the selected dataset.
 
-              key: const Key('ds_path_text'),
+              key: datasetPathKey,
 
               // If the user updates the text then we need to send the new value
               // off to the DatabaseModel.
