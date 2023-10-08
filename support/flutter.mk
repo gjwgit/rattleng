@@ -144,7 +144,7 @@ ignore:
 .PHONY: license
 license:
 	@echo "--\nFiles without a license:"
-	@find lib -type f ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
+	@find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
 
 ########################################################################
 # INTEGRATION TESTING
