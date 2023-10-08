@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rattle/constants/widgets.dart';
+import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as rattle;
 import 'package:rattle/dataset/button.dart';
 import 'package:rattle/dataset/popup.dart';
@@ -36,6 +36,7 @@ import 'package:rattle/dataset/popup.dart';
 
 const String envPAUSE = String.fromEnvironment("PAUSE", defaultValue: "0");
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
+final Duration delay = Duration(seconds: 1);
 
 void main() {
   group('Basic App Test:', () {
@@ -52,34 +53,67 @@ void main() {
 
       await tester.pump(pause);
 
-      debugPrint("TESTER: Find the DatasetButton and tap.");
+      debugPrint("TESTER: Tap the Dataset button.");
 
-      var datasetButton = find.byType(DatasetButton);
+      final datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
       await tester.pump(pause);
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      // Always delay here since if not the glimpse view is not available in
+      // time! Odd but that's the result of experimenting. Have a delay after
+      // the Demo buttons is pushed does not get the glimpse contents into the
+      // widget.
+      await tester.pump(delay);
 
-      debugPrint("TESTER: Check and tap Demo button.");
+      debugPrint("TESTER: Tap the Demo button.");
 
-      var datasetPopup = find.byType(DatasetPopup);
+      final datasetPopup = find.byType(DatasetPopup);
       expect(datasetPopup, findsOneWidget);
-      var demoButton = find.text("Demo");
+      final demoButton = find.text("Demo");
       expect(demoButton, findsOneWidget);
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      debugPrint("TESTER: Check the default demo dataset is loaded.");
+      debugPrint("TESTER: Expect the default demo dataset is identified.");
 
-      var dsPathTextFinder = find.byKey(const Key('ds_path_text'));
+      final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
-      var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
       String filename = dsPathText.controller?.text ?? '';
       expect(filename, "rattle::weather");
 
-      debugPrint("TESTER: Check the R script contains the expected code.");
+      debugPrint("TESTER: Check welcome hidden and dataset is visible.");
+
+      final datasetFinder = find.byType(Visibility);
+      expect(datasetFinder, findsNWidgets(2));
+      expect(
+        datasetFinder.evaluate().first.widget.toString(),
+        contains("hidden"),
+      );
+      expect(
+        datasetFinder.evaluate().last.widget.toString(),
+        contains("visible"),
+      );
+
+      debugPrint("TESTER: Expect the default demo dataset is loaded.");
+
+      final datasetDisplayFinder = find.byKey(datasetGlimpseKey);
+
+      expect(datasetDisplayFinder, findsOneWidget);
+
+      final dataset =
+          datasetDisplayFinder.evaluate().last.widget as SelectableText;
+
+      expect(dataset.data, contains("Rows: 366\n"));
+      expect(dataset.data, contains("Columns: 24\n"));
+      expect(dataset.data, contains("date            <date>"));
+      expect(dataset.data, contains("rain_tomorrow   <fct>"));
+
+      debugPrint("TESTER TODO: Confirm the status bar has been updated.");
+
+      debugPrint("TESTER: Check R script widget contains the expected code.");
 
       final scriptTabFinder = find.text('Script');
       expect(scriptTabFinder, findsOneWidget);
@@ -105,11 +139,12 @@ void main() {
         contains('## -- ds_glimpse.R --'),
       );
 
-      // TODO TAP THE EXPORT BUTTON
+      debugPrint("TESTER TODO: Tap Export. Check/run export.R.");
 
-      // TODO TEST THAT SCRIPT.R EXISTS
+      debugPrint("TESTER TODO: From Dataset tab uncheck Normalise and reload.");
 
-      // RUN THE SCRIPT?
+      // This will test if Date is the first column rather than date. Also
+      // RainTomorrow rather than rain_tomorrow.
 
       debugPrint("TESTER: Finished.");
     });
