@@ -26,7 +26,7 @@
 
 # Random Forest using randomForest
 #
-# Rattle timestamp: <<TIMESTAMP>>
+# Rattle timestamp: TIMESTAMP
 #
 # References:
 #
@@ -43,10 +43,10 @@ mdesc <- "Forest"
 model_randomForest <- randomForest(
   form,
   data=ds[tr, vars], 
-  ntree=<<RF_NUM_TREES>>,
-  mtry=<<RF_MTRY>>,
+  ntree=RF_NUM_TREES,
+  mtry=RF_MTRY,
   importance=TRUE,
-  na.action=<<RF_NA_ACTION>>,
+  na.action=RF_NA_ACTION,
   replace=FALSE)
 
 # Generate textual output of the 'Random Forest' model.

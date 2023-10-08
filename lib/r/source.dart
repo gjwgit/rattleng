@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-10-05 08:33:39 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-08 15:24:14 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,15 @@ import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/helpers/timestamp.dart';
 
 /// Run the R [script] and append to the [rattle] script.
+///
+/// Various PARAMETERS that are found in the R script will be replaced with
+/// actual values before the code is run. An early approach was to wrap the
+/// PARAMETERS within anlg brackets, as in <<PARAMETERS>> but then the R scripts
+/// do not run standalone. Whlist it did ensure the parameters were properly
+/// mapped, it is useful to be able to run the scripts as is outside of
+/// rattleNG. So decided to remove the angle brackets. The scripts still can not
+/// tun standalone as such since they will have undefined vairables, but we can
+/// define the variables and then run the scripts.
 
 void rSource(String script, RattleModel rattle) {
   // TODO ANOTHER ARGUMENT AS A LIST OF MAPS FROM STRING TO STRING LIKE
@@ -40,7 +49,7 @@ void rSource(String script, RattleModel rattle) {
   //
   // AND THEN ON THE CODE FOR EACH MAP, RUN
   //
-  // code.replaceAll('<<$map>>','$value')
+  // code.replaceAll('$MAP','$value')
 
   // First obtain the text from the script.
 
@@ -51,48 +60,50 @@ void rSource(String script, RattleModel rattle) {
   // Process template variables. This is done here rather than passing the
   // TIMESTAMP parameter through the map.
 
-  code = code.replaceAll('<<TIMESTAMP>>', timestamp());
+  code = code.replaceAll('TIMESTAMP', timestamp());
 
-  // Populate the <<VERSION>>.
+  // Populate the VERSION.
 
   // PackageInfo info = await PackageInfo.fromPlatform();
-  // code = code.replaceAll('<<VERSION>>', info.version);
+  // code = code.replaceAll('VERSION', info.version);
   //
   // THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE VERSION FOR NOW
   //
-  code = code.replaceAll('<<VERSION>>', '0.0.1');
+  code = code.replaceAll('VERSION', '0.0.1');
 
   // HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE FUNCTION CALL AS A
   // MAP AS DESCRIBED ABOVE..
 
-  code = code.replaceAll('<<VAR_TARGET>>', "rain_tomorrow");
-  code = code.replaceAll('<<VAR_RISK>>', "risk_mm");
-  code = code.replaceAll('<<VARS_ID>>', '"date", "location"');
+  code = code.replaceAll(
+      'VAR_TARGET', rattle.normalise ? "rain_tomorrow" : "RainTomorrow");
+  code = code.replaceAll('VAR_RISK', rattle.normalise ? "risk_mm" : "RISK_MM");
+  code = code.replaceAll('VARS_ID', '"date", "location"');
 
-  code = code.replaceAll('<<DATA_SPLIT_TR_TU_TE>>', '0.7, 0.15, 0.15');
+  code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
 
   // RPART_BUILD.R
 
-  code = code.replaceAll('<<PRIORS>>', '');
-  code = code.replaceAll('<<LOSS>>', '');
-  code = code.replaceAll('<<MAXDEPTH>>', '');
-  code = code.replaceAll('<<MINSPLIT>>', '');
-  code = code.replaceAll('<<MINBUCKET>>', '');
-  code = code.replaceAll('<<CP>>', '');
+  code = code.replaceAll(' PRIORS', '');
+  code = code.replaceAll(' LOSS', '');
+  code = code.replaceAll(' MAXDEPTH', '');
+  code = code.replaceAll(' MINSPLIT', '');
+  code = code.replaceAll(' MINBUCKET', '');
+  code = code.replaceAll(' CP', '');
 
   // RANDOM_FOREST_BUILD.R
 
-  code = code.replaceAll('<<RF_NUM_TREES>>', '500');
-  code = code.replaceAll('<<RF_MTRY>>', '4');
-  code = code.replaceAll('<<RF_NA_ACTION>>', 'randomForest::na.roughfix');
+  code = code.replaceAll('RF_NUM_TREES', '500');
+  code = code.replaceAll('RF_MTRY', '4');
+  code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
 
-  // SIMPLY REMOVE THESE DIRECTIVES FOR NOW UNTIL WE PASS IN A DIRECTIVE TO OR
-  // NOT TO INCLUDE THESE BLOCKS.
+  // Do we split the dataset? The option is presented on the DATASET GUI, and if set we split the dataset.
 
-  code = code.replaceAll('\n<<BEGIN_NORMALISE_NAMES>>', "");
-  code = code.replaceAll('\n<<END_NORMALISE_NAMES>>', "");
-  code = code.replaceAll('\n<<BEGIN_SPLIT_DATASET>>', "");
-  code = code.replaceAll('\n<<END_SPLIT_DATASET>>', "");
+  code = code.replaceAll('SPLIT_DATASET', rattle.partition ? "TRUE" : "FALSE");
+
+  // Do we want to normalise the dataset?
+
+  code =
+      code.replaceAll('NORMALISE_NAMES', rattle.normalise ? "TRUE" : "FALSE");
 
   // Run the code.
 
