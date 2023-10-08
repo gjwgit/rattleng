@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2023-10-09 08:23:24 +1100 Graham Williams>
+// Time-stamp: <Monday 2023-10-09 09:08:00 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -77,6 +77,7 @@ class DatasetTabState extends State<DatasetTab> {
                     padding: const EdgeInsets.only(left: 10),
                     child: SelectableText(
                       rExtractGlimpse(rattle.stdout),
+                      key: datasetGlimpseKey,
                       style: monoTextStyle,
                     ),
                   ),
