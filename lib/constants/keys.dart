@@ -1,11 +1,11 @@
-/// Constants used for widgets.
+/// Keys used for widgets.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-10-09 09:08:32 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2023-10-10 05:24:09 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,4 +27,5 @@ import 'package:flutter/material.dart' show Key;
 const datasetGlimpseKey = Key('dataset_glimpse_text');
 const datasetPathKey = Key('dataset_path_text');
 const scriptTextKey = Key("script_text");
+const statusBarKey = Key("status_bar");
 const welcomeTextKey = Key("rattle_welcome");
