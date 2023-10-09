@@ -17,8 +17,12 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as rattle;
@@ -36,55 +40,55 @@ import 'package:rattle/dataset/button.dart';
 
 const String envPAUSE = String.fromEnvironment("PAUSE", defaultValue: "0");
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
+final Duration delay = Duration(seconds: 1);
 
 void main() {
-  group('Basic App Test:', () {
-    testWidgets('Home page loads okay.', (WidgetTester tester) async {
-      // Run app.
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      rattle.main();
+  testWidgets('Home page loads okay.', (WidgetTester tester) async {
+    debugPrint("TESTER: Start up the app");
 
-      // Finish animation and scheduled microtasks.
+    rattle.main();
 
-      await tester.pumpAndSettle();
+    // Trigger a frame. Finish animation and scheduled microtasks.
 
-      // Leave time to see the first page.
+    await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+    // Leave time to see the first page.
 
-      // Verify that rattle starts on the home page.
+    await tester.pump(pause);
 
-      var datasetButtonFinder = find.byType(DatasetButton);
+    debugPrint("TESTER: Verify various expected home page widgets.");
 
-      // A single filePicker - Filename:
+    final datasetButtonFinder = find.byType(DatasetButton);
+    expect(datasetButtonFinder, findsOneWidget);
+    await tester.pump(pause);
 
-      expect(datasetButtonFinder, findsOneWidget);
+    final welcomeTextFinder = find.byKey(welcomeTextKey);
+    expect(welcomeTextFinder, findsOneWidget);
 
-      // Leave time to see the first page.
+    // TODO Check we have a X and the two toggles for normalise and partition.
 
-      await tester.pump(pause);
+    debugPrint("TESTER: Confirm welcome message on home screen.");
 
-      // Check the welcome widget has been created.
+    // Confirm the introductory text is as expected from the welcome.md
+    // file. We find all the Markdown widgets (currently 20231008 there are 2)
+    // and get the first one, hopefully as the welcome widget? Instead of
+    // findNWidgets(2) we could use findAtLeastNWidgets(2).
 
-      var welcomeTextFinder = find.byKey(welcomeTextKey);
-      expect(welcomeTextFinder, findsOneWidget);
+    final welcomeMarkdownFinder = find.byType(Markdown);
+    expect(welcomeMarkdownFinder, findsNWidgets(2));
 
-      // Confirm the introductory text is as expected from the welcome.md
-      // file. We find all the Markdown widgets (currently 20231008 there are 2)
-      // and get the first one, hopefully as the welcome widget? Instead of
-      // findNWidgets(2) we could use findAtLeastNWidgets(2).
+    final welcomeWidget =
+        welcomeMarkdownFinder.evaluate().first.widget as Markdown;
+    String welcome = welcomeWidget.data;
+    expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
 
-      var welcomeMarkdownFinder = find.byType(Markdown);
-      expect(welcomeMarkdownFinder, findsNWidgets(2));
+    debugPrint("TESTER TODO: Check the status bar has the expected contents.");
 
-      var welcomeWidget =
-          welcomeMarkdownFinder.evaluate().first.widget as Markdown;
-      String welcome = welcomeWidget.data;
-      expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
+    final statusBarFinder = find.byKey(statusBarKey);
+    expect(statusBarFinder, findsOneWidget);
 
-      // TODO Check the status bar has the expected contents
-
-      // TODO Check we have a X and the two toggles for normalise and partition.
-    });
+    debugPrint("TESTER: Finished.");
   });
 }

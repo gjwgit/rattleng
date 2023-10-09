@@ -30,6 +30,7 @@ import 'package:rattle/models/rattle_model.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/keys.dart';
 
 class StatusBar extends StatelessWidget {
   const StatusBar({Key? key}) : super(key: key);
@@ -52,6 +53,7 @@ class StatusBar extends StatelessWidget {
           padding: const EdgeInsets.only(left: 0),
           color: statusBarColour,
           child: Markdown(
+            key: statusBarKey,
             selectable: true,
             data: rattle.status,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),

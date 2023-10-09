@@ -19,8 +19,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:integration_test/integration_test.dart';
+
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/main.dart' as rattle;
+import 'package:rattle/main.dart' as app;
 import 'package:rattle/dataset/button.dart';
 import 'package:rattle/dataset/popup.dart';
 
@@ -39,114 +41,114 @@ final Duration pause = Duration(seconds: int.parse(envPAUSE));
 final Duration delay = Duration(seconds: 1);
 
 void main() {
-  group('Basic App Test:', () {
-    testWidgets('Home page loads okay.', (WidgetTester tester) async {
-      debugPrint("TESTER: Start up the app");
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      rattle.main();
+  testWidgets('Home page loads okay.', (WidgetTester tester) async {
+    debugPrint("TESTER: Start up the app");
 
-      // Finish animation and scheduled microtasks.
+    app.main();
 
-      await tester.pumpAndSettle();
+    // Trigger a frame. Finish animation and scheduled microtasks.
 
-      // Leave time to see the first page.
+    await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+    // Leave time to see the first page.
 
-      debugPrint("TESTER: Tap the Dataset button.");
+    await tester.pump(pause);
 
-      final datasetButton = find.byType(DatasetButton);
-      expect(datasetButton, findsOneWidget);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-      // Always delay here since if not the glimpse view is not available in
-      // time! Odd but that's the result of experimenting. Have a delay after
-      // the Demo buttons is pushed does not get the glimpse contents into the
-      // widget.
-      await tester.pump(delay);
+    debugPrint("TESTER: Tap the Dataset button.");
 
-      debugPrint("TESTER: Tap the Demo button.");
+    final datasetButton = find.byType(DatasetButton);
+    expect(datasetButton, findsOneWidget);
+    await tester.pump(pause);
+    await tester.tap(datasetButton);
+    await tester.pumpAndSettle();
+    // Always delay here since if not the glimpse view is not available in
+    // time! Odd but that's the result of experimenting. Have a delay after
+    // the Demo buttons is pushed does not get the glimpse contents into the
+    // widget.
+    await tester.pump(delay);
 
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-      final demoButton = find.text("Demo");
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
-      await tester.pump(pause);
+    debugPrint("TESTER: Tap the Demo button.");
 
-      debugPrint("TESTER: Expect the default demo dataset is identified.");
+    final datasetPopup = find.byType(DatasetPopup);
+    expect(datasetPopup, findsOneWidget);
+    final demoButton = find.text("Demo");
+    expect(demoButton, findsOneWidget);
+    await tester.tap(demoButton);
+    await tester.pumpAndSettle();
+    await tester.pump(pause);
 
-      final dsPathTextFinder = find.byKey(datasetPathKey);
-      expect(dsPathTextFinder, findsOneWidget);
-      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-      String filename = dsPathText.controller?.text ?? '';
-      expect(filename, "rattle::weather");
+    debugPrint("TESTER: Expect the default demo dataset is identified.");
 
-      debugPrint("TESTER: Check welcome hidden and dataset is visible.");
+    final dsPathTextFinder = find.byKey(datasetPathKey);
+    expect(dsPathTextFinder, findsOneWidget);
+    final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+    String filename = dsPathText.controller?.text ?? '';
+    expect(filename, "rattle::weather");
 
-      final datasetFinder = find.byType(Visibility);
-      expect(datasetFinder, findsNWidgets(2));
-      expect(
-        datasetFinder.evaluate().first.widget.toString(),
-        contains("hidden"),
-      );
-      expect(
-        datasetFinder.evaluate().last.widget.toString(),
-        contains("visible"),
-      );
+    debugPrint("TESTER: Check welcome hidden and dataset is visible.");
 
-      debugPrint("TESTER: Expect the default demo dataset is loaded.");
+    final datasetFinder = find.byType(Visibility);
+    expect(datasetFinder, findsNWidgets(2));
+    expect(
+      datasetFinder.evaluate().first.widget.toString(),
+      contains("hidden"),
+    );
+    expect(
+      datasetFinder.evaluate().last.widget.toString(),
+      contains("visible"),
+    );
 
-      final datasetDisplayFinder = find.byKey(datasetGlimpseKey);
+    debugPrint("TESTER: Expect the default demo dataset is loaded.");
 
-      expect(datasetDisplayFinder, findsOneWidget);
+    final datasetDisplayFinder = find.byKey(datasetGlimpseKey);
 
-      final dataset =
-          datasetDisplayFinder.evaluate().last.widget as SelectableText;
+    expect(datasetDisplayFinder, findsOneWidget);
 
-      expect(dataset.data, contains("Rows: 366\n"));
-      expect(dataset.data, contains("Columns: 24\n"));
-      expect(dataset.data, contains("date            <date>"));
-      expect(dataset.data, contains("rain_tomorrow   <fct>"));
+    final dataset =
+        datasetDisplayFinder.evaluate().last.widget as SelectableText;
 
-      debugPrint("TESTER TODO: Confirm the status bar has been updated.");
+    expect(dataset.data, contains("Rows: 366\n"));
+    expect(dataset.data, contains("Columns: 24\n"));
+    expect(dataset.data, contains("date            <date>"));
+    expect(dataset.data, contains("rain_tomorrow   <fct>"));
 
-      debugPrint("TESTER: Check R script widget contains the expected code.");
+    debugPrint("TESTER TODO: Confirm the status bar has been updated.");
 
-      final scriptTabFinder = find.text('Script');
-      expect(scriptTabFinder, findsOneWidget);
-      await tester.tap(scriptTabFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(pause);
+    debugPrint("TESTER: Check R script widget contains the expected code.");
 
-      final scriptTextFinder = find.byKey(scriptTextKey);
-      expect(
-        scriptTextFinder.first.toString(),
-        contains('## -- main.R --'),
-      );
-      expect(
-        scriptTextFinder.first.toString(),
-        contains('## -- data_load_weather.R --'),
-      );
-      expect(
-        scriptTextFinder.first.toString(),
-        contains('## -- data_template.R --'),
-      );
-      expect(
-        scriptTextFinder.first.toString(),
-        contains('## -- ds_glimpse.R --'),
-      );
+    final scriptTabFinder = find.text('Script');
+    expect(scriptTabFinder, findsOneWidget);
+    await tester.tap(scriptTabFinder);
+    await tester.pumpAndSettle();
+    await tester.pump(pause);
 
-      debugPrint("TESTER TODO: Tap Export. Check/run export.R.");
+    final scriptTextFinder = find.byKey(scriptTextKey);
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('## -- main.R --'),
+    );
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('## -- data_load_weather.R --'),
+    );
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('## -- data_template.R --'),
+    );
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('## -- ds_glimpse.R --'),
+    );
 
-      debugPrint("TESTER TODO: From Dataset tab uncheck Normalise and reload.");
+    debugPrint("TESTER TODO: Tap Export. Check/run export.R.");
 
-      // This will test if Date is the first column rather than date. Also
-      // RainTomorrow rather than rain_tomorrow.
+    debugPrint("TESTER TODO: From Dataset tab uncheck Normalise and reload.");
 
-      debugPrint("TESTER: Finished.");
-    });
+    // This will test if Date is the first column rather than date. Also
+    // RainTomorrow rather than rain_tomorrow.
+
+    debugPrint("TESTER: Finished.");
   });
 }
