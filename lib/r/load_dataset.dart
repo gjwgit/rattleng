@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
-
+import 'package:path/path.dart' as p;
 /// Load the specified dataset using the appropriate R script.
 ///
 /// The R script is expected to load the data into the template variable `ds`,
@@ -53,6 +53,8 @@ void rLoadDataset(String filename, RattleModel rattle) {
     debugPrint('LOAD_DATASET: rattle::weather');
     rSource("data_load_weather", rattle);
   } else {
+    debugPrint('filepath:'+filename);
+    rSource(filename, rattle);
     debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT.');
   }
   debugPrint('LOAD_DATASET: DATASET LOADED. NOM PROCESS.');
@@ -66,4 +68,41 @@ void rLoadDataset(String filename, RattleModel rattle) {
   );
   rSource('ds_glimpse', rattle);
   debugPrint('LOAD_DATASET: LOADED "$filename";');
+}
+
+void rLoadDatasetFile(String filepath, RattleModel rattle) {
+  // Get the filename from the corresponding widget.
+
+  // final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
+  // var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+  // String filename = dsPathText.controller?.text ?? '';
+
+//  String filename = getIt.get....
+//  print(filename)
+
+  // IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET PROCESSED
+  // (data_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
+  // SO OTHERWISE DO NOTHING.
+
+   if (filepath == '') {
+    debugPrint('filepath error');
+  } else {
+    String filename = p.basenameWithoutExtension(filepath);
+    debugPrint('filename: $filename');
+    debugPrint('filepath: $filepath');
+
+    rSource(filename, rattle);
+  }
+  debugPrint('LOAD_DATASET: DATASET LOADED. NOM PROCESS.');
+  rSource(
+    "data_template", rattle,
+    // {
+    //   "VAR_TARGET": "rain_tomorrow",
+    //   "VAR_RISK": "risk_mm",
+    //   "VARS_ID": '"date", "location"'
+    // }
+  );
+  rSource('ds_glimpse', rattle);
+
+
 }

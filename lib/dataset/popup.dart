@@ -27,6 +27,8 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/models/rattle_model.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 
 class DatasetPopup extends StatelessWidget {
   const DatasetPopup({Key? key}) : super(key: key);
@@ -60,7 +62,7 @@ class DatasetPopup extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  null;
+                  _selectFile(context);
                 },
                 child: const Text('Filename'),
               ),
@@ -105,6 +107,43 @@ class DatasetPopup extends StatelessWidget {
       ),
     );
   }
+}
+
+void _selectFile(BuildContext context) async {
+    // Use the FilePicker to select a file asynchronously.
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    // Check if a file was selected.
+    if (result != null) {
+        // Convert the selected file into a File object.
+        File file = File(result.files.single.path!);
+        
+        // Fetch the RattleModel from the Provider.
+        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+        
+        // Set the path of the selected file in the RattleModel.
+        rattle.setPath(file.path);
+        
+        // Load the dataset using the selected file's path.
+        rLoadDatasetFile(file.path, rattle);
+        
+        // Update the status message in the RattleModel.
+        rattle.setStatus(
+            "Choose **variable roles** and then proceed to "
+            "analyze and model your data via the other tabs.",
+        );
+        
+        // Close the file picker dialog.
+        Navigator.pop(context, "Filename");
+    } else {
+        // If the file selection was canceled, show a snackbar message.
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('File selection was canceled.'),
+                duration: Duration(seconds: 2),
+            ),
+        );
+    }
 }
 
 // // Obtain the current path.
