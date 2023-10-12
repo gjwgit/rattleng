@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-10-05 08:34:32 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-12 14:26:17 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:path/path.dart' as p;
+
 /// Load the specified dataset using the appropriate R script.
 ///
 /// The R script is expected to load the data into the template variable `ds`,
@@ -35,15 +36,17 @@ import 'package:path/path.dart' as p;
 /// different in the case where the dataset variables have been normalised,
 /// which is the default.
 
-void rLoadDataset(String filename, RattleModel rattle) {
+void rLoadDataset(RattleModel rattle) {
   // Get the filename from the corresponding widget.
 
   // final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
   // var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
   // String filename = dsPathText.controller?.text ?? '';
 
-//  String filename = getIt.get....
-//  print(filename)
+  String filename = rattle.path;
+
+  //  String filename = getIt.get....
+  //  print(filename)
 
   // IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET PROCESSED
   // (data_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
@@ -52,10 +55,11 @@ void rLoadDataset(String filename, RattleModel rattle) {
   if (filename == '' || filename == 'rattle::weather') {
     debugPrint('LOAD_DATASET: rattle::weather');
     rSource("data_load_weather", rattle);
+  } else if (filename.contains("\.csv")) {
+    debugPrint('LOAD_DATASET: $filename');
+    rSource("data_load_csv", rattle);
   } else {
-    debugPrint('filepath:'+filename);
-    rSource(filename, rattle);
-    debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT.');
+    debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT: $filename.');
   }
   debugPrint('LOAD_DATASET: DATASET LOADED. NOM PROCESS.');
   rSource(
@@ -84,7 +88,7 @@ void rLoadDatasetFile(String filepath, RattleModel rattle) {
   // (data_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
   // SO OTHERWISE DO NOTHING.
 
-   if (filepath == '') {
+  if (filepath == '') {
     debugPrint('filepath error');
   } else {
     String filename = p.basenameWithoutExtension(filepath);
@@ -103,6 +107,4 @@ void rLoadDatasetFile(String filepath, RattleModel rattle) {
     // }
   );
   rSource('ds_glimpse', rattle);
-
-
 }
