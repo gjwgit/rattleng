@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2023-10-08 15:09:45 +1100 Graham Williams>
+# Time-stamp: <Thursday 2023-10-12 14:30:41 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,11 +36,11 @@
 #
 # https://survivor.togaware.com/datascience/csv-data-reading.html
 
+library(magrittr)
+library(readr)        # Read/write delimited data: read_csv().
 
-print("TODO Read csv from FILENAME")
+dsname <- "FILENAME" %>% basename() %>% sub(".csv$", "", .)
 
-dsname <- "Basename of FILENAME"
-
-ds <- "Read FILENAME"
+ds <- read_csv("FILENAME")
 
 vnames <- names(ds)
