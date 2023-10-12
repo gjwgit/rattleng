@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-10-12 14:26:17 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-12 14:34:29 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -72,39 +72,4 @@ void rLoadDataset(RattleModel rattle) {
   );
   rSource('ds_glimpse', rattle);
   debugPrint('LOAD_DATASET: LOADED "$filename";');
-}
-
-void rLoadDatasetFile(String filepath, RattleModel rattle) {
-  // Get the filename from the corresponding widget.
-
-  // final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
-  // var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-  // String filename = dsPathText.controller?.text ?? '';
-
-//  String filename = getIt.get....
-//  print(filename)
-
-  // IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET PROCESSED
-  // (data_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
-  // SO OTHERWISE DO NOTHING.
-
-  if (filepath == '') {
-    debugPrint('filepath error');
-  } else {
-    String filename = p.basenameWithoutExtension(filepath);
-    debugPrint('filename: $filename');
-    debugPrint('filepath: $filepath');
-
-    rSource(filename, rattle);
-  }
-  debugPrint('LOAD_DATASET: DATASET LOADED. NOM PROCESS.');
-  rSource(
-    "data_template", rattle,
-    // {
-    //   "VAR_TARGET": "rain_tomorrow",
-    //   "VAR_RISK": "risk_mm",
-    //   "VARS_ID": '"date", "location"'
-    // }
-  );
-  rSource('ds_glimpse', rattle);
 }
