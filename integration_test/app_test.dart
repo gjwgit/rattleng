@@ -40,7 +40,7 @@ import 'package:rattle/dataset/button.dart';
 
 const String envPAUSE = String.fromEnvironment("PAUSE", defaultValue: "0");
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
-final Duration delay = Duration(seconds: 1);
+const Duration delay = Duration(seconds: 1);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
