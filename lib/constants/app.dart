@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-10-03 08:45:22 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 06:41:50 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -41,12 +41,6 @@ const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
-
-/// The status line welcome message.
-
-const String statusWelcomeMsg =
-    'Welcome to **RattleNG**. Click the Dataset button '
-    'to load a dataset.';
 
 /// The default background colour of the header bar.
 ///

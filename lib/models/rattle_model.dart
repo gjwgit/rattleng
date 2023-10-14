@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-30 16:34:33 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 06:46:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,6 +26,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/status.dart';
 import 'package:xterm/xterm.dart';
 
 /// The global state of affairs for Rattle.

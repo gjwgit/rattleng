@@ -1,11 +1,11 @@
-/// Widget to choose a dataset consisting of a button and text field.
+/// Widget to choose a dataset consisting of a button, text field, clear, and toggles.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-22 09:01:35 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 06:23:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,6 +28,8 @@ import 'package:rattle/dataset/button.dart';
 import 'package:rattle/dataset/clear_text_field.dart';
 import 'package:rattle/dataset/text_field.dart';
 import 'package:rattle/dataset/toggles.dart';
+
+const double widthSpace = 5;
 
 /// The dataset chooser to allow selection of the data for Rattle.
 ///
@@ -56,13 +58,13 @@ class _DatasetChooserState extends State<DatasetChooser> {
       children: [
         // Some fixed space so the widgets aren't crowded.
 
-        SizedBox(width: 5),
+        SizedBox(width: widthSpace),
 
         // Widget to select the dataset filename.
 
         DatasetButton(),
 
-        SizedBox(width: 5),
+        SizedBox(width: widthSpace),
 
         // A text field to display the selected dataset name.
 
@@ -72,7 +74,9 @@ class _DatasetChooserState extends State<DatasetChooser> {
 
         DatasetClearTextField(),
 
-        SizedBox(width: 5),
+        SizedBox(width: widthSpace),
+
+        // Toggles to choose what to do on loading the dataset.
 
         DatasetToggles(),
       ],

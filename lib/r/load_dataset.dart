@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-10-05 08:34:32 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 08:27:24 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,15 +35,17 @@ import 'package:rattle/models/rattle_model.dart';
 /// different in the case where the dataset variables have been normalised,
 /// which is the default.
 
-void rLoadDataset(String filename, RattleModel rattle) {
+void rLoadDataset(RattleModel rattle) {
   // Get the filename from the corresponding widget.
 
   // final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
   // var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
   // String filename = dsPathText.controller?.text ?? '';
 
-//  String filename = getIt.get....
-//  print(filename)
+  String filename = rattle.path;
+
+  //  String filename = getIt.get....
+  //  print(filename)
 
   // IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET PROCESSED
   // (data_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
@@ -52,8 +54,11 @@ void rLoadDataset(String filename, RattleModel rattle) {
   if (filename == '' || filename == 'rattle::weather') {
     debugPrint('LOAD_DATASET: rattle::weather');
     rSource("data_load_weather", rattle);
+  } else if (filename.contains(".csv")) {
+    debugPrint('LOAD_DATASET: $filename');
+    rSource("data_load_csv", rattle);
   } else {
-    debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT.');
+    debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT: $filename.');
   }
   debugPrint('LOAD_DATASET: DATASET LOADED. NOM PROCESS.');
   rSource(
