@@ -19,22 +19,26 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yiming Lu
 
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:rattle/constants/status.dart';
+import 'package:rattle/dataset/select_file.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/models/rattle_model.dart';
-import 'package:file_picker/file_picker.dart';
-import 'dart:io';
+
+const double heightSpace = 20;
+const double widthSpace = 10;
 
 class DatasetPopup extends StatelessWidget {
   const DatasetPopup({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -46,7 +50,8 @@ class DatasetPopup extends StatelessWidget {
                 size: 24,
                 color: Colors.blue,
               ),
-              SizedBox(width: 8), // Space between icon and title.
+              // Space between icon and title.
+              SizedBox(width: widthSpace),
               Text(
                 'Choose the Dataset Source:',
                 style: TextStyle(
@@ -56,42 +61,41 @@ class DatasetPopup extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20), // Space between title and buttons.
+          // Space between title and buttons.
+          const SizedBox(height: heightSpace),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
                 onPressed: () {
-                  _selectFile(context);
+                  datasetSelectFile(context);
                 },
                 child: const Text('Filename'),
               ),
-              const SizedBox(width: 10), // Space between buttons.
+              // Space between buttons.
+              const SizedBox(width: widthSpace),
               ElevatedButton(
                 onPressed: () {
                   null;
                 },
                 child: const Text('Package'),
               ),
-              const SizedBox(width: 10), // Space between buttons.
+              // Space between buttons.
+              const SizedBox(width: widthSpace),
               ElevatedButton(
                 onPressed: () {
-                  RattleModel rattle =
-                      Provider.of<RattleModel>(context, listen: false);
                   String selectedFileName = "rattle::weather";
                   rattle.setPath(selectedFileName);
                   rLoadDataset(rattle);
-                  rattle.setStatus(
-                    "Choose **variable roles** and then proceed to "
-                    "analyze and model your data via the other tabs.",
-                  );
+                  rattle.setStatus(statusChooseVariableRoles);
                   Navigator.pop(context, "Demo");
                 },
                 child: const Text('Demo'),
               ),
             ],
           ),
-          const SizedBox(height: 20), // Space between rows.
+          // Space between rows.
+          const SizedBox(height: heightSpace),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -108,66 +112,3 @@ class DatasetPopup extends StatelessWidget {
     );
   }
 }
-
-void _selectFile(BuildContext context) async {
-  // Use the FilePicker to select a file asynchronously.
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-  // Check if a file was selected.
-  if (result != null) {
-    // Convert the selected file into a File object.
-    File file = File(result.files.single.path!);
-
-    // Fetch the RattleModel from the Provider.
-    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-
-    // Set the path of the selected file in the RattleModel.
-    rattle.setPath(file.path);
-
-    // Load the dataset using the selected file's path.
-    rLoadDataset(rattle);
-
-    // Update the status message in the RattleModel.
-    rattle.setStatus(
-      "Choose **variable roles** and then proceed to "
-      "analyze and model your data via the other tabs.",
-    );
-
-    // Close the file picker dialog.
-    Navigator.pop(context, "Filename");
-  } else {
-    // If the file selection was canceled, show a snackbar message.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('File selection was canceled.'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-}
-
-// // Obtain the current path.
-
-// RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-// String currentPath = rattle.path;
-
-// if (currentPath == "") {
-//   debugPrint("NO PATH SO POPUP A CHOICE OF FILE or PACKAGE or DEMO.");
-//   // Obtain the dataset name
-//   debugPrint("FOR NOW SET THE DATASET AS rattle::weather.");
-//   String selectedFileName = "rattle::weather";
-//   // Update the selected filename using the Provider.
-
-//   Provider.of<RattleModel>(context, listen: false)
-//       .setPath(selectedFileName);
-// } else {
-//   debugPrint("PATH : $currentPath");
-// }
-
-// // Request the dataset to be loaded, and pass the rattle model across so
-// // that the script can be added to it.
-
-// rLoadDataset(currentPath, rattle);
-
-// rattle.setStatus("Choose **variable roles** and then proceed to "
-//     "analyze and model your data via the other tabs.");
