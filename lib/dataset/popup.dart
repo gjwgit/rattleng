@@ -71,7 +71,8 @@ class DatasetPopup extends StatelessWidget {
               // Choose a FILENAME to load and load it.
               ElevatedButton(
                 onPressed: () {
-                  _selectFile(context);
+                  _selectFile(rattle);
+                  Navigator.pop(context, "Filename");
                 },
                 child: const Text('Filename'),
               ),
@@ -118,7 +119,7 @@ class DatasetPopup extends StatelessWidget {
 
 // TODO 20231014 gjw CONSIDER MOVING THIS TO A SEPARATE FILE: select_file.dart
 
-void _selectFile(BuildContext context) async {
+void _selectFile(RattleModel rattle) async {
   // Use the FilePicker to select a file asynchronously.
 
   FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -130,10 +131,6 @@ void _selectFile(BuildContext context) async {
 
     File file = File(result.files.single.path!);
 
-    // Fetch the RattleModel from the Provider.
-
-    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-
     // Set the path of the selected file in the RattleModel.
 
     rattle.setPath(file.path);
@@ -143,18 +140,5 @@ void _selectFile(BuildContext context) async {
     rLoadDataset(rattle);
 
     rattle.setStatus(statusChooseVariableRoles);
-
-    // Close the file picker dialog.
-
-    Navigator.pop(context, "Filename");
-  } else {
-    // If the file selection was canceled, show a snackbar message.
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('File selection was canceled.'),
-        duration: Duration(seconds: 2),
-      ),
-    );
   }
 }
