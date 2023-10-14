@@ -66,9 +66,24 @@ class DatasetPopup extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              // Choose a FILENAME to load and load it.
               ElevatedButton(
                 onPressed: () {
-                  datasetSelectFile(context);
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles();
+
+                  if (datasetSelectFile(rattle)) {
+                    rattle.setStatus(statusChooseVariableRoles);
+                  } else {
+                    // If the file selection was canceled, show a snackbar message.
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('File selection was canceled.'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  }
                 },
                 child: const Text('Filename'),
               ),
