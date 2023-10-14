@@ -21,12 +21,14 @@
 ///
 /// Authors: Graham Williams, Yiming Lu
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/status.dart';
-import 'package:rattle/dataset/select_file.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/models/rattle_model.dart';
 
@@ -69,21 +71,7 @@ class DatasetPopup extends StatelessWidget {
               // Choose a FILENAME to load and load it.
               ElevatedButton(
                 onPressed: () {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles();
-
-                  if (datasetSelectFile(rattle)) {
-                    rattle.setStatus(statusChooseVariableRoles);
-                  } else {
-                    // If the file selection was canceled, show a snackbar message.
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('File selection was canceled.'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                  }
+                  _selectFile(context);
                 },
                 child: const Text('Filename'),
               ),
@@ -123,6 +111,49 @@ class DatasetPopup extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+// TODO 20231014 gjw CONSIDER MOVING THIS TO A SEPARATE FILE: select_file.dart
+
+void _selectFile(BuildContext context) async {
+  // Use the FilePicker to select a file asynchronously.
+
+  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  // Check if a file was selected.
+
+  if (result != null) {
+    // Convert the selected file into a File object.
+
+    File file = File(result.files.single.path!);
+
+    // Fetch the RattleModel from the Provider.
+
+    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+
+    // Set the path of the selected file in the RattleModel.
+
+    rattle.setPath(file.path);
+
+    // Load the dataset using the selected file's path.
+
+    rLoadDataset(rattle);
+
+    rattle.setStatus(statusChooseVariableRoles);
+
+    // Close the file picker dialog.
+
+    Navigator.pop(context, "Filename");
+  } else {
+    // If the file selection was canceled, show a snackbar message.
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('File selection was canceled.'),
+        duration: Duration(seconds: 2),
       ),
     );
   }
