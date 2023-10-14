@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-08 15:50:43 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 06:36:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -97,6 +97,10 @@ void rSource(String script, RattleModel rattle) {
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
+
+  // Do we split the dataset? The option is presented on the DATASET GUI, and if set we split the dataset.
+
+  code = code.replaceAll('FILENAME', rattle.path);
 
   // Do we split the dataset? The option is presented on the DATASET GUI, and if set we split the dataset.
 
