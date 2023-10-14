@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/status.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class DatasetClearTextField extends StatelessWidget {
