@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 06:36:41 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 08:27:24 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,7 +26,6 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
-import 'package:path/path.dart' as p;
 
 /// Load the specified dataset using the appropriate R script.
 ///
@@ -55,7 +54,7 @@ void rLoadDataset(RattleModel rattle) {
   if (filename == '' || filename == 'rattle::weather') {
     debugPrint('LOAD_DATASET: rattle::weather');
     rSource("data_load_weather", rattle);
-  } else if (filename.contains("\.csv")) {
+  } else if (filename.contains(".csv")) {
     debugPrint('LOAD_DATASET: $filename');
     rSource("data_load_csv", rattle);
   } else {
