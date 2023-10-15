@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 08:27:24 +1100 Graham Williams>
+// Time-stamp: <Monday 2023-10-16 09:29:45 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -48,26 +48,30 @@ void rLoadDataset(RattleModel rattle) {
   //  print(filename)
 
   // IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET PROCESSED
-  // (data_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
+  // (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
   // SO OTHERWISE DO NOTHING.
 
   if (filename == '' || filename == 'rattle::weather') {
     debugPrint('LOAD_DATASET: rattle::weather');
-    rSource("data_load_weather", rattle);
+    rSource("dataset_load_weather", rattle);
   } else if (filename.contains(".csv")) {
     debugPrint('LOAD_DATASET: $filename');
-    rSource("data_load_csv", rattle);
+    rSource("dataset_load_csv", rattle);
   } else {
     debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT: $filename.');
   }
-  debugPrint('LOAD_DATASET: DATASET LOADED. NOM PROCESS.');
+
+  debugPrint('LOAD_DATASET: DATASET LOADED. NOW OBTAIN VARIABLES.');
+
+  rSource("ds_set_vnames", rattle);
+  rSource("ds_get_vnames", rattle);
+
+  // TODO EXTRACT THE LIST OF VARIABLE NAMES AND FOR NOW ASSUME THE LAST IS
+  // TARGET AND THERE IS NO RISK VARIABLE AND STORE IN RATTLE STATE
+
   rSource(
-    "data_template", rattle,
-    // {
-    //   "VAR_TARGET": "rain_tomorrow",
-    //   "VAR_RISK": "risk_mm",
-    //   "VARS_ID": '"date", "location"'
-    // }
+    "dataset_template",
+    rattle,
   );
   rSource('ds_glimpse', rattle);
   debugPrint('LOAD_DATASET: LOADED "$filename";');

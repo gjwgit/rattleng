@@ -1,11 +1,11 @@
-# Rattle Scripts: Load a CSV file into the session as `ds`.
+# Rattle Scripts: Record the original variable names in `vnames`. 
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2023-10-12 14:30:41 +1100 Graham Williams>
+# Time-stamp: <Monday 2023-10-16 09:18:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,9 +24,7 @@
 #
 # Author: Graham Williams
 
-# The file `FILENAME` is loaded as a CSV file into the template
-# variable `ds` (dataset), intialising the `dsname` (a printable name
-# for the dataset) and `vnames` (the variable names).
+# Capture the original variable names if later required.
 #
 # Rattle timestamp: TIMESTAMP
 #
@@ -34,13 +32,6 @@
 #
 # @williams:2017:essentials Chapter 3
 #
-# https://survivor.togaware.com/datascience/csv-data-reading.html
-
-library(magrittr)
-library(readr)        # Read/write delimited data: read_csv().
-
-dsname <- "FILENAME" %>% basename() %>% sub(".csv$", "", .)
-
-ds <- read_csv("FILENAME")
+# https://survivor.togaware.com/datascience/data-template.html
 
 vnames <- names(ds)
