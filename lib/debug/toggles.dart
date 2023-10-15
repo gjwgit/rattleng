@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 12:34:37 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 15:47:20 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -83,6 +83,7 @@ class _DebugTogglesState extends State<DebugToggles> {
             child: Container(
               padding: const EdgeInsets.only(left: 10),
               child: Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   // Display selected widget
                   Visibility(

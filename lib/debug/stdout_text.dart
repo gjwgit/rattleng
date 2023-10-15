@@ -37,37 +37,30 @@ class StdoutText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      // As a [Consumer] of the [RattleModel] recording the app's state we can
-      // access the status message as it gets updated, so that the status bar
-      // remains up to date.
+    return SingleChildScrollView(
+      child: Builder(
+        builder: (BuildContext context) {
+          return Consumer<RattleModel>(
+            // As a [Consumer] of the [RattleModel] recording the app's state we can
+            // access the status message as it gets updated, so that the status bar
+            // remains up to date.
 
-      builder: (context, rattle, child) {
-        // The builder takes a context, a RattleModel, and the child. It is the
-        // `rattle` that contains the state that we can access here.
+            builder: (context, rattle, child) {
+              // The builder takes a context, a RattleModel, and the child. It is the
+              // `rattle` that contains the state that we can access here.
 
-        return Container(
-          // Make the SelectableText expand across the whole widget but seems to
-          // stop at the right edge of the toggles.
-
-          //padding: const EdgeInsets.only(left: 0),
-          padding: const EdgeInsets.all(0.0),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: SelectableText(
-                  "NORMALISE: ${rattle.normalise}\n"
-                  "PARTITION: ${rattle.partition}\n\n"
-                  "STDOUT from the R Process:\n"
-                  "${rattle.stdout}",
-                  // rExtractGlimpse(rattle.stdout),
-                  style: monoSmallTextStyle,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+              return SelectableText(
+                "NORMALISE: ${rattle.normalise}\n"
+                "PARTITION: ${rattle.partition}\n\n"
+                "STDOUT from the R Process:\n"
+                "${rattle.stdout}",
+                // rExtractGlimpse(rattle.stdout),
+                style: monoSmallTextStyle,
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
