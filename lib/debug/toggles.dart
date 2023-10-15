@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 19:55:26 +1100 Graham Williams>
+// Time-stamp: <Monday 2023-10-16 05:32:29 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,9 +42,9 @@ class _DebugTogglesState extends State<DebugToggles> {
   // Define widgets for each toggle option.
 
   final List<Widget> _toggleWidgets = [
+    const RattleModelText(),
     const StdoutText(),
     const StderrText(),
-    const RattleModelText(),
   ];
 
   @override
@@ -72,9 +72,9 @@ class _DebugTogglesState extends State<DebugToggles> {
                 minWidth: 200.0,
               ),
               children: const [
+                Text('Rattle State'),
                 Text('R Standard Output'),
                 Text('R Standard Error'),
-                Text('Rattle State'),
               ],
             ),
           ),
