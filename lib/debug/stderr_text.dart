@@ -43,13 +43,21 @@ class StderrText extends StatelessWidget {
         // `rattle` that contains the state that we can access here.
 
         return Container(
-          // I am setting the height for the bottom bar but this does not really
-          // seem to be the way to do this.
-          padding: const EdgeInsets.only(left: 0),
-          child: SelectableText(
-            "STDERR from the R Process:\n\n${rattle.stderr}",
-            // rExtractGlimpse(rattle.stdout),
-            style: monoTextStyle,
+          // Make the SelectableText expand across the whole widget but seems to
+          // stop at the right edge of the toggles.
+
+          //padding: const EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.all(0.0),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: SelectableText(
+                  "STDERR from the R Process:\n\n${rattle.stderr}",
+                  // rExtractGlimpse(rattle.stdout),
+                  style: monoSmallTextStyle,
+                ),
+              ),
+            ],
           ),
         );
       },
