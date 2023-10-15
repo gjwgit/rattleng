@@ -29,6 +29,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/status.dart';
+import 'package:rattle/dataset/select_file.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/models/rattle_model.dart';
 
@@ -57,7 +58,7 @@ class DatasetPopup extends StatelessWidget {
               Text(
                 'Choose the Dataset Source:',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -71,7 +72,7 @@ class DatasetPopup extends StatelessWidget {
               // Choose a FILENAME to load and load it.
               ElevatedButton(
                 onPressed: () {
-                  _selectFile(rattle);
+                  datasetSelectFile(rattle);
                   Navigator.pop(context, "Filename");
                 },
                 child: const Text('Filename'),
@@ -114,31 +115,5 @@ class DatasetPopup extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-// TODO 20231014 gjw CONSIDER MOVING THIS TO A SEPARATE FILE: select_file.dart
-
-void _selectFile(RattleModel rattle) async {
-  // Use the FilePicker to select a file asynchronously.
-
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-  // Check if a file was selected.
-
-  if (result != null) {
-    // Convert the selected file into a File object.
-
-    File file = File(result.files.single.path!);
-
-    // Set the path of the selected file in the RattleModel.
-
-    rattle.setPath(file.path);
-
-    // Load the dataset using the selected file's path.
-
-    rLoadDataset(rattle);
-
-    rattle.setStatus(statusChooseVariableRoles);
   }
 }
