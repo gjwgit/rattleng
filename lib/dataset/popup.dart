@@ -67,7 +67,8 @@ class DatasetPopup extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // Choose a FILENAME to load and load it.
+              // FILENAME
+
               ElevatedButton(
                 onPressed: () {
                   datasetSelectFile(rattle);
@@ -75,16 +76,26 @@ class DatasetPopup extends StatelessWidget {
                 },
                 child: const Text('Filename'),
               ),
+
               // Space between buttons.
+
               const SizedBox(width: widthSpace),
+
+              // PACKAGE
+
               ElevatedButton(
                 onPressed: () {
                   null;
                 },
                 child: const Text('Package'),
               ),
+
               // Space between buttons.
+
               const SizedBox(width: widthSpace),
+
+              // DEMO
+
               ElevatedButton(
                 onPressed: () {
                   String selectedFileName = "rattle::weather";
