@@ -21,11 +21,8 @@
 ///
 /// Authors: Graham Williams, Yiming Lu
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/status.dart';
@@ -42,6 +39,7 @@ class DatasetPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
