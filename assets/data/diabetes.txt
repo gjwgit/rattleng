@@ -1,0 +1,17 @@
+https://www4.stat.ncsu.edu/%7Eboos/var.select/diabetes.html
+
+Actual dataset:
+
+https://www4.stat.ncsu.edu/%7Eboos/var.select/diabetes.tab.txt
+
+R version - to get better column names but not the data as it is
+normalised.
+
+https://www4.stat.ncsu.edu/%7Eboos/var.select/diabetes.rwrite1.txt
+
+Convert to CSV
+
+wget -O diabetes.tsv https://www4.stat.ncsu.edu/%7Eboos/var.select/diabetes.tab.txt
+wget -O diabetes.ssv https://www4.stat.ncsu.edu/%7Eboos/var.select/diabetes.rwrite1.txt
+sed 's/ /,/g' diabetes.ssv | head -1 > diabetes.hdr
+sed 's/\t/,/g' diabetes.tsv | tail +2 | cat diabetes.hdr - >| diabetes.csv
