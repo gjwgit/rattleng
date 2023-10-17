@@ -1,4 +1,4 @@
-/// A button to clear the dataset textfield.
+/// Count the number of lines (\n) in a String.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -21,29 +21,24 @@
 ///
 /// Authors: Graham Williams
 
-import 'package:flutter/material.dart';
+// Count the number of lines in [txt].
 
-import 'package:provider/provider.dart';
+int countLines(String txt) {
+  // Initialize a counter variable to store the number of lines.
 
-import 'package:rattle/constants/status.dart';
-import 'package:rattle/models/rattle_model.dart';
+  int count = 0;
 
-class DatasetClearTextField extends StatelessWidget {
-  const DatasetClearTextField({Key? key}) : super(key: key);
+  // Loop through each character in the string.
 
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.clear),
-      onPressed: () {
-        // TODO 20230920 gjw POPUP TO ASK IF WANT TO SAVE CURRENT PROJECT.
+  for (int i = 0; i < txt.length; i++) {
+    // If the character is a newline character, increment the counter.
 
-        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-        rattle.setPath("");
-        rattle.setStatus(statusWelcomeMsg);
-        rattle.clearStdout();
-        rattle.clearStderr();
-      },
-    );
+    if (txt[i] == '\n') {
+      count++;
+    }
   }
+
+  // Return the counter value.
+
+  return count;
 }

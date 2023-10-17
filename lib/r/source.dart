@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2023-10-12 14:23:28 +1100 Graham Williams>
+// Time-stamp: <Monday 2023-10-16 06:03:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -68,11 +68,36 @@ void rSource(String script, RattleModel rattle) {
   // code = code.replaceAll('VERSION', info.version);
   //
   // THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE VERSION FOR NOW
-  //
+
   code = code.replaceAll('VERSION', '0.0.1');
 
-  // HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE FUNCTION CALL AS A
-  // MAP AS DESCRIBED ABOVE..
+  // Do we split the dataset? The option is presented on the DATASET GUI, and if
+  // set we split the dataset.
+
+  code = code.replaceAll('FILENAME', rattle.path);
+
+  // TODO if (script.contains('^dataset_')) {
+
+  // Do we split the dataset? The option is presented on the DATASET GUI, and if
+  // set we split the dataset.
+
+  code = code.replaceAll('SPLIT_DATASET', rattle.partition ? "TRUE" : "FALSE");
+
+  // Do we want to normalise the dataset? The option is presented on the DATASET
+  // GUI, and if set we normalise the dataset's variable names.
+
+  code =
+      code.replaceAll('NORMALISE_NAMES', rattle.normalise ? "TRUE" : "FALSE");
+
+  // TODO 20231016 gjw HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE
+  // FUNCTION CALL AS A MAP AS DESCRIBED ABOVE..
+
+  // TODO 20231016 gjw THES SHOULD BE SET IN THE DATASET TAB:
+  //
+  // rattle.target
+  // rattle.risk
+  // rattle.id
+  // rattle.split
 
   code = code.replaceAll(
     'VAR_TARGET',
@@ -83,7 +108,10 @@ void rSource(String script, RattleModel rattle) {
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
 
-  // RPART_BUILD.R
+  // TODO if (script == 'model_build_rpart')) {
+
+  // TODO 20231016 gjw THESE SHOULD BE SET IN THE MODEL TAB AND ARE THEN
+  // REPLACED WITHING model_build_rpart.R
 
   code = code.replaceAll(' PRIORS', '');
   code = code.replaceAll(' LOSS', '');
@@ -92,32 +120,17 @@ void rSource(String script, RattleModel rattle) {
   code = code.replaceAll(' MINBUCKET', '');
   code = code.replaceAll(' CP', '');
 
-  // RANDOM_FOREST_BUILD.R
+  // TODO if (script == 'model_build_random_forest')) {
 
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
 
-  // Do we split the dataset? The option is presented on the DATASET GUI, and if set we split the dataset.
+  // Add the code to the rattle state so it will be displayed in the SCRIPT tab.
 
-  code = code.replaceAll('FILENAME', rattle.path);
-
-  // Do we split the dataset? The option is presented on the DATASET GUI, and if set we split the dataset.
-
-  code = code.replaceAll('SPLIT_DATASET', rattle.partition ? "TRUE" : "FALSE");
-
-  // Do we want to normalise the dataset?
-
-  code =
-      code.replaceAll('NORMALISE_NAMES', rattle.normalise ? "TRUE" : "FALSE");
+  rattle.appendScript("\n## -- $script.R --\n${rStripHeader(code)}");
 
   // Run the code.
 
   process.stdin.writeln(code);
-
-  // Preapre code to add to the SCRIPT tab.
-
-  code = rStripHeader(code);
-
-  rattle.appendScript("\n## -- $script.R --\n$code");
 }

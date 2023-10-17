@@ -19,7 +19,7 @@ flutter:
 
   prep       Prep for PR by running tests, checks, docs.
 
-docs	    Run `dart doc` to create documentation.
+  docs	    Run `dart doc` to create documentation.
 
   checks    Run all checks over the code base 
     format        Run `dart format`.
@@ -80,7 +80,7 @@ qlinux: pubspec.lock $(BUILD_RUNNER)
 
 .PHONY: macos
 macos: $(BUILD_RUNNER)
-	flutter run -d macos
+	flutter run --device-id macos
 
 .PHONY: android
 android: $(BUILD_RUNNER)
@@ -139,7 +139,7 @@ analyze:
 
 .PHONY: ignore
 ignore:
-	@rgrep -C 2 ignore: lib
+	@rgrep ignore: lib
 
 .PHONY: license
 license:

@@ -1,4 +1,4 @@
-/// A text widget showing the stdout from the R process.
+/// A text widget showing the rattle model (current rattle state).
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -26,14 +26,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/helpers/count_lines.dart';
 import 'package:rattle/models/rattle_model.dart';
 
-/// Create a stdout text viewer that can scroll the text of stdout.
-///
-/// The contents is intialised from rattle state's stdout.
-
-class StdoutText extends StatelessWidget {
-  const StdoutText({Key? key}) : super(key: key);
+class RattleModelText extends StatelessWidget {
+  const RattleModelText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +47,14 @@ class StdoutText extends StatelessWidget {
               // `rattle` that contains the state that we can access here.
 
               return SelectableText(
-                "STDOUT from the R Process:\n"
-                "${rattle.stdout}",
+                "PATH: ${rattle.path}\n\n"
+                "STATUS: ${rattle.status}\n\n"
+                "MODEL: ${rattle.model}\n\n"
+                "NORMALISE: ${rattle.normalise}\n\n"
+                "PARTITION: ${rattle.partition}\n\n"
+                "SCRIPT: ${countLines(rattle.script)} lines\n\n"
+                "STDOUT: ${countLines(rattle.stdout)} lines\n\n"
+                "STDERR: ${countLines(rattle.stderr)} lines\n\n",
                 // rExtractGlimpse(rattle.stdout),
                 style: monoSmallTextStyle,
               );

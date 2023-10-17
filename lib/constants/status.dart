@@ -1,11 +1,11 @@
-/// Script tab for home page where the R script is captured.
+/// Constants used for the status widget.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 15:40:27 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 06:43:10 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,30 +22,14 @@
 ///
 /// Authors: Graham Williams
 
-import 'package:flutter/material.dart';
+/// A message for after a dataset has been loaded.
 
-import 'package:rattle/script/info.dart';
-import 'package:rattle/script/text.dart';
+const String statusChooseVariableRoles =
+    "Choose **variable roles** and then proceed to "
+    "analyze and model your data via the other tabs.";
 
-// TESTING CAN BE REMOVED? final scriptController = TextEditingController();
+/// The status line welcome message.
 
-class ScriptTab extends StatelessWidget {
-  const ScriptTab({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          flex: 4,
-          child: ScriptInfo(),
-        ),
-        Expanded(
-          flex: 7,
-          child: ScriptText(),
-        ),
-      ],
-    );
-  }
-}
+const String statusWelcomeMsg =
+    'Welcome to **RattleNG**. Click the Dataset button '
+    'to load a dataset.';

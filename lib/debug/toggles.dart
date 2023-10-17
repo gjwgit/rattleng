@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-08 15:54:46 +1100 Graham Williams>
+// Time-stamp: <Monday 2023-10-16 05:32:29 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,6 +25,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/debug/rattle_model_text.dart';
 import 'package:rattle/debug/stderr_text.dart';
 import 'package:rattle/debug/stdout_text.dart';
 
@@ -38,11 +39,12 @@ class DebugToggles extends StatefulWidget {
 class _DebugTogglesState extends State<DebugToggles> {
   int _selectedToggleIndex = 0;
 
-  // Define widgets for each toggle option
+  // Define widgets for each toggle option.
+
   final List<Widget> _toggleWidgets = [
+    const RattleModelText(),
     const StdoutText(),
     const StderrText(),
-    const Text('Rattle State'),
   ];
 
   @override
@@ -50,8 +52,6 @@ class _DebugTogglesState extends State<DebugToggles> {
     return Scaffold(
       body: Column(
         children: [
-          // ToggleButtons
-
           Container(
             padding: const EdgeInsets.all(16.0),
             child: ToggleButtons(
@@ -72,19 +72,19 @@ class _DebugTogglesState extends State<DebugToggles> {
                 minWidth: 200.0,
               ),
               children: const [
+                Text('Rattle State'),
                 Text('R Standard Output'),
                 Text('R Standard Error'),
-                Text('Rattle State'),
               ],
             ),
           ),
-
           Expanded(
             child: Container(
               padding: const EdgeInsets.only(left: 10),
               child: Row(
                 children: [
                   // Display selected widget
+
                   Visibility(
                     visible: _selectedToggleIndex == 0,
                     child: _toggleWidgets.first,
