@@ -1,11 +1,11 @@
-# Rattle Scripts: Record the original variable names in `vnames`. 
+# Rattle Scripts: Prepare dataset for the template: normalise, clean.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2023-10-16 09:18:05 +1100 Graham Williams>
+# Time-stamp: <Monday 2023-10-16 11:54:42 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,9 +24,8 @@
 #
 # Author: Graham Williams
 
-# Capture the original variable names if later required.
-#
-# Rattle timestamp: TIMESTAMP
+# Run this after the variable `ds` (dataset) has been instantiated.
+# This script will prepare the dataset for template variable processing.
 #
 # References:
 #
@@ -34,4 +33,17 @@
 #
 # https://survivor.togaware.com/datascience/data-template.html
 
+# Capture the original variable names for use in plots.
+
 vnames <- names(ds)
+
+# Normalise the variable names using janitor::clean_names(). This is
+# done after any dataset load. The DATASET tab has an option to
+# normalise the variable names on loading the data. It is set on by
+# default.
+
+if (NORMALISE_NAMES) ds %<>% clean_names(numerals="right")
+
+# Index the original variable names by the new names.
+
+names(vnames) <- names(ds)

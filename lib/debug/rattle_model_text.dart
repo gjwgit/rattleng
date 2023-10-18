@@ -27,6 +27,7 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/count_lines.dart';
+import 'package:rattle/helpers/truncate.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 class RattleModelText extends StatelessWidget {
@@ -47,14 +48,19 @@ class RattleModelText extends StatelessWidget {
               // `rattle` that contains the state that we can access here.
 
               return SelectableText(
-                "PATH: ${rattle.path}\n\n"
                 "STATUS: ${rattle.status}\n\n"
-                "MODEL: ${rattle.model}\n\n"
-                "NORMALISE: ${rattle.normalise}\n\n"
-                "PARTITION: ${rattle.partition}\n\n"
                 "SCRIPT: ${countLines(rattle.script)} lines\n\n"
                 "STDOUT: ${countLines(rattle.stdout)} lines\n\n"
-                "STDERR: ${countLines(rattle.stderr)} lines\n\n",
+                "STDERR: ${countLines(rattle.stderr)} lines\n\n"
+                "PATH: ${rattle.path}\n\n"
+                "NORMALISE: ${rattle.normalise}\n\n"
+                "PARTITION: ${rattle.partition}\n\n"
+                "VARS: ${truncate(rattle.vars.toString())} \n\n"
+                "TARGET: ${rattle.target} \n\n"
+                "RISK: ${rattle.risk} \n\n"
+                "IDENTIFIERS: ${rattle.identifiers} \n\n"
+                "IGNORE: ${rattle.ignore} \n\n"
+                "MODEL: ${rattle.model}\n\n",
                 // rExtractGlimpse(rattle.stdout),
                 style: monoSmallTextStyle,
               );

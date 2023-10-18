@@ -25,9 +25,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/constants/status.dart';
+import 'package:rattle/dataset/select_demo.dart';
 import 'package:rattle/dataset/select_file.dart';
-import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/models/rattle_model.dart';
 
 const double heightSpace = 20;
@@ -62,8 +61,11 @@ class DatasetPopup extends StatelessWidget {
               ),
             ],
           ),
+
           // Space between title and buttons.
+
           const SizedBox(height: heightSpace),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -77,7 +79,7 @@ class DatasetPopup extends StatelessWidget {
                 child: const Text('Filename'),
               ),
 
-              // Space between buttons.
+              // SPACE
 
               const SizedBox(width: widthSpace),
 
@@ -85,12 +87,13 @@ class DatasetPopup extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  null;
+                  // TODO 20231018 gjw datasetSelectPackage(rattle);
+                  Navigator.pop(context, "Package");
                 },
                 child: const Text('Package'),
               ),
 
-              // Space between buttons.
+              // SPACE
 
               const SizedBox(width: widthSpace),
 
@@ -98,18 +101,20 @@ class DatasetPopup extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  String selectedFileName = "rattle::weather";
-                  rattle.setPath(selectedFileName);
-                  rLoadDataset(rattle);
-                  rattle.setStatus(statusChooseVariableRoles);
+                  datasetSelectDemo(rattle);
                   Navigator.pop(context, "Demo");
                 },
                 child: const Text('Demo'),
               ),
             ],
           ),
-          // Space between rows.
+
+          // SPACE between row of options and the cancel button.
+
           const SizedBox(height: heightSpace),
+
+          // Add a CANCEL button to do nothing but return.
+
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

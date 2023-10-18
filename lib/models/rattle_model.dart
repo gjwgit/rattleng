@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 06:46:30 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2023-10-18 17:10:47 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -41,27 +41,16 @@ import 'package:xterm/xterm.dart';
 class RattleModel extends ChangeNotifier {
   // These global variables live here at the parent widget of the app.
 
-  ////////////////////////////////////////////////////////////////////////
-  // PATH
-  //
-  // When the [DatasetButton] updates the [_path] through [setPath] the
-  // [DatasetTextField] [Consumes] the new value and is rebuilt.
+  // TODO 20231018 gjw DO I WANT TO MOVE ALL THE DATASET VARS INTO
+  // models/dataset.dart, AND MODEL VARS TO models/models.dart, ETC?
 
-  String _path = "";
+  // Reset the dataset variables.
 
-  String get path => _path;
-
-  /// Record the dataset path through [setPath].
-
-  void setPath(String newPath) {
-    // First set the path to the new value.
-
-    _path = newPath;
-
-    // Then notify the widgets that are listening to this model to rebuild with
-    // the new bit of context, the new value of the path.
-
-    notifyListeners();
+  void resetDataset() {
+    setTarget("");
+    setRisk("");
+    setIdentifiers("");
+    setIgnore("");
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -75,6 +64,29 @@ class RattleModel extends ChangeNotifier {
     _status = newStatus;
     notifyListeners();
   }
+
+  ////////////////////////////////////////////////////////////////////////
+  // PROCESS
+
+  // 20230930 gjw TDOD HOW TO PROPERLY HANDLE THE CONSOLE?
+
+  Terminal _rterm = Terminal(maxLines: 10000);
+
+  Terminal get rterm => _rterm;
+
+  void setRterm(Terminal newRterm) {
+    _rterm = newRterm;
+    notifyListeners();
+  }
+
+  // TerminalController _rtermController = TerminalController();
+
+  // TerminalController get rtermController => _rtermController;
+
+  // void setRtermController(TerminalController newRtermController) {
+  //   _rtermController = newRtermController;
+  //   notifyListeners();
+  // }
 
   ////////////////////////////////////////////////////////////////////////
   // SCRIPT - the developing script.
@@ -126,16 +138,25 @@ class RattleModel extends ChangeNotifier {
   }
 
   ////////////////////////////////////////////////////////////////////////
-  // MODEL - the currently active model type.
+  // PATH
   //
-  // Store the currently selected model type. This is one of Tree, Forest, etc.
+  // When the [DatasetButton] updates the [_path] through [setPath] the
+  // [DatasetTextField] [Consumes] the new value and is rebuilt.
 
-  String _model = "Tree";
+  String _path = "";
 
-  String get model => _model;
+  String get path => _path;
 
-  void setModel(String newModel) {
-    _model = newModel;
+  /// Record the dataset path through [setPath].
+
+  void setPath(String newPath) {
+    // First set the path to the new value.
+
+    _path = newPath;
+
+    // Then notify the widgets that are listening to this model to rebuild with
+    // the new bit of context, the new value of the path.
+
     notifyListeners();
   }
 
@@ -164,27 +185,78 @@ class RattleModel extends ChangeNotifier {
   }
 
   ////////////////////////////////////////////////////////////////////////
-  // PROCESS
+  // VARS - A list of the names of the variables of the dataset.
 
-  // 20230930 gjw TDOD HOW TO PROPERLY HANDLE THE CONSOLE?
+  List<String> _vars = [];
 
-  Terminal _rterm = Terminal(maxLines: 10000);
+  List<String> get vars => _vars;
 
-  Terminal get rterm => _rterm;
-
-  void setRterm(Terminal newRterm) {
-    _rterm = newRterm;
+  void setVars(List<String> newVars) {
+    _vars = newVars;
     notifyListeners();
   }
 
-  // TerminalController _rtermController = TerminalController();
+  ////////////////////////////////////////////////////////////////////////
+  // TARGET - A list of the names of the variables of the dataset.
 
-  // TerminalController get rtermController => _rtermController;
+  String _target = "";
 
-  // void setRtermController(TerminalController newRtermController) {
-  //   _rtermController = newRtermController;
-  //   notifyListeners();
-  // }
+  String get target => _target;
+
+  void setTarget(String newTarget) {
+    _target = newTarget;
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // RISK - A list of the names of the variables of the dataset.
+
+  String _risk = "";
+
+  String get risk => _risk;
+
+  void setRisk(String newRisk) {
+    _risk = newRisk;
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // IDENTIFIERS - A list of the names of the variables of the dataset.
+
+  String _identifiers = "";
+
+  String get identifiers => _identifiers;
+
+  void setIdentifiers(String newIdentifiers) {
+    _identifiers = newIdentifiers;
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // IGNORE - A list of the names of the variables of the dataset.
+
+  String _ignore = "";
+
+  String get ignore => _ignore;
+
+  void setIgnore(String newIgnore) {
+    _ignore = newIgnore;
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // MODEL - the currently active model type.
+  //
+  // Store the currently selected model type. This is one of Tree, Forest, etc.
+
+  String _model = "Tree";
+
+  String get model => _model;
+
+  void setModel(String newModel) {
+    _model = newModel;
+    notifyListeners();
+  }
 
   ////////////////////////////////////////////////////////////////////////
   // INITIALISATION

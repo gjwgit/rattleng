@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2023-10-08 14:59:54 +1100 Graham Williams>
+# Time-stamp: <Monday 2023-10-16 11:47:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,17 +33,10 @@
 #
 # https://survivor.togaware.com/datascience/data-template.html
 
-# Normalise the variable names using janitor::clean_names(). This is
-# done after any dataset load. The DATASET tab has an option to
-# normalise the variable names on loading the data. It is set on by
-# default.
-
-if (NORMALISE_NAMES) ds %<>% clean_names(numerals="right")
-
-# Index the original variable names by the new names. The vnames must
-# be set in the data_load scripts.
-
-names(vnames) <- names(ds)
+# PREREQUISITE
+#
+# This is expected to be completed after a dataset_load and then the
+# dataset_prep.
 
 # Identify variable roles.
 
