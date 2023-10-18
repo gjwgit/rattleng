@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-10-18 17:28:04 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-19 08:36:33 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,7 +24,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/models/rattle_model.dart';
+import 'package:provider/provider.dart';
+
+import 'package:rattle/models/dataset.dart';
+import 'package:rattle/models/rattle.dart';
 import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/source.dart';
 
@@ -36,42 +39,45 @@ import 'package:rattle/r/source.dart';
 /// different in the case where the dataset variables have been normalised,
 /// which is the default.
 
-void rLoadDataset(RattleModel rattle) {
+void rLoadDataset(RattleModel rattle, DatasetModel dataset, String path) {
   // Get the filename from the corresponding widget.
+
+  //RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+  //DatasetModel dataset = Provider.of<DatasetModel>(context, listen: false);
 
   // final dsPathTextFinder = find.byKey(const Key('ds_path_text'));
   // var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
   // String filename = dsPathText.controller?.text ?? '';
 
-  String filename = rattle.path;
+  dataset.setPath(path);
 
   // TODO 20231018 gjw IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET
   // PROCESSED (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT
   // AND IF SO DO SO OTHERWISE DO NOTHING.
 
-  if (filename == '' || filename == 'rattle::weather') {
+  if (path == '' || path == 'rattle::weather') {
     // The default is to load the weather dataset as the demo dastaset from R's
     // rattle package.
 
-    rSource("dataset_load_weather", rattle);
-  } else if (filename.endsWith(".csv")) {
-    debugPrint('LOAD_DATASET: $filename');
-    rSource("dataset_load_csv", rattle);
+    rSource("dataset_load_weather", context);
+  } else if (path.endsWith(".csv")) {
+    debugPrint('LOAD_DATASET: $path');
+    rSource("dataset_load_csv", context);
   } else {
-    debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT: $filename.');
+    debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
 
     return;
   }
 
   // Reset the dataset variables since we have loaded a new dataset
-  rattle.resetDataset();
+  dataset.reset();
 
-  rSource("dataset_prep", rattle);
+  rSource("dataset_prep", context);
 
   // print("${rattle.stdout}\n\nJUST FINISHED DATASET PREP");
 
   // rattle.setVars(rGetVars(rattle));
-  rExecute("names(ds)", rattle);
+  rExecute("names(ds)", context);
 
   // NEED TO SET TARGET, RISK, HERE BEFORE dataset_template.
 
@@ -79,7 +85,7 @@ void rLoadDataset(RattleModel rattle) {
   // TARGET AND THERE IS NO RISK VARIABLE AND STORE IN RATTLE STATE
 
   //rSetupDatasetTemplate(rattle);
-  rSource("dataset_template", rattle);
-  rSource('ds_glimpse', rattle);
-  debugPrint('LOAD_DATASET: LOADED "$filename";');
+  rSource("dataset_template", context);
+  rSource('ds_glimpse', context);
+  debugPrint('LOAD_DATASET: LOADED "$path";');
 }

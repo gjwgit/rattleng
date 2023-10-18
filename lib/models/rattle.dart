@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-10-18 17:10:47 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-19 07:56:13 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -41,16 +41,10 @@ import 'package:xterm/xterm.dart';
 class RattleModel extends ChangeNotifier {
   // These global variables live here at the parent widget of the app.
 
-  // TODO 20231018 gjw DO I WANT TO MOVE ALL THE DATASET VARS INTO
-  // models/dataset.dart, AND MODEL VARS TO models/models.dart, ETC?
+  // Reset the rattle variables.
 
-  // Reset the dataset variables.
-
-  void resetDataset() {
-    setTarget("");
-    setRisk("");
-    setIdentifiers("");
-    setIgnore("");
+  void reset() {
+    null;
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -134,113 +128,6 @@ class RattleModel extends ChangeNotifier {
 
   void clearStderr() {
     _stderr = "";
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // PATH
-  //
-  // When the [DatasetButton] updates the [_path] through [setPath] the
-  // [DatasetTextField] [Consumes] the new value and is rebuilt.
-
-  String _path = "";
-
-  String get path => _path;
-
-  /// Record the dataset path through [setPath].
-
-  void setPath(String newPath) {
-    // First set the path to the new value.
-
-    _path = newPath;
-
-    // Then notify the widgets that are listening to this model to rebuild with
-    // the new bit of context, the new value of the path.
-
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // NORMALISE - Should we normalise the dataset on loading.
-
-  bool _normalise = true;
-
-  bool get normalise => _normalise;
-
-  void setNormalise(bool newNormalise) {
-    _normalise = newNormalise;
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // PARTITION - Should we partition the dataset for analysis.
-
-  bool _partition = true;
-
-  bool get partition => _partition;
-
-  void setPartition(bool newPartition) {
-    _partition = newPartition;
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // VARS - A list of the names of the variables of the dataset.
-
-  List<String> _vars = [];
-
-  List<String> get vars => _vars;
-
-  void setVars(List<String> newVars) {
-    _vars = newVars;
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // TARGET - A list of the names of the variables of the dataset.
-
-  String _target = "";
-
-  String get target => _target;
-
-  void setTarget(String newTarget) {
-    _target = newTarget;
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // RISK - A list of the names of the variables of the dataset.
-
-  String _risk = "";
-
-  String get risk => _risk;
-
-  void setRisk(String newRisk) {
-    _risk = newRisk;
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // IDENTIFIERS - A list of the names of the variables of the dataset.
-
-  String _identifiers = "";
-
-  String get identifiers => _identifiers;
-
-  void setIdentifiers(String newIdentifiers) {
-    _identifiers = newIdentifiers;
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // IGNORE - A list of the names of the variables of the dataset.
-
-  String _ignore = "";
-
-  String get ignore => _ignore;
-
-  void setIgnore(String newIgnore) {
-    _ignore = newIgnore;
     notifyListeners();
   }
 

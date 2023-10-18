@@ -28,10 +28,11 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/helpers/count_lines.dart';
 import 'package:rattle/helpers/truncate.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
+import 'package:rattle/models/rattle.dart';
 
-class RattleModelText extends StatelessWidget {
-  const RattleModelText({Key? key}) : super(key: key);
+class DatasetModelText extends StatelessWidget {
+  const DatasetModelText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,30 +40,33 @@ class RattleModelText extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return Consumer<RattleModel>(
-            // As a [Consumer] of the [RattleModel] recording the app's state we can
+            // As a [Consumer] of the [DatasetModel] recording the app's state we can
             // access the status message as it gets updated, so that the status bar
             // remains up to date.
 
             builder: (context, rattle, child) {
-              // The builder takes a context, a RattleModel, and the child. It is the
+              // The builder takes a context, a DatasetModel, and the child. It is the
               // `rattle` that contains the state that we can access here.
 
-              return SelectableText(
-                "STATUS: ${rattle.status}\n\n"
-                "SCRIPT: ${countLines(rattle.script)} lines\n\n"
-                "STDOUT: ${countLines(rattle.stdout)} lines\n\n"
-                "STDERR: ${countLines(rattle.stderr)} lines\n\n"
-                "PATH: ${rattle.path}\n\n"
-                "NORMALISE: ${rattle.normalise}\n\n"
-                "PARTITION: ${rattle.partition}\n\n"
-                "VARS: ${truncate(rattle.vars.toString())} \n\n"
-                "TARGET: ${rattle.target} \n\n"
-                "RISK: ${rattle.risk} \n\n"
-                "IDENTIFIERS: ${rattle.identifiers} \n\n"
-                "IGNORE: ${rattle.ignore} \n\n"
-                "MODEL: ${rattle.model}\n\n",
-                // rExtractGlimpse(rattle.stdout),
-                style: monoSmallTextStyle,
+              return Consumer<DatasetModel>(
+                builder: (context, dataset, child) {
+                  return SelectableText(
+                    "STATUS: ${rattle.status}\n\n"
+                    "SCRIPT: ${countLines(rattle.script)} lines\n\n"
+                    "STDOUT: ${countLines(rattle.stdout)} lines\n\n"
+                    "STDERR: ${countLines(rattle.stderr)} lines\n\n"
+                    "PATH: ${dataset.path}\n\n"
+                    "NORMALISE: ${dataset.normalise}\n\n"
+                    "PARTITION: ${dataset.partition}\n\n"
+                    "VARS: ${truncate(dataset.vars.toString())} \n\n"
+                    "TARGET: ${dataset.target} \n\n"
+                    "RISK: ${dataset.risk} \n\n"
+                    "IDENTIFIERS: ${dataset.identifiers} \n\n"
+                    "IGNORE: ${dataset.ignore} \n\n"
+                    "MODEL: ${rattle.model}\n\n",
+                    style: monoSmallTextStyle,
+                  );
+                },
               );
             },
           );

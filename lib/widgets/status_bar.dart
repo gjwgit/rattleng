@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/rattle.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -38,12 +38,12 @@ class StatusBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<RattleModel>(
-      // As a [Consumer] of the [RattleModel] recording the app's state we can
+      // As a [Consumer] of the [DatasetModel] recording the app's state we can
       // access the status message as it gets updated, so that the status bar
       // remains up to date.
 
       builder: (context, rattle, child) {
-        // The builder takes a context, a RattleModel, and the child. It is the
+        // The builder takes a context, a DatasetModel, and the child. It is the
         // `rattle` that contains the state that we can access here.
 
         return Container(

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-10-18 17:27:10 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-19 08:11:23 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,7 +24,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
+import 'package:rattle/models/rattle.dart';
 import 'package:rattle/r/process.dart';
 import 'package:rattle/r/strip_header.dart';
 

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-10-09 08:23:50 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-19 08:05:53 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,7 +28,7 @@ import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/rattle.dart';
 
 /// Create a script text viewer that can scroll the text of the script widget.
 ///
@@ -43,11 +43,11 @@ class ScriptText extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return Consumer<RattleModel>(
-            // Build a [Consumer] of the [RattleModel] so we can access updated values
+            // Build a [Consumer] of the [DatasetModel] so we can access updated values
             // of the script as it grows.
 
             builder: (context, rattle, child) {
-              // The builder takes a context, a RattleMode, and the child. It is the
+              // The builder takes a context, a RattleModel, and the child. It is the
               // `rattle` that contains the state that we can access here.
 
               return SelectableText(

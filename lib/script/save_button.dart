@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Friday 2023-09-15 06:57:22 +1000 Graham Williams>
+// Time-stamp: <Thursday 2023-10-19 08:05:19 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/rattle.dart';
 
 class ScriptSaveButton extends StatelessWidget {
   const ScriptSaveButton({Key? key}) : super(key: key);

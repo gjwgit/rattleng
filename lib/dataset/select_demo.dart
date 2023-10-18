@@ -22,18 +22,17 @@
 /// Authors: Yiming Lu, Graham Williams
 
 import 'package:rattle/constants/status.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
+import 'package:rattle/models/rattle.dart';
 import 'package:rattle/r/load_dataset.dart';
 
-void datasetSelectDemo(RattleModel rattle) {
+void datasetSelectDemo(RattleModel rattle, DatasetModel dataset) {
   // Choose to load the demo dataset.
-
-  rattle.setPath("rattle::weather");
 
   // Load the dataset using the selected file's path obtained from the
   // [rattle] object.
 
-  rLoadDataset(rattle);
+  rLoadDataset(rattle, dataset);
 
   // Set the status bar. Do so within the call here as otherwise if it is
   // outside of this async function, it gets done asynchronously, and so while

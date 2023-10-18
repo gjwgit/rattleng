@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/rattle.dart';
 
 /// Create a stdout text viewer that can scroll the text of stdout.
 ///
@@ -41,12 +41,12 @@ class StdoutText extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return Consumer<RattleModel>(
-            // As a [Consumer] of the [RattleModel] recording the app's state we can
+            // As a [Consumer] of the [DatasetModel] recording the app's state we can
             // access the status message as it gets updated, so that the status bar
             // remains up to date.
 
             builder: (context, rattle, child) {
-              // The builder takes a context, a RattleModel, and the child. It is the
+              // The builder takes a context, a DatasetModel, and the child. It is the
               // `rattle` that contains the state that we can access here.
 
               return SelectableText(

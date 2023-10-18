@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/r/source.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/rattle.dart';
 
 class ModelRadioButtons extends StatefulWidget {
   const ModelRadioButtons({Key? key}) : super(key: key);
@@ -63,13 +63,13 @@ class ModelRadioButtonsState extends State<ModelRadioButtons> {
                 debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
                     "$selectedValue = ${modellers[selectedValue]}");
 
-                rSource("model_template", rattle);
+                rSource("model_template", context);
 
                 switch (rattle.model) {
                   case "Tree":
-                    rSource("model_build_rpart", rattle);
+                    rSource("model_build_rpart", context);
                   case "Forest":
-                    rSource("model_build_random_forest", rattle);
+                    rSource("model_build_random_forest", context);
                   default:
                     debugPrint("NO ACTION FOR THIS BUTTON ${rattle.model}");
                 }

@@ -26,10 +26,10 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:rattle/constants/status.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
 import 'package:rattle/r/load_dataset.dart';
 
-void datasetSelectFile(RattleModel rattle) async {
+void datasetSelectFile(DatasetModel rattle) async {
   // Use the FilePicker to select a file asynchronously so as no to block the
   // main UI thread.
 
@@ -46,7 +46,7 @@ void datasetSelectFile(RattleModel rattle) async {
 
     File file = File(result.files.single.path!);
 
-    // Set the path of the selected file in the [RattleModel] so that it is
+    // Set the path of the selected file in the [DatasetModel] so that it is
     // generally available across the app.
 
     rattle.setPath(file.path);

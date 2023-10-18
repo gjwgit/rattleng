@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends StatelessWidget {
@@ -34,8 +34,8 @@ class DatasetTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      // Build a [Consumer] of the [RattleModel] so we can access updated
+    return Consumer<DatasetModel>(
+      // Build a [Consumer] of the [DatasetModel] so we can access updated
       // values of the path variable.
 
       builder: (context, rattle, child) {

@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 // This has to be a stateful widget otherwise the buttons don't visually toggle
@@ -42,7 +42,7 @@ class DatasetToggles extends StatefulWidget {
 class _DatasetTogglesState extends State<DatasetToggles> {
   @override
   Widget build(BuildContext context) {
-    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+    DatasetModel rattle = Provider.of<DatasetModel>(context, listen: false);
 
     return ToggleButtons(
       isSelected: [rattle.normalise, rattle.partition],

@@ -31,7 +31,7 @@ import 'package:rattle/debug/tab.dart';
 import 'package:rattle/dataset/tab.dart';
 import 'package:rattle/helpers/process_tab.dart';
 import 'package:rattle/model/tab.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/script/tab.dart';
@@ -122,7 +122,7 @@ class HomePageState extends State<HomePage>
           // On leaving the DATASET tab we set the variables and run the data
           // template.
 
-          RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+          DatasetModel rattle = Provider.of<DatasetModel>(context, listen: false);
           rattle.setVars(rExtractVars(rattle.stdout));
           if (rattle.target.isEmpty) {
             rattle.setTarget(rattle.vars.last);

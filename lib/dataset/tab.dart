@@ -31,7 +31,7 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/r/extract_glimpse.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/dataset.dart';
 import 'package:rattle/dataset/chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
@@ -47,8 +47,8 @@ class DatasetTab extends StatefulWidget {
 class DatasetTabState extends State<DatasetTab> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      // Build a [Consumer] of the [RattleModel] so we can access updated
+    return Consumer<DatasetModel>(
+      // Build a [Consumer] of the [DatasetModel] so we can access updated
       // values of the path variable.
       builder: (context, rattle, child) {
         return Scaffold(

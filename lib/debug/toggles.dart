@@ -42,7 +42,7 @@ class _DebugTogglesState extends State<DebugToggles> {
   // Define widgets for each toggle option.
 
   final List<Widget> _toggleWidgets = [
-    const RattleModelText(),
+    const DatasetModelText(),
     const StdoutText(),
     const StderrText(),
   ];

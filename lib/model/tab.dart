@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-10-03 09:06:53 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-19 08:27:47 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -32,7 +32,7 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/model/radio_buttons.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/models/rattle.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 

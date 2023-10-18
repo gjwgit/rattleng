@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-10-16 06:03:59 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-10-19 08:25:36 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,7 +26,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/models/rattle_model.dart';
+import 'package:provider/provider.dart';
+
+import 'package:rattle/models/dataset.dart';
+import 'package:rattle/models/rattle.dart';
 import 'package:rattle/r/process.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/helpers/timestamp.dart';
@@ -42,7 +45,7 @@ import 'package:rattle/helpers/timestamp.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-void rSource(String script, RattleModel rattle) {
+void rSource(String script, BuildContext context) {
   // TODO ANOTHER ARGUMENT AS A LIST OF MAPS FROM STRING TO STRING LIKE
   //
   // [ { 'FILENAME': '/home/kayon/data/weather.csv', ... } ]
@@ -50,6 +53,9 @@ void rSource(String script, RattleModel rattle) {
   // AND THEN ON THE CODE FOR EACH MAP, RUN
   //
   // code.replaceAll('$MAP','$value')
+
+  RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+  DatasetModel dataset = Provider.of<DatasetModel>(context, listen: false);
 
   // First obtain the text from the script.
 
@@ -74,36 +80,36 @@ void rSource(String script, RattleModel rattle) {
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
 
-  code = code.replaceAll('FILENAME', rattle.path);
+  code = code.replaceAll('FILENAME', dataset.path);
 
   // TODO if (script.contains('^dataset_')) {
 
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
 
-  code = code.replaceAll('SPLIT_DATASET', rattle.partition ? "TRUE" : "FALSE");
+  code = code.replaceAll('SPLIT_DATASET', dataset.partition ? "TRUE" : "FALSE");
 
   // Do we want to normalise the dataset? The option is presented on the DATASET
   // GUI, and if set we normalise the dataset's variable names.
 
   code =
-      code.replaceAll('NORMALISE_NAMES', rattle.normalise ? "TRUE" : "FALSE");
+      code.replaceAll('NORMALISE_NAMES', dataset.normalise ? "TRUE" : "FALSE");
 
   // TODO 20231016 gjw HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE
   // FUNCTION CALL AS A MAP AS DESCRIBED ABOVE..
 
   // TODO 20231016 gjw THES SHOULD BE SET IN THE DATASET TAB:
   //
-  // rattle.target
-  // rattle.risk
-  // rattle.id
-  // rattle.split
+  // dataset.target
+  // dataset.risk
+  // dataset.id
+  // dataset.split
 
   code = code.replaceAll(
     'VAR_TARGET',
-    rattle.normalise ? "rain_tomorrow" : "RainTomorrow",
+    dataset.normalise ? "rain_tomorrow" : "RainTomorrow",
   );
-  code = code.replaceAll('VAR_RISK', rattle.normalise ? "risk_mm" : "RISK_MM");
+  code = code.replaceAll('VAR_RISK', dataset.normalise ? "risk_mm" : "RISK_MM");
   code = code.replaceAll('VARS_ID', '"date", "location"');
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
