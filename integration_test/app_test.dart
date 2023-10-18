@@ -155,6 +155,8 @@ void main() {
     expect(dataset.data, contains("date            <date>"));
     expect(dataset.data, contains("rain_tomorrow   <fct>"));
 
+    debugPrint("TESTER TODO: Debug page confirm expected vars and target");
+
     debugPrint("TESTER TODO: Confirm the status bar has been updated.");
 
     debugPrint("TESTER: Check R script widget contains the expected code.");
