@@ -65,7 +65,7 @@ void main() async {
 
       alwaysOnTop: true,
 
-      // The size is overriden in the first instance by linux/my_application.cc
+      // The size is overridden in the first instance by linux/my_application.cc
       // but setting it here then does have effect when Restarting the app.
 
       // Windows has 1280x720 by default in windows/runner/main.cpp line 29 so

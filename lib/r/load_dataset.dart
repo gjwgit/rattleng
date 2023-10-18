@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-10-16 09:29:45 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2023-10-18 17:28:04 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,8 +24,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/r/execute.dart';
+import 'package:rattle/r/source.dart';
 
 /// Load the specified dataset using the appropriate R script.
 ///
@@ -44,35 +45,41 @@ void rLoadDataset(RattleModel rattle) {
 
   String filename = rattle.path;
 
-  //  String filename = getIt.get....
-  //  print(filename)
-
-  // IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET PROCESSED
-  // (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT AND IF SO DO
-  // SO OTHERWISE DO NOTHING.
+  // TODO 20231018 gjw IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET
+  // PROCESSED (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT
+  // AND IF SO DO SO OTHERWISE DO NOTHING.
 
   if (filename == '' || filename == 'rattle::weather') {
-    debugPrint('LOAD_DATASET: rattle::weather');
+    // The default is to load the weather dataset as the demo dastaset from R's
+    // rattle package.
+
     rSource("dataset_load_weather", rattle);
-  } else if (filename.contains(".csv")) {
+  } else if (filename.endsWith(".csv")) {
     debugPrint('LOAD_DATASET: $filename');
     rSource("dataset_load_csv", rattle);
   } else {
     debugPrint('LOAD_DATASET: FILENAME NOT RECOGNISED -> ABORT: $filename.');
+
+    return;
   }
 
-  debugPrint('LOAD_DATASET: DATASET LOADED. NOW OBTAIN VARIABLES.');
+  // Reset the dataset variables since we have loaded a new dataset
+  rattle.resetDataset();
 
-  rSource("ds_set_vnames", rattle);
-  rSource("ds_get_vnames", rattle);
+  rSource("dataset_prep", rattle);
+
+  // print("${rattle.stdout}\n\nJUST FINISHED DATASET PREP");
+
+  // rattle.setVars(rGetVars(rattle));
+  rExecute("names(ds)", rattle);
+
+  // NEED TO SET TARGET, RISK, HERE BEFORE dataset_template.
 
   // TODO EXTRACT THE LIST OF VARIABLE NAMES AND FOR NOW ASSUME THE LAST IS
   // TARGET AND THERE IS NO RISK VARIABLE AND STORE IN RATTLE STATE
 
-  rSource(
-    "dataset_template",
-    rattle,
-  );
+  //rSetupDatasetTemplate(rattle);
+  rSource("dataset_template", rattle);
   rSource('ds_glimpse', rattle);
   debugPrint('LOAD_DATASET: LOADED "$filename";');
 }

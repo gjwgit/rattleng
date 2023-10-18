@@ -38,7 +38,8 @@ these prerequisite packages:
 ```
 
 RattleNG will eventually check for these and prompt if they are not
-available.
+available. To install R please see the [Rattle install guide for
+Ubuntu](https://rattle.togaware.com/rattle-install-ubuntu.html).
 
 ### Latest Code
 

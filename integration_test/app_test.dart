@@ -172,11 +172,11 @@ void main() {
     );
     expect(
       scriptTextFinder.first.toString(),
-      contains('## -- data_load_weather.R --'),
+      contains('## -- dataset_load_weather.R --'),
     );
     expect(
       scriptTextFinder.first.toString(),
-      contains('## -- data_template.R --'),
+      contains('## -- dataset_template.R --'),
     );
     expect(
       scriptTextFinder.first.toString(),
