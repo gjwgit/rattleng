@@ -40,6 +40,7 @@ class ScriptSaveButton extends StatelessWidget {
         return ElevatedButton(
           child: const Text("Export"),
           onPressed: () {
+	    debugPrint("SAVE BUTTON EXPORT: 'script.R'");
             File('script.R').writeAsString(rattle.script);
           },
         );
