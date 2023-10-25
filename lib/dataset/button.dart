@@ -22,9 +22,8 @@
 /// Authors: Graham Williams
 
 import 'package:flutter/material.dart';
-
 import 'package:rattle/dataset/popup.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends StatelessWidget {
   const DatasetButton({Key? key}) : super(key: key);
