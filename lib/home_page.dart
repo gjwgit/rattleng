@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-10-18 17:26:27 +1100 Graham Williams>
+// Time-stamp: <Saturday 2023-10-28 08:18:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,14 +24,12 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/debug/tab.dart';
 import 'package:rattle/dataset/tab.dart';
 import 'package:rattle/helpers/process_tab.dart';
 import 'package:rattle/model/tab.dart';
-import 'package:rattle/models/rattle_model.dart';
+//import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/script/tab.dart';
@@ -122,11 +120,11 @@ class HomePageState extends State<HomePage>
           // On leaving the DATASET tab we set the variables and run the data
           // template.
 
-          RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-          rattle.setVars(rExtractVars(rattle.stdout));
-          if (rattle.target.isEmpty) {
-            rattle.setTarget(rattle.vars.last);
-          }
+//          RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+//          rattle.setVars(rExtractVars(rattle.stdout));
+//          if (rattle.target.isEmpty) {
+//            rattle.setTarget(rattle.vars.last);
+//          }
 
           // TODO 20231018 gjw Run the data template here?
         }

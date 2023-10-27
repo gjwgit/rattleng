@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-10-09 08:23:50 +1100 Graham Williams>
+// Time-stamp: <Saturday 2023-10-28 08:20:17 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,8 +24,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/models/rattle_model.dart';
@@ -42,20 +40,18 @@ class ScriptText extends StatelessWidget {
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
-          return Consumer<RattleModel>(
-            // Build a [Consumer] of the [RattleModel] so we can access updated values
-            // of the script as it grows.
+//          return Consumer<RattleModel>(
+          // Build a [Consumer] of the [RattleModel] so we can access updated values
+          // of the script as it grows.
 
-            builder: (context, rattle, child) {
-              // The builder takes a context, a RattleMode, and the child. It is the
-              // `rattle` that contains the state that we can access here.
+//            builder: (context, rattle, child) {
+          // The builder takes a context, a RattleMode, and the child. It is the
+          // `rattle` that contains the state that we can access here.
 
-              return SelectableText(
-                rattle.script,
-                key: scriptTextKey,
-                style: monoSmallTextStyle,
-              );
-            },
+          return SelectableText(
+            "rattle.script",
+            key: scriptTextKey,
+            style: monoSmallTextStyle,
           );
         },
       ),

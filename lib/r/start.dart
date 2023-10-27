@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-09-19 19:59:27 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-10-28 08:25:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,10 +26,9 @@ import 'dart:convert' show utf8;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:rattle/r/process.dart';
-import 'package:rattle/models/rattle_model.dart';
+//import 'package:rattle/models/rattle_model.dart';
 
 /// Start up the R process and
 
@@ -54,10 +53,10 @@ void rStart(context) async {
   //process.stdout.transform(utf8.decoder).forEach(debugPrint);
   //process.stderr.transform(utf8.decoder).forEach(debugPrint);
 
-  RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+//  RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
 
-  process.stdout.transform(utf8.decoder).forEach(rattle.appendStdout);
-  process.stderr.transform(utf8.decoder).forEach(rattle.appendStderr);
+//  process.stdout.transform(utf8.decoder).forEach(rattle.appendStdout);
+//  process.stderr.transform(utf8.decoder).forEach(rattle.appendStderr);
 
   // Read the main R startup code from the script file.
 

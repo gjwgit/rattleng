@@ -23,8 +23,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:rattle/r/source.dart';
 import 'package:rattle/models/rattle_model.dart';
 
@@ -55,28 +53,27 @@ class ModelRadioButtonsState extends State<ModelRadioButtons> {
     return Row(
       children: <Widget>[
         const SizedBox(width: 5), // Add some spacing
-        Consumer<RattleModel>(
-          builder: (context, rattle, child) {
-            return ElevatedButton(
-              onPressed: () {
-                // Handle button click here
-                debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
-                    "$selectedValue = ${modellers[selectedValue]}");
+//        Consumer<RattleModel>(
+//          builder: (context, rattle, child) {
+//            return
+        ElevatedButton(
+          onPressed: () {
+            // Handle button click here
+            debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
+                "$selectedValue = ${modellers[selectedValue]}");
 
-                rSource("model_template", rattle);
+//                rSource("model_template", rattle);
 
-                switch (rattle.model) {
-                  case "Tree":
-                    rSource("model_build_rpart", rattle);
-                  case "Forest":
-                    rSource("model_build_random_forest", rattle);
-                  default:
-                    debugPrint("NO ACTION FOR THIS BUTTON ${rattle.model}");
-                }
-              },
-              child: const Text('Build'),
-            );
+//                switch (rattle.model) {
+//                  case "Tree":
+//                    rSource("model_build_rpart", rattle);
+//                  case "Forest":
+//                    rSource("model_build_random_forest", rattle);
+//                  default:
+//                    debugPrint("NO ACTION FOR THIS BUTTON ${rattle.model}");
+//                }
           },
+          child: const Text('Build'),
         ),
         const SizedBox(width: 5), // Add some spacing
         Row(
@@ -96,23 +93,22 @@ class ModelRadioButtonsState extends State<ModelRadioButtons> {
       onTap: () {
         selectRadio(value);
       },
-      child: Consumer<RattleModel>(
-        builder: (context, rattle, child) {
-          return Row(
-            children: [
-              Radio(
-                value: value,
-                groupValue: selectedValue,
-                onChanged: (int? newValue) {
-                  selectRadio(newValue!);
-                  rattle.setModel(label);
-                  debugPrint("SET MODEL RADIO BUTTON TO $label");
-                },
-              ),
-              Text(label),
-            ],
-          );
-        },
+      child: //Consumer<RattleModel>(
+//        builder: (context, rattle, child) {
+//          return
+          Row(
+        children: [
+          Radio(
+            value: value,
+            groupValue: selectedValue,
+            onChanged: (int? newValue) {
+              selectRadio(newValue!);
+//                  rattle.setModel(label);
+              debugPrint("SET MODEL RADIO BUTTON TO $label");
+            },
+          ),
+          Text(label),
+        ],
       ),
     );
   }

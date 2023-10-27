@@ -23,11 +23,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:rattle/dataset/select_demo.dart';
 import 'package:rattle/dataset/select_file.dart';
-import 'package:rattle/models/rattle_model.dart';
+//import 'package:rattle/models/rattle_model.dart';
 
 const double heightSpace = 20;
 const double widthSpace = 10;
@@ -37,7 +35,7 @@ class DatasetPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+//    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
 
     return AlertDialog(
       content: Column(
@@ -73,7 +71,7 @@ class DatasetPopup extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  datasetSelectFile(rattle);
+                  datasetSelectFile();
                   Navigator.pop(context, "Filename");
                 },
                 child: const Text('Filename'),
@@ -101,7 +99,7 @@ class DatasetPopup extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  datasetSelectDemo(rattle);
+                  datasetSelectDemo();
                   Navigator.pop(context, "Demo");
                 },
                 child: const Text('Demo'),
