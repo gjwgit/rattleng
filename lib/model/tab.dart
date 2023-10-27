@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2023-10-03 09:06:53 +1100 Graham Williams>
+// Time-stamp: <Saturday 2023-10-28 08:13:55 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -26,13 +26,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/model/radio_buttons.dart';
-import 'package:rattle/models/rattle_model.dart';
+//import 'package:rattle/models/rattle_model.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
@@ -46,100 +44,98 @@ class ModelTab extends StatefulWidget {
 class ModelTabState extends State<ModelTab> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      builder: (context, rattle, child) {
-        return Scaffold(
-          body: Column(
-            children: [
-              const ModelRadioButtons(),
-              Visibility(
-                visible: rattle.model == "Cluster",
-                child: const Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    Text("NOT YET IMPLEMENTED"),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: rattle.model == "Associate",
-                child: const Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    Text("NOT YET IMPLEMENTED"),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: rattle.model == "Tree",
-                child: Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(left: 10),
-                    child: SingleChildScrollView(
-                      child: SelectableText(
-                        rExtractTree(rattle.stdout),
-                        style: monoTextStyle,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: rattle.model == "Forest",
-                child: Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(left: 10),
-                    child: SingleChildScrollView(
-                      child: SelectableText(
-                        rExtractForest(rattle.stdout),
-                        style: monoTextStyle,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: rattle.model == "Boost",
-                child: const Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    Text("NOT YET IMPLEMENTED"),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: rattle.model == "SVM",
-                child: const Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    Text("NOT YET IMPLEMENTED"),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: rattle.model == "Linear",
-                child: const Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    Text("NOT YET IMPLEMENTED"),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: rattle.model == "Neural",
-                child: const Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    Text("NOT YET IMPLEMENTED"),
-                  ],
-                ),
-              ),
-            ],
+//    return Consumer<RattleModel>(
+//      builder: (context, rattle, child) {
+    return Scaffold(
+      body: Column(
+        children: [
+          const ModelRadioButtons(),
+          Visibility(
+            visible: false, //rattle.model == "Cluster",
+            child: const Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                Text("NOT YET IMPLEMENTED"),
+              ],
+            ),
           ),
-        );
-      },
+          Visibility(
+            visible: false, //rattle.model == "Associate",
+            child: const Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                Text("NOT YET IMPLEMENTED"),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: true, //rattle.model == "Tree",
+            child: Expanded(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 10),
+                child: SingleChildScrollView(
+                  child: SelectableText(
+                    "rExtractTree(rattle.stdout)",
+                    style: monoTextStyle,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: false, //rattle.model == "Forest",
+            child: Expanded(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 10),
+                child: SingleChildScrollView(
+                  child: SelectableText(
+                    "rExtractForest(rattle.stdout)",
+                    style: monoTextStyle,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: false, //rattle.model == "Boost",
+            child: const Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                Text("NOT YET IMPLEMENTED"),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: false, //rattle.model == "SVM",
+            child: const Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                Text("NOT YET IMPLEMENTED"),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: false, //rattle.model == "Linear",
+            child: const Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                Text("NOT YET IMPLEMENTED"),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: false, //rattle.model == "Neural",
+            child: const Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                Text("NOT YET IMPLEMENTED"),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

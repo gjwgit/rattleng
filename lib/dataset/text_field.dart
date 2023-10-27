@@ -23,10 +23,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/models/rattle_model.dart';
+//import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends StatelessWidget {
@@ -34,48 +32,47 @@ class DatasetTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      // Build a [Consumer] of the [RattleModel] so we can access updated
-      // values of the path variable.
+//    return Consumer<RattleModel>(
+    // Build a [Consumer] of the [RattleModel] so we can access updated
+    // values of the path variable.
 
-      builder: (context, rattle, child) {
-        // The builder takes a context, a RattleMode, and the child. It is the
-        // `rattle` that contains the state that we can access here.
+//      builder: (context, rattle, child) {
+    // The builder takes a context, a RattleMode, and the child. It is the
+    // `rattle` that contains the state that we can access here.
 
-        return Expanded(
-          // Expand to fill the remainder of the row.
+    return Expanded(
+      // Expand to fill the remainder of the row.
 
-          child: DelayedTooltip(
-            message: "You can type the actual path to a file containing\n"
-                "your dataset, perhaps as a CSV file, or the name of a\n"
-                "package dataset, like rattle::wattle.",
-            child: TextField(
-              // A text field to contain the name of the selected dataset.
+      child: DelayedTooltip(
+        message: "You can type the actual path to a file containing\n"
+            "your dataset, perhaps as a CSV file, or the name of a\n"
+            "package dataset, like rattle::wattle.",
+        child: TextField(
+          // A text field to contain the name of the selected dataset.
 
-              key: datasetPathKey,
+          key: datasetPathKey,
 
-              // If the user updates the text then we need to send the new value
-              // off to the DatabaseModel.
+          // If the user updates the text then we need to send the new value
+          // off to the DatabaseModel.
 
-              onChanged: (newPath) {
-                rattle.setPath(newPath);
-              },
+          onChanged: (newPath) {
+            //              rattle.setPath(newPath);
+          },
 
-              // For an empty value we show a helpful message.
+          // For an empty value we show a helpful message.
 
-              decoration: const InputDecoration(
-                hintText:
-                    'Path to dataset file or named dataset from a package.',
-              ),
-
-              // The controller displays the current path and accessing it from
-              // the DatabaseModel ensures it is always the lates value displayed.
-
-              controller: TextEditingController(text: rattle.path),
-            ),
+          decoration: const InputDecoration(
+            hintText: 'Path to dataset file or named dataset from a package.',
           ),
-        );
-      },
+
+          // The controller displays the current path and accessing it from
+          // the DatabaseModel ensures it is always the lates value displayed.
+
+          controller: TextEditingController(text: "rattle.path"),
+        ),
+      ),
     );
+//      },
+//    );
   }
 }

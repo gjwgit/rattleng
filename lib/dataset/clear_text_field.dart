@@ -23,8 +23,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/models/rattle_model.dart';
 
@@ -38,17 +36,17 @@ class DatasetClearTextField extends StatelessWidget {
       onPressed: () {
         // TODO 20230920 gjw POPUP TO ASK IF WANT TO SAVE CURRENT PROJECT.
 
-        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-        rattle.setPath("");
-        rattle.setStatus(statusWelcomeMsg);
-        rattle.clearStdout();
-        rattle.clearStderr();
+//        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
+//        rattle.setPath("");
+//        rattle.setStatus(statusWelcomeMsg);
+//        rattle.clearStdout();
+//        rattle.clearStderr();
 
         // TODO 20231018 gjw IF MOVE TO models/dataset THEN THIS WOULD BE JUST
         // dataset.reset() WHICH IS CLEANER rattle.reset() WOULD CLEAR path,
         // stdin, AND stdout AND RESET THE STATUS MESSAGE.
 
-        rattle.resetDataset();
+//        rattle.resetDataset();
       },
     );
   }

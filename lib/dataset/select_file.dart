@@ -29,7 +29,8 @@ import 'package:rattle/constants/status.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/r/load_dataset.dart';
 
-void datasetSelectFile(RattleModel rattle) async {
+//void datasetSelectFile(RattleModel rattle) async {
+void datasetSelectFile() async {
   // Use the FilePicker to select a file asynchronously so as no to block the
   // main UI thread.
 
@@ -49,17 +50,17 @@ void datasetSelectFile(RattleModel rattle) async {
     // Set the path of the selected file in the [RattleModel] so that it is
     // generally available across the app.
 
-    rattle.setPath(file.path);
+//    rattle.setPath(file.path);
 
     // Load the dataset using the selected file's path obtained from the
     // [rattle] object.
 
-    rLoadDataset(rattle);
+//    rLoadDataset(rattle);
 
     // Set the status bar. Do so within the call here as otherwise if it is
     // outside of this async function, it gets done asynchronously, and so while
     // we are selecting the file rather than after the file is selected.
 
-    rattle.setStatus(statusChooseVariableRoles);
+//    rattle.setStatus(statusChooseVariableRoles);
   }
 }

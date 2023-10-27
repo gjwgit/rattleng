@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-10-03 08:47:29 +1100 Graham Williams>
+// Time-stamp: <Friday 2023-10-27 08:26:19 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,7 +32,7 @@ import 'package:rattle/home_page.dart';
 /// A widget for the root of the Rattle App.
 ///
 /// The root widget covers the screen of the app. This widget is stateless so
-/// that it does not manage any state.
+/// that it does not manage any state itself.
 
 class RattleApp extends StatelessWidget {
   const RattleApp({super.key});

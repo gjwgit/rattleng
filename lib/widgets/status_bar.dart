@@ -23,9 +23,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
-import 'package:rattle/models/rattle_model.dart';
+//import 'package:rattle/models/rattle_model.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -37,29 +35,29 @@ class StatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      // As a [Consumer] of the [RattleModel] recording the app's state we can
-      // access the status message as it gets updated, so that the status bar
-      // remains up to date.
+//    return Consumer<RattleModel>(
+    // As a [Consumer] of the [RattleModel] recording the app's state we can
+    // access the status message as it gets updated, so that the status bar
+    // remains up to date.
 
-      builder: (context, rattle, child) {
-        // The builder takes a context, a RattleModel, and the child. It is the
-        // `rattle` that contains the state that we can access here.
+//      builder: (context, rattle, child) {
+    // The builder takes a context, a RattleModel, and the child. It is the
+    // `rattle` that contains the state that we can access here.
 
-        return Container(
-          // I am setting the height for the bottom bar but this does not really
-          // seem to be the way to do this.
-          height: 50,
-          padding: const EdgeInsets.only(left: 0),
-          color: statusBarColour,
-          child: Markdown(
-            key: statusBarKey,
-            selectable: true,
-            data: rattle.status,
-            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-          ),
-        );
-      },
+    return Container(
+      // I am setting the height for the bottom bar but this does not really
+      // seem to be the way to do this.
+      height: 50,
+      padding: const EdgeInsets.only(left: 0),
+      color: statusBarColour,
+      child: Markdown(
+        key: statusBarKey,
+        selectable: true,
+        data: "rattle.status",
+        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+      ),
     );
+//      },
+//    );
   }
 }

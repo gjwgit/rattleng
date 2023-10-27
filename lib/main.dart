@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-10-06 11:54:03 +1100 Graham Williams>
+// Time-stamp: <Saturday 2023-10-28 08:26:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,12 +24,11 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:provider/provider.dart';
-
-import 'package:rattle/models/rattle_model.dart';
 
 import 'package:rattle/helpers/utils.dart';
+//import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/rattle_app.dart';
 
 void main() async {
@@ -87,12 +86,18 @@ void main() async {
   }
 
   // The runApp() function takes the given Widget and makes it the root of the
-  // widget tree.
+  // widget tree. Here we wrap the app within a ProviderScope() to support state
+  // management.
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => RattleModel(),
-      child: const RattleApp(),
+    const ProviderScope(
+      child: RattleApp(),
     ),
   );
+  // runApp(
+  //   ChangeNotifierProvider(
+  //     create: (context) => RattleModel(),
+  //     child: const RattleApp(),
+  //   ),
+  // );
 }

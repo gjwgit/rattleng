@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-30 16:34:50 +1000 Graham Williams>
+// Time-stamp: <Saturday 2023-10-28 08:24:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,9 +31,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:provider/provider.dart';
-
-import 'package:rattle/models/rattle_model.dart';
+//import 'package:rattle/models/rattle_model.dart';
 
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -99,49 +97,46 @@ class _RConsoleState extends State<RConsole> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RattleModel>(
-      builder: (context, rattle, child) {
-        terminal = rattle.rterm;
-        // terminalController = rattle.rtermController;
+//    return Consumer<RattleModel>(
+//      builder: (context, rattle, child) {
+//        terminal = rattle.rterm;
+    // terminalController = rattle.rtermController;
 
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: TerminalView(
-              terminal,
-              controller: terminalController,
-              autofocus: true,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Text("SafeArea("),
+      // child: TerminalView(
+      //   terminal,
+      //   controller: terminalController,
+      //   autofocus: true,
 
-              // Set the background to be black.
+      //   // Set the background to be black.
 
-              backgroundOpacity: 1.0,
+      //   backgroundOpacity: 1.0,
 
-              // A buffer around the edge of the console.
+      //   // A buffer around the edge of the console.
 
-              padding: const EdgeInsets.all(8.0),
+      //   padding: const EdgeInsets.all(8.0),
 
-              // This is how we can control the text size if desired.
+      //   // This is how we can control the text size if desired.
 
-              textScaleFactor: 1,
+      //   textScaleFactor: 1,
 
-              onSecondaryTapDown: (details, offset) async {
-                final selection = terminalController.selection;
-                if (selection != null) {
-                  final text = terminal.buffer.getText(selection);
-                  terminalController.clearSelection();
-                  await Clipboard.setData(ClipboardData(text: text));
-                } else {
-                  final data = await Clipboard.getData('text/plain');
-                  final text = data?.text;
-                  if (text != null) {
-                    terminal.paste(text);
-                  }
-                }
-              },
-            ),
-          ),
-        );
-      },
+      //   onSecondaryTapDown: (details, offset) async {
+      //     final selection = terminalController.selection;
+      //     if (selection != null) {
+      //       final text = terminal.buffer.getText(selection);
+      //       terminalController.clearSelection();
+      //       await Clipboard.setData(ClipboardData(text: text));
+      //     } else {
+      //       final data = await Clipboard.getData('text/plain');
+      //       final text = data?.text;
+      //       if (text != null) {
+      //         terminal.paste(text);
+      //       }
+      //     }
+      //   },
+      // ),
     );
   }
 }

@@ -11,7 +11,7 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   plugins:
-    - dart_code_metrics
+    - custom_lint
 
 dart_code_metrics:
   anti-patterns:

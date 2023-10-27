@@ -36,6 +36,9 @@ flutter:
   itest	    Run `flutter test integration_test` for interation testing.
   qtest	    Run above test with PAUSE=0.
 
+  riverpod  Setup `pubspec.yaml` to support riverpod.
+  runner    Build the auto generated code as *.g.dart files.
+
 Also supported:
 
   *.itest
@@ -70,7 +73,7 @@ pubspec.lock:
 
 .PHONY: linux
 linux: pubspec.lock $(BUILD_RUNNER)
-	flutter run -d linux
+	flutter run --device-id linux
 
 # Turn off debugPrint() output.
 
@@ -136,6 +139,7 @@ metrics:
 .PHONY: analyze 
 analyze:
 	flutter analyze
+	dart run custom_lint
 
 .PHONY: ignore
 ignore:
@@ -145,6 +149,19 @@ ignore:
 license:
 	@echo "--\nFiles without a license:"
 	@find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
+
+.PHONY: riverpod
+riverpod:
+	flutter pub add flutter_riverpod
+	flutter pub add riverpod_annotation
+	flutter pub add dev:riverpod_generator
+	flutter pub add dev:build_runner
+	flutter pub add dev:custom_lint
+	flutter pub add dev:riverpod_lint
+
+.PHONY: runner
+runner:
+	dart run build_runner build
 
 ########################################################################
 # INTEGRATION TESTING
