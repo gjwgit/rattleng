@@ -23,8 +23,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/constants/status.dart';
-import 'package:rattle/models/rattle_model.dart';
 
 class DatasetClearTextField extends StatelessWidget {
   const DatasetClearTextField({Key? key}) : super(key: key);

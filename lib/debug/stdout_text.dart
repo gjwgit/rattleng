@@ -47,7 +47,7 @@ class StdoutText extends StatelessWidget {
           // The builder takes a context, a RattleModel, and the child. It is the
           // `rattle` that contains the state that we can access here.
 
-          return SelectableText(
+          return const SelectableText(
             "STDOUT from the R Process:\n"
             "\${rattle.stdout}",
             // rExtractGlimpse(rattle.stdout),

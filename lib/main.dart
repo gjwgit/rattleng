@@ -27,7 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/helpers/utils.dart';
+import 'package:rattle/utils/utils.dart';
 //import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/rattle_app.dart';
 

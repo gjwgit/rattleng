@@ -23,11 +23,9 @@
 
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 
-import 'package:rattle/constants/status.dart';
-import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/r/load_dataset.dart';
+import 'package:file_picker/file_picker.dart';
 
 //void datasetSelectFile(RattleModel rattle) async {
 void datasetSelectFile() async {
@@ -46,6 +44,8 @@ void datasetSelectFile() async {
     // Convert the selected file into a File object.
 
     File file = File(result.files.single.path!);
+
+    debugPrint("SELECT FILE: $file");
 
     // Set the path of the selected file in the [RattleModel] so that it is
     // generally available across the app.

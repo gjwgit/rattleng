@@ -43,7 +43,7 @@ class StderrText extends StatelessWidget {
           // The builder takes a context, a RattleModel, and the child. It is the
           // `rattle` that contains the state that we can access here.
 
-          return SelectableText(
+          return const SelectableText(
             "STDERR from the R Process:\n\n\${rattle.stderr}",
             // rExtractGlimpse(rattle.stdout),
             style: monoSmallTextStyle,

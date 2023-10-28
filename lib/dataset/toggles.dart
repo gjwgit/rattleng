@@ -42,7 +42,7 @@ class _DatasetTogglesState extends State<DatasetToggles> {
 //    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
 
     return ToggleButtons(
-      isSelected: [true, true], //rattle.normalise, rattle.partition],
+      isSelected: const [true, true], //rattle.normalise, rattle.partition],
       onPressed: (int index) {
         setState(() {
           switch (index) {

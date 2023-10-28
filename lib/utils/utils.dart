@@ -50,7 +50,7 @@ bool get isDesktop {
 /// be globally suppressed with a noop redefinition like:
 ///
 /// ```
-/// import 'package:rattle/helpers/utils.dart';
+/// import 'package:rattle/utils/utils.dart';
 ///
 /// if (DebugPrintConfig.debugPrint == 'FALSE') {
 ///   debugPrint = (String? message, {int? wrapWidth}) {};

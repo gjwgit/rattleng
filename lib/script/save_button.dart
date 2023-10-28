@@ -26,7 +26,6 @@ import 'dart:io' show File;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/models/rattle_model.dart';
 
 class ScriptSaveButton extends StatelessWidget {
   const ScriptSaveButton({Key? key}) : super(key: key);
