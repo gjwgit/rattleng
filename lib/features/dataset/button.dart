@@ -22,7 +22,7 @@
 /// Authors: Graham Williams
 
 import 'package:flutter/material.dart';
-import 'package:rattle/dataset/popup.dart';
+import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends StatelessWidget {

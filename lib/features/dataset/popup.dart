@@ -23,8 +23,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/dataset/select_demo.dart';
-import 'package:rattle/dataset/select_file.dart';
+import 'package:rattle/features/dataset/select_demo.dart';
+import 'package:rattle/features/dataset/select_file.dart';
 //import 'package:rattle/models/rattle_model.dart';
 
 const double heightSpace = 20;

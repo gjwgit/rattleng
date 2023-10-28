@@ -25,9 +25,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/debug/rattle_model_text.dart';
-import 'package:rattle/debug/stderr_text.dart';
-import 'package:rattle/debug/stdout_text.dart';
+import 'package:rattle/features/debug/rattle_model_text.dart';
+import 'package:rattle/features/debug/stderr_text.dart';
+import 'package:rattle/features/debug/stdout_text.dart';
 
 class DebugToggles extends StatefulWidget {
   const DebugToggles({super.key});
