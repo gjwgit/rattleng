@@ -27,7 +27,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/model/radio_buttons.dart';
+import 'package:rattle/features/model/radio_buttons.dart';
 //import 'package:rattle/models/rattle_model.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?

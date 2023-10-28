@@ -1,11 +1,11 @@
-/// Debug tab for home page to view stdout and stderr side-by-side.
+/// Script tab for home page where the R script is captured.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-10-03 09:00:00 +1100 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 15:40:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,28 +24,28 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/debug/toggles.dart';
+import 'package:rattle/features/script/info.dart';
+import 'package:rattle/features/script/text.dart';
 
-// TESTING CAN BE REMOVED? final debugController = TextEditingController();
+// TESTING CAN BE REMOVED? final scriptController = TextEditingController();
 
-class DebugTab extends StatelessWidget {
-  const DebugTab({Key? key}) : super(key: key);
+class ScriptTab extends StatelessWidget {
+  const ScriptTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const DebugToggles();
-    // return const Row(
-    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //   children: [
-    //     Expanded(
-    //       flex: 4,
-    //       child: StdoutText(),
-    //     ),
-    //     Expanded(
-    //       flex: 4,
-    //       child: StderrText(),
-    //     ),
-    //   ],
-    // );
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          flex: 4,
+          child: ScriptInfo(),
+        ),
+        Expanded(
+          flex: 7,
+          child: ScriptText(),
+        ),
+      ],
+    );
   }
 }

@@ -30,7 +30,7 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
 //import 'package:rattle/r/extract_glimpse.dart';
 //import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/dataset/chooser.dart';
+import 'package:rattle/features/dataset/chooser.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
