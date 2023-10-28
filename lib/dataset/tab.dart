@@ -73,7 +73,7 @@ class DatasetTabState extends State<DatasetTab> {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
-                child: SelectableText(
+                child: const SelectableText(
                   "STDOUT GLIMPSE", //rExtractGlimpse(rattle.stdout),
                   key: datasetGlimpseKey,
                   style: monoTextStyle,

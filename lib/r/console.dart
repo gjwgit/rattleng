@@ -29,7 +29,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 //import 'package:rattle/models/rattle_model.dart';
 
@@ -102,7 +101,7 @@ class _RConsoleState extends State<RConsole> {
 //        terminal = rattle.rterm;
     // terminalController = rattle.rtermController;
 
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.transparent,
       body: Text("SafeArea("),
       // child: TerminalView(

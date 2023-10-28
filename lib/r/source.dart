@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/r/process.dart';
 import 'package:rattle/r/strip_header.dart';
-import 'package:rattle/helpers/timestamp.dart';
+import 'package:rattle/utils/timestamp.dart';
 
 /// Run the R [script] and append to the [rattle] script.
 ///

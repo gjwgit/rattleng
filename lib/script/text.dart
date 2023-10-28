@@ -26,7 +26,6 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/models/rattle_model.dart';
 
 /// Create a script text viewer that can scroll the text of the script widget.
 ///
@@ -48,7 +47,7 @@ class ScriptText extends StatelessWidget {
           // The builder takes a context, a RattleMode, and the child. It is the
           // `rattle` that contains the state that we can access here.
 
-          return SelectableText(
+          return const SelectableText(
             "rattle.script",
             key: scriptTextKey,
             style: monoSmallTextStyle,

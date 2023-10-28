@@ -24,8 +24,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-//import 'package:rattle/helpers/count_lines.dart';
-//import 'package:rattle/helpers/truncate.dart';
+//import 'package:rattle/utils/count_lines.dart';
+//import 'package:rattle/utils/truncate.dart';
 //import 'package:rattle/models/rattle_model.dart';
 
 class RattleModelText extends StatelessWidget {
@@ -45,7 +45,7 @@ class RattleModelText extends StatelessWidget {
           // The builder takes a context, a RattleModel, and the child. It is the
           // `rattle` that contains the state that we can access here.
 
-          return SelectableText(
+          return const SelectableText(
             "STATUS: \${rattle.status}\n\n"
             "SCRIPT: \${countLines(rattle.script)} lines\n\n"
             "STDOUT: \${countLines(rattle.stdout)} lines\n\n"

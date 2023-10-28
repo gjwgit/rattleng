@@ -25,7 +25,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/create_material_color.dart';
+import 'package:rattle/utils/create_material_color.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/home_page.dart';
 

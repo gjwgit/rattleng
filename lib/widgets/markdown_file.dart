@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/helpers/load_asset.dart';
+import 'package:rattle/utils/load_asset.dart';
 
 /// A scrolling widget that parses and displays Markdown file,
 /// which is located under the path [markdownFilePath].

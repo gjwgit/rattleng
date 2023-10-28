@@ -27,11 +27,10 @@ import 'package:flutter/material.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/debug/tab.dart';
 import 'package:rattle/dataset/tab.dart';
-import 'package:rattle/helpers/process_tab.dart';
+import 'package:rattle/utils/process_tab.dart';
 import 'package:rattle/model/tab.dart';
 //import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/r/console.dart';
-import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/script/tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
