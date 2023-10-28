@@ -17,9 +17,15 @@ flutter:
   linux     Run with the linux device;
   qlinux    Run with the linux device and debugPrint() turned off;
 
+  riverpod  Setup `pubspec.yaml` to support riverpod.
+  runner    Build the auto generated code as *.g.dart files.
+
   prep       Prep for PR by running tests, checks, docs.
 
   docs	    Run `dart doc` to create documentation.
+
+  fixer     Run `dart fix --dry-run` to check what can be automatically done.
+  fixit     Run `dart fix --apply` to automatically fix sipmle issues.
 
   checks    Run all checks over the code base 
     format        Run `dart format`.
@@ -35,9 +41,6 @@ flutter:
   test	    Run `flutter test` for testing.
   itest	    Run `flutter test integration_test` for interation testing.
   qtest	    Run above test with PAUSE=0.
-
-  riverpod  Setup `pubspec.yaml` to support riverpod.
-  runner    Build the auto generated code as *.g.dart files.
 
 Also supported:
 
