@@ -50,26 +50,19 @@ or follow them without understanding the rationale behind them.
 
 ## Architecture for RattleNG
 
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
-
-How far can we push github?
+Exploring mermaid for inline diagrams: https://mermaid.live/edit
 
 ```mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
+graph TD
+    style presentation fill:#f9d0c4, width:150px
+    style application fill:#c6dbda, width:150px
+    style domain fill:#f0e6f6, width:150px
+    style data fill:#d5e8d4, width:150px
+    presentation[Presentation Layer]
+    application[Application Layer]
+    domain[Domain Layer]
+    data[Data Layer]
+    presentation --> application
+    application --> domain
+    domain --> data
 ```
