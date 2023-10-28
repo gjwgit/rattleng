@@ -141,6 +141,14 @@ analyze:
 	flutter analyze
 	dart run custom_lint
 
+.PHONY: fixer
+fixer:
+	dart fix --dry-run
+
+.PHONY: fixit
+fixit:
+	dart fix --apply
+
 .PHONY: ignore
 ignore:
 	@rgrep ignore: lib
