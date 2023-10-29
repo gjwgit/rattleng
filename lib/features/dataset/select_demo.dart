@@ -1,4 +1,3 @@
-
 // void datasetSelectDemo(RattleModel rattle) {
 void datasetSelectDemo() {
   // Choose to load the demo dataset.

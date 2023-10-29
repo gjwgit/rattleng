@@ -23,7 +23,6 @@
 
 import 'package:flutter/material.dart';
 
-
 class DatasetClearTextField extends StatelessWidget {
   const DatasetClearTextField({Key? key}) : super(key: key);
 
