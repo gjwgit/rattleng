@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-10-28 08:18:59 +1100 Graham Williams>
+// Time-stamp: <Monday 2023-10-30 05:58:01 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,6 +22,8 @@
 ///
 /// Authors: Graham Williams
 
+library home_page;
+
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
@@ -34,63 +36,7 @@ import 'package:rattle/r/console.dart';
 import 'package:rattle/features/script/tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
-/// Define a mapping for the tabs in the GUI on to title:icon:widget.
-
-final List<Map<String, dynamic>> tabs = [
-  {
-    'title': "Dataset",
-    "icon": Icons.input,
-    "widget": const DatasetTab(),
-  },
-  {
-    'title': "Explore",
-    "icon": Icons.insights,
-    "widget": Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Image.asset("assets/images/myplot.png"),
-      ),
-    ),
-  },
-  {
-    'title': "Test",
-    "icon": Icons.task,
-    "widget": const Center(child: Text("TEST")),
-  },
-  {
-    'title': "Transform",
-    "icon": Icons.transform,
-    "widget": const Center(child: Text("TRANSFORM")),
-  },
-  {
-    'title': "Model",
-    "icon": Icons.model_training,
-    // "widget": const Center(child: Text("MODEL")),
-    "widget": const ModelTab(),
-  },
-  {
-    'title': "Evaluate",
-    "icon": Icons.leaderboard,
-    "widget": const Center(child: Text("EVALUATE")),
-  },
-  {
-    'title': "Console",
-    "icon": Icons.terminal,
-//    "widget": TerminalView(terminal),
-    "widget": const RConsole(),
-  },
-  {
-    'title': "Script",
-    "icon": Icons.code,
-    "widget": const ScriptTab(),
-  },
-  {
-    'title': "Debug",
-    "icon": Icons.work,
-    // "widget": const Center(child: Text("DEBUG")),
-    "widget": const DebugTab(),
-  },
-];
+part 'tabs.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
