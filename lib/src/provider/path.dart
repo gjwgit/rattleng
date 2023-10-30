@@ -4,9 +4,26 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 // part 'path.g.dart';
 
 // Define a StateProvider for path
-final pathProvider = StateProvider<String>((ref) {
-  return 'XXXX';
-});
+// final pathProvider = StateProvider<String>((ref) {
+//   return 'XXXX';
+// });
+
+// TODO 20231030 gjw PROBABLY RENAME THIS TO BE PROJECT RATHER THAN PATH. PATH
+// IS ONE FIELD WITHIN PROJECT. ALSO PERHAPS TRY THE @RIVERPOD ANNOTATION AGAIN.
+
+final pathProvider = Provider((_) => Path());
+
+class Path {
+  String _path = "";
+
+  setPath(String newPath) async {
+    _path = newPath;
+  }
+
+  String getPath() {
+    return _path;
+  }
+}
 
 /// Annotating a class by `@riverpod` defines a new shared state for your application,
 /// accessible using the generated [counterProvider].
