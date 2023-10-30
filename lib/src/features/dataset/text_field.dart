@@ -41,9 +41,14 @@ class DatasetTextField extends ConsumerWidget {
     // right after an update to the text feild, otherwise because it is rebuilt
     // each time, the cursor is set to the left position.
 
-    final txtController = TextEditingController.fromValue(TextEditingValue(
+    final txtController = TextEditingController.fromValue(
+      TextEditingValue(
         text: path,
-        selection: new TextSelection.collapsed(offset: path.length)));
+        selection: TextSelection.collapsed(
+          offset: path.length,
+        ),
+      ),
+    );
 
     return Expanded(
       // Use [Expanded] to fill the remainder of the row.
