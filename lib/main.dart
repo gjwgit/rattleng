@@ -27,9 +27,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/utils/utils.dart';
-//import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/rattle_app.dart';
+import 'package:rattle/src/utils/utils.dart';
+//import 'package:rattle/src/models/rattle_model.dart';
+import 'package:rattle/src/rattle_app.dart';
 
 void main() async {
   // The `main` entry point into any dart app.
