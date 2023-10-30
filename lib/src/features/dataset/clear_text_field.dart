@@ -34,8 +34,8 @@ class DatasetClearTextField extends ConsumerWidget {
     return IconButton(
       icon: const Icon(Icons.clear),
       onPressed: () {
-        final path = ref.watch(pathProvider);
-        print(path);
+        ref.watch(pathProvider).setPath('ZZZZ');
+        print(ref.read(pathProvider).getPath());
         // TODO 20231030 gjw HOW DO I UPDATE THE STATE IN RIVERPOD?
 
         // TODO 20230920 gjw POPUP TO ASK IF WANT TO SAVE CURRENT PROJECT.

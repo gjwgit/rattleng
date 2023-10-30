@@ -43,7 +43,10 @@ class DatasetTextField extends ConsumerWidget {
 //      builder: (context, rattle, child) {
     // The builder takes a context, a RattleMode, and the child. It is the
     // `rattle` that contains the state that we can access here.
-    String path = ref.watch(pathProvider);
+    final project = ref.watch(pathProvider);
+
+    // TODO 20231030 GJW CURRENTLY THE TEXT FIELD IS NOT BEING UPDATED WHEN THE
+    // VALUE CHANGES. HOW TO GET IT REBUILT?
 
     return Expanded(
       // Expand to fill the remainder of the row.
@@ -61,7 +64,7 @@ class DatasetTextField extends ConsumerWidget {
           // off to the DatabaseModel.
 
           onChanged: (newPath) {
-            path = newPath;
+            project.setPath(newPath);
           },
 
           // For an empty value we show a helpful message.
@@ -74,7 +77,9 @@ class DatasetTextField extends ConsumerWidget {
           // The controller displays the current path and accessing it from
           // the DatabaseModel ensures it is always the lates value displayed.
 
-          controller: TextEditingController(text: path), //"rattle.path"),
+          controller: TextEditingController(
+            text: ref.watch(pathProvider).getPath(), //"rattle.path"),
+          ),
         ),
       ),
     );
