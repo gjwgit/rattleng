@@ -34,23 +34,7 @@ class DatasetClearTextField extends ConsumerWidget {
     return IconButton(
       icon: const Icon(Icons.clear),
       onPressed: () {
-        ref.watch(pathProvider).setPath('ZZZZ');
-        print(ref.read(pathProvider).getPath());
-        // TODO 20231030 gjw HOW DO I UPDATE THE STATE IN RIVERPOD?
-
-        // TODO 20230920 gjw POPUP TO ASK IF WANT TO SAVE CURRENT PROJECT.
-
-//        RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-//        rattle.setPath("");
-//        rattle.setStatus(statusWelcomeMsg);
-//        rattle.clearStdout();
-//        rattle.clearStderr();
-
-        // TODO 20231018 gjw IF MOVE TO models/dataset THEN THIS WOULD BE JUST
-        // dataset.reset() WHICH IS CLEANER rattle.reset() WOULD CLEAR path,
-        // stdin, AND stdout AND RESET THE STATUS MESSAGE.
-
-//        rattle.resetDataset();
+        ref.read(pathProvider.notifier).state = '';
       },
     );
   }

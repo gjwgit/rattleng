@@ -28,7 +28,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/src/provider/path.dart';
 
 import 'package:rattle/src/constants/keys.dart';
-//import 'package:rattle/src/models/rattle_model.dart';
 import 'package:rattle/src/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends ConsumerWidget {
@@ -36,27 +35,15 @@ class DatasetTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-//    return Consumer<RattleModel>(
-    // Build a [Consumer] of the [RattleModel] so we can access updated
-    // values of the path variable.
-
-//      builder: (context, rattle, child) {
-    // The builder takes a context, a RattleMode, and the child. It is the
-    // `rattle` that contains the state that we can access here.
-    final project = ref.watch(pathProvider);
-
-    // TODO 20231030 GJW CURRENTLY THE TEXT FIELD IS NOT BEING UPDATED WHEN THE
-    // VALUE CHANGES. HOW TO GET IT REBUILT?
-
     return Expanded(
-      // Expand to fill the remainder of the row.
+      // Use [Expanded] to fill the remainder of the row.
 
       child: DelayedTooltip(
         message: "You can type the actual path to a file containing\n"
             "your dataset, perhaps as a CSV file, or the name of a\n"
             "package dataset, like rattle::wattle.",
         child: TextField(
-          // A text field to contain the name of the selected dataset.
+          // A [TextField] to contain the name of the selected dataset.
 
           key: datasetPathKey,
 
@@ -64,7 +51,7 @@ class DatasetTextField extends ConsumerWidget {
           // off to the DatabaseModel.
 
           onChanged: (newPath) {
-            project.setPath(newPath);
+            ref.watch(pathProvider.notifier).state = newPath;
           },
 
           // For an empty value we show a helpful message.
@@ -74,16 +61,17 @@ class DatasetTextField extends ConsumerWidget {
             border: OutlineInputBorder(),
           ),
 
-          // The controller displays the current path and accessing it from
-          // the DatabaseModel ensures it is always the lates value displayed.
+          // The controller displays the current path and accessing it from the
+          // DatabaseModel ensures it is always the lates value displayed.
+
+          // TODO 20231031 gjw UNFORTUNATELY ADDING THIS CONTROLLER MAKES THE
+          // TEXT IN THE TEXT FIELD GO BACKWAREDS!
 
           controller: TextEditingController(
-            text: ref.watch(pathProvider).getPath(), //"rattle.path"),
+            text: ref.watch(pathProvider),
           ),
         ),
       ),
     );
-//      },
-//    );
   }
 }
