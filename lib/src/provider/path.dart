@@ -1,42 +1,27 @@
+/// Gloabl variable path.
+///
+/// Copyright (C) 2023, Togaware Pty Ltd.
+///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// Time-stamp: <Tuesday 2023-10-31 08:34:41 +1100 Graham Williams>
+//
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program.  If not, see <https://www.gnu.org/licenses/>.
+///
+/// Authors: Graham Williams
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// part 'path.g.dart';
-
-// Define a StateProvider for path
-// final pathProvider = StateProvider<String>((ref) {
-//   return 'XXXX';
-// });
-
-// TODO 20231030 gjw PROBABLY RENAME THIS TO BE PROJECT RATHER THAN PATH. PATH
-// IS ONE FIELD WITHIN PROJECT. ALSO PERHAPS TRY THE @RIVERPOD ANNOTATION AGAIN.
-
-final pathProvider = Provider((_) => Path());
-
-class Path {
-  String _path = "";
-
-  setPath(String newPath) async {
-    _path = newPath;
-  }
-
-  String getPath() {
-    return _path;
-  }
-}
-
-/// Annotating a class by `@riverpod` defines a new shared state for your application,
-/// accessible using the generated [counterProvider].
-/// This class is both responsible for initializing the state (through the [build] method)
-/// and exposing ways to modify it (cf [increment]).
-// @riverpod
-// class Path extends _$Path {
-//   /// Classes annotated by `@riverpod` **must** define a [build] function.
-//   /// This function is expected to return the initial state of your shared state.
-//   /// It is totally acceptable for this function to return a [Future] or [Stream] if you need to.
-//   /// You can also freely define parameters on this method.
-//   @override
-//   String build() => '';
-
-//   void increment() => "YYYY";
-// }
+final pathProvider = StateProvider<String>((ref) => '');
