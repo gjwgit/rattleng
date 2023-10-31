@@ -25,7 +25,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/status.dart';
 import 'package:rattle/provider/path.dart';
+import 'package:rattle/provider/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 
 const double heightSpace = 20;
@@ -75,7 +77,8 @@ class DatasetPopup extends ConsumerWidget {
                     ref.read(pathProvider.notifier).state = path;
                     // TODO 20231031 gjw
                     // rloadDataset()
-                    // set statusbar;
+                    ref.read(statusProvider.notifier).state =
+                        statusChooseVariableRoles;
                   }
 
                   // Avoid the "Do not use BuildContexts across async gaps."
@@ -112,7 +115,8 @@ class DatasetPopup extends ConsumerWidget {
                   ref.read(pathProvider.notifier).state = "rattle::weather";
                   // TODO 20231031 gjw
                   // rLoadDataset();
-                  // set statusbar;
+                  ref.read(statusProvider.notifier).state =
+                      statusChooseVariableRoles;
                   Navigator.pop(context, "Demo");
                 },
                 child: const Text('Demo'),

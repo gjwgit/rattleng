@@ -26,15 +26,18 @@ import 'package:flutter/material.dart';
 //import 'package:rattle/models/rattle_model.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
+import 'package:rattle/constants/status.dart';
+import 'package:rattle/provider/status.dart';
 
-class StatusBar extends StatelessWidget {
+class StatusBar extends ConsumerWidget {
   const StatusBar({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
 //    return Consumer<RattleModel>(
     // As a [Consumer] of the [RattleModel] recording the app's state we can
     // access the status message as it gets updated, so that the status bar
@@ -53,7 +56,7 @@ class StatusBar extends StatelessWidget {
       child: Markdown(
         key: statusBarKey,
         selectable: true,
-        data: "rattle.status",
+        data: ref.watch(statusProvider),
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
       ),
     );
