@@ -31,10 +31,16 @@ available from Togaware (https://datamining.togaware.com).
 ### R Dependency
 
 The R statistical software needs to be installed first. Then install
-these prerequisite packages:
+these prerequisite packages after starting up R itself:
 
+```r
+install.packages(c("rattle", "janitor"))
 ```
-> install.packages(c("rattle", "tidyverse", "janitor"))
+
+Also  from a terminal install the tidyverse package:
+
+```bash
+wajig install r-cran-tidyverse
 ```
 
 RattleNG will eventually check for these and prompt if they are not
