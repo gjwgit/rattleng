@@ -27,9 +27,8 @@ import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
 
-//void datasetSelectFile(RattleModel rattle) async {
-void datasetSelectFile() async {
-  // Use the FilePicker to select a file asynchronously so as no to block the
+Future<String> datasetSelectFile() async {
+  // Use the FilePicker to select a file asynchronously so as not to block the
   // main UI thread.
 
   FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -40,27 +39,13 @@ void datasetSelectFile() async {
 
   // Check if a file was selected.
 
+  String path = "";
+
   if (result != null) {
-    // Convert the selected file into a File object.
+    // Extract the path from the selected file.
 
-    File file = File(result.files.single.path!);
-
-    debugPrint("SELECT FILE: $file");
-
-    // Set the path of the selected file in the [RattleModel] so that it is
-    // generally available across the app.
-
-//    rattle.setPath(file.path);
-
-    // Load the dataset using the selected file's path obtained from the
-    // [rattle] object.
-
-//    rLoadDataset(rattle);
-
-    // Set the status bar. Do so within the call here as otherwise if it is
-    // outside of this async function, it gets done asynchronously, and so while
-    // we are selecting the file rather than after the file is selected.
-
-//    rattle.setStatus(statusChooseVariableRoles);
+    path = result.files.single.path!;
   }
+
+  return path;
 }

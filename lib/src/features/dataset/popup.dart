@@ -23,20 +23,19 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/src/features/dataset/select_demo.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/src/provider/path.dart';
 import 'package:rattle/src/features/dataset/select_file.dart';
-//import 'package:rattle/src/models/rattle_model.dart';
 
 const double heightSpace = 20;
 const double widthSpace = 10;
 
-class DatasetPopup extends StatelessWidget {
+class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-//    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -70,8 +69,19 @@ class DatasetPopup extends StatelessWidget {
               // FILENAME
 
               ElevatedButton(
-                onPressed: () {
-                  datasetSelectFile();
+                onPressed: () async {
+                  String path = await datasetSelectFile();
+                  if (path.isNotEmpty) {
+                    ref.read(pathProvider.notifier).state = path;
+                    // TODO 20231031 gjw
+                    // rloadDataset()
+                    // set statusbar;
+                  }
+
+                  // Avoid the "Do not use BuildContexts across async gaps."
+                  // warning.
+
+                  if (!context.mounted) return;
                   Navigator.pop(context, "Filename");
                 },
                 child: const Text('Filename'),
@@ -85,7 +95,7 @@ class DatasetPopup extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  // TODO 20231018 gjw datasetSelectPackage(rattle);
+                  // TODO 20231018 gjw datasetSelectPackage();
                   Navigator.pop(context, "Package");
                 },
                 child: const Text('Package'),
@@ -99,7 +109,10 @@ class DatasetPopup extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  datasetSelectDemo();
+                  ref.read(pathProvider.notifier).state = "rattle::weather";
+                  // TODO 20231031 gjw
+                  // rLoadDataset();
+                  // set statusbar;
                   Navigator.pop(context, "Demo");
                 },
                 child: const Text('Demo'),
