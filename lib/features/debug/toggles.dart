@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-10-16 05:32:29 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2023-11-01 09:55:48 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,7 +25,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/features/debug/rattle_model_text.dart';
+import 'package:rattle/features/debug/rattle_state_text.dart';
 import 'package:rattle/features/debug/stderr_text.dart';
 import 'package:rattle/features/debug/stdout_text.dart';
 
@@ -42,7 +42,7 @@ class _DebugTogglesState extends State<DebugToggles> {
   // Define widgets for each toggle option.
 
   final List<Widget> _toggleWidgets = [
-    const RattleModelText(),
+    const RattleStateText(),
     const StdoutText(),
     const StderrText(),
   ];

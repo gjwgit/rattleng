@@ -1,4 +1,4 @@
-/// A text widget showing the rattle model (current rattle state).
+/// A text widget showing the current rattle state.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,34 +23,45 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/provider/path.dart';
+import 'package:rattle/provider/status.dart';
 //import 'package:rattle/utils/count_lines.dart';
 //import 'package:rattle/utils/truncate.dart';
 //import 'package:rattle/models/rattle_model.dart';
 
-class RattleModelText extends StatelessWidget {
-  const RattleModelText({Key? key}) : super(key: key);
+class RattleStateText extends ConsumerWidget {
+  const RattleStateText({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Initialise the state variables used here.
+
+    String status = ref.read(statusProvider);
+    String path = ref.read(pathProvider);
+    bool partition = true; // TODO 20231101 gjw
+    bool normalise = true; // TODO 20231101 gjw
+
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
-//          return Consumer<RattleModel>(
-          // As a [Consumer] of the [RattleModel] recording the app's state we can
+//          return Consumer<RattleState>(
+          // As a [Consumer] of the [RattleState] recording the app's state we can
           // access the status message as it gets updated, so that the status bar
           // remains up to date.
 
 //            builder: (context, rattle, child) {
-          // The builder takes a context, a RattleModel, and the child. It is the
+          // The builder takes a context, a RattleState, and the child. It is the
           // `rattle` that contains the state that we can access here.
 
-          return const SelectableText(
-            "STATUS: \${rattle.status}\n\n"
+          return SelectableText(
+            "STATUS: $status\n\n"
             "SCRIPT: \${countLines(rattle.script)} lines\n\n"
             "STDOUT: \${countLines(rattle.stdout)} lines\n\n"
             "STDERR: \${countLines(rattle.stderr)} lines\n\n"
-            "PATH: \${rattle.path}\n\n"
+            "PATH: $path\n\n"
             "NORMALISE: \${rattle.normalise}\n\n"
             "PARTITION: \${rattle.partition}\n\n"
             "VARS: \${truncate(rattle.vars.toString())} \n\n"
