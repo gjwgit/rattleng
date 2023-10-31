@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-10-28 08:26:27 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,14 +27,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/utils/utils.dart';
-//import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/rattle_app.dart';
+import 'package:rattle/utils/debug_print_config.dart';
+import 'package:rattle/utils/is_desktop.dart';
 
 void main() async {
   // The `main` entry point into any dart app.
   //
-  // TODO WHY We use async.
+  // This is required to be [async] since we use [await] below to initalise the
+  // window manager.
 
   // Use debugPrint() to print trace messages and backtraces in preference to
   // print(). Use print() for human readable messages to the console for errors,
@@ -86,18 +87,12 @@ void main() async {
   }
 
   // The runApp() function takes the given Widget and makes it the root of the
-  // widget tree. Here we wrap the app within a ProviderScope() to support state
-  // management.
+  // widget tree. Here we wrap the app within RiverPod's ProviderScope() to
+  // support state management.
 
   runApp(
     const ProviderScope(
       child: RattleApp(),
     ),
   );
-  // runApp(
-  //   ChangeNotifierProvider(
-  //     create: (context) => RattleModel(),
-  //     child: const RattleApp(),
-  //   ),
-  // );
 }
