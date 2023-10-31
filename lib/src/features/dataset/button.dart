@@ -22,6 +22,7 @@
 /// Authors: Graham Williams
 
 import 'package:flutter/material.dart';
+
 import 'package:rattle/src/features/dataset/popup.dart';
 import 'package:rattle/src/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
