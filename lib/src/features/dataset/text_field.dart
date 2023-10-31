@@ -73,7 +73,6 @@ class DatasetTextField extends ConsumerWidget {
 
           decoration: const InputDecoration(
             hintText: 'Path to dataset file or named dataset from a package.',
-            border: OutlineInputBorder(),
           ),
 
           // The controller displays the current path and accessing it from the
