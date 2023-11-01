@@ -2,9 +2,9 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
-// Licensed under the GNU General Public License, Version 3 (the "License");
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,34 +22,40 @@
 /// Authors: Graham Williams
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:rattle/provider/normalise.dart';
+import 'package:rattle/provider/partition.dart';
 
 // This has to be a stateful widget otherwise the buttons don't visually toggle
-// - i.e., the widget does not seem to get updated even though the values get
+// i.e., the widget does not seem to get updated even though the values get
 // updated.
 
-class DatasetToggles extends StatefulWidget {
+class DatasetToggles extends ConsumerStatefulWidget {
   const DatasetToggles({super.key});
 
   @override
-  State<DatasetToggles> createState() => _DatasetTogglesState();
+  ConsumerState<DatasetToggles> createState() => _DatasetTogglesState();
 }
 
-class _DatasetTogglesState extends State<DatasetToggles> {
+class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   @override
   Widget build(BuildContext context) {
 //    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
 
+    bool normalise = ref.read(normaliseProvider);
+    bool partition = ref.read(partitionProvider);
+
     return ToggleButtons(
-      isSelected: const [true, true], //rattle.normalise, rattle.partition],
+      isSelected: [normalise, partition],
       onPressed: (int index) {
         setState(() {
           switch (index) {
             case 0:
-            //rattle.setNormalise(!rattle.normalise);
+              ref.read(normaliseProvider.notifier).state = !normalise;
             case 1:
-            //rattle.setPartition(!rattle.partition);
+              ref.read(partitionProvider.notifier).state = !partition;
           }
         });
       },

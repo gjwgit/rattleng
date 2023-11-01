@@ -1,13 +1,40 @@
+/// Initiate the R process and setup capture of its output.
+///
+/// Copyright (C) 2023, Togaware Pty Ltd.
+///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
+// Time-stamp: <Thursday 2023-11-02 08:10:33 +1100 Graham Williams>
+//
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program.  If not, see <https://www.gnu.org/licenses/>.
+///
+/// Authors: Graham Williams
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/r/process.dart';
-//import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/utils/update_script.dart';
 
-/// Start up the R process and
+/// Start up the R process and set up the capture of stderr and stdout.
 
-void rStart(context) async {
+void rStart(WidgetRef ref) async {
   // Start up an R process from the command line.
 
   debugPrint("R: STARTING UP A NEW R PROCESS");
@@ -48,4 +75,8 @@ void rStart(context) async {
   // Run the code.
 
   process.stdin.writeln(code);
+
+  // Add the code to the script.
+
+  updateScript(ref, code);
 }
