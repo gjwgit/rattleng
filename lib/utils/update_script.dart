@@ -1,4 +1,4 @@
-/// A button to save the script to file.
+/// Update the script provider which captures the R code to replicate the project.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -6,7 +6,7 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Saturday 2023-10-28 08:21:18 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,25 +23,10 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:io' show File;
-
-import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/script.dart';
 
-class ScriptSaveButton extends ConsumerWidget {
-  const ScriptSaveButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      child: const Text("Export"),
-      onPressed: () {
-        debugPrint("SAVE BUTTON EXPORT: 'script.R'");
-        File('script.R').writeAsString(ref.read(scriptProvider));
-      },
-    );
-  }
+void updateScript(WidgetRef ref, String code) {
+  ref.read(scriptProvider.notifier).state = ref.read(scriptProvider) + code;
 }

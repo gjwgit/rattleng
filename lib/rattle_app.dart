@@ -2,10 +2,11 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Friday 2023-10-27 08:26:19 +1100 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
+// Time-stamp: <Thursday 2023-11-02 08:08:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,6 +25,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/utils/create_material_color.dart';
 import 'package:rattle/r/start.dart';
@@ -31,21 +34,21 @@ import 'package:rattle/home_page.dart';
 
 /// A widget for the root of the Rattle App.
 ///
-/// The root widget covers the screen of the app. This widget is stateless so
-/// that it does not manage any state itself.
+/// The root widget covers the screen of the app. This widget is stateless as
+/// it does not need to manage any state itself.
 
-class RattleApp extends StatelessWidget {
+class RattleApp extends ConsumerWidget {
   const RattleApp({super.key});
 
-  /// We build the root widget as a MaterialApp() widget, turning off the
+  /// We build the root widget as a [MaterialApp] widget, turning off the
   /// default debug corner banner, setting up the app theme, and populating the
   /// widget with the Rattle home page widget.
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Initialise the R process.
 
-    rStart(context);
+    rStart(ref);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

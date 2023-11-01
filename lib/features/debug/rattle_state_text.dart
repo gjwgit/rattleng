@@ -28,6 +28,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/status.dart';
+import 'package:rattle/provider/normalise.dart';
+import 'package:rattle/provider/partition.dart';
 //import 'package:rattle/utils/count_lines.dart';
 //import 'package:rattle/utils/truncate.dart';
 //import 'package:rattle/models/rattle_model.dart';
@@ -41,8 +43,8 @@ class RattleStateText extends ConsumerWidget {
 
     String status = ref.read(statusProvider);
     String path = ref.read(pathProvider);
-    bool partition = true; // TODO 20231101 gjw
-    bool normalise = true; // TODO 20231101 gjw
+    bool partition = ref.read(partitionProvider);
+    bool normalise = ref.read(normaliseProvider);
 
     return SingleChildScrollView(
       child: Builder(
@@ -62,8 +64,8 @@ class RattleStateText extends ConsumerWidget {
             "STDOUT: \${countLines(rattle.stdout)} lines\n\n"
             "STDERR: \${countLines(rattle.stderr)} lines\n\n"
             "PATH: $path\n\n"
-            "NORMALISE: \${rattle.normalise}\n\n"
-            "PARTITION: \${rattle.partition}\n\n"
+            "NORMALISE: $normalise\n\n"
+            "PARTITION: $partition\n\n"
             "VARS: \${truncate(rattle.vars.toString())} \n\n"
             "TARGET: \${rattle.target} \n\n"
             "RISK: \${rattle.risk} \n\n"

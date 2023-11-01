@@ -2,9 +2,9 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
-// Licensed under the GNU General Public License, Version 3 (the "License");
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,9 +25,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/path.dart';
-
 import 'package:rattle/constants/keys.dart';
+import 'package:rattle/provider/path.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends ConsumerWidget {
@@ -38,8 +37,9 @@ class DatasetTextField extends ConsumerWidget {
     final path = ref.watch(pathProvider);
 
     // Introduce a text controller that ensures the cursor is always on the
-    // right after an update to the text feild, otherwise because it is rebuilt
-    // each time, the cursor is set to the left position.
+    // right after an update to the text field. Otherwise, because it is rebuilt
+    // each time, the cursor is set to the left position and so the characters
+    // are effectively captured right to left rather then left to right.
 
     final txtController = TextEditingController.fromValue(
       TextEditingValue(
@@ -76,10 +76,7 @@ class DatasetTextField extends ConsumerWidget {
           ),
 
           // The controller displays the current path and accessing it from the
-          // DatabaseModel ensures it is always the lates value displayed.
-
-          // TODO 20231031 gjw UNFORTUNATELY ADDING THIS CONTROLLER MAKES THE
-          // TEXT IN THE TEXT FIELD GO BACKWAREDS!
+          // path provider ensures it is always the latest value displayed.
 
           controller: txtController,
         ),
