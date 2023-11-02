@@ -1,12 +1,13 @@
 /// The root widget for the Rattle app.
 ///
+/// Time-stamp: <Thursday 2023-11-02 08:08:27 +1100 Graham Williams>
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Thursday 2023-11-02 08:08:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software

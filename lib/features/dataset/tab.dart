@@ -1,12 +1,13 @@
 /// Dataset tab for home page.
 ///
+/// Time-stamp: <Saturday 2023-10-28 08:07:23 +1100 Graham Williams>
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Saturday 2023-10-28 08:07:23 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
