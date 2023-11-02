@@ -1,4 +1,4 @@
-/// A text widget showing the stderr from the R process.
+/// A provider for the target variable.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -6,7 +6,7 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,29 +23,6 @@
 ///
 /// Authors: Graham Williams
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/stderr.dart';
-import 'package:rattle/constants/app.dart';
-
-class StderrText extends ConsumerWidget {
-  const StderrText({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SingleChildScrollView(
-      child: Builder(
-        builder: (BuildContext context) {
-          String stderr = ref.watch(stderrProvider);
-
-          return SelectableText(
-            "STDERR from the R Process:\n\n$stderr",
-            style: monoSmallTextStyle,
-          );
-        },
-      ),
-    );
-  }
-}
+final targetProvider = StateProvider<String>((ref) => "");

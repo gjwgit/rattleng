@@ -2,10 +2,12 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Licensed under the GNU General Public License, Version 3 (the "License");
-///
+// Time-stamp: <Friday 2023-11-03 09:06:19 +1100 Graham Williams>
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -23,14 +25,20 @@
 
 import 'package:flutter/material.dart';
 
-class ModelRadioButtons extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/provider/model.dart';
+import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/r/source.dart';
+
+class ModelRadioButtons extends ConsumerStatefulWidget {
   const ModelRadioButtons({Key? key}) : super(key: key);
 
   @override
-  ModelRadioButtonsState createState() => ModelRadioButtonsState();
+  ConsumerState<ModelRadioButtons> createState() => ModelRadioButtonsState();
 }
 
-class ModelRadioButtonsState extends State<ModelRadioButtons> {
+class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
   // List of modellers we support.
 
   List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost'];
@@ -47,28 +55,27 @@ class ModelRadioButtonsState extends State<ModelRadioButtons> {
 
   @override
   Widget build(BuildContext context) {
+    String model = ref.watch(modelProvider);
+
     return Row(
       children: <Widget>[
         const SizedBox(width: 5), // Add some spacing
-//        Consumer<RattleModel>(
-//          builder: (context, rattle, child) {
-//            return
         ElevatedButton(
           onPressed: () {
             // Handle button click here
             debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
                 "$selectedValue = ${modellers[selectedValue]}");
 
-//                rSource("model_template", rattle);
+            rSource(ref, "model_template");
 
-//                switch (rattle.model) {
-//                  case "Tree":
-//                    rSource("model_build_rpart", rattle);
-//                  case "Forest":
-//                    rSource("model_build_random_forest", rattle);
-//                  default:
-//                    debugPrint("NO ACTION FOR THIS BUTTON ${rattle.model}");
-//                }
+            switch (model) {
+              case "Tree":
+                rSource(ref, "model_build_rpart");
+              case "Forest":
+                rSource(ref, "model_build_random_forest");
+              default:
+                debugPrint("NO ACTION FOR THIS BUTTON $model");
+            }
           },
           child: const Text('Build'),
         ),
@@ -90,17 +97,14 @@ class ModelRadioButtonsState extends State<ModelRadioButtons> {
       onTap: () {
         selectRadio(value);
       },
-      child: //Consumer<RattleModel>(
-//        builder: (context, rattle, child) {
-//          return
-          Row(
+      child: Row(
         children: [
           Radio(
             value: value,
             groupValue: selectedValue,
             onChanged: (int? newValue) {
               selectRadio(newValue!);
-//                  rattle.setModel(label);
+              ref.read(modelProvider.notifier).state = label;
               debugPrint("SET MODEL RADIO BUTTON TO $label");
             },
           ),

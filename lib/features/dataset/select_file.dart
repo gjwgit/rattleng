@@ -2,10 +2,12 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Licensed under the GNU General Public License, Version 3 (the "License");
-///
+// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -21,14 +23,10 @@
 ///
 /// Authors: Yiming Lu, Graham Williams
 
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-
 import 'package:file_picker/file_picker.dart';
 
 Future<String> datasetSelectFile() async {
-  // Use the FilePicker to select a file asynchronously so as not to block the
+  // Use the [FilePicker] to select a file asynchronously so as not to block the
   // main UI thread.
 
   FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -37,12 +35,10 @@ Future<String> datasetSelectFile() async {
     allowedExtensions: ['csv'],
   );
 
-  // Check if a file was selected.
-
   String path = "";
 
   if (result != null) {
-    // Extract the path from the selected file.
+    // If a file was selected then extract the path from the selected file.
 
     path = result.files.single.path!;
   }

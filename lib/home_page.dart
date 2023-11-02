@@ -2,10 +2,11 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Monday 2023-10-30 06:33:17 +1100 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
+// Time-stamp: <Friday 2023-11-03 08:00:23 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,26 +25,31 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/features/debug/tab.dart';
 import 'package:rattle/features/dataset/tab.dart';
-import 'package:rattle/utils/process_tab.dart';
+import 'package:rattle/features/debug/tab.dart';
 import 'package:rattle/features/model/tab.dart';
-//import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/r/console.dart';
 import 'package:rattle/features/script/tab.dart';
+import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/vars.dart';
+import 'package:rattle/r/console.dart';
+import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/process_tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 part 'tabs.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  HomePageState createState() => HomePageState();
+  ConsumerState<HomePage> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage>
+class HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -63,11 +69,13 @@ class HomePageState extends State<HomePage>
           // On leaving the DATASET tab we set the variables and run the data
           // template.
 
-//          RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-//          rattle.setVars(rExtractVars(rattle.stdout));
-//          if (rattle.target.isEmpty) {
-//            rattle.setTarget(rattle.vars.last);
-//          }
+          List<String> vars = rExtractVars(ref.read(stdoutProvider));
+          String target = ref.read(targetProvider);
+
+          ref.read(varsProvider.notifier).state = vars;
+          if (target.isEmpty) {
+            ref.read(targetProvider.notifier).state = vars.last;
+          }
 
           // TODO 20231018 gjw Run the data template here?
         }

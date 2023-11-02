@@ -23,12 +23,15 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:convert' show utf8;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/provider/stderr.dart';
+import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/process.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -57,8 +60,14 @@ void rStart(WidgetRef ref) async {
 
 //  RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
 
-//  process.stdout.transform(utf8.decoder).forEach(rattle.appendStdout);
-//  process.stderr.transform(utf8.decoder).forEach(rattle.appendStderr);
+  process.stdout.transform(utf8.decoder).forEach(
+        (String txt) => ref.read(stdoutProvider.notifier).state =
+            ref.read(stdoutProvider) + txt,
+      );
+  process.stderr.transform(utf8.decoder).forEach(
+        (String txt) => ref.read(stderrProvider.notifier).state =
+            ref.read(stderrProvider) + txt,
+      );
 
   // Read the main R startup code from the script file.
 
