@@ -2,10 +2,12 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Licensed under the GNU General Public License, Version 3 (the "License");
-///
+// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -23,38 +25,30 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/constants/app.dart';
-//import 'package:rattle/models/rattle_model.dart';
 
 /// Create a stdout text viewer that can scroll the text of stdout.
 ///
 /// The contents is intialised from rattle state's stdout.
 
-class StdoutText extends StatelessWidget {
+class StdoutText extends ConsumerWidget {
   const StdoutText({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
-//          return Consumer<RattleModel>(
-          // As a [Consumer] of the [RattleModel] recording the app's state we can
-          // access the status message as it gets updated, so that the status bar
-          // remains up to date.
+          String stdout = ref.watch(stdoutProvider);
 
-//            builder: (context, rattle, child) {
-          // The builder takes a context, a RattleModel, and the child. It is the
-          // `rattle` that contains the state that we can access here.
-
-          return const SelectableText(
+          return SelectableText(
             "STDOUT from the R Process:\n"
-            "\${rattle.stdout}",
-            // rExtractGlimpse(rattle.stdout),
+            "$stdout",
             style: monoSmallTextStyle,
           );
-//            },
-//          );
         },
       ),
     );

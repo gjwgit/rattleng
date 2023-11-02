@@ -2,9 +2,10 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 // Time-stamp: <Saturday 2023-10-28 08:24:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
@@ -30,13 +31,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-//import 'package:rattle/models/rattle_model.dart';
-
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 
-// 20230930 gjw TDOD HOW TO PROPERLY HANDLE THE CONSOLE?
+// TODO 20230930 gjw HOW TO PROPERLY HANDLE THE CONSOLE? WANT TO SEND COMMANDS
+// TO IT AND GET THE OUTPUT TO BE PARSED AS IS CURRENT DONE THROUGH THE R
+// PROCESS BUT WOULD BE NICER THROUGH A CONSOLE.
 
 /// The R Console widget where the R subprocess runs and executes commands sent
 /// to it and where the results are read from.

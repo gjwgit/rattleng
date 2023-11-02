@@ -2,9 +2,10 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-//
 // Time-stamp: <Saturday 2023-10-28 08:07:23 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
@@ -26,29 +27,31 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
-//import 'package:rattle/r/extract_glimpse.dart';
-//import 'package:rattle/models/rattle_model.dart';
 import 'package:rattle/features/dataset/chooser.dart';
+import 'package:rattle/provider/path.dart';
+import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
-class DatasetTab extends StatefulWidget {
+class DatasetTab extends ConsumerStatefulWidget {
   const DatasetTab({Key? key}) : super(key: key);
 
   @override
-  DatasetTabState createState() => DatasetTabState();
+  ConsumerState<DatasetTab> createState() => _DatasetTabState();
 }
 
-class DatasetTabState extends State<DatasetTab> {
+class _DatasetTabState extends ConsumerState<DatasetTab> {
   @override
   Widget build(BuildContext context) {
-//    return Consumer<RattleModel>(
-    // Build a [Consumer] of the [RattleModel] so we can access updated
-    // values of the path variable.
-//      builder: (context, rattle, child) {
+    String path = ref.watch(pathProvider);
+    String stdout = ref.watch(stdoutProvider);
+
     return Scaffold(
       body: Column(
         children: [
@@ -59,7 +62,7 @@ class DatasetTabState extends State<DatasetTab> {
           // overwritten once a dataset is loaded.
 
           Visibility(
-            visible: true, //rattle.path == "",
+            visible: path == "",
             child: Expanded(
               child: Center(
                 key: welcomeTextKey,
@@ -68,13 +71,13 @@ class DatasetTabState extends State<DatasetTab> {
             ),
           ),
           Visibility(
-            visible: false, //rattle.path != "",
+            visible: path != "",
             child: Expanded(
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
-                child: const SelectableText(
-                  "STDOUT GLIMPSE", //rExtractGlimpse(rattle.stdout),
+                child: SelectableText(
+                  rExtractGlimpse(stdout),
                   key: datasetGlimpseKey,
                   style: monoTextStyle,
                 ),
@@ -84,7 +87,5 @@ class DatasetTabState extends State<DatasetTab> {
         ],
       ),
     );
-//      },
-//    );
   }
 }

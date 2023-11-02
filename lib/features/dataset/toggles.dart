@@ -22,6 +22,7 @@
 /// Authors: Graham Williams
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/widgets/delayed_tooltip.dart';
@@ -42,8 +43,6 @@ class DatasetToggles extends ConsumerStatefulWidget {
 class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   @override
   Widget build(BuildContext context) {
-//    RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-
     bool normalise = ref.read(normaliseProvider);
     bool partition = ref.read(partitionProvider);
 

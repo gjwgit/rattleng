@@ -2,10 +2,12 @@
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-// Licensed under the GNU General Public License, Version 3 (the "License");
-///
+// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -28,7 +30,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/provider/path.dart';
-import 'package:rattle/provider/status.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
 
@@ -51,8 +52,11 @@ class DatasetPopup extends ConsumerWidget {
                 size: 24,
                 color: Colors.blue,
               ),
+
               // Space between icon and title.
+
               SizedBox(width: widthSpace),
+
               Text(
                 'Choose the Dataset Source:',
                 style: TextStyle(
@@ -77,8 +81,7 @@ class DatasetPopup extends ConsumerWidget {
                   String path = await datasetSelectFile();
                   if (path.isNotEmpty) {
                     ref.read(pathProvider.notifier).state = path;
-                    // TODO 20231031 gjw
-                    // rloadDataset()
+                    rLoadDataset(ref);
                     setStatus(ref, statusChooseVariableRoles);
                   }
 

@@ -23,7 +23,7 @@
 
 /// Truncate [str] to length [len] replacing it with [rep].
 
-String truncate(String str, {int maxLength = 115, String replacement = '...'}) {
+String truncate(String str, {int maxLength = 110, String replacement = '...'}) {
   return str.length <= maxLength
       ? str
       : str.substring(0, maxLength) + replacement;
