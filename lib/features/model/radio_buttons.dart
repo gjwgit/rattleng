@@ -28,7 +28,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/model.dart';
-import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/source.dart';
 
 class ModelRadioButtons extends ConsumerStatefulWidget {
