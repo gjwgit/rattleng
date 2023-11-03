@@ -26,6 +26,96 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
+## Installing RattleNG
+
+### R Dependency
+
+The R statistical software needs to be installed first. Then install
+these prerequisite packages after starting up R itself:
+
+```r
+install.packages(c("rattle", "janitor"))
+```
+
+Also  from a terminal install the tidyverse package:
+
+```bash
+wajig install r-cran-tidyverse
+```
+
+RattleNG will eventually check for these and prompt if they are not
+available. To install R please see the [Rattle install guide for
+Ubuntu](https://rattle.togaware.com/rattle-install-ubuntu.html).
+
+### Latest Code
+
+RattleNG is currently under active development. To get the current app
+you can install flutter on your local computer, then clone the github
+repository, to your local disk, and from a command line change to the
+directory where you cloned the rattle repository (it should contain a
+`lib` sub-directory) and type the following command, changing `<os>`
+to be one of `windows`, `macos`, or `linux`.
+
+```
+flutter run -d <os>
+```
+
+### Linux
+
++ Download https://access.togaware.com/rattle.snap
++ Install with `snap install --dangerous rattle.snap`
+
+The *dangerous* refers to side-loading the app from outside of the
+snap store. This is not required for the snap store version.
+
+### Windows
+
++ Download and install R itself
+  + Visit https://cloud.r-project.org/ and navigate to Windows install
+  + Click on *Download R for Windows*
+  + Open the downloaded file to install R into *C:\Program Files\R*
+  + Add *C:\Program Files\R\bin* to the PATH environment variable
+    + Open *Edit the system environment variables* from Control panel
+	+ Click *Environment Variables...*
+	+ Click the *Path* entry and then *Edit...*
+    + Click *New* and then add *C:\Program Files\R\bin*
+    + Click *OK* a few times to close the windows.
++ Download https://access.togaware.com/rattle.msix
++ Add the rattle certificate to your store:
+  + Right click the downloaded file in Explorer
+  + Choose *Properties*
+  + Choose the *Digital Signatures* tab. 
+  + Highlight the *Togaware* line
+  + Click *Details*. 
+  + Click *View Certificate...* 
+  + Click *Install Certificate...*
+  + Choose *Local Machine*
+  + Click *Next*
+  + Choose *Place all certificates in the following store*
+  + Click *Browse...*
+  + Select **Trusted Root Certification Authorities**
+  + Click *OK*
+  + Click *Next* and *Finish*.
+  + A popup says **The import was successful**
++ Open the downloaded `rattle.msix` to install and run rattle
+  + Or in PowerShell: `Add-AppxPackage -Path .\rattle.msix`
+
+## Current Status 2023-09-17
+
+When you start up the app you can work through the following
+scenario. Development is happening at a pace so the scenarios will be updated
+regularly.
+
++ Startup the app
++ Click the **Script** tab to see the R code that has already been run
++ Click the **Dataset** tab and then choose **Demo** to load the
+  `rattle::weather` dataset and view the dataset summary.
++ Click the **Model** tab and then the **Build** button to build and view a
+  decision tree.
++ Click the **Script** tab and the Export button to save the full script
+  to `script.R`
++ From your own command line run `Rscript script.R`
+
 ## How you can Help
 
 RattleNG will remain an open source application, free for anyone to
@@ -42,6 +132,16 @@ then do it's stuff! The `<<PARAMETER>>` strings are filled in by the
 Flutter interface. See the growing number of scripts in `assets/scripts/`
 
 Suggested tasks can be found as github issues.
+
+### Install Flutter on Windows
+
++ Download the flutter sdk
++ Unzip it to your home folder
++ Add C:\Users\<user>\flutter\bin to Path
++ In a CMD console run `flutter help`
+
+Currently (20230918), on Azure Windows VM, `flutter doctor` just sits
+there!
 
 ## Rattle Resources
 
@@ -60,6 +160,15 @@ visually.
 
 ![](assets/screenshots/data_page.png)
 
+Click the Dataset button to have options to load the data from a file,
+from an R package, or the demo weather dataset.
+
+![](assets/screenshots/data_source.png)
+
+After the data is loaded we are presented with a summary.
+
+![](assets/screenshots/data_summary.png)
+
 *More screenshots to come.*
 
 ### Exploring Data Visually
@@ -68,6 +177,12 @@ All of the popular Rattle visualisations are available, modernised
 using `ggplot` and the `tidyverse`.
 
 ![](assets/screenshots/explore_plot.png)
+
+### Building Models
+
+A decision tree model is one of the most widely built AI models.
+
+![](assets/screenshots/model_rpart.png)
 
 ### The R Console
 

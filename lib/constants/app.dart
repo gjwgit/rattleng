@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2023-09-11 22:27:37 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 06:41:50 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -38,15 +38,17 @@ const String assetsPath = 'assets';
 
 const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 
-/// Location of the markdown file containing instructions for the LOG tab.
+/// Location of the markdown file containing instructions for the SCRIPT tab.
 
-const String logIntroFile = '$assetsPath/markdown/log_intro.md';
+const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
-/// The status line welcome message.
+/// The default background colour of the header bar.
+///
+/// A solid purple, suitable for shite text. This stabdout colour is the
+/// backgrounf used throughout the app for buttons, and the like, as well as the
+/// top header bar used for the control area at the top of the app.
 
-const String statusWelcomeMsg =
-    'Welcome to **RattleNG**. Click the Dataset button '
-    'to load a dataset.';
+const headerBarColour = Color(0xff45035e);
 
 /// The default background colour of the status bar.
 ///
@@ -55,3 +57,14 @@ const String statusWelcomeMsg =
 /// app.
 
 const statusBarColour = Color(0x5545035e);
+
+/// A mono font used for displaying R script and output.
+
+const monoTextStyle = TextStyle(
+  fontFamily: 'RobotoMono',
+  fontSize: 16,
+);
+const monoSmallTextStyle = TextStyle(
+  fontFamily: 'RobotoMono',
+  fontSize: 12,
+);

@@ -17,7 +17,15 @@ flutter:
   linux     Run with the linux device;
   qlinux    Run with the linux device and debugPrint() turned off;
 
-  doc	    Run `dart doc` to create documentation.
+  riverpod  Setup `pubspec.yaml` to support riverpod.
+  runner    Build the auto generated code as *.g.dart files.
+
+  prep       Prep for PR by running tests, checks, docs.
+
+  docs	    Run `dart doc` to create documentation.
+
+  fixer     Run `dart fix --dry-run` to check what can be automatically done.
+  fixit     Run `dart fix --apply` to automatically fix sipmle issues.
 
   checks    Run all checks over the code base 
     format        Run `dart format`.
@@ -26,6 +34,8 @@ flutter:
     unused_files  Check unused files from dart_code_metrics.
     metrics	  Run analyze from dart_code_metrics.
     analyze       Run flutter analyze.
+    ignore        Look for usage of ignore directives.
+    license	  Look for missing top license in source code.
 
 
   test	    Run `flutter test` for testing.
@@ -55,18 +65,18 @@ chrome:
 # List the files that are automatically generated. Then they will get 
 # built as required.
 
-BUILD_RUNNER = \
-#	lib/models/synchronise_time.g.dart
+# BUILD_RUNNER = \
+# 	lib/models/synchronise_time.g.dart
 
-$(BUILD_RUNNER):
-	dart run build_runner build --delete-conflicting-outputs
+# $(BUILD_RUNNER):
+# 	dart run build_runner build --delete-conflicting-outputs
 
 pubspec.lock:
 	flutter pub get
 
 .PHONY: linux
 linux: pubspec.lock $(BUILD_RUNNER)
-	flutter run -d linux
+	flutter run --device-id linux
 
 # Turn off debugPrint() output.
 
@@ -76,7 +86,7 @@ qlinux: pubspec.lock $(BUILD_RUNNER)
 
 .PHONY: macos
 macos: $(BUILD_RUNNER)
-	flutter run -d macos
+	flutter run --device-id macos
 
 .PHONY: android
 android: $(BUILD_RUNNER)
@@ -95,9 +105,13 @@ emu:
 linux_config:
 	flutter config --enable-linux-desktop
 
-.PHONY: doc
-doc:
+.PHONY: prep
+prep: checks tests docs
+
+.PHONY: docs
+docs::
 	dart doc
+	chmod -R go+rX doc
 
 .PHONY: format
 format:
@@ -107,7 +121,7 @@ format:
 tests:: test qtest
 
 .PHONY: checks
-checks: format nullable unused_code unused_files metrics analyze
+checks: format nullable unused_code unused_files metrics analyze ignore license
 
 .PHONY: nullable
 nullable:
@@ -128,6 +142,37 @@ metrics:
 .PHONY: analyze 
 analyze:
 	flutter analyze
+	dart run custom_lint
+
+.PHONY: fixer
+fixer:
+	dart fix --dry-run
+
+.PHONY: fixit
+fixit:
+	dart fix --apply
+
+.PHONY: ignore
+ignore:
+	@rgrep ignore: lib
+
+.PHONY: license
+license:
+	@echo "--\nFiles without a license:"
+	@find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
+
+.PHONY: riverpod
+riverpod:
+	flutter pub add flutter_riverpod
+	flutter pub add riverpod_annotation
+	flutter pub add dev:riverpod_generator
+	flutter pub add dev:build_runner
+	flutter pub add dev:custom_lint
+	flutter pub add dev:riverpod_lint
+
+.PHONY: runner
+runner:
+	dart run build_runner build
 
 ########################################################################
 # INTEGRATION TESTING

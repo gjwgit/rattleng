@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2023-09-07 10:52:27 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2023-09-19 07:55:38 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -56,9 +56,6 @@ $(APP):
 
   docs         Generate doc and install to ecosysl.
   bmacos       Build macos binary
-  test         Run the integration test suite.
-  ignore       Look for usage of ignore directives.
-  prep         Prep for PR by running tests, checks, docs.
 
   rtest       Run the R script tests.
 endef
@@ -77,13 +74,8 @@ bmacos:
 	flutter build macos
 	zip bstim_$(VER).zip build/macos/Build/Products/Release/bstim_$(VER).app
 
-docs: doc
-	chmod -R go+rX doc
+docs::
 	rsync -avzh doc/api/ root@ecosysl.net:/var/www/html/rattleng/
-
-.PHONY: ignore
-ignore:
-	@rgrep -C 2 ignore: lib
 
 .PHONY: rtests
 rtests:
@@ -92,3 +84,22 @@ rtests:
 .PHONY: prep
 prep: rtests checks tests docs
 
+realclean::
+	snapcraft clean rattle
+
+.PHONY: snap
+snap:
+	flutter clean
+	snapcraft clean rattle
+	snapcraft
+
+.PHONY: isnap
+isnap:
+	snap install --dangerous rattle_0.0.1_amd64.snap 
+
+rattle.zip:
+	rm -f rattle.zip
+	flutter build linux
+	rsync -avzh build/linux/x64/release/bundle/ rattle/
+	zip -r rattle.zip rattle
+	rm -rf rattle

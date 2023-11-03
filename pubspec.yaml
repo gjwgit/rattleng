@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 0.0.1
+version: 0.0.2
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -31,17 +31,20 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_svg: ^2.0.7
-  flutter_gen: ^5.3.1
-  window_manager: ^0.3.5
-  universal_io: ^2.2.2
-  flutter_markdown: ^0.6.17
   file_picker: ^5.3.3
+  flutter_gen: ^5.3.1
+  flutter_markdown: ^0.6.17
+  flutter_pty: ^0.4.0
+  flutter_riverpod: ^2.4.4
+  flutter_svg: ^2.0.7
   intl: ^0.18.1
   package_info_plus: ^4.1.0
-  xterm: ^3.5.0
-  flutter_pty: ^0.4.0
+  path: ^1.8.0
   provider: ^6.0.5
+  riverpod_annotation: ^2.2.1
+  universal_io: ^2.2.2
+  window_manager: ^0.3.5
+  xterm: ^3.5.0
   
 dev_dependencies:
   flutter_test:
@@ -50,14 +53,20 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
+  build_runner: ^2.4.6
+  custom_lint: ^0.5.5
+  riverpod_generator: ^2.3.5
+  riverpod_lint: ^2.3.2
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.2
-  dart_code_metrics: ^5.7.6
+  msix: ^3.16.2
 
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -114,3 +123,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+# Settings for creating .msix file, that can be installed in a windows
+# machine This can be customized, see
+# https://pub.dev/packages/msix/example for reference
+
+msix_config:
+  display_name: rattle
+  msix_version: 1.0.0.0
+  certificate_path: CERTIFICATE.pfx
+  certificate_password: rattle1234
+  execution_alias: rattle

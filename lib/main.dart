@@ -1,11 +1,13 @@
 /// Shake, rattle, and roll data science.
 ///
+/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Monday 2023-09-11 12:23:49 +1000 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,19 +26,18 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:provider/provider.dart';
 
-import 'package:rattle/models/rattle_model.dart';
-
-import 'package:rattle/helpers/r.dart' show rStart;
-import 'package:rattle/helpers/utils.dart';
 import 'package:rattle/rattle_app.dart';
+import 'package:rattle/utils/debug_print_config.dart';
+import 'package:rattle/utils/is_desktop.dart';
 
 void main() async {
   // The `main` entry point into any dart app.
   //
-  // TODO WHY We use async.
+  // This is required to be [async] since we use [await] below to initalise the
+  // window manager.
 
   // Use debugPrint() to print trace messages and backtraces in preference to
   // print(). Use print() for human readable messages to the console for errors,
@@ -66,10 +67,14 @@ void main() async {
 
       alwaysOnTop: true,
 
-      // The size is overriden in the first instance by linux/my_application.cc
-      // but setting it here then does have effect when Retarting the app.
+      // The size is overridden in the first instance by linux/my_application.cc
+      // but setting it here then does have effect when Restarting the app.
 
-      size: Size(950, 600),
+      // Windows has 1280x720 by default in windows/runner/main.cpp line 29 so
+      // best not to override it here since under windows the 950x600 is too
+      // small.
+
+      // size: Size(950, 600),
 
       // The [title] is used for the window manager's window title.
 
@@ -83,17 +88,13 @@ void main() async {
     });
   }
 
-  // Initialise the R process.
-
-  rStart();
-
   // The runApp() function takes the given Widget and makes it the root of the
-  // widget tree.
+  // widget tree. Here we wrap the app within RiverPod's ProviderScope() to
+  // support state management.
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => RattleModel(),
-      child: const RattleApp(),
+    const ProviderScope(
+      child: RattleApp(),
     ),
   );
 }
