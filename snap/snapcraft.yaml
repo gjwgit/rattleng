@@ -26,3 +26,9 @@ parts:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
+
+plugs:
+  r-executable:
+    interface: system-files
+    read:
+      - /usr/bin/R
