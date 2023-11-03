@@ -1,13 +1,11 @@
-/// The app's status bar.
-///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// An R script text widget for the script tab page.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// Time-stamp: <Thursday 2023-11-02 20:30:45 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,27 +24,31 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/provider/status.dart';
+import 'package:rattle/provider/script.dart';
 
-class StatusBar extends ConsumerWidget {
-  const StatusBar({Key? key}) : super(key: key);
+/// Create a script text viewer that can scroll the text of the script widget.
+///
+/// The contents is intialised from the main.R script asset.
+
+class ScriptText extends ConsumerWidget {
+  const ScriptText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      color: statusBarColour,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        data: ref.watch(statusProvider),
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+    return SingleChildScrollView(
+      child: Builder(
+        builder: (BuildContext context) {
+          final script = ref.watch(scriptProvider);
+          return SelectableText(
+            script,
+            key: scriptTextKey,
+            style: monoSmallTextStyle,
+          );
+        },
       ),
     );
   }

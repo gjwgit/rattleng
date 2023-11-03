@@ -1,4 +1,4 @@
-/// The app's status bar.
+/// A text widget showing the stdout from the R process.
 ///
 /// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
 ///
@@ -26,27 +26,31 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
-import 'package:rattle/provider/status.dart';
 
-class StatusBar extends ConsumerWidget {
-  const StatusBar({Key? key}) : super(key: key);
+/// Create a stdout text viewer that can scroll the text of stdout.
+///
+/// The contents is intialised from rattle state's stdout.
+
+class StdoutText extends ConsumerWidget {
+  const StdoutText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      color: statusBarColour,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        data: ref.watch(statusProvider),
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+    return SingleChildScrollView(
+      child: Builder(
+        builder: (BuildContext context) {
+          String stdout = ref.watch(stdoutProvider);
+
+          return SelectableText(
+            "STDOUT from the R Process:\n"
+            "$stdout",
+            style: monoSmallTextStyle,
+          );
+        },
       ),
     );
   }

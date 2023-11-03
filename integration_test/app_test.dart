@@ -29,8 +29,8 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/dataset/button.dart';
-import 'package:rattle/dataset/popup.dart';
+import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/dataset/popup.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not

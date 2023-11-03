@@ -1,11 +1,13 @@
-/// R Scripts: support for running an R command.
+/// R Scripts: Support for running an R command.
+///
+/// Time-stamp: <Wednesday 2023-10-18 17:27:10 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Wednesday 2023-10-18 17:27:10 +1100 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,9 +26,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/models/rattle_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/r/process.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [script] and append to the [rattle] script.
 ///
@@ -39,22 +43,17 @@ import 'package:rattle/r/strip_header.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-void rExecute(String code, RattleModel rattle) {
-  // TODO ANOTHER ARGUMENT AS A LIST OF MAPS FROM STRING TO STRING LIKE
-  //
-  // [ { 'FILENAME': '/home/kayon/data/weather.csv', ... } ]
-  //
-  // AND THEN ON THE CODE FOR EACH MAP, RUN
-  //
-  // code.replaceAll('$MAP','$value')
-
-  // First obtain the text from the script.
-
+void rExecute(WidgetRef ref, String code) {
   debugPrint("R_EXECUTE: '$code'");
 
-  // Add the code to the rattle state so it will be displayed in the SCRIPT tab.
+  // Add the code to the script provider so it will be displayed in the script
+  // tab.
 
-  rattle.appendScript("\n## -- Generated Code --\n${rStripHeader(code)}\n");
+  updateScript(
+    ref,
+    "\n${'#' * 72}\n## -- Generated Code --\n${'#' * 72}"
+    "\n${rStripHeader(code)}\n",
+  );
 
   // Run the code.
 

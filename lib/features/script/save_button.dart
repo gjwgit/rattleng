@@ -1,6 +1,6 @@
-/// The app's status bar.
+/// A button to save the script to file.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-10-28 08:21:18 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -24,30 +24,25 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:io' show File;
+
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
-import 'package:rattle/provider/status.dart';
+import 'package:rattle/provider/script.dart';
 
-class StatusBar extends ConsumerWidget {
-  const StatusBar({Key? key}) : super(key: key);
+class ScriptSaveButton extends ConsumerWidget {
+  const ScriptSaveButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      color: statusBarColour,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        data: ref.watch(statusProvider),
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-      ),
+    return ElevatedButton(
+      child: const Text("Export"),
+      onPressed: () {
+        debugPrint("SAVE BUTTON EXPORT: 'script.R'");
+        File('script.R').writeAsString(ref.read(scriptProvider));
+      },
     );
   }
 }
