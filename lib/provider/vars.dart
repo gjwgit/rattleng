@@ -1,6 +1,6 @@
-/// The app's status bar.
+/// A provider for the list of variables.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -24,30 +24,6 @@
 ///
 /// Authors: Graham Williams
 
-import 'package:flutter/material.dart';
-
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
-import 'package:rattle/provider/status.dart';
-
-class StatusBar extends ConsumerWidget {
-  const StatusBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      color: statusBarColour,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        data: ref.watch(statusProvider),
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-      ),
-    );
-  }
-}
+final varsProvider = StateProvider<List<String>>((ref) => []);

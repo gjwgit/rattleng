@@ -1,4 +1,4 @@
-/// The app's status bar.
+/// Choose and load a file as the source dataset.
 ///
 /// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
 ///
@@ -22,32 +22,27 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Yiming Lu, Graham Williams
 
-import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+Future<String> datasetSelectFile() async {
+  // Use the [FilePicker] to select a file asynchronously so as not to block the
+  // main UI thread.
 
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
-import 'package:rattle/provider/status.dart';
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    dialogTitle: "Choose a csv file to load as your dataset.",
+    type: FileType.custom,
+    allowedExtensions: ['csv'],
+  );
 
-class StatusBar extends ConsumerWidget {
-  const StatusBar({Key? key}) : super(key: key);
+  String path = "";
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      color: statusBarColour,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        data: ref.watch(statusProvider),
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-      ),
-    );
+  if (result != null) {
+    // If a file was selected then extract the path from the selected file.
+
+    path = result.files.single.path!;
   }
+
+  return path;
 }

@@ -1,11 +1,13 @@
 /// The main tabs-based page interface.
 ///
+/// Time-stamp: <Friday 2023-11-03 08:00:23 +1100 Graham Williams>
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Wednesday 2023-10-18 17:26:27 +1100 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,85 +26,31 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/debug/tab.dart';
-import 'package:rattle/dataset/tab.dart';
-import 'package:rattle/helpers/process_tab.dart';
-import 'package:rattle/model/tab.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:rattle/features/dataset/tab.dart';
+import 'package:rattle/features/debug/tab.dart';
+import 'package:rattle/features/model/tab.dart';
+import 'package:rattle/features/script/tab.dart';
+import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
-import 'package:rattle/script/tab.dart';
+import 'package:rattle/utils/process_tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
-/// Define a mapping for the tabs in the GUI on to title:icon:widget.
+part 'tabs.dart';
 
-final List<Map<String, dynamic>> tabs = [
-  {
-    'title': "Dataset",
-    "icon": Icons.input,
-    "widget": const DatasetTab(),
-  },
-  {
-    'title': "Explore",
-    "icon": Icons.insights,
-    "widget": Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Image.asset("assets/images/myplot.png"),
-      ),
-    ),
-  },
-  {
-    'title': "Test",
-    "icon": Icons.task,
-    "widget": const Center(child: Text("TEST")),
-  },
-  {
-    'title': "Transform",
-    "icon": Icons.transform,
-    "widget": const Center(child: Text("TRANSFORM")),
-  },
-  {
-    'title': "Model",
-    "icon": Icons.model_training,
-    // "widget": const Center(child: Text("MODEL")),
-    "widget": const ModelTab(),
-  },
-  {
-    'title': "Evaluate",
-    "icon": Icons.leaderboard,
-    "widget": const Center(child: Text("EVALUATE")),
-  },
-  {
-    'title': "Console",
-    "icon": Icons.terminal,
-//    "widget": TerminalView(terminal),
-    "widget": const RConsole(),
-  },
-  {
-    'title': "Script",
-    "icon": Icons.code,
-    "widget": const ScriptTab(),
-  },
-  {
-    'title': "Debug",
-    "icon": Icons.work,
-    // "widget": const Center(child: Text("DEBUG")),
-    "widget": const DebugTab(),
-  },
-];
-
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  HomePageState createState() => HomePageState();
+  ConsumerState<HomePage> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage>
+class HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -122,10 +70,12 @@ class HomePageState extends State<HomePage>
           // On leaving the DATASET tab we set the variables and run the data
           // template.
 
-          RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-          rattle.setVars(rExtractVars(rattle.stdout));
-          if (rattle.target.isEmpty) {
-            rattle.setTarget(rattle.vars.last);
+          List<String> vars = rExtractVars(ref.read(stdoutProvider));
+          String target = ref.read(targetProvider);
+
+          ref.read(varsProvider.notifier).state = vars;
+          if (target.isEmpty) {
+            ref.read(targetProvider.notifier).state = vars.last;
           }
 
           // TODO 20231018 gjw Run the data template here?

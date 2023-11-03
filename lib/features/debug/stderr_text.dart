@@ -1,4 +1,4 @@
-/// The app's status bar.
+/// A text widget showing the stderr from the R process.
 ///
 /// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
 ///
@@ -26,27 +26,26 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/provider/stderr.dart';
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
-import 'package:rattle/provider/status.dart';
 
-class StatusBar extends ConsumerWidget {
-  const StatusBar({Key? key}) : super(key: key);
+class StderrText extends ConsumerWidget {
+  const StderrText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      color: statusBarColour,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        data: ref.watch(statusProvider),
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+    return SingleChildScrollView(
+      child: Builder(
+        builder: (BuildContext context) {
+          String stderr = ref.watch(stderrProvider);
+
+          return SelectableText(
+            "STDERR from the R Process:\n\n$stderr",
+            style: monoSmallTextStyle,
+          );
+        },
       ),
     );
   }

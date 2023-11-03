@@ -1,11 +1,13 @@
 /// Utility to strip header comments from an R script file.
 ///
+/// Time-stamp: <Thursday 2023-11-02 09:09:27 +1100 Graham Williams>
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Friday 2023-09-15 09:17:56 +1000 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,8 +30,8 @@
 /// [code].
 
 String rStripHeader(String code) {
-  // Keep first line then strip everything down to the first line not starting
-  // with a hash.
+  // Keep the first line then strip everything down to the first line not
+  // starting with a hash.
 
   List<String> lines = code.split('\n');
 
@@ -40,9 +42,17 @@ String rStripHeader(String code) {
     index++;
   }
 
-  // Join the lines.
+  // Join the lines. For a single line the sublist processing duplicates the
+  // line prefixing it with #. So handle the sinle line edge case specially.
 
-  String result = "\n${lines.first} \n#${lines.sublist(index).join('\n')}";
+  // TODO 20231102 gjw ACTUALLY I THINK THE PROBLEM IS WHEN THE FIRST LINE DOES
+  // NOT START WITH #. SHOULD TEST AND FIX THAT ONE UP.
+
+  String result = "\n${lines.first}";
+
+  if (lines.length > 1) {
+    result = "$result\n#${lines.sublist(index).join('\n')}";
+  }
 
   return result;
 }
