@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:10:33 +1100 Graham Williams>
+/// Time-stamp: <Friday 2023-11-03 19:50:49 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -58,8 +58,6 @@ void rStart(WidgetRef ref) async {
 
   //process.stdout.transform(utf8.decoder).forEach(debugPrint);
   //process.stderr.transform(utf8.decoder).forEach(debugPrint);
-
-//  RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
 
   process.stdout.transform(utf8.decoder).forEach(
         (String txt) => ref.read(stdoutProvider.notifier).state =
