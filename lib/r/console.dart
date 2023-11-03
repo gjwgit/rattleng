@@ -1,6 +1,8 @@
+/// This one keeps the previous shell but creates new one in same window.
+
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Friday 2023-11-03 13:53:16 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 09:51:34 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -24,12 +26,8 @@
 ///
 /// Authors: Graham Williams
 
-// STATUS 20230909: COPIED FROM XTERM EXAMPLE FOR NOW. IT CREATES A NEW WIDGET
-// EACH TIME THE TAB IS ENTERED!!!! AND WOSRE STILL A NEW R PROCESS WITHOUT
-// REMOVING THE OLD ONE :-) THEY ALL GO ON EXITTING THE APP.
-
 import 'dart:convert';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 
@@ -37,25 +35,43 @@ import 'package:flutter_pty/flutter_pty.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 
-// TODO 20230930 gjw HOW TO PROPERLY HANDLE THE CONSOLE? WANT TO SEND COMMANDS
-// TO IT AND GET THE OUTPUT TO BE PARSED AS IS CURRENT DONE THROUGH THE R
-// PROCESS BUT WOULD BE NICER THROUGH A CONSOLE.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// The R Console widget where the R subprocess runs and executes commands sent
-/// to it and where the results are read from.
+final terminalProvider = StateProvider<Terminal>((ref) {
+  Terminal terminal = Terminal();
 
-class RConsole extends StatefulWidget {
+  return terminal;
+});
+
+final ptyProvider = StateProvider<Pty>((ref) {
+  // Create a pseudo termminal provider.
+
+  Terminal terminal = ref.watch(terminalProvider);
+  Pty pty = Pty.start(shell);
+
+  // Add a listener to the enclosing terminal.
+
+  pty.output
+      .cast<List<int>>()
+      .transform(const Utf8Decoder())
+      .listen(terminal.write);
+
+  return pty;
+});
+
+/// Widget to accept R commands and show results.
+
+class RConsole extends ConsumerStatefulWidget {
   const RConsole({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _RConsoleState createState() => _RConsoleState();
+  ConsumerState<RConsole> createState() => _RConsoleState();
 }
 
-class _RConsoleState extends State<RConsole> {
-  Terminal terminal = Terminal(
-    maxLines: 10000,
-  );
+class _RConsoleState extends ConsumerState<RConsole> {
+  //Terminal(
+  //  maxLines: 10000,
+  //);
 
   TerminalController terminalController = TerminalController();
 
@@ -73,16 +89,23 @@ class _RConsoleState extends State<RConsole> {
   }
 
   void _startPty() {
-    pty = Pty.start(
-      shell,
-      columns: terminal.viewWidth,
-      rows: terminal.viewHeight,
-    );
+    print("CONSOLE: Start Pty");
+    Terminal terminal = ref.read(terminalProvider);
+    Pty pty = ref.read(ptyProvider);
+    // pty = Pty.start(
+    //   shell,
+    //   columns: terminal.viewWidth,
+    //   rows: terminal.viewHeight,
+    // );
 
-    pty.output
-        .cast<List<int>>()
-        .transform(const Utf8Decoder())
-        .listen(terminal.write);
+    print("$mounted");
+    print("$pty.output");
+    print("$pty.output.cast<List<int>>()");
+
+    // pty.output
+    //     .cast<List<int>>()
+    //     .transform(const Utf8Decoder())
+    //     .listen(terminal.write);
 
     pty.exitCode.then((code) {
       terminal.write('the process exited with exit code $code');
@@ -90,15 +113,6 @@ class _RConsoleState extends State<RConsole> {
 
     terminal.onOutput = (data) {
       pty.write(const Utf8Encoder().convert(data));
-      RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-      // 20230913 data seems to be empty. probably not getting the right concept
-      // yet.
-      rattle.setOutput(DateFormat('hh:mm:ss').format(DateTime.now()) +
-          " => " +
-          data +
-          " <= ");
-      //rattle.setOutput(Utf8Encoder().convert(data));
-      //rattle.setOutput(Utf8Encoder().convert(data));
     };
 
     terminal.onResize = (w, h, pw, ph) {
@@ -108,46 +122,29 @@ class _RConsoleState extends State<RConsole> {
 
   @override
   Widget build(BuildContext context) {
-//    return Consumer<RattleModel>(
-//      builder: (context, rattle, child) {
-//        terminal = rattle.rterm;
-    // terminalController = rattle.rtermController;
+    Terminal terminal = ref.watch(terminalProvider);
 
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Text("SafeArea("),
-      // child: TerminalView(
-      //   terminal,
-      //   controller: terminalController,
-      //   autofocus: true,
+      body: SafeArea(
+        child: TerminalView(
+          terminal,
+          controller: terminalController,
+          autofocus: true,
 
-      //   // Set the background to be black.
+          // Set the background to be black.
 
-      //   backgroundOpacity: 1.0,
+          backgroundOpacity: 1.0,
 
-      //   // A buffer around the edge of the console.
+          // A buffer around the edge of the console.
 
-      //   padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
 
-      //   // This is how we can control the text size if desired.
+          // This is how we can control the text size if desired.
 
-      //   textScaleFactor: 1,
-
-      //   onSecondaryTapDown: (details, offset) async {
-      //     final selection = terminalController.selection;
-      //     if (selection != null) {
-      //       final text = terminal.buffer.getText(selection);
-      //       terminalController.clearSelection();
-      //       await Clipboard.setData(ClipboardData(text: text));
-      //     } else {
-      //       final data = await Clipboard.getData('text/plain');
-      //       final text = data?.text;
-      //       if (text != null) {
-      //         terminal.paste(text);
-      //       }
-      //     }
-      //   },
-      // ),
+          textScaleFactor: 1,
+        ),
+      ),
     );
   }
 }
