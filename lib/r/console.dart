@@ -2,7 +2,7 @@
 
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Saturday 2023-11-04 09:51:34 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 16:00:41 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -32,32 +32,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_pty/flutter_pty.dart';
-import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final terminalProvider = StateProvider<Terminal>((ref) {
-  Terminal terminal = Terminal();
-
-  return terminal;
-});
-
-final ptyProvider = StateProvider<Pty>((ref) {
-  // Create a pseudo termminal provider.
-
-  Terminal terminal = ref.watch(terminalProvider);
-  Pty pty = Pty.start(shell);
-
-  // Add a listener to the enclosing terminal.
-
-  pty.output
-      .cast<List<int>>()
-      .transform(const Utf8Decoder())
-      .listen(terminal.write);
-
-  return pty;
-});
+import 'package:rattle/provider/pty.dart';
+import 'package:rattle/provider/terminal.dart';
 
 /// Widget to accept R commands and show results.
 
@@ -69,91 +49,58 @@ class RConsole extends ConsumerStatefulWidget {
 }
 
 class _RConsoleState extends ConsumerState<RConsole> {
-  //Terminal(
-  //  maxLines: 10000,
-  //);
-
   TerminalController terminalController = TerminalController();
-
-  late final Pty pty;
 
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.endOfFrame.then(
-      (_) {
-        if (mounted) _startPty();
-      },
-    );
+    // This seems to be needed to initiate the pseudo terminal.
+    ref.read(ptyProvider);
   }
 
-  void _startPty() {
-    print("CONSOLE: Start Pty");
-    Terminal terminal = ref.read(terminalProvider);
-    Pty pty = ref.read(ptyProvider);
-    // pty = Pty.start(
-    //   shell,
-    //   columns: terminal.viewWidth,
-    //   rows: terminal.viewHeight,
-    // );
-
-    print("$mounted");
-    print("$pty.output");
-    print("$pty.output.cast<List<int>>()");
-
-    // pty.output
-    //     .cast<List<int>>()
-    //     .transform(const Utf8Decoder())
-    //     .listen(terminal.write);
-
-    pty.exitCode.then((code) {
-      terminal.write('the process exited with exit code $code');
-    });
-
-    terminal.onOutput = (data) {
-      pty.write(const Utf8Encoder().convert(data));
-    };
-
-    terminal.onResize = (w, h, pw, ph) {
-      pty.resize(h, w);
-    };
-  }
+  static const blackOnWhite = TerminalTheme(
+    cursor: Color(0XFFAEAFAD),
+    selection: Color(0XFFAEAFAD),
+    foreground: Color(0XFF222222),
+    background: Color(0XFFFFFFFF),
+    black: Color(0XFF000000),
+    red: Color(0XFFCD3131),
+    green: Color(0XFF0DBC79),
+    yellow: Color(0XFFE5E510),
+    blue: Color(0XFF2472C8),
+    magenta: Color(0XFFBC3FBC),
+    cyan: Color(0XFF11A8CD),
+    white: Color(0XFFE5E5E5),
+    brightBlack: Color(0XFF666666),
+    brightRed: Color(0XFFF14C4C),
+    brightGreen: Color(0XFF23D18B),
+    brightYellow: Color(0XFFF5F543),
+    brightBlue: Color(0XFF3B8EEA),
+    brightMagenta: Color(0XFFD670D6),
+    brightCyan: Color(0XFF29B8DB),
+    brightWhite: Color(0XFFFFFFFF),
+    searchHitBackground: Color(0XFFFFFF2B),
+    searchHitBackgroundCurrent: Color(0XFF31FF26),
+    searchHitForeground: Color(0XFF000000),
+  );
 
   @override
   Widget build(BuildContext context) {
     Terminal terminal = ref.watch(terminalProvider);
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: TerminalView(
           terminal,
           controller: terminalController,
           autofocus: true,
-
-          // Set the background to be black.
-
           backgroundOpacity: 1.0,
-
-          // A buffer around the edge of the console.
-
           padding: const EdgeInsets.all(8.0),
-
-          // This is how we can control the text size if desired.
-
           textScaleFactor: 1,
+          //theme: TerminalThemes.whiteOnBlack,
+          theme: blackOnWhite,
         ),
       ),
     );
   }
-}
-
-/// We are only interested in running R on whichever desktop.
-///
-/// Linux and MacOS desktops initiate R simply through the R command. Windows
-/// does an R.exe.
-
-String get shell {
-  return Platform.isWindows ? 'R.exe' : 'R';
 }
