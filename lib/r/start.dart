@@ -32,10 +32,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/pty.dart';
-import 'package:rattle/provider/stderr.dart';
 //import 'package:rattle/provider/stdout.dart';
 //import 'package:rattle/provider/terminal.dart';
-import 'package:rattle/r/process.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Start up the R process and set up the capture of stderr and stdout.
