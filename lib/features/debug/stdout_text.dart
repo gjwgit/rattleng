@@ -1,6 +1,6 @@
 /// A text widget showing the stdout from the R process.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 19:39:44 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -46,7 +46,7 @@ class StdoutText extends ConsumerWidget {
           String stdout = ref.watch(stdoutProvider);
 
           return SelectableText(
-            "STDOUT from the R Process:\n"
+            "STDOUT from the R Console:\n\n\n"
             "$stdout",
             style: monoSmallTextStyle,
           );

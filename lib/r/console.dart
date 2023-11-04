@@ -2,7 +2,7 @@
 
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Saturday 2023-11-04 16:00:41 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 16:12:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -57,6 +57,9 @@ class _RConsoleState extends ConsumerState<RConsole> {
     // This seems to be needed to initiate the pseudo terminal.
     ref.read(ptyProvider);
   }
+
+  // There is no TerminalThemes for the black on white that I prefer and am
+  // using for the app.
 
   static const blackOnWhite = TerminalTheme(
     cursor: Color(0XFFAEAFAD),
