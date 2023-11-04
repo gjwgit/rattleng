@@ -27,7 +27,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xterm/xterm.dart';
 
 final terminalProvider = StateProvider<Terminal>((ref) {
-  Terminal terminal = Terminal();
+  Terminal terminal = Terminal(
+      // colorScheme: TerminalColorScheme.light(),
+      );
 
   // Options include:
   //   maxLines: 10000, // 1000
