@@ -31,7 +31,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/pty.dart';
-import 'package:rattle/r/process.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/update_script.dart';
 
