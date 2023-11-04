@@ -2,6 +2,7 @@ String cleanString(String txt) {
   // On moving to pty I was getting lots of escapes.
 
   txt = txt.replaceAll('', '');
+  txt = txt.replaceAll('\r', '');
   txt = txt.replaceAll('[3m[38;5;246m', '');
   txt = txt.replaceAll('[?2004l', '');
   txt = txt.replaceAll('[39m[23m', '');
