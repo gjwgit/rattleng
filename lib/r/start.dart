@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Saturday 2023-11-04 15:38:04 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 19:38:04 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,8 +33,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/pty.dart';
 import 'package:rattle/provider/stderr.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/provider/terminal.dart';
+//import 'package:rattle/provider/stdout.dart';
+//import 'package:rattle/provider/terminal.dart';
 import 'package:rattle/r/process.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -45,7 +45,7 @@ void rStart(WidgetRef ref) async {
 
   debugPrint("R: STARTING UP A NEW R PROCESS");
 
-  process = await Process.start('R', ["--no-save"]);
+  // process = await Process.start('R', ["--no-save"]);
 
   // Output generted by the process' stderr and stdout is
   // captured here to the SCRIPT tab of Flutter DevTools.
@@ -61,14 +61,14 @@ void rStart(WidgetRef ref) async {
   //process.stdout.transform(utf8.decoder).forEach(debugPrint);
   //process.stderr.transform(utf8.decoder).forEach(debugPrint);
 
-  process.stdout.transform(utf8.decoder).forEach(
-        (String txt) => ref.read(stdoutProvider.notifier).state =
-            ref.read(stdoutProvider) + txt,
-      );
-  process.stderr.transform(utf8.decoder).forEach(
-        (String txt) => ref.read(stderrProvider.notifier).state =
-            ref.read(stderrProvider) + txt,
-      );
+  // process.stdout.transform(utf8.decoder).forEach(
+  //       (String txt) => ref.read(stdoutProvider.notifier).state =
+  //           ref.read(stdoutProvider) + txt,
+  //     );
+  // process.stderr.transform(utf8.decoder).forEach(
+  //       (String txt) => ref.read(stderrProvider.notifier).state =
+  //           ref.read(stderrProvider) + txt,
+  //     );
 
   // Read the main R startup code from the script file.
 
@@ -82,15 +82,21 @@ void rStart(WidgetRef ref) async {
   // User currentUser = await FirebaseAuth.instance.currentUser!;
   // code = code.replaceAll('<<USER>>', currentUser.displayName ?? 'unknown');
 
-  // Run the code.
+  // Because we want to modify a provider here we note that the widget tree is
+  // still building. Modifying a provider inside of the widget life-cycle
+  // (build, initState, etc) is not allowed, as it could lead to an inconsistent
+  // UI state. For example, two widgets could listen to the same provider, but
+  // incorrectly receive different states. We resolve that here by delaying the
+  // modification by encapsulating it within a `Future(() {...})`.  This will
+  // perform your update after the widget tree is done building. 20231104 gjw
 
-  ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+  Future(() {
+    // Add the code to the script.
 
-  // TODO 20231104 gjw OLD R PROCESS TO BE REMOVED.
+    updateScript(ref, code);
 
-  process.stdin.writeln(code);
+    // Run the code.
 
-  // Add the code to the script.
-
-  updateScript(ref, code);
+    ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+  });
 }
