@@ -1,6 +1,6 @@
 /// R Scripts: Support for running an R command.
 ///
-/// Time-stamp: <Saturday 2023-11-04 16:09:03 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 18:30:11 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -64,5 +64,5 @@ void rExecute(WidgetRef ref, String code) {
 
   // TODO 20231104 gjw OLD R PROCESS TO BE REMOVED.
 
-  process.stdin.writeln(code);
+  // process.stdin.writeln(code);
 }

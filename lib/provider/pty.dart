@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Saturday 2023-11-04 15:26:20 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 21:23:45 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,30 +30,39 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 
+import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/terminal.dart';
+import 'package:rattle/utils/clean_string.dart';
 
 final ptyProvider = StateProvider<Pty>((ref) {
   // Create a pseudo termminal provider.
 
   Terminal terminal = ref.watch(terminalProvider);
-  Pty pty = Pty.start(shell);
+  Pty pty = Pty.start("R", arguments: ["--no-save"]);
 
   // Options
   //   columns: terminal.viewWidth,
   //   rows: terminal.viewHeight,
 
-  // Add a listener to the enclosing terminal.
+  // Add a listener of the pty to show the pty output within the enclosing
+  // terminal. I also want to capture the output for parsing in the app.
 
-  pty.output
-      .cast<List<int>>()
-      .transform(const Utf8Decoder())
-      .listen(terminal.write);
+  pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen((data) {
+    terminal.write(data);
+    // The stdout is captured for the parsing.
+    ref.read(stdoutProvider.notifier).state =
+        ref.read(stdoutProvider) + cleanString(data);
+  });
 
   pty.exitCode.then((code) {
     terminal.write('the process exited with exit code $code');
   });
 
   terminal.onOutput = (data) {
+    // This gets called when a user types into the R console. So typing the
+    // command `ls()` in the R conosle the command is echoed in the R
+    // console. This is not capturing the output from the console.
+
     pty.write(const Utf8Encoder().convert(data));
   };
 
