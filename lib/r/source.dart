@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 17:28:17 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 15:37:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -24,6 +24,7 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
+import 'package:rattle/provider/pty.dart';
 import 'package:rattle/r/process.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/timestamp.dart';
@@ -143,6 +145,10 @@ void rSource(WidgetRef ref, String script) {
   );
 
   // Run the code.
+
+  ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+
+  // TODO 20231104 gjw OLD R PROCESS TO BE REMOVED.
 
   process.stdin.writeln(code);
 }

@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Friday 2023-11-03 19:50:49 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 15:38:04 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -24,15 +24,17 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:convert' show utf8;
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/provider/pty.dart';
 import 'package:rattle/provider/stderr.dart';
 import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/provider/terminal.dart';
 import 'package:rattle/r/process.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -81,6 +83,10 @@ void rStart(WidgetRef ref) async {
   // code = code.replaceAll('<<USER>>', currentUser.displayName ?? 'unknown');
 
   // Run the code.
+
+  ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+
+  // TODO 20231104 gjw OLD R PROCESS TO BE REMOVED.
 
   process.stdin.writeln(code);
 
