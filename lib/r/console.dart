@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Sunday 2023-11-05 12:48:24 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2023-11-05 12:49:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -93,7 +93,6 @@ class _RConsoleState extends ConsumerState<RConsole> {
           backgroundOpacity: 1.0,
           padding: const EdgeInsets.all(8.0),
           textScaleFactor: 1,
-          //theme: TerminalThemes.whiteOnBlack,
           theme: blackOnWhite,
         ),
       ),
