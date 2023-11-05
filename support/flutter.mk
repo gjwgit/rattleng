@@ -29,10 +29,6 @@ flutter:
 
   checks    Run all checks over the code base 
     format        Run `dart format`.
-    nullable	  Check NULLs from dart_code_metrics.
-    unused_code   Check unused code from dart_code_metrics.
-    unused_files  Check unused files from dart_code_metrics.
-    metrics	  Run analyze from dart_code_metrics.
     analyze       Run flutter analyze.
     ignore        Look for usage of ignore directives.
     license	  Look for missing top license in source code.
@@ -121,7 +117,7 @@ format:
 tests:: test qtest
 
 .PHONY: checks
-checks: format nullable unused_code unused_files metrics analyze ignore license
+checks: format analyze ignore license
 
 .PHONY: nullable
 nullable:

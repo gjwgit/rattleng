@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 09:54:45 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -8,7 +8,6 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
