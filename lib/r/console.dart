@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Saturday 2023-10-28 08:24:27 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2023-11-05 12:49:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -8,7 +8,6 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -24,129 +23,79 @@
 ///
 /// Authors: Graham Williams
 
-// STATUS 20230909: COPIED FROM XTERM EXAMPLE FOR NOW. IT CREATES A NEW WIDGET
-// EACH TIME THE TAB IS ENTERED!!!! AND WOSRE STILL A NEW R PROCESS WITHOUT
-// REMOVING THE OLD ONE :-) THEY ALL GO ON EXITTING THE APP.
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_pty/flutter_pty.dart';
-import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 
-// TODO 20230930 gjw HOW TO PROPERLY HANDLE THE CONSOLE? WANT TO SEND COMMANDS
-// TO IT AND GET THE OUTPUT TO BE PARSED AS IS CURRENT DONE THROUGH THE R
-// PROCESS BUT WOULD BE NICER THROUGH A CONSOLE.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// The R Console widget where the R subprocess runs and executes commands sent
-/// to it and where the results are read from.
+import 'package:rattle/provider/pty.dart';
+import 'package:rattle/provider/terminal.dart';
 
-class RConsole extends StatefulWidget {
+/// Widget to accept R commands and show results.
+
+class RConsole extends ConsumerStatefulWidget {
   const RConsole({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _RConsoleState createState() => _RConsoleState();
+  ConsumerState<RConsole> createState() => _RConsoleState();
 }
 
-class _RConsoleState extends State<RConsole> {
-  Terminal terminal = Terminal(
-    maxLines: 10000,
-  );
-
+class _RConsoleState extends ConsumerState<RConsole> {
   TerminalController terminalController = TerminalController();
-
-  late final Pty pty;
 
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.endOfFrame.then(
-      (_) {
-        if (mounted) _startPty();
-      },
-    );
+    // This seems to be needed to initiate the pseudo terminal.
+    ref.read(ptyProvider);
   }
 
-  void _startPty() {
-    pty = Pty.start(
-      shell,
-      columns: terminal.viewWidth,
-      rows: terminal.viewHeight,
-    );
+  // There is no TerminalThemes for the black on white that I prefer and am
+  // using for the app.
 
-    pty.output
-        .cast<List<int>>()
-        .transform(const Utf8Decoder())
-        .listen(terminal.write);
-
-    pty.exitCode.then((code) {
-      terminal.write('the process exited with exit code $code');
-    });
-
-    terminal.onOutput = (data) {
-      pty.write(const Utf8Encoder().convert(data));
-    };
-
-    terminal.onResize = (w, h, pw, ph) {
-      pty.resize(h, w);
-    };
-  }
+  static const blackOnWhite = TerminalTheme(
+    cursor: Color(0XFFAEAFAD),
+    selection: Color(0XFFAEAFAD),
+    foreground: Color(0XFF222222),
+    background: Color(0XFFFFFFFF),
+    black: Color(0XFF000000),
+    red: Color(0XFFCD3131),
+    green: Color(0XFF0DBC79),
+    yellow: Color(0XFFE5E510),
+    blue: Color(0XFF2472C8),
+    magenta: Color(0XFFBC3FBC),
+    cyan: Color(0XFF11A8CD),
+    white: Color(0XFFE5E5E5),
+    brightBlack: Color(0XFF666666),
+    brightRed: Color(0XFFF14C4C),
+    brightGreen: Color(0XFF23D18B),
+    brightYellow: Color(0XFFF5F543),
+    brightBlue: Color(0XFF3B8EEA),
+    brightMagenta: Color(0XFFD670D6),
+    brightCyan: Color(0XFF29B8DB),
+    brightWhite: Color(0XFFFFFFFF),
+    searchHitBackground: Color(0XFFFFFF2B),
+    searchHitBackgroundCurrent: Color(0XFF31FF26),
+    searchHitForeground: Color(0XFF000000),
+  );
 
   @override
   Widget build(BuildContext context) {
-//    return Consumer<RattleModel>(
-//      builder: (context, rattle, child) {
-//        terminal = rattle.rterm;
-    // terminalController = rattle.rtermController;
+    Terminal terminal = ref.watch(terminalProvider);
 
-    return const Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Text("SafeArea("),
-      // child: TerminalView(
-      //   terminal,
-      //   controller: terminalController,
-      //   autofocus: true,
-
-      //   // Set the background to be black.
-
-      //   backgroundOpacity: 1.0,
-
-      //   // A buffer around the edge of the console.
-
-      //   padding: const EdgeInsets.all(8.0),
-
-      //   // This is how we can control the text size if desired.
-
-      //   textScaleFactor: 1,
-
-      //   onSecondaryTapDown: (details, offset) async {
-      //     final selection = terminalController.selection;
-      //     if (selection != null) {
-      //       final text = terminal.buffer.getText(selection);
-      //       terminalController.clearSelection();
-      //       await Clipboard.setData(ClipboardData(text: text));
-      //     } else {
-      //       final data = await Clipboard.getData('text/plain');
-      //       final text = data?.text;
-      //       if (text != null) {
-      //         terminal.paste(text);
-      //       }
-      //     }
-      //   },
-      // ),
+    return Scaffold(
+      body: SafeArea(
+        child: TerminalView(
+          terminal,
+          controller: terminalController,
+          autofocus: true,
+          backgroundOpacity: 1.0,
+          padding: const EdgeInsets.all(8.0),
+          textScaleFactor: 1,
+          theme: blackOnWhite,
+        ),
+      ),
     );
   }
-}
-
-/// We are only interested in running R on whichever desktop.
-///
-/// Linux and MacOS desktops initiate R simply through the R command. Windows
-/// does an R.exe.
-
-String get shell {
-  return Platform.isWindows ? 'R.exe' : 'R';
 }

@@ -1,6 +1,6 @@
-/// A provider for the stdout output from the R process.
+/// A provider of the path that identifies the dataset to load.
 ///
-/// Time-stamp: <Saturday 2023-11-04 18:27:10 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-11-04 15:22:54 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -8,7 +8,6 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -25,5 +24,15 @@
 /// Authors: Graham Williams
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xterm/xterm.dart';
 
-final stdoutProvider = StateProvider<String>((ref) => "");
+final terminalProvider = StateProvider<Terminal>((ref) {
+  Terminal terminal = Terminal(
+      // colorScheme: TerminalColorScheme.light(),
+      );
+
+  // Options include:
+  //   maxLines: 10000, // 1000
+
+  return terminal;
+});
