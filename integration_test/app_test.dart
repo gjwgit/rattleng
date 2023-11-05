@@ -170,7 +170,7 @@ void main() {
     final scriptTextFinder = find.byKey(scriptTextKey);
     expect(
       scriptTextFinder.first.toString(),
-      contains('## -- main.R --'),
+      contains('# Rattle Scripts: The main setup.'),
     );
     expect(
       scriptTextFinder.first.toString(),
