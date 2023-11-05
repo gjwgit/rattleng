@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2023-11-05 07:50:20 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2023-11-05 17:27:02 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -34,6 +34,7 @@ import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/pty.dart';
+import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
@@ -143,7 +144,9 @@ void rSource(WidgetRef ref, String script) {
     "\n${rStripHeader(code)}",
   );
 
-  // Run the code.
+  // Run the code without comments.
+
+  code = rStripComments(code);
 
   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
 }
