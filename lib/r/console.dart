@@ -1,8 +1,6 @@
-/// This one keeps the previous shell but creates new one in same window.
-
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Saturday 2023-11-04 16:12:15 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2023-11-05 12:48:24 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -10,7 +8,6 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -26,12 +23,8 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:convert';
-//import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_pty/flutter_pty.dart';
 import 'package:xterm/xterm.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
