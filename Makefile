@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2023-09-19 07:55:38 +1000 Graham Williams>
+# Time-stamp: <Sunday 2023-11-05 20:06:50 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -103,3 +103,6 @@ rattle.zip:
 	rsync -avzh build/linux/x64/release/bundle/ rattle/
 	zip -r rattle.zip rattle
 	rm -rf rattle
+
+%.itest:
+	flutter test --device-id linux --dart-define=PAUSE=0 integration_test/$*_test.dart
