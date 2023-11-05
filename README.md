@@ -189,7 +189,7 @@ A decision tree model is one of the most widely built AI models.
 The R console is where everything in R happens. The user can review
 the contents of the console and even run R commands themselves. Click
 the EXPORT button to have the history of R commands from the console
-saved to file. Compare this EXPORT to that of the LOG page where a
+saved to file. Compare this EXPORT to that of the SCRIPT page where a
 documented and formatted script is saved to file.
 
 ![](assets/screenshots/console_page.png)
