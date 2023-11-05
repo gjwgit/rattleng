@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Saturday 2023-11-04 19:38:04 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2023-11-05 17:27:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -34,6 +34,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/provider/pty.dart';
 //import 'package:rattle/provider/stdout.dart';
 //import 'package:rattle/provider/terminal.dart';
+import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Start up the R process and set up the capture of stderr and stdout.
@@ -93,7 +94,9 @@ void rStart(WidgetRef ref) async {
 
     updateScript(ref, code);
 
-    // Run the code.
+    // Run the code without comments.
+
+    code = rStripComments(code);
 
     ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
   });
