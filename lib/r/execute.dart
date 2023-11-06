@@ -1,6 +1,6 @@
 /// R Scripts: Support for running an R command.
 ///
-/// Time-stamp: <Sunday 2023-11-05 17:26:49 +1100 Graham Williams>
+/// Time-stamp: <Monday 2023-11-06 07:55:22 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -47,7 +47,7 @@ import 'package:rattle/utils/update_script.dart';
 /// define the variables and then run the scripts.
 
 void rExecute(WidgetRef ref, String code) {
-  debugPrint("R_EXECUTE: '$code'");
+  debugPrint("R EXECUTE:\t\t'$code'");
 
   // Add the code to the script provider so it will be displayed in the script
   // tab.
