@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2023-11-05 17:27:02 +1100 Graham Williams>
+/// Time-stamp: <Monday 2023-11-06 13:36:51 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -34,6 +34,7 @@ import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/pty.dart';
+import 'package:rattle/provider/target.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/timestamp.dart';
@@ -59,7 +60,7 @@ void rSource(WidgetRef ref, String script) {
 
   // First obtain the text from the script.
 
-  debugPrint("R_SOURCE: '$script.R'");
+  debugPrint("R SOURCE:\t\t'$script.R'");
 
   var code = File("assets/r/$script.R").readAsStringSync();
 
@@ -108,10 +109,10 @@ void rSource(WidgetRef ref, String script) {
   // TODO 20231102 gjw THE FOLLOWING HARD CODED AND ONLY WORKS FOR THE DEMO
   // DATASET!!!!
 
-  code = code.replaceAll(
-    'VAR_TARGET',
-    normalise ? "rain_tomorrow" : "RainTomorrow",
-  );
+  code = code.replaceAll('VAR_TARGET', ref.read(targetProvider));
+
+  //    normalise ? "rain_tomorrow" : "RainTomorrow",
+//  );
   code = code.replaceAll('VAR_RISK', normalise ? "risk_mm" : "RISK_MM");
   code = code.replaceAll('VARS_ID', '"date", "location"');
 
