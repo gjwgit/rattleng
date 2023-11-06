@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Sunday 2023-11-05 17:27:15 +1100 Graham Williams>
+/// Time-stamp: <Monday 2023-11-06 07:59:25 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -42,8 +42,6 @@ import 'package:rattle/utils/update_script.dart';
 void rStart(WidgetRef ref) async {
   // Start up an R process from the command line.
 
-  debugPrint("R: STARTING UP A NEW R PROCESS");
-
   // process = await Process.start('R', ["--no-save"]);
 
   // Output generted by the process' stderr and stdout is
@@ -71,7 +69,7 @@ void rStart(WidgetRef ref) async {
 
   // Read the main R startup code from the script file.
 
-  debugPrint("R: SOURCE 'main.R'");
+  debugPrint("R START:\t\t'main.R'");
 
   String code = File("assets/r/main.R").readAsStringSync();
 

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-10-18 17:27:44 +1100 Graham Williams>
+// Time-stamp: <Monday 2023-11-06 09:30:44 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,6 +23,10 @@
 /// Authors: Graham Williams
 
 List<String> rExtractVars(String txt) {
+  // Command/string to identify start point of the extracttion.
+
+  String cmd = '> names(ds)';
+
   // Split the string based on lines.
 
   List<String> lines = txt.split('\n');
@@ -31,13 +35,14 @@ List<String> rExtractVars(String txt) {
 
   List<String> result = [];
 
-  // Find the start of the latest string of interest. Begin by initializing a
-  // value that indicates no start index found.
+  // Find the start of the latest string of interest, searching from the last
+  // line backwards. Begin by initializing a value that indicates no start index
+  // found.
 
   int startIndex = -1;
 
   for (int i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].contains("> names(ds)")) {
+    if (lines[i].contains(cmd)) {
       startIndex = i;
       break;
     }
@@ -65,9 +70,15 @@ List<String> rExtractVars(String txt) {
 
   String vars = result.join(" ");
 
-  // Remove the [1] line numbering in the output.
+  print("R EXTRACT VARS JOIN: $vars");
+
+  // Remove the [1] etc line numbering in the output.
 
   vars = vars.replaceAll(RegExp(r' *\[\d+\] *'), ' ');
+
+  // Remove the quotes around the var names.
+
+  vars = vars.replaceAll('"', '');
 
   // Remove extra spaces.
 
@@ -80,6 +91,8 @@ List<String> rExtractVars(String txt) {
   result = vars.split(' ');
 
   // Return the list of variable names.
+
+  print("R EXTRACT VARS FINAL: $result");
 
   return result;
 }

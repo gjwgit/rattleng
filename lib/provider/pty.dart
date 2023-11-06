@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Saturday 2023-11-04 21:23:45 +1100 Graham Williams>
+/// Time-stamp: <Monday 2023-11-06 12:16:56 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -49,7 +49,6 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
   pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen((data) {
     terminal.write(data);
-    // The stdout is captured for the parsing.
     ref.read(stdoutProvider.notifier).state =
         ref.read(stdoutProvider) + cleanString(data);
   });
