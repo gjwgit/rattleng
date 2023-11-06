@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 17:32:16 +1100 Graham Williams>
+/// Time-stamp: <Monday 2023-11-06 13:38:19 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -29,7 +29,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/path.dart';
+import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/execute.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 
 /// Load the specified dataset using the appropriate R script.
@@ -50,7 +54,7 @@ void rLoadDataset(WidgetRef ref) {
   // PROCESSED (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT
   // AND IF SO DO SO OTHERWISE DO NOTHING.
 
-  debugPrint("LOAD_DATASET: '$path'");
+  debugPrint("R LOAD DATASET:\t'$path'");
 
   if (path == '' || path == 'rattle::weather') {
     // The default, when we get here and no path has been specified yet, is to
@@ -69,18 +73,8 @@ void rLoadDataset(WidgetRef ref) {
 
   rSource(ref, "dataset_prep");
 
-  // print("${rattle.stdout}\n\nJUST FINISHED DATASET PREP");
-
-  // rattle.setVars(rGetVars(rattle));
   rExecute(ref, "names(ds)");
 
-  // NEED TO SET TARGET, RISK, HERE BEFORE dataset_template.
-
-  // TODO EXTRACT THE LIST OF VARIABLE NAMES AND FOR NOW ASSUME THE LAST IS
-  // TARGET AND THERE IS NO RISK VARIABLE AND STORE IN RATTLE STATE
-
-  //rSetupDatasetTemplate(rattle);
-  rSource(ref, "dataset_template");
   rSource(ref, "ds_glimpse");
-  debugPrint('LOAD_DATASET: LOADED "$path";');
+  debugPrint('R LOAD DATASET:\tLoaded "$path";');
 }
