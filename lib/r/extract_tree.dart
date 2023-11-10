@@ -23,7 +23,7 @@
 /// Authors: Graham Williams
 
 import 'package:rattle/r/extract.dart';
-import 'package:rattle/helpers/timestamp.dart';
+import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log) {
   const String hd = "Summary of the Decision Tree model for Classification";

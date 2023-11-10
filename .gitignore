@@ -23,6 +23,7 @@
 .buildlog/
 .history
 .svn/
+migrate_working_dir/
 
 #-----------------------------------------------------------------------
 # IntelliJ related
@@ -38,7 +39,7 @@
 #
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so that line
-# can be commented out by default.
+# can be commented out as it is by default.
 #-----------------------------------------------------------------------
 
 .classpath
@@ -80,7 +81,7 @@ analysis_benchmark.json
 # locally you can remove this line.
 
 **/doc/api/
-
+**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies

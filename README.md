@@ -28,6 +28,25 @@ available from Togaware (https://datamining.togaware.com).
 
 ## Installing RattleNG
 
+### R Dependency
+
+The R statistical software needs to be installed first. Then install
+these prerequisite packages after starting up R itself:
+
+```r
+install.packages(c("rattle", "janitor"))
+```
+
+Also  from a terminal install the tidyverse package:
+
+```bash
+wajig install r-cran-tidyverse
+```
+
+RattleNG will eventually check for these and prompt if they are not
+available. To install R please see the [Rattle install guide for
+Ubuntu](https://rattle.togaware.com/rattle-install-ubuntu.html).
+
 ### Latest Code
 
 RattleNG is currently under active development. To get the current app
@@ -170,7 +189,7 @@ A decision tree model is one of the most widely built AI models.
 The R console is where everything in R happens. The user can review
 the contents of the console and even run R commands themselves. Click
 the EXPORT button to have the history of R commands from the console
-saved to file. Compare this EXPORT to that of the LOG page where a
+saved to file. Compare this EXPORT to that of the SCRIPT page where a
 documented and formatted script is saved to file.
 
 ![](assets/screenshots/console_page.png)

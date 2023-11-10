@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-20 05:04:35 +1000 Graham Williams>
+# Time-stamp: <Sunday 2023-10-08 15:07:06 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Decision Tree using RPART
 #
-# Rattle timestamp: <<TIMESTAMP>>
+# Rattle timestamp: TIMESTAMP
 #
 # References:
 #
@@ -48,9 +48,9 @@ model_rpart <- rpart(
   form,
   data=ds[tr, vars],
   method="class",
-  parms=list(split="information"<<PRIORS>><<LOSS>>),
+  parms=list(split="information" PRIORS LOSS),
   control=rpart.control(usesurrogate=0,
-                        maxsurrogate=0<<MINSPLIT>><<MINBUCKET>><<CP>>),
+                        maxsurrogate=0 MINSPLIT MINBUCKET CP),
   model=TRUE)
 
 # Generate a textual view of the Decision Tree model.

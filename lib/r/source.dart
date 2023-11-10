@@ -1,11 +1,13 @@
-/// R Scripts: support for running a script.
+/// R Scripts: Support for running a script.
+///
+/// Time-stamp: <Sunday 2023-11-05 17:27:02 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Wednesday 2023-09-20 10:56:47 +1000 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,83 +24,129 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/models/rattle_model.dart';
-import 'package:rattle/r/process.dart';
+import 'package:rattle/provider/normalise.dart';
+import 'package:rattle/provider/partition.dart';
+import 'package:rattle/provider/path.dart';
+import 'package:rattle/provider/pty.dart';
+import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
-import 'package:rattle/helpers/timestamp.dart';
+import 'package:rattle/utils/timestamp.dart';
+import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [script] and append to the [rattle] script.
+///
+/// Various PARAMETERS that are found in the R script will be replaced with
+/// actual values before the code is run. An early approach was to wrap the
+/// PARAMETERS within anlg brackets, as in <<PARAMETERS>> but then the R scripts
+/// do not run standalone. Whlist it did ensure the parameters were properly
+/// mapped, it is useful to be able to run the scripts as is outside of
+/// rattleNG. So decided to remove the angle brackets. The scripts still can not
+/// tun standalone as such since they will have undefined vairables, but we can
+/// define the variables and then run the scripts.
 
-void rSource(String script, RattleModel rattle) {
-  // TODO ANOTHER ARGUMENT AS A LIST OF MAPS FROM STRING TO STRING LIKE
-  //
-  // [ { 'FILENAME': '/home/kayon/data/weather.csv', ... } ]
-  //
-  // AND THEN ON THE CODE FOR EACH MAP, RUN
-  //
-  // code.replaceAll('<<$map>>','$value')
+void rSource(WidgetRef ref, String script) {
+  // Initialise the state variables used here.
+
+  String path = ref.read(pathProvider);
+  bool partition = ref.read(partitionProvider);
+  bool normalise = ref.read(normaliseProvider);
 
   // First obtain the text from the script.
 
-  debugPrint("R: RUNNING THE CODE IN SCRIPT FILE '$script.R'");
+  debugPrint("R_SOURCE: '$script.R'");
 
   var code = File("assets/r/$script.R").readAsStringSync();
 
   // Process template variables.
 
-  // HARD CODED FOR NOW UNTIL WE PASS IN THE
-  // KEY:VALUE MAPPINGS.
+  code = code.replaceAll('TIMESTAMP', timestamp());
 
-  code = code.replaceAll('<<TIMESTAMP>>', timestamp());
+  // Populate the VERSION.
 
-  // Populate the <<VERSION>>.
+  // PackageInfo info = await PackageInfo.fromPlatform();
+  // code = code.replaceAll('VERSION', info.version);
+  //
+  // TODO 20231102 gjw THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE
+  // VERSION FOR NOW.
 
-  //PackageInfo info = await PackageInfo.fromPlatform();
-  //code = code.replaceAll('<<VERSION>>', info.version);
+  code = code.replaceAll('VERSION', '0.0.1');
 
-  // HARD CODE FOR NOW AS ABOVE REQUIRES ASYNC AND RETURNS FUTURE.
+  // Do we split the dataset? The option is presented on the DATASET GUI, and if
+  // set we split the dataset.
 
-  code = code.replaceAll('<<VERSION>>', '0.0.1');
+  code = code.replaceAll('FILENAME', path);
 
-  code = code.replaceAll('<<VAR_TARGET>>', "rain_tomorrow");
-  code = code.replaceAll('<<VAR_RISK>>', "risk_mm");
-  code = code.replaceAll('<<VARS_ID>>', '"date", "location"');
+  // TODO if (script.contains('^dataset_')) {
 
-  code = code.replaceAll('<<DATA_SPLIT_TR_TU_TE>>', '0.7, 0.15, 0.15');
+  // Do we split the dataset? The option is presented on the DATASET GUI, and if
+  // set we split the dataset.
 
-  // RPART_BUILD.R
+  code = code.replaceAll('SPLIT_DATASET', partition ? "TRUE" : "FALSE");
 
-  code = code.replaceAll('<<PRIORS>>', '');
-  code = code.replaceAll('<<LOSS>>', '');
-  code = code.replaceAll('<<MINSPLIT>>', '');
-  code = code.replaceAll('<<MINBUCKET>>', '');
-  code = code.replaceAll('<<CP>>', '');
+  // Do we want to normalise the dataset? The option is presented on the DATASET
+  // GUI, and if set we normalise the dataset's variable names.
 
-  // RANDOM_FOREST_BUILD.R
+  code = code.replaceAll('NORMALISE_NAMES', normalise ? "TRUE" : "FALSE");
 
-  code = code.replaceAll('<<RF_NUM_TREES>>', '500');
-  code = code.replaceAll('<<RF_MTRY>>', '4');
-  code = code.replaceAll('<<RF_NA_ACTION>>', 'randomForest::na.roughfix');
+  // TODO 20231016 gjw HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE
+  // FUNCTION CALL AS A MAP AS DESCRIBED ABOVE..
 
-  // SIMPLY REMOVE THESE DIRECTIVES FOR NOW UNTIL WE PASS IN A DIRECTIVE TO OR
-  // NOT TO INCLUDE THESE BLOCKS.
+  // TODO 20231016 gjw THESE SHOULD BE SET IN THE DATASET TAB AND ACCESS THROUGH
+  // PROVIDERS.
+  //
+  // target
+  // risk
+  // id
+  // split
 
-  code = code.replaceAll('<<BEGIN_NORMALISE_NAMES>>', "");
-  code = code.replaceAll('<<END_NORMALISE_NAMES>>', "");
-  code = code.replaceAll('<<BEGIN_SPLIT_DATASET>>', "");
-  code = code.replaceAll('<<END_SPLIT_DATASET>>', "");
+  // TODO 20231102 gjw THE FOLLOWING HARD CODED AND ONLY WORKS FOR THE DEMO
+  // DATASET!!!!
 
-  // Run the code.
+  code = code.replaceAll(
+    'VAR_TARGET',
+    normalise ? "rain_tomorrow" : "RainTomorrow",
+  );
+  code = code.replaceAll('VAR_RISK', normalise ? "risk_mm" : "RISK_MM");
+  code = code.replaceAll('VARS_ID', '"date", "location"');
 
-  process.stdin.writeln(code);
+  code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
 
-  // Preapre code to add to the SCRIPT tab.
+  // TODO if (script == 'model_build_rpart')) {
 
-  code = rStripHeader(code);
+  // TODO 20231016 gjw THESE SHOULD BE SET IN THE MODEL TAB AND ARE THEN
+  // REPLACED WITHING model_build_rpart.R
 
-  rattle.appendScript("\n## -- $script.R --\n$code");
+  code = code.replaceAll(' PRIORS', '');
+  code = code.replaceAll(' LOSS', '');
+  code = code.replaceAll(' MAXDEPTH', '');
+  code = code.replaceAll(' MINSPLIT', '');
+  code = code.replaceAll(' MINBUCKET', '');
+  code = code.replaceAll(' CP', '');
+
+  // TODO if (script == 'model_build_random_forest')) {
+
+  code = code.replaceAll('RF_NUM_TREES', '500');
+  code = code.replaceAll('RF_MTRY', '4');
+  code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
+
+  // Add the code to the script provider so it will be displayed in the script
+  // tab and available to be exprted there.
+
+  updateScript(
+    ref,
+    "\n${'#' * 72}\n## -- $script.R --\n${'#' * 72}"
+    "\n${rStripHeader(code)}",
+  );
+
+  // Run the code without comments.
+
+  code = rStripComments(code);
+
+  ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
 }

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2023-09-20 08:14:29 +1000 Graham Williams>
+# Time-stamp: <Sunday 2023-10-08 15:19:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: <<TIMESTAMP>>
+# Rattle timestamp: TIMESTAMP
 #
 # Run this script after the variable `ds` (dataset) and other data
 # template variables have been defined as in `data_template.R`. this
@@ -48,28 +48,32 @@ form   <- formula(target %s+% " ~ .")
 
 print(form)
 
-<<BEGIN_SPLIT_DATASET>>
-
 # Split the dataset into train, tune, and test, recording the indicies
-# of the observations to be associated with each dataset.
+# of the observations to be associated with each dataset. If the
+# dataset is not to be partitioned, simply have the train, tune and
+# test datasets as the whole dataset.
 
-split <- c(<<DATA_SPLIT_TR_TU_TE>>)
+if (SPLIT_DATASET) {
 
-nobs %>% sample(split[1]*nobs)                               -> tr
-nobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*nobs) -> tu
-nobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)           -> te
+  split <- c(DATA_SPLIT_TR_TU_TE)
+
+  nobs %>% sample(split[1]*nobs)                               -> tr
+  nobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*nobs) -> tu
+  nobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)           -> te
+
+} else {
+  tr <- tu <- te <- seq_len(nobs)
+}
 
 # Note the actual target values and the risk values.
 
 ds %>% slice(tr) %>% pull(target) -> actual_tr
 ds %>% slice(tu) %>% pull(target) -> actual_tu
 ds %>% slice(te) %>% pull(target) -> actual_te
-
+  
 if (!is.null(risk))
 {
   ds %>% slice(tr) %>% pull(risk) -> risk_tr
   ds %>% slice(tu) %>% pull(risk) -> risk_tu
   ds %>% slice(te) %>% pull(risk) -> risk_te
 }
-
-<<END_SPLIT_DATASET>>

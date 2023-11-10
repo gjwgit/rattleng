@@ -1,11 +1,13 @@
 /// The main tabs-based page interface.
 ///
+/// Time-stamp: <Friday 2023-11-03 08:00:23 +1100 Graham Williams>
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Wednesday 2023-09-20 16:31:57 +1000 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,90 +26,70 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/dataset/tab.dart';
-import 'package:rattle/helpers/process_tab.dart';
-import 'package:rattle/model/tab.dart';
+import 'package:rattle/features/dataset/tab.dart';
+import 'package:rattle/features/debug/tab.dart';
+import 'package:rattle/features/model/tab.dart';
+import 'package:rattle/features/script/tab.dart';
+import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/console.dart';
-import 'package:rattle/script/tab.dart';
-import 'package:rattle/widgets/stderr_text.dart';
-import 'package:rattle/widgets/stdout_text.dart';
+import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/process_tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
-/// Define a mapping for the tabs in the GUI on to title:icon:widget.
+part 'tabs.dart';
 
-final List<Map<String, dynamic>> tabs = [
-  {
-    'title': "Dataset",
-    "icon": Icons.input,
-    "widget": const DatasetTab(),
-  },
-  {
-    'title': "Explore",
-    "icon": Icons.insights,
-    "widget": Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Image.asset("assets/images/myplot.png"),
-      ),
-    ),
-  },
-  {
-    'title': "Test",
-    "icon": Icons.task,
-    "widget": const StdoutText(),
-    // "widget": const Center(child: Text("TEST")),
-  },
-  {
-    'title': "Transform",
-    "icon": Icons.transform,
-    "widget": const StderrText(),
-    // "widget": const Center(child: Text("TRANSFORM")),
-  },
-  {
-    'title': "Model",
-    "icon": Icons.model_training,
-    // "widget": const Center(child: Text("MODEL")),
-    "widget": const ModelTab(),
-  },
-  {
-    'title': "Evaluate",
-    "icon": Icons.leaderboard,
-    "widget": const Center(child: Text("EVALUATE")),
-  },
-  {
-    'title': "Console",
-    "icon": Icons.terminal,
-//    "widget": TerminalView(terminal),
-    "widget": const RConsole(),
-  },
-  {
-    'title': "Script",
-    "icon": Icons.code,
-    "widget": const ScriptTab(),
-  },
-];
-
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  HomePageState createState() => HomePageState();
+  ConsumerState<HomePage> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage>
+class HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
-  late TabController tabController;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: tabs.length, vsync: this);
+    _tabController = TabController(length: tabs.length, vsync: this);
+
+    // Add a listener to the TabController to perform an action when we leave
+    // the tab
+
+    _tabController.addListener(() {
+      // Check if we are leaving the tab, not entering it
+
+      if (!_tabController.indexIsChanging) {
+        if (_tabController.previousIndex == 0) {
+          // On leaving the DATASET tab we set the variables and run the data
+          // template.
+
+          List<String> vars = rExtractVars(ref.read(stdoutProvider));
+          String target = ref.read(targetProvider);
+
+          ref.read(varsProvider.notifier).state = vars;
+          if (target.isEmpty) {
+            ref.read(targetProvider.notifier).state = vars.last;
+          }
+
+          // TODO 20231018 gjw Run the data template here?
+        }
+
+        // You can also perform other actions here, such as showing a snackbar,
+        // calling a function, etc.
+      }
+    });
   }
 
   @override
   void dispose() {
-    tabController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -133,7 +115,7 @@ class HomePageState extends State<HomePage>
             onPressed: () {
               debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
               // KEEP OPEN FOR NOW FOR THE MODEL TAB.
-              processTab(tabs[tabController.index]['title']);
+              processTab(tabs[_tabController.index]['title']);
             },
             tooltip:
                 "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
@@ -182,7 +164,7 @@ class HomePageState extends State<HomePage>
 
           IconButton(
             onPressed: () {
-              debugPrint("TAB is ${tabs[tabController.index]['title']}");
+              debugPrint("TAB is ${tabs[_tabController.index]['title']}");
             },
             icon: const Icon(
               Icons.info,
@@ -196,7 +178,7 @@ class HomePageState extends State<HomePage>
         // icon.
 
         bottom: TabBar(
-          controller: tabController,
+          controller: _tabController,
           //indicatorColor: Colors.yellow,
           //labelColor: Colors.yellow,
           unselectedLabelColor: Colors.grey,
@@ -215,7 +197,7 @@ class HomePageState extends State<HomePage>
       // Associate the Widgets with each of the bodies.
 
       body: TabBarView(
-        controller: tabController,
+        controller: _tabController,
         children: tabs.map((tab) {
           return tab['widget'] as Widget;
         }).toList(),

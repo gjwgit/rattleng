@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-09-17 14:25:41 +1000 Graham Williams>
+// Time-stamp: <Sunday 2023-10-15 06:41:50 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -42,11 +42,13 @@ const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
-/// The status line welcome message.
+/// The default background colour of the header bar.
+///
+/// A solid purple, suitable for shite text. This stabdout colour is the
+/// backgrounf used throughout the app for buttons, and the like, as well as the
+/// top header bar used for the control area at the top of the app.
 
-const String statusWelcomeMsg =
-    'Welcome to **RattleNG**. Click the Dataset button '
-    'to load a dataset.';
+const headerBarColour = Color(0xff45035e);
 
 /// The default background colour of the status bar.
 ///

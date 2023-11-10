@@ -1,11 +1,13 @@
 /// The root widget for the Rattle app.
 ///
+/// Time-stamp: <Thursday 2023-11-02 08:08:27 +1100 Graham Williams>
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Wednesday 2023-09-20 09:27:51 +1000 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,32 +26,35 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/helpers/create_material_color.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/constants/app.dart';
+import 'package:rattle/utils/create_material_color.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/home_page.dart';
 
 /// A widget for the root of the Rattle App.
 ///
-/// The root widget covers the screen of the app. This widget is stateless so
-/// that it does not manage any state.
+/// The root widget covers the screen of the app. This widget is stateless as
+/// it does not need to manage any state itself.
 
-class RattleApp extends StatelessWidget {
+class RattleApp extends ConsumerWidget {
   const RattleApp({super.key});
 
-  /// We build the root widget as a MaterialApp() widget, turning off the
+  /// We build the root widget as a [MaterialApp] widget, turning off the
   /// default debug corner banner, setting up the app theme, and populating the
   /// widget with the Rattle home page widget.
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Initialise the R process.
 
-    rStart(context);
+    rStart(ref);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: createMaterialColor(const Color(0xff45035e)),
+        primarySwatch: createMaterialColor(headerBarColour),
         textTheme: Theme.of(context).textTheme.apply(
               fontSizeFactor: 1.1,
               fontSizeDelta: 2.0,

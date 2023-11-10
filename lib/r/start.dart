@@ -1,11 +1,13 @@
-/// R Scripts: start the R process.
+/// Initiate the R process and setup capture of its output.
+///
+/// Time-stamp: <Sunday 2023-11-05 17:27:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Tuesday 2023-09-19 19:59:27 +1000 Graham Williams>
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,23 +24,27 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:convert' show utf8;
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:rattle/r/process.dart';
-import 'package:rattle/models/rattle_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Start up the R process and
+import 'package:rattle/provider/pty.dart';
+//import 'package:rattle/provider/stdout.dart';
+//import 'package:rattle/provider/terminal.dart';
+import 'package:rattle/r/strip_comments.dart';
+import 'package:rattle/utils/update_script.dart';
 
-void rStart(context) async {
+/// Start up the R process and set up the capture of stderr and stdout.
+
+void rStart(WidgetRef ref) async {
   // Start up an R process from the command line.
 
   debugPrint("R: STARTING UP A NEW R PROCESS");
 
-  process = await Process.start('R', ["--no-save"]);
+  // process = await Process.start('R', ["--no-save"]);
 
   // Output generted by the process' stderr and stdout is
   // captured here to the SCRIPT tab of Flutter DevTools.
@@ -54,10 +60,14 @@ void rStart(context) async {
   //process.stdout.transform(utf8.decoder).forEach(debugPrint);
   //process.stderr.transform(utf8.decoder).forEach(debugPrint);
 
-  RattleModel rattle = Provider.of<RattleModel>(context, listen: false);
-
-  process.stdout.transform(utf8.decoder).forEach(rattle.appendStdout);
-  process.stderr.transform(utf8.decoder).forEach(rattle.appendStderr);
+  // process.stdout.transform(utf8.decoder).forEach(
+  //       (String txt) => ref.read(stdoutProvider.notifier).state =
+  //           ref.read(stdoutProvider) + txt,
+  //     );
+  // process.stderr.transform(utf8.decoder).forEach(
+  //       (String txt) => ref.read(stderrProvider.notifier).state =
+  //           ref.read(stderrProvider) + txt,
+  //     );
 
   // Read the main R startup code from the script file.
 
@@ -71,7 +81,23 @@ void rStart(context) async {
   // User currentUser = await FirebaseAuth.instance.currentUser!;
   // code = code.replaceAll('<<USER>>', currentUser.displayName ?? 'unknown');
 
-  // Run the code.
+  // Because we want to modify a provider here we note that the widget tree is
+  // still building. Modifying a provider inside of the widget life-cycle
+  // (build, initState, etc) is not allowed, as it could lead to an inconsistent
+  // UI state. For example, two widgets could listen to the same provider, but
+  // incorrectly receive different states. We resolve that here by delaying the
+  // modification by encapsulating it within a `Future(() {...})`.  This will
+  // perform your update after the widget tree is done building. 20231104 gjw
 
-  process.stdin.writeln(code);
+  Future(() {
+    // Add the code to the script.
+
+    updateScript(ref, code);
+
+    // Run the code without comments.
+
+    code = rStripComments(code);
+
+    ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+  });
 }

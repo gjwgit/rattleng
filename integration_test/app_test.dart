@@ -1,4 +1,4 @@
-/// Testing: Home page tests to load the default sample dataset and model.
+/// Testing: Basic app startup test.
 ///
 /// Copyright (C) 2023, Software Innovation Institute, ANU.
 ///
@@ -15,12 +15,22 @@
 ///
 /// Authors: Graham Williams
 
+// TODO 20231015 gjw MIGRATE ALL TESTS TO THE ONE APP INSTANCE RATHER THAN A
+// COSTLY BUILD EACH INDIVIDUAL TEST!
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rattle/main.dart' as rattle;
-import 'package:rattle/dataset/button.dart';
-import 'package:rattle/dataset/popup.dart';
+import 'package:integration_test/integration_test.dart';
+
+import 'package:rattle/constants/keys.dart';
+import 'package:rattle/main.dart' as app;
+import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/dataset/popup.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -34,101 +44,154 @@ import 'package:rattle/dataset/popup.dart';
 
 const String envPAUSE = String.fromEnvironment("PAUSE", defaultValue: "0");
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
+const Duration delay = Duration(seconds: 1);
 
 void main() {
-  group('Basic App Test:', () {
-    testWidgets('Home page loads okay.', (WidgetTester tester) async {
-      // Run app.
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      rattle.main();
+  testWidgets('Home page loads okay.', (WidgetTester tester) async {
+    debugPrint("TESTER: Start up the app");
 
-      // Finish animation and scheduled microtasks.
+    app.main();
 
-      await tester.pumpAndSettle();
+    // Trigger a frame. Finish animation and scheduled microtasks.
 
-      // Leave time to see the first page.
+    await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+    // Leave time to see the first page.
 
-      // Verify that rattle starts on the home page.
+    await tester.pump(pause);
 
-      var datasetButton = find.byType(DatasetButton);
+    debugPrint("TESTER: Verify various expected home page widgets.");
 
-      // A single filePicker - Filename:
+    final datasetButtonFinder = find.byType(DatasetButton);
+    expect(datasetButtonFinder, findsOneWidget);
+    await tester.pump(pause);
 
-      expect(datasetButton, findsOneWidget);
+    final welcomeTextFinder = find.byKey(welcomeTextKey);
+    expect(welcomeTextFinder, findsOneWidget);
 
-      // Leave time to see the first page.
+    // TODO Check we have a X and the two toggles for normalise and partition.
 
-      await tester.pump(pause);
+    debugPrint("TESTER: Confirm welcome message on home screen.");
 
-      // Tap the DatasetButton for the popup
+    // Confirm the introductory text is as expected from the welcome.md
+    // file. We find all the Markdown widgets (currently 20231008 there are 2)
+    // and get the first one, hopefully as the welcome widget? Instead of
+    // findNWidgets(2) we could use findAtLeastNWidgets(2).
 
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-      await tester.pump(pause);
+    final welcomeMarkdownFinder = find.byType(Markdown);
+    expect(welcomeMarkdownFinder, findsNWidgets(2));
 
-      // Find the popup
+    final welcomeWidget =
+        welcomeMarkdownFinder.evaluate().first.widget as Markdown;
+    String welcome = welcomeWidget.data;
+    expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
 
-      var datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
+    debugPrint("TESTER TODO: Check the status bar has the expected contents.");
 
-      // Find the Demo button and tap it.
+    final statusBarFinder = find.byKey(statusBarKey);
+    expect(statusBarFinder, findsOneWidget);
 
-      var demoButton = find.text("Demo");
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
-      await tester.pump(pause);
+    ////////////////////////////////////////////////////////////////////////
+    // DATASET DEMO
+    ////////////////////////////////////////////////////////////////////////
 
-      // // Find the Run button and start pressing it.
+    debugPrint("TESTER: Tap the Dataset button.");
 
-      // var runButton = find.byKey(const Key("run_button"));
-      // expect(runButton, findsOneWidget);
-      // await tester.pump(pause);
-      // await tester.tap(runButton);
-      // await tester.pumpAndSettle();
-      // await tester.pump(pause);
+    final datasetButton = find.byType(DatasetButton);
+    expect(datasetButton, findsOneWidget);
+    await tester.pump(pause);
+    await tester.tap(datasetButton);
+    await tester.pumpAndSettle();
+    // Always delay here since if not the glimpse view is not available in
+    // time! Odd but that's the result of experimenting. Have a delay after
+    // the Demo buttons is pushed does not get the glimpse contents into the
+    // widget.
+    await tester.pump(delay);
 
-      // After the first tap we should see the default dataset loaded.
+    debugPrint("TESTER: Tap the Demo button.");
 
-      var dsPathTextFinder = find.byKey(const Key('ds_path_text'));
-      expect(dsPathTextFinder, findsOneWidget);
-      var dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-      String filename = dsPathText.controller?.text ?? '';
-      expect(filename, "rattle::weather");
+    final datasetPopup = find.byType(DatasetPopup);
+    expect(datasetPopup, findsOneWidget);
+    final demoButton = find.text("Demo");
+    expect(demoButton, findsOneWidget);
+    await tester.tap(demoButton);
+    await tester.pumpAndSettle();
+    await tester.pump(pause);
 
-      // Check the Scripts
+    debugPrint("TESTER: Expect the default demo dataset is identified.");
 
-      final scriptTab = find.text('Script');
-      expect(scriptTab, findsOneWidget);
-      await tester.tap(scriptTab);
-      await tester.pumpAndSettle();
-      await tester.pump(pause);
+    final dsPathTextFinder = find.byKey(datasetPathKey);
+    expect(dsPathTextFinder, findsOneWidget);
+    final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+    String filename = dsPathText.controller?.text ?? '';
+    expect(filename, "rattle::weather");
 
-      // Check the script contains '-- data_load_weather.R --'
+    debugPrint("TESTER: Check welcome hidden and dataset is visible.");
 
-      // final scriptTextField = find.text(contains('-- data_load_weather.R --'));
-      // expect(scriptTextField, findsOneWidget);
+    final datasetFinder = find.byType(Visibility);
+    expect(datasetFinder, findsNWidgets(2));
+    expect(
+      datasetFinder.evaluate().first.widget.toString(),
+      contains("hidden"),
+    );
+    expect(
+      datasetFinder.evaluate().last.widget.toString(),
+      contains("visible"),
+    );
 
-      // Tap again to have some R scripts run to set up the data template.
+    debugPrint("TESTER: Expect the default demo dataset is loaded.");
 
-      // await tester.tap(runButton);
-      // await tester.pumpAndSettle();
+    final datasetDisplayFinder = find.byKey(datasetGlimpseKey);
 
-      // TODO TEST THIS SUCCEEDED
+    expect(datasetDisplayFinder, findsOneWidget);
 
-      // TODO TAP TO THE MODEL TAB
+    final dataset =
+        datasetDisplayFinder.evaluate().last.widget as SelectableText;
 
-      // TODO TEST THIS SUCCEEDED
+    expect(dataset.data, contains("Rows: 366\n"));
+    expect(dataset.data, contains("Columns: 24\n"));
+    expect(dataset.data, contains("date            <date>"));
+    expect(dataset.data, contains("rain_tomorrow   <fct>"));
 
-      // TODO TAP THE RUN BUTTON AGAIN
+    debugPrint("TESTER TODO: Debug page confirm expected vars and target");
 
-      // TODO TEST THIS SUCCEEDED
+    debugPrint("TESTER TODO: Confirm the status bar has been updated.");
 
-      // GO TO LOG TAB
+    debugPrint("TESTER: Check R script widget contains the expected code.");
 
-      // TODO TEST THIS SUCCEEDED
-    });
+    final scriptTabFinder = find.text('Script');
+    expect(scriptTabFinder, findsOneWidget);
+    await tester.tap(scriptTabFinder);
+    await tester.pumpAndSettle();
+    await tester.pump(pause);
+
+    final scriptTextFinder = find.byKey(scriptTextKey);
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('# Rattle Scripts: The main setup.'),
+    );
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('## -- dataset_load_weather.R --'),
+    );
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('## -- dataset_template.R --'),
+    );
+    expect(
+      scriptTextFinder.first.toString(),
+      contains('## -- ds_glimpse.R --'),
+    );
+
+    debugPrint("TESTER TODO: Tap Export. Check/run export.R.");
+
+    debugPrint("TESTER TODO: From Dataset tab uncheck Normalise and reload.");
+
+    // This will test if Date is the first column rather than date. Also
+    // RainTomorrow rather than rain_tomorrow.
+
+    debugPrint("TESTER: Finished.");
   });
 }
