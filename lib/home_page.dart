@@ -1,6 +1,6 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Friday 2023-11-03 08:00:23 +1100 Graham Williams>
+/// Time-stamp: <Monday 2023-11-06 12:11:36 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,11 +33,13 @@ import 'package:rattle/features/dataset/tab.dart';
 import 'package:rattle/features/debug/tab.dart';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/script/tab.dart';
+import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/target.dart';
 import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/process_tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -67,18 +69,18 @@ class HomePageState extends ConsumerState<HomePage>
 
       if (!_tabController.indexIsChanging) {
         if (_tabController.previousIndex == 0) {
-          // On leaving the DATASET tab we set the variables and run the data
-          // template.
+          String path = ref.read(pathProvider);
+          if (path.isNotEmpty) {
+            // On leaving the DATASET tab we set the variables and run the data
+            // template if there is a dataset loaded, as indicated by the path
+            // having a value.
 
-          List<String> vars = rExtractVars(ref.read(stdoutProvider));
-          String target = ref.read(targetProvider);
+            List<String> vars = rExtractVars(ref.read(stdoutProvider));
 
-          ref.read(varsProvider.notifier).state = vars;
-          if (target.isEmpty) {
+            ref.read(varsProvider.notifier).state = vars;
             ref.read(targetProvider.notifier).state = vars.last;
+            rSource(ref, "dataset_template");
           }
-
-          // TODO 20231018 gjw Run the data template here?
         }
 
         // You can also perform other actions here, such as showing a snackbar,
@@ -147,7 +149,7 @@ class HomePageState extends ConsumerState<HomePage>
             tooltip: "TODO: Load an existing project from file.",
           ),
 
-          // SAVE PROJECT
+          // EXPORT - A tab specific export.
 
           IconButton(
             icon: const Icon(

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2023-10-08 15:07:06 +1100 Graham Williams>
+# Time-stamp: <Monday 2023-11-06 15:53:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,10 +44,19 @@ library(rpart)        # ML: decision tree rpart().
 mtype <- "rpart"
 mdesc <- "Tree"
 
+# Determine what type of model to build, based on the number of values
+# of the target variable.
+
+method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
+                 "anova", "class")
+method
+
+# Train a decision tree model.
+
 model_rpart <- rpart(
   form,
   data=ds[tr, vars],
-  method="class",
+  method=method,
   parms=list(split="information" PRIORS LOSS),
   control=rpart.control(usesurrogate=0,
                         maxsurrogate=0 MINSPLIT MINBUCKET CP),
