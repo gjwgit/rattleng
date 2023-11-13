@@ -28,24 +28,27 @@ available from Togaware (https://datamining.togaware.com).
 
 ## Installing RattleNG
 
-### R Dependency
-
-The R statistical software needs to be installed first. Then install
-these prerequisite packages after starting up R itself:
+The basic process is to install the [R statistical
+software](https://cloud.r-project.org/), then fire up R to install the
+pre-requisite packages:
 
 ```r
-install.packages(c("rattle", "janitor"))
+install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))
 ```
 
-Also  from a terminal install the tidyverse package:
+Then fire up the rattleng app and in the Console tab of the app make
+sure you can load these packages:
 
-```bash
-wajig install r-cran-tidyverse
+```r
+library(rattle)
+library(magrittr)
+library(janitor)
+library(tidyverse)
+glimpse(weather)
 ```
 
 RattleNG will eventually check for these and prompt if they are not
-available. To install R please see the [Rattle install guide for
-Ubuntu](https://rattle.togaware.com/rattle-install-ubuntu.html).
+available.
 
 ### Latest Code
 
@@ -61,6 +64,10 @@ flutter run -d <os>
 ```
 
 ### Linux
+
+See the [Rattle install guide for
+Ubuntu](https://rattle.togaware.com/rattle-install-ubuntu.html) for
+installing R. Then
 
 + Download https://access.togaware.com/rattle.snap
 + Install with `snap install --dangerous rattle.snap`
