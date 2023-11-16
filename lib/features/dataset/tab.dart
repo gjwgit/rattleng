@@ -78,7 +78,7 @@ class _DatasetTabState extends ConsumerState<DatasetTab> {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
-                child: DataTableWidget(["Col 1", "Col 2", "Col 3"]),
+                child: DataTableWidget(["Variable", "DataType"]),
               ),
             ),
           ),
