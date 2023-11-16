@@ -37,6 +37,7 @@ import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/widgets/markdown_file.dart';
+import 'package:rattle/features/dataset/dataset_table.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
@@ -77,11 +78,7 @@ class _DatasetTabState extends ConsumerState<DatasetTab> {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
-                child: SelectableText(
-                  rExtractGlimpse(stdout),
-                  key: datasetGlimpseKey,
-                  style: monoTextStyle,
-                ),
+                child: DataTableWidget(["Col 1", "Col 2", "Col 3"]),
               ),
             ),
           ),
