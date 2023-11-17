@@ -5,25 +5,21 @@ class DataTableWidget extends StatelessWidget {
 
   DataTableWidget(this.columnNames, {Key? key}) : super(key: key);
 
+  // A method to get the data from the R Script and parse it to make rows
+  
+  List<DataRow> makeRows(){
+       return DataRow(cells: []).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Table(
-      children: [
-        TableRow(
-          children: columnNames.map((String colName) {
-            return TableCell(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  colName,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-        // Add more rows as needed
+    return DataTable(
+      columns:[
+        DataColumn(label: Text('Variable'))
+        DataColumn(label: Text('DataType'))
       ],
+      rows: [],
+      
     );
   }
 }
