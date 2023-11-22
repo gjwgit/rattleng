@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/provider/stdout.dart'; // Import the provider for stdout
+import 'package:rattle/r/extract_vars.dart';
 
 class DataTableWidget extends ConsumerStatefulWidget {
   final List<String> columnNames;
@@ -88,8 +89,7 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //stdout is the console out
   List<String> ExtractVariables(String stdout) {
     List<String> varNames = List.empty(growable: true);
-    varNames.add("0");
-    print("The stdout is : $stdout");
+    varNames = rExtractVars(stdout);
     return varNames;
   }
 }
