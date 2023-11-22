@@ -71,6 +71,8 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
     }).toList();
   }
 
+  //Building the data table widget.
+  //TODO : Implement a scrollable widget so that all the variables can be viewed
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
