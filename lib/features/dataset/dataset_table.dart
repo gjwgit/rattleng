@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/provider/stdout.dart'; // Import the provider for stdout
 
-class DataTableWidget extends StatefulWidget {
+class DataTableWidget extends ConsumerStatefulWidget {
   final List<String> columnNames;
 
   DataTableWidget(this.columnNames, {Key? key}) : super(key: key);
@@ -8,12 +10,12 @@ class DataTableWidget extends StatefulWidget {
   //Create the initial state of the widget
   //Which in this case sets the values for the dropdown
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<DataTableWidget> createState() {
     return _DataTableWidgetState();
   }
 }
 
-class _DataTableWidgetState extends State<DataTableWidget> {
+class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //A dictionary to store the role of each column in the dataset
   //The key is the column name
   //value is the column name
@@ -70,13 +72,24 @@ class _DataTableWidgetState extends State<DataTableWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String stdout = ref.watch(stdoutProvider);
     return DataTable(
       columns: [
         DataColumn(label: Text('Variable')),
         DataColumn(label: Text('DataType')),
         DataColumn(label: Text('Role'))
       ],
-      rows: makeVarNames(["a", "b", "c"].toList()),
+      rows: makeVarNames(ExtractVariables(stdout)),
     );
+  }
+
+  //A method to get the variable Names from the console
+  //Use execute.dart and extract to get the variable names
+  //stdout is the console out
+  List<String> ExtractVariables(String stdout) {
+    List<String> varNames = List.empty(growable: true);
+    varNames.add("0");
+    print("The stdout is : $stdout");
+    return varNames;
   }
 }

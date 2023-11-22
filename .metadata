@@ -18,6 +18,9 @@ migration:
     - platform: linux
       create_revision: ff5b5b5fa6f35b717667719ddfdb1521d8bdd05a
       base_revision: ff5b5b5fa6f35b717667719ddfdb1521d8bdd05a
+    - platform: macos
+      create_revision: ff5b5b5fa6f35b717667719ddfdb1521d8bdd05a
+      base_revision: ff5b5b5fa6f35b717667719ddfdb1521d8bdd05a
     - platform: windows
       create_revision: ff5b5b5fa6f35b717667719ddfdb1521d8bdd05a
       base_revision: ff5b5b5fa6f35b717667719ddfdb1521d8bdd05a
