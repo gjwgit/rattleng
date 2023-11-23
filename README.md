@@ -36,7 +36,10 @@ pre-requisite packages:
 install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))
 ```
 
-Then fire up the rattleng app and in the Console tab of the app make
+Then you can install the rattleng app from the packages available on
+github or snap or build it yourself from source.
+
+Fire up the rattleng app and in the Console tab of the app make
 sure you can load these packages:
 
 ```r
@@ -87,7 +90,7 @@ snap store. This is not required for the snap store version.
 	+ Click the *Path* entry and then *Edit...*
     + Click *New* and then add *C:\Program Files\R\bin*
     + Click *OK* a few times to close the windows.
-+ Download https://access.togaware.com/rattle.msix
++ Download https://rattle.togaware.com/rattle.msix
 + Add the rattle certificate to your store:
   + Right click the downloaded file in Explorer
   + Choose *Properties*
