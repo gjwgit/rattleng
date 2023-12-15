@@ -28,31 +28,35 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //The third element is a drop down with 5 options {Input , Text , Risk , Ident , Weight}
   List<DataRow> makeVarNames(List<String> varNames) {
     return varNames.map((String varName) {
+      //Process the varnames using regexp to remove "[" aretefacts
+      RegExp pattern = RegExp(r'[^a-zA-Z0-9]');
+      String newVar = varName.replaceFirstMapped(pattern, (m) => "_");
+      print('The new variable is  ${newVar}');
       //Default to input if a role is not selected
-      dropdownValues.putIfAbsent(varName, () => 'Input');
+      dropdownValues.putIfAbsent(newVar, () => 'Input');
       return DataRow(
         cells: [
-          DataCell(Text(varName)),
-          DataCell(const Text("Type")),
+          DataCell(Text(newVar)),
+          const DataCell(Text("Type")),
           DataCell(
             DropdownButton<String>(
-              value: dropdownValues[varName],
-              items: [
+              value: dropdownValues[newVar],
+              items: const [
                 DropdownMenuItem(
-                  child: Text("Input"),
                   value: 'Input',
+                  child: Text("Input"),
                 ),
                 DropdownMenuItem(
-                  child: Text("Target"),
                   value: 'Target',
+                  child: const Text("Target"),
                 ),
                 DropdownMenuItem(
-                  child: Text("Risk"),
                   value: 'Risk',
+                  child: Text("Risk"),
                 ),
                 DropdownMenuItem(
-                  child: Text("Weight"),
                   value: 'Weight',
+                  child: Text("Weight"),
                 ),
               ],
               //Set the current value of the dropdown
@@ -60,7 +64,7 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
               //a stateful widget
               onChanged: (String? value) {
                 setState(() {
-                  dropdownValues[varName] = value!;
+                  dropdownValues[newVar] = value!;
                   print(value);
                 });
               },
