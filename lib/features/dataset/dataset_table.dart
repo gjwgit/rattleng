@@ -72,17 +72,21 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   }
 
   //Building the data table widget.
-  //TODO : Implement a scrollable widget so that all the variables can be viewed
+  //TODO : Implement a scrollable widget so
+  //that all the variables can be viewed
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    return DataTable(
-      columns: [
-        DataColumn(label: Text('Variable')),
-        DataColumn(label: Text('DataType')),
-        DataColumn(label: Text('Role'))
-      ],
-      rows: makeVarNames(ExtractVariables(stdout)),
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        columns: const [
+          DataColumn(label: Text('Variable')),
+          DataColumn(label: Text('DataType')),
+          DataColumn(label: Text('Role')),
+        ],
+        rows: makeVarNames(ExtractVariables(stdout)),
+      ),
     );
   }
 
