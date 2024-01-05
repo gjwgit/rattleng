@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/provider/stdout.dart'; // Import the provider for stdout
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/r/extract_types.dart';
 
 class DataTableWidget extends ConsumerStatefulWidget {
   final List<String> columnNames;
@@ -26,6 +27,7 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   // In a given row , the first element is the row name ,
   //The second element is the datatype
   //The third element is a drop down with 5 options {Input , Text , Risk , Ident , Weight}
+  //Widget should also also accomodate other parameters such as sK
   List<DataRow> makeVarNames(List<String> varNames) {
     return varNames.map((String varName) {
       //Process the varnames using regexp to remove "[" aretefacts
@@ -101,5 +103,11 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
     List<String> varNames = List.empty(growable: true);
     varNames = rExtractVars(stdout);
     return varNames;
+  }
+
+  //A method to get the variable types from the console
+  List<String> ExtractTypes(String stdout) {
+    List<String> varTypes = List.empty(growable: true);
+    varTypes = rExtractTypes(stdout);
   }
 }
