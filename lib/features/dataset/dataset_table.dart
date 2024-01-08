@@ -20,19 +20,16 @@ class DataTableWidget extends ConsumerStatefulWidget {
 class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //A dictionary to store the role of each column in the dataset
   //The key is the column name
-  //value is the column name
+  //value is the role of the parameter
   Map<String, String> dropdownValues = {};
 
-  // A method to make rows from variable names
-  // In a given row , the first element is the row name ,
-  //The second element is the datatype
-  //The third element is a drop down with 5 options {Input , Text , Risk , Ident , Weight}
-  //Widget should also also accomodate other parameters such as sK
   List<DataRow> makeVarNames(List<String> varNames) {
-    return varNames.map((String varName) {
+    return varNames.asMap().entries.map((element) {
+      int index = element.key;
+      String value = element.value;
       //Process the varnames using regexp to remove "[" aretefacts
       RegExp pattern = RegExp(r'[^a-zA-Z0-9]');
-      String newVar = varName.replaceFirstMapped(pattern, (m) => "_");
+      String newVar = value.replaceFirstMapped(pattern, (m) => "_");
       print('The new variable is  ${newVar}');
       //Default to input if a role is not selected
       dropdownValues.putIfAbsent(newVar, () => 'Input');
@@ -82,7 +79,7 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //that all the variables can be viewed
   @override
   Widget build(BuildContext context) {
-    String stdout = ref.watch(stdoutProvider);
+    WidgetRef stdout = ref.watch(stdoutProvider);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: DataTable(
@@ -106,8 +103,9 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   }
 
   //A method to get the variable types from the console
-  List<String> ExtractTypes(String stdout) {
+  List<String> ExtractTypes(WidgetRef ref) {
     List<String> varTypes = List.empty(growable: true);
-    varTypes = rExtractTypes(stdout);
+    rExtractTypes(ref);
+    return List.empty();
   }
 }
