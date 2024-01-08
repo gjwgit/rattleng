@@ -79,7 +79,8 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //that all the variables can be viewed
   @override
   Widget build(BuildContext context) {
-    WidgetRef stdout = ref.watch(stdoutProvider);
+    String stdout = ref.watch(stdoutProvider);
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: DataTable(
@@ -99,6 +100,7 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   List<String> ExtractVariables(String stdout) {
     List<String> varNames = List.empty(growable: true);
     varNames = rExtractVars(stdout);
+    rExtractTypes(stdout);
     return varNames;
   }
 }
