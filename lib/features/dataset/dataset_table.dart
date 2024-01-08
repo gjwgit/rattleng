@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/provider/stdout.dart'; // Import the provider for stdout
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/extract_types.dart';
+import 'package:rattle/r/execute.dart';
 
 class DataTableWidget extends ConsumerStatefulWidget {
   final List<String> columnNames;
@@ -13,6 +14,7 @@ class DataTableWidget extends ConsumerStatefulWidget {
   //Which in this case sets the values for the dropdown
   @override
   ConsumerState<DataTableWidget> createState() {
+    //What happens when you execute the command here ??
     return _DataTableWidgetState();
   }
 }
@@ -74,13 +76,9 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
     }).toList();
   }
 
-  //Building the data table widget.
-  //TODO : Implement a scrollable widget so
-  //that all the variables can be viewed
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: DataTable(
@@ -101,6 +99,7 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
     List<String> varNames = List.empty(growable: true);
     varNames = rExtractVars(stdout);
     rExtractTypes(stdout);
+
     return varNames;
   }
 }

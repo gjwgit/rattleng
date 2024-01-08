@@ -55,3 +55,6 @@ vars   <- names(ds)
 # Make the target variable the last one.
 
 vars   <- c(target, vars) %>% unique() %>% rev()
+
+#See the types of features
+classes

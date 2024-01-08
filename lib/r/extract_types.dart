@@ -16,16 +16,24 @@ import 'package:rattle/r/extract.dart';
 //Assuming that classes<-unname(sapply(ds,class)) and print(classes)
 //has been executed
 void rExtractTypes(String text) {
-  //The first command that should be executed
-  //It is unclear as to how the first command would be executed?
-k
-  //The starting command meant to identify the types
   String startingCommand = '> classes';
   //The extracted string is
   String rExtractedString = rExtract(text, startingCommand);
-  debugPrint("The command that was output was : $rExtractedString");
-}
 
-void loadTypes(WidgetRef ref) {
-  rExecute(ref, "classes");
+  //from the extracted string , remove all the numbers
+  // Remove all numbers from the extracted string
+  rExtractedString = rExtractedString.replaceAll(RegExp(r'\d+'), '');
+  //Process the varnames using regexp to remove "[]" aretefacts
+  RegExp pattern = RegExp(r'[^a-zA-Z]');
+  rExtractedString = rExtractedString.replaceFirstMapped(pattern, (m) => '\n');
+
+  List<String> tempList = rExtractedString.split('\n');
+  List<String> nTempList = List.empty(growable: true);
+  //Add the modified string to a new list
+  for (String element in tempList) {
+    nTempList.add(element.replaceAllMapped(pattern, (match) => ''));
+  }
+
+  debugPrint("The command that was output was : $rExtractedString");
+  debugPrint("parsed : $nTempList");
 }
