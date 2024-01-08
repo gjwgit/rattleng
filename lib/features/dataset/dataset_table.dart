@@ -101,11 +101,4 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
     varNames = rExtractVars(stdout);
     return varNames;
   }
-
-  //A method to get the variable types from the console
-  List<String> ExtractTypes(WidgetRef ref) {
-    List<String> varTypes = List.empty(growable: true);
-    rExtractTypes(ref);
-    return List.empty();
-  }
 }
