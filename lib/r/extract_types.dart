@@ -19,21 +19,47 @@ void rExtractTypes(String text) {
   String startingCommand = '> classes';
   //The extracted string is
   String rExtractedString = rExtract(text, startingCommand);
+  rExtractedString = rExtractedString.replaceAll(RegExp(r'"'), '\n');
 
-  //from the extracted string , remove all the numbers
-  // Remove all numbers from the extracted string
-  rExtractedString = rExtractedString.replaceAll(RegExp(r'\d+'), '');
-  //Process the varnames using regexp to remove "[]" aretefacts
-  RegExp pattern = RegExp(r'[^a-zA-Z]');
-  rExtractedString = rExtractedString.replaceFirstMapped(pattern, (m) => '\n');
-
-  List<String> tempList = rExtractedString.split('\n');
-  List<String> nTempList = List.empty(growable: true);
-  //Add the modified string to a new list
-  for (String element in tempList) {
-    nTempList.add(element.replaceAllMapped(pattern, (match) => ''));
+  //Group Strings that start with [[digit]] and end with an array of characters as one element
+  //in the list of Strings
+  RegExp pattern = RegExp(r'\[\[\d+\]\]');
+  rExtractedString = rExtractedString.replaceAll(pattern, '_');
+  pattern = RegExp(r'\[1\]');
+  rExtractedString = rExtractedString.replaceAll(pattern, '');
+  rExtractedString.trim();
+  List<String> types = rExtractedString.split('_');
+  List<String> typesTemp = List.empty(growable: true);
+  List<String> retVal = List.empty(growable: true);
+  //Adding the trimmed elements of the array into a new array .
+  //How to modify the old array
+  for (String element in types) {
+    if (element.isNotEmpty) {
+      typesTemp.add(element.trim());
+    }
   }
 
-  debugPrint("The command that was output was : $rExtractedString");
-  debugPrint("parsed : $nTempList");
+  //The created array has artefacts
+  //The artefacts will be removed
+  RegExp artifact = RegExp(r'\n');
+  for (String element in typesTemp) {
+    retVal.add(element.replaceAll(artifact, ''));
+  }
+
+  artifact = RegExp(r' ');
+  List<String> nRetVal = List.empty(growable: true);
+  for (String element in retVal) {
+    nRetVal.add(element.replaceAll(artifact, ','));
+  }
+
+  artifact = RegExp(r'\[1C');
+  List<String> ret = List.empty(growable: true);
+  for (String element in nRetVal) {
+    ret.add(element.replaceAll(artifact, ''));
+  }
+  for (String element in ret) {
+    debugPrint(element);
+  }
+
+  debugPrint("The number of columns in the dataset is  ${ret.length}");
 }
