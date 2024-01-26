@@ -25,20 +25,55 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //value is the role of the parameter
   Map<String, String> dropdownValues = {};
 
-  List<DataRow> makeVarNames(List<String> varNames) {
-    return varNames.asMap().entries.map((element) {
-      int index = element.key;
-      String value = element.value;
+  @override
+  Widget build(BuildContext context) {
+    String stdout = ref.watch(stdoutProvider);
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        columns: const [
+          DataColumn(label: Text('Variable')),
+          DataColumn(label: Text('Type')),
+          DataColumn(label: Text('Role')),
+        ],
+        rows: makeVars(extractVariables(stdout), extractTypes(stdout)),
+      ),
+    );
+  }
+
+  //A method to get the variable Names from the console
+  //Use execute.dart and extract to get the variable names
+  //stdout is the console out
+  List<String> extractVariables(String stdout) {
+    List<String> varNames = List.empty(growable: true);
+    varNames = rExtractVars(stdout);
+    return varNames;
+  }
+
+  List<String> extractTypes(String stdout) {
+    List<String> varTypes = List.empty(growable: true);
+    varTypes = rExtractTypes(stdout);
+    return varTypes;
+  }
+
+  //Rewrite the makeVars Method to implment fetching the type of variables
+  //and the names of the variables
+  ///[makeVars] (This method implements the [MappedIterator])
+  ///[MappedIterator] extension makes the code more readable
+  List<DataRow> makeVars(List<String> varNames, List<String> varTypes) {
+    return varNames.mapIndexed((index, element) {
       //Process the varnames using regexp to remove "[" aretefacts
+
+      //TODO : Refactor the text preprocessing to extract_vars
       RegExp pattern = RegExp(r'[^a-zA-Z0-9]');
-      String newVar = value.replaceFirstMapped(pattern, (m) => "_");
-      print('The new variable is  ${newVar}');
+      String newVar = element.replaceFirstMapped(pattern, (m) => "_");
+      debugPrint('The new variable is  $newVar');
       //Default to input if a role is not selected
       dropdownValues.putIfAbsent(newVar, () => 'Input');
       return DataRow(
         cells: [
           DataCell(Text(newVar)),
-          const DataCell(Text("Type")),
+          DataCell(Text(varTypes[index])),
           DataCell(
             DropdownButton<String>(
               value: dropdownValues[newVar],
@@ -75,31 +110,18 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
       );
     }).toList();
   }
+}
 
-  @override
-  Widget build(BuildContext context) {
-    String stdout = ref.watch(stdoutProvider);
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: DataTable(
-        columns: const [
-          DataColumn(label: Text('Variable')),
-          DataColumn(label: Text('DataType')),
-          DataColumn(label: Text('Role')),
-        ],
-        rows: makeVarNames(ExtractVariables(stdout)),
-      ),
-    );
-  }
+//Defining an indexed iterator that can be used to access the members of different lists
+///The implementational details are explained in Lines [makeVars]
 
-  //A method to get the variable Names from the console
-  //Use execute.dart and extract to get the variable names
-  //stdout is the console out
-  List<String> ExtractVariables(String stdout) {
-    List<String> varNames = List.empty(growable: true);
-    varNames = rExtractVars(stdout);
-    rExtractTypes(stdout);
-
-    return varNames;
+extension MappedIterator<E> on Iterable<E> {
+  Iterable<T> mapIndexed<T>(T Function(int index, E element) f) sync* {
+    int index = 0;
+    for (var element in this) {
+      debugPrint('$index is the index');
+      yield f(index, element);
+      index++;
+    }
   }
 }
