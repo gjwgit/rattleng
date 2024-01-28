@@ -25,20 +25,41 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
   //value is the role of the parameter
   Map<String, String> dropdownValues = {};
 
+  ///Uses the Future builder widget becauase:
+  ///[extractTypes] can be passed as  snapshot , which makes implementation
+  ///flexible and readable
+
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: DataTable(
-        columns: const [
-          DataColumn(label: Text('Variable')),
-          DataColumn(label: Text('Type')),
-          DataColumn(label: Text('Role')),
-        ],
-        rows: makeVars(extractVariables(stdout), extractTypes(stdout)),
-      ),
-    );
+    return FutureBuilder<List<String>>(
+        future: extractTypes(stdout),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              snapshot.data!.length <= 1) {
+            return const SizedBox(
+                height: 0.001,
+                width: 0.001,
+                child: CircularProgressIndicator());
+
+            //UI Element to let the user know that the future is being fetched
+          } else if (snapshot.hasError) {
+            return Text('error ${snapshot.error}');
+          } else {
+            List<String> types = snapshot.data!;
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: DataTable(
+                columns: const [
+                  DataColumn(label: Text('Variable')),
+                  DataColumn(label: Text('Type')),
+                  DataColumn(label: Text('Role')),
+                ],
+                rows: makeVars(extractVariables(stdout), types),
+              ),
+            );
+          }
+        });
   }
 
   //A method to get the variable Names from the console
@@ -50,9 +71,9 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
     return varNames;
   }
 
-  List<String> extractTypes(String stdout) {
+  Future<List<String>> extractTypes(String stdout) async {
     List<String> varTypes = List.empty(growable: true);
-    varTypes = rExtractTypes(stdout);
+    varTypes = await rExtractTypes(stdout);
     return varTypes;
   }
 

@@ -15,7 +15,7 @@ import 'package:rattle/r/extract.dart';
 //The [text] is the output from the console
 //Assuming that classes<-unname(sapply(ds,class)) and print(classes)
 //has been executed
-List<String> rExtractTypes(String text) {
+Future<List<String>> rExtractTypes(String text) async {
   String startingCommand = '> classes';
   //The extracted string is
   String rExtractedString = rExtract(text, startingCommand);
