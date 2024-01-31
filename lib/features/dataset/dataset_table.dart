@@ -45,7 +45,7 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
             //UI Element to let the user know that the future is being fetched
           } else if (snapshot.hasError) {
             return Text('error ${snapshot.error}');
-          } else {
+          } else if (snapshot.data!.isNotEmpty && snapshot.data!.length > 1) {
             List<String> types = snapshot.data!;
             return SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -58,6 +58,8 @@ class _DataTableWidgetState extends ConsumerState<DataTableWidget> {
                 rows: makeVars(extractVariables(stdout), types),
               ),
             );
+          } else {
+            return const Text('The snapshot was null');
           }
         });
   }
