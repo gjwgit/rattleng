@@ -26,7 +26,7 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
-## Current Status Qucik Start 2024-03-01
+## Current Status Quick Start 2024-03-01
 
 After installing R and the app (see the next section), start up the
 app and work through the following scenario. Development is happening
