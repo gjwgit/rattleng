@@ -28,11 +28,14 @@ available from Togaware (https://datamining.togaware.com).
 
 ## Current Status Quick Start 2024-03-01
 
-After installing R and the app (see the next section), start up the
-app and work through the following scenario. Development is happening
-at a pace so the scenarios will be updated regularly.
+After installing R and the app (either a package or from source, see
+the next sections), start up the app and work through the following
+scenario. 
 
-+ Startup the app (Install R and the app, or R and flutter as below).
+Development is happening at a pace so the scenarios will be updated
+regularly.
+
++ Startup the app .
 + Tap the **Script** tab to see the R code that has already been run.
 + Tap the **Console** tab to see the R code being run in the R session.
 + Tap the **Dataset** tab and then the **Dataset** button and then
