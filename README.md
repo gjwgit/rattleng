@@ -26,15 +26,15 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
-## Current Status 2024-03-01
+## Current Status Qucik Start 2024-03-01
 
-When you start up the app you can work through the following
-scenario. Development is happening at a pace so the scenarios will be updated
-regularly.
+After installing R and the app (see the next section), start up the
+app and work through the following scenario. Development is happening
+at a pace so the scenarios will be updated regularly.
 
-+ Startup the app;
-+ Tap the **Script** tab to see the R code that has already been run;
-+ Tap the **Console** tab to see the R code being run in the R session;
++ Startup the app (Install R and the app, or R and flutter as below).
++ Tap the **Script** tab to see the R code that has already been run.
++ Tap the **Console** tab to see the R code being run in the R session.
 + Tap the **Dataset** tab and then the **Dataset** button and then
   choose **Demo** to load the `rattle::weather` dataset and view the
   dataset summary.
@@ -44,7 +44,7 @@ regularly.
 + Tap the **Model** tab and then the **Tree** radio button (selected
   by default) and then the **Build** button to build and view a
   decision tree. Scroll the window to see the whole tree.
-+ Tap the **Script** tab and Scroll the window to view the latest R
++ Tap the **Script** tab and scroll the window to view the latest R
   commands run. Then tap the **Export** button to save the full script
   to `script.R` (no options currently to change the name or location
   of the saved script file).
@@ -52,9 +52,22 @@ regularly.
 
 ## Installing RattleNG from Pre-Built Packages
 
+The basic process is to install the [R statistical
+software](https://cloud.r-project.org/), then fire up R to install the
+pre-requisite packages:
+
+```r
+install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))
+```
+
+Then you can install the rattleng app from the packages available on
+github or snap or build it yourself from source.
+
+Specific OS instructions follow.
+
 ### Linux
 
-+ Install R itself
++ Install R
   + Debian/Ubuntu: `wajig install r-recommended`
 + Install required R packages
   + `> install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))`
@@ -64,9 +77,13 @@ The *dangerous* refers to side-loading the app from outside of the
 snap store. This will not be required for the snap store version but
 for this development version we are side-loading the package.
 
+### MacOS
+
+Please check back later.
+
 ### Windows
 
-+ Download and install R itself
++ Download and install R
   + Visit https://cloud.r-project.org/ and navigate to Windows install
   + Click on *Download R for Windows*
   + Open the downloaded file to install R into *C:\Program Files\R*
@@ -98,16 +115,7 @@ for this development version we are side-loading the package.
 
 ## Running RattleNG from Source
 
-The basic process is to install the [R statistical
-software](https://cloud.r-project.org/), then fire up R to install the
-pre-requisite packages:
-
-```r
-install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))
-```
-
-Then you can install the rattleng app from the packages available on
-github or snap or build it yourself from source.
+Ensure you have R installed, as described above.
 
 Fire up the rattleng app and in the Console tab of the app make
 sure you can load these packages:
