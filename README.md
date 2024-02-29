@@ -115,10 +115,21 @@ Please check back later.
 
 ## Running RattleNG from Source
 
-Ensure you have R installed, as described above.
+Ensure you have R installed, as described above. Also you will need to
+install Flutter.
 
-Fire up the rattleng app and in the Console tab of the app make
-sure you can load these packages:
+Then clone the rattleng repository:
+
+```bash
+git clone https://github.com/gjwgit/rattleng
+cd rattleng
+flutter run -d <os>
+```
+
+Replace `<os>` with `linux`, `macos`, or `windows`.
+
+After firing up the rattleng app, check in the Console tab to make
+sure the following packages were loaded:
 
 ```r
 library(rattle)
