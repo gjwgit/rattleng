@@ -26,7 +26,77 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
-## Installing RattleNG
+## Current Status 2024-03-01
+
+When you start up the app you can work through the following
+scenario. Development is happening at a pace so the scenarios will be updated
+regularly.
+
++ Startup the app;
++ Tap the **Script** tab to see the R code that has already been run;
++ Tap the **Console** tab to see the R code being run in the R session;
++ Tap the **Dataset** tab and then the **Dataset** button and then
+  choose **Demo** to load the `rattle::weather` dataset and view the
+  dataset summary.
++ Notice the toggle buttons to the top right of the tab page:
+  **Normalise** and **Partition**. Hover the mouse to view the
+  tooltips.
++ Tap the **Model** tab and then the **Tree** radio button (selected
+  by default) and then the **Build** button to build and view a
+  decision tree. Scroll the window to see the whole tree.
++ Tap the **Script** tab and Scroll the window to view the latest R
+  commands run. Then tap the **Export** button to save the full script
+  to `script.R` (no options currently to change the name or location
+  of the saved script file).
++ From your own command line run `Rscript script.R`
+
+## Installing RattleNG from Pre-Built Packages
+
+### Linux
+
++ Install R itself
+  + Debian/Ubuntu: `wajig install r-recommended`
++ Install required R packages
+  + `> install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))`
++ Install RattleNG with `snap install --dangerous rattle.snap`
+
+The *dangerous* refers to side-loading the app from outside of the
+snap store. This will not be required for the snap store version but
+for this development version we are side-loading the package.
+
+### Windows
+
++ Download and install R itself
+  + Visit https://cloud.r-project.org/ and navigate to Windows install
+  + Click on *Download R for Windows*
+  + Open the downloaded file to install R into *C:\Program Files\R*
+  + Add *C:\Program Files\R\bin* to the PATH environment variable
+    + Open *Edit the system environment variables* from Control panel
+	+ Click *Environment Variables...*
+	+ Click the *Path* entry and then *Edit...*
+    + Click *New* and then add *C:\Program Files\R\bin*
+    + Click *OK* a few times to close the windows.
++ Download https://rattle.togaware.com/rattle.msix
++ Add the rattle certificate to your store:
+  + Right click the downloaded file in Explorer
+  + Choose *Properties*
+  + Choose the *Digital Signatures* tab. 
+  + Highlight the *Togaware* line
+  + Click *Details*. 
+  + Click *View Certificate...* 
+  + Click *Install Certificate...*
+  + Choose *Local Machine*
+  + Click *Next*
+  + Choose *Place all certificates in the following store*
+  + Click *Browse...*
+  + Select **Trusted Root Certification Authorities**
+  + Click *OK*
+  + Click *Next* and *Finish*.
+  + A popup says **The import was successful**
++ Open the downloaded `rattle.msix` to install and run rattle
+  + Or in PowerShell: `Add-AppxPackage -Path .\rattle.msix`
+
+## Running RattleNG from Source
 
 The basic process is to install the [R statistical
 software](https://cloud.r-project.org/), then fire up R to install the
@@ -65,66 +135,6 @@ to be one of `windows`, `macos`, or `linux`.
 ```
 flutter run -d <os>
 ```
-
-### Linux
-
-See the [Rattle install guide for
-Ubuntu](https://rattle.togaware.com/rattle-install-ubuntu.html) for
-installing R. Then
-
-+ Download https://access.togaware.com/rattle.snap
-+ Install with `snap install --dangerous rattle.snap`
-
-The *dangerous* refers to side-loading the app from outside of the
-snap store. This is not required for the snap store version.
-
-### Windows
-
-+ Download and install R itself
-  + Visit https://cloud.r-project.org/ and navigate to Windows install
-  + Click on *Download R for Windows*
-  + Open the downloaded file to install R into *C:\Program Files\R*
-  + Add *C:\Program Files\R\bin* to the PATH environment variable
-    + Open *Edit the system environment variables* from Control panel
-	+ Click *Environment Variables...*
-	+ Click the *Path* entry and then *Edit...*
-    + Click *New* and then add *C:\Program Files\R\bin*
-    + Click *OK* a few times to close the windows.
-+ Download https://rattle.togaware.com/rattle.msix
-+ Add the rattle certificate to your store:
-  + Right click the downloaded file in Explorer
-  + Choose *Properties*
-  + Choose the *Digital Signatures* tab. 
-  + Highlight the *Togaware* line
-  + Click *Details*. 
-  + Click *View Certificate...* 
-  + Click *Install Certificate...*
-  + Choose *Local Machine*
-  + Click *Next*
-  + Choose *Place all certificates in the following store*
-  + Click *Browse...*
-  + Select **Trusted Root Certification Authorities**
-  + Click *OK*
-  + Click *Next* and *Finish*.
-  + A popup says **The import was successful**
-+ Open the downloaded `rattle.msix` to install and run rattle
-  + Or in PowerShell: `Add-AppxPackage -Path .\rattle.msix`
-
-## Current Status 2023-09-17
-
-When you start up the app you can work through the following
-scenario. Development is happening at a pace so the scenarios will be updated
-regularly.
-
-+ Startup the app
-+ Click the **Script** tab to see the R code that has already been run
-+ Click the **Dataset** tab and then choose **Demo** to load the
-  `rattle::weather` dataset and view the dataset summary.
-+ Click the **Model** tab and then the **Build** button to build and view a
-  decision tree.
-+ Click the **Script** tab and the Export button to save the full script
-  to `script.R`
-+ From your own command line run `Rscript script.R`
 
 ## How you can Help
 
