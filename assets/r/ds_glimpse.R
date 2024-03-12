@@ -27,3 +27,6 @@
 # Glimpse the dataset.
 
 glimpse(ds)
+
+# Get the classes in a dataset
+classes<-unname(sapply(ds,class))
