@@ -41,7 +41,7 @@ class ModelRadioButtons extends ConsumerStatefulWidget {
 class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
   // List of modellers we support.
 
-  List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost'];
+  List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost', 'Word Cloud'];
 
   // Default selected valueas an idex into the modellers.
 
@@ -73,6 +73,8 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 rSource(ref, "model_build_rpart");
               case "Forest":
                 rSource(ref, "model_build_random_forest");
+              case "Word Cloud":
+                rSource(ref, "model_build_word_cloud");
               default:
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
             }
