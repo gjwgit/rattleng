@@ -113,7 +113,16 @@ class _ModelTabState extends ConsumerState<ModelTab> {
           ),
           Visibility(
             visible: model == "Word Cloud",
-            child: Image.asset("./assets/images/wordcloud.png"),
+            child: Expanded(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 10),
+                child: SingleChildScrollView(
+                  // TODO 3/21 hardcoded
+                  child: Image.asset("./assets/images/wordcloud.png"),
+                ),
+              ),
+            ),
           ),
           Visibility(
             visible: model == "SVM",
