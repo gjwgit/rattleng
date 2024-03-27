@@ -27,3 +27,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final stdoutProvider = StateProvider<String>((ref) => "");
+
+final pngPathProvider = StateProvider<bool>((ref) => false);

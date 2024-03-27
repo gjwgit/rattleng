@@ -49,6 +49,7 @@ class _ModelTabState extends ConsumerState<ModelTab> {
   Widget build(BuildContext context) {
     String model = ref.watch(modelProvider);
     String stdout = ref.watch(stdoutProvider);
+    bool pngBuild = ref.watch(pngPathProvider);
 
     return Scaffold(
       body: Column(
@@ -119,7 +120,7 @@ class _ModelTabState extends ConsumerState<ModelTab> {
                 padding: const EdgeInsets.only(left: 10),
                 child: SingleChildScrollView(
                   // TODO 3/21 hardcoded
-                  child: Image.asset("./assets/images/wordcloud.png"),
+                  child: pngBuild ? Image.asset("./assets/images/wordcloud.png") : const Text("No model has been built"),
                 ),
               ),
             ),
