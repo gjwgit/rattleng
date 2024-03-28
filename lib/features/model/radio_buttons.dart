@@ -24,6 +24,8 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +64,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
       children: <Widget>[
         const SizedBox(width: 5), // Add some spacing
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             // Handle button click here
             debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
                 "$selectedValue = ${modellers[selectedValue]}");
@@ -81,6 +83,13 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
             }
             if (model == "Word Cloud") {
+              final file = File("./assets/images/wordcloud.png");
+              while (true) {
+                if (await file.exists()) {
+                  debugPrint("file exists");
+                  break;
+                }
+              }
               ref.read(pngPathProvider.notifier).state = true;
             }
           },
