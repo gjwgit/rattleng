@@ -63,6 +63,9 @@ void rLoadDataset(WidgetRef ref) {
     rSource(ref, "dataset_load_weather");
   } else if (path.endsWith(".csv")) {
     rSource(ref, "dataset_load_csv");
+  } else if (path.endsWith(".txt")) {
+    rSource(ref, "dataset_load_txt");
+    return;
   } else {
     debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
     return;
@@ -75,6 +78,7 @@ void rLoadDataset(WidgetRef ref) {
 
   rExecute(ref, "names(ds)");
 
+  // this shows the data
   rSource(ref, "ds_glimpse");
   debugPrint('R LOAD DATASET:\tLoaded "$path";');
 }

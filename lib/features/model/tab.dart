@@ -27,6 +27,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/features/model/save_wordcloud_png.dart';
 
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/stdout.dart';
@@ -36,6 +37,8 @@ import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
+
+const String word_cloud_image_path = "./assets/images/wordcloud.png";
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({Key? key}) : super(key: key);
@@ -49,7 +52,7 @@ class _ModelTabState extends ConsumerState<ModelTab> {
   Widget build(BuildContext context) {
     String model = ref.watch(modelProvider);
     String stdout = ref.watch(stdoutProvider);
-
+    bool pngBuild = ref.watch(pngPathProvider);
     return Scaffold(
       body: Column(
         children: [
@@ -109,6 +112,28 @@ class _ModelTabState extends ConsumerState<ModelTab> {
                 SizedBox(height: 50),
                 Text("NOT YET IMPLEMENTED"),
               ],
+            ),
+          ),
+          Visibility(
+            visible: model == "Word Cloud",
+            // TODO 20240328 yyx Overflow at bottom
+            child: Expanded(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  children: [
+                    SingleChildScrollView(
+                      child: pngBuild ?
+                        Image.asset(word_cloud_image_path)
+                        : const Text("No model has been built"),
+                    ),
+                    SaveWordCloudButton(
+                      wordCloudImagePath: word_cloud_image_path,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           Visibility(

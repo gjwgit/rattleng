@@ -24,11 +24,14 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/model.dart';
+import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/source.dart';
 
 class ModelRadioButtons extends ConsumerStatefulWidget {
@@ -41,7 +44,7 @@ class ModelRadioButtons extends ConsumerStatefulWidget {
 class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
   // List of modellers we support.
 
-  List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost'];
+  List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost', 'Word Cloud'];
 
   // Default selected valueas an idex into the modellers.
 
@@ -61,7 +64,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
       children: <Widget>[
         const SizedBox(width: 5), // Add some spacing
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             // Handle button click here
             debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
                 "$selectedValue = ${modellers[selectedValue]}");
@@ -73,8 +76,21 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 rSource(ref, "model_build_rpart");
               case "Forest":
                 rSource(ref, "model_build_random_forest");
+              case "Word Cloud":
+                // context.read(pngPathProvider).state = 
+                rSource(ref, "model_build_word_cloud");
               default:
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
+            }
+            if (model == "Word Cloud") {
+              final file = File("./assets/images/wordcloud.png");
+              while (true) {
+                if (await file.exists()) {
+                  debugPrint("file exists");
+                  break;
+                }
+              }
+              ref.read(pngPathProvider.notifier).state = true;
             }
           },
           child: const Text('Build'),
