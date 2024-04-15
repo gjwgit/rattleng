@@ -116,22 +116,26 @@ class _ModelTabState extends ConsumerState<ModelTab> {
           ),
           Visibility(
             visible: model == "Word Cloud",
-            // TODO 20240328 yyx Overflow at bottom
             child: Expanded(
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      pngBuild
-                          ? Image.asset(word_cloud_image_path)
-                          : const Text("No model has been built"),
-                      SaveWordCloudButton(
-                        wordCloudImagePath: word_cloud_image_path,
-                      ),
-                    ],
-                  ),
+                  child: pngBuild
+                      ? Column(
+                          children: [
+                            Image.asset(word_cloud_image_path),
+                            SaveWordCloudButton(
+                              wordCloudImagePath: word_cloud_image_path,
+                            ),
+                          ],
+                        )
+                      : const Column(
+                          children: [
+                            SizedBox(height: 50),
+                            Text("No model has been built"),
+                          ],
+                        ),
                 ),
               ),
             ),
