@@ -121,17 +121,17 @@ class _ModelTabState extends ConsumerState<ModelTab> {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  children: [
-                    SingleChildScrollView(
-                      child: pngBuild ?
-                        Image.asset(word_cloud_image_path)
-                        : const Text("No model has been built"),
-                    ),
-                    SaveWordCloudButton(
-                      wordCloudImagePath: word_cloud_image_path,
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      pngBuild
+                          ? Image.asset(word_cloud_image_path)
+                          : const Text("No model has been built"),
+                      SaveWordCloudButton(
+                        wordCloudImagePath: word_cloud_image_path,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
