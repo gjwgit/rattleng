@@ -187,7 +187,7 @@ Widget wordcloudWindow() {
   if (pngBuild && pngLoad) { 
     // TODO move the img to tmp folder
     return Column(children: [
-                            Image.file(File("./wordcloud.png")),
+                            Image.file(File(word_cloud_image_path)),
                             SaveWordCloudButton(
                               wordCloudImagePath: word_cloud_image_path,
                             ),      

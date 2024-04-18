@@ -29,6 +29,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/features/model/tab.dart';
 
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/stdout.dart';
@@ -85,7 +86,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
             if (model == "Word Cloud") {
               // TODO dependency wordcloud yyx
               // TODO do we need this while loop? yyx
-              final file = File("./wordcloud.png");
+              final file = File(word_cloud_image_path);
               while (true) {
                 if (await file.exists()) {
                   debugPrint("file exists");
