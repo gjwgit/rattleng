@@ -85,7 +85,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
             if (model == "Word Cloud") {
               // TODO dependency wordcloud yyx
               // TODO do we need this while loop? yyx
-              final file = File("./assets/images/wordcloud.png");
+              final file = File("./wordcloud.png");
               while (true) {
                 if (await file.exists()) {
                   debugPrint("file exists");

@@ -10,7 +10,7 @@ text <- paste(text_data, collapse = " ")
 # Set seed for reproducibility
 set.seed(123)
 
-png("./assets/images/wordcloud.png", width = 800, height = 600, units = "px")
+png("./wordcloud.png", width = 800, height = 600, units = "px")
 
 # Generate word cloud
 wordcloud(text, scale=c(5,0.5), min.freq = 1, random.order = FALSE, colors=brewer.pal(8, "Dark2"))
