@@ -29,6 +29,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/features/model/tab.dart';
 
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
@@ -82,6 +83,7 @@ void rSource(WidgetRef ref, String script) {
   // set we split the dataset.
 
   code = code.replaceAll('FILENAME', path);
+  code = code.replaceAll('WORDCLOUDPATH', word_cloud_image_path);
 
   // TODO if (script.contains('^dataset_')) {
 
