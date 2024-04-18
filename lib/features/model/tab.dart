@@ -24,6 +24,8 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,7 +40,7 @@ import 'package:rattle/r/extract_tree.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
-const String word_cloud_image_path = "./assets/images/wordcloud.png";
+const String word_cloud_image_path = "./wordcloud.png";
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({Key? key}) : super(key: key);
@@ -182,9 +184,10 @@ Widget wordcloudWindow() {
       ),      
     ],);
   }
-  if (pngBuild && pngLoad) {
+  if (pngBuild && pngLoad) { 
+    // TODO move the img to tmp folder
     return Column(children: [
-                            Image.asset(word_cloud_image_path),
+                            Image.file(File("./wordcloud.png")),
                             SaveWordCloudButton(
                               wordCloudImagePath: word_cloud_image_path,
                             ),      
