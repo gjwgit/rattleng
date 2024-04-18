@@ -83,6 +83,8 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
             }
             if (model == "Word Cloud") {
+              // TODO dependency wordcloud yyx
+              // TODO do we need this while loop? yyx
               final file = File("./assets/images/wordcloud.png");
               while (true) {
                 if (await file.exists()) {
@@ -90,7 +92,14 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                   break;
                 }
               }
-              ref.read(pngPathProvider.notifier).state = true;
+              bool pngBuild = ref.watch(wordcloudBuildProvider);
+              bool pngLoad = ref.watch(wordcloudLoadProvider);
+              if (pngBuild && pngLoad) {
+                // rebuilt
+                ref.read(wordcloudLoadProvider.notifier).state = false;
+              }
+              ref.read(wordcloudBuildProvider.notifier).state = true;
+
             }
           },
           child: const Text('Build'),

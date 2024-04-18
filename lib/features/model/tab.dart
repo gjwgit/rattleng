@@ -48,11 +48,14 @@ class ModelTab extends ConsumerStatefulWidget {
 }
 
 class _ModelTabState extends ConsumerState<ModelTab> {
+  // bool pngLoad = false;
+  // bool pngBuild = false;
   @override
   Widget build(BuildContext context) {
+  bool pngBuild = ref.watch(wordcloudBuildProvider);
+  bool pngLoad = ref.watch(wordcloudLoadProvider);
     String model = ref.watch(modelProvider);
     String stdout = ref.watch(stdoutProvider);
-    bool pngBuild = ref.watch(pngPathProvider);
     return Scaffold(
       body: Column(
         children: [
@@ -121,21 +124,7 @@ class _ModelTabState extends ConsumerState<ModelTab> {
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
                 child: SingleChildScrollView(
-                  child: pngBuild
-                      ? Column(
-                          children: [
-                            Image.asset(word_cloud_image_path),
-                            SaveWordCloudButton(
-                              wordCloudImagePath: word_cloud_image_path,
-                            ),
-                          ],
-                        )
-                      : const Column(
-                          children: [
-                            SizedBox(height: 50),
-                            Text("No model has been built"),
-                          ],
-                        ),
+                  child: wordcloudWindow(),
                 ),
               ),
             ),
@@ -171,4 +160,62 @@ class _ModelTabState extends ConsumerState<ModelTab> {
       ),
     );
   }
+
+Widget wordcloudWindow() {
+  bool pngBuild = ref.watch(wordcloudBuildProvider);
+  bool pngLoad = ref.watch(wordcloudLoadProvider);
+  if (!pngBuild && !pngLoad) {
+    return Column(children: [
+      SizedBox(height: 50),
+      Text("No model has been built"),
+    ],);
+  }
+  if (pngBuild && !pngLoad) {
+    return Column(children: [
+      SizedBox(height: 50,),
+      Text("Model has been built. Please click the load button"),
+      ElevatedButton(
+        onPressed: () {
+          ref.read(wordcloudLoadProvider.notifier).state = true;
+        },
+        child: const Text("load"),
+      ),      
+    ],);
+  }
+  if (pngBuild && pngLoad) {
+    return Column(children: [
+                            Image.asset(word_cloud_image_path),
+                            SaveWordCloudButton(
+                              wordCloudImagePath: word_cloud_image_path,
+                            ),      
+    ],);
+  }
+
+  return Text("bug");
+
+  //  pngBuild & pngLoad
+  //                     ? Column(
+  //                         children: [
+  //                           Image.asset(word_cloud_image_path),
+  //                           SaveWordCloudButton(
+  //                             wordCloudImagePath: word_cloud_image_path,
+  //                           ),
+  //                         ],
+  //                       )
+  //                     : Column(
+  //                         children: [
+  //                           SizedBox(height: 50),
+  //                           Text("No model has been built"),
+  //                           ElevatedButton(
+  //                             onPressed: () {
+  //                               setState(() {
+  //                                 pngLoad = true;
+  //                               });
+  //                             },
+  //                             child: const Text("load"),
+  //                           ),
+  //                         ],
+  //                       ),
+  // return ;
+}
 }
