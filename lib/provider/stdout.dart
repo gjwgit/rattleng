@@ -27,5 +27,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final stdoutProvider = StateProvider<String>((ref) => "");
-
-final pngPathProvider = StateProvider<bool>((ref) => false);
+// TODO refactor yyx 
+// record whether the wordcloud model has been built
+final wordcloudBuildProvider = StateProvider<bool>((ref) => false);
+final wordcloudLoadProvider = StateProvider<bool>((ref) => false);
