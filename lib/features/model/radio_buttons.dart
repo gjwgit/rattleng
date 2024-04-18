@@ -93,12 +93,6 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                   break;
                 }
               }
-              bool pngBuild = ref.watch(wordcloudBuildProvider);
-              bool pngLoad = ref.watch(wordcloudLoadProvider);
-              if (pngBuild && pngLoad) {
-                // rebuilt
-                ref.read(wordcloudLoadProvider.notifier).state = false;
-              }
               ref.read(wordcloudBuildProvider.notifier).state = true;
 
             }
