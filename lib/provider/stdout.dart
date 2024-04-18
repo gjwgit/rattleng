@@ -30,4 +30,3 @@ final stdoutProvider = StateProvider<String>((ref) => "");
 // TODO refactor yyx 
 // record whether the wordcloud model has been built
 final wordcloudBuildProvider = StateProvider<bool>((ref) => false);
-final wordcloudLoadProvider = StateProvider<bool>((ref) => false);

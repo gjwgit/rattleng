@@ -50,12 +50,8 @@ class ModelTab extends ConsumerStatefulWidget {
 }
 
 class _ModelTabState extends ConsumerState<ModelTab> {
-  // bool pngLoad = false;
-  // bool pngBuild = false;
   @override
   Widget build(BuildContext context) {
-  bool pngBuild = ref.watch(wordcloudBuildProvider);
-  bool pngLoad = ref.watch(wordcloudLoadProvider);
     String model = ref.watch(modelProvider);
     String stdout = ref.watch(stdoutProvider);
     return Scaffold(
@@ -165,26 +161,14 @@ class _ModelTabState extends ConsumerState<ModelTab> {
 
 Widget wordcloudWindow() {
   bool pngBuild = ref.watch(wordcloudBuildProvider);
-  bool pngLoad = ref.watch(wordcloudLoadProvider);
-  if (!pngBuild && !pngLoad) {
+  if (!pngBuild) {
     return Column(children: [
       SizedBox(height: 50),
       Text("No model has been built"),
     ],);
   }
-  if (pngBuild && !pngLoad) {
-    return Column(children: [
-      SizedBox(height: 50,),
-      Text("Model has been built. Please click the load button"),
-      ElevatedButton(
-        onPressed: () {
-          ref.read(wordcloudLoadProvider.notifier).state = true;
-        },
-        child: const Text("load"),
-      ),      
-    ],);
-  }
-  if (pngBuild && pngLoad) { 
+
+  if (pngBuild) { 
     // TODO move the img to tmp folder
     return Column(children: [
                             Image.file(File(word_cloud_image_path)),
