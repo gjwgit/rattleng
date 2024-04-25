@@ -24,6 +24,8 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,6 +61,7 @@ class HomePageState extends ConsumerState<HomePage>
   @override
   void initState() {
     super.initState();
+    deleteFileIfExists();
     _tabController = TabController(length: tabs.length, vsync: this);
 
     // Add a listener to the TabController to perform an action when we leave
@@ -88,7 +91,13 @@ class HomePageState extends ConsumerState<HomePage>
       }
     });
   }
-
+  Future<void> deleteFileIfExists() async {
+    File fileToDelete = File(word_cloud_image_path);
+    if (await fileToDelete.exists()) {
+      await fileToDelete.delete();
+      debugPrint('File ${word_cloud_image_path} deleted');
+    }
+  }
   @override
   void dispose() {
     _tabController.dispose();
