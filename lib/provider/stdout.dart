@@ -27,6 +27,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final stdoutProvider = StateProvider<String>((ref) => "");
-// TODO refactor yyx 
+// TODO move to a seperate file yyx 
 // record whether the wordcloud model has been built
 final wordcloudBuildProvider = StateProvider<bool>((ref) => false);

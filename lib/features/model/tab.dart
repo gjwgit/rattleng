@@ -40,7 +40,10 @@ import 'package:rattle/r/extract_tree.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
-const String word_cloud_image_path = "./wordcloud.png";
+var systemTempDir = Directory.systemTemp;
+
+String word_cloud_image_path =  "${systemTempDir.path}/wordcloud.png";
+
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({Key? key}) : super(key: key);
@@ -160,6 +163,7 @@ class _ModelTabState extends ConsumerState<ModelTab> {
   }
 
 Widget wordcloudWindow() {
+  debugPrint("path: ${word_cloud_image_path}");
   bool pngBuild = ref.watch(wordcloudBuildProvider);
   if (!pngBuild) {
     return Column(children: [
@@ -177,7 +181,7 @@ Widget wordcloudWindow() {
                             ),      
     ],);
   }
-
+  
   return Text("bug");
 
   //  pngBuild & pngLoad
