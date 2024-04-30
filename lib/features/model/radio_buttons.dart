@@ -79,6 +79,14 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 rSource(ref, "model_build_random_forest");
               case "Word Cloud":
                 // context.read(pngPathProvider).state = 
+                File old_wordcloud_file = File(word_cloud_image_path);
+                if (old_wordcloud_file.existsSync()) {
+                  old_wordcloud_file.deleteSync();
+                  debugPrint("old wordcloud file deleted");
+                }
+                else {
+                  debugPrint("old wordcloud file not exists");
+                }
                 rSource(ref, "model_build_word_cloud");
               default:
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
@@ -93,7 +101,8 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                   break;
                 }
               }
-              ref.read(wordcloudBuildProvider.notifier).state = true;
+              // toggle the state
+              ref.read(wordcloudBuildProvider.notifier).state = !ref.read(wordcloudBuildProvider.notifier).state;
 
             }
           },

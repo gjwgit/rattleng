@@ -43,7 +43,7 @@ import 'package:rattle/r/extract_tree.dart';
 var systemTempDir = Directory.systemTemp;
 
 String word_cloud_image_path =  "${systemTempDir.path}/wordcloud.png";
-
+File word_cloud_file = File(word_cloud_image_path);
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({Key? key}) : super(key: key);
@@ -164,7 +164,9 @@ class _ModelTabState extends ConsumerState<ModelTab> {
 
 Widget wordcloudWindow() {
   debugPrint("path: ${word_cloud_image_path}");
-  bool pngBuild = ref.watch(wordcloudBuildProvider);
+  debugPrint("build wordcloud window.");
+  bool rebuild = ref.watch(wordcloudBuildProvider);
+  bool pngBuild = word_cloud_file.existsSync();
   if (!pngBuild) {
     return Column(children: [
       SizedBox(height: 50),
@@ -173,7 +175,6 @@ Widget wordcloudWindow() {
   }
 
   if (pngBuild) { 
-    // TODO move the img to tmp folder
     return Column(children: [
                             Image.file(File(word_cloud_image_path)),
                             SaveWordCloudButton(
