@@ -172,6 +172,7 @@ class wordcloudWindow extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
   // reload the wordcloud png
   imageCache.clear();
+  imageCache.clearLiveImages();
   // bool rebuild = ref.watch(wordcloudBuildProvider);
   debugPrint("path: ${word_cloud_image_path}");
   debugPrint("build wordcloud window.");
