@@ -26,7 +26,9 @@
 
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/save_wordcloud_png.dart';
@@ -162,10 +164,17 @@ class _ModelTabState extends ConsumerState<ModelTab> {
     );
   }
 
-Widget wordcloudWindow() {
+}
+
+
+class wordcloudWindow extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+  // reload the wordcloud png
+  imageCache.clear();
+  // bool rebuild = ref.watch(wordcloudBuildProvider);
   debugPrint("path: ${word_cloud_image_path}");
   debugPrint("build wordcloud window.");
-  bool rebuild = ref.watch(wordcloudBuildProvider);
   bool pngBuild = word_cloud_file.existsSync();
   if (!pngBuild) {
     return Column(children: [
@@ -184,30 +193,5 @@ Widget wordcloudWindow() {
   }
   
   return Text("bug");
-
-  //  pngBuild & pngLoad
-  //                     ? Column(
-  //                         children: [
-  //                           Image.asset(word_cloud_image_path),
-  //                           SaveWordCloudButton(
-  //                             wordCloudImagePath: word_cloud_image_path,
-  //                           ),
-  //                         ],
-  //                       )
-  //                     : Column(
-  //                         children: [
-  //                           SizedBox(height: 50),
-  //                           Text("No model has been built"),
-  //                           ElevatedButton(
-  //                             onPressed: () {
-  //                               setState(() {
-  //                                 pngLoad = true;
-  //                               });
-  //                             },
-  //                             child: const Text("load"),
-  //                           ),
-  //                         ],
-  //                       ),
-  // return ;
-}
+  }
 }
