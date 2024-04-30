@@ -32,6 +32,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/save_wordcloud_png.dart';
+import 'package:rattle/provider/checkbox.dart';
 
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/stdout.dart';
@@ -44,7 +45,7 @@ import 'package:rattle/r/extract_tree.dart';
 
 var systemTempDir = Directory.systemTemp;
 
-String word_cloud_image_path =  "${systemTempDir.path}/wordcloud.png";
+String word_cloud_image_path = "${systemTempDir.path}/wordcloud.png";
 File word_cloud_file = File(word_cloud_image_path);
 
 class ModelTab extends ConsumerStatefulWidget {
@@ -127,8 +128,12 @@ class _ModelTabState extends ConsumerState<ModelTab> {
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10),
                 child: SingleChildScrollView(
-                  child: wordcloudWindow(),
-                ),
+                    child: Column(
+                  children: [
+                    ConfigBar(),
+                    WordCloudWindow(),
+                  ],
+                )),
               ),
             ),
           ),
@@ -163,36 +168,61 @@ class _ModelTabState extends ConsumerState<ModelTab> {
       ),
     );
   }
-
 }
 
+class WordCloudWindow extends StatelessWidget {
+  const WordCloudWindow({super.key});
 
-class wordcloudWindow extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context) {
+    // reload the wordcloud png
+    imageCache.clear();
+    imageCache.clearLiveImages();
+    // bool rebuild = ref.watch(wordcloudBuildProvider);
+    debugPrint("path: ${word_cloud_image_path}");
+    debugPrint("build wordcloud window.");
+    bool pngBuild = word_cloud_file.existsSync();
+    if (!pngBuild) {
+      return Column(
+        children: [
+          SizedBox(height: 50),
+          Text("No model has been built"),
+        ],
+      );
+    }
+
+    if (pngBuild) {
+      return Column(
+        children: [
+          Image.file(File(word_cloud_image_path)),
+          SaveWordCloudButton(
+            wordCloudImagePath: word_cloud_image_path,
+          ),
+        ],
+      );
+    }
+
+    return const Text("bug");
+  }
+}
+
+class ConfigBar extends ConsumerWidget {
+  const ConfigBar({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-  // reload the wordcloud png
-  imageCache.clear();
-  imageCache.clearLiveImages();
-  // bool rebuild = ref.watch(wordcloudBuildProvider);
-  debugPrint("path: ${word_cloud_image_path}");
-  debugPrint("build wordcloud window.");
-  bool pngBuild = word_cloud_file.existsSync();
-  if (!pngBuild) {
-    return Column(children: [
-      SizedBox(height: 50),
-      Text("No model has been built"),
-    ],);
-  }
-
-  if (pngBuild) { 
-    return Column(children: [
-                            Image.file(File(word_cloud_image_path)),
-                            SaveWordCloudButton(
-                              wordCloudImagePath: word_cloud_image_path,
-                            ),      
-    ],);
-  }
-  
-  return Text("bug");
+    return SizedBox(
+      width: 100.0,
+      height: 100.0,
+      child: CheckboxListTile(
+        value: ref.watch(checkboxProvider),
+        onChanged: (bool? v) => {
+          ref.read(checkboxProvider.notifier).state = v!,
+        },
+        title: const Text("random order"),
+      ),
+    );
   }
 }
+
+

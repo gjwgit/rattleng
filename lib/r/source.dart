@@ -30,6 +30,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/tab.dart';
+import 'package:rattle/provider/checkbox.dart';
 
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
@@ -56,6 +57,7 @@ void rSource(WidgetRef ref, String script) {
   // Initialise the state variables used here.
 
   String path = ref.read(pathProvider);
+  bool checkbox = ref.read(checkboxProvider);
   bool partition = ref.read(partitionProvider);
   bool normalise = ref.read(normaliseProvider);
 
@@ -84,6 +86,7 @@ void rSource(WidgetRef ref, String script) {
 
   code = code.replaceAll('FILENAME', path);
   code = code.replaceAll('WORDCLOUDPATH', word_cloud_image_path);
+  code = code.replaceAll("RANDOMORDER", checkbox.toString().toUpperCase());
 
   // TODO if (script.contains('^dataset_')) {
 
