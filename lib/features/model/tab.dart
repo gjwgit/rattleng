@@ -39,7 +39,9 @@ import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/radio_buttons.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
+import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
+import 'package:rattle/provider/wordcloud/stopword.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 
@@ -258,6 +260,28 @@ class _ConfigBarState extends ConsumerState<ConfigBar> {
               },
             ),
             const Text("stem"),
+          ],
+        ),
+        Row(
+          children: [
+            Checkbox(
+              value: ref.watch(stopwordProvider),
+              onChanged: (bool? v) => {
+                ref.read(stopwordProvider.notifier).state = v!,
+              },
+            ),
+            const Text("remove stopword"),
+          ],
+        ),
+        Row(
+          children: [
+            Checkbox(
+              value: ref.watch(punctuationProvider),
+              onChanged: (bool? v) => {
+                ref.read(punctuationProvider.notifier).state = v!,
+              },
+            ),
+            const Text("remove punctuation"),
           ],
         ),
         const SizedBox(

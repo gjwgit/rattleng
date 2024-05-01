@@ -11,7 +11,12 @@ docs <- Corpus(VectorSource(text_data))
 if (STEM) {
     docs <- tm_map(docs, stemDocument)
 }
-
+if (PUNCTUATION) {
+    docs <- tm_map(docs, removePunctuation)
+}
+if (STOPWORD) {
+    docs <- tm_map(docs, removeWords, stopwords("english"))
+}
 # Convert text data to a single character string
 # text <- paste(text_data, collapse = " ")
 dtm <- TermDocumentMatrix(docs)
