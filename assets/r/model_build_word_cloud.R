@@ -1,12 +1,23 @@
 # Load required library
+library(tm)
 library(wordcloud)
 
 # Sample text data
 text_data <- readLines("FILENAME")
 
-# Convert text data to a single character string
-text <- paste(text_data, collapse = " ")
+docs <- Corpus(VectorSource(text_data))
 
+# preprocessing
+if (STEM) {
+    docs <- tm_map(docs, stemDocument)
+}
+
+# Convert text data to a single character string
+# text <- paste(text_data, collapse = " ")
+dtm <- TermDocumentMatrix(docs)
+m <- as.matrix(dtm)
+v <- sort(rowSums(m),decreasing=TRUE)
+d <- data.frame(word = names(v),freq=v)
 
 # Set seed for reproducibility
 set.seed(123)
@@ -17,6 +28,6 @@ set.seed(123)
 png("WORDCLOUDPATH", width = 800, height = 600, units = "px")
 
 # Generate word cloud
-wordcloud(text, scale=c(5,0.5), min.freq = 1, max.word = MAXWORD, random.order = RANDOMORDER, colors=brewer.pal(8, "Dark2"))
+wordcloud(words = d$word, freq = d$freq, scale=c(5,0.5), min.freq = 1, max.word = MAXWORD, random.order = RANDOMORDER, colors=brewer.pal(8, "Dark2"))
 
 dev.off()

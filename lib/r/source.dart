@@ -38,6 +38,7 @@ import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/pty.dart';
 import 'package:rattle/provider/target.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
+import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/timestamp.dart';
@@ -59,6 +60,7 @@ void rSource(WidgetRef ref, String script) {
 
   String path = ref.read(pathProvider);
   bool checkbox = ref.read(checkboxProvider);
+  bool stem = ref.read(stemProvider);
   bool partition = ref.read(partitionProvider);
   bool normalise = ref.read(normaliseProvider);
   String maxWord = ref.read(maxWordProvider);
@@ -88,6 +90,7 @@ void rSource(WidgetRef ref, String script) {
   code = code.replaceAll('FILENAME', path);
   code = code.replaceAll('WORDCLOUDPATH', word_cloud_image_path);
   code = code.replaceAll("RANDOMORDER", checkbox.toString().toUpperCase());
+  code = code.replaceAll('STEM', stem ? "TRUE" : "FALSE");
   if (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
   {
     code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString());

@@ -39,6 +39,7 @@ import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/radio_buttons.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
+import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 
@@ -47,7 +48,6 @@ import 'package:rattle/r/extract_tree.dart';
 var systemTempDir = Directory.systemTemp;
 
 String word_cloud_image_path = "${systemTempDir.path}/wordcloud.png";
-File word_cloud_file = File(word_cloud_image_path);
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({Key? key}) : super(key: key);
@@ -176,12 +176,14 @@ class WordCloudWindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("wordcloud window build");
+    debugPrint("path: ${word_cloud_image_path}");
     // reload the wordcloud png
     imageCache.clear();
     imageCache.clearLiveImages();
     // bool rebuild = ref.watch(wordcloudBuildProvider);
-    debugPrint("path: ${word_cloud_image_path}");
-    debugPrint("build wordcloud window.");
+    // debugPrint("build wordcloud window.");
+    var word_cloud_file = File(word_cloud_image_path);
     bool pngBuild = word_cloud_file.existsSync();
     if (!pngBuild) {
       debugPrint("No model has been built.");
@@ -195,7 +197,7 @@ class WordCloudWindow extends StatelessWidget {
 
     if (pngBuild) {
       debugPrint("model has been built.");
-      
+
       return Column(
         children: [
           Image.file(File(word_cloud_image_path)),
@@ -244,7 +246,18 @@ class _ConfigBarState extends ConsumerState<ConfigBar> {
                 ref.read(checkboxProvider.notifier).state = v!,
               },
             ),
-            Text("random order"),
+            const Text("random order"),
+          ],
+        ),
+        Row(
+          children: [
+            Checkbox(
+              value: ref.watch(stemProvider),
+              onChanged: (bool? v) => {
+                ref.read(stemProvider.notifier).state = v!,
+              },
+            ),
+            const Text("stem"),
           ],
         ),
         const SizedBox(
