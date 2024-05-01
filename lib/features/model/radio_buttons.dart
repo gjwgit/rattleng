@@ -61,6 +61,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
   @override
   Widget build(BuildContext context) {
     String model = ref.watch(modelProvider);
+    debugPrint("ModelRadioButtonsState build");
 
     return Row(
       children: <Widget>[
