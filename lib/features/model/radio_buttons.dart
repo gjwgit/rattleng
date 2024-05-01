@@ -34,6 +34,7 @@ import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/timestamp.dart';
 
 class ModelRadioButtons extends ConsumerStatefulWidget {
   const ModelRadioButtons({Key? key}) : super(key: key);
