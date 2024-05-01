@@ -32,12 +32,13 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/save_wordcloud_png.dart';
-import 'package:rattle/provider/checkbox.dart';
+import 'package:rattle/provider/wordcloud/checkbox.dart';
 
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/radio_buttons.dart';
+import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 
@@ -183,6 +184,7 @@ class WordCloudWindow extends StatelessWidget {
     debugPrint("build wordcloud window.");
     bool pngBuild = word_cloud_file.existsSync();
     if (!pngBuild) {
+      debugPrint("No model has been built.");
       return Column(
         children: [
           SizedBox(height: 50),
@@ -192,6 +194,8 @@ class WordCloudWindow extends StatelessWidget {
     }
 
     if (pngBuild) {
+      debugPrint("model has been built.");
+      
       return Column(
         children: [
           Image.file(File(word_cloud_image_path)),
@@ -206,23 +210,102 @@ class WordCloudWindow extends StatelessWidget {
   }
 }
 
-class ConfigBar extends ConsumerWidget {
+class ConfigBar extends ConsumerStatefulWidget {
   const ConfigBar({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      width: 100.0,
-      height: 100.0,
-      child: CheckboxListTile(
-        value: ref.watch(checkboxProvider),
-        onChanged: (bool? v) => {
-          ref.read(checkboxProvider.notifier).state = v!,
-        },
-        title: const Text("random order"),
-      ),
+  ConsumerState<ConfigBar> createState() => _ConfigBarState();
+}
+
+class _ConfigBarState extends ConsumerState<ConfigBar> {
+  final maxWordTextController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    maxWordTextController.addListener(_updateMaxWordProvider);
+  }
+
+  @override
+  void dispose() {
+    maxWordTextController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // checkbox for random color
+        Row(
+          children: [
+            Checkbox(
+              value: ref.watch(checkboxProvider),
+              onChanged: (bool? v) => {
+                ref.read(checkboxProvider.notifier).state = v!,
+              },
+            ),
+            Text("random order"),
+          ],
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        // max word text field
+        SizedBox(
+          width: 100.0,
+          child: TextField(
+            controller: maxWordTextController,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(), hintText: "max word"),
+          ),
+        ),
+      ],
     );
+  }
+
+  void _updateMaxWordProvider() {
+    debugPrint("max word text changed to ${maxWordTextController.text}");
+    ref.read(maxWordProvider.notifier).state = maxWordTextController.text;
   }
 }
 
+// class ConfigBar extends ConsumerWidget {
+//   const ConfigBar({super.key});
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     return Row(
+//       children: [
+//         // checkbox for random color
+//         Row(
+//           children: [
+//             Checkbox(
+//               value: ref.watch(checkboxProvider),
+//               onChanged: (bool? v) => {
+//                 ref.read(checkboxProvider.notifier).state = v!,
+//               },
+//             ),
+//             Text("random order"),
+//           ],
+//         ),
+//         const SizedBox(width: 5,),
+//         // max word text field
+//         SizedBox(
+//           width: 100.0,
+//           child: TextField(
+//             decoration: InputDecoration(
+//                 border: OutlineInputBorder(), hintText: "max word"),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
+// class MaxWordTextField extends ConsumerStatefulWidget {
+//   @override
+//   ConsumerState<ConsumerStatefulWidget> createState() {
+//     // TODO: implement createState
+//     throw UnimplementedError();
+//   }
+
+// }

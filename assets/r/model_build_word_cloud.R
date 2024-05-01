@@ -17,6 +17,6 @@ set.seed(123)
 png("WORDCLOUDPATH", width = 800, height = 600, units = "px")
 
 # Generate word cloud
-wordcloud(text, scale=c(5,0.5), min.freq = 1, random.order = RANDOMORDER, colors=brewer.pal(8, "Dark2"))
+wordcloud(text, scale=c(5,0.5), min.freq = 1, max.word = MAXWORD, random.order = RANDOMORDER, colors=brewer.pal(8, "Dark2"))
 
 dev.off()

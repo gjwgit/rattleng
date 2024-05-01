@@ -30,13 +30,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/tab.dart';
-import 'package:rattle/provider/checkbox.dart';
+import 'package:rattle/provider/wordcloud/checkbox.dart';
 
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/pty.dart';
 import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/timestamp.dart';
@@ -60,7 +61,7 @@ void rSource(WidgetRef ref, String script) {
   bool checkbox = ref.read(checkboxProvider);
   bool partition = ref.read(partitionProvider);
   bool normalise = ref.read(normaliseProvider);
-
+  String maxWord = ref.read(maxWordProvider);
   // First obtain the text from the script.
 
   debugPrint("R SOURCE:\t\t'$script.R'");
@@ -87,6 +88,15 @@ void rSource(WidgetRef ref, String script) {
   code = code.replaceAll('FILENAME', path);
   code = code.replaceAll('WORDCLOUDPATH', word_cloud_image_path);
   code = code.replaceAll("RANDOMORDER", checkbox.toString().toUpperCase());
+  if (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
+  {
+    code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString());
+  }
+  else {
+    // default
+    code = code.replaceAll("MAXWORD", "Inf");
+  }
+
 
   // TODO if (script.contains('^dataset_')) {
 
