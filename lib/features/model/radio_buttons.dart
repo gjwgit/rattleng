@@ -34,7 +34,6 @@ import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/timestamp.dart';
 
 class ModelRadioButtons extends ConsumerStatefulWidget {
   const ModelRadioButtons({Key? key}) : super(key: key);
@@ -57,7 +56,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
 
   // Default selected valueas an idex into the modellers.
 
-  int selectedValue = 2;
+  int selectedValue = 3;
 
   void selectRadio(int value) {
     setState(() {
@@ -132,6 +131,8 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
   }
 
   Widget buildRadioTile(int value, String label) {
+    debugPrint("selectedValue is $selectedValue");
+    
     return GestureDetector(
       onTap: () {
         selectRadio(value);
@@ -143,6 +144,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
             groupValue: selectedValue,
             onChanged: (int? newValue) {
               selectRadio(newValue!);
+              debugPrint("model provider changed to $label");
               ref.read(modelProvider.notifier).state = label;
               debugPrint("SET MODEL RADIO BUTTON TO $label");
             },
