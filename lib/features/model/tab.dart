@@ -59,11 +59,13 @@ class ModelTab extends ConsumerStatefulWidget {
   ConsumerState<ModelTab> createState() => _ModelTabState();
 }
 
-class _ModelTabState extends ConsumerState<ModelTab> {
+class _ModelTabState extends ConsumerState<ModelTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     String model = ref.watch(modelProvider);
     String stdout = ref.watch(stdoutProvider);
+    debugPrint("modeltab rebuild.");
     return Scaffold(
       body: Column(
         children: [
@@ -172,6 +174,9 @@ class _ModelTabState extends ConsumerState<ModelTab> {
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class WordCloudWindow extends StatelessWidget {
