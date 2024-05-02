@@ -46,7 +46,14 @@ class ModelRadioButtons extends ConsumerStatefulWidget {
 class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
   // List of modellers we support.
 
-  List<String> modellers = ['Cluster', 'Associate', 'Tree', 'Forest', 'Boost', 'Word Cloud'];
+  List<String> modellers = [
+    'Cluster',
+    'Associate',
+    'Tree',
+    'Forest',
+    'Boost',
+    'Word Cloud'
+  ];
 
   // Default selected valueas an idex into the modellers.
 
@@ -72,7 +79,9 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
             debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
                 "$selectedValue = ${modellers[selectedValue]}");
 
-            rSource(ref, "model_template");
+            if (model != "Word Cloud") {
+              rSource(ref, "model_template");
+            }
 
             switch (model) {
               case "Tree":
@@ -80,13 +89,12 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
               case "Forest":
                 rSource(ref, "model_build_random_forest");
               case "Word Cloud":
-                // context.read(pngPathProvider).state = 
+                // context.read(pngPathProvider).state =
                 File old_wordcloud_file = File(word_cloud_image_path);
                 if (old_wordcloud_file.existsSync()) {
                   old_wordcloud_file.deleteSync();
                   debugPrint("old wordcloud file deleted");
-                }
-                else {
+                } else {
                   debugPrint("old wordcloud file not exists");
                 }
                 rSource(ref, "model_build_word_cloud");
@@ -104,8 +112,8 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 }
               }
               // toggle the state
-              ref.read(wordcloudBuildProvider.notifier).state = !ref.read(wordcloudBuildProvider.notifier).state;
-
+              ref.read(wordcloudBuildProvider.notifier).state =
+                  !ref.read(wordcloudBuildProvider.notifier).state;
             }
           },
           child: const Text('Build'),
