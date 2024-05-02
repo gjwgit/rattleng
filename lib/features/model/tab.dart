@@ -39,6 +39,7 @@ import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/radio_buttons.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
+import 'package:rattle/provider/wordcloud/minfreq.dart';
 import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
@@ -223,78 +224,100 @@ class ConfigBar extends ConsumerStatefulWidget {
 
 class _ConfigBarState extends ConsumerState<ConfigBar> {
   final maxWordTextController = TextEditingController();
+  final minFreqTextController = TextEditingController();
   @override
   void initState() {
     super.initState();
     maxWordTextController.addListener(_updateMaxWordProvider);
+    minFreqTextController.addListener(_updateMinFreqProvider);
   }
 
   @override
   void dispose() {
     maxWordTextController.dispose();
+    minFreqTextController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        // checkbox for random color
         Row(
           children: [
-            Checkbox(
-              value: ref.watch(checkboxProvider),
-              onChanged: (bool? v) => {
-                ref.read(checkboxProvider.notifier).state = v!,
-              },
+            // checkbox for random color
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(checkboxProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(checkboxProvider.notifier).state = v!,
+                  },
+                ),
+                const Text("random order"),
+              ],
             ),
-            const Text("random order"),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(stemProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(stemProvider.notifier).state = v!,
+                  },
+                ),
+                const Text("stem"),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(stopwordProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(stopwordProvider.notifier).state = v!,
+                  },
+                ),
+                const Text("remove stopword"),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(punctuationProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(punctuationProvider.notifier).state = v!,
+                  },
+                ),
+                const Text("remove punctuation"),
+              ],
+            ),
+            const SizedBox(
+              width: 5,
+            ),
           ],
         ),
         Row(
           children: [
-            Checkbox(
-              value: ref.watch(stemProvider),
-              onChanged: (bool? v) => {
-                ref.read(stemProvider.notifier).state = v!,
-              },
+            // max word text field
+            SizedBox(
+              width: 150.0,
+              child: TextField(
+                controller: maxWordTextController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), hintText: "max word"),
+              ),
             ),
-            const Text("stem"),
-          ],
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value: ref.watch(stopwordProvider),
-              onChanged: (bool? v) => {
-                ref.read(stopwordProvider.notifier).state = v!,
-              },
+            SizedBox(
+              width: 5,
             ),
-            const Text("remove stopword"),
-          ],
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value: ref.watch(punctuationProvider),
-              onChanged: (bool? v) => {
-                ref.read(punctuationProvider.notifier).state = v!,
-              },
+            SizedBox(
+              width: 150.0,
+              child: TextField(
+                controller: minFreqTextController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), hintText: "min freq"),
+              ),
             ),
-            const Text("remove punctuation"),
           ],
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        // max word text field
-        SizedBox(
-          width: 100.0,
-          child: TextField(
-            controller: maxWordTextController,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(), hintText: "max word"),
-          ),
         ),
       ],
     );
@@ -303,6 +326,11 @@ class _ConfigBarState extends ConsumerState<ConfigBar> {
   void _updateMaxWordProvider() {
     debugPrint("max word text changed to ${maxWordTextController.text}");
     ref.read(maxWordProvider.notifier).state = maxWordTextController.text;
+  }
+
+  void _updateMinFreqProvider() {
+    debugPrint("min freq text changed to ${minFreqTextController.text}");
+    ref.read(minFreqProvider.notifier).state = minFreqTextController.text;
   }
 }
 

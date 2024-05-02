@@ -38,6 +38,7 @@ import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/pty.dart';
 import 'package:rattle/provider/target.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
+import 'package:rattle/provider/wordcloud/minfreq.dart';
 import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
@@ -68,6 +69,7 @@ void rSource(WidgetRef ref, String script) {
   bool partition = ref.read(partitionProvider);
   bool normalise = ref.read(normaliseProvider);
   String maxWord = ref.read(maxWordProvider);
+  String minFreq = ref.read(minFreqProvider);
   // First obtain the text from the script.
 
   debugPrint("R SOURCE:\t\t'$script.R'");
@@ -97,6 +99,15 @@ void rSource(WidgetRef ref, String script) {
   code = code.replaceAll('STEM', stem ? "TRUE" : "FALSE");
   code = code.replaceAll('PUNCTUATION', punctuation ? "TRUE" : "FALSE");
   code = code.replaceAll('STOPWORD', stopword ? "TRUE" : "FALSE");
+  
+  if (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
+  {
+    code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString());
+  }
+  else {
+    // default
+    code = code.replaceAll("MINFREQ", "1");
+  }
   if (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
   {
     code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString());
