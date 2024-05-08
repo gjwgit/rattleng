@@ -31,7 +31,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/features/model/forest_tab.dart';
 import 'package:rattle/features/model/save_wordcloud_png.dart';
+import 'package:rattle/features/model/tree_tab.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 
 import 'package:rattle/provider/model.dart';
@@ -46,6 +48,81 @@ import 'package:rattle/provider/wordcloud/stopword.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/r/extract_tree.dart';
 
+final List<Map<String, dynamic>> tabs = [
+  {
+    'title': "Cluster",
+    "widget": const Column(
+      children: <Widget>[
+        SizedBox(height: 50),
+        Text("NOT YET IMPLEMENTED"),
+      ],
+    ),
+  },
+  {
+    'title': "Associate",
+    "widget": const Column(
+      children: <Widget>[
+        SizedBox(height: 50),
+        Text("NOT YET IMPLEMENTED"),
+      ],
+    ),
+  },
+  {
+    'title': "Tree",
+    "widget": const TreeTab(),
+  },
+  {
+    'title': "Forest",
+    "widget": const ForestTab(),
+  },
+  {
+    'title': "Boost",
+    "widget": const Column(
+      children: <Widget>[
+        SizedBox(height: 50),
+        Text("NOT YET IMPLEMENTED"),
+      ],
+    ),
+  },
+  {
+    'title': "Wordcloud",
+    "widget": SingleChildScrollView(
+        child: Column(
+      children: [
+        ConfigBar(),
+        WordCloudWindow(),
+      ],
+    )),
+  },
+  {
+    'title': "SVM",
+    "widget": const Column(
+      children: <Widget>[
+        SizedBox(height: 50),
+        Text("NOT YET IMPLEMENTED"),
+      ],
+    ),
+  },
+  {
+    'title': "Linear",
+    "widget": const Column(
+      children: <Widget>[
+        SizedBox(height: 50),
+        Text("NOT YET IMPLEMENTED"),
+      ],
+    ),
+  },
+  {
+    'title': "Neural",
+    "widget": const Column(
+      children: <Widget>[
+        SizedBox(height: 50),
+        Text("NOT YET IMPLEMENTED"),
+      ],
+    ),
+  },
+];
+
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
 var systemTempDir = Directory.systemTemp;
@@ -59,122 +136,48 @@ class ModelTab extends ConsumerStatefulWidget {
   ConsumerState<ModelTab> createState() => _ModelTabState();
 }
 
-class _ModelTabState extends ConsumerState<ModelTab> with AutomaticKeepAliveClientMixin {
+class _ModelTabState extends ConsumerState<ModelTab>
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+  // disable the automatic rebuild everytime we switch to here.
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: tabs.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    String model = ref.watch(modelProvider);
-    String stdout = ref.watch(stdoutProvider);
     debugPrint("modeltab rebuild.");
     return Scaffold(
-      body: Column(
-        children: [
-          const ModelRadioButtons(),
-          Visibility(
-            visible: model == "Cluster",
-            child: const Column(
-              children: <Widget>[
-                SizedBox(height: 50),
-                Text("NOT YET IMPLEMENTED"),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: model == "Associate",
-            child: const Column(
-              children: <Widget>[
-                SizedBox(height: 50),
-                Text("NOT YET IMPLEMENTED"),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: model == "Tree",
-            child: Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 10),
-                child: SingleChildScrollView(
-                  child: SelectableText(
-                    rExtractTree(stdout),
-                    style: monoTextStyle,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: model == "Forest",
-            child: Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 10),
-                child: SingleChildScrollView(
-                  child: SelectableText(
-                    rExtractForest(stdout),
-                    style: monoTextStyle,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: model == "Boost",
-            child: const Column(
-              children: <Widget>[
-                SizedBox(height: 50),
-                Text("NOT YET IMPLEMENTED"),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: model == "Word Cloud",
-            child: Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 10),
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: [
-                    ConfigBar(),
-                    WordCloudWindow(),
-                  ],
-                )),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: model == "SVM",
-            child: const Column(
-              children: <Widget>[
-                SizedBox(height: 50),
-                Text("NOT YET IMPLEMENTED"),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: model == "Linear",
-            child: const Column(
-              children: <Widget>[
-                SizedBox(height: 50),
-                Text("NOT YET IMPLEMENTED"),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: model == "Neural",
-            child: const Column(
-              children: <Widget>[
-                SizedBox(height: 50),
-                Text("NOT YET IMPLEMENTED"),
-              ],
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        bottom: TabBar(
+          unselectedLabelColor: Colors.grey,
+          controller: _tabController,
+          tabs: tabs.map((tab) {
+            return Tab(
+              text: tab['title'],
+            );
+          }).toList(),
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: tabs.map((tab) {
+          return tab['widget'] as Widget;
+        }).toList(),
       ),
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }
