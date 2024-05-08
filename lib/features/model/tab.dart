@@ -138,7 +138,7 @@ class ModelTab extends ConsumerStatefulWidget {
 
 class _ModelTabState extends ConsumerState<ModelTab>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  // disable the automatic rebuild everytime we switch to here.
+  
   late TabController _tabController;
 
   @override
@@ -158,7 +158,7 @@ class _ModelTabState extends ConsumerState<ModelTab>
     super.build(context);
     debugPrint("modeltab rebuild.");
     // TODO remove white space above the yyx
-    // TODO missing build button
+    // TODO missing build button yyx
     return Scaffold(
       appBar: AppBar(
         bottom: TabBar(
@@ -180,6 +180,7 @@ class _ModelTabState extends ConsumerState<ModelTab>
     );
   }
 
+  // disable the automatic rebuild everytime we switch to the model tab.
   @override
   bool get wantKeepAlive => true;
 }
