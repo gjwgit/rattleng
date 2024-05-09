@@ -10,15 +10,13 @@ class ForestTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String stdout = ref.watch(stdoutProvider);
-    return Expanded(
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.only(left: 10),
-        child: SingleChildScrollView(
-          child: SelectableText(
-            rExtractForest(stdout),
-            style: monoTextStyle,
-          ),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.only(left: 10),
+      child: SingleChildScrollView(
+        child: SelectableText(
+          rExtractForest(stdout),
+          style: monoTextStyle,
         ),
       ),
     );
