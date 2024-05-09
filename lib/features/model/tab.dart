@@ -138,7 +138,6 @@ class ModelTab extends ConsumerStatefulWidget {
 
 class _ModelTabState extends ConsumerState<ModelTab>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  
   late TabController _tabController;
 
   @override
@@ -157,11 +156,10 @@ class _ModelTabState extends ConsumerState<ModelTab>
   Widget build(BuildContext context) {
     super.build(context);
     debugPrint("modeltab rebuild.");
-    // TODO remove white space above the yyx
     // TODO missing build button yyx
-    return Scaffold(
-      appBar: AppBar(
-        bottom: TabBar(
+    return Column(
+      children: [
+        TabBar(
           unselectedLabelColor: Colors.grey,
           controller: _tabController,
           tabs: tabs.map((tab) {
@@ -170,13 +168,15 @@ class _ModelTabState extends ConsumerState<ModelTab>
             );
           }).toList(),
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: tabs.map((tab) {
-          return tab['widget'] as Widget;
-        }).toList(),
-      ),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: tabs.map((tab) {
+              return tab['widget'] as Widget;
+            }).toList(),
+          ),
+        ),
+      ],
     );
   }
 
