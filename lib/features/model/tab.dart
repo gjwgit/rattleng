@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/features/model/build_button.dart';
 import 'package:rattle/features/model/forest_tab.dart';
 import 'package:rattle/features/model/save_wordcloud_png.dart';
 import 'package:rattle/features/model/tree_tab.dart';
@@ -91,6 +92,7 @@ final List<Map<String, dynamic>> tabs = [
       children: [
         ConfigBar(),
         WordCloudWindow(),
+        ModelBuildButton(),
       ],
     )),
   },
@@ -156,7 +158,8 @@ class _ModelTabState extends ConsumerState<ModelTab>
   Widget build(BuildContext context) {
     super.build(context);
     debugPrint("modeltab rebuild.");
-    // TODO missing build button yyx
+    // TODO missing build button; place it on the bottom right as a floating button yyx
+    
     return Column(
       children: [
         TabBar(
@@ -221,7 +224,6 @@ class WordCloudWindow extends StatelessWidget {
         ],
       );
     }
-
     return const Text("bug");
   }
 }
