@@ -37,17 +37,11 @@ import 'package:rattle/features/model/save_wordcloud_png.dart';
 import 'package:rattle/features/model/tree_tab.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 
-import 'package:rattle/provider/model.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/features/model/radio_buttons.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/provider/wordcloud/minfreq.dart';
 import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
-import 'package:rattle/r/extract_forest.dart';
-import 'package:rattle/r/extract_tree.dart';
 
 final List<Map<String, dynamic>> tabs = [
   {
@@ -87,6 +81,7 @@ final List<Map<String, dynamic>> tabs = [
   },
   {
     'title': "Wordcloud",
+    // TODO put them in a class wordcloudtab
     "widget": SingleChildScrollView(
         child: Column(
       children: [
