@@ -1,29 +1,3 @@
-/// Radio buttons to choose the model to build.
-///
-/// Time-stamp: <Friday 2023-11-03 09:06:19 +1100 Graham Williams>
-///
-/// Copyright (C) 2023, Togaware Pty Ltd.
-///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
-//
-// This program is free software: you can redistribute it and/or modify it under
-// the terms of the GNU General Public License as published by the Free Software
-// Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-// details.
-//
-// You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
-///
-/// Authors: Graham Williams
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -34,6 +8,7 @@ import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/timestamp.dart';
 
 class ModelBuildButton extends ConsumerStatefulWidget {
   const ModelBuildButton({Key? key}) : super(key: key);
@@ -51,7 +26,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
     'Tree',
     'Forest',
     'Boost',
-    'Word Cloud'
+    'Wordcloud',
   ];
 
   // Default selected valueas an idex into the modellers.
@@ -67,15 +42,15 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
   @override
   Widget build(BuildContext context) {
     String model = ref.watch(modelProvider);
+    debugPrint("current model tab is $model");
     debugPrint("ModelBuildButton build");
 
     return ElevatedButton(
       onPressed: () async {
         // Handle button click here
-        debugPrint("MODEL BUTTON CLICKED! SELECTED VALUE "
-            "$selectedValue = ${modellers[selectedValue]}");
+        debugPrint("MODEL BUTTON CLICKED for $model");
 
-        if (model != "Word Cloud") {
+        if (model != "Wordcloud") {
           rSource(ref, "model_template");
         }
 
@@ -84,7 +59,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
             rSource(ref, "model_build_rpart");
           case "Forest":
             rSource(ref, "model_build_random_forest");
-          case "Word Cloud":
+          case "Wordcloud":
             // context.read(pngPathProvider).state =
             File old_wordcloud_file = File(word_cloud_image_path);
             if (old_wordcloud_file.existsSync()) {
@@ -97,9 +72,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
           default:
             debugPrint("NO ACTION FOR THIS BUTTON $model");
         }
-        if (model == "Word Cloud") {
-          // TODO dependency wordcloud yyx
-          // TODO do we need this while loop? yyx
+        if (model == "Wordcloud") {
           final file = File(word_cloud_image_path);
           while (true) {
             if (await file.exists()) {
@@ -107,9 +80,10 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
               break;
             }
           }
-          // toggle the state
+          // toggle the state to trigger rebuild
+          debugPrint("build clicked on ${timestamp()}");
           ref.read(wordcloudBuildProvider.notifier).state =
-              !ref.read(wordcloudBuildProvider.notifier).state;
+              timestamp();
         }
       },
       child: const Text('Build'),
