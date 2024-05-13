@@ -47,6 +47,7 @@ import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
 
+Widget buildButton = const ModelBuildButton();
 final List<Map<String, dynamic>> tabs = [
   {
     'title': "Cluster",
@@ -68,11 +69,13 @@ final List<Map<String, dynamic>> tabs = [
   },
   {
     'title': "Tree",
-    "widget": const TreeTab(),
+    "widget": TreeTab(
+      buildButton: buildButton,
+    ),
   },
   {
     'title': "Forest",
-    "widget": const ForestTab(),
+    "widget": ForestTab(buildButton: buildButton),
   },
   {
     'title': "Boost",
@@ -89,9 +92,10 @@ final List<Map<String, dynamic>> tabs = [
     "widget": SingleChildScrollView(
         child: Column(
       children: [
-        ConfigBar(),
+        ConfigBar(
+          buildButton: buildButton,
+        ),
         WordCloudWindow(),
-        ModelBuildButton(),
       ],
     )),
   },
@@ -147,7 +151,8 @@ class _ModelTabState extends ConsumerState<ModelTab>
     _tabController = TabController(length: tabs.length, vsync: this);
 
     _tabController.addListener(() {
-      ref.read(modelProvider.notifier).state = tabs[_tabController.index]["title"];
+      ref.read(modelProvider.notifier).state =
+          tabs[_tabController.index]["title"];
       debugPrint("Selected tab: ${_tabController.index}");
     });
   }
@@ -163,7 +168,7 @@ class _ModelTabState extends ConsumerState<ModelTab>
     super.build(context);
     debugPrint("modeltab rebuild.");
     // TODO missing build button; place it on the bottom right as a floating button yyx
-    
+
     return Column(
       children: [
         TabBar(
@@ -196,7 +201,7 @@ class WordCloudWindow extends ConsumerStatefulWidget {
   const WordCloudWindow({Key? key}) : super(key: key);
   @override
   ConsumerState<WordCloudWindow> createState() => _WordCloudWindowState();
-  
+
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint("wordcloud window build");
     debugPrint("path: ${word_cloud_image_path}");
@@ -210,7 +215,7 @@ class WordCloudWindow extends ConsumerStatefulWidget {
     bool pngBuild = word_cloud_file.existsSync();
     if (!pngBuild) {
       debugPrint("No model has been built.");
-      return Column(
+      return const Column(
         children: [
           SizedBox(height: 50),
           Text("No model has been built"),
@@ -233,6 +238,7 @@ class WordCloudWindow extends ConsumerStatefulWidget {
     return const Text("bug");
   }
 }
+
 class _WordCloudWindowState extends ConsumerState<WordCloudWindow> {
   @override
   Widget build(BuildContext context) {
@@ -272,11 +278,12 @@ class _WordCloudWindowState extends ConsumerState<WordCloudWindow> {
       );
     }
     return const Text("bug");
-  } 
+  }
 }
 
 class ConfigBar extends ConsumerStatefulWidget {
-  const ConfigBar({super.key});
+  final Widget buildButton;
+  const ConfigBar({super.key, required this.buildButton});
 
   @override
   ConsumerState<ConfigBar> createState() => _ConfigBarState();
@@ -303,9 +310,19 @@ class _ConfigBarState extends ConsumerState<ConfigBar> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 5,
+        ),
         Row(
           children: [
+            const SizedBox(
+              width: 5,
+            ),
+            buildButton,
             // checkbox for random color
+            const SizedBox(
+              width: 5,
+            ),
             Row(
               children: [
                 Checkbox(
@@ -355,8 +372,14 @@ class _ConfigBarState extends ConsumerState<ConfigBar> {
             ),
           ],
         ),
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           children: [
+            const SizedBox(
+              width: 5,
+            ),
             // max word text field
             SizedBox(
               width: 150.0,
