@@ -196,7 +196,7 @@ class WordCloudWindow extends ConsumerStatefulWidget {
   const WordCloudWindow({Key? key}) : super(key: key);
   @override
   ConsumerState<WordCloudWindow> createState() => _WordCloudWindowState();
-  @override
+  
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint("wordcloud window build");
     debugPrint("path: ${word_cloud_image_path}");
