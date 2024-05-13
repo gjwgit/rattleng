@@ -141,10 +141,11 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
         children: [
           Radio(
             value: value,
+            // use selectedValue here in the radio button
             groupValue: selectedValue,
             onChanged: (int? newValue) {
               selectRadio(newValue!);
-              debugPrint("model provider changed to $label");
+              // this should be done when switching tab
               ref.read(modelProvider.notifier).state = label;
               debugPrint("SET MODEL RADIO BUTTON TO $label");
             },

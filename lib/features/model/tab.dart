@@ -31,10 +31,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:rattle/features/dataset/tab.dart';
 import 'package:rattle/features/model/build_button.dart';
 import 'package:rattle/features/model/forest_tab.dart';
 import 'package:rattle/features/model/save_wordcloud_png.dart';
 import 'package:rattle/features/model/tree_tab.dart';
+import 'package:rattle/provider/model.dart';
+import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 
 import 'package:rattle/provider/wordcloud/maxword.dart';
@@ -141,6 +145,11 @@ class _ModelTabState extends ConsumerState<ModelTab>
   void initState() {
     super.initState();
     _tabController = TabController(length: tabs.length, vsync: this);
+
+    _tabController.addListener(() {
+      ref.read(modelProvider.notifier).state = tabs[_tabController.index]["title"];
+      debugPrint("Selected tab: ${_tabController.index}");
+    });
   }
 
   @override
@@ -183,17 +192,19 @@ class _ModelTabState extends ConsumerState<ModelTab>
   bool get wantKeepAlive => true;
 }
 
-class WordCloudWindow extends StatelessWidget {
-  const WordCloudWindow({super.key});
-
+class WordCloudWindow extends ConsumerStatefulWidget {
+  const WordCloudWindow({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  ConsumerState<WordCloudWindow> createState() => _WordCloudWindowState();
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint("wordcloud window build");
     debugPrint("path: ${word_cloud_image_path}");
     // reload the wordcloud png
     imageCache.clear();
     imageCache.clearLiveImages();
-    // bool rebuild = ref.watch(wordcloudBuildProvider);
+    String rebuild = ref.watch(wordcloudBuildProvider);
+    debugPrint("received rebuild on $rebuild");
     // debugPrint("build wordcloud window.");
     var word_cloud_file = File(word_cloud_image_path);
     bool pngBuild = word_cloud_file.existsSync();
@@ -221,6 +232,44 @@ class WordCloudWindow extends StatelessWidget {
     }
     return const Text("bug");
   }
+}
+class _WordCloudWindowState extends ConsumerState<WordCloudWindow> {
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("wordcloud window build");
+    debugPrint("path: ${word_cloud_image_path}");
+    // reload the wordcloud png
+    imageCache.clear();
+    imageCache.clearLiveImages();
+    String rebuild = ref.watch(wordcloudBuildProvider);
+    debugPrint("received rebuild on $rebuild");
+    // debugPrint("build wordcloud window.");
+    var word_cloud_file = File(word_cloud_image_path);
+    bool pngBuild = word_cloud_file.existsSync();
+    if (!pngBuild) {
+      debugPrint("No model has been built.");
+      return Column(
+        children: [
+          SizedBox(height: 50),
+          Text("No model has been built"),
+        ],
+      );
+    }
+
+    if (pngBuild) {
+      debugPrint("model has been built.");
+
+      return Column(
+        children: [
+          Image.file(File(word_cloud_image_path)),
+          SaveWordCloudButton(
+            wordCloudImagePath: word_cloud_image_path,
+          ),
+        ],
+      );
+    }
+    return const Text("bug");
+  } 
 }
 
 class ConfigBar extends ConsumerStatefulWidget {
