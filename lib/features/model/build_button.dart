@@ -82,8 +82,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
           }
           // toggle the state to trigger rebuild
           debugPrint("build clicked on ${timestamp()}");
-          ref.read(wordcloudBuildProvider.notifier).state =
-              timestamp();
+          ref.read(wordcloudBuildProvider.notifier).state = timestamp();
         }
       },
       child: const Text('Build'),
