@@ -248,7 +248,7 @@ class _WordCloudWindowState extends ConsumerState<WordCloudWindow> {
     bool pngBuild = word_cloud_file.existsSync();
     if (!pngBuild) {
       debugPrint("No model has been built.");
-      return Column(
+      return const Column(
         children: [
           SizedBox(height: 50),
           Text("No model has been built"),
@@ -258,6 +258,7 @@ class _WordCloudWindowState extends ConsumerState<WordCloudWindow> {
 
     if (pngBuild) {
       debugPrint("model has been built.");
+      // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
       var bytes = word_cloud_file.readAsBytesSync();
       Image image = Image.memory(bytes);
       return Column(
