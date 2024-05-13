@@ -258,10 +258,12 @@ class _WordCloudWindowState extends ConsumerState<WordCloudWindow> {
 
     if (pngBuild) {
       debugPrint("model has been built.");
-
+      var bytes = word_cloud_file.readAsBytesSync();
+      Image image = Image.memory(bytes);
       return Column(
         children: [
-          Image.file(File(word_cloud_image_path)),
+          Text("the last rebuild time is $rebuild"),
+          image,
           SaveWordCloudButton(
             wordCloudImagePath: word_cloud_image_path,
           ),
