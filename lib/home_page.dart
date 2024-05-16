@@ -1,6 +1,6 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Thursday 2024-05-16 20:40:47 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-05-16 20:44:24 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -123,22 +123,25 @@ class HomePageState extends ConsumerState<HomePage>
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
+          // NOTE 20240516 gjw Remove the Run button - no longer a part of the
+          // app.
+
           // RUN
 
-          IconButton(
-            key: const Key("run_button"),
-            icon: const Icon(
-              Icons.directions_run,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
-              // KEEP OPEN FOR NOW FOR THE MODEL TAB.
-              processTab(tabs[_tabController.index]['title']);
-            },
-            tooltip:
-                "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
-          ),
+          // IconButton(
+          //   key: const Key("run_button"),
+          //   icon: const Icon(
+          //     Icons.directions_run,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {
+          //     debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
+          //     // KEEP OPEN FOR NOW FOR THE MODEL TAB.
+          //     processTab(tabs[_tabController.index]['title']);
+          //   },
+          //   tooltip:
+          //       "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
+          // ),
 
           // RESET
 
