@@ -26,7 +26,9 @@
 
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -91,6 +93,7 @@ class HomePageState extends ConsumerState<HomePage>
       }
     });
   }
+
   Future<void> deleteFileIfExists() async {
     File fileToDelete = File(word_cloud_image_path);
     if (await fileToDelete.exists()) {
@@ -98,6 +101,7 @@ class HomePageState extends ConsumerState<HomePage>
       debugPrint('File ${word_cloud_image_path} deleted');
     }
   }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -184,34 +188,40 @@ class HomePageState extends ConsumerState<HomePage>
             tooltip: "FOR NOW: Report the current TAB.",
           ),
         ],
-
-        // Build the tab bar from the list of tabs, noting the tab title and
-        // icon.
-
-        bottom: TabBar(
-          controller: _tabController,
-          //indicatorColor: Colors.yellow,
-          //labelColor: Colors.yellow,
-          unselectedLabelColor: Colors.grey,
-          // dividerColor: Colors.green,
-          tabAlignment: TabAlignment.fill,
-          isScrollable: false,
-          tabs: tabs.map((tab) {
-            return Tab(
-              icon: Icon(tab['icon']),
-              text: tab['title'],
-            );
-          }).toList(),
-        ),
       ),
 
-      // Associate the Widgets with each of the bodies.
-
-      body: TabBarView(
-        controller: _tabController,
-        children: tabs.map((tab) {
-          return tab['widget'] as Widget;
-        }).toList(),
+      body: Row(
+        children: [
+          // Build the tab bar from the list of tabs, noting the tab title and
+          // icon.
+          RotatedBox(
+            quarterTurns: 1,
+            child: TabBar(
+              controller: _tabController,
+              //indicatorColor: Colors.yellow,
+              //labelColor: Colors.yellow,
+              unselectedLabelColor: Colors.grey,
+              // dividerColor: Colors.green,
+              tabAlignment: TabAlignment.fill,
+              isScrollable: false,
+              tabs: tabs.map((tab) {
+                return Tab(
+                  icon: Icon(tab['icon']),
+                  text: tab['title'],
+                );
+              }).toList(),
+            ),
+          ),
+          // Associate the Widgets with each of the bodies.
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: tabs.map((tab) {
+                return tab['widget'] as Widget;
+              }).toList(),
+            ),
+          ),
+        ],
       ),
 
       // ignore: sized_box_for_whitespace
