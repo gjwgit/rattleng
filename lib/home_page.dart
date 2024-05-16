@@ -1,6 +1,6 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Thursday 2024-05-16 20:44:24 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-05-17 09:36:33 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -188,8 +188,8 @@ class HomePageState extends ConsumerState<HomePage>
             onPressed: () {
               showAboutDialog(
                 context: context,
-                // TODO 20240516 gjw Need pubspec.yaml data here.
-                applicationName: _appName,
+                applicationName:
+                    '${_appName[0].toUpperCase()}${_appName.substring(1)}',
                 applicationVersion: _appVersion,
                 children: [
                   const SelectableText('RattleNG is a modern rewrite of the '
