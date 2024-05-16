@@ -204,34 +204,62 @@ class HomePageState extends ConsumerState<HomePage>
             ),
           ),
         ],
-
-        // Build the tab bar from the list of tabs, noting the tab title and
-        // icon.
-
-        bottom: TabBar(
-          controller: _tabController,
-          //indicatorColor: Colors.yellow,
-          //labelColor: Colors.yellow,
-          unselectedLabelColor: Colors.grey,
-          // dividerColor: Colors.green,
-          tabAlignment: TabAlignment.fill,
-          isScrollable: false,
-          tabs: tabs.map((tab) {
-            return Tab(
-              icon: Icon(tab['icon']),
-              text: tab['title'],
-            );
-          }).toList(),
-        ),
       ),
 
-      // Associate the Widgets with each of the bodies.
+      // Build the tab bar from the list of tabs, noting the tab title and
+      // icon. We rotate the tab bar for placement on the left edge.
 
-      body: TabBarView(
-        controller: _tabController,
-        children: tabs.map((tab) {
-          return tab['widget'] as Widget;
-        }).toList(),
+      body: Row(
+        children: [
+          RotatedBox(
+            quarterTurns: 1,
+            child: TabBar(
+              controller: _tabController,
+              //indicatorColor: Colors.yellow,
+              //labelColor: Colors.yellow,
+              unselectedLabelColor: Colors.grey,
+              // dividerColor: Colors.green,
+              //tabAlignment: TabAlignment.fill,
+              isScrollable: false,
+              tabs: tabs.map((tab) {
+                // Rotate the tabs back the correct direction.
+
+                return RotatedBox(
+                  quarterTurns: -1,
+
+                  // Wrap the tabs within a container so all have the same
+                  // width, rotated, and the highloght is the same for each one
+                  // irrespective of the text width.
+
+                  child: Container(
+                    width: 100.0,
+                    child: Tab(
+                      icon: Icon(tab['icon']),
+                      child: Text(
+                        tab['title'],
+
+                        // Reduce the font size to not overflow the widget.
+
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+
+          // Associate the Widgets with each of the bodies.
+
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: tabs.map((tab) {
+                return tab['widget'] as Widget;
+              }).toList(),
+            ),
+          ),
+        ],
       ),
 
       // ignore: sized_box_for_whitespace
