@@ -1,8 +1,8 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Monday 2023-11-06 12:11:36 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-05-16 20:12:56 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -24,9 +24,12 @@
 ///
 /// Authors: Graham Williams
 
+import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/dataset/tab.dart';
@@ -55,11 +58,13 @@ class HomePage extends ConsumerStatefulWidget {
 class HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  var _appVersion = 'Unknown';
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: tabs.length, vsync: this);
+    _loadAppVersion();
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab
@@ -86,6 +91,13 @@ class HomePageState extends ConsumerState<HomePage>
         // You can also perform other actions here, such as showing a snackbar,
         // calling a function, etc.
       }
+    });
+  }
+
+  Future<void> _loadAppVersion() async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = packageInfo.version; // Set app version from package info
     });
   }
 
@@ -166,7 +178,19 @@ class HomePageState extends ConsumerState<HomePage>
 
           IconButton(
             onPressed: () {
-              debugPrint("TAB is ${tabs[_tabController.index]['title']}");
+              showAboutDialog(
+                context: context,
+                // TODO 20240516 gjw Need pubspec.yaml data here.
+                applicationName: 'Rattle New Generation',
+                applicationVersion: _appVersion,
+                applicationIcon:
+                    const ImageIcon(AssetImage('assets/images/logo.png')),
+                children: [
+                  const SelectableText('RattleNG is a modern rewrite of the '
+                      'very popular Rattle Data Mining and Data Science tool.\n\n'
+                      'Authors: Graham Williams.'),
+                ],
+              );
             },
             icon: const Icon(
               Icons.info,
