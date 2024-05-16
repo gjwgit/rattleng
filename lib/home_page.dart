@@ -1,6 +1,6 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Thursday 2024-05-16 20:12:56 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-05-16 20:40:47 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -24,7 +24,10 @@
 ///
 /// Authors: Graham Williams
 
-import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
+// NOTE 20240516 gjw remove this after adding the Abuot dialog otherwise getting
+// compile errors. What was the purpose of this?
+//
+//import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
 
 import 'package:flutter/material.dart';
 
@@ -59,12 +62,13 @@ class HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   var _appVersion = 'Unknown';
+  var _appName = 'Unknown';
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: tabs.length, vsync: this);
-    _loadAppVersion();
+    _loadAppInfo();
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab
@@ -94,10 +98,11 @@ class HomePageState extends ConsumerState<HomePage>
     });
   }
 
-  Future<void> _loadAppVersion() async {
+  Future<void> _loadAppInfo() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
       _appVersion = packageInfo.version; // Set app version from package info
+      _appName = packageInfo.packageName; // Set app version from package info
     });
   }
 
@@ -181,10 +186,8 @@ class HomePageState extends ConsumerState<HomePage>
               showAboutDialog(
                 context: context,
                 // TODO 20240516 gjw Need pubspec.yaml data here.
-                applicationName: 'Rattle New Generation',
+                applicationName: _appName,
                 applicationVersion: _appVersion,
-                applicationIcon:
-                    const ImageIcon(AssetImage('assets/images/logo.png')),
                 children: [
                   const SelectableText('RattleNG is a modern rewrite of the '
                       'very popular Rattle Data Mining and Data Science tool.\n\n'
@@ -196,7 +199,6 @@ class HomePageState extends ConsumerState<HomePage>
               Icons.info,
               color: Colors.blue,
             ),
-            tooltip: "FOR NOW: Report the current TAB.",
           ),
         ],
 
