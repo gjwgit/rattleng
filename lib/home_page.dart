@@ -1,6 +1,6 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Friday 2024-05-17 09:36:33 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-05-17 10:30:10 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 // NOTE 20240516 gjw remove this after adding the Abuot dialog otherwise getting
 // compile errors. What was the purpose of this?
