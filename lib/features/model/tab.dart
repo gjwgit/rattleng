@@ -384,7 +384,7 @@ class _ConfigBarState extends ConsumerState<ConfigBar> {
               child: TextField(
                 controller: maxWordTextController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: "max word"),
+                    border: OutlineInputBorder(), labelText: "max word"),
               ),
             ),
             SizedBox(
@@ -395,7 +395,7 @@ class _ConfigBarState extends ConsumerState<ConfigBar> {
               child: TextField(
                 controller: minFreqTextController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: "min freq"),
+                    border: OutlineInputBorder(), labelText: "min freq"),
               ),
             ),
           ],
