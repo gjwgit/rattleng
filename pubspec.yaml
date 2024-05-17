@@ -38,7 +38,7 @@ dependencies:
   flutter_riverpod: ^2.4.4
   flutter_svg: ^2.0.7
   intl: ^0.18.1
-  package_info_plus: ^4.1.0
+  package_info_plus: ^5.0.1
   path: ^1.8.0
   provider: ^6.0.5
   riverpod_annotation: ^2.2.1
