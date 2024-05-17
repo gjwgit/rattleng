@@ -4,7 +4,7 @@ summary: Rattle Next Generation Data Science App
 description: Rattle is the data scientists toolkit.
 
 confinement: strict
-base: core18
+base: core20
 grade: stable
 
 slots:
