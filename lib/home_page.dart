@@ -1,8 +1,8 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Monday 2023-11-06 12:11:36 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-05-17 10:30:10 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -22,15 +22,18 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
+
+// NOTE 20240516 gjw remove this after adding the Abuot dialog otherwise getting
+// compile errors. What was the purpose of this?
+//
+//import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
 
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/dataset/tab.dart';
@@ -44,7 +47,6 @@ import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/process_tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 part 'tabs.dart';
@@ -59,12 +61,15 @@ class HomePage extends ConsumerStatefulWidget {
 class HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  var _appVersion = 'Unknown';
+  var _appName = 'Unknown';
 
   @override
   void initState() {
     super.initState();
     deleteFileIfExists();
     _tabController = TabController(length: tabs.length, vsync: this);
+    _loadAppInfo();
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab
@@ -102,6 +107,14 @@ class HomePageState extends ConsumerState<HomePage>
     }
   }
 
+  Future<void> _loadAppInfo() async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = packageInfo.version; // Set app version from package info
+      _appName = packageInfo.packageName; // Set app version from package info
+    });
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -119,22 +132,25 @@ class HomePageState extends ConsumerState<HomePage>
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
+          // NOTE 20240516 gjw Remove the Run button - no longer a part of the
+          // app.
+
           // RUN
 
-          IconButton(
-            key: const Key("run_button"),
-            icon: const Icon(
-              Icons.directions_run,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
-              // KEEP OPEN FOR NOW FOR THE MODEL TAB.
-              processTab(tabs[_tabController.index]['title']);
-            },
-            tooltip:
-                "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
-          ),
+          // IconButton(
+          //   key: const Key("run_button"),
+          //   icon: const Icon(
+          //     Icons.directions_run,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {
+          //     debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
+          //     // KEEP OPEN FOR NOW FOR THE MODEL TAB.
+          //     processTab(tabs[_tabController.index]['title']);
+          //   },
+          //   tooltip:
+          //       "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
+          // ),
 
           // RESET
 
@@ -179,21 +195,31 @@ class HomePageState extends ConsumerState<HomePage>
 
           IconButton(
             onPressed: () {
-              debugPrint("TAB is ${tabs[_tabController.index]['title']}");
+              showAboutDialog(
+                context: context,
+                applicationName:
+                    '${_appName[0].toUpperCase()}${_appName.substring(1)}',
+                applicationVersion: _appVersion,
+                children: [
+                  const SelectableText('RattleNG is a modern rewrite of the '
+                      'very popular Rattle Data Mining and Data Science tool.\n\n'
+                      'Authors: Graham Williams.'),
+                ],
+              );
             },
             icon: const Icon(
               Icons.info,
               color: Colors.blue,
             ),
-            tooltip: "FOR NOW: Report the current TAB.",
           ),
         ],
       ),
 
+      // Build the tab bar from the list of tabs, noting the tab title and
+      // icon. We rotate the tab bar for placement on the left edge.
+
       body: Row(
         children: [
-          // Build the tab bar from the list of tabs, noting the tab title and
-          // icon.
           RotatedBox(
             quarterTurns: 1,
             child: TabBar(
@@ -202,17 +228,39 @@ class HomePageState extends ConsumerState<HomePage>
               //labelColor: Colors.yellow,
               unselectedLabelColor: Colors.grey,
               // dividerColor: Colors.green,
-              tabAlignment: TabAlignment.fill,
+              //tabAlignment: TabAlignment.fill,
               isScrollable: false,
               tabs: tabs.map((tab) {
-                return Tab(
-                  icon: Icon(tab['icon']),
-                  text: tab['title'],
+                // Rotate the tabs back the correct direction.
+
+                return RotatedBox(
+                  quarterTurns: -1,
+
+                  // Wrap the tabs within a container so all have the same
+                  // width, rotated, and the highloght is the same for each one
+                  // irrespective of the text width.
+
+                  child: Container(
+                    width: 100.0,
+                    child: Tab(
+                      icon: Icon(tab['icon']),
+                      child: Text(
+                        tab['title'],
+
+                        // Reduce the font size to not overflow the widget.
+
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
                 );
               }).toList(),
             ),
           ),
+
+
           // Associate the Widgets with each of the bodies.
+
           Expanded(
             child: TabBarView(
               controller: _tabController,
