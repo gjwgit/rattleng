@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2023-11-06 13:36:51 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-05-19 11:40:07 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -29,12 +29,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/features/model/tab.dart';
+import 'package:rattle/provider/wordcloud/checkbox.dart';
 
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/pty.dart';
 import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/wordcloud/maxword.dart';
+import 'package:rattle/provider/wordcloud/minfreq.dart';
+import 'package:rattle/provider/wordcloud/punctuation.dart';
+import 'package:rattle/provider/wordcloud/stem.dart';
+import 'package:rattle/provider/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/timestamp.dart';
@@ -55,9 +62,14 @@ void rSource(WidgetRef ref, String script) {
   // Initialise the state variables used here.
 
   String path = ref.read(pathProvider);
+  bool checkbox = ref.read(checkboxProvider);
+  bool stem = ref.read(stemProvider);
+  bool punctuation = ref.read(punctuationProvider);
+  bool stopword = ref.read(stopwordProvider);
   bool partition = ref.read(partitionProvider);
   bool normalise = ref.read(normaliseProvider);
-
+  String maxWord = ref.read(maxWordProvider);
+  String minFreq = ref.read(minFreqProvider);
   // First obtain the text from the script.
 
   debugPrint("R SOURCE:\t\t'$script.R'");
@@ -82,6 +94,24 @@ void rSource(WidgetRef ref, String script) {
   // set we split the dataset.
 
   code = code.replaceAll('FILENAME', path);
+  code = code.replaceAll('WORDCLOUDPATH', wordcloudImagePath);
+  code = code.replaceAll("RANDOMORDER", checkbox.toString().toUpperCase());
+  code = code.replaceAll('STEM', stem ? "TRUE" : "FALSE");
+  code = code.replaceAll('PUNCTUATION', punctuation ? "TRUE" : "FALSE");
+  code = code.replaceAll('STOPWORD', stopword ? "TRUE" : "FALSE");
+
+  if (minFreq.isNotEmpty && num.tryParse(minFreq) != null) {
+    code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString());
+  } else {
+    // default
+    code = code.replaceAll("MINFREQ", "1");
+  }
+  if (maxWord.isNotEmpty && num.tryParse(maxWord) != null) {
+    code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString());
+  } else {
+    // default
+    code = code.replaceAll("MAXWORD", "Inf");
+  }
 
   // TODO if (script.contains('^dataset_')) {
 
