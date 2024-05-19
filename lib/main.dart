@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Saturday 2023-11-04 09:54:45 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-05-19 14:55:43 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -29,7 +29,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/rattle_app.dart';
-import 'package:rattle/utils/debug_print_config.dart';
 import 'package:rattle/utils/is_desktop.dart';
 
 void main() async {
@@ -37,19 +36,6 @@ void main() async {
   //
   // This is required to be [async] since we use [await] below to initalise the
   // window manager.
-
-  // Use debugPrint() to print trace messages and backtraces in preference to
-  // print(). Use print() for human readable messages to the console for errors,
-  // like login credentials error. The debugPrint() output is then able to be
-  // globally suppressed with the following noop redefinition. We also use an
-  // environment through helper/utils.dart to toggle this externally, often
-  // through a Makefile. 20220512 gjw
-
-  if (DebugPrintConfig.debugPrint == 'FALSE') {
-    debugPrint = (String? message, {int? wrapWidth}) {
-      null;
-    };
-  }
 
   // Tune the window manager before runApp() to avoid a lag in the UI. For
   // desktop (non-web) versions re-size to a comfortable initial window.
