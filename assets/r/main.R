@@ -1,11 +1,11 @@
 # Rattle Scripts: The main setup.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2023-09-22 11:18:52 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-05-19 14:53:30 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #

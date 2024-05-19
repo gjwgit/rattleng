@@ -34,7 +34,7 @@ String rExtractGlimpse(String txt) {
   int startIndex = -1;
 
   for (int i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].contains("> glimpse(ds)")) {
+    if (lines[i].contains("> glimpse(ds)") || lines[i].contains("> cat")) {
       startIndex = i;
       break;
     }
