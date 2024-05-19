@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-05-19 11:51:39 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-05-19 14:38:39 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -91,7 +91,7 @@ final List<Map<String, dynamic>> tabs = [
           ConfigBar(
             buildButton: buildButton,
           ),
-          WordcloudWindow(),
+          const WordcloudWindow(),
         ],
       ),
     ),
@@ -194,7 +194,8 @@ class _ModelTabState extends ConsumerState<ModelTab>
   bool get wantKeepAlive => true;
 }
 
-// TODO 20240519 gjw SHOULDN'T THIS BE IN ITS OWN FILE.
+// TODO 20240519 gjw SHOULDN'T THIS BE IN ITS OWN FILE:
+// features/model/wordcloud/window.dart?
 
 class WordcloudWindow extends ConsumerStatefulWidget {
   const WordcloudWindow({Key? key}) : super(key: key);
@@ -223,7 +224,7 @@ class WordcloudWindow extends ConsumerStatefulWidget {
     }
 
     if (pngBuild) {
-      debugPrint("model has been built.");
+      debugPrint("Wordcloud has been built.");
 
       return Column(
         children: [
@@ -268,7 +269,7 @@ class _WordcloudWindowState extends ConsumerState<WordcloudWindow> {
       Image image = Image.memory(bytes);
       return Column(
         children: [
-          Text("the last rebuild time is $rebuild"),
+          Text("Latest rebuild $rebuild"),
           image,
           SaveWordcloudButton(
             wordcloudImagePath: wordcloudImagePath,
