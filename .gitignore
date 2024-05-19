@@ -4,6 +4,9 @@
 
 *~
 !lib
+ignore
+script.R
+.Rhistory
 
 ########################################################################
 # From https://github.com/flutter/flutter/blob/master/.gitignore
