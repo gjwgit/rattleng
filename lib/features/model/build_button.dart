@@ -61,9 +61,9 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
             rSource(ref, "model_build_random_forest");
           case "Wordcloud":
             // context.read(pngPathProvider).state =
-            File old_wordcloud_file = File(word_cloud_image_path);
-            if (old_wordcloud_file.existsSync()) {
-              old_wordcloud_file.deleteSync();
+            File oldWordcloudFile = File(wordcloudImagePath);
+            if (oldWordcloudFile.existsSync()) {
+              oldWordcloudFile.deleteSync();
               debugPrint("old wordcloud file deleted");
             } else {
               debugPrint("old wordcloud file not exists");
@@ -73,7 +73,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
             debugPrint("NO ACTION FOR THIS BUTTON $model");
         }
         if (model == "Wordcloud") {
-          final file = File(word_cloud_image_path);
+          final file = File(wordcloudImagePath);
           while (true) {
             if (await file.exists()) {
               debugPrint("file exists");

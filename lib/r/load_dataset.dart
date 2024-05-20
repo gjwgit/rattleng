@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Monday 2023-11-06 13:38:19 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-05-19 06:57:35 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,18 +22,14 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/provider/path.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/provider/target.dart';
-import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/execute.dart';
-import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 
 /// Load the specified dataset using the appropriate R script.
