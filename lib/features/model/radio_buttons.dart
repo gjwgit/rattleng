@@ -32,7 +32,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/tab.dart';
 
 import 'package:rattle/provider/model.dart';
-import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/source.dart';
 
 class ModelRadioButtons extends ConsumerStatefulWidget {
@@ -51,7 +50,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
     'Tree',
     'Forest',
     'Boost',
-    'Word Cloud'
+    'Word Cloud',
   ];
 
   // Default selected valueas an idex into the modellers.
