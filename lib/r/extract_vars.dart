@@ -1,11 +1,11 @@
 /// Utility to extract the latest names(ds) output from R.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-11-06 09:30:44 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-05-19 07:07:31 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,6 +21,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
+import 'package:flutter/foundation.dart' show debugPrint;
 
 List<String> rExtractVars(String txt) {
   // Command/string to identify start point of the extracttion.
@@ -70,7 +72,7 @@ List<String> rExtractVars(String txt) {
 
   String vars = result.join(" ");
 
-  print("R EXTRACT VARS JOIN: $vars");
+  debugPrint("R EXTRACT VARS JOIN: $vars");
 
   // Remove the [1] etc line numbering in the output.
 
@@ -92,7 +94,7 @@ List<String> rExtractVars(String txt) {
 
   // Return the list of variable names.
 
-  print("R EXTRACT VARS FINAL: $result");
+  debugPrint("R EXTRACT VARS FINAL: $result");
 
   return result;
 }

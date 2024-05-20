@@ -1,6 +1,6 @@
 /// Radio buttons to choose the model to build.
 ///
-/// Time-stamp: <Friday 2023-11-03 09:06:19 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-05-19 11:36:52 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -89,9 +89,9 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 rSource(ref, "model_build_random_forest");
               case "Word Cloud":
                 // context.read(pngPathProvider).state =
-                File old_wordcloud_file = File(word_cloud_image_path);
-                if (old_wordcloud_file.existsSync()) {
-                  old_wordcloud_file.deleteSync();
+                File oldWordcloudFile = File(wordcloudImagePath);
+                if (oldWordcloudFile.existsSync()) {
+                  oldWordcloudFile.deleteSync();
                   debugPrint("old wordcloud file deleted");
                 } else {
                   debugPrint("old wordcloud file not exists");
@@ -103,7 +103,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
             if (model == "Word Cloud") {
               // TODO dependency wordcloud yyx
               // TODO do we need this while loop? yyx
-              final file = File(word_cloud_image_path);
+              final file = File(wordcloudImagePath);
               while (true) {
                 if (await file.exists()) {
                   debugPrint("file exists");
@@ -111,8 +111,8 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 }
               }
               // toggle the state
-              ref.read(wordcloudBuildProvider.notifier).state =
-                  !ref.read(wordcloudBuildProvider.notifier).state;
+              // ref.read(wordcloudBuildProvider.notifier).state =
+              //     !ref.read(wordcloudBuildProvider.notifier).state;
             }
           },
           child: const Text('Build'),
@@ -132,7 +132,6 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
 
   Widget buildRadioTile(int value, String label) {
     debugPrint("selectedValue is $selectedValue");
-    
     return GestureDetector(
       onTap: () {
         selectRadio(value);

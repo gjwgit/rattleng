@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:08:27 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-05-19 14:57:19 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -52,7 +52,6 @@ class RattleApp extends ConsumerWidget {
     rStart(ref);
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: createMaterialColor(headerBarColour),
         textTheme: Theme.of(context).textTheme.apply(
