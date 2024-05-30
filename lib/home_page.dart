@@ -1,6 +1,6 @@
 /// The main tabs-based page interface.
 ///
-/// Time-stamp: <Friday 2024-05-17 10:30:10 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-05-19 14:08:09 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -32,7 +32,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -48,7 +47,6 @@ import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/process_tab.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 part 'tabs.dart';
@@ -100,11 +98,12 @@ class HomePageState extends ConsumerState<HomePage>
       }
     });
   }
+
   Future<void> deleteFileIfExists() async {
-    File fileToDelete = File(word_cloud_image_path);
+    File fileToDelete = File(wordcloudImagePath);
     if (await fileToDelete.exists()) {
       await fileToDelete.delete();
-      debugPrint('File ${word_cloud_image_path} deleted');
+      debugPrint('File $wordcloudImagePath deleted');
     }
   }
 
@@ -168,28 +167,43 @@ class HomePageState extends ConsumerState<HomePage>
 
           // LOAD PROJECT
 
-          IconButton(
-            icon: const Icon(
-              Icons.download,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              debugPrint("LOAD PRESSED NO ACTION YET");
-            },
-            tooltip: "TODO: Load an existing project from file.",
-          ),
+          // IconButton(
+          //   icon: const Icon(
+          //     Icons.download,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {
+          //     debugPrint("LOAD PRESSED NO ACTION YET");
+          //   },
+          //   tooltip: "TODO: Load an existing project from file.",
+          // ),
+
+          // SAVE PROJECT
+
+          // IconButton(
+          //   icon: const Icon(
+          //     Icons.upload,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {
+          //     debugPrint("SAVE PRESSED NO ACTION YET");
+          //   },
+          //   tooltip: "TODO: Save the current project to file.",
+          // ),
 
           // EXPORT - A tab specific export.
+          //
+          // On Model -> Wordcloud -> Image, then save the image to file.
 
           IconButton(
             icon: const Icon(
-              Icons.upload,
+              Icons.save,
               color: Colors.grey,
             ),
             onPressed: () {
               debugPrint("SAVE PRESSED NO ACTION YET");
             },
-            tooltip: "TODO: Save the current project to file.",
+            tooltip: "TODO: Save the current view to file.",
           ),
 
           // INFO
@@ -204,7 +218,7 @@ class HomePageState extends ConsumerState<HomePage>
                 children: [
                   const SelectableText('RattleNG is a modern rewrite of the '
                       'very popular Rattle Data Mining and Data Science tool.\n\n'
-                      'Authors: Graham Williams.'),
+                      'Authors: Graham Williams, Yixiang Yin.'),
                 ],
               );
             },
@@ -241,7 +255,7 @@ class HomePageState extends ConsumerState<HomePage>
                   // width, rotated, and the highloght is the same for each one
                   // irrespective of the text width.
 
-                  child: Container(
+                  child: SizedBox(
                     width: 100.0,
                     child: Tab(
                       icon: Icon(tab['icon']),
@@ -258,6 +272,7 @@ class HomePageState extends ConsumerState<HomePage>
               }).toList(),
             ),
           ),
+
 
           // Associate the Widgets with each of the bodies.
 

@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2023-11-06 13:36:51 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-05-19 11:40:07 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -94,29 +94,25 @@ void rSource(WidgetRef ref, String script) {
   // set we split the dataset.
 
   code = code.replaceAll('FILENAME', path);
-  code = code.replaceAll('WORDCLOUDPATH', word_cloud_image_path);
+  code = code.replaceAll('WORDCLOUDPATH', wordcloudImagePath);
   code = code.replaceAll("RANDOMORDER", checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? "TRUE" : "FALSE");
   code = code.replaceAll('PUNCTUATION', punctuation ? "TRUE" : "FALSE");
   code = code.replaceAll('STOPWORD', stopword ? "TRUE" : "FALSE");
-  
-  if (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
-  {
+
+
+  if (minFreq.isNotEmpty && num.tryParse(minFreq) != null) {
     code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString());
-  }
-  else {
+  } else {
     // default
     code = code.replaceAll("MINFREQ", "1");
   }
-  if (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
-  {
+  if (maxWord.isNotEmpty && num.tryParse(maxWord) != null) {
     code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString());
-  }
-  else {
+  } else {
     // default
     code = code.replaceAll("MAXWORD", "Inf");
   }
-
 
   // TODO if (script.contains('^dataset_')) {
 

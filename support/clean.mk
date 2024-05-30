@@ -22,8 +22,8 @@ help::
 
 .PHONY: clean
 clean::
+	find . -type f \( -name "*~" -o -name "*.bak" \) -exec rm {} \;
 
 .PHONY: realclean
 realclean:: clean
-	find . -type f \( -name "*~" -o -name "*.bak" \) -exec rm {} \;
 
