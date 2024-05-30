@@ -32,7 +32,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/tab.dart';
 
 import 'package:rattle/provider/model.dart';
-import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/source.dart';
 
 class ModelRadioButtons extends ConsumerStatefulWidget {
@@ -51,7 +50,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
     'Tree',
     'Forest',
     'Boost',
-    'Word Cloud'
+    'Word Cloud',
   ];
 
   // Default selected valueas an idex into the modellers.
@@ -101,8 +100,6 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
             }
             if (model == "Word Cloud") {
-              // TODO dependency wordcloud yyx
-              // TODO do we need this while loop? yyx
               final file = File(wordcloudImagePath);
               while (true) {
                 if (await file.exists()) {

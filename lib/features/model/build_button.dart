@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/tab.dart';
 
 import 'package:rattle/provider/model.dart';
-import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/provider/wordcloud/build.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 
