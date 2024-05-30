@@ -4,51 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/save_wordcloud_png.dart';
 import 'package:rattle/features/model/tab.dart';
+import 'package:rattle/features/model/wordcloud/config_bar.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
 
-class WordcloudWindow extends ConsumerStatefulWidget {
-  const WordcloudWindow({Key? key}) : super(key: key);
+class WordcloudTab extends ConsumerStatefulWidget {
+  const WordcloudTab({super.key});
   @override
-  ConsumerState<WordcloudWindow> createState() => _WordcloudWindowState();
-
-  Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint("wordcloud window build");
-    debugPrint('path: $wordcloudImagePath');
-    // reload the wordcloud png
-    imageCache.clear();
-    imageCache.clearLiveImages();
-    String rebuild = ref.watch(wordcloudBuildProvider);
-    debugPrint("received rebuild on $rebuild");
-    // debugPrint("build wordcloud window.");
-    var wordcloudFile = File(wordcloudImagePath);
-    bool pngBuild = wordcloudFile.existsSync();
-    if (!pngBuild) {
-      debugPrint("No model has been built.");
-      return const Column(
-        children: [
-          SizedBox(height: 50),
-          Text("No model has been built"),
-        ],
-      );
-    }
-
-    if (pngBuild) {
-      debugPrint("Wordcloud has been built.");
-
-      return Column(
-        children: [
-          Image.file(File(wordcloudImagePath)),
-          SaveWordcloudButton(
-            wordcloudImagePath: wordcloudImagePath,
-          ),
-        ],
-      );
-    }
-    return const Text("bug");
-  }
+  ConsumerState<WordcloudTab> createState() => _WordcloudTabState();
 }
 
-class _WordcloudWindowState extends ConsumerState<WordcloudWindow> {
+class _WordcloudTabState extends ConsumerState<WordcloudTab> {
+
   @override
   Widget build(BuildContext context) {
     debugPrint("wordcloud window build");
@@ -61,9 +27,11 @@ class _WordcloudWindowState extends ConsumerState<WordcloudWindow> {
     // debugPrint("build wordcloud window.");
     var wordcloudFile = File(wordcloudImagePath);
     bool pngBuild = wordcloudFile.existsSync();
+    Widget rtn = const Text("bug");
+
     if (!pngBuild) {
       debugPrint("No model has been built.");
-      return const Column(
+      rtn = const Column(
         children: [
           SizedBox(height: 50),
           Text("No model has been built"),
@@ -76,7 +44,7 @@ class _WordcloudWindowState extends ConsumerState<WordcloudWindow> {
       // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
       var bytes = wordcloudFile.readAsBytesSync();
       Image image = Image.memory(bytes);
-      return Column(
+      rtn = Column(
         children: [
           Text("Latest rebuild $rebuild"),
           image,
@@ -86,6 +54,16 @@ class _WordcloudWindowState extends ConsumerState<WordcloudWindow> {
         ],
       );
     }
-    return const Text("bug");
+    return wrap(rtn);
   }
 }
+  Widget wrap(Widget w) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const WordcloudConfigBar(),
+          w,
+        ],
+      ),
+    );
+  }

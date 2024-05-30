@@ -11,8 +11,7 @@ import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
 
 class WordcloudConfigBar extends ConsumerStatefulWidget {
-  final Widget buildButton;
-  const WordcloudConfigBar({super.key, required this.buildButton});
+  const WordcloudConfigBar({super.key});
 
   @override
   ConsumerState<WordcloudConfigBar> createState() => _ConfigBarState();

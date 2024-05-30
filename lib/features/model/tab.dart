@@ -32,8 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/build_button.dart';
 import 'package:rattle/features/model/forest_tab.dart';
 import 'package:rattle/features/model/tree_tab.dart';
-import 'package:rattle/features/model/wordcloud/config_bar.dart';
-import 'package:rattle/features/model/wordcloud/window.dart';
+import 'package:rattle/features/model/wordcloud/tab.dart';
 import 'package:rattle/provider/model.dart';
 
 Widget buildButton = const ModelBuildButton();
@@ -77,17 +76,7 @@ final List<Map<String, dynamic>> tabs = [
   },
   {
     'title': "Wordcloud",
-    // TODO put them in a class wordcloudtab
-    "widget": SingleChildScrollView(
-      child: Column(
-        children: [
-          WordcloudConfigBar(
-            buildButton: buildButton,
-          ),
-          const WordcloudWindow(),
-        ],
-      ),
-    ),
+    "widget": const WordcloudTab(),
   },
   {
     'title': "SVM",
@@ -157,7 +146,6 @@ class _ModelTabState extends ConsumerState<ModelTab>
   Widget build(BuildContext context) {
     super.build(context);
     debugPrint("modeltab rebuild.");
-    // TODO missing build button; place it on the bottom right as a floating button yyx
 
     return Column(
       children: [
