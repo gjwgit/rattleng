@@ -100,8 +100,6 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
             }
             if (model == "Word Cloud") {
-              // TODO dependency wordcloud yyx
-              // TODO do we need this while loop? yyx
               final file = File(wordcloudImagePath);
               while (true) {
                 if (await file.exists()) {
