@@ -7,4 +7,5 @@ numbers.
 
 ## 0.1.0 FUTURE
 
++ Pre merge code cleanup [0.0.4]
 + Implement wordcloud [0.0.3]
