@@ -100,6 +100,7 @@ void rSource(WidgetRef ref, String script) {
   code = code.replaceAll('PUNCTUATION', punctuation ? "TRUE" : "FALSE");
   code = code.replaceAll('STOPWORD', stopword ? "TRUE" : "FALSE");
 
+
   if (minFreq.isNotEmpty && num.tryParse(minFreq) != null) {
     code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString());
   } else {

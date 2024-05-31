@@ -29,19 +29,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:rattle/features/model/build_button.dart';
 import 'package:rattle/features/model/forest_tab.dart';
-import 'package:rattle/features/model/save_wordcloud_png.dart';
 import 'package:rattle/features/model/tree_tab.dart';
+import 'package:rattle/features/model/wordcloud/tab.dart';
 import 'package:rattle/provider/model.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/provider/wordcloud/checkbox.dart';
-import 'package:rattle/provider/wordcloud/maxword.dart';
-import 'package:rattle/provider/wordcloud/minfreq.dart';
-import 'package:rattle/provider/wordcloud/punctuation.dart';
-import 'package:rattle/provider/wordcloud/stem.dart';
-import 'package:rattle/provider/wordcloud/stopword.dart';
 
 Widget buildButton = const ModelBuildButton();
 final List<Map<String, dynamic>> tabs = [
@@ -84,17 +76,7 @@ final List<Map<String, dynamic>> tabs = [
   },
   {
     'title': "Wordcloud",
-    // TODO put them in a class wordcloudtab
-    "widget": SingleChildScrollView(
-      child: Column(
-        children: [
-          ConfigBar(
-            buildButton: buildButton,
-          ),
-          const WordcloudWindow(),
-        ],
-      ),
-    ),
+    "widget": const WordcloudTab(),
   },
   {
     'title': "SVM",
@@ -164,7 +146,6 @@ class _ModelTabState extends ConsumerState<ModelTab>
   Widget build(BuildContext context) {
     super.build(context);
     debugPrint("modeltab rebuild.");
-    // TODO missing build button; place it on the bottom right as a floating button yyx
 
     return Column(
       children: [
@@ -194,279 +175,5 @@ class _ModelTabState extends ConsumerState<ModelTab>
   bool get wantKeepAlive => true;
 }
 
-// TODO 20240519 gjw SHOULDN'T THIS BE IN ITS OWN FILE:
-// features/model/wordcloud/window.dart?
 
-class WordcloudWindow extends ConsumerStatefulWidget {
-  const WordcloudWindow({Key? key}) : super(key: key);
-  @override
-  ConsumerState<WordcloudWindow> createState() => _WordcloudWindowState();
 
-  Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint("wordcloud window build");
-    debugPrint('path: $wordcloudImagePath');
-    // reload the wordcloud png
-    imageCache.clear();
-    imageCache.clearLiveImages();
-    String rebuild = ref.watch(wordcloudBuildProvider);
-    debugPrint("received rebuild on $rebuild");
-    // debugPrint("build wordcloud window.");
-    var wordcloudFile = File(wordcloudImagePath);
-    bool pngBuild = wordcloudFile.existsSync();
-    if (!pngBuild) {
-      debugPrint("No model has been built.");
-      return const Column(
-        children: [
-          SizedBox(height: 50),
-          Text("No model has been built"),
-        ],
-      );
-    }
-
-    if (pngBuild) {
-      debugPrint("Wordcloud has been built.");
-
-      return Column(
-        children: [
-          Image.file(File(wordcloudImagePath)),
-          SaveWordcloudButton(
-            wordcloudImagePath: wordcloudImagePath,
-          ),
-        ],
-      );
-    }
-    return const Text("bug");
-  }
-}
-
-class _WordcloudWindowState extends ConsumerState<WordcloudWindow> {
-  @override
-  Widget build(BuildContext context) {
-    debugPrint("wordcloud window build");
-    debugPrint('path: $wordcloudImagePath');
-    // reload the wordcloud png
-    imageCache.clear();
-    imageCache.clearLiveImages();
-    String rebuild = ref.watch(wordcloudBuildProvider);
-    debugPrint("received rebuild on $rebuild");
-    // debugPrint("build wordcloud window.");
-    var wordcloudFile = File(wordcloudImagePath);
-    bool pngBuild = wordcloudFile.existsSync();
-    if (!pngBuild) {
-      debugPrint("No model has been built.");
-      return const Column(
-        children: [
-          SizedBox(height: 50),
-          Text("No model has been built"),
-        ],
-      );
-    }
-
-    if (pngBuild) {
-      debugPrint("model has been built.");
-      // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
-      var bytes = wordcloudFile.readAsBytesSync();
-      Image image = Image.memory(bytes);
-      return Column(
-        children: [
-          Text("Latest rebuild $rebuild"),
-          image,
-          SaveWordcloudButton(
-            wordcloudImagePath: wordcloudImagePath,
-          ),
-        ],
-      );
-    }
-    return const Text("bug");
-  }
-}
-
-// TODO 20240519 gjw WOULDN'T THIS BE SPECIFIC TO WORDCLOUD WIDGET? PERHAPS NEED
-// TO RENAME AS WordcloudConfigBar?
-
-class ConfigBar extends ConsumerStatefulWidget {
-  final Widget buildButton;
-  const ConfigBar({super.key, required this.buildButton});
-
-  @override
-  ConsumerState<ConfigBar> createState() => _ConfigBarState();
-}
-
-class _ConfigBarState extends ConsumerState<ConfigBar> {
-  final maxWordTextController = TextEditingController();
-  final minFreqTextController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    maxWordTextController.addListener(_updateMaxWordProvider);
-    minFreqTextController.addListener(_updateMinFreqProvider);
-  }
-
-  @override
-  void dispose() {
-    maxWordTextController.dispose();
-    minFreqTextController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 5.0),
-        Row(
-          children: [
-            const SizedBox(width: 5.0),
-            buildButton,
-            const SizedBox(width: 20.0),
-            const Text(
-              'A wordcloud visualises word frequencies. '
-              'More frequent words are larger.',
-            ),
-          ],
-        ),
-        const SizedBox(height: 20.0),
-        Row(
-          children: [
-            const Text('Tuning Options:  '),
-            // checkbox for random color
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(checkboxProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(checkboxProvider.notifier).state = v!,
-                  },
-                ),
-                const Text("Random Order"),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stemProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stemProvider.notifier).state = v!,
-                  },
-                ),
-                const Text("Stem"),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stopwordProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stopwordProvider.notifier).state = v!,
-                  },
-                ),
-                const Text("Remove Stopwords"),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(punctuationProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(punctuationProvider.notifier).state = v!,
-                  },
-                ),
-                const Text("Remove Punctuation"),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Row(
-            children: [
-              const Text('Tuning Parameters:  '),
-              const SizedBox(width: 5),
-              // max word text field
-              SizedBox(
-                width: 150.0,
-                child: TextField(
-                  controller: maxWordTextController,
-                  style: const TextStyle(fontSize: 16),
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: "Max Words",
-                    labelStyle: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              SizedBox(
-                width: 150.0,
-                child: TextField(
-                  controller: minFreqTextController,
-                  style: const TextStyle(fontSize: 16),
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: "Min Freq",
-                    labelStyle: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _updateMaxWordProvider() {
-    debugPrint("max word text changed to ${maxWordTextController.text}");
-    ref.read(maxWordProvider.notifier).state = maxWordTextController.text;
-  }
-
-  void _updateMinFreqProvider() {
-    debugPrint("min freq text changed to ${minFreqTextController.text}");
-    ref.read(minFreqProvider.notifier).state = minFreqTextController.text;
-  }
-}
-
-// class ConfigBar extends ConsumerWidget {
-//   const ConfigBar({super.key});
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return Row(
-//       children: [
-//         // checkbox for random color
-//         Row(
-//           children: [
-//             Checkbox(
-//               value: ref.watch(checkboxProvider),
-//               onChanged: (bool? v) => {
-//                 ref.read(checkboxProvider.notifier).state = v!,
-//               },
-//             ),
-//             Text("random order"),
-//           ],
-//         ),
-//         const SizedBox(width: 5,),
-//         // max word text field
-//         SizedBox(
-//           width: 100.0,
-//           child: TextField(
-//             decoration: InputDecoration(
-//                 border: OutlineInputBorder(), hintText: "max word"),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-// class MaxWordTextField extends ConsumerStatefulWidget {
-//   @override
-//   ConsumerState<ConsumerStatefulWidget> createState() {
-//     // TODO: implement createState
-//     throw UnimplementedError();
-//   }
-
-// }
