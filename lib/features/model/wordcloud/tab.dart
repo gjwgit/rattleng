@@ -39,10 +39,33 @@ class _WordcloudTabState extends ConsumerState<WordcloudTab> {
     }
 
     if (pngBuild) {
-      debugPrint("model has been built.");
+      debugPrint(
+          "model has been built - but sleeping if needed to wait for file");
       // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+
       var bytes = wordcloudFile.readAsBytesSync();
+
+      // TODO 20240601 gjw WITHOUT THE DELAY HERE WE SEE AN EXCEPTION ON LINUX
+      //
+      // _Exception was thrown resolving an image codec:
+      // Exception: Invalid image data
+      //
+      // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
+      // LOADED SUCCESSFULLY.
+      //
+      // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
+      // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
+      // UNTIL THE FILE IS READY.
+      //
+      // THERE MUST NE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
+
+      while (bytes.lengthInBytes == 0) {
+        sleep(const Duration(seconds: 1));
+        bytes = wordcloudFile.readAsBytesSync();
+      }
+
       Image image = Image.memory(bytes);
+
       rtn = Column(
         children: [
           Text("Latest rebuild $rebuild"),
