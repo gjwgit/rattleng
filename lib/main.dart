@@ -1,8 +1,8 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Sunday 2024-05-19 14:55:43 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 08:36:11 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -23,12 +23,14 @@
 ///
 /// Authors: Graham Williams
 
+// Group imports by dart, flutter, packages, local. Then alphabetically.
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/rattle_app.dart';
+import 'package:rattle/app.dart';
 import 'package:rattle/utils/is_desktop.dart';
 
 void main() async {
@@ -46,18 +48,19 @@ void main() async {
     await windowManager.ensureInitialized();
 
     WindowOptions windowOptions = const WindowOptions(
-      // Setting [alwaysOnTop] here will ensure the app starts on top of other
-      // apps on the desktop so that it is visible. We later turn it of as we
-      // don;t want to force it always on top.
+      // Setting [alwaysOnTop] here will ensure the desktop app starts on top of
+      // other apps on the desktop so that it is visible. We later turn it of as
+      // we don't want to force it always on top.
 
       alwaysOnTop: true,
 
-      // The size is overridden in the first instance by linux/my_application.cc
-      // but setting it here then does have effect when Restarting the app.
+      // We can override the size in the first instance by, for example in
+      // Linux, editting linux/my_application.cc. Setting it here has effect
+      // when Restarting the app whil debugging
 
-      // Windows has 1280x720 by default in windows/runner/main.cpp line 29 so
-      // best not to override it here since under windows the 950x600 is too
-      // small.
+      // Hoever, since Windows has 1280x720 by default in the windows-specific
+      // windows/runner/main.cpp, line 29, it is best not to override it here
+      // since under Windows 950x600 is too small.
 
       // size: Size(950, 600),
 
@@ -65,6 +68,9 @@ void main() async {
 
       title: "RattleNG - Data Science with R",
     );
+
+    // The window should be on top now, so show the window, give it focus, and
+    // then turn always on top off.
 
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();

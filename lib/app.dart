@@ -1,8 +1,8 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-05-19 14:57:19 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 08:34:29 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -24,26 +24,28 @@
 ///
 /// Authors: Graham Williams
 
+// Group imports by dart, flutter, packages, local. Then alphabetically.
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/utils/create_material_color.dart';
+import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
-import 'package:rattle/home_page.dart';
+import 'package:rattle/utils/create_material_color.dart';
 
 /// A widget for the root of the Rattle App.
 ///
-/// The root widget covers the screen of the app. This widget is stateless as
-/// it does not need to manage any state itself.
+/// The root widget covers the screen of the app. This widget is stateless as it
+/// does not need to manage any state itself. The state is managed through
+/// riverpod and so it is a [ConsumerWidget].
 
 class RattleApp extends ConsumerWidget {
   const RattleApp({super.key});
 
-  /// We build the root widget as a [MaterialApp] widget, turning off the
-  /// default debug corner banner, setting up the app theme, and populating the
-  /// widget with the Rattle home page widget.
+  /// Build the root widget as a [MaterialApp] widget, setting up the app theme,
+  /// and populating the widget with the Rattle home page widget.
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,7 +61,7 @@ class RattleApp extends ConsumerWidget {
               fontSizeDelta: 2.0,
             ),
       ),
-      home: const HomePage(),
+      home: const RattleHome(),
     );
   }
 }

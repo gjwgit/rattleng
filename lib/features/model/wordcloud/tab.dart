@@ -39,8 +39,7 @@ class _WordcloudTabState extends ConsumerState<WordcloudTab> {
     }
 
     if (pngBuild) {
-      debugPrint(
-          "model has been built - but sleeping if needed to wait for file");
+      debugPrint("model built - sleeping if needed to wait for file");
       // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
       var bytes = wordcloudFile.readAsBytesSync();

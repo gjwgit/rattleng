@@ -1,6 +1,6 @@
-/// DESCRIPTION
+/// <DESCRIPTION>
 //
-// Time-stamp: <Tuesday 2024-01-23 11:01:01 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-06-02 07:49:25 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,6 +21,6 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: AUTHORS
+/// Authors: <AUTHORS>
 
-library;
+// Group imports by dart, flutter, packages, local. Then alphabetically.
