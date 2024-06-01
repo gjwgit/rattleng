@@ -1,6 +1,6 @@
-/// The main tabs-based page interface.
+/// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-06-02 08:31:22 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 09:22:11 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -65,10 +65,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
     _loadAppInfo();
 
     // Add a listener to the TabController to perform an action when we leave
-    // the tab
+    // the tab.
 
     _tabController.addListener(() {
-      // Check if we are leaving the tab, not entering it
+      // Check if we are leaving the tab, not entering it.
 
       if (!_tabController.indexIsChanging) {
         if (_tabController.previousIndex == 0) {
@@ -125,9 +125,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
-          // The version is reported in the About popup but for screenshots
-          // while in development it is useful to have the version visiable at
-          // all times so place it on the title bar for now.
+          // While the version number is reported in the About popup but for
+          // screenshots, during development it is useful to have the version
+          // visiable at all times, particularly for a screenshot, so place it
+          // on the title bar for now.
 
           Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
           const SizedBox(width: 50),
@@ -145,6 +146,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
             tooltip: "TODO: Reset to start a new project.",
           ),
 
+          // SAVE - Context specific.
+
           IconButton(
             icon: const Icon(
               Icons.save,
@@ -156,7 +159,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
             tooltip: "TODO: Save the current view to file.",
           ),
 
-          // INFO
+          // INFO - ABOUT
 
           IconButton(
             onPressed: () {
@@ -189,11 +192,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
             quarterTurns: 1,
             child: TabBar(
               controller: _tabController,
-              //indicatorColor: Colors.yellow,
-              //labelColor: Colors.yellow,
               unselectedLabelColor: Colors.grey,
-              // dividerColor: Colors.green,
-              //tabAlignment: TabAlignment.fill,
               isScrollable: false,
               tabs: homeTabs.map((tab) {
                 // Rotate the tabs back the correct direction.
@@ -202,7 +201,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
                   quarterTurns: -1,
 
                   // Wrap the tabs within a container so all have the same
-                  // width, rotated, and the highloght is the same for each one
+                  // width, rotated, and the highlight is the same for each one
                   // irrespective of the text width.
 
                   child: SizedBox(
@@ -223,7 +222,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
             ),
           ),
 
-          // Associate the Widgets with each of the bodies.
+          // Associate the Widgets with each of the tabs.
 
           Expanded(
             child: TabBarView(
@@ -236,7 +235,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
         ],
       ),
 
-      // ignore: sized_box_for_whitespace
       bottomNavigationBar: const StatusBar(),
     );
   }
