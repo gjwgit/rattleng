@@ -1,11 +1,11 @@
-/// The main tabs-based page interface.
+/// Define the home page left menu tabs.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2023-10-30 06:32:00 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-06-02 08:07:54 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,17 +22,19 @@
 ///
 /// Authors: Graham Williams
 
-/// Experimenting with the use of part to break out the definition of the tabs
-/// into its own file. This is a textual split and is as if this file was
-/// actaully embedded in the file it is a part of. Thus this file does not have
-/// it's own imports. The use of [part] is discouraged for the original old idea
-/// of it, but seems like a useful feetaure in this case, keeping my files
-/// smaller, and compartmentalising the tab variable, though not having it
-/// immediately available within the code that is using it.
+// Experimenting with the use of `part` to break out the definition of the tabs
+// into its own file. This is a textual split and is as if this file was
+// actually embedded in the file it is a part of. Thus this file does not have
+// it's own imports. The use of [part] is discouraged for the original old idea
+// of it, but seems like a useful feetaure in this case, keeping my files
+// smaller, and compartmentalising the tab variable, though not having it
+// immediately available within the code that is using it.
 
-part of 'home_page.dart';
+part of 'home.dart';
 
-/// Define a mapping for the tabs in the GUI on to title:icon:widget.
+/// TODO 20240602 gjw WHY NOT MAKE THIS A CONSTANT
+
+/// Define a mapping for the tabs in the GUI to identify the title:icon:widget.
 
 final List<Map<String, dynamic>> tabs = [
   {
@@ -63,7 +65,6 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Model",
     "icon": Icons.model_training,
-    // "widget": const Center(child: Text("MODEL")),
     "widget": const ModelTab(),
   },
   {
@@ -74,7 +75,6 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Console",
     "icon": Icons.terminal,
-//    "widget": TerminalView(terminal),
     "widget": const RConsole(),
   },
   {
@@ -85,7 +85,6 @@ final List<Map<String, dynamic>> tabs = [
   {
     'title': "Debug",
     "icon": Icons.work,
-    // "widget": const Center(child: Text("DEBUG")),
     "widget": const DebugTab(),
   },
 ];
