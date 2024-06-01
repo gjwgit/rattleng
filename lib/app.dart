@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-06-02 08:34:29 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 09:15:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -35,7 +35,7 @@ import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/create_material_color.dart';
 
-/// A widget for the root of the Rattle App.
+/// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
 /// The root widget covers the screen of the app. This widget is stateless as it
 /// does not need to manage any state itself. The state is managed through
