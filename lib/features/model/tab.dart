@@ -174,6 +174,3 @@ class _ModelTabState extends ConsumerState<ModelTab>
   @override
   bool get wantKeepAlive => true;
 }
-
-
-

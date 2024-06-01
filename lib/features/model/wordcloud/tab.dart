@@ -14,7 +14,6 @@ class WordcloudTab extends ConsumerStatefulWidget {
 }
 
 class _WordcloudTabState extends ConsumerState<WordcloudTab> {
-
   @override
   Widget build(BuildContext context) {
     debugPrint("wordcloud window build");
@@ -57,13 +56,14 @@ class _WordcloudTabState extends ConsumerState<WordcloudTab> {
     return wrap(rtn);
   }
 }
-  Widget wrap(Widget w) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const WordcloudConfigBar(),
-          w,
-        ],
-      ),
-    );
-  }
+
+Widget wrap(Widget w) {
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        const WordcloudConfigBar(),
+        w,
+      ],
+    ),
+  );
+}
