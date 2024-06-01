@@ -273,7 +273,6 @@ class HomePageState extends ConsumerState<HomePage>
             ),
           ),
 
-
           // Associate the Widgets with each of the bodies.
 
           Expanded(
