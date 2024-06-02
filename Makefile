@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2023-11-05 20:06:50 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-05-12 11:16:36 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -18,8 +18,12 @@
 #   Trivial update or bug fix
 
 APP=$(shell pwd | xargs basename)
-VER=0.0.1
+VER=
 DATE=$(shell date +%Y-%m-%d)
+
+# Identify a destination used by install.mk
+
+DEST=/var/www/html/$(APP)
 
 ########################################################################
 # Supported Makefile modules.
@@ -37,6 +41,8 @@ INC_BASE=support
 # appropriate INC to a non-existant location and it will be skipped.
 
 INC_DOCKER=skip
+INC_MLHUB=skip
+INC_WEBCAM=skip
 
 # Load any modules available.
 
@@ -54,10 +60,8 @@ endif
 define HELP
 $(APP):
 
-  docs         Generate doc and install to ecosysl.
-  bmacos       Build macos binary
-
   rtest       Run the R script tests.
+
 endef
 export HELP
 
@@ -70,22 +74,12 @@ help::
 locals:
 	@echo "This might be the instructions to install $(APP)"
 
-bmacos:
-	flutter build macos
-	zip bstim_$(VER).zip build/macos/Build/Products/Release/bstim_$(VER).app
-
-docs::
-	rsync -avzh doc/api/ root@ecosysl.net:/var/www/html/rattleng/
-
 .PHONY: rtests
 rtests:
 	@bash r_test/rpart_test.sh
 
-.PHONY: prep
-prep: rtests checks tests docs
-
-realclean::
-	snapcraft clean rattle
+# realclean::
+# 	snapcraft clean rattle
 
 .PHONY: snap
 snap:

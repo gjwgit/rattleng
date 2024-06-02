@@ -5,7 +5,7 @@ import 'package:rattle/features/dataset/export_png.dart';
 class SaveWordcloudButton extends StatelessWidget {
   final String wordcloudImagePath; // Path of the word cloud image
 
-  SaveWordcloudButton({required this.wordcloudImagePath});
+  const SaveWordcloudButton({required this.wordcloudImagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SaveWordcloudButton extends StatelessWidget {
           await File(wordcloudImagePath).copy(pathToSave);
         }
       },
-      child: Text('Save Word Cloud Image'),
+      child: const Text('Save Word Cloud Image'),
     );
   }
 }
