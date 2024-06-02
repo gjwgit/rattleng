@@ -23,6 +23,8 @@ dependencies:
   flutter_pty: ^0.4.0
   flutter_riverpod: ^2.4.4
   flutter_svg: ^2.0.7
+  ffi: ^2.0.0
+  gtk: ^2.1.0
   intl: ^0.18.1
   package_info_plus: ^5.0.1
   path: ^1.8.0
