@@ -2,7 +2,9 @@
 #
 # Makefile template for Version Control - git
 #
-# Copyright 2018 (c) Graham.Williams@togaware.com
+# Time-stamp: <Sunday 2021-11-07 05:49:43 AEDT Graham Williams>
+#
+# Copyright 2018-2024 (c) Graham.Williams@togaware.com
 #
 # License: Creative Commons Attribution-ShareAlike 4.0 International.
 #
@@ -60,7 +62,9 @@ qstatus:
 enter:: status fetch rebase
 exit:: status push
 
-push:
+# Use :: to allow push to be augmented in other makefiles.
+
+push::
 	@echo "-------------------------------------------------------"
 	git push
 	@echo "-------------------------------------------------------"
