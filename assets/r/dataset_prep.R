@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-02 15:52:35 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-06-02 16:18:36 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,8 +47,7 @@ if (NORMALISE_NAMES) ds %<>% clean_names(numerals="right")
 # Cleanse the dataset of constant value columns and convert char to
 # factor.
 
-if (CLEANSE_DATASET)
-{
+if (CLEANSE_DATASET) {
   # Map character columns to be factors.
   
   ds %<>% mutate_if(sapply(ds, is.character), as.factor)

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-02 14:12:38 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-06-02 16:19:17 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,6 +39,8 @@ library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 
 mtype <- "randomForest"
 mdesc <- "Forest"
+
+# Typically we use na.roughfix() for na.action.
 
 model_randomForest <- randomForest(
   form,
