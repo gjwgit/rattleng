@@ -26,6 +26,10 @@ The open access Togaware Desktop Data Mining Survival Guide even more
 recently provides current Rattle and template documentation and is
 available from Togaware (https://datamining.togaware.com).
 
+The documentation for the flutter/dart implementation of RattleNG is
+available from the [Solid Community
+AU](https://solidcommunity.au/docs/rattleng/).
+
 ## Current Status Quick Start 2024-03-01
 
 After installing R and the app (either a package or from source, see
