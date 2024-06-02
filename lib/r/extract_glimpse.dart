@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-02 14:08:09 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-02 16:49:30 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -54,7 +54,7 @@ String rExtractGlimpse(String txt) {
       String strippedLine = lines[i].replaceAll(RegExp(r'^\$ '), '');
 
       // 20240602 gjw Remove the `[3m[90m` that appears in the output now. Not
-      // sure where that has come from or where it sneaked in.
+      // sure where that has come from or when it sneaked in.
 
       strippedLine = strippedLine.replaceAll('[3m[90m', '');
 
