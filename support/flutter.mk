@@ -8,6 +8,15 @@
 #
 ########################################################################
 
+# App version numbers
+#   Major release
+#   Minor update
+#   Trivial update or bug fix
+
+ifeq ($(VER),)
+  VER = $(shell egrep '^version:' pubspec.yaml | cut -d' ' -f2)
+endif
+
 define FLUTTER_HELP
 flutter:
 
@@ -17,10 +26,8 @@ flutter:
   linux     Run with the linux device;
   qlinux    Run with the linux device and debugPrint() turned off;
 
-  riverpod  Setup `pubspec.yaml` to support riverpod.
-  runner    Build the auto generated code as *.g.dart files.
-
-  prep       Prep for PR by running tests, checks, docs.
+  prep      Prep for PR by running tests, checks, docs.
+  push      Do a git push and bump the build number if there is one.
 
   docs	    Run `dart doc` to create documentation.
 
@@ -29,7 +36,11 @@ flutter:
 
   checks    Run all checks over the code base 
     format        Run `dart format`.
-    analyze       Run flutter analyze.
+   dcm             Run dart code metrics 
+    nullable	  Check NULLs from dart_code_metrics.
+    unused_code   Check unused code from dart_code_metrics.
+    unused_files  Check unused files from dart_code_metrics.
+    metrics	  Run analyze from dart_code_metrics.   analyze       Run flutter analyze.
     ignore        Look for usage of ignore directives.
     license	  Look for missing top license in source code.
 
@@ -37,6 +48,19 @@ flutter:
   test	    Run `flutter test` for testing.
   itest	    Run `flutter test integration_test` for interation testing.
   qtest	    Run above test with PAUSE=0.
+  coverage  Run with `--coverage`.
+    coview  View the generated html coverage in browser.
+
+  riverpod  Setup `pubspec.yaml` to support riverpod.
+  runner    Build the auto generated code as *.g.dart files.
+
+  desktops  Set up for all desktop platforms (linux, windows, macos)
+
+  distributions
+    apk	    Builds installers/$(APP).apk
+    tgz     Builds installers/$(APP).tar.gz
+
+  publish   Publish a package to pub.dev
 
 Also supported:
 
@@ -86,12 +110,12 @@ macos: $(BUILD_RUNNER)
 
 .PHONY: android
 android: $(BUILD_RUNNER)
-	flutter run -d $(shell flutter devices | grep android | cut -d " " -f 5)
+	flutter run --device-id $(shell flutter devices | grep android | tr '•' '|' | tr -s '|' | tr -s ' ' | cut -d'|' -f2 | tr -d ' ')
 
 .PHONY: emu
 emu:
 	@if [ -n "$(shell flutter devices | grep emulator | cut -d" " -f 6)" ]; then \
-	  flutter run -d $(shell flutter devices | grep emulator | cut -d" " -f 6); \
+	  flutter run --device-id $(shell flutter devices | grep emulator | cut -d" " -f 6); \
 	else \
 	  flutter emulators --launch Pixel_3a_API_30; \
 	  echo "Emulator has been started. Rerun `make emu` to build the app."; \
@@ -102,34 +126,52 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: checks tests docs
+prep: analyze fix format dcm ignore license todo
+	@echo "ADVISORY: make tests docs"
+	@echo $(SEPARATOR)
 
 .PHONY: docs
 docs::
 	dart doc
 	chmod -R go+rX doc
 
+SEPARATOR="\n------------------------------------------------------------------------\n"
+
+.PHONY: fix
+fix:
+	@echo "Dart: FIX"
+	dart fix --apply lib
+	@echo $(SEPARATOR)
+
 .PHONY: format
 format:
+	@echo "Dart: FORMAT"
 	dart format lib/
+	@echo $(SEPARATOR)
 
 .PHONY: tests
 tests:: test qtest
 
-.PHONY: checks
-checks: format analyze ignore license
+.PHONY: dcm
+dcm: nullable unused_code unused_files metrics
 
 .PHONY: nullable
 nullable:
-	dart run dart_code_metrics:metrics check-unnecessary-nullable --disable-sunset-warning lib
+	@echo "Dart Code Metrics: NULLABLE"
+	-dart run dart_code_metrics:metrics check-unnecessary-nullable --disable-sunset-warning lib
+	@echo $(SEPARATOR)
 
 .PHONY: unused_code
 unused_code:
-	dart run dart_code_metrics:metrics check-unused-code --disable-sunset-warning lib
+	@echo "Dart Code Metrics: UNUSED CODE"
+	-dart run dart_code_metrics:metrics check-unused-code --disable-sunset-warning lib
+	@echo $(SEPARATOR)
 
 .PHONY: unused_files
 unused_files:
-	dart run dart_code_metrics:metrics check-unused-files --disable-sunset-warning lib
+	@echo "Dart Code Metrics: UNUSED FILES"
+	-dart run dart_code_metrics:metrics check-unused-files --disable-sunset-warning lib
+	@echo $(SEPARATOR)
 
 .PHONY: metrics 
 metrics:
@@ -150,12 +192,21 @@ fixit:
 
 .PHONY: ignore
 ignore:
-	@rgrep ignore: lib
+	@echo "Files that override lint checks with IGNORE:\n"
+	@-if rgrep -n ignore: lib; then exit 1; else exit 0; fi
+	@echo $(SEPARATOR)
+
+.PHONY: todo
+todo:
+	@echo "Files that include TODO items to be resolved:\n"
+	@-if rgrep -n ' TODO ' lib; then exit 1; else exit 0; fi
+	@echo $(SEPARATOR)
 
 .PHONY: license
 license:
-	@echo "--\nFiles without a license:"
-	@find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
+	@echo "Files without a LICENSE:\n"
+	@-find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
+	@echo $(SEPARATOR)
 
 .PHONY: riverpod
 riverpod:
@@ -170,6 +221,15 @@ riverpod:
 runner:
 	dart run build_runner build
 
+# Support desktop platforms: Linux, MacOS and Windows. Using the
+# project name as in the already existant pubspec.yaml ensures the
+# project name is a valid name. Otherwise it is obtained from the
+# folder name and may not necessarily be a valid flutter project name.
+
+.PHONY: desktops
+desktops:
+	flutter create --platforms=windows,macos,linux --project-name $(shell grep 'name: ' pubspec.yaml | awk '{print $$2}') .
+
 ########################################################################
 # INTEGRATION TESTING
 #
@@ -180,7 +240,9 @@ runner:
 
 .PHONY: test
 test:
-	flutter test test
+	@echo "Unit TEST:"
+	-flutter test test
+	@echo $(SEPARATOR)
 
 %.itest:
 	flutter test --dart-define=PAUSE=5 --device-id \
@@ -189,21 +251,113 @@ test:
 
 .PHONY: itest
 itest:
+	@echo "Pausing integration TEST:"
 	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=5 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	$$t; done
+	@echo $(SEPARATOR)
 
 .PHONY: qtest
 qtest:
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=0 --device-id \
+	@echo "Quick integration TEST:"
+	-for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=0 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	$$t; done
+	@echo $(SEPARATOR)
 
 %.qtest:
 	flutter test --dart-define=PAUSE=0 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	integration_test/$*_test.dart
 
-clean::
+.PHONY: coverage
+coverage:
+	@echo "COVERAGE"
+	@flutter test --coverage
+	@echo
+	@-/bin/bash support/coverage.sh
+	@echo $(SEPARATOR)
+
+.PHONY: coview
+coview:
+	@genhtml coverage/lcov.info -o coverage/html
+	@open coverage/html/index.html
+
+realclean::
+	rm -rf coverage
+
+# Crate an installer for Linux as a tar.gz archive.
+
+tgz:: $(APP)-$(VER)-linux-x86_64.tar.gz
+
+$(APP)-$(VER)-linux-x86_64.tar.gz:
+	mkdir -p installers
+	rm -rf build/linux/x64/release
+	flutter build linux --release
+	tar --transform 's|^build/linux/x64/release/bundle|$(APP)|' -czvf $@ build/linux/x64/release/bundle
+	cp $@ installers/
+	mv $@ installers/$(APP).tar.gz
+
+apk::
+	flutter build apk --release
+	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
+	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
+
+appbundle:
+	flutter build appbundle --release
+
+realclean::
 	flutter clean
 	flutter pub get
+
+# For the `dev` branch only, update the version sequence number prior
+# to a push (relies on the git.mk being loaded after this
+# flutter.mk). This is only undertaken through `make push` rather than
+# a `git push` in any other way. If
+# the pubspec.yaml is not using a build number then do not push to bump
+# the build number.
+
+VERSEQ=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f2 | awk '{print $$1+1}')
+
+BRANCH := $(shell git branch --show-current)
+
+ifeq ($(BRANCH),dev)
+push::
+	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
+	-egrep '^version: .*\+.*' pubspec.yaml && \
+	git commit -m "Bump sequence $(VERSEQ)" pubspec.yaml
+endif
+
+.PHONY: publish
+publish:
+	dart pub publish
+
+### TODO THESE SHOULD BE CHECKED AND CLEANED UP
+
+
+.PHONY: docs
+docs::
+	rsync -avzh doc/api/ root@solidcommunity.au:/var/www/html/docs/$(APP)/
+
+.PHONY: versions
+versions:
+	perl -pi -e 's|applicationVersion = ".*";|applicationVersion = "$(VER)";|' \
+	lib/constants/app.dart
+
+.PHONY: wc
+wc: lib/*.dart
+	@cat lib/*.dart lib/*/*.dart lib/*/*/*.dart \
+	| egrep -v '^/' \
+	| egrep -v '^ *$$' \
+	| wc -l
+
+#
+# Manage the production install on the remote server.
+#
+
+.PHONY: solidcommunity
+solidcommunity:
+	rsync -avzh ./ solidcommunity.au:projects/$(APP)/ \
+	--exclude .dart_tool --exclude build --exclude ios --exclude macos \
+	--exclude linux --exclude windows --exclude android
+	ssh solidcommunity.au '(cd projects/$(APP); flutter upgrade; make prod)'

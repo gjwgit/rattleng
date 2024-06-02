@@ -1,8 +1,8 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Sunday 2024-05-19 06:57:35 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 14:48:26 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -36,7 +36,7 @@ import 'package:rattle/r/source.dart';
 ///
 /// The R script is expected to load the data into the template variable `ds`,
 /// and define `dsname` as the dataset name and `vnames` as a named list of the
-/// original variable names with values the current variable names, being
+/// original variable names having as values the current variable names, being
 /// different in the case where the dataset variables have been normalised,
 /// which is the default.
 

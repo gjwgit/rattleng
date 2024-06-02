@@ -7,4 +7,7 @@ numbers.
 
 ## 0.1.0 FUTURE
 
++ Add CLEANSE option for DATASET to suite RandomForest na.roughfix() [0.0.6]
++ Wait until wordcloud file has content [0.0.5]
++ Pre merge code cleanup [0.0.4]
 + Implement wordcloud [0.0.3]

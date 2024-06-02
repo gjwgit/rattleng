@@ -1,6 +1,6 @@
-/// The main tabs-based page interface.
+/// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-05-19 14:08:09 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 09:22:11 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -24,41 +24,34 @@
 ///
 /// Authors: Graham Williams, Yixiang Yin
 
-// NOTE 20240516 gjw remove this after adding the Abuot dialog otherwise getting
-// compile errors. What was the purpose of this?
-//
-//import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
+// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/features/dataset/tab.dart';
-import 'package:rattle/features/debug/tab.dart';
+import 'package:rattle/constants/home_tabs.dart';
 import 'package:rattle/features/model/tab.dart';
-import 'package:rattle/features/script/tab.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/target.dart';
 import 'package:rattle/provider/vars.dart';
-import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
-part 'tabs.dart';
-
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class RattleHome extends ConsumerStatefulWidget {
+  const RattleHome({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<HomePage> createState() => HomePageState();
+  ConsumerState<RattleHome> createState() => RattleHomeState();
 }
 
-class HomePageState extends ConsumerState<HomePage>
+class RattleHomeState extends ConsumerState<RattleHome>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   var _appVersion = 'Unknown';
@@ -68,14 +61,14 @@ class HomePageState extends ConsumerState<HomePage>
   void initState() {
     super.initState();
     deleteFileIfExists();
-    _tabController = TabController(length: tabs.length, vsync: this);
+    _tabController = TabController(length: homeTabs.length, vsync: this);
     _loadAppInfo();
 
     // Add a listener to the TabController to perform an action when we leave
-    // the tab
+    // the tab.
 
     _tabController.addListener(() {
-      // Check if we are leaving the tab, not entering it
+      // Check if we are leaving the tab, not entering it.
 
       if (!_tabController.indexIsChanging) {
         if (_tabController.previousIndex == 0) {
@@ -132,25 +125,13 @@ class HomePageState extends ConsumerState<HomePage>
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
-          // NOTE 20240516 gjw Remove the Run button - no longer a part of the
-          // app.
+          // While the version number is reported in the About popup but for
+          // screenshots, during development it is useful to have the version
+          // visiable at all times, particularly for a screenshot, so place it
+          // on the title bar for now.
 
-          // RUN
-
-          // IconButton(
-          //   key: const Key("run_button"),
-          //   icon: const Icon(
-          //     Icons.directions_run,
-          //     color: Colors.grey,
-          //   ),
-          //   onPressed: () {
-          //     debugPrint("RUN PRESSED NO ACTION AT THIS TIME");
-          //     // KEEP OPEN FOR NOW FOR THE MODEL TAB.
-          //     processTab(tabs[_tabController.index]['title']);
-          //   },
-          //   tooltip:
-          //       "NO LONGER ACTIVE AT LEAST FOR NOW. WAS Run the current tab.",
-          // ),
+          Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
+          const SizedBox(width: 50),
 
           // RESET
 
@@ -165,35 +146,7 @@ class HomePageState extends ConsumerState<HomePage>
             tooltip: "TODO: Reset to start a new project.",
           ),
 
-          // LOAD PROJECT
-
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.download,
-          //     color: Colors.grey,
-          //   ),
-          //   onPressed: () {
-          //     debugPrint("LOAD PRESSED NO ACTION YET");
-          //   },
-          //   tooltip: "TODO: Load an existing project from file.",
-          // ),
-
-          // SAVE PROJECT
-
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.upload,
-          //     color: Colors.grey,
-          //   ),
-          //   onPressed: () {
-          //     debugPrint("SAVE PRESSED NO ACTION YET");
-          //   },
-          //   tooltip: "TODO: Save the current project to file.",
-          // ),
-
-          // EXPORT - A tab specific export.
-          //
-          // On Model -> Wordcloud -> Image, then save the image to file.
+          // SAVE - Context specific.
 
           IconButton(
             icon: const Icon(
@@ -206,7 +159,7 @@ class HomePageState extends ConsumerState<HomePage>
             tooltip: "TODO: Save the current view to file.",
           ),
 
-          // INFO
+          // INFO - ABOUT
 
           IconButton(
             onPressed: () {
@@ -230,7 +183,7 @@ class HomePageState extends ConsumerState<HomePage>
         ],
       ),
 
-      // Build the tab bar from the list of tabs, noting the tab title and
+      // Build the tab bar from the list of homeTabs, noting the tab title and
       // icon. We rotate the tab bar for placement on the left edge.
 
       body: Row(
@@ -239,20 +192,16 @@ class HomePageState extends ConsumerState<HomePage>
             quarterTurns: 1,
             child: TabBar(
               controller: _tabController,
-              //indicatorColor: Colors.yellow,
-              //labelColor: Colors.yellow,
               unselectedLabelColor: Colors.grey,
-              // dividerColor: Colors.green,
-              //tabAlignment: TabAlignment.fill,
               isScrollable: false,
-              tabs: tabs.map((tab) {
+              tabs: homeTabs.map((tab) {
                 // Rotate the tabs back the correct direction.
 
                 return RotatedBox(
                   quarterTurns: -1,
 
                   // Wrap the tabs within a container so all have the same
-                  // width, rotated, and the highloght is the same for each one
+                  // width, rotated, and the highlight is the same for each one
                   // irrespective of the text width.
 
                   child: SizedBox(
@@ -273,13 +222,12 @@ class HomePageState extends ConsumerState<HomePage>
             ),
           ),
 
-
-          // Associate the Widgets with each of the bodies.
+          // Associate the Widgets with each of the tabs.
 
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: tabs.map((tab) {
+              children: homeTabs.map((tab) {
                 return tab['widget'] as Widget;
               }).toList(),
             ),
@@ -287,7 +235,6 @@ class HomePageState extends ConsumerState<HomePage>
         ],
       ),
 
-      // ignore: sized_box_for_whitespace
       bottomNavigationBar: const StatusBar(),
     );
   }

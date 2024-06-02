@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-05-19 14:38:39 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-02 08:13:47 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -36,7 +36,7 @@ import 'package:rattle/features/model/wordcloud/tab.dart';
 import 'package:rattle/provider/model.dart';
 
 Widget buildButton = const ModelBuildButton();
-final List<Map<String, dynamic>> tabs = [
+final List<Map<String, dynamic>> modelTabs = [
   {
     'title': "Cluster",
     "widget": const Column(
@@ -127,11 +127,11 @@ class _ModelTabState extends ConsumerState<ModelTab>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: tabs.length, vsync: this);
+    _tabController = TabController(length: modelTabs.length, vsync: this);
 
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
-          tabs[_tabController.index]["title"];
+          modelTabs[_tabController.index]["title"];
       debugPrint("Selected tab: ${_tabController.index}");
     });
   }
@@ -152,7 +152,7 @@ class _ModelTabState extends ConsumerState<ModelTab>
         TabBar(
           unselectedLabelColor: Colors.grey,
           controller: _tabController,
-          tabs: tabs.map((tab) {
+          tabs: modelTabs.map((tab) {
             return Tab(
               text: tab['title'],
             );
@@ -161,7 +161,7 @@ class _ModelTabState extends ConsumerState<ModelTab>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: tabs.map((tab) {
+            children: modelTabs.map((tab) {
               return tab['widget'] as Widget;
             }).toList(),
           ),
@@ -174,6 +174,3 @@ class _ModelTabState extends ConsumerState<ModelTab>
   @override
   bool get wantKeepAlive => true;
 }
-
-
-
