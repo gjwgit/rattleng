@@ -1,6 +1,6 @@
-/// A toggle button to nomrlaise variable names.
+/// Toggle buttons to process loading of the dataset.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:rattle/provider/cleanse.dart';
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 
@@ -43,23 +44,35 @@ class DatasetToggles extends ConsumerStatefulWidget {
 class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   @override
   Widget build(BuildContext context) {
+    bool cleanse = ref.read(cleanseProvider);
     bool normalise = ref.read(normaliseProvider);
     bool partition = ref.read(partitionProvider);
 
     return ToggleButtons(
-      isSelected: [normalise, partition],
+      isSelected: [cleanse, normalise, partition],
       onPressed: (int index) {
         setState(() {
           switch (index) {
             case 0:
-              ref.read(normaliseProvider.notifier).state = !normalise;
+              ref.read(cleanseProvider.notifier).state = !cleanse;
             case 1:
+              ref.read(normaliseProvider.notifier).state = !normalise;
+            case 2:
               ref.read(partitionProvider.notifier).state = !partition;
           }
         });
       },
       children: const <Widget>[
+        // CLEANSE
+
+        DelayedTooltip(
+          message: 'Undertake some automatic data cleaning operations.\n'
+              'Remove constant columns and convert character columns.',
+          child: Icon(Icons.cleaning_services),
+        ),
+
         // NORMALISE
+
         DelayedTooltip(
           message: "The variables/column names are normalised by default.\n"
               "We use lowercase names separated by underscore.\n"
@@ -68,7 +81,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           // child: Icon(Icons.art_track),
           // child: Icon(Icons.ac_unit),
         ),
+
         // PARTITION
+
         DelayedTooltip(
           message: "The dataset is partitioned by default into 70/15/15.\n"
               "If you do not require it to be partitioned, turn this off.",

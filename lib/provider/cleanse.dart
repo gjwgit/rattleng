@@ -1,11 +1,11 @@
-/// The state of affairs about the processing of the dataset.
+/// Gloabl variable [cleaning].
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-02 14:47:34 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-02 14:56:17 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,16 +22,6 @@
 ///
 /// Authors: Graham Williams
 
-class MetaDataState {
-  final String? path;
-  final bool? cleaning;
-  final bool? normalise;
-  final bool? partition;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-  const MetaDataState({
-    this.path,
-    this.cleaning,
-    this.normalise,
-    this.partition,
-  });
-}
+final cleanseProvider = StateProvider<bool>((ref) => true);

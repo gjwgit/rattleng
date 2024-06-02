@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-05-19 11:40:07 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 14:58:06 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 
+import 'package:rattle/provider/cleanse.dart';
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
@@ -66,8 +67,9 @@ void rSource(WidgetRef ref, String script) {
   bool stem = ref.read(stemProvider);
   bool punctuation = ref.read(punctuationProvider);
   bool stopword = ref.read(stopwordProvider);
-  bool partition = ref.read(partitionProvider);
+  bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
+  bool partition = ref.read(partitionProvider);
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
   // First obtain the text from the script.
@@ -124,6 +126,11 @@ void rSource(WidgetRef ref, String script) {
   // GUI, and if set we normalise the dataset's variable names.
 
   code = code.replaceAll('NORMALISE_NAMES', normalise ? "TRUE" : "FALSE");
+
+  // Do we want to cleanse the dataset? The option is presented on the DATASET
+  // GUI, and if it is set we will cleanse the dataset columns.
+
+  code = code.replaceAll('CLEANSE_DATASET', cleanse ? "TRUE" : "FALSE");
 
   // TODO 20231016 gjw HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE
   // FUNCTION CALL AS A MAP AS DESCRIBED ABOVE..
