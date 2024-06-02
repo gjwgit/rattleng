@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-02 14:57:36 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/provider/model.dart';
+import 'package:rattle/provider/cleanse.dart';
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
@@ -57,8 +58,9 @@ class RattleStateText extends ConsumerWidget {
     String model = ref.watch(modelProvider);
     String target = ref.watch(targetProvider);
     List<String> vars = ref.watch(varsProvider);
-    bool partition = ref.watch(partitionProvider);
+    bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
+    bool partition = ref.watch(partitionProvider);
 
     return SingleChildScrollView(
       child: Builder(
@@ -69,6 +71,7 @@ class RattleStateText extends ConsumerWidget {
             "STDOUT:      ${countLines(stdout)} lines\n"
             "STDERR:      ${countLines(stderr)} lines\n"
             "PATH:        $path\n"
+            "CLEANSE:     $cleanse\n"
             "NORMALISE:   $normalise\n"
             "PARTITION:   $partition\n"
             "VARS:        ${truncate(vars.toString())}\n"
