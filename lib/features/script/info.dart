@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -34,7 +35,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 /// The contents is intialised from script_intro.md markdown asset.
 
 class ScriptInfo extends StatelessWidget {
-  const ScriptInfo({Key? key}) : super(key: key);
+  const ScriptInfo({super.key});
 
   @override
   Widget build(BuildContext context) {

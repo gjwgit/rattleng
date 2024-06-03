@@ -10,5 +10,6 @@ Future<String?> selectFile() async {
     // LINUX. COULD BE A PACKAGE BUG? SHOULD REPORT IF SO.
     fileName: "wordcloud.png",
   );
+
   return result;
 }

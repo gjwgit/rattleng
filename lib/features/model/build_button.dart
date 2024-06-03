@@ -11,7 +11,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 class ModelBuildButton extends ConsumerStatefulWidget {
-  const ModelBuildButton({Key? key}) : super(key: key);
+  const ModelBuildButton({super.key});
 
   @override
   ConsumerState<ModelBuildButton> createState() => ModelBuildButtonState();

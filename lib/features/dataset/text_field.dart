@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ import 'package:rattle/provider/path.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends ConsumerWidget {
-  const DatasetTextField({Key? key}) : super(key: key);
+  const DatasetTextField({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

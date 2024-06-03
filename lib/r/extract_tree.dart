@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';

@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Yiming Lu, Graham Williams
+library;
 
 import 'package:file_picker/file_picker.dart';
 

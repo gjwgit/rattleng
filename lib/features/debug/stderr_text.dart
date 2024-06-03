@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ import 'package:rattle/provider/stderr.dart';
 import 'package:rattle/constants/app.dart';
 
 class StderrText extends ConsumerWidget {
-  const StderrText({Key? key}) : super(key: key);
+  const StderrText({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
