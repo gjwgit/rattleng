@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 0.0.7+22
+version: 0.0.7+23
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
