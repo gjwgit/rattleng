@@ -69,9 +69,6 @@ class _WordcloudTabState extends ConsumerState<WordcloudTab> {
         children: [
           Text("Latest rebuild $rebuild"),
           image,
-          SaveWordcloudButton(
-            wordcloudImagePath: wordcloudImagePath,
-          ),
         ],
       );
     }
@@ -80,12 +77,32 @@ class _WordcloudTabState extends ConsumerState<WordcloudTab> {
 }
 
 Widget wrap(Widget w) {
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        const WordcloudConfigBar(),
-        w,
-      ],
-    ),
+  return Column(
+    children: [
+      const WordcloudConfigBar(),
+      SizedBox(
+        height: 5,
+      ),
+      // Container(
+      // color: Colors.blue,
+      // child:
+      Expanded(
+        child:
+            // Container(
+            // color: Colors.black,
+            // child:
+            SingleChildScrollView(
+          child: w,
+        ),
+      ),
+      // ),
+      // ),
+      SizedBox(
+        height: 5,
+      ),
+      SaveWordcloudButton(
+        wordcloudImagePath: wordcloudImagePath,
+      ),
+    ],
   );
 }
