@@ -35,11 +35,11 @@ endif
 ifneq ("$(wildcard $(INC_PANDOC))","")
   include $(INC_PANDOC)
 endif
-ifneq ("$(wildcard $(INC_GIT))","")
-  include $(INC_GIT)
-endif
 ifneq ("$(wildcard $(INC_FLUTTER))","")
   include $(INC_FLUTTER)
+endif
+ifneq ("$(wildcard $(INC_GIT))","")
+  include $(INC_GIT)
 endif
 ifneq ("$(wildcard $(INC_AZURE))","")
   include $(INC_AZURE)
