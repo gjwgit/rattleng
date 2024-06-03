@@ -45,7 +45,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             buildButton,
             const SizedBox(width: 20.0),
             const Text(
-              'A wordcloud visualises word frequencies. '
+              'A word cloud visualises word frequencies. '
               'More frequent words are larger.',
             ),
           ],

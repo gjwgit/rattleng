@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2024-06-04 06:18:21 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-06-04 06:36:47 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -75,7 +75,7 @@ final List<Map<String, dynamic>> modelTabs = [
     ),
   },
   {
-    'title': "WordCloud",
+    'title': "Word Cloud",
     "widget": const WordCloudTab(),
   },
   {

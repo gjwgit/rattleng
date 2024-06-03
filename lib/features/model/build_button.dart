@@ -50,7 +50,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
         // Handle button click here
         debugPrint("MODEL BUTTON CLICKED for $model");
 
-        if (model != "WordCloud") {
+        if (model != "Word Cloud") {
           rSource(ref, "model_template");
         }
 
@@ -59,7 +59,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
             rSource(ref, "model_build_rpart");
           case "Forest":
             rSource(ref, "model_build_random_forest");
-          case "WordCloud":
+          case "Word Cloud":
             // context.read(pngPathProvider).state =
             File oldWordcloudFile = File(wordCloudImagePath);
             if (oldWordcloudFile.existsSync()) {
@@ -72,7 +72,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
           default:
             debugPrint("NO ACTION FOR THIS BUTTON $model");
         }
-        if (model == "WordCloud") {
+        if (model == "Word Cloud") {
           final file = File(wordCloudImagePath);
           while (true) {
             if (await file.exists()) {
