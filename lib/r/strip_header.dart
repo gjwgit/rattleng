@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 /// The intention is to strip the initial copyright message from the script,
 /// though keeping the first line, assumened to be the script title, and then

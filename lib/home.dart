@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
@@ -46,7 +47,7 @@ import 'package:rattle/widgets/status_bar.dart';
 import 'package:rattle/features/model/tab.dart';
 
 class RattleHome extends ConsumerStatefulWidget {
-  const RattleHome({Key? key}) : super(key: key);
+  const RattleHome({super.key});
 
   @override
   ConsumerState<RattleHome> createState() => RattleHomeState();

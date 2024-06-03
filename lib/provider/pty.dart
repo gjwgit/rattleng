@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Monday 2023-11-06 12:16:56 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-04 09:45:48 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'dart:convert';
 
@@ -38,7 +39,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
   // Create a pseudo termminal provider.
 
   Terminal terminal = ref.watch(terminalProvider);
-  Pty pty = Pty.start("R", arguments: ["--no-save"]);
+  Pty pty = Pty.start(shell, arguments: ["--no-save"]);
 
   // Options
   //   columns: terminal.viewWidth,

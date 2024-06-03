@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/features/model/wordcloud/save_png.dart';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/model/wordcloud/config.dart';
+import 'package:rattle/features/model/wordcloud/save_png.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
 
 class WordCloudTab extends ConsumerStatefulWidget {
@@ -58,7 +58,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
       // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
       // UNTIL THE FILE IS READY.
       //
-      // THERE MUST NE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
+      // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
 
       while (bytes.lengthInBytes == 0) {
         sleep(const Duration(seconds: 1));
@@ -77,6 +77,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
         ],
       );
     }
+
     return wrap(rtn);
   }
 }

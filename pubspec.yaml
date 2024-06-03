@@ -46,18 +46,29 @@ dev_dependencies:
 
   build_runner: ^2.4.6
   custom_lint: ^0.6.4
-  riverpod_generator: ^2.3.5
-  riverpod_lint: ^2.3.2
+
+  dart_code_metrics:
+    git:
+      url: https://github.com/Zheyuan-Robert-Xu/dart-code-metrics.git
+      ref: master
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+
   flutter_lints: ^4.0.0
+
   msix: ^3.16.2
 
+  riverpod_generator: ^2.3.5
+
+  # TODO 20240604 gjw FOR NOW REMOVE riverpod_lint AS IT HAS
+  # DEPENDECNY CONFLICTS WITH dart_code_mtetrics.
   
+  # riverpod_lint: ^2.3.2
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

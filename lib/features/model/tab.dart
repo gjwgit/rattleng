@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2024-06-04 06:36:47 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-06-04 07:01:33 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+library;
 
 import 'dart:io';
 
@@ -111,10 +112,12 @@ final List<Map<String, dynamic>> modelTabs = [
 
 var systemTempDir = Directory.systemTemp;
 
+// TODO 20240604 gjw THIS SHOULD BE IN A CONSTANTS FILE.
+
 String wordCloudImagePath = "${systemTempDir.path}/wordcloud.png";
 
 class ModelTab extends ConsumerStatefulWidget {
-  const ModelTab({Key? key}) : super(key: key);
+  const ModelTab({super.key});
 
   @override
   ConsumerState<ModelTab> createState() => _ModelTabState();
@@ -170,7 +173,8 @@ class _ModelTabState extends ConsumerState<ModelTab>
     );
   }
 
-  // disable the automatic rebuild everytime we switch to the model tab.
+  // Disable the automatic rebuild everytime we switch to the model tab.
+  // TODO 20240604 gjw WHY? ALWAYS GOOD TO EXPLAIN WHY
   @override
   bool get wantKeepAlive => true;
 }

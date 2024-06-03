@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Tuesday 2024-06-04 06:23:45 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-04 09:51:29 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'dart:convert';
 import 'dart:io';
@@ -103,18 +104,13 @@ void rSource(WidgetRef ref, String script) {
   code = code.replaceAll('PUNCTUATION', punctuation ? "TRUE" : "FALSE");
   code = code.replaceAll('STOPWORD', stopword ? "TRUE" : "FALSE");
 
-  if (minFreq.isNotEmpty && num.tryParse(minFreq) != null) {
-    code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString());
-  } else {
-    // default
-    code = code.replaceAll("MINFREQ", "1");
-  }
-  if (maxWord.isNotEmpty && num.tryParse(maxWord) != null) {
-    code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString());
-  } else {
-    // default
-    code = code.replaceAll("MAXWORD", "Inf");
-  }
+  (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
+      ? code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString())
+      : code = code.replaceAll("MINFREQ", "1");
+
+  (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
+      ? code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString())
+      : code = code.replaceAll("MAXWORD", "Inf");
 
   // TODO if (script.contains('^dataset_')) {
 

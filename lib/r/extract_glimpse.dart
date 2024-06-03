@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 String rExtractGlimpse(String txt) {
   // Split the string into lines.

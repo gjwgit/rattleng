@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Sunday 2024-06-02 14:48:26 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-04 09:51:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+library;
 
 import 'package:flutter/material.dart';
 
@@ -61,9 +62,11 @@ void rLoadDataset(WidgetRef ref) {
     rSource(ref, "dataset_load_csv");
   } else if (path.endsWith(".txt")) {
     rSource(ref, "dataset_load_txt");
+
     return;
   } else {
     debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
+
     return;
   }
 

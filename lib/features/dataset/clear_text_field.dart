@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/provider/path.dart';
 
 class DatasetClearTextField extends ConsumerWidget {
-  const DatasetClearTextField({Key? key}) : super(key: key);
+  const DatasetClearTextField({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

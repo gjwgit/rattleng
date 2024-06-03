@@ -25,6 +25,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ import 'package:rattle/widgets/markdown_file.dart';
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
 class DatasetTab extends ConsumerStatefulWidget {
-  const DatasetTab({Key? key}) : super(key: key);
+  const DatasetTab({super.key});
 
   @override
   ConsumerState<DatasetTab> createState() => _DatasetTabState();

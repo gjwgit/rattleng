@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ import 'package:rattle/constants/app.dart';
 /// The contents is intialised from rattle state's stdout.
 
 class StdoutText extends ConsumerWidget {
-  const StdoutText({Key? key}) : super(key: key);
+  const StdoutText({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

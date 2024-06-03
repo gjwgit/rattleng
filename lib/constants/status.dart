@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 /// A message for after a dataset has been loaded.
 
