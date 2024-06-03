@@ -1,6 +1,6 @@
 /// Radio buttons to choose the model to build.
 ///
-/// Time-stamp: <Sunday 2024-05-19 11:36:52 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-04 06:22:30 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -88,9 +88,9 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 rSource(ref, "model_build_random_forest");
               case "Word Cloud":
                 // context.read(pngPathProvider).state =
-                File oldWordcloudFile = File(wordcloudImagePath);
-                if (oldWordcloudFile.existsSync()) {
-                  oldWordcloudFile.deleteSync();
+                File oldWordCloudFile = File(wordCloudImagePath);
+                if (oldWordCloudFile.existsSync()) {
+                  oldWordCloudFile.deleteSync();
                   debugPrint("old wordcloud file deleted");
                 } else {
                   debugPrint("old wordcloud file not exists");
@@ -100,7 +100,7 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 debugPrint("NO ACTION FOR THIS BUTTON $model");
             }
             if (model == "Word Cloud") {
-              final file = File(wordcloudImagePath);
+              final file = File(wordCloudImagePath);
               while (true) {
                 if (await file.exists()) {
                   debugPrint("file exists");
@@ -108,8 +108,8 @@ class ModelRadioButtonsState extends ConsumerState<ModelRadioButtons> {
                 }
               }
               // toggle the state
-              // ref.read(wordcloudBuildProvider.notifier).state =
-              //     !ref.read(wordcloudBuildProvider.notifier).state;
+              // ref.read(wordCloudBuildProvider.notifier).state =
+              //     !ref.read(wordCloudBuildProvider.notifier).state;
             }
           },
           child: const Text('Build'),

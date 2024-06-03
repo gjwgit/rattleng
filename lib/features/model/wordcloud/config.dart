@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
@@ -8,14 +10,14 @@ import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
 
-class WordcloudConfigBar extends ConsumerStatefulWidget {
-  const WordcloudConfigBar({super.key});
+class WordCloudConfig extends ConsumerStatefulWidget {
+  const WordCloudConfig({super.key});
 
   @override
-  ConsumerState<WordcloudConfigBar> createState() => _ConfigBarState();
+  ConsumerState<WordCloudConfig> createState() => _ConfigState();
 }
 
-class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
+class _ConfigState extends ConsumerState<WordCloudConfig> {
   final maxWordTextController = TextEditingController();
   final minFreqTextController = TextEditingController();
   @override

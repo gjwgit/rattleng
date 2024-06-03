@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-02 08:13:47 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-06-04 06:18:21 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -75,8 +75,8 @@ final List<Map<String, dynamic>> modelTabs = [
     ),
   },
   {
-    'title': "Wordcloud",
-    "widget": const WordcloudTab(),
+    'title': "WordCloud",
+    "widget": const WordCloudTab(),
   },
   {
     'title': "SVM",
@@ -111,7 +111,7 @@ final List<Map<String, dynamic>> modelTabs = [
 
 var systemTempDir = Directory.systemTemp;
 
-String wordcloudImagePath = "${systemTempDir.path}/wordcloud.png";
+String wordCloudImagePath = "${systemTempDir.path}/wordcloud.png";
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({Key? key}) : super(key: key);

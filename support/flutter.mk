@@ -316,7 +316,7 @@ BRANCH := $(shell git branch --show-current)
 
 ifeq ($(BRANCH),dev)
 push::
-	@echo $(SEPARATOR)
+	@echo '-------------------------------------------------------'
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
 	-egrep '^version: .*\+.*' pubspec.yaml && \
 	git commit -m "Bump sequence $(VERSEQ)" pubspec.yaml
