@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-06-02 14:58:06 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-04 06:23:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -28,16 +28,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/features/model/tab.dart';
-import 'package:rattle/provider/wordcloud/checkbox.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/cleanse.dart';
 import 'package:rattle/provider/normalise.dart';
 import 'package:rattle/provider/partition.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/pty.dart';
 import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/wordcloud/checkbox.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/provider/wordcloud/minfreq.dart';
 import 'package:rattle/provider/wordcloud/punctuation.dart';
@@ -96,7 +97,7 @@ void rSource(WidgetRef ref, String script) {
   // set we split the dataset.
 
   code = code.replaceAll('FILENAME', path);
-  code = code.replaceAll('WORDCLOUDPATH', wordcloudImagePath);
+  code = code.replaceAll('WORDCLOUDPATH', wordCloudImagePath);
   code = code.replaceAll("RANDOMORDER", checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? "TRUE" : "FALSE");
   code = code.replaceAll('PUNCTUATION', punctuation ? "TRUE" : "FALSE");

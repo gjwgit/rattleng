@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/features/model/tab.dart';
 
+import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
 import 'package:rattle/r/source.dart';
@@ -26,7 +26,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
     'Tree',
     'Forest',
     'Boost',
-    'Wordcloud',
+    'WordCloud',
   ];
 
   // Default selected valueas an idex into the modellers.
@@ -50,7 +50,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
         // Handle button click here
         debugPrint("MODEL BUTTON CLICKED for $model");
 
-        if (model != "Wordcloud") {
+        if (model != "WordCloud") {
           rSource(ref, "model_template");
         }
 
@@ -59,9 +59,9 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
             rSource(ref, "model_build_rpart");
           case "Forest":
             rSource(ref, "model_build_random_forest");
-          case "Wordcloud":
+          case "WordCloud":
             // context.read(pngPathProvider).state =
-            File oldWordcloudFile = File(wordcloudImagePath);
+            File oldWordcloudFile = File(wordCloudImagePath);
             if (oldWordcloudFile.existsSync()) {
               oldWordcloudFile.deleteSync();
               debugPrint("old wordcloud file deleted");
@@ -72,8 +72,8 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
           default:
             debugPrint("NO ACTION FOR THIS BUTTON $model");
         }
-        if (model == "Wordcloud") {
-          final file = File(wordcloudImagePath);
+        if (model == "WordCloud") {
+          final file = File(wordCloudImagePath);
           while (true) {
             if (await file.exists()) {
               debugPrint("file exists");
@@ -82,7 +82,7 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
           }
           // toggle the state to trigger rebuild
           debugPrint("build clicked on ${timestamp()}");
-          ref.read(wordcloudBuildProvider.notifier).state = timestamp();
+          ref.read(wordCloudBuildProvider.notifier).state = timestamp();
         }
       },
       child: const Text('Build'),
