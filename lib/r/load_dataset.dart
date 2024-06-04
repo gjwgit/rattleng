@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Sunday 2024-06-02 14:48:26 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-04 09:51:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+library;
 
 import 'package:flutter/material.dart';
 
@@ -56,25 +57,27 @@ void rLoadDataset(WidgetRef ref) {
     // The default, when we get here and no path has been specified yet, is to
     // load the weather dataset as the demo dataset from R's rattle package.
 
-    rSource(ref, "dataset_load_weather");
-  } else if (path.endsWith(".csv")) {
-    rSource(ref, "dataset_load_csv");
-  } else if (path.endsWith(".txt")) {
-    rSource(ref, "dataset_load_txt");
+    rSource(ref, 'dataset_load_weather');
+  } else if (path.endsWith('.csv')) {
+    rSource(ref, 'dataset_load_csv');
+  } else if (path.endsWith('.txt')) {
+    rSource(ref, 'dataset_load_txt');
+
     return;
   } else {
     debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
+
     return;
   }
 
   // Reset the dataset variables since we have loaded a new dataset
 //  rattle.resetDataset();
 
-  rSource(ref, "dataset_prep");
+  rSource(ref, 'dataset_prep');
 
-  rExecute(ref, "names(ds)");
+  rExecute(ref, 'names(ds)');
 
   // this shows the data
-  rSource(ref, "ds_glimpse");
+  rSource(ref, 'ds_glimpse');
   debugPrint('R LOAD DATASET:\tLoaded "$path";');
 }

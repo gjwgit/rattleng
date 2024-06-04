@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yiming Lu
+library;
 
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ const double heightSpace = 20;
 const double widthSpace = 10;
 
 class DatasetPopup extends ConsumerWidget {
-  const DatasetPopup({Key? key}) : super(key: key);
+  const DatasetPopup({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -90,7 +91,7 @@ class DatasetPopup extends ConsumerWidget {
                   // warning.
 
                   if (!context.mounted) return;
-                  Navigator.pop(context, "Filename");
+                  Navigator.pop(context, 'Filename');
                 },
                 child: const Text('Filename'),
               ),
@@ -104,7 +105,7 @@ class DatasetPopup extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () {
                   // TODO 20231018 gjw datasetSelectPackage();
-                  Navigator.pop(context, "Package");
+                  Navigator.pop(context, 'Package');
                 },
                 child: const Text('Package'),
               ),
@@ -118,10 +119,10 @@ class DatasetPopup extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () {
                   // TODO 20231101 gjw DEFINE setPath()
-                  ref.read(pathProvider.notifier).state = "rattle::weather";
+                  ref.read(pathProvider.notifier).state = 'rattle::weather';
                   rLoadDataset(ref);
                   setStatus(ref, statusChooseVariableRoles);
-                  Navigator.pop(context, "Demo");
+                  Navigator.pop(context, 'Demo');
                 },
                 child: const Text('Demo'),
               ),
@@ -139,7 +140,7 @@ class DatasetPopup extends ConsumerWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context, "Cancel");
+                  Navigator.pop(context, 'Cancel');
                 },
                 child: const Text('Cancel'),
               ),

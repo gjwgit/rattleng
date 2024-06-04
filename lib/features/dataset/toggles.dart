@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -66,17 +67,19 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // CLEANSE
 
         DelayedTooltip(
-          message: 'Undertake some automatic data cleaning operations.\n'
-              'Remove constant columns and convert character columns.',
+          message: 'Undertake data cleansing for a CSV dataset.\n'
+              'This will remove constant columns\n'
+              'and convert character columns to factors.\n'
+              'If you do not require cleansing, turn this off.',
           child: Icon(Icons.cleaning_services),
         ),
 
         // NORMALISE
 
         DelayedTooltip(
-          message: "The variables/column names are normalised by default.\n"
-              "We use lowercase names separated by underscore.\n"
-              "If you prefer not to normalise the names, turn this off.",
+          message: 'Variable/column names of a CSV dataset are normalised.\n'
+              'Names are lowercased, separated by underscore.\n'
+              'If you do not requires normalisation, turn this off.',
           child: Icon(Icons.auto_fix_high_outlined),
           // child: Icon(Icons.art_track),
           // child: Icon(Icons.ac_unit),
@@ -85,8 +88,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // PARTITION
 
         DelayedTooltip(
-          message: "The dataset is partitioned by default into 70/15/15.\n"
-              "If you do not require it to be partitioned, turn this off.",
+          message: 'Partition a CSV dataset for modelling into 70/15/15.\n'
+              'If you do not require partitioning, turn this off.',
           child: Icon(Icons.horizontal_split),
           // child: Icon(Icons.assessment_outlined),
         ),

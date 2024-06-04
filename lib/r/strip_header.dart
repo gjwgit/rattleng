@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 /// The intention is to strip the initial copyright message from the script,
 /// though keeping the first line, assumened to be the script title, and then
@@ -48,7 +49,7 @@ String rStripHeader(String code) {
   // TODO 20231102 gjw ACTUALLY I THINK THE PROBLEM IS WHEN THE FIRST LINE DOES
   // NOT START WITH #. SHOULD TEST AND FIX THAT ONE UP.
 
-  String result = "\n${lines.first}";
+  String result = '\n${lines.first}';
 
   if (lines.length > 1) {
     result = "$result\n#${lines.sublist(index).join('\n')}";

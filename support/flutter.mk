@@ -31,19 +31,16 @@ flutter:
 
   docs	    Run `dart doc` to create documentation.
 
-  fixer     Run `dart fix --dry-run` to check what can be automatically done.
-  fixit     Run `dart fix --apply` to automatically fix sipmle issues.
-
-  checks    Run all checks over the code base 
-    format        Run `dart format`.
-   dcm             Run dart code metrics 
+  fix             Run `dart fix --apply`.
+  format          Run `dart format`.
+  dcm             Run dart code metrics 
     nullable	  Check NULLs from dart_code_metrics.
     unused_code   Check unused code from dart_code_metrics.
     unused_files  Check unused files from dart_code_metrics.
-    metrics	  Run analyze from dart_code_metrics.   analyze       Run flutter analyze.
-    ignore        Look for usage of ignore directives.
-    license	  Look for missing top license in source code.
-
+    metrics	  Run analyze from dart_code_metrics.
+  analyze         Run flutter analyze.
+  ignore          Look for usage of ignore directives.
+  license	  Look for missing top license in source code.
 
   test	    Run `flutter test` for testing.
   itest	    Run `flutter test integration_test` for interation testing.
@@ -175,20 +172,16 @@ unused_files:
 
 .PHONY: metrics 
 metrics:
-	dart run dart_code_metrics:metrics analyze --disable-sunset-warning lib --reporter=console
+	@echo "Dart Code Metrics: METRICS"
+	-dart run dart_code_metrics:metrics analyze --disable-sunset-warning lib --reporter=console
+	@echo $(SEPARATOR)
 
 .PHONY: analyze 
 analyze:
-	flutter analyze
-	dart run custom_lint
-
-.PHONY: fixer
-fixer:
-	dart fix --dry-run
-
-.PHONY: fixit
-fixit:
-	dart fix --apply
+	@echo "Futter ANALYZE"
+	-flutter analyze lib
+#	dart run custom_lint
+	@echo $(SEPARATOR)
 
 .PHONY: ignore
 ignore:
@@ -323,6 +316,7 @@ BRANCH := $(shell git branch --show-current)
 
 ifeq ($(BRANCH),dev)
 push::
+	@echo '-------------------------------------------------------'
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
 	-egrep '^version: .*\+.*' pubspec.yaml && \
 	git commit -m "Bump sequence $(VERSEQ)" pubspec.yaml

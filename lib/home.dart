@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-06-02 09:22:11 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-04 06:28:32 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
@@ -35,7 +36,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/home_tabs.dart';
-import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/target.dart';
@@ -44,8 +44,10 @@ import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
+import 'package:rattle/features/model/tab.dart';
+
 class RattleHome extends ConsumerStatefulWidget {
-  const RattleHome({Key? key}) : super(key: key);
+  const RattleHome({super.key});
 
   @override
   ConsumerState<RattleHome> createState() => RattleHomeState();
@@ -82,7 +84,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
             ref.read(varsProvider.notifier).state = vars;
             ref.read(targetProvider.notifier).state = vars.last;
-            rSource(ref, "dataset_template");
+            rSource(ref, 'dataset_template');
           }
         }
 
@@ -93,10 +95,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
   }
 
   Future<void> deleteFileIfExists() async {
-    File fileToDelete = File(wordcloudImagePath);
+    File fileToDelete = File(wordCloudImagePath);
     if (await fileToDelete.exists()) {
       await fileToDelete.delete();
-      debugPrint('File $wordcloudImagePath deleted');
+      debugPrint('File $wordCloudImagePath deleted');
     }
   }
 
@@ -141,9 +143,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
-              debugPrint("RESET PRESSED NO ACTION YET");
+              debugPrint('RESET PRESSED NO ACTION YET');
             },
-            tooltip: "TODO: Reset to start a new project.",
+            tooltip: 'TODO: Reset to start a new project.',
           ),
 
           // SAVE - Context specific.
@@ -154,9 +156,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
-              debugPrint("SAVE PRESSED NO ACTION YET");
+              debugPrint('SAVE PRESSED NO ACTION YET');
             },
-            tooltip: "TODO: Save the current view to file.",
+            tooltip: 'TODO: Save the current view to file.',
           ),
 
           // INFO - ABOUT

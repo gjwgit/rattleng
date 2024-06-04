@@ -1,6 +1,7 @@
 /// Load data from the assets folder.
 ///
 /// Authors: Zheyuan Xu, Graham Williams
+library;
 
 import 'package:flutter/services.dart' show rootBundle;
 

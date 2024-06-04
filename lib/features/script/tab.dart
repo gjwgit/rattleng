@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ import 'package:rattle/features/script/text.dart';
 // TESTING CAN BE REMOVED? final scriptController = TextEditingController();
 
 class ScriptTab extends StatelessWidget {
-  const ScriptTab({Key? key}) : super(key: key);
+  const ScriptTab({super.key});
 
   @override
   Widget build(BuildContext context) {

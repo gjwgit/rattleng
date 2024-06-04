@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends StatelessWidget {
-  const DatasetButton({Key? key}) : super(key: key);
+  const DatasetButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,10 @@ class DatasetButton extends StatelessWidget {
         _showPopup(context);
       },
       child: const DelayedTooltip(
-        message: "Click here to have the option to load the data from a file,\n"
-            "including CSV files, or from an R pacakge, or to load \n"
-            "the demo dataset, rattle::weather.",
-        child: Text("Dataset"),
+        message: 'Click here to have the option to load the data from a file,\n'
+            'including CSV files, or from an R pacakge, or to load \n'
+            'the demo dataset, rattle::weather.',
+        child: Text('Dataset'),
       ),
     );
   }

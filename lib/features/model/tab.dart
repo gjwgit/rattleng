@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-02 08:13:47 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-06-04 07:01:33 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+library;
 
 import 'dart:io';
 
@@ -38,70 +39,70 @@ import 'package:rattle/provider/model.dart';
 Widget buildButton = const ModelBuildButton();
 final List<Map<String, dynamic>> modelTabs = [
   {
-    'title': "Cluster",
-    "widget": const Column(
+    'title': 'Cluster',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Associate",
-    "widget": const Column(
+    'title': 'Associate',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Tree",
-    "widget": TreeTab(
+    'title': 'Tree',
+    'widget': TreeTab(
       buildButton: buildButton,
     ),
   },
   {
-    'title': "Forest",
-    "widget": ForestTab(buildButton: buildButton),
+    'title': 'Forest',
+    'widget': ForestTab(buildButton: buildButton),
   },
   {
-    'title': "Boost",
-    "widget": const Column(
+    'title': 'Boost',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Wordcloud",
-    "widget": const WordcloudTab(),
+    'title': 'Word Cloud',
+    'widget': const WordCloudTab(),
   },
   {
-    'title': "SVM",
-    "widget": const Column(
+    'title': 'SVM',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Linear",
-    "widget": const Column(
+    'title': 'Linear',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Neural",
-    "widget": const Column(
+    'title': 'Neural',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
@@ -111,10 +112,12 @@ final List<Map<String, dynamic>> modelTabs = [
 
 var systemTempDir = Directory.systemTemp;
 
-String wordcloudImagePath = "${systemTempDir.path}/wordcloud.png";
+// TODO 20240604 gjw THIS SHOULD BE IN A CONSTANTS FILE.
+
+String wordCloudImagePath = '${systemTempDir.path}/wordcloud.png';
 
 class ModelTab extends ConsumerStatefulWidget {
-  const ModelTab({Key? key}) : super(key: key);
+  const ModelTab({super.key});
 
   @override
   ConsumerState<ModelTab> createState() => _ModelTabState();
@@ -131,8 +134,8 @@ class _ModelTabState extends ConsumerState<ModelTab>
 
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
-          modelTabs[_tabController.index]["title"];
-      debugPrint("Selected tab: ${_tabController.index}");
+          modelTabs[_tabController.index]['title'];
+      debugPrint('Selected tab: ${_tabController.index}');
     });
   }
 
@@ -145,7 +148,7 @@ class _ModelTabState extends ConsumerState<ModelTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint("modeltab rebuild.");
+    debugPrint('modeltab rebuild.');
 
     return Column(
       children: [
@@ -170,7 +173,8 @@ class _ModelTabState extends ConsumerState<ModelTab>
     );
   }
 
-  // disable the automatic rebuild everytime we switch to the model tab.
+  // Disable the automatic rebuild everytime we switch to the model tab.
+  // TODO 20240604 gjw WHY? ALWAYS GOOD TO EXPLAIN WHY
   @override
   bool get wantKeepAlive => true;
 }
