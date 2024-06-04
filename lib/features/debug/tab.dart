@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ import 'package:rattle/features/debug/toggles.dart';
 // TESTING CAN BE REMOVED? final debugController = TextEditingController();
 
 class DebugTab extends StatelessWidget {
-  const DebugTab({Key? key}) : super(key: key);
+  const DebugTab({super.key});
 
   @override
   Widget build(BuildContext context) {

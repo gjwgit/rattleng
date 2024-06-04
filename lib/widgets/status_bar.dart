@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ import 'package:rattle/constants/keys.dart';
 import 'package:rattle/provider/status.dart';
 
 class StatusBar extends ConsumerWidget {
-  const StatusBar({Key? key}) : super(key: key);
+  const StatusBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

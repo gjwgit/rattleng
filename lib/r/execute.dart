@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'dart:convert';
 
@@ -55,7 +56,7 @@ void rExecute(WidgetRef ref, String code) {
   updateScript(
     ref,
     "\n${'#' * 72}\n## -- Generated Code --\n${'#' * 72}"
-    "\n${rStripHeader(code)}\n",
+    '\n${rStripHeader(code)}\n',
   );
 
   // Run the code without comments.

@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -44,7 +45,7 @@ import 'package:rattle/utils/count_lines.dart';
 import 'package:rattle/utils/truncate.dart';
 
 class RattleStateText extends ConsumerWidget {
-  const RattleStateText({Key? key}) : super(key: key);
+  const RattleStateText({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,20 +67,20 @@ class RattleStateText extends ConsumerWidget {
       child: Builder(
         builder: (BuildContext context) {
           return SelectableText(
-            "STATUS:      $status\n"
-            "SCRIPT:      ${countLines(script)} lines\n"
-            "STDOUT:      ${countLines(stdout)} lines\n"
-            "STDERR:      ${countLines(stderr)} lines\n"
-            "PATH:        $path\n"
-            "CLEANSE:     $cleanse\n"
-            "NORMALISE:   $normalise\n"
-            "PARTITION:   $partition\n"
-            "VARS:        ${truncate(vars.toString())}\n"
-            "TARGET:      $target\n"
-            "RISK:        \$risk \n"
-            "IDENTIFIERS: \$identifiers \n"
-            "IGNORE:      \$ignore\n"
-            "MODEL:       $model\n",
+            'STATUS:      $status\n'
+            'SCRIPT:      ${countLines(script)} lines\n'
+            'STDOUT:      ${countLines(stdout)} lines\n'
+            'STDERR:      ${countLines(stderr)} lines\n'
+            'PATH:        $path\n'
+            'CLEANSE:     $cleanse\n'
+            'NORMALISE:   $normalise\n'
+            'PARTITION:   $partition\n'
+            'VARS:        ${truncate(vars.toString())}\n'
+            'TARGET:      $target\n'
+            'RISK:        \$risk \n'
+            'IDENTIFIERS: \$identifiers \n'
+            'IGNORE:      \$ignore\n'
+            'MODEL:       $model\n',
             style: monoSmallTextStyle,
           );
         },

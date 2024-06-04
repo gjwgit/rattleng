@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
@@ -66,7 +67,7 @@ void main() async {
 
       // The [title] is used for the window manager's window title.
 
-      title: "RattleNG - Data Science with R",
+      title: 'RattleNG - Data Science with R',
     );
 
     // The window should be on top now, so show the window, give it focus, and
