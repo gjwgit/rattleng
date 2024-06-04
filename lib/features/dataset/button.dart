@@ -27,6 +27,8 @@ import 'package:flutter/material.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
+bool LOADED = true;
+
 class DatasetButton extends StatelessWidget {
   const DatasetButton({super.key});
 
@@ -34,7 +36,15 @@ class DatasetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        _showPopup(context);
+        // TODO yyx when user clicking the dataset button
+        // first show the window asking if you really want to load a new one and that will clear everything if a dataset has been loaded
+        // The pop up window has yes or no buttion.
+        // if Yes, clear every state in the app and showPopup
+        // if No, dismiss the popup window
+        // _showPopup(context);
+        if (LOADED) {
+          _showConfirmPopup(context);
+        }
       },
       child: const DelayedTooltip(
         message: 'Click here to have the option to load the data from a file,\n'
@@ -42,6 +52,44 @@ class DatasetButton extends StatelessWidget {
             'the demo dataset, rattle::weather.',
         child: Text('Dataset'),
       ),
+    );
+  }
+
+  void _showConfirmPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Basic dialog title'),
+          content: const Text(
+            'A dialog is a type of modal window that\n'
+            'appears in front of app content to\n'
+            'provide critical information, or prompt\n'
+            'for a decision to be made.',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showPopup(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
