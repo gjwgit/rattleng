@@ -41,7 +41,6 @@ class DatasetButton extends StatelessWidget {
         // The pop up window has yes or no buttion.
         // if Yes, clear every state in the app and showPopup
         // if No, dismiss the popup window
-        // _showPopup(context);
         if (LOADED) {
           _showConfirmPopup(context);
         }
@@ -60,12 +59,9 @@ class DatasetButton extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Basic dialog title'),
+          title: const Text('Warning'),
           content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
+            'If you load a new dataset, the old one will be removed.\nAre you sure?',
           ),
           actions: <Widget>[
             TextButton(
@@ -85,6 +81,7 @@ class DatasetButton extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
                 _showPopup(context);
+                // TODO yyx clear every state
               },
             ),
           ],
