@@ -112,6 +112,8 @@ final List<Map<String, dynamic>> modelTabs = [
 var systemTempDir = Directory.systemTemp;
 
 String wordcloudImagePath = "${systemTempDir.path}/wordcloud.png";
+String tmpPath = systemTempDir.path;
+String tmpImagePath = "${systemTempDir.path}/tmp.png";
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({Key? key}) : super(key: key);

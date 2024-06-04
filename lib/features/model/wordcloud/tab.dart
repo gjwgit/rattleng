@@ -16,8 +16,8 @@ class WordcloudTab extends ConsumerStatefulWidget {
 class _WordcloudTabState extends ConsumerState<WordcloudTab> {
   @override
   Widget build(BuildContext context) {
-    debugPrint("wordcloud window build");
-    debugPrint('path: $wordcloudImagePath');
+    // debugPrint("wordcloud window build");
+    // debugPrint('path: $wordcloudImagePath');
     // reload the wordcloud png
     imageCache.clear();
     imageCache.clearLiveImages();

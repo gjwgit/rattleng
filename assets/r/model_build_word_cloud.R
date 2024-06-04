@@ -31,7 +31,7 @@ set.seed(123)
 # TODO STEM=T|F
 # if STEM: text <- tm_map(text, stemDocument)
 
-png("tmp.png", width = 800, height = 600, units = "px")
+png("WORDCLOUDPATH/tmp.png", width = 800, height = 600, units = "px")
 
 # Generate word cloud
 wordcloud(words = d$word, freq = d$freq, scale=c(5,0.5), min.freq = MINFREQ, max.word = MAXWORD, random.order = RANDOMORDER, colors=brewer.pal(8, "Dark2"))
@@ -39,6 +39,6 @@ wordcloud(words = d$word, freq = d$freq, scale=c(5,0.5), min.freq = MINFREQ, max
 dev.off()
 
 # Trim the white space using magick
-image <- image_read("tmp.png")
+image <- image_read("WORDCLOUDPATH/tmp.png")
 trimmed_image <- image_trim(image)
-image_write(trimmed_image, path = "WORDCLOUDPATH")
+image_write(trimmed_image, path = "WORDCLOUDPATH/wordcloud.png")
