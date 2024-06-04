@@ -32,12 +32,12 @@ Future<String> datasetSelectFile() async {
   // main UI thread.
 
   FilePickerResult? result = await FilePicker.platform.pickFiles(
-    dialogTitle: "Choose a csv/txt file to load as your dataset.",
+    dialogTitle: 'Choose a csv/txt file to load as your dataset.',
     type: FileType.custom,
     allowedExtensions: ['csv', 'txt'],
   );
 
-  String path = "";
+  String path = '';
 
   if (result != null) {
     // If a file was selected then extract the path from the selected file.

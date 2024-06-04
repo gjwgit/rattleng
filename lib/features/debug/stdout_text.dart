@@ -47,8 +47,8 @@ class StdoutText extends ConsumerWidget {
           String stdout = ref.watch(stdoutProvider);
 
           return SelectableText(
-            "STDOUT from the R Console:\n\n\n"
-            "$stdout",
+            'STDOUT from the R Console:\n\n\n'
+            '$stdout',
             style: monoSmallTextStyle,
           );
         },

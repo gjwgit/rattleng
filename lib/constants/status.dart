@@ -26,8 +26,8 @@ library;
 /// A message for after a dataset has been loaded.
 
 const String statusChooseVariableRoles =
-    "Choose **variable roles** and then proceed to "
-    "analyze and model your data via the other tabs.";
+    'Choose **variable roles** and then proceed to '
+    'analyze and model your data via the other tabs.';
 
 /// The status line welcome message.
 

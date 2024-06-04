@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final stderrProvider = StateProvider<String>((ref) => "");
+final stderrProvider = StateProvider<String>((ref) => '');

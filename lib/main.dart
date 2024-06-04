@@ -67,7 +67,7 @@ void main() async {
 
       // The [title] is used for the window manager's window title.
 
-      title: "RattleNG - Data Science with R",
+      title: 'RattleNG - Data Science with R',
     );
 
     // The window should be on top now, so show the window, give it focus, and

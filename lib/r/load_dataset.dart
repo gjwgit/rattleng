@@ -57,11 +57,11 @@ void rLoadDataset(WidgetRef ref) {
     // The default, when we get here and no path has been specified yet, is to
     // load the weather dataset as the demo dataset from R's rattle package.
 
-    rSource(ref, "dataset_load_weather");
-  } else if (path.endsWith(".csv")) {
-    rSource(ref, "dataset_load_csv");
-  } else if (path.endsWith(".txt")) {
-    rSource(ref, "dataset_load_txt");
+    rSource(ref, 'dataset_load_weather');
+  } else if (path.endsWith('.csv')) {
+    rSource(ref, 'dataset_load_csv');
+  } else if (path.endsWith('.txt')) {
+    rSource(ref, 'dataset_load_txt');
 
     return;
   } else {
@@ -73,11 +73,11 @@ void rLoadDataset(WidgetRef ref) {
   // Reset the dataset variables since we have loaded a new dataset
 //  rattle.resetDataset();
 
-  rSource(ref, "dataset_prep");
+  rSource(ref, 'dataset_prep');
 
-  rExecute(ref, "names(ds)");
+  rExecute(ref, 'names(ds)');
 
   // this shows the data
-  rSource(ref, "ds_glimpse");
+  rSource(ref, 'ds_glimpse');
   debugPrint('R LOAD DATASET:\tLoaded "$path";');
 }

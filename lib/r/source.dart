@@ -78,7 +78,7 @@ void rSource(WidgetRef ref, String script) {
 
   debugPrint("R SOURCE:\t\t'$script.R'");
 
-  var code = File("assets/r/$script.R").readAsStringSync();
+  var code = File('assets/r/$script.R').readAsStringSync();
 
   // Process template variables.
 
@@ -99,35 +99,35 @@ void rSource(WidgetRef ref, String script) {
 
   code = code.replaceAll('FILENAME', path);
   code = code.replaceAll('WORDCLOUDPATH', wordCloudImagePath);
-  code = code.replaceAll("RANDOMORDER", checkbox.toString().toUpperCase());
-  code = code.replaceAll('STEM', stem ? "TRUE" : "FALSE");
-  code = code.replaceAll('PUNCTUATION', punctuation ? "TRUE" : "FALSE");
-  code = code.replaceAll('STOPWORD', stopword ? "TRUE" : "FALSE");
+  code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
+  code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
 
   (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
       ? code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString())
-      : code = code.replaceAll("MINFREQ", "1");
+      : code = code.replaceAll('MINFREQ', '1');
 
   (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
-      ? code = code.replaceAll("MAXWORD", num.parse(maxWord).toInt().toString())
-      : code = code.replaceAll("MAXWORD", "Inf");
+      ? code = code.replaceAll('MAXWORD', num.parse(maxWord).toInt().toString())
+      : code = code.replaceAll('MAXWORD', 'Inf');
 
   // TODO if (script.contains('^dataset_')) {
 
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
 
-  code = code.replaceAll('SPLIT_DATASET', partition ? "TRUE" : "FALSE");
+  code = code.replaceAll('SPLIT_DATASET', partition ? 'TRUE' : 'FALSE');
 
   // Do we want to normalise the dataset? The option is presented on the DATASET
   // GUI, and if set we normalise the dataset's variable names.
 
-  code = code.replaceAll('NORMALISE_NAMES', normalise ? "TRUE" : "FALSE");
+  code = code.replaceAll('NORMALISE_NAMES', normalise ? 'TRUE' : 'FALSE');
 
   // Do we want to cleanse the dataset? The option is presented on the DATASET
   // GUI, and if it is set we will cleanse the dataset columns.
 
-  code = code.replaceAll('CLEANSE_DATASET', cleanse ? "TRUE" : "FALSE");
+  code = code.replaceAll('CLEANSE_DATASET', cleanse ? 'TRUE' : 'FALSE');
 
   // TODO 20231016 gjw HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE
   // FUNCTION CALL AS A MAP AS DESCRIBED ABOVE..
@@ -147,7 +147,7 @@ void rSource(WidgetRef ref, String script) {
 
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );
-  code = code.replaceAll('VAR_RISK', normalise ? "risk_mm" : "RISK_MM");
+  code = code.replaceAll('VAR_RISK', normalise ? 'risk_mm' : 'RISK_MM');
   code = code.replaceAll('VARS_ID', '"date", "location"');
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
@@ -176,7 +176,7 @@ void rSource(WidgetRef ref, String script) {
   updateScript(
     ref,
     "\n${'#' * 72}\n## -- $script.R --\n${'#' * 72}"
-    "\n${rStripHeader(code)}",
+    '\n${rStripHeader(code)}',
   );
 
   // Run the code without comments.

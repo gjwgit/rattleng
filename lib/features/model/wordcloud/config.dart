@@ -63,7 +63,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     ref.read(checkboxProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Random Order"),
+                const Text('Random Order'),
               ],
             ),
             const SizedBox(width: 20),
@@ -75,7 +75,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     ref.read(stemProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Stem"),
+                const Text('Stem'),
               ],
             ),
             const SizedBox(width: 20),
@@ -87,7 +87,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     ref.read(stopwordProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Remove Stopwords"),
+                const Text('Remove Stopwords'),
               ],
             ),
             const SizedBox(width: 20),
@@ -99,7 +99,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     ref.read(punctuationProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Remove Punctuation"),
+                const Text('Remove Punctuation'),
               ],
             ),
           ],
@@ -119,7 +119,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   style: const TextStyle(fontSize: 16),
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: "Max Words",
+                    labelText: 'Max Words',
                     labelStyle: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -132,7 +132,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   style: const TextStyle(fontSize: 16),
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: "Min Freq",
+                    labelText: 'Min Freq',
                     labelStyle: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -145,12 +145,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   }
 
   void _updateMaxWordProvider() {
-    debugPrint("max word text changed to ${maxWordTextController.text}");
+    debugPrint('max word text changed to ${maxWordTextController.text}');
     ref.read(maxWordProvider.notifier).state = maxWordTextController.text;
   }
 
   void _updateMinFreqProvider() {
-    debugPrint("min freq text changed to ${minFreqTextController.text}");
+    debugPrint('min freq text changed to ${minFreqTextController.text}');
     ref.read(minFreqProvider.notifier).state = minFreqTextController.text;
   }
 }

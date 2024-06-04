@@ -84,7 +84,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
             ref.read(varsProvider.notifier).state = vars;
             ref.read(targetProvider.notifier).state = vars.last;
-            rSource(ref, "dataset_template");
+            rSource(ref, 'dataset_template');
           }
         }
 
@@ -143,9 +143,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
-              debugPrint("RESET PRESSED NO ACTION YET");
+              debugPrint('RESET PRESSED NO ACTION YET');
             },
-            tooltip: "TODO: Reset to start a new project.",
+            tooltip: 'TODO: Reset to start a new project.',
           ),
 
           // SAVE - Context specific.
@@ -156,9 +156,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
-              debugPrint("SAVE PRESSED NO ACTION YET");
+              debugPrint('SAVE PRESSED NO ACTION YET');
             },
-            tooltip: "TODO: Save the current view to file.",
+            tooltip: 'TODO: Save the current view to file.',
           ),
 
           // INFO - ABOUT

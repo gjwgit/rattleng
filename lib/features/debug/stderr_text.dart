@@ -43,7 +43,7 @@ class StderrText extends ConsumerWidget {
           String stderr = ref.watch(stderrProvider);
 
           return SelectableText(
-            "STDERR from the R Process:\n\n$stderr",
+            'STDERR from the R Process:\n\n$stderr',
             style: monoSmallTextStyle,
           );
         },
