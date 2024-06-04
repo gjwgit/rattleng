@@ -80,33 +80,36 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 }
 
 Widget wrap(Widget w) {
-  return Column(
-    children: [
-      const WordCloudConfig(),
-      SizedBox(
-        height: 5,
-      ),
-      // TODO yyx tried to make the pane white by wrapping expanded with container. didn't work
-      // Container(
-      // color: Colors.blue,
-      // child:
-      Expanded(
-        child:
-            // Container(
-            // color: Colors.black,
-            // child:
-            SingleChildScrollView(
-          child: w,
+  return Container(
+    color: Colors.white,
+    child: Column(
+      children: [
+        const WordCloudConfig(),
+        WordCloudSaveButton(
+          wordCloudImagePath: wordCloudImagePath,
         ),
-      ),
-      // ),
-      // ),
-      SizedBox(
-        height: 5,
-      ),
-      WordCloudSaveButton(
-        wordCloudImagePath: wordCloudImagePath,
-      ),
-    ],
+        const SizedBox(
+          height: 5,
+        ),
+        // TODO yyx tried to make the pane white by wrapping expanded with container. didn't work
+        // Container(
+        // color: Colors.blue,
+        // child:
+        Expanded(
+          child:
+              // Container(
+              // color: Colors.black,
+              // child:
+              SingleChildScrollView(
+            child: w,
+          ),
+        ),
+        // ),
+        // ),
+        const SizedBox(
+          height: 5,
+        ),
+      ],
+    ),
   );
 }
