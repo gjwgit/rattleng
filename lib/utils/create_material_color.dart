@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 //
 // See https://medium.com/@filipvk/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
 

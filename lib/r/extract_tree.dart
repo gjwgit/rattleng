@@ -21,22 +21,23 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log) {
-  const String hd = "Summary of the Decision Tree model for Classification";
+  const String hd = 'Summary of the Decision Tree model for Classification';
   const String md = "(built using 'rpart'):";
-  final String fm = rExtract(log, "> print(form)");
-  final String pr = rExtract(log, "> print(model_rpart)");
-  final String cp = rExtract(log, "> printcp(model_rpart)");
+  final String fm = rExtract(log, '> print(form)');
+  final String pr = rExtract(log, '> print(model_rpart)');
+  final String cp = rExtract(log, '> printcp(model_rpart)');
   final String ts = timestamp();
 
-  String result = "\n\n\n\n\nNo Tree model has been built.";
+  String result = '\n\n\n\n\nNo Tree model has been built.';
 
-  if (pr != "") {
-    result = "$hd $md\n\nFormula: $fm\n\n$pr\n$cp\n\nRattle timestamp: $ts";
+  if (pr != '') {
+    result = '$hd $md\n\nFormula: $fm\n\n$pr\n$cp\n\nRattle timestamp: $ts';
   }
 
   return result;
@@ -72,7 +73,7 @@ String rExtractTree(String log) {
     (match) {
       // The first group is then the whole rpart(...) call.
 
-      String txt = match.group(1) ?? "";
+      String txt = match.group(1) ?? '';
 
       txt = txt.replaceAll('\n', '');
       txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
@@ -80,13 +81,13 @@ String rExtractTree(String log) {
       txt = txt.replaceAllMapped(
         RegExp(r'(\w+)\s*=\s*([^,]+),'),
         (match) {
-          return "\n    ${match.group(1)}=${match.group(2)},";
+          return '\n    ${match.group(1)}=${match.group(2)},';
         },
       );
 
       txt = txt.replaceAll(' = ', '=');
 
-      return "\n$txt\n)";
+      return '\n$txt\n)';
     },
   );
 

@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,7 @@ import 'package:rattle/provider/terminal.dart';
 /// Widget to accept R commands and show results.
 
 class RConsole extends ConsumerStatefulWidget {
-  const RConsole({Key? key}) : super(key: key);
+  const RConsole({super.key});
 
   @override
   ConsumerState<RConsole> createState() => _RConsoleState();

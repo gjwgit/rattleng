@@ -23,7 +23,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final stdoutProvider = StateProvider<String>((ref) => "");
+final stdoutProvider = StateProvider<String>((ref) => '');

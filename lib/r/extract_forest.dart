@@ -21,25 +21,26 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log) {
-  const String hd = "Summary of the Random Forest model for Classification";
+  const String hd = 'Summary of the Random Forest model for Classification';
   const String md = "(built using 'randomForest'):";
-  final String fm = rExtract(log, "> print(form)");
-  final String pr = rExtract(log, "> print(model_randomForest)");
+  final String fm = rExtract(log, '> print(form)');
+  final String pr = rExtract(log, '> print(model_randomForest)');
   final String pe = rExtract(
     log,
-    "+                 as.numeric(model_randomForest\$predicted))",
+    '+                 as.numeric(model_randomForest\$predicted))',
   );
   final String ts = timestamp();
 
-  String result = "\n\n\n\n\nNo Forest model has been built.";
+  String result = '\n\n\n\n\nNo Forest model has been built.';
 
-  if (pr != "") {
-    result = "$hd $md\n\nFormula: $fm\n$pr \n$pe\n\nRattle timestamp: $ts";
+  if (pr != '') {
+    result = '$hd $md\n\nFormula: $fm\n$pr \n$pe\n\nRattle timestamp: $ts';
   }
 
   return result;
@@ -50,7 +51,7 @@ String _basicTemplate(String log) {
 String rExtractForest(String log) {
   String extract = _basicTemplate(log);
 
-  extract = extract.replaceAll("Call:\n", "");
+  extract = extract.replaceAll('Call:\n', '');
 
   // Nicely format the call to randomForest.
 
@@ -63,7 +64,7 @@ String rExtractForest(String log) {
     (match) {
       // The first group is then the whole randomForest(...) call.
 
-      String txt = match.group(1) ?? "";
+      String txt = match.group(1) ?? '';
 
       txt = txt.replaceAll('\n', '');
       txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
@@ -71,20 +72,20 @@ String rExtractForest(String log) {
       txt = txt.replaceAllMapped(
         RegExp(r'(\w+)\s*=\s*([^,]+),'),
         (match) {
-          return "\n    ${match.group(1)}=${match.group(2)},";
+          return '\n    ${match.group(1)}=${match.group(2)},';
         },
       );
 
       txt = txt.replaceAll(' = ', '=');
 
-      return "\n$txt\n)\n";
+      return '\n$txt\n)\n';
     },
   );
 
   extract =
-      extract.replaceAll("\nConfusion matrix:\n", "\n\nConfusion matrix:\n\n");
+      extract.replaceAll('\nConfusion matrix:\n', '\n\nConfusion matrix:\n\n');
 
-  extract = extract.replaceAll("\nArea under", "\n\nArea under");
+  extract = extract.replaceAll('\nArea under', '\n\nArea under');
 
   return extract;
 }
