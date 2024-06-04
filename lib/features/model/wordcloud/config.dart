@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
@@ -36,111 +37,115 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 5.0),
-        Row(
-          children: [
-            const SizedBox(width: 5.0),
-            buildButton,
-            const SizedBox(width: 20.0),
-            const Text(
-              'A word cloud visualises word frequencies. '
-              'More frequent words are larger.',
-            ),
-          ],
-        ),
-        const SizedBox(height: 20.0),
-        Row(
-          children: [
-            const Text('Tuning Options:  '),
-            // checkbox for random color
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(checkboxProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(checkboxProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Random Order'),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stemProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stemProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Stem'),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stopwordProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stopwordProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Remove Stopwords'),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(punctuationProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(punctuationProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Remove Punctuation'),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Row(
+    return Container(
+      color: Color(0xfffef7ff),
+//          headerBarColour, // Color(0x5545035e), //Color(0xff45035e), //Colors.grey,
+      child: Column(
+        children: [
+          const SizedBox(height: 5.0),
+          Row(
             children: [
-              const Text('Tuning Parameters:  '),
-              const SizedBox(width: 5),
-              // max word text field
-              SizedBox(
-                width: 150.0,
-                child: TextField(
-                  controller: maxWordTextController,
-                  style: const TextStyle(fontSize: 16),
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Max Words',
-                    labelStyle: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              SizedBox(
-                width: 150.0,
-                child: TextField(
-                  controller: minFreqTextController,
-                  style: const TextStyle(fontSize: 16),
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Min Freq',
-                    labelStyle: TextStyle(fontSize: 16),
-                  ),
-                ),
+              const SizedBox(width: 5.0),
+              buildButton,
+              const SizedBox(width: 20.0),
+              const Text(
+                'A word cloud visualises word frequencies. '
+                'More frequent words are larger.',
               ),
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: 20.0),
+          Row(
+            children: [
+              const Text('Tuning Options:  '),
+              // checkbox for random color
+              Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(checkboxProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(checkboxProvider.notifier).state = v!,
+                    },
+                  ),
+                  const Text('Random Order'),
+                ],
+              ),
+              const SizedBox(width: 20),
+              Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(stemProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(stemProvider.notifier).state = v!,
+                    },
+                  ),
+                  const Text('Stem'),
+                ],
+              ),
+              const SizedBox(width: 20),
+              Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(stopwordProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(stopwordProvider.notifier).state = v!,
+                    },
+                  ),
+                  const Text('Remove Stopwords'),
+                ],
+              ),
+              const SizedBox(width: 20),
+              Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(punctuationProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(punctuationProvider.notifier).state = v!,
+                    },
+                  ),
+                  const Text('Remove Punctuation'),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              children: [
+                const Text('Tuning Parameters:  '),
+                const SizedBox(width: 5),
+                // max word text field
+                SizedBox(
+                  width: 150.0,
+                  child: TextField(
+                    controller: maxWordTextController,
+                    style: const TextStyle(fontSize: 16),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Max Words',
+                      labelStyle: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                SizedBox(
+                  width: 150.0,
+                  child: TextField(
+                    controller: minFreqTextController,
+                    style: const TextStyle(fontSize: 16),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Min Freq',
+                      labelStyle: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
