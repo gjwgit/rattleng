@@ -61,7 +61,7 @@ class DatasetButton extends StatelessWidget {
         return AlertDialog(
           title: const Text('Warning'),
           content: const Text(
-            'If you load a new dataset, the old one will be removed.\nAre you sure?',
+            'If you load a new dataset, it will reset the app.\nAre you sure?',
           ),
           actions: <Widget>[
             TextButton(
@@ -82,6 +82,7 @@ class DatasetButton extends StatelessWidget {
                 Navigator.of(context).pop();
                 _showPopup(context);
                 // TODO yyx clear every state
+                reset(context);
               },
             ),
           ],
@@ -97,5 +98,8 @@ class DatasetButton extends StatelessWidget {
         return const DatasetPopup();
       },
     );
+  }
+  void reset(BuildContext context) {
+
   }
 }
