@@ -3,4 +3,4 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final wordCloudBuildProvider = StateProvider<String>((ref) => "");
+final wordCloudBuildProvider = StateProvider<String>((ref) => '');

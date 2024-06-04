@@ -56,7 +56,7 @@ List<String> rExtractVars(String txt) {
 
   if (startIndex != -1) {
     for (int i = startIndex + 1; i < lines.length; i++) {
-      if (lines[i].startsWith(">")) {
+      if (lines[i].startsWith('>')) {
         // Found the next line starting with the R prompt '>'. Stop adding lines
         // to the result. Assumes no lines, after the pattern of interest, that
         // contain the output we want to capture start with the R prompt '>'.
@@ -71,9 +71,9 @@ List<String> rExtractVars(String txt) {
   // Join all lines into one string to work on it now to extract the variable
   // names.
 
-  String vars = result.join(" ");
+  String vars = result.join(' ');
 
-  debugPrint("R EXTRACT VARS JOIN: $vars");
+  debugPrint('R EXTRACT VARS JOIN: $vars');
 
   // Remove the [1] etc line numbering in the output.
 
@@ -95,7 +95,7 @@ List<String> rExtractVars(String txt) {
 
   // Return the list of variable names.
 
-  debugPrint("R EXTRACT VARS FINAL: $result");
+  debugPrint('R EXTRACT VARS FINAL: $result');
 
   return result;
 }

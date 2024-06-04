@@ -67,20 +67,20 @@ class RattleStateText extends ConsumerWidget {
       child: Builder(
         builder: (BuildContext context) {
           return SelectableText(
-            "STATUS:      $status\n"
-            "SCRIPT:      ${countLines(script)} lines\n"
-            "STDOUT:      ${countLines(stdout)} lines\n"
-            "STDERR:      ${countLines(stderr)} lines\n"
-            "PATH:        $path\n"
-            "CLEANSE:     $cleanse\n"
-            "NORMALISE:   $normalise\n"
-            "PARTITION:   $partition\n"
-            "VARS:        ${truncate(vars.toString())}\n"
-            "TARGET:      $target\n"
-            "RISK:        \$risk \n"
-            "IDENTIFIERS: \$identifiers \n"
-            "IGNORE:      \$ignore\n"
-            "MODEL:       $model\n",
+            'STATUS:      $status\n'
+            'SCRIPT:      ${countLines(script)} lines\n'
+            'STDOUT:      ${countLines(stdout)} lines\n'
+            'STDERR:      ${countLines(stderr)} lines\n'
+            'PATH:        $path\n'
+            'CLEANSE:     $cleanse\n'
+            'NORMALISE:   $normalise\n'
+            'PARTITION:   $partition\n'
+            'VARS:        ${truncate(vars.toString())}\n'
+            'TARGET:      $target\n'
+            'RISK:        \$risk \n'
+            'IDENTIFIERS: \$identifiers \n'
+            'IGNORE:      \$ignore\n'
+            'MODEL:       $model\n',
             style: monoSmallTextStyle,
           );
         },

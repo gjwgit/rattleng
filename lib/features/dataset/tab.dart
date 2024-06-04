@@ -64,7 +64,7 @@ class _DatasetTabState extends ConsumerState<DatasetTab> {
           // overwritten once a dataset is loaded.
 
           Visibility(
-            visible: path == "",
+            visible: path == '',
             child: Expanded(
               child: Center(
                 key: welcomeTextKey,
@@ -73,7 +73,7 @@ class _DatasetTabState extends ConsumerState<DatasetTab> {
             ),
           ),
           Visibility(
-            visible: path != "",
+            visible: path != '',
             child: Expanded(
               child: Container(
                 width: double.infinity,

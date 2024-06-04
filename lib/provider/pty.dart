@@ -39,7 +39,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
   // Create a pseudo termminal provider.
 
   Terminal terminal = ref.watch(terminalProvider);
-  Pty pty = Pty.start(shell, arguments: ["--no-save"]);
+  Pty pty = Pty.start(shell, arguments: ['--no-save']);
 
   // Options
   //   columns: terminal.viewWidth,

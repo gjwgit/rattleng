@@ -49,7 +49,7 @@ String rStripHeader(String code) {
   // TODO 20231102 gjw ACTUALLY I THINK THE PROBLEM IS WHEN THE FIRST LINE DOES
   // NOT START WITH #. SHOULD TEST AND FIX THAT ONE UP.
 
-  String result = "\n${lines.first}";
+  String result = '\n${lines.first}';
 
   if (lines.length > 1) {
     result = "$result\n#${lines.sublist(index).join('\n')}";

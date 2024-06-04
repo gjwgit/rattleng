@@ -35,7 +35,7 @@ String rExtractGlimpse(String txt) {
   int startIndex = -1;
 
   for (int i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].contains("> glimpse(ds)") || lines[i].contains("> cat")) {
+    if (lines[i].contains('> glimpse(ds)') || lines[i].contains('> cat')) {
       startIndex = i;
       break;
     }
@@ -43,7 +43,7 @@ String rExtractGlimpse(String txt) {
 
   if (startIndex != -1) {
     for (int i = startIndex + 1; i < lines.length; i++) {
-      if (lines[i].startsWith(">")) {
+      if (lines[i].startsWith('>')) {
         // Found the next line starting with '>'. Stop adding lines to the
         // result.
 

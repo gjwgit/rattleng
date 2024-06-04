@@ -72,7 +72,7 @@ void rStart(WidgetRef ref) async {
 
   debugPrint("R START:\t\t'main.R'");
 
-  String code = File("assets/r/main.R").readAsStringSync();
+  String code = File('assets/r/main.R').readAsStringSync();
 
   // Populate the <<USER>>. Bit it seems to need to use Firebase. Too much
   // trouble just for the user name.

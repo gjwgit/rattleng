@@ -18,30 +18,30 @@ class WordCloudTab extends ConsumerStatefulWidget {
 class _WordCloudTabState extends ConsumerState<WordCloudTab> {
   @override
   Widget build(BuildContext context) {
-    debugPrint("wordcloud window build");
+    debugPrint('wordcloud window build');
     debugPrint('path: $wordCloudImagePath');
     // reload the wordcloud png
     imageCache.clear();
     imageCache.clearLiveImages();
     String rebuild = ref.watch(wordCloudBuildProvider);
-    debugPrint("received rebuild on $rebuild");
+    debugPrint('received rebuild on $rebuild');
     // debugPrint("build wordcloud window.");
     var wordCloudFile = File(wordCloudImagePath);
     bool pngBuild = wordCloudFile.existsSync();
-    Widget rtn = const Text("bug");
+    Widget rtn = const Text('bug');
 
     if (!pngBuild) {
-      debugPrint("No model has been built.");
+      debugPrint('No model has been built.');
       rtn = const Column(
         children: [
           SizedBox(height: 50),
-          Text("No model has been built"),
+          Text('No model has been built'),
         ],
       );
     }
 
     if (pngBuild) {
-      debugPrint("model built - sleeping if needed to wait for file");
+      debugPrint('model built - sleeping if needed to wait for file');
       // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
       var bytes = wordCloudFile.readAsBytesSync();
@@ -69,7 +69,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
       rtn = Column(
         children: [
-          Text("Latest rebuild $rebuild"),
+          Text('Latest rebuild $rebuild'),
           image,
           WordCloudSaveButton(
             wordCloudImagePath: wordCloudImagePath,

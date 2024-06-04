@@ -77,9 +77,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // NORMALISE
 
         DelayedTooltip(
-          message: "Variable/column names of a CSV dataset are normalised.\n"
-              "Names are lowercased, separated by underscore.\n"
-              "If you do not requires normalisation, turn this off.",
+          message: 'Variable/column names of a CSV dataset are normalised.\n'
+              'Names are lowercased, separated by underscore.\n'
+              'If you do not requires normalisation, turn this off.',
           child: Icon(Icons.auto_fix_high_outlined),
           // child: Icon(Icons.art_track),
           // child: Icon(Icons.ac_unit),
@@ -88,8 +88,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // PARTITION
 
         DelayedTooltip(
-          message: "Partition a CSV dataset for modelling into 70/15/15.\n"
-              "If you do not require partitioning, turn this off.",
+          message: 'Partition a CSV dataset for modelling into 70/15/15.\n'
+              'If you do not require partitioning, turn this off.',
           child: Icon(Icons.horizontal_split),
           // child: Icon(Icons.assessment_outlined),
         ),

@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final scriptProvider = StateProvider<String>((ref) => "");
+final scriptProvider = StateProvider<String>((ref) => '');

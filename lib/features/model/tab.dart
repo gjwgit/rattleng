@@ -39,70 +39,70 @@ import 'package:rattle/provider/model.dart';
 Widget buildButton = const ModelBuildButton();
 final List<Map<String, dynamic>> modelTabs = [
   {
-    'title': "Cluster",
-    "widget": const Column(
+    'title': 'Cluster',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Associate",
-    "widget": const Column(
+    'title': 'Associate',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Tree",
-    "widget": TreeTab(
+    'title': 'Tree',
+    'widget': TreeTab(
       buildButton: buildButton,
     ),
   },
   {
-    'title': "Forest",
-    "widget": ForestTab(buildButton: buildButton),
+    'title': 'Forest',
+    'widget': ForestTab(buildButton: buildButton),
   },
   {
-    'title': "Boost",
-    "widget": const Column(
+    'title': 'Boost',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Word Cloud",
-    "widget": const WordCloudTab(),
+    'title': 'Word Cloud',
+    'widget': const WordCloudTab(),
   },
   {
-    'title': "SVM",
-    "widget": const Column(
+    'title': 'SVM',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Linear",
-    "widget": const Column(
+    'title': 'Linear',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
   {
-    'title': "Neural",
-    "widget": const Column(
+    'title': 'Neural',
+    'widget': const Column(
       children: <Widget>[
         SizedBox(height: 50),
-        Text("NOT YET IMPLEMENTED"),
+        Text('NOT YET IMPLEMENTED'),
       ],
     ),
   },
@@ -114,7 +114,7 @@ var systemTempDir = Directory.systemTemp;
 
 // TODO 20240604 gjw THIS SHOULD BE IN A CONSTANTS FILE.
 
-String wordCloudImagePath = "${systemTempDir.path}/wordcloud.png";
+String wordCloudImagePath = '${systemTempDir.path}/wordcloud.png';
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({super.key});
@@ -134,8 +134,8 @@ class _ModelTabState extends ConsumerState<ModelTab>
 
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
-          modelTabs[_tabController.index]["title"];
-      debugPrint("Selected tab: ${_tabController.index}");
+          modelTabs[_tabController.index]['title'];
+      debugPrint('Selected tab: ${_tabController.index}');
     });
   }
 
@@ -148,7 +148,7 @@ class _ModelTabState extends ConsumerState<ModelTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint("modeltab rebuild.");
+    debugPrint('modeltab rebuild.');
 
     return Column(
       children: [

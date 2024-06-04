@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final modelProvider = StateProvider<String>((ref) => "Tree");
+final modelProvider = StateProvider<String>((ref) => 'Tree');

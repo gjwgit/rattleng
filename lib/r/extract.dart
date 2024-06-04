@@ -46,7 +46,7 @@ String rExtract(String txt, String pat) {
 
   if (startIndex != -1) {
     for (int i = startIndex + 1; i < lines.length; i++) {
-      if (lines[i].startsWith(">")) {
+      if (lines[i].startsWith('>')) {
         // Found the next line starting with '>'. Stop adding lines to the
         // result.
 
