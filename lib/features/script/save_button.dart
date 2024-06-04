@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'dart:io' show File;
 
@@ -33,12 +34,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/provider/script.dart';
 
 class ScriptSaveButton extends ConsumerWidget {
-  const ScriptSaveButton({Key? key}) : super(key: key);
+  const ScriptSaveButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
-      child: const Text("Export"),
+      child: const Text('Export'),
       onPressed: () {
         debugPrint("SAVE BUTTON EXPORT: 'script.R'");
         File('script.R').writeAsString(ref.read(scriptProvider));

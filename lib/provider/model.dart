@@ -23,7 +23,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final modelProvider = StateProvider<String>((ref) => "Tree");
+final modelProvider = StateProvider<String>((ref) => 'Tree');

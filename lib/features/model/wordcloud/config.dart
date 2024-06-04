@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
@@ -8,14 +10,14 @@ import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
 
-class WordcloudConfigBar extends ConsumerStatefulWidget {
-  const WordcloudConfigBar({super.key});
+class WordCloudConfig extends ConsumerStatefulWidget {
+  const WordCloudConfig({super.key});
 
   @override
-  ConsumerState<WordcloudConfigBar> createState() => _ConfigBarState();
+  ConsumerState<WordCloudConfig> createState() => _ConfigState();
 }
 
-class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
+class _ConfigState extends ConsumerState<WordCloudConfig> {
   final maxWordTextController = TextEditingController();
   final minFreqTextController = TextEditingController();
   @override
@@ -43,7 +45,7 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
             buildButton,
             const SizedBox(width: 20.0),
             const Text(
-              'A wordcloud visualises word frequencies. '
+              'A word cloud visualises word frequencies. '
               'More frequent words are larger.',
             ),
           ],
@@ -61,7 +63,7 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
                     ref.read(checkboxProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Random Order"),
+                const Text('Random Order'),
               ],
             ),
             const SizedBox(width: 20),
@@ -73,7 +75,7 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
                     ref.read(stemProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Stem"),
+                const Text('Stem'),
               ],
             ),
             const SizedBox(width: 20),
@@ -85,7 +87,7 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
                     ref.read(stopwordProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Remove Stopwords"),
+                const Text('Remove Stopwords'),
               ],
             ),
             const SizedBox(width: 20),
@@ -97,7 +99,7 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
                     ref.read(punctuationProvider.notifier).state = v!,
                   },
                 ),
-                const Text("Remove Punctuation"),
+                const Text('Remove Punctuation'),
               ],
             ),
           ],
@@ -117,7 +119,7 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
                   style: const TextStyle(fontSize: 16),
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: "Max Words",
+                    labelText: 'Max Words',
                     labelStyle: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -130,7 +132,7 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
                   style: const TextStyle(fontSize: 16),
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: "Min Freq",
+                    labelText: 'Min Freq',
                     labelStyle: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -143,12 +145,12 @@ class _ConfigBarState extends ConsumerState<WordcloudConfigBar> {
   }
 
   void _updateMaxWordProvider() {
-    debugPrint("max word text changed to ${maxWordTextController.text}");
+    debugPrint('max word text changed to ${maxWordTextController.text}');
     ref.read(maxWordProvider.notifier).state = maxWordTextController.text;
   }
 
   void _updateMinFreqProvider() {
-    debugPrint("min freq text changed to ${minFreqTextController.text}");
+    debugPrint('min freq text changed to ${minFreqTextController.text}');
     ref.read(minFreqProvider.notifier).state = minFreqTextController.text;
   }
 }
