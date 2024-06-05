@@ -1,3 +1,5 @@
+//
+
 // TODO 20240605 gjw LICENSE AND COMMENTS REQUIRED
 
 import 'dart:io';
@@ -20,16 +22,15 @@ class WordCloudTab extends ConsumerStatefulWidget {
 class _WordCloudTabState extends ConsumerState<WordCloudTab> {
   @override
   Widget build(BuildContext context) {
-    // debugPrint('wordcloud window build');
-    // debugPrint('path: $wordCloudImagePath');
+    // Build the word cloud widget to be deisplay in it's tab, consisting of the
+    // top conguration and the main panel showing the generated image.
 
-    // Reload the wordcloud png.
+    // Reload the wordcloud image.
 
     imageCache.clear();
     imageCache.clearLiveImages();
     String rebuild = ref.watch(wordCloudBuildProvider);
     debugPrint('received rebuild on $rebuild');
-    // debugPrint("build wordcloud window.");
     var wordCloudFile = File(wordCloudImagePath);
     bool pngBuild = wordCloudFile.existsSync();
 
@@ -77,9 +78,13 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
       Image image = Image.memory(bytes);
 
-      imageDisplay = Column(
+      // Build the widget to display the image. Make it a row, centering the
+      // image horizontally, and so ensuring the scrollbar is all the way to the
+      // right.
+
+      imageDisplay = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Latest rebuild $rebuild'),
           image,
         ],
       );
