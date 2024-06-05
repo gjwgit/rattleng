@@ -1,3 +1,7 @@
+//
+
+// TODO 20240605 gjw LICENSE AND COMMENTS REQUIRED
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -18,35 +22,46 @@ class WordCloudTab extends ConsumerStatefulWidget {
 class _WordCloudTabState extends ConsumerState<WordCloudTab> {
   @override
   Widget build(BuildContext context) {
-    debugPrint('wordcloud window build');
-    debugPrint('path: $wordCloudImagePath');
-    // reload the wordcloud png
+    // Build the word cloud widget to be deisplay in it's tab, consisting of the
+    // top conguration and the main panel showing the generated image.
+
+    // Reload the wordcloud image.
+
     imageCache.clear();
     imageCache.clearLiveImages();
     String rebuild = ref.watch(wordCloudBuildProvider);
     debugPrint('received rebuild on $rebuild');
-    // debugPrint("build wordcloud window.");
     var wordCloudFile = File(wordCloudImagePath);
     bool pngBuild = wordCloudFile.existsSync();
-    Widget rtn = const Text('bug');
+
+    // Identify a widget for the display of the word cloud image file. Default
+    // to a BUG display! The traditional 'This should not happen'.
+
+    Widget imageDisplay = const Text('This should not happen.');
 
     if (!pngBuild) {
       debugPrint('No model has been built.');
-      rtn = const Column(
+      imageDisplay = const Column(
         children: [
           SizedBox(height: 50),
-          Text('No model has been built'),
+          Text('To build a word cloud you first need to load a txt dataset.\n'
+              'Once a txt dataset has been loaded then tap the Build button.\n'
+              'Various options and parameters will fine tune the word cloud.\n'
+              'Tap the save icon in the top toolbar to save the image to file.\n'
+              'Review the Script page for R commands used to build the word cloud.'),
         ],
       );
     }
 
     if (pngBuild) {
       debugPrint('model built - sleeping if needed to wait for file');
-      // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+
+      // Reload the image:
+      // (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
       var bytes = wordCloudFile.readAsBytesSync();
 
-      // TODO 20240601 gjw WITHOUT THE DELAY HERE WE SEE AN EXCEPTION ON LINUX
+      // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
       //
       // _Exception was thrown resolving an image codec:
       // Exception: Invalid image data
@@ -67,27 +82,53 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
       Image image = Image.memory(bytes);
 
-      rtn = Column(
+      // Build the widget to display the image. Make it a row, centering the
+      // image horizontally, and so ensuring the scrollbar is all the way to the
+      // right.
+
+      imageDisplay = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Latest rebuild $rebuild'),
           image,
-          WordCloudSaveButton(
-            wordCloudImagePath: wordCloudImagePath,
-          ),
         ],
       );
     }
 
-    return wrap(rtn);
+    return wordCloudPanel(imageDisplay);
   }
 }
 
-Widget wrap(Widget w) {
-  return SingleChildScrollView(
+Widget wordCloudPanel(Widget wordCloudBody) {
+  return Container(
+    color: Colors.white,
     child: Column(
       children: [
         const WordCloudConfig(),
-        w,
+        // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
+        // BUTTON TOP RIGHT.
+        //
+        // WordCloudSaveButton(
+        //  wordCloudImagePath: wordCloudImagePath,
+        // ),
+        const SizedBox(height: 10),
+        // TODO yyx tried to make the pane white by wrapping expanded with container. didn't work
+        // Container(
+        // color: Colors.blue,
+        // child:
+        Expanded(
+          child:
+              // Container(
+              // color: Colors.black,
+              // child:
+              SingleChildScrollView(
+            child: wordCloudBody,
+          ),
+        ),
+        // ),
+        // ),
+        const SizedBox(
+          height: 5,
+        ),
       ],
     ),
   );
