@@ -22,18 +22,23 @@
 /// Authors: Graham Williams
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
+import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 bool LOADED = true;
 
-class DatasetButton extends StatelessWidget {
+class DatasetButton extends ConsumerWidget {
   const DatasetButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () async {
         // TODO yyx when user clicking the dataset button
@@ -42,7 +47,7 @@ class DatasetButton extends StatelessWidget {
         // if Yes, clear every state in the app and showPopup
         // if No, dismiss the popup window
         if (LOADED) {
-          _showConfirmPopup(context);
+          _showConfirmPopup(context, ref);
         }
       },
       child: const DelayedTooltip(
@@ -54,7 +59,7 @@ class DatasetButton extends StatelessWidget {
     );
   }
 
-  void _showConfirmPopup(BuildContext context) {
+  void _showConfirmPopup(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -82,7 +87,7 @@ class DatasetButton extends StatelessWidget {
                 Navigator.of(context).pop();
                 _showPopup(context);
                 // TODO yyx clear every state
-                reset(context);
+                reset(context, ref);
               },
             ),
           ],
@@ -99,7 +104,11 @@ class DatasetButton extends StatelessWidget {
       },
     );
   }
-  void reset(BuildContext context) {
-
+  void reset(BuildContext context, WidgetRef ref) {
+    // clear the state of the app
+    // TODO yyx first clear wordcloud tab
+    // load the dataset, build wordcloud, load a new one, we shouldn't see the previous wordcloud
+    // load the demo dataset, build tree, load a new one, we shouldn't see the previous tree
+    ref.read(stdoutProvider.notifier).state = '';
   }
 }
