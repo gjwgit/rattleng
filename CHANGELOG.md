@@ -7,6 +7,8 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ WordCloud cleanup. Improve image display. Add msg. [0.1.1]
+
 ## 0.1.0 Word Clouds, Basic Trees, and Basic Forests
 
 + Comprehensive cleanup with dart code metrics [0.1.0]
