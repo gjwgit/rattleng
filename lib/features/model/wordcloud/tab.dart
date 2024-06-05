@@ -110,9 +110,7 @@ Widget wordCloudPanel(Widget wordCloudBody) {
         // WordCloudSaveButton(
         //  wordCloudImagePath: wordCloudImagePath,
         // ),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 10),
         // TODO yyx tried to make the pane white by wrapping expanded with container. didn't work
         // Container(
         // color: Colors.blue,
