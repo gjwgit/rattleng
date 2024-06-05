@@ -105,7 +105,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
     if (await tmpImageFile.exists()) {
       await tmpImageFile.delete();
       debugPrint('File $tmpImagePath deleted');
-    }    
+    }
   }
 
   Future<void> _loadAppInfo() async {
