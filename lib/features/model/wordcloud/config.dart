@@ -1,10 +1,22 @@
+/// The WordCloud configuration panel.
+
+library;
+
+// TODO 20240605 gjw REQUIRES LICENSE AND DOCUMENTATION.
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/tab.dart';
+// TODO 20240605 gjw PERHAPS CALL THIS randomProviderWC RATHER THAN
+// THE GENERIC checkboxProvider.
 import 'package:rattle/provider/wordcloud/checkbox.dart';
+// TODO 20240605 gjw We will have other providers as the app grows. maxword
+// might be used in other panels too. Perhaps we need to identify these as
+// WordCloud providers, either within a wordcloudProvider structure or
+// individually as in maxwordsProviderWC?
 import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/provider/wordcloud/minfreq.dart';
 import 'package:rattle/provider/wordcloud/punctuation.dart';
@@ -38,11 +50,18 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xfffef7ff),
-//          headerBarColour, // Color(0x5545035e), //Color(0xff45035e), //Colors.grey,
+      // Set the default colour for the config bar background.
+
+      color: configBarColor,
+
+      // Layout the config bar.
+
       child: Column(
         children: [
           const SizedBox(height: 5.0),
+
+          // A BUILD button and functionality explanation.
+
           Row(
             children: [
               const SizedBox(width: 5.0),
@@ -55,10 +74,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ],
           ),
           const SizedBox(height: 20.0),
+
+          // Options for the current functionality.
+
           Row(
             children: [
               const Text('Tuning Options:  '),
-              // checkbox for random color
+              // Checkbox for random order of words in the cloud.
               Row(
                 children: [
                   Checkbox(
@@ -109,6 +131,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ],
           ),
           const SizedBox(height: 10),
+
+          // Parameters for the current functionality.
+
           Align(
             alignment: Alignment.bottomCenter,
             child: Row(

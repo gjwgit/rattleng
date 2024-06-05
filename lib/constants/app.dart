@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-06-05 06:34:14 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-05 08:09:00 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -50,6 +50,10 @@ const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 /// top header bar used for the control area at the top of the app.
 
 const headerBarColour = Color(0xff45035e);
+
+/// The default background colour for the configuration bars in each panel.
+
+const configBarColor = Color(0xfffef7ff);
 
 /// The default background colour of the status bar.
 ///
