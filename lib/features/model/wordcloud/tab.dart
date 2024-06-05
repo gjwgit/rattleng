@@ -1,4 +1,4 @@
-//
+/// Panel for word cloud.
 
 // TODO 20240605 gjw LICENSE AND COMMENTS REQUIRED
 
@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/model/wordcloud/config.dart';
 import 'package:rattle/features/model/wordcloud/save_png.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
+import 'package:rattle/widgets/markdown_file.dart';
 
 class WordCloudTab extends ConsumerStatefulWidget {
   const WordCloudTab({super.key});
@@ -22,15 +24,16 @@ class WordCloudTab extends ConsumerStatefulWidget {
 class _WordCloudTabState extends ConsumerState<WordCloudTab> {
   @override
   Widget build(BuildContext context) {
-    // Build the word cloud widget to be deisplay in it's tab, consisting of the
-    // top conguration and the main panel showing the generated image.
+    // Build the word cloud widget to be displayed in the tab, consisting of the
+    // top configuration and the main panel showing the generated image. Before
+    // the build we display a introdcurory text to the functionality.
 
     // Reload the wordcloud image.
 
     imageCache.clear();
     imageCache.clearLiveImages();
     String rebuild = ref.watch(wordCloudBuildProvider);
-    debugPrint('received rebuild on $rebuild');
+    debugPrint('Received rebuild on $rebuild.');
     var wordCloudFile = File(wordCloudImagePath);
     bool pngBuild = wordCloudFile.existsSync();
 
@@ -39,25 +42,32 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
     Widget imageDisplay = const Text('This should not happen.');
 
+    // If there is no image built then return a widget that displays the word
+    // cloud introductory message, but with the config bar also displayed.
+
     if (!pngBuild) {
       debugPrint('No model has been built.');
-      imageDisplay = const Column(
+      return Column(
         children: [
-          SizedBox(height: 50),
-          Text('To build a word cloud you first need to load a txt dataset.\n'
-              'Once a txt dataset has been loaded then tap the Build button.\n'
-              'Various options and parameters will fine tune the word cloud.\n'
-              'Tap the save icon in the top toolbar to save the image to file.\n'
-              'Review the Script page for R commands used to build the word cloud.'),
+          // TODO 20240605 gjw NOT QUIT THE RIGHT SOLUTION YET. IF I SET MAX
+          // WORDS TO 10 WHILE THE MSG IS DISPLAYED THEN BUILD, IT GET THE
+          // PARAMETER BUT AFTER THE BUILD/REFRESH THE 10 IS LOST FROM THE
+          // CONFIG BAR SINCE IT IS REBUILT. HOW TO FIX THAT AND RETAIN THE
+          // MESSAGE WITHTHE CONFIG BAR.
+          const WordCloudConfig(),
+          Expanded(
+            child: Center(
+              child: sunkenMarkdownFileBuilder(wordCloudMsgFile),
+            ),
+          ),
         ],
       );
-    }
-
-    if (pngBuild) {
-      debugPrint('model built - sleeping if needed to wait for file');
+    } else {
+      debugPrint('Model built. Now Sleeping as needed to await file.');
 
       // Reload the image:
-      // (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+      // https://nambiarakhilraj01.medium.com/
+      // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
       var bytes = wordCloudFile.readAsBytesSync();
 
@@ -104,30 +114,20 @@ Widget wordCloudPanel(Widget wordCloudBody) {
     child: Column(
       children: [
         const WordCloudConfig(),
+
         // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
-        // BUTTON TOP RIGHT.
+        // BUTTON TOP RIGHT. KEEP HERE AS A COMMENT UNTIL IMPLEMENTED.
         //
         // WordCloudSaveButton(
         //  wordCloudImagePath: wordCloudImagePath,
         // ),
+
         const SizedBox(height: 10),
-        // TODO yyx tried to make the pane white by wrapping expanded with container. didn't work
-        // Container(
-        // color: Colors.blue,
-        // child:
+
         Expanded(
-          child:
-              // Container(
-              // color: Colors.black,
-              // child:
-              SingleChildScrollView(
+          child: SingleChildScrollView(
             child: wordCloudBody,
           ),
-        ),
-        // ),
-        // ),
-        const SizedBox(
-          height: 5,
         ),
       ],
     ),
