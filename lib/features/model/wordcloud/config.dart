@@ -1,8 +1,8 @@
 /// The WordCloud configuration panel.
 
-library;
-
 // TODO 20240605 gjw REQUIRES LICENSE AND DOCUMENTATION.
+
+library;
 
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/tab.dart';
 // TODO 20240605 gjw PERHAPS CALL THIS randomProviderWC RATHER THAN
-// THE GENERIC checkboxProvider.
+// THE GENERIC checkboxProvider? FOR DISCUSSION.
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 // TODO 20240605 gjw We will have other providers as the app grows. maxword
 // might be used in other panels too. Perhaps we need to identify these as
