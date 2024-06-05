@@ -7,7 +7,8 @@ numbers.
 
 ## 0.2.0 FUTURE
 
-+ WordCloud cleanup. Improve image display. Add msg. [0.1.1]
++ Add wordcloud introductory message [0.1.2]
++ WordCloud cleanup. Improve image display. [0.1.1]
 
 ## 0.1.0 Word Clouds, Basic Trees, and Basic Forests
 
