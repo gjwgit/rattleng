@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2023-10-15 06:41:50 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-05 08:09:00 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -45,11 +45,15 @@ const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
 /// The default background colour of the header bar.
 ///
-/// A solid purple, suitable for shite text. This stabdout colour is the
+/// A solid purple, suitable for white text. This stabdout colour is the
 /// backgrounf used throughout the app for buttons, and the like, as well as the
 /// top header bar used for the control area at the top of the app.
 
 const headerBarColour = Color(0xff45035e);
+
+/// The default background colour for the configuration bars in each panel.
+
+const configBarColor = Color(0xfffef7ff);
 
 /// The default background colour of the status bar.
 ///
