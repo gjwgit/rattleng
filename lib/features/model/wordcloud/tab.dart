@@ -44,7 +44,11 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
       imageDisplay = const Column(
         children: [
           SizedBox(height: 50),
-          Text('No model has been built'),
+          Text('To build a word cloud you first need to load a txt dataset.\n'
+              'Once a txt dataset has been loaded then tap the Build button.\n'
+              'Various options and parameters will fine tune the word cloud.\n'
+              'Tap the save icon in the top toolbar to save the image to file.\n'
+              'Review the Script page for R commands used to build the word cloud.'),
         ],
       );
     }
@@ -100,9 +104,12 @@ Widget wordCloudPanel(Widget wordCloudBody) {
     child: Column(
       children: [
         const WordCloudConfig(),
-        WordCloudSaveButton(
-          wordCloudImagePath: wordCloudImagePath,
-        ),
+        // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
+        // BUTTON TOP RIGHT.
+        //
+        // WordCloudSaveButton(
+        //  wordCloudImagePath: wordCloudImagePath,
+        // ),
         const SizedBox(
           height: 5,
         ),
