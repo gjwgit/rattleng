@@ -98,7 +98,7 @@ void rSource(WidgetRef ref, String script) {
   // set we split the dataset.
 
   code = code.replaceAll('FILENAME', path);
-  code = code.replaceAll('WORDCLOUDPATH', wordCloudImagePath);
+  code = code.replaceAll('WORDCLOUDPATH', tmpDirPath);
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
