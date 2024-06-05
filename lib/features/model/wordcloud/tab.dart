@@ -1,3 +1,5 @@
+// TODO 20240605 gjw LICENSE AND COMMENTS REQUIRED
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,7 +22,9 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
   Widget build(BuildContext context) {
     // debugPrint('wordcloud window build');
     // debugPrint('path: $wordCloudImagePath');
-    // reload the wordcloud png
+
+    // Reload the wordcloud png.
+
     imageCache.clear();
     imageCache.clearLiveImages();
     String rebuild = ref.watch(wordCloudBuildProvider);
@@ -28,11 +32,15 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
     // debugPrint("build wordcloud window.");
     var wordCloudFile = File(wordCloudImagePath);
     bool pngBuild = wordCloudFile.existsSync();
-    Widget rtn = const Text('bug');
+
+    // Identify a widget for the display of the word cloud image file. Default
+    // to a BUG display! The traditional 'This should not happen'.
+
+    Widget imageDisplay = const Text('This should not happen.');
 
     if (!pngBuild) {
       debugPrint('No model has been built.');
-      rtn = const Column(
+      imageDisplay = const Column(
         children: [
           SizedBox(height: 50),
           Text('No model has been built'),
@@ -42,11 +50,13 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
     if (pngBuild) {
       debugPrint('model built - sleeping if needed to wait for file');
-      // reload the image (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+
+      // Reload the image:
+      // (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
       var bytes = wordCloudFile.readAsBytesSync();
 
-      // TODO 20240601 gjw WITHOUT THE DELAY HERE WE SEE AN EXCEPTION ON LINUX
+      // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
       //
       // _Exception was thrown resolving an image codec:
       // Exception: Invalid image data
@@ -67,7 +77,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
       Image image = Image.memory(bytes);
 
-      rtn = Column(
+      imageDisplay = Column(
         children: [
           Text('Latest rebuild $rebuild'),
           image,
@@ -75,11 +85,11 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
       );
     }
 
-    return wrap(rtn);
+    return wordCloudPanel(imageDisplay);
   }
 }
 
-Widget wrap(Widget w) {
+Widget wordCloudPanel(Widget wordCloudBody) {
   return Container(
     color: Colors.white,
     child: Column(
@@ -101,7 +111,7 @@ Widget wrap(Widget w) {
               // color: Colors.black,
               // child:
               SingleChildScrollView(
-            child: w,
+            child: wordCloudBody,
           ),
         ),
         // ),
