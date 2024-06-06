@@ -88,7 +88,6 @@ class DatasetButton extends ConsumerWidget {
               onPressed: () {
                 Navigator.of(context).pop();
                 _showOptionPopup(context, ref);
-                // TODO yyx clear every state
                 reset(context, ref);
               },
             ),
@@ -111,12 +110,12 @@ class DatasetButton extends ConsumerWidget {
   void reset(BuildContext context, WidgetRef ref) {
     // clear the state of the app
     // ideally if the app renders based on states stored in providers, we just reset each provider to the start
-    // clear wordcloud tab
+    // MODEL TAB
+    // TODO yyx 20240606 reset wordcloud tab
     ref.read(wordCloudBuildProvider.notifier).state = '';
-    // load the dataset, build wordcloud, load a new one, we shouldn't see the previous wordcloud
     // reset the stdoutProvider, this reset the tree tab, forest tab as they depend on it
     ref.read(stdoutProvider.notifier).state = '';
-    // reset console
+    // CONSOLE TAB
     ref.read(terminalProvider.notifier).state = Terminal();
     rStart(ref);
     // dataset unload
