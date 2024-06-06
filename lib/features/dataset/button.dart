@@ -31,6 +31,7 @@ import 'package:provider/provider.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/terminal.dart';
+import 'package:rattle/r/start.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 import 'package:xterm/xterm.dart';
 
@@ -109,12 +110,12 @@ class DatasetButton extends ConsumerWidget {
   void reset(BuildContext context, WidgetRef ref) {
     // clear the state of the app
     // ideally if the app renders based on states stored in providers, we just reset each provider to the start
-    // TODO yyx first clear wordcloud tab
+    // TODO yyx 20240605 clear wordcloud tab; perhaps need to restructure wordcloud
     // load the dataset, build wordcloud, load a new one, we shouldn't see the previous wordcloud
     // reset the stdoutProvider, this reset the tree tab, forest tab as they depend on it
     ref.read(stdoutProvider.notifier).state = '';
-    // TODO yyx 20240605 new terminal?
-    // glimpse not found 
-    // ref.read(terminalProvider.notifier).state = Terminal();
+    // reset console
+    ref.read(terminalProvider.notifier).state = Terminal();
+    rStart(ref);
   }
 }
