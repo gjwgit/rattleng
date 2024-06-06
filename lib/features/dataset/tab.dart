@@ -1,6 +1,6 @@
 /// Dataset tab for home page.
 ///
-/// Time-stamp: <Wednesday 2024-06-05 15:58:41 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-06-07 08:59:36 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -59,6 +59,11 @@ class _DatasetTabState extends ConsumerState<DatasetTab> {
       body: Column(
         children: [
           const DatasetChooser(),
+
+          // Add a little space below the underlined input widget so the
+          // underline is not lost.
+
+          const SizedBox(height: 10),
 
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
