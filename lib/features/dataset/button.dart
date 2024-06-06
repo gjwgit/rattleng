@@ -30,6 +30,12 @@ import 'package:rattle/provider/dataset_loaded.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/terminal.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
+import 'package:rattle/provider/wordcloud/checkbox.dart';
+import 'package:rattle/provider/wordcloud/maxword.dart';
+import 'package:rattle/provider/wordcloud/minfreq.dart';
+import 'package:rattle/provider/wordcloud/punctuation.dart';
+import 'package:rattle/provider/wordcloud/stem.dart';
+import 'package:rattle/provider/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 import 'package:xterm/xterm.dart';
@@ -111,8 +117,15 @@ class DatasetButton extends ConsumerWidget {
     // clear the state of the app
     // ideally if the app renders based on states stored in providers, we just reset each provider to the start
     // MODEL TAB
-    // TODO yyx 20240606 reset wordcloud tab
+    // reset wordcloud tab
     ref.read(wordCloudBuildProvider.notifier).state = '';
+
+    ref.read(checkboxProvider.notifier).state = false;
+    ref.read(punctuationProvider.notifier).state = false;
+    ref.read(stemProvider.notifier).state = false;
+    ref.read(stopwordProvider.notifier).state = false;
+    ref.read(maxWordProvider.notifier).state = '';
+    ref.read(minFreqProvider.notifier).state = '';
     // reset the stdoutProvider, this reset the tree tab, forest tab as they depend on it
     ref.read(stdoutProvider.notifier).state = '';
     // CONSOLE TAB
