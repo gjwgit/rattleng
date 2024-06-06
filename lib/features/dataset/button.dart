@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
+import 'package:rattle/provider/dataset_loaded.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/terminal.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
@@ -48,8 +49,10 @@ class DatasetButton extends ConsumerWidget {
         // The pop up window has yes or no buttion.
         // if Yes, clear every state in the app and showPopup
         // if No, dismiss the popup window
-        if (LOADED) {
-          _showConfirmPopup(context, ref);
+        if (ref.read(datasetLoaded)) {
+          _showAlertPopup(context, ref);
+        } else {
+          _showOptionPopup(context, ref);
         }
       },
       child: const DelayedTooltip(
@@ -61,7 +64,7 @@ class DatasetButton extends ConsumerWidget {
     );
   }
 
-  void _showConfirmPopup(BuildContext context, WidgetRef ref) {
+  void _showAlertPopup(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -87,7 +90,7 @@ class DatasetButton extends ConsumerWidget {
               child: const Text('Yes'),
               onPressed: () {
                 Navigator.of(context).pop();
-                _showPopup(context);
+                _showOptionPopup(context, ref);
                 // TODO yyx clear every state
                 reset(context, ref);
               },
@@ -98,7 +101,8 @@ class DatasetButton extends ConsumerWidget {
     );
   }
 
-  void _showPopup(BuildContext context) {
+  void _showOptionPopup(BuildContext context, WidgetRef ref) {
+    ref.read(datasetLoaded.notifier).state = true;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -117,5 +121,7 @@ class DatasetButton extends ConsumerWidget {
     // reset console
     ref.read(terminalProvider.notifier).state = Terminal();
     rStart(ref);
+    // dataset unload
+    ref.read(datasetLoaded.notifier).state = false;
   }
 }
