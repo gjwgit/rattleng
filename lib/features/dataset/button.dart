@@ -118,7 +118,5 @@ class DatasetButton extends ConsumerWidget {
     // CONSOLE TAB
     ref.read(terminalProvider.notifier).state = Terminal();
     rStart(ref);
-    // dataset unload
-    ref.read(datasetLoaded.notifier).state = false;
   }
 }
