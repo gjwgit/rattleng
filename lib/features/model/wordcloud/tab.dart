@@ -28,17 +28,17 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
     imageCache.clear();
     imageCache.clearLiveImages();
-    String rebuild = ref.watch(wordCloudBuildProvider);
-    debugPrint('received rebuild on $rebuild');
+    String lastBuildTime = ref.watch(wordCloudBuildProvider);
+    debugPrint('received rebuild on $lastBuildTime');
     var wordCloudFile = File(wordCloudImagePath);
-    bool pngBuild = wordCloudFile.existsSync();
+    bool fileExists = wordCloudFile.existsSync();
 
     // Identify a widget for the display of the word cloud image file. Default
     // to a BUG display! The traditional 'This should not happen'.
 
     Widget imageDisplay = const Text('This should not happen.');
 
-    if (!pngBuild) {
+    if (!fileExists) {
       debugPrint('No model has been built.');
       imageDisplay = const Column(
         children: [
@@ -52,7 +52,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
       );
     }
 
-    if (pngBuild) {
+    if (fileExists) {
       debugPrint('model built - sleeping if needed to wait for file');
 
       // Reload the image:
