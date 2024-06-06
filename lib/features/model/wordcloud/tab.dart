@@ -37,23 +37,14 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
     // to a BUG display! The traditional 'This should not happen'.
 
     Widget imageDisplay = const Text('This should not happen.');
-
-    if (!fileExists) {
-      debugPrint('No model has been built.');
-      imageDisplay = const Column(
-        children: [
-          SizedBox(height: 50),
-          Text('To build a word cloud you first need to load a txt dataset.\n'
-              'Once a txt dataset has been loaded then tap the Build button.\n'
-              'Various options and parameters will fine tune the word cloud.\n'
-              'Tap the save icon in the top toolbar to save the image to file.\n'
-              'Review the Script page for R commands used to build the word cloud.'),
-        ],
-      );
-    }
-
-    if (fileExists) {
-      debugPrint('model built - sleeping if needed to wait for file');
+    // fileexists | build not empty
+    // 1 | 1 -> show the png
+    // 1 | 0 -> show not built
+    // 0 | 0 -> show not built
+    // 0 | 1 -> show loading
+    if (lastBuildTime.isNotEmpty) {
+      if (fileExists) {
+debugPrint('model built - sleeping if needed to wait for file');
 
       // Reload the image:
       // (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
@@ -91,7 +82,29 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
           image,
         ],
       );
+      } else {
+        imageDisplay = const Column(
+        children: [
+          SizedBox(height: 50),
+          Text('Loading'),
+        ],
+      );
+      }
+
+    } else {
+      debugPrint('No model has been built.');
+      imageDisplay = const Column(
+        children: [
+          SizedBox(height: 50),
+          Text('To build a word cloud you first need to load a txt dataset.\n'
+              'Once a txt dataset has been loaded then tap the Build button.\n'
+              'Various options and parameters will fine tune the word cloud.\n'
+              'Tap the save icon in the top toolbar to save the image to file.\n'
+              'Review the Script page for R commands used to build the word cloud.'),
+        ],
+      );
     }
+
 
     return wordCloudPanel(imageDisplay);
   }
