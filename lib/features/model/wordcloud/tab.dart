@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/model/wordcloud/config.dart';
-import 'package:rattle/features/model/wordcloud/save_png.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
 
 class WordCloudTab extends ConsumerStatefulWidget {
