@@ -18,6 +18,10 @@ class WordCloudTab extends ConsumerStatefulWidget {
   ConsumerState<WordCloudTab> createState() => _WordCloudTabState();
 }
 
+bool buildButtonPressed(String buildTime) {
+  return buildTime.isNotEmpty;
+}
+
 class _WordCloudTabState extends ConsumerState<WordCloudTab> {
   @override
   Widget build(BuildContext context) {
@@ -42,8 +46,9 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
     // 1 | 0 -> show not built
     // 0 | 0 -> show not built
     // 0 | 1 -> show loading
-    if (lastBuildTime.isNotEmpty) {
+    if (buildButtonPressed(lastBuildTime)) {
       if (fileExists) {
+        // build button pressed and png file exists
         debugPrint('model built - sleeping if needed to wait for file');
 
         // Reload the image:
@@ -82,7 +87,8 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
             image,
           ],
         );
-      } else {
+      } else { 
+        // build button pressed but png not exists
         imageDisplay = const Column(
           children: [
             SizedBox(height: 50),
@@ -91,6 +97,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
         );
       }
     } else {
+      // build button not pressed
       debugPrint('No model has been built.');
       imageDisplay = const Column(
         children: [
