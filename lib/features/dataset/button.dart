@@ -47,7 +47,7 @@ class DatasetButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () async {
-        // TODO yyx when user clicking the dataset button
+        // When user clicks the dataset button
         // first show the window asking if you really want to load a new one and that will clear everything if a dataset has been loaded
         // The pop up window has yes or no buttion.
         // if Yes, clear every state in the app and showPopup
@@ -114,8 +114,8 @@ class DatasetButton extends ConsumerWidget {
   }
 
   void reset(BuildContext context, WidgetRef ref) {
-    // clear the state of the app
-    // ideally if the app renders based on states stored in providers, we just reset each provider to the start
+    // reset the app
+    // ideally if the app renders based on states stored in providers, we just need to reset each provider to the starting value
     // MODEL TAB
     // reset wordcloud tab
     ref.read(wordCloudBuildProvider.notifier).state = '';
