@@ -107,6 +107,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
       // If there is no image built then return a widget that displays the word
       // cloud introductory message, but with the config bar also displayed.
       debugPrint('No model has been built.');
+      
       return Column(
         children: [
           // TODO 20240605 gjw NOT QUIT THE RIGHT SOLUTION YET. IF I SET MAX
