@@ -22,11 +22,9 @@
 /// Authors: Graham Williams
 library;
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/provider/stdout.dart';
