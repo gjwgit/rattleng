@@ -46,7 +46,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
     // to a BUG display! The traditional 'This should not happen'.
 
     Widget imageDisplay = const Text('This should not happen.');
-    // fileexists | build not empty
+    // file exists | build not empty
     // 1 | 1 -> show the png
     // 1 | 0 -> show not built
     // 0 | 0 -> show not built
@@ -107,7 +107,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
       // If there is no image built then return a widget that displays the word
       // cloud introductory message, but with the config bar also displayed.
       debugPrint('No model has been built.');
-      
+
       return Column(
         children: [
           // TODO 20240605 gjw NOT QUIT THE RIGHT SOLUTION YET. IF I SET MAX
