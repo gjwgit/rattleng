@@ -95,10 +95,16 @@ class RattleHomeState extends ConsumerState<RattleHome>
   }
 
   Future<void> deleteFileIfExists() async {
+    // clean up the files from previous use
     File fileToDelete = File(wordCloudImagePath);
     if (await fileToDelete.exists()) {
       await fileToDelete.delete();
       debugPrint('File $wordCloudImagePath deleted');
+    }
+    File tmpImageFile = File(tmpImagePath);
+    if (await tmpImageFile.exists()) {
+      await tmpImageFile.delete();
+      debugPrint('File $tmpImagePath deleted');
     }
   }
 
