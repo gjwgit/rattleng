@@ -1,4 +1,4 @@
-/// A provider manages the state of the checkbox for wordcloud
+/// A provider manages the state of the random order checkbox for wordcloud
 //
 // Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
 //
