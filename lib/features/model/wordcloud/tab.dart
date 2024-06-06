@@ -44,53 +44,52 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
     // 0 | 1 -> show loading
     if (lastBuildTime.isNotEmpty) {
       if (fileExists) {
-debugPrint('model built - sleeping if needed to wait for file');
+        debugPrint('model built - sleeping if needed to wait for file');
 
-      // Reload the image:
-      // (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+        // Reload the image:
+        // (https://nambiarakhilraj01.medium.com/what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
-      var bytes = wordCloudFile.readAsBytesSync();
+        var bytes = wordCloudFile.readAsBytesSync();
 
-      // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
-      //
-      // _Exception was thrown resolving an image codec:
-      // Exception: Invalid image data
-      //
-      // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
-      // LOADED SUCCESSFULLY.
-      //
-      // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
-      // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
-      // UNTIL THE FILE IS READY.
-      //
-      // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
+        // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
+        //
+        // _Exception was thrown resolving an image codec:
+        // Exception: Invalid image data
+        //
+        // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
+        // LOADED SUCCESSFULLY.
+        //
+        // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
+        // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
+        // UNTIL THE FILE IS READY.
+        //
+        // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
 
-      while (bytes.lengthInBytes == 0) {
-        sleep(const Duration(seconds: 1));
-        bytes = wordCloudFile.readAsBytesSync();
-      }
+        while (bytes.lengthInBytes == 0) {
+          sleep(const Duration(seconds: 1));
+          bytes = wordCloudFile.readAsBytesSync();
+        }
 
-      Image image = Image.memory(bytes);
+        Image image = Image.memory(bytes);
 
-      // Build the widget to display the image. Make it a row, centering the
-      // image horizontally, and so ensuring the scrollbar is all the way to the
-      // right.
+        // Build the widget to display the image. Make it a row, centering the
+        // image horizontally, and so ensuring the scrollbar is all the way to the
+        // right.
 
-      imageDisplay = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          image,
-        ],
-      );
+        imageDisplay = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            image,
+          ],
+        );
       } else {
         imageDisplay = const Column(
-        children: [
-          SizedBox(height: 50),
-          Text('Loading'),
-        ],
-      );
+          children: [
+            SizedBox(height: 50),
+            Text('Loading'),
+          ],
+        );
       }
-
     } else {
       debugPrint('No model has been built.');
       imageDisplay = const Column(
@@ -104,7 +103,6 @@ debugPrint('model built - sleeping if needed to wait for file');
         ],
       );
     }
-
 
     return wordCloudPanel(imageDisplay);
   }
