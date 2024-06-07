@@ -1,6 +1,6 @@
 /// Dataset tab for home page.
 ///
-/// Time-stamp: <Friday 2024-06-07 09:16:39 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-06-07 13:57:38 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,70 +30,40 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
 import 'package:rattle/features/dataset/config.dart';
-import 'package:rattle/provider/path.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/r/extract_glimpse.dart';
-import 'package:rattle/widgets/markdown_file.dart';
+import 'package:rattle/features/dataset/panel.dart';
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
-class DatasetTab extends ConsumerStatefulWidget {
+class DatasetTab extends StatefulWidget {
   const DatasetTab({super.key});
 
   @override
-  ConsumerState<DatasetTab> createState() => _DatasetTabState();
+  State<DatasetTab> createState() => _DatasetTabState();
 }
 
-class _DatasetTabState extends ConsumerState<DatasetTab> {
+class _DatasetTabState extends State<DatasetTab> {
   @override
   Widget build(BuildContext context) {
-    String path = ref.watch(pathProvider);
-    String stdout = ref.watch(stdoutProvider);
+    // A Tab consists of a Config bar and the results Panel.
 
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
-          const DatasetConfig(),
+          DatasetConfig(),
 
           // Add a little space below the underlined input widget so the
           // underline is not lost. Thouoght to include this in config but then
           // I would need an extra Column widget(). Seems okay logically to add
           // the spacer here as part of the tab.
 
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
 
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
 
-          Visibility(
-            visible: path == '',
-            child: Expanded(
-              child: Center(
-                key: welcomeTextKey,
-                child: sunkenMarkdownFileBuilder(welcomeMsgFile),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: path != '',
-            child: Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 10),
-                child: SelectableText(
-                  rExtractGlimpse(stdout),
-                  key: datasetGlimpseKey,
-                  style: monoTextStyle,
-                ),
-              ),
-            ),
-          ),
+          DatasetPanel(),
         ],
       ),
     );
