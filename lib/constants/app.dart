@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-06-05 08:09:00 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 06:04:31 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -42,26 +43,6 @@ const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
-
-/// The default background colour of the header bar.
-///
-/// A solid purple, suitable for white text. This stabdout colour is the
-/// backgrounf used throughout the app for buttons, and the like, as well as the
-/// top header bar used for the control area at the top of the app.
-
-const headerBarColour = Color(0xff45035e);
-
-/// The default background colour for the configuration bars in each panel.
-
-const configBarColor = Color(0xfffef7ff);
-
-/// The default background colour of the status bar.
-///
-/// A light purple, suitable for black text, is 0x5545035e. This is a soft
-/// contrast to the darker purple used for the control area at the top of the
-/// app.
-
-const statusBarColour = Color(0x5545035e);
 
 /// A mono font used for displaying R script and output.
 

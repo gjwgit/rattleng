@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-11-01 09:55:48 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 09:22:46 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,7 +25,6 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/debug/rattle_state_text.dart';
 import 'package:rattle/features/debug/stderr_text.dart';
 import 'package:rattle/features/debug/stdout_text.dart';
@@ -64,10 +63,6 @@ class _DebugTogglesState extends State<DebugToggles> {
                 });
               },
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              selectedBorderColor: statusBarColour,
-              selectedColor: Colors.white,
-              fillColor: headerBarColour,
-              color: Colors.grey, //red[400],
               constraints: const BoxConstraints(
                 minHeight: 40.0,
                 minWidth: 200.0,
