@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-06-07 05:53:33 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-06-07 15:54:25 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -43,6 +43,7 @@ import 'package:rattle/provider/target.dart';
 import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 import 'package:rattle/features/model/tab.dart';
@@ -150,9 +151,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
-              debugPrint('RESET PRESSED NO ACTION YET');
+              // TODO yyx 20240607 show confirmation but without popup to choose a new dataset afterwards?
+              reset(context, ref);
             },
-            tooltip: 'TODO: Reset to start a new project.',
+            tooltip: 'Tap here to clear the current project and\n'
+                'so start a new project with a new dataset.',
           ),
 
           // SAVE - Context specific.
