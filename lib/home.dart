@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-06-04 06:28:32 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-06-07 05:53:33 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
