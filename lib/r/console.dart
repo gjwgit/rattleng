@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Sunday 2024-05-19 11:55:55 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-08 08:45:40 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -53,10 +53,9 @@ class _RConsoleState extends ConsumerState<RConsole> {
   }
 
   // There is no TerminalThemes for the black on white that I prefer and am
-  // using for the app. However, the black on white does not allow the Console
-  // to stand out as much for the otherwise white on black app. So white on
-  // black might be a good choice afterall. Although this is not being used for
-  // now, keep it in the code by overridding the lint rule.
+  // using for the app. The black on white does not stand out as much as a
+  // Console white on black does. But the black on white is more in line with
+  // hte theme of the app.
 
   static const blackOnWhite = TerminalTheme(
     cursor: Color(0XFFAEAFAD),
@@ -96,7 +95,8 @@ class _RConsoleState extends ConsumerState<RConsole> {
           autofocus: true,
           backgroundOpacity: 1.0,
           padding: const EdgeInsets.all(8.0),
-          textScaleFactor: 1,
+          textScaleFactor: 1.2,
+          textStyle: const TerminalStyle(fontFamily: 'RobotoMono'),
           theme: blackOnWhite,
         ),
       ),
