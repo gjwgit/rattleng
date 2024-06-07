@@ -24,6 +24,7 @@
 /// Authors: Yixiang Yin
 
 library;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final punctuationProvider = StateProvider<bool>((ref) => false);

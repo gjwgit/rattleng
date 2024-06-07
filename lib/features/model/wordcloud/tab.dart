@@ -71,6 +71,7 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
     if (!pngBuild) {
       debugPrint('No model has been built.');
+
       return Column(
         children: [
           // TODO 20240605 gjw NOT QUIT THE RIGHT SOLUTION YET. IF I SET MAX
