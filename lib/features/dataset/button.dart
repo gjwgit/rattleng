@@ -104,7 +104,8 @@ class DatasetButton extends ConsumerWidget {
   }
 
   void _showOptionPopup(BuildContext context, WidgetRef ref) {
-    // TODO yyx 20240607 if we cancel we are not loaded. perhaps put this after each option in the DATASETPOPUP.
+    // TODO yyx 20240607 if we cancel we are not loaded.
+    // perhaps put this after each option in the DATASETPOPUP except the cancel button.
     debugPrint('DATASET LOADED');
     ref.read(datasetLoaded.notifier).state = true;
     
