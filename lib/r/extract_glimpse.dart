@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-02 16:49:30 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-07 13:49:14 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -34,8 +34,13 @@ String rExtractGlimpse(String txt) {
 
   int startIndex = -1;
 
+  // If the dataset is loaded from a CSV file or the demo dataset it will be
+  // summarised by R's `glimpse(ds)` command. For a TXT file we use `cat(ds,
+  // sep = "\n")`. In either case we find the latest instance and return the
+  // output for display in RattleNG.
+
   for (int i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].contains('> glimpse(ds)') || lines[i].contains('> cat')) {
+    if (lines[i].contains('> glimpse(ds)') || lines[i].contains('> cat(ds,')) {
       startIndex = i;
       break;
     }

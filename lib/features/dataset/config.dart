@@ -1,11 +1,11 @@
-/// Widget to choose a dataset consisting of a button, text field, clear, and toggles.
+/// Widget to configure the dataset: button, path, clear, and toggles.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-07 09:18:28 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-07 13:59:17 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,7 +33,7 @@ import 'package:rattle/features/dataset/toggles.dart';
 
 const double widthSpace = 5;
 
-/// The dataset chooser to allow selection of the data for Rattle.
+/// The dataset config allows selection and tuning of the data for Rattle.
 ///
 /// The widget consists of a button to allow picking the dataset and a text
 /// field where the dataset path or name is displayed or entered by the user
