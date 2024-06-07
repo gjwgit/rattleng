@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-07 13:50:54 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-07 16:05:49 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -50,25 +50,23 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
 
-    if (path == '') {
-      return Expanded(
-        child: Center(
-          key: welcomeTextKey,
-          child: sunkenMarkdownFileBuilder(welcomeMsgFile),
-        ),
-      );
-    } else {
-      return Expanded(
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.only(left: 10),
-          child: SelectableText(
-            rExtractGlimpse(stdout),
-            key: datasetGlimpseKey,
-            style: monoTextStyle,
-          ),
-        ),
-      );
-    }
+    return path == ''
+        ? Expanded(
+            child: Center(
+              key: welcomeTextKey,
+              child: sunkenMarkdownFileBuilder(welcomeMsgFile),
+            ),
+          )
+        : Expanded(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(left: 10),
+              child: SelectableText(
+                rExtractGlimpse(stdout),
+                key: datasetGlimpseKey,
+                style: monoTextStyle,
+              ),
+            ),
+          );
   }
 }
