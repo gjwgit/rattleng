@@ -37,6 +37,7 @@ import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
+import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 import 'package:xterm/xterm.dart';
 
@@ -111,25 +112,5 @@ class DatasetButton extends ConsumerWidget {
         return const DatasetPopup();
       },
     );
-  }
-
-  void reset(BuildContext context, WidgetRef ref) {
-    // reset the app
-    // ideally if the app renders based on states stored in providers, we just need to reset each provider to the starting value
-    // MODEL TAB
-    // reset wordcloud tab
-    ref.read(wordCloudBuildProvider.notifier).state = '';
-
-    ref.read(checkboxProvider.notifier).state = false;
-    ref.read(punctuationProvider.notifier).state = false;
-    ref.read(stemProvider.notifier).state = false;
-    ref.read(stopwordProvider.notifier).state = false;
-    ref.read(maxWordProvider.notifier).state = '';
-    ref.read(minFreqProvider.notifier).state = '';
-    // reset the stdoutProvider, this reset the tree tab, forest tab as they depend on it
-    ref.read(stdoutProvider.notifier).state = '';
-    // CONSOLE TAB
-    ref.read(terminalProvider.notifier).state = Terminal();
-    rStart(ref);
   }
 }
