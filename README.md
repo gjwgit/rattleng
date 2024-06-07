@@ -8,8 +8,9 @@ knowledge, through machine learning and artificial intelligence.
 
 But now, it is time for a refresh.
 
-RattleNG remains sympathetic to the original Rattle user interface and
-functionality, as presented in the Rattle book
+RattleNG, available from https://github.com/gjwgit/rattleng, remains
+sympathetic to the original Rattle user interface and functionality,
+as presented in the Rattle book
 (https://bit.ly/rattle_data_mining). However, it brings to the
 community a modern user interface refresh implemented in
 **Flutter**. The underlying **R** foundations remain firmly in
@@ -239,6 +240,13 @@ All of the popular Rattle visualisations are available, modernised
 using `ggplot` and the `tidyverse`.
 
 ![](assets/screenshots/explore_plot.png)
+
+### Summarising Through WordClouds
+
+For a text file we can gain an insight into the document through a
+word cloud.
+
+![](assets/screenshots/explore_wordcloud.png)
 
 ### Building Models
 
