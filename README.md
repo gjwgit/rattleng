@@ -1,61 +1,79 @@
 # Rattle the Next Generation Data Scientist
 
 Rattle has been in development and use for more than 15 years as a
-Data Mining and now Data Science toolkit. It is used by educators,
-consultants, and practitioners across industry and government, to turn
-data into knowledge, through machine learning and artificial
-intelligence.
+Data Mining and now Data Science toolkit. The open source software and
+it books and papers have been used by educators, consultants, and
+practitioners across industry and government, to turn data into
+knowledge, through machine learning and artificial intelligence.
 
-It is time for a refresh.
+But now, it is time for a refresh.
 
-RattleNG will adhere to the familiar Rattle style presented in the
-Rattle book (https://bit.ly/rattle_data_mining) with a modern user
-interface refresh implemented in **Flutter**. RattleNG will be
-symphathetic to the published Rattle interface.  Don't worry, the
-underlying **R** foundations remain and **Python** is being added to
-the mix.
+RattleNG remains sympathetic to the original Rattle user interface and
+functionality, as presented in the Rattle book
+(https://bit.ly/rattle_data_mining). However, it brings to the
+community a modern user interface refresh implemented in
+**Flutter**. The underlying **R** foundations remain firmly in
+place. A new edition of the Rattle book will soon be available.
 
-The underlying architecture has undergone quite a change with the
-maturing of our technology over the years. As I introduced in my more
+Over those 15 years we have also matured in how we deliver data
+science and analytics. RattleNG delivers a new perspective on
+scripting data science in R through templates as introduced in my more
 recent book, *The Essentials of Data Science*
-(https://bit.ly/essentials_data_science), the concept of templates for
+(https://bit.ly/essentials_data_science). The concept of templates for
 data science now provides the foundations for a flexible and
-extensible application in RattleNG. 
+extensible application in RattleNG.
 
-The open access Togaware Desktop Data Mining Survival Guide even more
-recently provides current Rattle and template documentation and is
-available from Togaware (https://datamining.togaware.com).
+You can also review my Desktop Data Mining Survival Guide published
+online by Togaware, available from (https://datamining.togaware.com).
 
-The documentation for the flutter/dart implementation of RattleNG is
-available from the [Solid Community
+The detailed coding documentation for our new Flutter/Dart based
+RattleNG is available online from the [Solid Community
 AU](https://solidcommunity.au/docs/rattleng/).
+
+The RattleNG rewrite is being lead by Professor Graham Williams (the
+original Rattle author), Chief Scientist of the Software Innovation
+Institute of the Australian National University.  Significant
+contributions have also been made by Yixiang Yin.
 
 ## Current Status Quick Start 2024-03-01
 
-After installing R and the app (either a package or from source, see
-the next sections), start up the app and work through the following
-scenario. 
+You will need to install R, separate to the  app itself. Visit
+https://www.r-project.org/ for details.
 
-Development is happening at a pace so the scenarios will be updated
-regularly.
+The install RattleNG for your operating system.
 
-+ Startup the app .
-+ Tap the **Script** tab to see the R code that has already been run.
-+ Tap the **Console** tab to see the R code being run in the R session.
-+ Tap the **Dataset** tab and then the **Dataset** button and then
-  choose **Demo** to load the `rattle::weather` dataset and view the
-  dataset summary.
++ Start RattleNG.
++ Tap the **Script** tab to see the R code that has been run.
++ Tap the **Console** tab to see the R code being run within an R
+  session. You can even type R commands there to have them run.
++ Tap the **Dataset** tab to return the to startup screen for
+  RattleNG. Tap the **Dataset** button and then choose **Demo** to
+  load the `rattle::weather` dataset. You can also load your own CSV
+  or TXT file by tapping the **Filename** button instead. The result
+  panel of the page will provide view or summary of the dataset.
 + Notice the toggle buttons to the top right of the tab page:
-  **Normalise** and **Partition**. Hover the mouse to view the
-  tooltips.
+  **Cleanse**, **Normalise** and **Partition**. Hover the mouse to
+  view the tooltips.
 + Tap the **Model** tab and then the **Tree** radio button (selected
   by default) and then the **Build** button to build and view a
-  decision tree. Scroll the window to see the whole tree.
+  decision tree from a CSV dataset. Scroll the window to see the whole
+  tree.
 + Tap the **Script** tab and scroll the window to view the latest R
   commands run. Then tap the **Export** button to save the full script
   to `script.R` (no options currently to change the name or location
   of the saved script file).
 + From your own command line run `Rscript script.R`
+
+Currently implemented features:
+
++ **Dataset**
++ Explore
+  + **WordCloud**
++ Model
+  + **Tree**
+  + **Forest**
++ **Console**
++ **Script**
 
 ## Installing RattleNG from Pre-Built Packages
 
