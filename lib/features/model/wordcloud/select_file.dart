@@ -22,8 +22,9 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Yixiang Yin, Graham Williams
-/// 
+///
 library;
+
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:file_picker/file_picker.dart';
 
