@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Implement project reset [0.1.4]
 + Restructure dataset tab into tab/config/panel [0.1.3]
 + Add wordcloud introductory message [0.1.2]
 + WordCloud cleanup. Improve image display. [0.1.1]
