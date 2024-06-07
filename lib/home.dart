@@ -151,6 +151,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
+              // TODO yyx 20240607 show confirmation but without popup to choose a new dataset afterwards?
+              // 
               reset(context, ref);
             },
             tooltip: 'Reset to start a new project.',
