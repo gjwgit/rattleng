@@ -20,9 +20,13 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
+// Group imports by dart, flutter, packages, local. Then alphabetically.
+
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
