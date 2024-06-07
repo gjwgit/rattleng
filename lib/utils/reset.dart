@@ -29,6 +29,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/terminal.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
@@ -59,4 +60,6 @@ void reset(BuildContext context, WidgetRef ref) {
   // CONSOLE TAB
   ref.read(terminalProvider.notifier).state = Terminal();
   rStart(ref);
+  // DATASET TAB
+  ref.read(pathProvider.notifier).state = '';
 }
