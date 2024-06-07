@@ -31,19 +31,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/provider/dataset_loaded.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/provider/terminal.dart';
-import 'package:rattle/provider/wordcloud/build.dart';
-import 'package:rattle/provider/wordcloud/checkbox.dart';
-import 'package:rattle/provider/wordcloud/maxword.dart';
-import 'package:rattle/provider/wordcloud/minfreq.dart';
-import 'package:rattle/provider/wordcloud/punctuation.dart';
-import 'package:rattle/provider/wordcloud/stem.dart';
-import 'package:rattle/provider/wordcloud/stopword.dart';
-import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
-import 'package:xterm/xterm.dart';
 
 class DatasetButton extends ConsumerWidget {
   const DatasetButton({super.key});
