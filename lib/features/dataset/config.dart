@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 06:23:59 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-06-07 09:18:28 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -41,14 +42,14 @@ const double widthSpace = 5;
 /// This is a StatefulWidget to record the name of the chosen dataset. TODO THE
 /// DATASET NAME MAY NEED TO BE PUSHED HIGHER FOR ACCESS FROM OTHER PAGES.
 
-class DatasetChooser extends StatefulWidget {
-  const DatasetChooser({super.key});
+class DatasetConfig extends StatefulWidget {
+  const DatasetConfig({super.key});
 
   @override
-  State<DatasetChooser> createState() => _DatasetChooserState();
+  State<DatasetConfig> createState() => _DatasetConfigState();
 }
 
-class _DatasetChooserState extends State<DatasetChooser> {
+class _DatasetConfigState extends State<DatasetConfig> {
   // A controller for the text field so it can be updated programmatically.
 
   // final TextEditingController _textController = TextEditingController();
