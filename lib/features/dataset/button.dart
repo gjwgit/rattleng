@@ -41,11 +41,11 @@ class DatasetButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () async {
-        // When user clicks the dataset button
-        // first show the window asking if you really want to load a new one and that will clear everything if a dataset has been loaded
-        // The pop up window has yes or no buttion.
-        // if Yes, clear every state in the app and showPopup
-        // if No, dismiss the popup window
+        // WHEN USER CLICKS THE DATASET BUTTON
+        // FIRST SHOW THE WINDOW ASKING IF YOU REALLY WANT TO LOAD A NEW ONE AND THAT WILL CLEAR EVERYTHING IF A DATASET HAS BEEN LOADED
+        // THE POP UP WINDOW HAS YES OR NO BUTTION.
+        // IF YES, CLEAR EVERY STATE IN THE APP AND SHOW POPUP WINDOW
+        // IF NO, DISMISS THE POPUP WINDOW
         if (ref.read(datasetLoaded)) {
           _showAlertPopup(context, ref);
         } else {
@@ -62,6 +62,7 @@ class DatasetButton extends ConsumerWidget {
   }
 
   void _showAlertPopup(BuildContext context, WidgetRef ref) {
+    // Show Alert Window to Reset, Reset after confirmation
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -87,8 +88,13 @@ class DatasetButton extends ConsumerWidget {
               child: const Text('Yes'),
               onPressed: () {
                 Navigator.of(context).pop();
-                _showOptionPopup(context, ref);
+                // RESET BEFORE SHOWOPTIONPOPUP BECAUSE THE OTHER WAY AROUND CASUES BUG:
+                // FIRST SET LOAD TO TRUE AND THEN RESET IT TO FALSE
+                // BUT THE DATASET ACTUALLY IS LOADED
+                // AS A CONSEQUENCE THE PREVIOUS RESULT WON'T BE RESET
+                // BECAUSE LOAD INDICATES NO DATASET HAS BEEN LOADED AND THE APP IS FRESH
                 reset(context, ref);
+                _showOptionPopup(context, ref);
               },
             ),
           ],
@@ -98,7 +104,10 @@ class DatasetButton extends ConsumerWidget {
   }
 
   void _showOptionPopup(BuildContext context, WidgetRef ref) {
+    // TODO yyx 20240607 if we cancel we are not loaded. perhaps put this after each option in the DATASETPOPUP.
+    debugPrint('DATASET LOADED');
     ref.read(datasetLoaded.notifier).state = true;
+    
     showDialog(
       context: context,
       builder: (BuildContext context) {

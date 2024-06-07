@@ -29,6 +29,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/provider/dataset_loaded.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/terminal.dart';
@@ -43,6 +44,7 @@ import 'package:rattle/r/start.dart';
 import 'package:xterm/xterm.dart';
 
 void reset(BuildContext context, WidgetRef ref) {
+  debugPrint('RESET');
   // reset the app
   // ideally if the app renders based on states stored in providers, we just need to reset each provider to the starting value
   // MODEL TAB
@@ -62,4 +64,6 @@ void reset(BuildContext context, WidgetRef ref) {
   rStart(ref);
   // DATASET TAB
   ref.read(pathProvider.notifier).state = '';
+  debugPrint('DATASET UNLOADED');
+  ref.read(datasetLoaded.notifier).state = false;
 }
