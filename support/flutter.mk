@@ -198,7 +198,7 @@ todo:
 .PHONY: license
 license:
 	@echo "Files without a LICENSE:\n"
-	@-find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print
+	@-find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
 	@echo $(SEPARATOR)
 
 #	@-find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -printf "\t%p\n"
