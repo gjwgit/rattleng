@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-06-02 09:15:58 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-08 06:53:01 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -31,7 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/colors.dart';
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/create_material_color.dart';
@@ -54,9 +54,30 @@ class RattleApp extends ConsumerWidget {
 
     rStart(ref);
 
+    // EXPERIMENT with the color scheme.
+
+    final ColorScheme colorScheme = ColorScheme.fromSeed(
+      brightness: MediaQuery.platformBrightnessOf(context),
+      seedColor: Colors.indigo,
+    );
+
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: createMaterialColor(headerBarColour),
+        // Material 3 is the current (2024) flutter default theme for colours
+        // and Google fonts. We can stay with this as the default for now
+        // while we experiment with options.
+        //
+        // We could turn the new material theme off to get the older look.
+        //
+        // useMaterial3: false,
+        //
+        // EXPERIMENTATION
+        //
+        // colorScheme: colorScheme,
+        // primarySwatch: createMaterialColor(Colors.black),
+
+        // The default font size seems rather small. So increase it here.
+
         textTheme: Theme.of(context).textTheme.apply(
               fontSizeFactor: 1.1,
               fontSizeDelta: 2.0,

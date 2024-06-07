@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 08:22:42 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,7 +31,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/model/tab.dart';
 // TODO 20240605 gjw PERHAPS CALL THIS randomProviderWC RATHER THAN
 // THE GENERIC checkboxProvider? FOR DISCUSSION.
@@ -72,10 +71,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // Set the default colour for the config bar background.
-
-      color: configBarColor,
-
       // Layout the config bar.
 
       child: Column(
