@@ -38,8 +38,7 @@ import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 // TODO 20240605 gjw We will have other providers as the app grows. maxword
 // might be used in other panels too. Perhaps we need to identify these as
-// WordCloud providers, either within a wordcloudProvider structure or
-// individually as in maxwordsProviderWC?
+// WordCloud providers, perhaps within a wordcloudProvider structure?
 import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/provider/wordcloud/minfreq.dart';
 import 'package:rattle/provider/wordcloud/punctuation.dart';
@@ -192,6 +191,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ],
             ),
           ),
+
+          // Add a little sapce below the underlined input widgets so the
+          // underline is not lost.
+
+          const SizedBox(height: 10),
         ],
       ),
     );

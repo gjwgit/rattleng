@@ -45,6 +45,10 @@ class WordCloudTab extends ConsumerStatefulWidget {
   ConsumerState<WordCloudTab> createState() => _WordCloudTabState();
 }
 
+bool buildButtonPressed(String buildTime) {
+  return buildTime.isNotEmpty;
+}
+
 class _WordCloudTabState extends ConsumerState<WordCloudTab> {
   @override
   Widget build(BuildContext context) {
@@ -56,20 +60,75 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 
     imageCache.clear();
     imageCache.clearLiveImages();
-    String rebuild = ref.watch(wordCloudBuildProvider);
-    debugPrint('Received rebuild on $rebuild.');
+    String lastBuildTime = ref.watch(wordCloudBuildProvider);
+    debugPrint('received rebuild on $lastBuildTime');
     var wordCloudFile = File(wordCloudImagePath);
-    bool pngBuild = wordCloudFile.existsSync();
+    bool fileExists = wordCloudFile.existsSync();
 
     // Identify a widget for the display of the word cloud image file. Default
     // to a BUG display! The traditional 'This should not happen'.
 
     Widget imageDisplay = const Text('This should not happen.');
+    // file exists | build not empty
+    // 1 | 1 -> show the png
+    // 1 | 0 -> show not built
+    // 0 | 0 -> show not built
+    // 0 | 1 -> show loading
+    if (buildButtonPressed(lastBuildTime)) {
+      if (fileExists) {
+        // build button pressed and png file exists
+        debugPrint('Model built. Now Sleeping as needed to await file.');
 
-    // If there is no image built then return a widget that displays the word
-    // cloud introductory message, but with the config bar also displayed.
+        // Reload the image:
+        // https://nambiarakhilraj01.medium.com/
+        // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
-    if (!pngBuild) {
+        var bytes = wordCloudFile.readAsBytesSync();
+
+        // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
+        //
+        // _Exception was thrown resolving an image codec:
+        // Exception: Invalid image data
+        //
+        // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
+        // LOADED SUCCESSFULLY.
+        //
+        // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
+        // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
+        // UNTIL THE FILE IS READY.
+        //
+        // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
+
+        while (bytes.lengthInBytes == 0) {
+          sleep(const Duration(seconds: 1));
+          bytes = wordCloudFile.readAsBytesSync();
+        }
+
+        Image image = Image.memory(bytes);
+
+        // Build the widget to display the image. Make it a row, centering the
+        // image horizontally, and so ensuring the scrollbar is all the way to the
+        // right.
+
+        imageDisplay = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            image,
+          ],
+        );
+      } else {
+        // build button pressed but png not exists
+        imageDisplay = const Column(
+          children: [
+            SizedBox(height: 50),
+            Text('Loading'),
+          ],
+        );
+      }
+    } else {
+      // build button not pressed
+      // If there is no image built then return a widget that displays the word
+      // cloud introductory message, but with the config bar also displayed.
       debugPrint('No model has been built.');
 
       return Column(
@@ -85,46 +144,6 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
               child: sunkenMarkdownFileBuilder(wordCloudMsgFile),
             ),
           ),
-        ],
-      );
-    } else {
-      debugPrint('Model built. Now Sleeping as needed to await file.');
-
-      // Reload the image:
-      // https://nambiarakhilraj01.medium.com/
-      // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
-
-      var bytes = wordCloudFile.readAsBytesSync();
-
-      // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
-      //
-      // _Exception was thrown resolving an image codec:
-      // Exception: Invalid image data
-      //
-      // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
-      // LOADED SUCCESSFULLY.
-      //
-      // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
-      // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
-      // UNTIL THE FILE IS READY.
-      //
-      // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
-
-      while (bytes.lengthInBytes == 0) {
-        sleep(const Duration(seconds: 1));
-        bytes = wordCloudFile.readAsBytesSync();
-      }
-
-      Image image = Image.memory(bytes);
-
-      // Build the widget to display the image. Make it a row, centering the
-      // image horizontally, and so ensuring the scrollbar is all the way to the
-      // right.
-
-      imageDisplay = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          image,
         ],
       );
     }
