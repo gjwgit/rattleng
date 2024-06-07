@@ -154,7 +154,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
               // TODO yyx 20240607 show confirmation but without popup to choose a new dataset afterwards?
               reset(context, ref);
             },
-            tooltip: 'TODO: Tap here to clear the current project and\n'
+            tooltip: 'Tap here to clear the current project and\n'
                 'so start a new project with a new dataset.',
           ),
 
