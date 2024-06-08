@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Saturday 2024-06-08 08:22:42 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 21:05:56 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -70,129 +70,126 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // Layout the config bar.
+    // Layout the config bar.
+    return Column(
+      children: [
+        const SizedBox(height: 5.0),
 
-      child: Column(
-        children: [
-          const SizedBox(height: 5.0),
+        // A BUILD button and functionality explanation.
 
-          // A BUILD button and functionality explanation.
+        Row(
+          children: [
+            const SizedBox(width: 5.0),
+            buildButton,
+            const SizedBox(width: 20.0),
+            const Text(
+              'A word cloud visualises word frequencies. '
+              'More frequent words are larger.',
+            ),
+          ],
+        ),
+        const SizedBox(height: 20.0),
 
-          Row(
-            children: [
-              const SizedBox(width: 5.0),
-              buildButton,
-              const SizedBox(width: 20.0),
-              const Text(
-                'A word cloud visualises word frequencies. '
-                'More frequent words are larger.',
-              ),
-            ],
-          ),
-          const SizedBox(height: 20.0),
+        // Options for the current functionality.
 
-          // Options for the current functionality.
-
-          Row(
-            children: [
-              const Text('Tuning Options:  '),
-              // Checkbox for random order of words in the cloud.
-              Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(checkboxProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(checkboxProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Random Order'),
-                ],
-              ),
-              const SizedBox(width: 20),
-              Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(stemProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(stemProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Stem'),
-                ],
-              ),
-              const SizedBox(width: 20),
-              Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(stopwordProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(stopwordProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Remove Stopwords'),
-                ],
-              ),
-              const SizedBox(width: 20),
-              Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(punctuationProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(punctuationProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Remove Punctuation'),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-
-          // Parameters for the current functionality.
-
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
+        Row(
+          children: [
+            const Text('Tuning Options:  '),
+            // Checkbox for random order of words in the cloud.
+            Row(
               children: [
-                const Text('Tuning Parameters:  '),
-                const SizedBox(width: 5),
-                // max word text field
-                SizedBox(
-                  width: 150.0,
-                  child: TextField(
-                    controller: maxWordTextController,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Max Words',
-                      labelStyle: TextStyle(fontSize: 16),
-                    ),
-                  ),
+                Checkbox(
+                  value: ref.watch(checkboxProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(checkboxProvider.notifier).state = v!,
+                  },
                 ),
-                const SizedBox(width: 20),
-                SizedBox(
-                  width: 150.0,
-                  child: TextField(
-                    controller: minFreqTextController,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Min Freq',
-                      labelStyle: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
+                const Text('Random Order'),
               ],
             ),
+            const SizedBox(width: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(stemProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(stemProvider.notifier).state = v!,
+                  },
+                ),
+                const Text('Stem'),
+              ],
+            ),
+            const SizedBox(width: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(stopwordProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(stopwordProvider.notifier).state = v!,
+                  },
+                ),
+                const Text('Remove Stopwords'),
+              ],
+            ),
+            const SizedBox(width: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(punctuationProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(punctuationProvider.notifier).state = v!,
+                  },
+                ),
+                const Text('Remove Punctuation'),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+
+        // Parameters for the current functionality.
+
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Row(
+            children: [
+              const Text('Tuning Parameters:  '),
+              const SizedBox(width: 5),
+              // max word text field
+              SizedBox(
+                width: 150.0,
+                child: TextField(
+                  controller: maxWordTextController,
+                  style: const TextStyle(fontSize: 16),
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Max Words',
+                    labelStyle: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+              SizedBox(
+                width: 150.0,
+                child: TextField(
+                  controller: minFreqTextController,
+                  style: const TextStyle(fontSize: 16),
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Min Freq',
+                    labelStyle: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
           ),
+        ),
 
-          // Add a little sapce below the underlined input widgets so the
-          // underline is not lost.
+        // Add a little sapce below the underlined input widgets so the
+        // underline is not lost.
 
-          const SizedBox(height: 10),
-        ],
-      ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 
