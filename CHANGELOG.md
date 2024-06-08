@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Console font update. Common sunken effect for panels [0.1.5]
 + Implement project reset [0.1.4]
 + Restructure dataset tab into tab/config/panel [0.1.3]
 + Add wordcloud introductory message [0.1.2]
