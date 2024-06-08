@@ -1,11 +1,11 @@
-/// Tree tab constants.
+/// Markdown files.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-09 06:03:35 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-09 09:29:22 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -28,6 +28,10 @@ library;
 
 import 'package:rattle/constants/app.dart';
 
-/// Location of the markdown file containing the welcome message for the tree tab.
+/// Location of the markdown file containing the welcome message for the FOREST tab.
+
+const String forestIntroFile = '$assetsPath/markdown/forest.md';
+
+/// Location of the markdown file containing the welcome message for the TREE tab.
 
 const String treeIntroFile = '$assetsPath/markdown/tree.md';

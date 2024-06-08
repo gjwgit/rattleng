@@ -1,4 +1,4 @@
-/// Tree tab
+/// TREE tab
 //
 // Time-stamp: <Sunday 2024-06-09 06:10:08 +1000 Graham Williams>
 //
@@ -39,7 +39,7 @@ import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/utils/add_build_button.dart';
 
-/// The tree tab supports building decision tree models.
+/// The TREE tab supports building decision tree models.
 
 class TreeTab extends StatelessWidget {
   const TreeTab({super.key});
@@ -72,27 +72,3 @@ class TreeTab extends StatelessWidget {
   }
 }
 
-// class TreeTab extends ConsumerWidget {
-//   final Widget buildButton;
-//   const TreeTab({super.key, required this.buildButton});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     String stdout = ref.watch(stdoutProvider);
-//     Widget content = Expanded(
-//       child: Container(
-//         decoration: sunkenBoxDecoration,
-//         width: double.infinity,
-//         padding: const EdgeInsets.only(left: 10),
-//         child: SingleChildScrollView(
-//           child: SelectableText(
-//             rExtractTree(stdout),
-//             style: monoTextStyle,
-//           ),
-//         ),
-//       ),
-//     );
-
-//     return addBuildButton(content, buildButton);
-//   }
-// }
