@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Saturday 2024-06-08 08:23:40 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-08 11:28:29 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -41,6 +41,7 @@ class StatusBar extends ConsumerWidget {
     return Container(
       height: 50,
       padding: const EdgeInsets.only(left: 0),
+      // color: statusBarColor,
       child: Markdown(
         key: statusBarKey,
         selectable: true,
