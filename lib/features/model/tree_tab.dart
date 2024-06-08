@@ -1,6 +1,6 @@
 /// Tab to display the tree model
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 11:40:53 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,6 +43,7 @@ class TreeTab extends ConsumerWidget {
     String stdout = ref.watch(stdoutProvider);
     Widget content = Expanded(
       child: Container(
+        color: Colors.white,
         width: double.infinity,
         padding: const EdgeInsets.only(left: 10),
         child: SingleChildScrollView(
