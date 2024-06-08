@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-06-08 20:52:08 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-09 06:08:46 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -60,9 +60,7 @@ final List<Map<String, dynamic>> modelTabs = [
   },
   {
     'title': 'Tree',
-    'widget': TreeTab(
-      buildButton: buildButton,
-    ),
+    'widget': const TreeTab(),
   },
   {
     'title': 'Forest',
