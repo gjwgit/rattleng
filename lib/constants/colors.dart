@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-06-08 09:49:42 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 20:32:46 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -59,3 +59,18 @@ const panelBarColor = Colors.red; //Color(0xfffef7ff);
 /// The default background colour of the status bar at the bottom of the app.
 
 final statusBarColor = Colors.deepPurple.shade100;
+
+/// A [BoxDecoration] with a sunken effect for use with a [Container]'s
+/// decortation.
+
+final sunkenBoxDecoration = BoxDecoration(
+  color: Colors.white,
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey.withOpacity(1),
+      spreadRadius: 10,
+      blurRadius: 10,
+      offset: const Offset(10, 10),
+    ),
+  ],
+);
