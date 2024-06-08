@@ -1,6 +1,6 @@
-/// Tab to display the forest model
+/// FOREST Tab
 //
-// Time-stamp: <Saturday 2024-06-08 20:48:30 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-09 09:25:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,31 +33,41 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/colors.dart';
+import 'package:rattle/features/model/forest/config.dart';
+import 'package:rattle/features/model/forest/panel.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/utils/add_build_button.dart';
 
-class ForestTab extends ConsumerWidget {
-  final Widget buildButton;
-  const ForestTab({super.key, required this.buildButton});
+/// The FOREST tab supports building decision tree models.
+
+class ForestTab extends StatelessWidget {
+  const ForestTab({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    String stdout = ref.watch(stdoutProvider);
-    Widget content = Expanded(
-      child: Container(
-        decoration: sunkenBoxDecoration,
-        width: double.infinity,
-        padding: const EdgeInsets.only(left: 10),
-        child: SingleChildScrollView(
-          child: SelectableText(
-            rExtractForest(stdout),
-            style: monoTextStyle,
-          ),
-        ),
+  Widget build(BuildContext context) {
+    // A per the RattleNG pattern, a Tab consists of a Config bar and the
+    // results Panel.
+
+    return const Scaffold(
+      body: Column(
+        children: [
+          ForestConfig(),
+
+          // Add a little space blow the config widgets so that things like any
+          // underline is not lost not buttons,looking chopped off. We include
+          // this here rather than within config to avoid an extra Column
+          // widget().  Logically we add the spacer here as part of the tab.
+
+          SizedBox(height: 10),
+
+          // We add the Panel which may be a text view that takes up the
+          // remaining space to introduce this particular tab's functionality
+          // which is then replaced with the output of the build.
+
+          ForestPanel(),
+        ],
       ),
     );
-
-    return addBuildButton(content, buildButton);
   }
 }
