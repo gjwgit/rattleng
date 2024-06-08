@@ -1,8 +1,8 @@
 /// Dataset tab.
 ///
-/// Time-stamp: <Saturday 2024-06-08 15:20:22 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-08 18:24:17 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -33,12 +33,15 @@ import 'package:flutter/material.dart';
 import 'package:rattle/features/dataset/config.dart';
 import 'package:rattle/features/dataset/panel.dart';
 
+/// The dataset tab introduces RattleNG and supports loading a dataset.
+
 class DatasetTab extends StatelessWidget {
   const DatasetTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // A Tab consists of a Config bar and the results Panel.
+    // A per the RattleNG pattern, a Tab consists of a Config bar and the
+    // results Panel.
 
     return const Scaffold(
       body: Column(
