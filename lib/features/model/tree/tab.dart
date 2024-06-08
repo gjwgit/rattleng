@@ -1,6 +1,6 @@
 /// Tree tab
 //
-// Time-stamp: <Saturday 2024-06-08 14:05:44 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 20:44:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/colors.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/utils/add_build_button.dart';
@@ -45,7 +46,7 @@ class TreeTab extends ConsumerWidget {
     String stdout = ref.watch(stdoutProvider);
     Widget content = Expanded(
       child: Container(
-        color: Colors.white,
+        decoration: sunkenBoxDecoration,
         width: double.infinity,
         padding: const EdgeInsets.only(left: 10),
         child: SingleChildScrollView(

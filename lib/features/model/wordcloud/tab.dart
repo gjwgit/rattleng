@@ -1,6 +1,6 @@
 /// Panel for word cloud.
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 20:42:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/colors.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/model/wordcloud/config.dart';
@@ -153,27 +154,27 @@ class _WordCloudTabState extends ConsumerState<WordCloudTab> {
 }
 
 Widget wordCloudPanel(Widget wordCloudBody) {
-  return Container(
-    color: Colors.white,
-    child: Column(
-      children: [
-        const WordCloudConfig(),
+  return Column(
+    children: [
+      const WordCloudConfig(),
 
-        // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
-        // BUTTON TOP RIGHT. KEEP HERE AS A COMMENT UNTIL IMPLEMENTED.
-        //
-        // WordCloudSaveButton(
-        //  wordCloudImagePath: wordCloudImagePath,
-        // ),
+      // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
+      // BUTTON TOP RIGHT. KEEP HERE AS A COMMENT UNTIL IMPLEMENTED.
+      //
+      // WordCloudSaveButton(
+      //  wordCloudImagePath: wordCloudImagePath,
+      // ),
 
-        const SizedBox(height: 10),
+      const SizedBox(height: 10),
 
-        Expanded(
+      Expanded(
+        child: Container(
+          decoration: sunkenBoxDecoration,
           child: SingleChildScrollView(
             child: wordCloudBody,
           ),
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }

@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-06-08 13:27:31 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 20:52:08 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -31,8 +31,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/build_button.dart';
-import 'package:rattle/features/model/forest_tab.dart';
-import 'package:rattle/features/model/tree_tab.dart';
+import 'package:rattle/features/model/forest/tab.dart';
+import 'package:rattle/features/model/tree/tab.dart';
 import 'package:rattle/features/model/wordcloud/tab.dart';
 import 'package:rattle/provider/model.dart';
 

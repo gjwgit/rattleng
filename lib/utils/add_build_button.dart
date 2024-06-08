@@ -4,9 +4,7 @@ import 'package:flutter/widgets.dart';
 Widget addBuildButton(Widget content, Widget buildButton) {
   return Column(
     children: [
-      const SizedBox(
-        height: 5,
-      ),
+      const SizedBox(height: 5),
       Row(
         children: [
           const SizedBox(
@@ -15,6 +13,7 @@ Widget addBuildButton(Widget content, Widget buildButton) {
           buildButton,
         ],
       ),
+      const SizedBox(height: 10),
       content,
     ],
   );

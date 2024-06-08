@@ -1,11 +1,11 @@
-/// Widget to display the Rattle introduction or view.
+/// Widget to display the Rattle introduction or data view.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-07 16:05:49 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 20:52:32 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,13 +29,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/colors.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
-/// The dataset panel displayes the Rattle explainer or a data summary.
+/// The dataset panel displays the RattleNG welcome or a data summary.
 
 class DatasetPanel extends ConsumerStatefulWidget {
   const DatasetPanel({super.key});
@@ -59,6 +60,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
           )
         : Expanded(
             child: Container(
+              decoration: sunkenBoxDecoration,
               width: double.infinity,
               padding: const EdgeInsets.only(left: 10),
               child: SelectableText(
