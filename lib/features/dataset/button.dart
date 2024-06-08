@@ -108,7 +108,7 @@ class DatasetButton extends ConsumerWidget {
     // perhaps put this after each option in the DATASETPOPUP except the cancel button.
     debugPrint('DATASET LOADED');
     ref.read(datasetLoaded.notifier).state = true;
-    
+
     showDialog(
       context: context,
       builder: (BuildContext context) {

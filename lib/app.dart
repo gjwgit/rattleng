@@ -31,10 +31,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/colors.dart';
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
-import 'package:rattle/utils/create_material_color.dart';
 
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
