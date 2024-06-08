@@ -1,6 +1,6 @@
-/// Tab to display the tree model
+/// Tree tab
 //
-// Time-stamp: <Saturday 2024-06-08 11:40:53 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 14:05:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,7 +28,9 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/r/extract_tree.dart';
