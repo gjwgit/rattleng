@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-06-08 06:26:38 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-08 09:49:42 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -42,20 +42,20 @@ import 'package:flutter/material.dart';
 
 /// The default background colour of the header and side bar.
 
-const headerBarColor = Colors.white; //Color(0xff45035e);
+const headerBarColor = Colors.red; //Color(0xff45035e);
 
 /// The default background colour of the tab bars in the header and side bars.
 
-const tabBarColor = Colors.white; //Color(0xff45035e);
+const tabBarColor = Colors.red; //Color(0xff45035e);
 
 /// The default background colour for the configuration bars in each panel.
 
-const configBarColor = Colors.white;
+const configBarColor = Colors.red;
 
 /// The default background colour for the configuration bars in each panel.
 
-const panelBarColor = Colors.white; //Color(0xfffef7ff);
+const panelBarColor = Colors.red; //Color(0xfffef7ff);
 
 /// The default background colour of the status bar at the bottom of the app.
 
-const statusBarColor = Colors.white; //Color(0x5545035e);
+final statusBarColor = Colors.deepPurple.shade100;
