@@ -1,6 +1,6 @@
-/// Dataset tab for home page.
+/// Dataset tab.
 ///
-/// Time-stamp: <Friday 2024-06-07 13:57:38 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-08 15:20:22 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,16 +33,9 @@ import 'package:flutter/material.dart';
 import 'package:rattle/features/dataset/config.dart';
 import 'package:rattle/features/dataset/panel.dart';
 
-// TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
-
-class DatasetTab extends StatefulWidget {
+class DatasetTab extends StatelessWidget {
   const DatasetTab({super.key});
 
-  @override
-  State<DatasetTab> createState() => _DatasetTabState();
-}
-
-class _DatasetTabState extends State<DatasetTab> {
   @override
   Widget build(BuildContext context) {
     // A Tab consists of a Config bar and the results Panel.
