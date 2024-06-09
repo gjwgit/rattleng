@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-09 09:29:22 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-09 10:20:06 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -27,6 +27,10 @@
 library;
 
 import 'package:rattle/constants/app.dart';
+
+/// Location of the markdown file containing the welcome message for the CLUSTER tab.
+
+const String clusterIntroFile = '$assetsPath/markdown/cluster.md';
 
 /// Location of the markdown file containing the welcome message for the FOREST tab.
 

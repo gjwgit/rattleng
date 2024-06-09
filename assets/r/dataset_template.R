@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2023-10-16 11:47:03 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-06-09 12:42:03 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -55,3 +55,16 @@ vars   <- names(ds)
 # Make the target variable the last one.
 
 vars   <- c(target, vars) %>% unique() %>% rev()
+
+# Identify the numeric variables
+
+
+vars %>%
+  magrittr::extract(ds, .) %>%
+  sapply(is.numeric) %>% 
+  which() %>%
+  names() %T>%
+  print() ->
+numc
+
+

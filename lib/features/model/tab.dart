@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-09 09:25:51 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-09 15:54:11 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/build_button.dart';
+import 'package:rattle/features/model/cluster/tab.dart';
 import 'package:rattle/features/model/forest/tab.dart';
 import 'package:rattle/features/model/tree/tab.dart';
 import 'package:rattle/features/model/wordcloud/tab.dart';
@@ -42,12 +43,7 @@ Widget buildButton = const ModelBuildButton();
 final List<Map<String, dynamic>> modelTabs = [
   {
     'title': 'Cluster',
-    'widget': const Column(
-      children: <Widget>[
-        SizedBox(height: 50),
-        Text('NOT YET IMPLEMENTED'),
-      ],
-    ),
+    'widget': const ClusterTab(),
   },
   {
     'title': 'Associate',
