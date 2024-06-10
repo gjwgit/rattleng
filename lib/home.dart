@@ -238,10 +238,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
             destinations: homeTabs.map((tab) {
               return NavigationRailDestination(
                 icon: Icon(tab['icon']),
-                // TODO yxx 20240610 title not displayed
                 label: Text(tab['title']),
               );
             }).toList(),
+            labelType: NavigationRailLabelType.all,
             selectedIndex: _selectedIndex,
             onDestinationSelected: (int index) {
               setState(() {
