@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ wordclound in-pattern with tab/config/panel [0.1.9]
 + Initial EXPLORE framework [0.1.8]
 + Migrate FOREST to tab/config/panel pattern [0.1.7]
 + Migrate TREE to tab/config/panel pattern [0.1.6]
