@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Monday 2024-06-10 15:35:18 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-11 08:59:40 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -39,6 +39,9 @@ class StatusBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String path = ref.watch(pathProvider);
+    if (path != '') path = '$path   ';
+
     return Container(
       height: 50,
       padding: const EdgeInsets.only(left: 0),
@@ -46,8 +49,10 @@ class StatusBar extends ConsumerWidget {
       child: Markdown(
         key: statusBarKey,
         selectable: true,
-        data:
-            'Togaware   ${ref.watch(pathProvider)}    ${ref.watch(statusProvider)}',
+        data: '![](assets/images/favicon_small.png)   '
+            '[togware.com](https://togaware.com)  '
+            '$path'
+            '${ref.watch(statusProvider)}',
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
       ),
     );
