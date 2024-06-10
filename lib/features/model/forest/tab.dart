@@ -29,15 +29,8 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/colors.dart';
 import 'package:rattle/features/model/forest/config.dart';
 import 'package:rattle/features/model/forest/panel.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/r/extract_forest.dart';
-import 'package:rattle/utils/add_build_button.dart';
 
 /// The FOREST tab supports building decision tree models.
 
