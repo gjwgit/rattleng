@@ -29,15 +29,8 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/colors.dart';
 import 'package:rattle/features/model/tree/config.dart';
 import 'package:rattle/features/model/tree/panel.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/r/extract_tree.dart';
-import 'package:rattle/utils/add_build_button.dart';
 
 /// The TREE tab supports building decision tree models.
 
@@ -71,4 +64,3 @@ class TreeTab extends StatelessWidget {
     );
   }
 }
-
