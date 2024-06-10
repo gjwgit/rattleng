@@ -1,6 +1,6 @@
 /// Panel for word cloud.
 //
-// Time-stamp: <Saturday 2024-06-08 20:42:38 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-06-10 10:34:53 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/colors.dart';
 import 'package:rattle/constants/wordcloud.dart';
-import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/model/wordcloud/config.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
 import 'package:rattle/widgets/markdown_file.dart';

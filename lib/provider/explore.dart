@@ -1,14 +1,14 @@
-/// Wordcloud specific constants for RattleNG
+/// A provider for the explore type.
+///
+/// Time-stamp: <Monday 2024-06-10 09:36:56 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
+///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2024-06-10 10:08:49 +1000 Graham Williams>
-//
-// Licensed under the GNU General Public License, Version 3 (the "License");
-///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -23,17 +23,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
-
 library;
 
-import 'dart:io';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Location of the markdown file containing the word cloud welcome message.
-
-const String wordCloudMsgFile = 'assets/markdown/wordcloud.md';
-
-var systemTempDir = Directory.systemTemp;
-
-String tmpDirPath = systemTempDir.path;
-String wordCloudImagePath = '$tmpDirPath/wordcloud.png';
-String tmpImagePath = '$tmpDirPath/tmp.png';
+final exploreProvider = StateProvider<String>((ref) => 'Summary');

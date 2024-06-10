@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-09 10:20:06 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-06-10 09:57:53 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -28,14 +28,78 @@ library;
 
 import 'package:rattle/constants/app.dart';
 
-/// Location of the markdown file containing the welcome message for the CLUSTER tab.
+/// ASSOCIATE tab markdown file welcome message.
+
+const String associateIntroFile = '$assetsPath/markdown/associate.md';
+
+/// BOOST tab markdown file welcome message.
+
+const String boostIntroFile = '$assetsPath/markdown/boost.md';
+
+/// CLUSTER tab markdown file welcome message.
 
 const String clusterIntroFile = '$assetsPath/markdown/cluster.md';
 
-/// Location of the markdown file containing the welcome message for the FOREST tab.
+/// CORRELATION tab markdown file welcome message.
+
+const String correlationIntroFile = '$assetsPath/markdown/correlation.md';
+
+/// FOREST tab markdown file welcome message.
 
 const String forestIntroFile = '$assetsPath/markdown/forest.md';
 
-/// Location of the markdown file containing the welcome message for the TREE tab.
+/// INTERACTIVE tab markdown file welcome message.
+
+const String interactiveIntroFile = '$assetsPath/markdown/interactive.md';
+
+/// LINEAR tab markdown file welcome message.
+
+const String linearIntroFile = '$assetsPath/markdown/linear.md';
+
+/// MISSING tab markdown file welcome message.
+
+const String missingIntroFile = '$assetsPath/markdown/missing.md';
+
+/// NNET tab markdown file welcome message.
+
+const String nnetIntroFile = '$assetsPath/markdown/nnet.md';
+
+/// PCA tab markdown file welcome message.
+
+const String pcaIntroFile = '$assetsPath/markdown/pca.md';
+
+/// SCRIPT tab markdown file welcome message.
+
+const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
+
+/// SUMMARY tab markdown file welcome message.
+
+const String summaryIntroFile = '$assetsPath/markdown/summary.md';
+
+/// SURVIVAL tab markdown file welcome message.
+
+const String survivalIntroFile = '$assetsPath/markdown/survival.md';
+
+/// SVM tab markdown file welcome message.
+
+const String svmIntroFile = '$assetsPath/markdown/svm.md';
+
+/// TESTS tab markdown file welcome message.
+
+const String testsIntroFile = '$assetsPath/markdown/tests.md';
+
+/// TREE tab markdown file welcome message.
 
 const String treeIntroFile = '$assetsPath/markdown/tree.md';
+
+/// VISUAL tab markdown file welcome message.
+
+const String visualIntroFile = '$assetsPath/markdown/visual.md';
+
+/// WELCOME tab markdown file welcome message.
+
+const String welcomeIntroFile = '$assetsPath/markdown/welcome.md';
+
+/// WORD CLOUD tab markdown file welcome message.
+
+const String wordcloudIntroFile = '$assetsPath/markdown/wordcloud.md';
