@@ -206,7 +206,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
             destinations: homeTabs.map((tab) {
               return NavigationRailDestination(
                 icon: Icon(tab['icon']),
-                label: Text(tab['title'], style: const TextStyle(fontSize: 16),),
+                label: Text(
+                  tab['title'],
+                  style: const TextStyle(fontSize: 16),
+                ),
               );
             }).toList(),
             labelType: NavigationRailLabelType.all,
