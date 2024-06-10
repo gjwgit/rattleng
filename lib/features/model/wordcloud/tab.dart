@@ -42,7 +42,7 @@ import 'package:rattle/widgets/markdown_file.dart';
 
 class WordCloudTab extends StatelessWidget {
   const WordCloudTab({super.key});
-    @override
+  @override
   Widget build(BuildContext context) {
     // A per the RattleNG pattern, a Tab consists of a Config bar and the
     // results Panel.
@@ -50,6 +50,11 @@ class WordCloudTab extends StatelessWidget {
     return const Scaffold(
       body: Column(
         children: [
+          // TODO 20240605 gjw NOT QUIT THE RIGHT SOLUTION YET. IF I SET MAX
+          // WORDS TO 10 WHILE THE MSG IS DISPLAYED THEN BUILD, IT GET THE
+          // PARAMETER BUT AFTER THE BUILD/REFRESH THE 10 IS LOST FROM THE
+          // CONFIG BAR SINCE IT IS REBUILT. HOW TO FIX THAT AND RETAIN THE
+          // MESSAGE WITHTHE CONFIG BAR.
           WordCloudConfig(),
 
           // Add a little space below the underlined input widget so the
@@ -58,6 +63,12 @@ class WordCloudTab extends StatelessWidget {
           // the spacer here as part of the tab.
 
           SizedBox(height: 10),
+          // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
+          // BUTTON TOP RIGHT. KEEP HERE AS A COMMENT UNTIL IMPLEMENTED.
+          //
+          // WordCloudSaveButton(
+          //  wordCloudImagePath: wordCloudImagePath,
+          // ),
 
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
