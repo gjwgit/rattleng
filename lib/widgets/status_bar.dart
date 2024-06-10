@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Saturday 2024-06-08 11:28:29 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-06-10 15:35:18 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/keys.dart';
+import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/status.dart';
 
 class StatusBar extends ConsumerWidget {
@@ -45,7 +46,8 @@ class StatusBar extends ConsumerWidget {
       child: Markdown(
         key: statusBarKey,
         selectable: true,
-        data: ref.watch(statusProvider),
+        data:
+            'Togaware   ${ref.watch(pathProvider)}    ${ref.watch(statusProvider)}',
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
       ),
     );
