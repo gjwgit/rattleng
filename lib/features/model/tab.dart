@@ -60,7 +60,7 @@ final List<Map<String, dynamic>> modelTabs = [
   },
   {
     'title': 'Forest',
-    'widget': ForestTab(),
+    'widget': const ForestTab(),
   },
   {
     'title': 'Boost',
