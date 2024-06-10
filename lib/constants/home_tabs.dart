@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/features/dataset/tab.dart';
 import 'package:rattle/features/debug/tab.dart';
-import 'package:rattle/features/explore/tab.dart.~1~';
+import 'package:rattle/features/explore/tab.dart';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/script/tab.dart';
 import 'package:rattle/r/console.dart';
