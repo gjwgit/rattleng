@@ -197,43 +197,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
       ),
 
       // Build the tab bar from the list of homeTabs, noting the tab title and
-      // icon. We rotate the tab bar for placement on the left edge.
+      // icon. We put the tab bar on the left edge. It's a better design for large screen.
+      // For smaller screen, put it at the bottom.
 
       body: Row(
         children: [
-          // RotatedBox(
-          //   quarterTurns: 1,
-          //   child: TabBar(
-          //     controller: _tabController,
-          //     unselectedLabelColor: Colors.grey,
-          //     isScrollable: false,
-          //     tabs: homeTabs.map((tab) {
-          //       // Rotate the tabs back the correct direction.
-
-          //       return RotatedBox(
-          //         quarterTurns: -1,
-
-          //         // Wrap the tabs within a container so all have the same
-          //         // width, rotated, and the highlight is the same for each one
-          //         // irrespective of the text width.
-
-          //         child: SizedBox(
-          //           width: 100.0,
-          //           child: Tab(
-          //             icon: Icon(tab['icon']),
-          //             child: Text(
-          //               tab['title'],
-
-          //               // Reduce the font size to not overflow the widget.
-
-          //               style: const TextStyle(fontSize: 16),
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     }).toList(),
-          //   ),
-          // ),
           NavigationRail(
             destinations: homeTabs.map((tab) {
               return NavigationRailDestination(
