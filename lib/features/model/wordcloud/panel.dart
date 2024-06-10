@@ -35,7 +35,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/colors.dart';
 import 'package:rattle/constants/wordcloud.dart';
-import 'package:rattle/features/model/wordcloud/config.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
@@ -131,9 +130,7 @@ class _WordCloudPanelState extends ConsumerState<WordCloudPanel> {
       // cloud introductory message, but with the config bar also displayed.
       debugPrint('No model has been built.');
 
-      return
-
-          Expanded(
+      return Expanded(
         child: Center(
           child: sunkenMarkdownFileBuilder(wordCloudMsgFile),
         ),

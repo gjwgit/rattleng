@@ -27,18 +27,10 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:rattle/constants/colors.dart';
-import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/features/model/wordcloud/config.dart';
 import 'package:rattle/features/model/wordcloud/panel.dart';
-import 'package:rattle/provider/wordcloud/build.dart';
-import 'package:rattle/widgets/markdown_file.dart';
 
 class WordCloudTab extends StatelessWidget {
   const WordCloudTab({super.key});
