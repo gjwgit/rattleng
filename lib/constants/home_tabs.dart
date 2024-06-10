@@ -48,4 +48,5 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.work,
     'widget': const DebugTab(),
   },
+
 ];

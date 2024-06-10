@@ -59,11 +59,13 @@ class RattleHomeState extends ConsumerState<RattleHome>
   late TabController _tabController;
   var _appVersion = 'Unknown';
   var _appName = 'Unknown';
+  var _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     deleteFileIfExists();
+    // TODO yyx 20240610 As we use NavigationRail, we don't use TabBarView anymore. What should I do with this controller?
     _tabController = TabController(length: homeTabs.length, vsync: this);
     _loadAppInfo();
 
@@ -199,49 +201,57 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
       body: Row(
         children: [
-          RotatedBox(
-            quarterTurns: 1,
-            child: TabBar(
-              controller: _tabController,
-              unselectedLabelColor: Colors.grey,
-              isScrollable: false,
-              tabs: homeTabs.map((tab) {
-                // Rotate the tabs back the correct direction.
+          // RotatedBox(
+          //   quarterTurns: 1,
+          //   child: TabBar(
+          //     controller: _tabController,
+          //     unselectedLabelColor: Colors.grey,
+          //     isScrollable: false,
+          //     tabs: homeTabs.map((tab) {
+          //       // Rotate the tabs back the correct direction.
 
-                return RotatedBox(
-                  quarterTurns: -1,
+          //       return RotatedBox(
+          //         quarterTurns: -1,
 
-                  // Wrap the tabs within a container so all have the same
-                  // width, rotated, and the highlight is the same for each one
-                  // irrespective of the text width.
+          //         // Wrap the tabs within a container so all have the same
+          //         // width, rotated, and the highlight is the same for each one
+          //         // irrespective of the text width.
 
-                  child: SizedBox(
-                    width: 100.0,
-                    child: Tab(
-                      icon: Icon(tab['icon']),
-                      child: Text(
-                        tab['title'],
+          //         child: SizedBox(
+          //           width: 100.0,
+          //           child: Tab(
+          //             icon: Icon(tab['icon']),
+          //             child: Text(
+          //               tab['title'],
 
-                        // Reduce the font size to not overflow the widget.
+          //               // Reduce the font size to not overflow the widget.
 
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
+          //               style: const TextStyle(fontSize: 16),
+          //             ),
+          //           ),
+          //         ),
+          //       );
+          //     }).toList(),
+          //   ),
+          // ),
+          NavigationRail(
+            destinations: homeTabs.map((tab) {
+              return NavigationRailDestination(
+                icon: Icon(tab['icon']),
+                // TODO yxx 20240610 title not displayed
+                label: Text(tab['title']),
+              );
+            }).toList(),
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
           ),
-
           // Associate the Widgets with each of the tabs.
-
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: homeTabs.map((tab) {
-                return tab['widget'] as Widget;
-              }).toList(),
-            ),
+            child: homeTabs[_selectedIndex]['widget'],
           ),
         ],
       ),
