@@ -28,6 +28,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/utils/show_under_construction.dart';
+
 /// The CORRELATION tab config currently consists of just a BUILD button.
 ///
 /// This is a StatefulWidget to pass the ref across to the rSource.
@@ -58,7 +60,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
 
             ElevatedButton(
               onPressed: () {
-                debugPrint('CORRELATION CONFIG DISPLAY');
+                showUnderConstruction(context);
               },
               child: const Text('Display'),
             ),
