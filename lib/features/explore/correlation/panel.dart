@@ -1,4 +1,4 @@
-/// Widget to display the SUMMARY introduction or output.
+/// Widget to display the CORRELATION introduction or output.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

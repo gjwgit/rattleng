@@ -1,4 +1,4 @@
-/// Widget to configure the SUMMARY tab: button.
+/// Widget to configure the CORRELATION tab: button.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// The SUMMARY tab config currently consists of just a BUILD button.
+/// The CORRELATION tab config currently consists of just a BUILD button.
 ///
 /// This is a StatefulWidget to pass the ref across to the rSource.
 
@@ -58,7 +58,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
 
             ElevatedButton(
               onPressed: () {
-                debugPrint('SUMMARY CONFIG BUILD');
+                debugPrint('CORRELATION CONFIG BUILD');
               },
               child: const Text('Build'),
             ),

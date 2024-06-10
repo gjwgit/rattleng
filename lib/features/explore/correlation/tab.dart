@@ -1,4 +1,4 @@
-/// SUMMARY tab made up of config and panel widgets.
+/// CORRELATION tab made up of config and panel widgets.
 //
 // Time-stamp: <Monday 2024-06-10 09:26:31 +1000 Graham Williams>
 //
@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:rattle/features/explore/correlation/config.dart';
 import 'package:rattle/features/explore/correlation/panel.dart';
 
-/// The SUMMARY tab provides a data oriented view of the loaded dataset.
+/// The CORRELATION tab provides a data oriented view of the loaded dataset.
 
 class CorrelationTab extends StatelessWidget {
   const CorrelationTab({super.key});

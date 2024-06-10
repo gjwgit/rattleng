@@ -1,4 +1,4 @@
-/// SUMMARY tab made up of config and panel widgets.
+/// VISUAL tab made up of config and panel widgets.
 //
 // Time-stamp: <Monday 2024-06-10 09:26:31 +1000 Graham Williams>
 //
@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:rattle/features/explore/visual/config.dart';
 import 'package:rattle/features/explore/visual/panel.dart';
 
-/// The SUMMARY tab provides a data oriented view of the loaded dataset.
+/// The VISUAL tab provides a data oriented view of the loaded dataset.
 
 class VisualTab extends StatelessWidget {
   const VisualTab({super.key});
