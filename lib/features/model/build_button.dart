@@ -1,6 +1,6 @@
 /// build button for model tab
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-06-10 10:16:34 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,7 +33,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/features/model/tab.dart';
+import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/provider/model.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
 import 'package:rattle/r/source.dart';

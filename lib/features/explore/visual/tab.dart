@@ -1,6 +1,6 @@
-/// CLUSTER Tab entry into config and panel.
+/// SUMMARY tab made up of config and panel widgets.
 //
-// Time-stamp: <Monday 2024-06-10 09:12:46 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-06-10 09:26:31 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams
 
 library;
 
@@ -29,13 +29,13 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/features/model/cluster/config.dart';
-import 'package:rattle/features/model/cluster/panel.dart';
+import 'package:rattle/features/explore/visual/config.dart';
+import 'package:rattle/features/explore/visual/panel.dart';
 
-/// The CLUSTER tab supports building decision tree models.
+/// The SUMMARY tab provides a data oriented view of the loaded dataset.
 
-class ClusterTab extends StatelessWidget {
-  const ClusterTab({super.key});
+class VisualTab extends StatelessWidget {
+  const VisualTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class ClusterTab extends StatelessWidget {
     return const Scaffold(
       body: Column(
         children: [
-          ClusterConfig(),
+          VisualConfig(),
 
           // Add a little space blow the config widgets so that things like any
           // underline is not lost not buttons,looking chopped off. We include
@@ -58,7 +58,7 @@ class ClusterTab extends StatelessWidget {
           // remaining space to introduce this particular tab's functionality
           // which is then replaced with the output of the build.
 
-          ClusterPanel(),
+          VisualPanel(),
         ],
       ),
     );

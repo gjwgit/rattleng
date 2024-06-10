@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-06-07 15:54:25 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-06-10 10:10:06 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -36,6 +36,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/constants/home_tabs.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
@@ -45,8 +46,6 @@ import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/status_bar.dart';
-
-import 'package:rattle/features/model/tab.dart';
 
 class RattleHome extends ConsumerStatefulWidget {
   const RattleHome({super.key});

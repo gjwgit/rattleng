@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/features/dataset/tab.dart';
 import 'package:rattle/features/debug/tab.dart';
+import 'package:rattle/features/explore/tab.dart.~1~';
 import 'package:rattle/features/model/tab.dart';
 import 'package:rattle/features/script/tab.dart';
 import 'package:rattle/r/console.dart';
@@ -15,22 +16,12 @@ final List<Map<String, dynamic>> homeTabs = [
   {
     'title': 'Explore',
     'icon': Icons.insights,
-    'widget': Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Image.asset('assets/images/myplot.png'),
-      ),
-    ),
+    'widget': const ExploreTab(),
   },
   {
-    'title': 'Test',
-    'icon': Icons.task,
-    'widget': const Center(child: Text('TEST')),
-  },
-  {
-    'title': 'Transform',
+    'title': 'Wrangle',
     'icon': Icons.transform,
-    'widget': const Center(child: Text('TRANSFORM')),
+    'widget': const Center(child: Text('WRANGLE')),
   },
   {
     'title': 'Model',
