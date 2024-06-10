@@ -28,6 +28,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/utils/show_under_construction.dart';
+
 /// The INTERACTIVE tab config currently consists of just a BUILD button.
 ///
 /// This is a StatefulWidget to pass the ref across to the rSource.
@@ -58,7 +60,7 @@ class InteractiveConfigState extends ConsumerState<InteractiveConfig> {
 
             ElevatedButton(
               onPressed: () {
-                debugPrint('INTERACTIVE CONFIG DISPLAY');
+                showUnderConstruction(context);
               },
               child: const Text('Display'),
             ),
