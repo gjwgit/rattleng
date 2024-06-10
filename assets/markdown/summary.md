@@ -1,13 +1,22 @@
-Univariate Dataset Summary
+**Univariate Dataset Summary**
 
-It is useful to understand how our data is distributed.
+The first task for a data scientist, on loading their dataset into
+RattleNG, is to understand what the data looks like and how it is
+distributed. The basic summary on the **Dataset** tab provides the
+initial glimpse. Here we explore much more and build a good
+understanding of the data.
 
-The summary here will include more details depending on which check
-buttons you choose.
+The default **Summary** lists the variables found in the dataset the
+number of levels the variable has (for factors) the data type, and the
+number of missing values in that variables.  The next summary panel
+displays the factors and their levels followed by a summary of the
+distribution of each variable.
 
-The Summary option provides a very brief summary.
+Enable the **Describe** option (*TODO* should this be an option or we
+jsut show the whole lot in one go across the multiple panels) for a
+comprehensive summary of each variable.
 
-The Describe option provides comprehensive summaries of each variable.
+**Basics**
 
-Kurtosis and Skewness allow these measures to be compared across the
-available numeric variables.
+**Kurtosis** and **Skewness** allow these measures to be compared
+across the available numeric variables.

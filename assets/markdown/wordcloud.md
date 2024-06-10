@@ -1,3 +1,5 @@
+**Word Cloud**
+
 A word cloud visually presents the frequency of words contained within
 a text data file. More frequent words are larger and, by default, in
 the centre of the cloud. The words get smaller as we move to the edge
