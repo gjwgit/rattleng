@@ -1,4 +1,4 @@
-Interactive Data Exploration
+**Interactive Data Exploration**
 
 GGobi is an independent applications which provide highly dynamic and
 interactive graphic data visualisation for exploratory data analysis.
