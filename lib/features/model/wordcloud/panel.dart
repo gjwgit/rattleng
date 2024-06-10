@@ -132,11 +132,7 @@ class _WordCloudPanelState extends ConsumerState<WordCloudPanel> {
       debugPrint('No model has been built.');
 
       return
-          // TODO 20240605 gjw NOT QUIT THE RIGHT SOLUTION YET. IF I SET MAX
-          // WORDS TO 10 WHILE THE MSG IS DISPLAYED THEN BUILD, IT GET THE
-          // PARAMETER BUT AFTER THE BUILD/REFRESH THE 10 IS LOST FROM THE
-          // CONFIG BAR SINCE IT IS REBUILT. HOW TO FIX THAT AND RETAIN THE
-          // MESSAGE WITHTHE CONFIG BAR.
+
           Expanded(
         child: Center(
           child: sunkenMarkdownFileBuilder(wordCloudMsgFile),
