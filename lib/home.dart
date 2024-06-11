@@ -65,7 +65,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
   void initState() {
     super.initState();
     deleteFileIfExists();
-    
+
     _tabController = TabController(length: homeTabs.length, vsync: this);
     _loadAppInfo();
 
@@ -231,6 +231,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
       bottomNavigationBar: const StatusBar(),
     );
   }
+
   void _onItemSelected(int index) {
     // If we are leaving the first tab (index 0)
     // TODO yyx 20240610 Tried to replicate the tabController but not working
@@ -252,6 +253,5 @@ class RattleHomeState extends ConsumerState<RattleHome>
       _previousIndex = _selectedIndex;
       _selectedIndex = index;
     });
+  }
 }
-}
-

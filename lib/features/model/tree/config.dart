@@ -29,8 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/tab.dart';
 
-import 'package:rattle/r/source.dart';
-
 /// The tree tab config currently consists of just a BUILD button.
 ///
 /// This is a StatefulWidget to pass the ref across to the rSouorce.
