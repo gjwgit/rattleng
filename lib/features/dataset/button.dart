@@ -110,12 +110,11 @@ void showAlertPopup(
   );
 }
 
-  void _showOptionPopup(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const DatasetPopup();
-      },
-    );
-  }
+void _showOptionPopup(BuildContext context, WidgetRef ref) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return const DatasetPopup();
+    },
+  );
 }
