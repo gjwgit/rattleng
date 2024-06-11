@@ -38,12 +38,14 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/constants/home_tabs.dart';
+import 'package:rattle/provider/dataset_loaded.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
 import 'package:rattle/provider/target.dart';
 import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -150,8 +152,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
-              // TODO yyx 20240607 show confirmation but without popup to choose a new dataset afterwards?
-              reset(context, ref);
+              if (ref.read(datasetLoaded)) {
+                showAlertPopup(context, ref, false);
+              } else {
+                reset(context, ref);
+              }
             },
             tooltip: 'Tap here to clear the current project and\n'
                 'so start a new project with a new dataset.',

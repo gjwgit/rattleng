@@ -47,7 +47,7 @@ class DatasetButton extends ConsumerWidget {
         // IF YES, CLEAR EVERY STATE IN THE APP AND SHOW POPUP WINDOW
         // IF NO, DISMISS THE POPUP WINDOW
         if (ref.read(datasetLoaded)) {
-          _showAlertPopup(context, ref);
+          showAlertPopup(context, ref, true);
         } else {
           _showOptionPopup(context, ref);
         }
@@ -60,60 +60,66 @@ class DatasetButton extends ConsumerWidget {
       ),
     );
   }
+}
 
-  void _showAlertPopup(BuildContext context, WidgetRef ref) {
-    // Show Alert Window to Reset, Reset after confirmation
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Warning'),
-          content: const Text(
-            'If you load a new dataset, it will reset the app.\nAre you sure?',
+void showAlertPopup(
+  BuildContext context,
+  WidgetRef ref,
+  bool loadNewDataset,
+) {
+  // Show Alert Window, Reset after confirmation
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Warning'),
+        content: const Text(
+          'If you load a new dataset, it will reset the app.\nAre you sure?',
+        ),
+        actions: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('No'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Yes'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                // RESET BEFORE SHOWOPTIONPOPUP BECAUSE THE OTHER WAY AROUND CASUES BUG:
-                // FIRST SET LOAD TO TRUE AND THEN RESET IT TO FALSE
-                // BUT THE DATASET ACTUALLY IS LOADED
-                // AS A CONSEQUENCE THE PREVIOUS RESULT WON'T BE RESET
-                // BECAUSE LOAD INDICATES NO DATASET HAS BEEN LOADED AND THE APP IS FRESH
-                reset(context, ref);
+            child: const Text('Yes'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              // RESET BEFORE SHOWOPTIONPOPUP BECAUSE THE OTHER WAY AROUND CASUES BUG:
+              // FIRST SET LOAD TO TRUE AND THEN RESET IT TO FALSE
+              // BUT THE DATASET ACTUALLY IS LOADED
+              // AS A CONSEQUENCE THE PREVIOUS RESULT WON'T BE RESET
+              // BECAUSE LOAD INDICATES NO DATASET HAS BEEN LOADED AND THE APP IS FRESH
+              reset(context, ref);
+              if (loadNewDataset) {
                 _showOptionPopup(context, ref);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
-  void _showOptionPopup(BuildContext context, WidgetRef ref) {
-    // TODO yyx 20240607 if we cancel we are not loaded.
-    // perhaps put this after each option in the DATASETPOPUP except the cancel button.
-    debugPrint('DATASET LOADED');
-    ref.read(datasetLoaded.notifier).state = true;
+void _showOptionPopup(BuildContext context, WidgetRef ref) {
+  // TODO yyx 20240607 if we cancel we are not loaded.
+  // perhaps put this after each option in the DATASETPOPUP except the cancel button.
+  debugPrint('DATASET LOADED');
+  ref.read(datasetLoaded.notifier).state = true;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const DatasetPopup();
-      },
-    );
-  }
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return const DatasetPopup();
+    },
+  );
 }
