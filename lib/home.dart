@@ -65,13 +65,15 @@ class RattleHomeState extends ConsumerState<RattleHome>
   void initState() {
     super.initState();
     deleteFileIfExists();
-    // TODO yyx 20240610 As we use NavigationRail, we don't use TabBarView anymore. What should I do with this controller?
+    
     _tabController = TabController(length: homeTabs.length, vsync: this);
     _loadAppInfo();
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab.
 
+    // TODO yyx 20240610 As we use NavigationRail, we don't use TabBarView anymore.
+    // We don't get to use the tab controller. Moved the same functionality to the build button
     _tabController.addListener(() {
       // Check if we are leaving the tab, not entering it.
 
