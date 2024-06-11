@@ -212,12 +212,16 @@ class RattleHomeState extends ConsumerState<RattleHome>
                   tab['title'],
                   style: const TextStyle(fontSize: 16),
                 ),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
               );
             }).toList(),
             labelType: NavigationRailLabelType.all,
             selectedIndex: _selectedIndex,
             // TODO yyx 20240610 I want it to have the same colour as the selected tab horizontally. What is the value?
-            selectedLabelTextStyle: const TextStyle(color: Colors.deepPurple),
+            selectedLabelTextStyle: const TextStyle(
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
+            ),
             unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
             onDestinationSelected: _onItemSelected,
           ),
