@@ -157,7 +157,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
               } else {
                 reset(context, ref);
               }
-              
             },
             tooltip: 'Tap here to clear the current project and\n'
                 'so start a new project with a new dataset.',
