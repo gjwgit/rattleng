@@ -1,3 +1,5 @@
+**Random Forests**
+
 A **random forest** consists of multiple decision trees from different
 samples of the dataset.  While building each tree, random subsets of
 the available variables are considered for splitting the data at each

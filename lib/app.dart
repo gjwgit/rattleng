@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-06-08 06:53:01 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-11 09:49:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -54,10 +54,10 @@ class RattleApp extends ConsumerWidget {
 
     // EXPERIMENT with the color scheme.
 
-    final ColorScheme colorScheme = ColorScheme.fromSeed(
-      brightness: MediaQuery.platformBrightnessOf(context),
-      seedColor: Colors.indigo,
-    );
+    // final ColorScheme colorScheme = ColorScheme.fromSeed(
+    //   brightness: MediaQuery.platformBrightnessOf(context),
+    //   seedColor: Colors.indigo,
+    // );
 
     return MaterialApp(
       theme: ThemeData(

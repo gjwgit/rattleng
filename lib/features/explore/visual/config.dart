@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-06-10 09:23:55 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-06-11 06:03:40 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,8 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/utils/show_under_construction.dart';
 
 /// The VISUAL tab config currently consists of just a BUILD button.
 ///
@@ -58,9 +60,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             ElevatedButton(
               onPressed: () {
-                debugPrint('VISUAL CONFIG BUILD');
+                showUnderConstruction(context);
               },
-              child: const Text('Build'),
+              child: const Text('Display'),
             ),
           ],
         ),
