@@ -59,8 +59,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
   late TabController _tabController;
   var _appVersion = 'Unknown';
   var _appName = 'Unknown';
-  var _selectedIndex = 0;
-
+  var _selectedIndex = 0; // start with the first tab
+  var _previousIndex = -1; // start with -1 indicates invalid index
   @override
   void initState() {
     super.initState();
@@ -217,11 +217,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
             // TODO yyx 20240610 I want it to have the same colour as the selected tab horizontally. What is the value?
             selectedLabelTextStyle: const TextStyle(color: Colors.deepPurple),
             unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
-            onDestinationSelected: (int index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
+            onDestinationSelected: _onItemSelected,
           ),
           // Associate the Widgets with each of the tabs.
           Expanded(
@@ -233,4 +229,27 @@ class RattleHomeState extends ConsumerState<RattleHome>
       bottomNavigationBar: const StatusBar(),
     );
   }
+  void _onItemSelected(int index) {
+    // If we are leaving the first tab (index 0)
+    // TODO yyx 20240610 Tried to replicate the tabController but not working
+    // if (_previousIndex == 0 && index != 0) {
+    //   String path = ref.read(pathProvider);
+    //   if (path.isNotEmpty) {
+    //     // On leaving the DATASET tab, we set the variables and run the data
+    //     // template if there is a dataset loaded, as indicated by the path
+    //     // having a value.
+    //     List<String> vars = rExtractVars(ref.read(stdoutProvider));
+    //     ref.read(varsProvider.notifier).state = vars;
+    //     ref.read(targetProvider.notifier).state = vars.last;
+    //     rSource(ref, 'dataset_template');
+    //   }
+    // }
+
+    // Update the previous index to the current index before changing the selected index
+    setState(() {
+      _previousIndex = _selectedIndex;
+      _selectedIndex = index;
+    });
 }
+}
+

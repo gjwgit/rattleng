@@ -35,7 +35,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/provider/model.dart';
+import 'package:rattle/provider/path.dart';
+import 'package:rattle/provider/stdout.dart';
+import 'package:rattle/provider/target.dart';
+import 'package:rattle/provider/vars.dart';
 import 'package:rattle/provider/wordcloud/build.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 
@@ -78,48 +83,60 @@ class ModelBuildButtonState extends ConsumerState<ModelBuildButton> {
       onPressed: () async {
         // Handle button click here
         debugPrint('MODEL BUTTON CLICKED for $model');
+        String path = ref.read(pathProvider);
+        if (path.isNotEmpty) {
+          // we set the variables and run the data
+          // template if there is a dataset loaded, as indicated by the path
+          // having a value.
+          List<String> vars = rExtractVars(ref.read(stdoutProvider));
+          ref.read(varsProvider.notifier).state = vars;
+          ref.read(targetProvider.notifier).state = vars.last;
+          rSource(ref, 'dataset_template');
 
-        if (model != 'Word Cloud') {
-          rSource(ref, 'model_template');
-        }
-
-        switch (model) {
-          case 'Tree':
-            rSource(ref, 'model_build_rpart');
-          case 'Forest':
-            rSource(ref, 'model_build_random_forest');
-          case 'Word Cloud':
-            // context.read(pngPathProvider).state =
-            // clean up the files from previous use
-            File oldWordcloudFile = File(wordCloudImagePath);
-            if (oldWordcloudFile.existsSync()) {
-              oldWordcloudFile.deleteSync();
-              debugPrint('old wordcloud file deleted');
-            } else {
-              debugPrint('old wordcloud file not exists');
-            }
-            File oldTmpFile = File(tmpImagePath);
-            if (oldTmpFile.existsSync()) {
-              oldTmpFile.deleteSync();
-              debugPrint('old tmp file deleted');
-            } else {
-              debugPrint('old tmp file not exists');
-            }
-            rSource(ref, 'model_build_word_cloud');
-          default:
-            debugPrint('NO ACTION FOR THIS BUTTON $model');
-        }
-        if (model == 'Word Cloud') {
-          final file = File(wordCloudImagePath);
-          while (true) {
-            if (await file.exists()) {
-              debugPrint('file exists');
-              break;
-            }
+          if (model != 'Word Cloud') {
+            rSource(ref, 'model_template');
           }
-          // toggle the state to trigger rebuild
-          debugPrint('build clicked on ${timestamp()}');
-          ref.read(wordCloudBuildProvider.notifier).state = timestamp();
+
+          switch (model) {
+            case 'Tree':
+              rSource(ref, 'model_build_rpart');
+            case 'Forest':
+              rSource(ref, 'model_build_random_forest');
+            case 'Word Cloud':
+              // context.read(pngPathProvider).state =
+              // clean up the files from previous use
+              File oldWordcloudFile = File(wordCloudImagePath);
+              if (oldWordcloudFile.existsSync()) {
+                oldWordcloudFile.deleteSync();
+                debugPrint('old wordcloud file deleted');
+              } else {
+                debugPrint('old wordcloud file not exists');
+              }
+              File oldTmpFile = File(tmpImagePath);
+              if (oldTmpFile.existsSync()) {
+                oldTmpFile.deleteSync();
+                debugPrint('old tmp file deleted');
+              } else {
+                debugPrint('old tmp file not exists');
+              }
+              rSource(ref, 'model_build_word_cloud');
+            default:
+              debugPrint('NO ACTION FOR THIS BUTTON $model');
+          }
+          if (model == 'Word Cloud') {
+            final file = File(wordCloudImagePath);
+            while (true) {
+              if (await file.exists()) {
+                debugPrint('file exists');
+                break;
+              }
+            }
+            // toggle the state to trigger rebuild
+            debugPrint('build clicked on ${timestamp()}');
+            ref.read(wordCloudBuildProvider.notifier).state = timestamp();
+          }
+        } else {
+          debugPrint('no dataset is loaded yet to build');
         }
       },
       child: const Text('Build'),

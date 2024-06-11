@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/features/model/tab.dart';
 
 import 'package:rattle/r/source.dart';
 
@@ -58,13 +59,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
             // The BUILD button.
 
-            ElevatedButton(
-              onPressed: () {
-                rSource(ref, 'model_template');
-                rSource(ref, 'model_build_random_forest');
-              },
-              child: const Text('Build'),
-            ),
+            buildButton,
           ],
         ),
       ],
