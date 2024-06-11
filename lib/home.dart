@@ -152,6 +152,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
             onPressed: () {
               // TODO yyx 20240607 show confirmation but without popup to choose a new dataset afterwards?
               reset(context, ref);
+              // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
+              // Wait until 103 is merged
+
+
             },
             tooltip: 'Tap here to clear the current project and\n'
                 'so start a new project with a new dataset.',
