@@ -43,6 +43,7 @@ import 'package:rattle/provider/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
 import 'package:xterm/xterm.dart';
 
+
 void reset(BuildContext context, WidgetRef ref) {
   debugPrint('RESET');
   // reset the app
@@ -67,3 +68,4 @@ void reset(BuildContext context, WidgetRef ref) {
   debugPrint('DATASET UNLOADED');
   ref.read(datasetLoaded.notifier).state = false;
 }
+
