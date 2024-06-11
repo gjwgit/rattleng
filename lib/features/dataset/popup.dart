@@ -31,12 +31,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
+import 'package:rattle/provider/dataset_loaded.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
 
 const double heightSpace = 20;
 const double widthSpace = 10;
+
+void datasetLoadedUpdate(WidgetRef ref) {
+  debugPrint('DATASET LOADED');
+  ref.read(datasetLoaded.notifier).state = true;
+}
 
 class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
@@ -85,6 +91,7 @@ class DatasetPopup extends ConsumerWidget {
                     ref.read(pathProvider.notifier).state = path;
                     rLoadDataset(ref);
                     setStatus(ref, statusChooseVariableRoles);
+                    datasetLoadedUpdate(ref);
                   }
 
                   // Avoid the "Do not use BuildContexts across async gaps."
@@ -106,6 +113,8 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   // TODO 20231018 gjw datasetSelectPackage();
                   Navigator.pop(context, 'Package');
+
+                  datasetLoadedUpdate(ref);
                 },
                 child: const Text('Package'),
               ),
@@ -123,6 +132,8 @@ class DatasetPopup extends ConsumerWidget {
                   rLoadDataset(ref);
                   setStatus(ref, statusChooseVariableRoles);
                   Navigator.pop(context, 'Demo');
+
+                  datasetLoadedUpdate(ref);
                 },
                 child: const Text('Demo'),
               ),
