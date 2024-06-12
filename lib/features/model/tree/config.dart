@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-06-12 10:15:24 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-12 12:10:31 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -65,7 +65,7 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
                 rSource(ref, 'model_template');
                 rSource(ref, 'model_build_rpart');
               },
-              child: const Text('Build Tree'),
+              child: const Text('Build Decision Tree'),
             ),
           ],
         ),
