@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Add ActivityButton as default button for Build/Display [0.1.11]
 + Review status bar, markdown intros, add Under Construction [0.1.10]
 + Wordclound in-pattern with tab/config/panel [0.1.9]
 + Initial EXPLORE framework [0.1.8]
