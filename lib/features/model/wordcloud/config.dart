@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Saturday 2024-06-08 21:05:56 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-12 10:13:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,22 +27,29 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/model/tab.dart';
+import 'package:rattle/features/model/build_button.dart';
 // TODO 20240605 gjw PERHAPS CALL THIS randomProviderWC RATHER THAN
 // THE GENERIC checkboxProvider? FOR DISCUSSION.
 import 'package:rattle/provider/wordcloud/checkbox.dart';
 // TODO 20240605 gjw We will have other providers as the app grows. maxword
 // might be used in other panels too. Perhaps we need to identify these as
 // WordCloud providers, perhaps within a wordcloudProvider structure?
+import 'package:rattle/provider/wordcloud/build.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/provider/wordcloud/minfreq.dart';
 import 'package:rattle/provider/wordcloud/punctuation.dart';
 import 'package:rattle/provider/wordcloud/stem.dart';
 import 'package:rattle/provider/wordcloud/stopword.dart';
+import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/timestamp.dart';
+import 'package:rattle/widgets/activity_button.dart';
 
 class WordCloudConfig extends ConsumerStatefulWidget {
   const WordCloudConfig({super.key});
@@ -80,7 +87,43 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
         Row(
           children: [
             const SizedBox(width: 5.0),
-            buildButton,
+
+            // buildButton,
+
+            ActivityButton(
+              onPressed: () async {
+                debugPrint('WC CONFIG BUTTON');
+                // context.read(pngPathProvider).state =
+                // clean up the files from previous use
+                File oldWordcloudFile = File(wordCloudImagePath);
+                if (oldWordcloudFile.existsSync()) {
+                  oldWordcloudFile.deleteSync();
+                  debugPrint('old wordcloud file deleted');
+                } else {
+                  debugPrint('old wordcloud file not exists');
+                }
+                File oldTmpFile = File(tmpImagePath);
+                if (oldTmpFile.existsSync()) {
+                  oldTmpFile.deleteSync();
+                  debugPrint('old tmp file deleted');
+                } else {
+                  debugPrint('old tmp file not exists');
+                }
+                rSource(ref, 'model_build_word_cloud');
+                final file = File(wordCloudImagePath);
+                while (true) {
+                  if (await file.exists()) {
+                    debugPrint('file exists');
+                    break;
+                  }
+                }
+                // Toggle the state to trigger rebuild
+                debugPrint('build clicked on ${timestamp()}');
+                ref.read(wordCloudBuildProvider.notifier).state = timestamp();
+              },
+              child: const Text('Build'),
+            ),
+
             const SizedBox(width: 20.0),
             const Text(
               'A word cloud visualises word frequencies. '
