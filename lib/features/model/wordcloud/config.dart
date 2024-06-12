@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Wednesday 2024-06-12 10:13:40 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-12 11:40:47 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,13 +33,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/features/model/tab.dart';
-// TODO 20240605 gjw PERHAPS CALL THIS randomProviderWC RATHER THAN
-// THE GENERIC checkboxProvider? FOR DISCUSSION.
+import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/provider/wordcloud/checkbox.dart';
-// TODO 20240605 gjw We will have other providers as the app grows. maxword
-// might be used in other panels too. Perhaps we need to identify these as
-// WordCloud providers, perhaps within a wordcloudProvider structure?
+// TODO 20240605 gjw WE WILL HAVE OTHER PROVIDERS AS THE APP GROWS. maxword
+// MIGHT BE USED IN OTHER PANELS TOO. PERHAPS WE NEED TO IDENTIFY THESE AS
+// WORDCLOUD PROVIDERS, PERHAPS WITHIN A wordcloudProvider STRUCTURE? FOR
+// CONSIDERATION.
 import 'package:rattle/provider/wordcloud/build.dart';
 import 'package:rattle/provider/wordcloud/maxword.dart';
 import 'package:rattle/provider/wordcloud/minfreq.dart';
@@ -91,9 +90,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
             ActivityButton(
               onPressed: () async {
-                debugPrint('WC CONFIG BUTTON');
-                // context.read(pngPathProvider).state =
-                // clean up the files from previous use
+                // Clean up the files from previous use.
+
+                // TODO 20240612 gjw IS THIS REQUIRED HERE? OR CLEANUP WHEN EXIT
+                // THE APP? OR RELY ON OS TO CLEANUP /tmp?
+
                 File oldWordcloudFile = File(wordCloudImagePath);
                 if (oldWordcloudFile.existsSync()) {
                   oldWordcloudFile.deleteSync();
@@ -108,7 +109,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 } else {
                   debugPrint('old tmp file not exists');
                 }
+
+                // This is the main action.
+
                 rSource(ref, 'model_build_word_cloud');
+
+                // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
+
                 final file = File(wordCloudImagePath);
                 while (true) {
                   if (await file.exists()) {
