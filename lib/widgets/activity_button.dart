@@ -1,6 +1,6 @@
 /// build button for model tab
 //
-// Time-stamp: <Wednesday 2024-06-12 10:11:01 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-12 12:01:32 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,7 +29,11 @@ library;
 
 import 'package:flutter/material.dart';
 
-class ActivityButton extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/provider/path.dart';
+
+class ActivityButton extends ConsumerWidget {
   final VoidCallback? onPressed;
   final Widget? child;
 
@@ -40,12 +44,40 @@ class ActivityButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('ActivityButton build');
 
     return ElevatedButton(
       onPressed: () {
-        if (onPressed != null) {
+        String path = ref.read(pathProvider);
+
+        if (path.isEmpty) {
+          showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: const Row(
+                  children: [
+                    Icon(Icons.warning, color: Colors.red),
+                    SizedBox(width: 20),
+                    Text('Missing a Dataset'),
+                  ],
+                ),
+                content: const Text('There is currently no dataset loaded.\n'
+                    'Please tap on the **Dataset** feature\n'
+                    'to select a dataset to load.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Dismiss the dialog
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        } else if (onPressed != null) {
           onPressed!();
         }
       },
