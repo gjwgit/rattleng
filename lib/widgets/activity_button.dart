@@ -1,6 +1,6 @@
-/// build button for model tab
+/// An ElevatedButton implementing Activity initiation for RattleNG
 //
-// Time-stamp: <Wednesday 2024-06-12 12:01:32 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-12 16:01:23 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
