@@ -53,7 +53,7 @@ class _TreePanelState extends ConsumerState<TreePanel> {
     return content == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(treeIntroFile),
+              child: markdownFileBuilder(treeIntroFile),
             ),
           )
         : Expanded(

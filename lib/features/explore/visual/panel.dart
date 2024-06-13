@@ -53,7 +53,7 @@ class _VisualPanelState extends ConsumerState<VisualPanel> {
     return content == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(visualIntroFile),
+              child: markdownFileBuilder(visualIntroFile),
             ),
           )
         : Expanded(

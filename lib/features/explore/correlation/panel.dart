@@ -53,7 +53,7 @@ class _CorrelationPanelState extends ConsumerState<CorrelationPanel> {
     return content == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(correlationIntroFile),
+              child: markdownFileBuilder(correlationIntroFile),
             ),
           )
         : Expanded(

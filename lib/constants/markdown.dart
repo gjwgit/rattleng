@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2024-06-10 09:57:53 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-13 17:02:14 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -30,7 +30,7 @@ import 'package:rattle/constants/app.dart';
 
 /// ASSOCIATE tab markdown file welcome message.
 
-const String associateIntroFile = '$assetsPath/markdown/associate.md';
+const String associationIntroFile = '$assetsPath/markdown/association.md';
 
 /// BOOST tab markdown file welcome message.
 
@@ -62,7 +62,7 @@ const String missingIntroFile = '$assetsPath/markdown/missing.md';
 
 /// NNET tab markdown file welcome message.
 
-const String nnetIntroFile = '$assetsPath/markdown/nnet.md';
+const String neuralIntroFile = '$assetsPath/markdown/neural.md';
 
 /// PCA tab markdown file welcome message.
 

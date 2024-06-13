@@ -57,7 +57,7 @@ class _SummaryPanelState extends ConsumerState<SummaryPanel> {
     return contents == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(summaryIntroFile),
+              child: markdownFileBuilder(summaryIntroFile),
             ),
           )
         : Expanded(

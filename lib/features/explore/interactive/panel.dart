@@ -53,7 +53,7 @@ class _InteractivePanelState extends ConsumerState<InteractivePanel> {
     return content == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(interactiveIntroFile),
+              child: markdownFileBuilder(interactiveIntroFile),
             ),
           )
         : Expanded(

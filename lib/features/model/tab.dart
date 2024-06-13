@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-06-12 11:42:05 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-13 17:24:35 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -33,6 +33,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/model/cluster/tab.dart';
 import 'package:rattle/features/model/forest/tab.dart';
 import 'package:rattle/features/model/tree/tab.dart';
+import 'package:rattle/features/model/association/tab.dart';
+import 'package:rattle/features/model/boost/tab.dart';
+import 'package:rattle/features/model/svm/tab.dart';
+import 'package:rattle/features/model/linear/tab.dart';
+import 'package:rattle/features/model/neural/tab.dart';
 import 'package:rattle/features/model/wordcloud/tab.dart';
 import 'package:rattle/provider/model.dart';
 
@@ -42,13 +47,8 @@ final List<Map<String, dynamic>> modelTabs = [
     'widget': const ClusterTab(),
   },
   {
-    'title': 'Associate',
-    'widget': const Column(
-      children: <Widget>[
-        SizedBox(height: 50),
-        Text('NOT YET IMPLEMENTED'),
-      ],
-    ),
+    'title': 'Associations',
+    'widget': const AssociationTab(),
   },
   {
     'title': 'Tree',
@@ -60,12 +60,7 @@ final List<Map<String, dynamic>> modelTabs = [
   },
   {
     'title': 'Boost',
-    'widget': const Column(
-      children: <Widget>[
-        SizedBox(height: 50),
-        Text('NOT YET IMPLEMENTED'),
-      ],
-    ),
+    'widget': const BoostTab(),
   },
   {
     'title': 'Word Cloud',
@@ -73,30 +68,15 @@ final List<Map<String, dynamic>> modelTabs = [
   },
   {
     'title': 'SVM',
-    'widget': const Column(
-      children: <Widget>[
-        SizedBox(height: 50),
-        Text('NOT YET IMPLEMENTED'),
-      ],
-    ),
+    'widget': const SvmTab(),
   },
   {
     'title': 'Linear',
-    'widget': const Column(
-      children: <Widget>[
-        SizedBox(height: 50),
-        Text('NOT YET IMPLEMENTED'),
-      ],
-    ),
+    'widget': const LinearTab(),
   },
   {
     'title': 'Neural',
-    'widget': const Column(
-      children: <Widget>[
-        SizedBox(height: 50),
-        Text('NOT YET IMPLEMENTED'),
-      ],
-    ),
+    'widget': const NeuralTab(),
   },
 ];
 

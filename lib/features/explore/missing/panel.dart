@@ -53,7 +53,7 @@ class _MissingPanelState extends ConsumerState<MissingPanel> {
     return content == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(missingIntroFile),
+              child: markdownFileBuilder(missingIntroFile),
             ),
           )
         : Expanded(
