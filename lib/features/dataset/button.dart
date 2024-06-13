@@ -72,7 +72,13 @@ void showAlertPopup(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Warning'),
+        title: const Row(
+          children: [
+            Icon(Icons.warning, color: Colors.red),
+            SizedBox(width: 20),
+            Text('Warning'),
+          ],
+        ),
         content: const Text(
           'If you load a new dataset, it will reset the app.\nAre you sure?',
         ),

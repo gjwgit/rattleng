@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2024-06-10 10:10:06 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-06-13 15:42:09 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -36,8 +36,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/constants/home_tabs.dart';
+import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/provider/dataset_loaded.dart';
 import 'package:rattle/provider/path.dart';
 import 'package:rattle/provider/stdout.dart';
@@ -45,7 +46,6 @@ import 'package:rattle/provider/target.dart';
 import 'package:rattle/provider/vars.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -58,16 +58,61 @@ class RattleHome extends ConsumerStatefulWidget {
 
 class RattleHomeState extends ConsumerState<RattleHome>
     with SingleTickerProviderStateMixin {
+  // We use a [tabController] to manager what scripts are run on moving from the
+  // DATASET feature. The [tabController] keeps track of the selected index for
+  // the NavigationRail.
+
   late TabController _tabController;
-  var _appVersion = 'Unknown';
+
+  // We will populate the app name and version.
+
   var _appName = 'Unknown';
+  var _appVersion = 'Unknown';
+
+  // Helper function to cleanup any wordcloud leftover files.
+
+  // TODO 20240613 gjw DO WE NEED THIS?
+
+  Future<void> deleteFileIfExists() async {
+    // clean up the files from previous use
+    File fileToDelete = File(wordCloudImagePath);
+    if (await fileToDelete.exists()) {
+      await fileToDelete.delete();
+      debugPrint('File $wordCloudImagePath deleted');
+    }
+    File tmpImageFile = File(tmpImagePath);
+    if (await tmpImageFile.exists()) {
+      await tmpImageFile.delete();
+      debugPrint('File $tmpImagePath deleted');
+    }
+  }
+
+  // Helper function to load the app name and version.
+
+  Future<void> _loadAppInfo() async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appName = packageInfo.packageName; // Set app version from package info
+      _appVersion = packageInfo.version; // Set app version from package info
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+
+    // TODO 20240613 gjw IS THIS REQUIRED?
+
     deleteFileIfExists();
-    _tabController = TabController(length: homeTabs.length, vsync: this);
+
+    // Get the app name and version.
+
     _loadAppInfo();
+
+    // Create the [tabController] to manage what happens on leaving/entering
+    // tabs.
+
+    _tabController = TabController(length: homeTabs.length, vsync: this);
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab.
@@ -78,6 +123,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
       if (!_tabController.indexIsChanging) {
         if (_tabController.previousIndex == 0) {
           String path = ref.read(pathProvider);
+
+          // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
+
           if (path.isNotEmpty) {
             // On leaving the DATASET tab we set the variables and run the data
             // template if there is a dataset loaded, as indicated by the path
@@ -94,28 +142,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // You can also perform other actions here, such as showing a snackbar,
         // calling a function, etc.
       }
-    });
-  }
-
-  Future<void> deleteFileIfExists() async {
-    // clean up the files from previous use
-    File fileToDelete = File(wordCloudImagePath);
-    if (await fileToDelete.exists()) {
-      await fileToDelete.delete();
-      debugPrint('File $wordCloudImagePath deleted');
-    }
-    File tmpImageFile = File(tmpImagePath);
-    if (await tmpImageFile.exists()) {
-      await tmpImageFile.delete();
-      debugPrint('File $tmpImagePath deleted');
-    }
-  }
-
-  Future<void> _loadAppInfo() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      _appVersion = packageInfo.version; // Set app version from package info
-      _appName = packageInfo.packageName; // Set app version from package info
     });
   }
 
@@ -204,49 +230,32 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
       body: Row(
         children: [
-          RotatedBox(
-            quarterTurns: 1,
-            child: TabBar(
-              controller: _tabController,
-              unselectedLabelColor: Colors.grey,
-              isScrollable: false,
-              tabs: homeTabs.map((tab) {
-                // Rotate the tabs back the correct direction.
-
-                return RotatedBox(
-                  quarterTurns: -1,
-
-                  // Wrap the tabs within a container so all have the same
-                  // width, rotated, and the highlight is the same for each one
-                  // irrespective of the text width.
-
-                  child: SizedBox(
-                    width: 100.0,
-                    child: Tab(
-                      icon: Icon(tab['icon']),
-                      child: Text(
-                        tab['title'],
-
-                        // Reduce the font size to not overflow the widget.
-
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+          NavigationRail(
+            selectedIndex: _tabController.index,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _tabController.index = index;
+              });
+            },
+            labelType: NavigationRailLabelType.all,
+            destinations: homeTabs.map((tab) {
+              return NavigationRailDestination(
+                icon: Icon(tab['icon']),
+                label: Text(
+                  tab['title'],
+                  style: const TextStyle(fontSize: 16),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+              );
+            }).toList(),
+            selectedLabelTextStyle: const TextStyle(
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
             ),
+            unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
           ),
-
-          // Associate the Widgets with each of the tabs.
-
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: homeTabs.map((tab) {
-                return tab['widget'] as Widget;
-              }).toList(),
-            ),
+            child: homeTabs[_tabController.index]['widget'],
           ),
         ],
       ),
