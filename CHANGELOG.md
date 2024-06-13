@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Implement pattern for all model tabs [0.1.13]
 + Use a NavigationRail for the left hand navigation [0.1.12]
 + Add ActivityButton as default button for Build/Display [0.1.11]
 + Review status bar, markdown intros, add Under Construction [0.1.10]
