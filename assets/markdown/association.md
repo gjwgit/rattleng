@@ -1,4 +1,4 @@
-Association Rule Analysis
+**Association Rule Analysis**
 
 Association analysis identifies relationships or affinities between
 observations and/or between variables. These relationships are then

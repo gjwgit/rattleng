@@ -35,7 +35,7 @@ import 'package:rattle/utils/load_asset.dart';
 /// It allows handling asynchronous loading of markdown file.
 
 // 20230828 gjw NOT CURRENTLY USED SO COMMENT OUT FOR NOW.
-
+//
 // FutureBuilder markdownFileBuilder(String markdownFilePath) {
 //   return FutureBuilder(
 //     key: const Key('markdown_file'),
@@ -56,24 +56,28 @@ import 'package:rattle/utils/load_asset.dart';
 //   );
 // }
 
-FutureBuilder sunkenMarkdownFileBuilder(String markdownFilePath) {
+FutureBuilder markdownFileBuilder(String markdownFilePath) {
   return FutureBuilder(
-    key: const Key('sunken_markdown_file'),
+    key: const Key('markdown_file'),
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(1),
-                spreadRadius: 10,
-                blurRadius: 10,
-                offset: const Offset(10, 10),
-              ),
-            ],
-          ),
+          // 20240613 gjw The sukenMarkdownFileBuild was not looking so good so
+          // let's not do so for now.
+          //
+          // decoration: BoxDecoration(
+          //   color: Colors.white,
+          //   boxShadow: [
+          //     BoxShadow(
+          //       color: Colors.grey.withOpacity(1),
+          //       spreadRadius: 10,
+          //       blurRadius: 10,
+          //       offset: const Offset(10, 10),
+          //     ),
+          //   ],
+          // ),
+          color: Colors.white,
           child: Markdown(
             data: snapshot.data!,
             selectable: true,

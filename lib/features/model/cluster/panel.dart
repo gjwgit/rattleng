@@ -53,7 +53,7 @@ class _ClusterPanelState extends ConsumerState<ClusterPanel> {
     return content == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(clusterIntroFile),
+              child: markdownFileBuilder(clusterIntroFile),
             ),
           )
         : Expanded(

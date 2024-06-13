@@ -53,7 +53,7 @@ class _TestsPanelState extends ConsumerState<TestsPanel> {
     return content == ''
         ? Expanded(
             child: Center(
-              child: sunkenMarkdownFileBuilder(testsIntroFile),
+              child: markdownFileBuilder(testsIntroFile),
             ),
           )
         : Expanded(

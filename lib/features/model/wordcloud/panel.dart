@@ -132,7 +132,7 @@ class _WordCloudPanelState extends ConsumerState<WordCloudPanel> {
 
       return Expanded(
         child: Center(
-          child: sunkenMarkdownFileBuilder(wordCloudMsgFile),
+          child: markdownFileBuilder(wordCloudMsgFile),
         ),
       );
     }
