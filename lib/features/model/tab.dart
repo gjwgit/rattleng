@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-09 15:54:11 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-12 11:42:05 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -23,23 +23,19 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
-library;
 
-import 'dart:io';
+library;
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/features/model/build_button.dart';
+
 import 'package:rattle/features/model/cluster/tab.dart';
 import 'package:rattle/features/model/forest/tab.dart';
 import 'package:rattle/features/model/tree/tab.dart';
 import 'package:rattle/features/model/wordcloud/tab.dart';
 import 'package:rattle/provider/model.dart';
 
-// TODO 20240608 THIS USED TO BE A SINGLE BUTTON. NOW INDIVIDUAL BUTTONS PER TAB.
-
-Widget buildButton = const ModelBuildButton();
 final List<Map<String, dynamic>> modelTabs = [
   {
     'title': 'Cluster',
@@ -105,13 +101,6 @@ final List<Map<String, dynamic>> modelTabs = [
 ];
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
-
-var systemTempDir = Directory.systemTemp;
-
-// TODO 20240604 gjw THIS SHOULD BE IN A CONSTANTS FILE.
-String tmpDirPath = systemTempDir.path;
-String wordCloudImagePath = '$tmpDirPath/wordcloud.png';
-String tmpImagePath = '$tmpDirPath/tmp.png';
 
 class ModelTab extends ConsumerStatefulWidget {
   const ModelTab({super.key});
