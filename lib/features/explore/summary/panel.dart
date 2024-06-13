@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 10:06:28 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-13 10:14:47 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -69,7 +69,7 @@ class _SummaryPanelState extends ConsumerState<SummaryPanel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const MarkdownBody(data: '**Summary of the Dataset**'),
+                    const MarkdownBody(data: '**Contents of the Dataset**'),
                     SelectableText(
                       contents,
                       style: monoTextStyle,
