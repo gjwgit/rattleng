@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-09 12:42:03 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-06-12 21:18:56 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -56,15 +56,49 @@ vars   <- names(ds)
 
 vars   <- c(target, vars) %>% unique() %>% rev()
 
-# Identify the numeric variables
+# Identify the input variables for modelling.
 
+inputs <- setdiff(vars, target) %T>% print()
 
-vars %>%
-  magrittr::extract(ds, .) %>%
-  sapply(is.numeric) %>% 
+# Also record them by indicies.
+
+inputs %>%
+  sapply(function(x) which(x == names(ds)), USE.NAMES=FALSE) %T>%
+  print() ->
+inputi
+
+# Identify the numeric variables by index.
+
+ds %>%
+  sapply(is.numeric) %>%
   which() %>%
-  names() %T>%
+  intersect(inputi) %T>%
+  print() ->
+numi
+
+# Identify the numeric variables by name.
+
+ds %>% 
+  names() %>% 
+  magrittr::extract(numi) %T>% 
   print() ->
 numc
+
+# Identify the categoric variables by index.
+
+ds %>%
+  sapply(is.factor) %>%
+  which() %>%
+  intersect(inputi) %T>%
+  print() ->
+cati
+
+# Identify the categoric variables by name.
+
+ds %>% 
+  names() %>% 
+  magrittr::extract(cati) %T>% 
+  print() ->
+catc
 
 
