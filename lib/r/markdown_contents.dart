@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 11:18:43 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-13 16:19:04 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,7 +22,7 @@
 ///
 /// Authors: Graham Williams
 
-/// EXPERIMENTAL
+/// EXPERIMENTAL AND NOT CURRENTLY USED - KEEP FOR NOW
 
 library;
 
