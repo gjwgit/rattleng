@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2023-09-15 06:57:10 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-13 05:42:30 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,14 +21,16 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/script/save_button.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 /// Create a script info widget with a Save button and displaying markdown.
 ///
