@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-06-10 09:25:41 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-13 10:14:47 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,11 +28,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:flutter_markdown/flutter_markdown.dart';
+
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/colors.dart';
 import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/r/extract_empty.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/markdown_file.dart';
 
 /// The panel displays the instructions or the output.
@@ -48,9 +50,11 @@ class _SummaryPanelState extends ConsumerState<SummaryPanel> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractEmpty(stdout);
 
-    return content == ''
+    String contents = rExtract(stdout, 'contents(ds)');
+    // contents = rMarkdownContents(contents);
+
+    return contents == ''
         ? Expanded(
             child: Center(
               child: sunkenMarkdownFileBuilder(summaryIntroFile),
@@ -62,9 +66,15 @@ class _SummaryPanelState extends ConsumerState<SummaryPanel> {
               width: double.infinity,
               padding: const EdgeInsets.only(left: 10),
               child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const MarkdownBody(data: '**Contents of the Dataset**'),
+                    SelectableText(
+                      contents,
+                      style: monoTextStyle,
+                    ),
+                  ],
                 ),
               ),
             ),
