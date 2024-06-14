@@ -29,17 +29,17 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/provider/dataset_loaded.dart';
-import 'package:rattle/provider/path.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/provider/terminal.dart';
-import 'package:rattle/provider/wordcloud/build.dart';
-import 'package:rattle/provider/wordcloud/checkbox.dart';
-import 'package:rattle/provider/wordcloud/maxword.dart';
-import 'package:rattle/provider/wordcloud/minfreq.dart';
-import 'package:rattle/provider/wordcloud/punctuation.dart';
-import 'package:rattle/provider/wordcloud/stem.dart';
-import 'package:rattle/provider/wordcloud/stopword.dart';
+import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/terminal.dart';
+import 'package:rattle/providers/wordcloud/build.dart';
+import 'package:rattle/providers/wordcloud/checkbox.dart';
+import 'package:rattle/providers/wordcloud/maxword.dart';
+import 'package:rattle/providers/wordcloud/minfreq.dart';
+import 'package:rattle/providers/wordcloud/punctuation.dart';
+import 'package:rattle/providers/wordcloud/stem.dart';
+import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
 import 'package:xterm/xterm.dart';
 

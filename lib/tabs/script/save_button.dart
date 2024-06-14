@@ -1,6 +1,6 @@
-/// Update the script provider which captures the R code to replicate the project.
+/// A button to save the script to file.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2023-10-28 08:21:18 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -25,10 +25,25 @@
 /// Authors: Graham Williams
 library;
 
+import 'dart:io' show File;
+
+import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/script.dart';
 
-void updateScript(WidgetRef ref, String code) {
-  ref.read(scriptProvider.notifier).state = ref.read(scriptProvider) + code;
+class ScriptSaveButton extends ConsumerWidget {
+  const ScriptSaveButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ElevatedButton(
+      child: const Text('Export'),
+      onPressed: () {
+        debugPrint("SAVE BUTTON EXPORT: 'script.R'");
+        File('script.R').writeAsString(ref.read(scriptProvider));
+      },
+    );
+  }
 }

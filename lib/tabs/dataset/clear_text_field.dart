@@ -1,14 +1,11 @@
-/// Update the script provider which captures the R code to replicate the project.
-///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// A button to clear the dataset textfield.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-//
+// Licensed under the GNU General Public License, Version 3 (the "License");
+///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -25,10 +22,22 @@
 /// Authors: Graham Williams
 library;
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/script.dart';
+import 'package:rattle/providers/path.dart';
 
-void updateScript(WidgetRef ref, String code) {
-  ref.read(scriptProvider.notifier).state = ref.read(scriptProvider) + code;
+class DatasetClearTextField extends ConsumerWidget {
+  const DatasetClearTextField({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return IconButton(
+      icon: const Icon(Icons.clear),
+      onPressed: () {
+        ref.read(pathProvider.notifier).state = '';
+      },
+    );
+  }
 }
