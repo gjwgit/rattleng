@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Refactor the markdown file display for each tab [0.1.15]
 + Re-org features to tab/panels to support future flexibility [0.1.14]
 + Implement pattern for all model tabs [0.1.13]
 + Use a NavigationRail for the left hand navigation [0.1.12]
