@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/path.dart';
+import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/source.dart';
 

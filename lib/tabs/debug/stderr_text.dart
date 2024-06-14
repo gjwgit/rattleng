@@ -1,6 +1,6 @@
-/// Update the script provider which captures the R code to replicate the project.
+/// A text widget showing the stderr from the R process.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -25,10 +25,29 @@
 /// Authors: Graham Williams
 library;
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/script.dart';
+import 'package:rattle/providers/stderr.dart';
+import 'package:rattle/constants/app.dart';
 
-void updateScript(WidgetRef ref, String code) {
-  ref.read(scriptProvider.notifier).state = ref.read(scriptProvider) + code;
+class StderrText extends ConsumerWidget {
+  const StderrText({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SingleChildScrollView(
+      child: Builder(
+        builder: (BuildContext context) {
+          String stderr = ref.watch(stderrProvider);
+
+          return SelectableText(
+            'STDERR from the R Process:\n\n$stderr',
+            style: monoSmallTextStyle,
+          );
+        },
+      ),
+    );
+  }
 }
