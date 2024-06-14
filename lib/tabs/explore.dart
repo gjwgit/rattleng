@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-06-14 10:08:50 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 14:58:36 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -36,7 +36,7 @@ import 'package:rattle/panels/missing/panel.dart';
 import 'package:rattle/panels/correlation/panel.dart';
 import 'package:rattle/panels/tests/panel.dart';
 import 'package:rattle/panels/interactive/panel.dart';
-//import 'package:rattle/panels/wordcloud/panel.dart';
+//TODO import 'package:rattle/panels/wordcloud/panel.dart';
 import 'package:rattle/providers/explore.dart';
 
 final List<Map<String, dynamic>> explorePanels = [
@@ -64,6 +64,7 @@ final List<Map<String, dynamic>> explorePanels = [
     'title': 'Interactive',
     'widget': const InteractivePanel(),
   },
+  // TODO ADD WORDCLOUD HERE
   // {
   //   'title': 'Word Cloud',
   //   'widget': const WordCloudPanel(),
