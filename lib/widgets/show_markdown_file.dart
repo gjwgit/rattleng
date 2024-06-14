@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/load_asset.dart';
 
 /// A scrolling widget that parses and displays Markdown file,
@@ -36,7 +37,7 @@ import 'package:rattle/utils/load_asset.dart';
 
 // 20230828 gjw NOT CURRENTLY USED SO COMMENT OUT FOR NOW.
 //
-// FutureBuilder markdownFileBuilder(String markdownFilePath) {
+// FutureBuilder showMarkdownFile(String markdownFilePath) {
 //   return FutureBuilder(
 //     key: const Key('markdown_file'),
 //     future: loadAsset(markdownFilePath),
@@ -56,35 +57,25 @@ import 'package:rattle/utils/load_asset.dart';
 //   );
 // }
 
-FutureBuilder markdownFileBuilder(String markdownFilePath) {
+FutureBuilder showMarkdownFile(String markdownFilePath) {
   return FutureBuilder(
     key: const Key('markdown_file'),
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        return Container(
-          // 20240613 gjw The sukenMarkdownFileBuild was not looking so good so
-          // let's not do so for now.
-          //
-          // decoration: BoxDecoration(
-          //   color: Colors.white,
-          //   boxShadow: [
-          //     BoxShadow(
-          //       color: Colors.grey.withOpacity(1),
-          //       spreadRadius: 10,
-          //       blurRadius: 10,
-          //       offset: const Offset(10, 10),
-          //     ),
-          //   ],
-          // ),
-          color: Colors.white,
-          child: Markdown(
-            data: snapshot.data!,
-            selectable: true,
-            // Custom image builder to load assets.
-            imageBuilder: (uri, title, alt) {
-              return Image.asset('$assetsPath/${uri.toString()}');
-            },
+        return Expanded(
+          child: Container(
+            decoration: sunkenBoxDecoration,
+            child: Center(
+              child: Markdown(
+                data: snapshot.data!,
+                selectable: true,
+                // Custom image builder to load assets.
+                imageBuilder: (uri, title, alt) {
+                  return Image.asset('$assetsPath/${uri.toString()}');
+                },
+              ),
+            ),
           ),
         );
       }

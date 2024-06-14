@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-06-10 09:25:41 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 14:30:08 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,10 +30,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/colors.dart';
+import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_empty.dart';
-import 'package:rattle/widgets/markdown_file.dart';
+import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -51,11 +51,7 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? Expanded(
-            child: Center(
-              child: markdownFileBuilder(testsIntroFile),
-            ),
-          )
+        ? showMarkdownFile(testsIntroFile)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

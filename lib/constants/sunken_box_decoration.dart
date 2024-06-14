@@ -1,11 +1,11 @@
-/// App-Wide Colors for RattleNG
+/// App-Wide sunken box for RattleNG
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-06-08 21:08:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 13:40:13 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -29,7 +29,7 @@ library;
 import 'package:flutter/material.dart';
 
 /// A [BoxDecoration] with a sunken effect for use with a [Container]'s
-/// decortation.
+/// decoration: parameter.
 
 final sunkenBoxDecoration = BoxDecoration(
   color: Colors.white,

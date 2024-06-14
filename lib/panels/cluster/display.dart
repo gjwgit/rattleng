@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-09 16:42:59 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 14:37:07 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,10 +30,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/colors.dart';
+import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
-import 'package:rattle/widgets/markdown_file.dart';
+import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The tree panel displays the tree instructions or the tree biuld output.
 
@@ -51,11 +51,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
     String content = rExtractCluster(stdout);
 
     return content == ''
-        ? Expanded(
-            child: Center(
-              child: markdownFileBuilder(clusterIntroFile),
-            ),
-          )
+        ? showMarkdownFile(clusterIntroFile)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

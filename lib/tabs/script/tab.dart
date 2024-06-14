@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2023-10-15 15:40:27 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 13:57:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,6 +42,7 @@ class ScriptTab extends StatelessWidget {
           flex: 4,
           child: ScriptInfo(),
         ),
+        VerticalDivider(),
         Expanded(
           flex: 7,
           child: ScriptText(),

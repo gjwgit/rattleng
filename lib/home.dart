@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-06-13 15:42:09 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-06-14 13:11:30 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -254,6 +254,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
             ),
             unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
           ),
+          const VerticalDivider(),
           Expanded(
             child: homeTabs[_tabController.index]['widget'],
           ),
