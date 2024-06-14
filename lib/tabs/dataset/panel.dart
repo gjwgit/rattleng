@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
