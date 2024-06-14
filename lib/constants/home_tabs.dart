@@ -1,6 +1,6 @@
 /// Identify the main app tabs: title, icon and widget.
 //
-// Time-stamp: <Thursday 2024-06-13 16:14:23 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 09:38:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,11 +28,11 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter/material.dart';
 
-import 'package:rattle/features/dataset/tab.dart';
-import 'package:rattle/features/debug/tab.dart';
-import 'package:rattle/features/explore/tab.dart';
-import 'package:rattle/features/model/tab.dart';
-import 'package:rattle/features/script/tab.dart';
+import 'package:rattle/tabs/dataset/tab.dart';
+import 'package:rattle/tabs/debug/tab.dart';
+import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/tabs/model.dart';
+import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/r/console.dart';
 
 final List<Map<String, dynamic>> homeTabs = [

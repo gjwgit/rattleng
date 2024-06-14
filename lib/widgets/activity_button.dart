@@ -31,7 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/path.dart';
+import 'package:rattle/providers/path.dart';
 
 class ActivityButton extends ConsumerWidget {
   final VoidCallback? onPressed;
