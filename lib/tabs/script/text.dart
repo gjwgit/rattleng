@@ -1,13 +1,11 @@
-/// The app's status bar.
-///
-/// Time-stamp: <Tuesday 2024-06-11 08:59:40 +1000 Graham Williams>
+/// An R script text widget for the script tab page.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// Time-stamp: <Saturday 2024-06-08 11:34:00 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,33 +25,37 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/status.dart';
+import 'package:rattle/providers/script.dart';
 
-class StatusBar extends ConsumerWidget {
-  const StatusBar({super.key});
+/// Create a script text viewer that can scroll the text of the script widget.
+///
+/// The contents is intialised from the main.R script asset.
+
+class ScriptText extends ConsumerWidget {
+  const ScriptText({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String path = ref.watch(pathProvider);
-    if (path != '') path = '$path   ';
+    // Build the widget.
 
     return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      // color: statusBarColor,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        data: '![](assets/images/favicon_small.png)   '
-            '[togware.com](https://togaware.com)  '
-            '$path'
-            '${ref.watch(statusProvider)}',
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+      color: Colors.white,
+      child: SingleChildScrollView(
+        child: Builder(
+          builder: (BuildContext context) {
+            final script = ref.watch(scriptProvider);
+
+            return SelectableText(
+              script,
+              key: scriptTextKey,
+              style: monoSmallTextStyle,
+            );
+          },
+        ),
       ),
     );
   }

@@ -30,8 +30,8 @@ import 'package:xterm/xterm.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/pty.dart';
-import 'package:rattle/provider/terminal.dart';
+import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/terminal.dart';
 
 /// Widget to accept R commands and show results.
 
