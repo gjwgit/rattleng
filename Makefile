@@ -34,7 +34,6 @@ DEST=/var/www/html/$(APP)
 INC_BASE=$(HOME)/.local/share/make
 INC_BASE=support
 
-
 # Specific Makefiles will be loaded if they are found in
 # INC_BASE. Sometimes the INC_BASE is shared by multiple local
 # Makefiles and we want to skip specific makes. Simply define the
