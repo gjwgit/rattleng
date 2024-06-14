@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Friday 2024-06-14 09:13:03 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 14:23:49 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,10 +33,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/colors.dart';
+import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
-import 'package:rattle/widgets/markdown_file.dart';
+import 'package:rattle/widgets/show_markdown_file.dart';
 
 class WordCloudDisplay extends ConsumerStatefulWidget {
   const WordCloudDisplay({super.key});
@@ -130,11 +130,7 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // cloud introductory message, but with the config bar also displayed.
       debugPrint('No model has been built.');
 
-      return Expanded(
-        child: Center(
-          child: markdownFileBuilder(wordCloudMsgFile),
-        ),
-      );
+      return showMarkdownFile(wordCloudMsgFile);
     }
 
     return wordCloudDisplay(imageDisplay);

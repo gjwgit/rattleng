@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 16:34:25 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-14 14:28:13 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,12 +29,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/colors.dart';
+import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_glimpse.dart';
-import 'package:rattle/widgets/markdown_file.dart';
+import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
@@ -52,16 +52,11 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     String stdout = ref.watch(stdoutProvider);
 
     return path == ''
-        ? Expanded(
-            child: Center(
-              key: welcomeTextKey,
-              child: markdownFileBuilder(welcomeMsgFile),
-            ),
-          )
+        ? showMarkdownFile(welcomeMsgFile)
         : Expanded(
             child: Container(
-              decoration: sunkenBoxDecoration,
               width: double.infinity,
+              color: Colors.white,
               padding: const EdgeInsets.only(left: 10),
               child: SelectableText(
                 rExtractGlimpse(stdout),
