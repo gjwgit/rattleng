@@ -8,6 +8,8 @@ ignore
 script.R
 .Rhistory
 
+installers/*.tar.gz
+
 ########################################################################
 # From https://github.com/flutter/flutter/blob/master/.gitignore
 ########################################################################
