@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-06-14 13:11:30 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-06-14 15:01:05 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -36,18 +36,68 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/home_tabs.dart';
 import 'package:rattle/constants/wordcloud.dart';
-import 'package:rattle/tabs/dataset/button.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/vars.dart';
+import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/tabs/dataset/button.dart';
+import 'package:rattle/tabs/dataset/tab.dart';
+import 'package:rattle/tabs/debug/tab.dart';
+import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/tabs/model.dart';
+import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/status_bar.dart';
+
+// Define the [NavigationRail] tabs for the home page.
+
+final List<Map<String, dynamic>> homeTabs = [
+  {
+    'title': 'Dataset',
+    'icon': Icons.input,
+    'widget': const DatasetTab(),
+  },
+  {
+    'title': 'Explore',
+    'icon': Icons.insights,
+    'widget': const ExploreTab(),
+  },
+  {
+    'title': 'Wrangle',
+    'icon': Icons.transform,
+    'widget': const Center(child: Text('WRANGLE')),
+  },
+  {
+    'title': 'Model',
+    'icon': Icons.model_training,
+    'widget': const ModelTab(),
+  },
+  {
+    'title': 'Evaluate',
+    'icon': Icons.leaderboard,
+    'widget': const Center(child: Text('EVALUATE')),
+  },
+  {
+    'title': 'Console',
+    'icon': Icons.terminal,
+    'widget': const RConsole(),
+  },
+  {
+    'title': 'Script',
+    'icon': Icons.code,
+    'widget': const ScriptTab(),
+  },
+  {
+    'title': 'Debug',
+    'icon': Icons.work,
+    'widget': const DebugTab(),
+  },
+];
 
 class RattleHome extends ConsumerStatefulWidget {
   const RattleHome({super.key});
