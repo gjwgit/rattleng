@@ -24,7 +24,7 @@ Then
 
 ```bash
 tar zxvf rattleng.tar.gz
-(cd rattleng; ./mlfutter)
+rattleng/rattle
 ```
 
 Or to install for the current user:
