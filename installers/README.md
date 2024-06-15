@@ -7,6 +7,11 @@ in theory identical across all platforms, rattleng relies on running R
 locally and so it requires R to be installed on your platform. At
 present R is supported on the desktops (Linux, MacOS, and Windows).
 
+## Prerequisite
+
+Install R. See the instructions from the [R
+Project](https://cloud.r-project.org/).
+
 ## Linux tar Archive
 
 Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
