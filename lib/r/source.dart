@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2024-06-10 10:15:30 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 14:44:36 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -61,7 +61,7 @@ import 'package:rattle/utils/update_script.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-void rSource(WidgetRef ref, String script) {
+void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
   String path = ref.read(pathProvider);
@@ -78,7 +78,9 @@ void rSource(WidgetRef ref, String script) {
 
   debugPrint("R SOURCE:\t\t'$script.R'");
 
-  var code = File('assets/r/$script.R').readAsStringSync();
+  String asset = 'assets/r/$script.R';
+  String code = await DefaultAssetBundle.of(context).loadString(asset);
+  // var code = File('assets/r/$script.R').readAsStringSync();
 
   // Process template variables.
 

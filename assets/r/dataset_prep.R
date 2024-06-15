@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-02 16:18:36 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-06-15 15:06:46 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -60,3 +60,8 @@ if (CLEANSE_DATASET) {
 # Index the original variable names by the new names.
 
 names(vnames) <- names(ds)
+
+# Display the list of vars.
+
+names(ds)
+

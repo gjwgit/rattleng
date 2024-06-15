@@ -61,8 +61,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
             ActivityButton(
               onPressed: () {
-                rSource(ref, 'model_template');
-                rSource(ref, 'model_build_random_forest');
+                rSource(context,ref, 'model_template');
+                rSource(context,ref, 'model_build_random_forest');
               },
               child: const Text('Build Random Forest'),
             ),

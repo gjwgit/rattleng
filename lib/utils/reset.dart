@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-15 14:33:18 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -61,7 +61,7 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.read(stdoutProvider.notifier).state = '';
   // CONSOLE TAB
   ref.read(terminalProvider.notifier).state = Terminal();
-  rStart(ref);
+  rStart(context, ref);
   // DATASET TAB
   ref.read(pathProvider.notifier).state = '';
   debugPrint('DATASET UNLOADED');

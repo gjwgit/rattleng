@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-06-14 15:01:05 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 15:03:27 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -185,7 +185,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
             ref.read(varsProvider.notifier).state = vars;
             ref.read(targetProvider.notifier).state = vars.last;
-            rSource(ref, 'dataset_template');
+            rSource(context, ref, 'dataset_template');
           }
         }
 
