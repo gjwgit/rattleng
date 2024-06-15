@@ -9,8 +9,7 @@ present R is supported on the desktops (Linux, MacOS, and Windows).
 
 ## Linux tar Archive
 
-+ Download
-  [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
+Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
 
 ```bash
 wget https://access.togaware.com/rattleng.tar.gz
