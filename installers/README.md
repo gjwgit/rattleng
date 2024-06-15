@@ -27,13 +27,15 @@ To install for the current user:
 
 ```bash
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
-cat <<EOF > ~/.local/bin/rattleng
-#!/bin/bash
-
-(cd ${HOME}/.local/share/rattleng; ./rattle)
-EOF
-chmod a+rx ${HOME}/.local/bin/rattleng
+ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
 ```
+
+A system install:
+
+```bash
+sudo tar zxvf rattleng.tar.gz -C /opt/
+sudo ln -s /opt/rattleng/rattle /usr/local/bin/
+``` 
 
 ## MacOS
 
