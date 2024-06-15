@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Sunday 2023-11-05 20:52:34 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 14:46:53 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -89,7 +89,7 @@ class DatasetPopup extends ConsumerWidget {
                   String path = await datasetSelectFile();
                   if (path.isNotEmpty) {
                     ref.read(pathProvider.notifier).state = path;
-                    rLoadDataset(ref);
+                    rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
                     datasetLoadedUpdate(ref);
                   }
@@ -129,7 +129,7 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   // TODO 20231101 gjw DEFINE setPath()
                   ref.read(pathProvider.notifier).state = 'rattle::weather';
-                  rLoadDataset(ref);
+                  rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
                   Navigator.pop(context, 'Demo');
 

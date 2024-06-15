@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Monday 2023-11-06 07:59:25 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 14:32:38 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -40,7 +40,7 @@ import 'package:rattle/utils/update_script.dart';
 
 /// Start up the R process and set up the capture of stderr and stdout.
 
-void rStart(WidgetRef ref) async {
+void rStart(BuildContext context, WidgetRef ref) async {
   // Start up an R process from the command line.
 
   // process = await Process.start('R', ["--no-save"]);
@@ -72,7 +72,9 @@ void rStart(WidgetRef ref) async {
 
   debugPrint("R START:\t\t'main.R'");
 
-  String code = File('assets/r/main.R').readAsStringSync();
+  String code =
+      await DefaultAssetBundle.of(context).loadString("assets/r/main.R");
+  // String code = File('assets/r/main.R').readAsStringSync();
 
   // Populate the <<USER>>. Bit it seems to need to use Firebase. Too much
   // trouble just for the user name.
