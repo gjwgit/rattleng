@@ -1,11 +1,11 @@
 # Rattleng Installers
 
-Flutter supports multiple platform targets and the app will run native
-on Android, iOS, Linux, MacOS, and Windows, as well as directly in a
-browser from the web. While the functionality is in theory identical
-across all platforms, rattleng relies on mlhub packages being
-available on the platform. At present we only support dekstops (Linux,
-MacOS, and Windows).
+Flutter supports multiple platform targets and Flutter based apps will
+run native on Android, iOS, Linux, MacOS, and Windows, as well as
+directly in a browser from the web. While the Flutter functionality is
+in theory identical across all platforms, rattleng relies on running R
+locally and so it requires R to be installed on your platform. At
+present R is supported on the desktops (Linux, MacOS, and Windows).
 
 ## Linux tar Archive
 
