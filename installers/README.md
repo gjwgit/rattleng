@@ -30,7 +30,7 @@ tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 cat <<EOF > ~/.local/bin/rattleng
 #!/bin/bash
 
-(cd ${HOME}/.local/share/rattleng; ./rattleng)
+(cd ${HOME}/.local/share/rattleng; ./rattle)
 EOF
 chmod a+rx ${HOME}/.local/bin/rattleng
 ```
