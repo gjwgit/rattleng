@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2024-05-12 11:16:36 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-06-15 08:58:41 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -61,6 +61,9 @@ $(APP):
 
   rtest       Run the R script tests.
 
+  local	     Install to $(HOME)/.local/share/$(APP)
+  tgz	     Upload the installer to access.togaware.com
+
 endef
 export HELP
 
@@ -99,3 +102,14 @@ rattle.zip:
 
 %.itest:
 	flutter test --device-id linux --dart-define=PAUSE=0 integration_test/$*_test.dart
+
+# Install locally for linux.
+
+local:
+	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
+
+# Upload to access.togaware.com.
+
+tgz::
+	chmod a+r installers/*.tar.gz
+	rsync -avzh installers/*.tar.gz togaware.com:apps/access/
