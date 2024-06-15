@@ -20,21 +20,21 @@ Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
 wget https://access.togaware.com/rattleng.tar.gz
 ```
 
-Then
+Then, to simply try it out locally:
 
 ```bash
 tar zxvf rattleng.tar.gz
 rattleng/rattle
 ```
 
-Or to install for the current user:
+Or, to install for the current user:
 
 ```bash
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
 ```
 
-Or for a system install:
+Or, for a system-wide install:
 
 ```bash
 sudo tar zxvf rattleng.tar.gz -C /opt/
