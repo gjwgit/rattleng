@@ -6,7 +6,8 @@ it books and papers have been used by educators, consultants, and
 practitioners across industry and government, to turn data into
 knowledge, through machine learning and artificial intelligence.
 
-But now, it is time for a refresh.
+But now, it is time for a refresh. To install the new Rattle visit
+https://github.com/gjwgit/rattleng/tree/dev/installers/README.md.
 
 RattleNG, available from https://github.com/gjwgit/rattleng, remains
 sympathetic to the original Rattle user interface and functionality,
