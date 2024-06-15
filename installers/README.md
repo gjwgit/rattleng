@@ -23,14 +23,14 @@ tar zxvf rattleng.tar.gz
 (cd rattleng; ./mlfutter)
 ```
 
-To install for the current user:
+Or to install for the current user:
 
 ```bash
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
 ```
 
-A system install:
+Or for a system install:
 
 ```bash
 sudo tar zxvf rattleng.tar.gz -C /opt/
