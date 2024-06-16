@@ -54,8 +54,8 @@ sudo ln -s /opt/rattleng/rattle /usr/local/bin/
 The `rattle.desktop` can (not-tested) be installed into
 `/usr/local/share/applications/` and `/usr/local/share/icons/`.
 
-Once installed you can run the app as Alt-F2 and type `rattle` then
-Enter.
+Once installed you can also run the app through Alt-F2 and type
+`rattle` then Enter.
 
 ## MacOS
 
