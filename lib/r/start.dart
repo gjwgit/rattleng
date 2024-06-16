@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Saturday 2024-06-15 14:32:38 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 17:45:38 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,10 +23,10 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -72,8 +72,13 @@ void rStart(BuildContext context, WidgetRef ref) async {
 
   debugPrint("R START:\t\t'main.R'");
 
-  String code =
-      await DefaultAssetBundle.of(context).loadString("assets/r/main.R");
+  const asset = 'assets/r/main.R';
+  String code = await DefaultAssetBundle.of(context).loadString(asset);
+
+  // 20240615 gjw Previously the code used File() to access the asset file which
+  // worked fine in development byt failed on a deployment. Thus I moved to the
+  // async reading from the asset bunble above.
+  //
   // String code = File('assets/r/main.R').readAsStringSync();
 
   // Populate the <<USER>>. Bit it seems to need to use Firebase. Too much
