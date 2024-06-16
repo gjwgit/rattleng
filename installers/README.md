@@ -34,12 +34,26 @@ tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
 ```
 
+For this user, to install a desktop icon and make it known to Gnome
+and KDE:
+
+```bash
+wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattle.desktop -O ${HOME}/.local/share/applications/rattle.desktop
+wget https://raw.githubusercontent.com/gjwgit/rattlemg/dev/installers/rattle.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
+```
+
 Or, for a system-wide install:
 
 ```bash
 sudo tar zxvf rattleng.tar.gz -C /opt/
 sudo ln -s /opt/rattleng/rattle /usr/local/bin/
 ``` 
+
+The `rattle.desktop` can (not-tested) be installed into
+`/usr/local/share/applications/` and `/usr/local/share/icons/`.
+
+Once installed you can run the app as Alt-F2 and type `rattle` then
+Enter.
 
 ## MacOS
 
