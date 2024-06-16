@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Saturday 2024-06-15 14:44:36 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 17:43:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -74,6 +74,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   bool partition = ref.read(partitionProvider);
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
+
   // First obtain the text from the script.
 
   debugPrint("R SOURCE:\t\t'$script.R'");
