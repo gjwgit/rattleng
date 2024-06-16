@@ -5,4 +5,4 @@ Terminal=false
 Type=Application
 Name=Rattle
 Exec=.local/bin/rattle
-Icon=/home/user/.local/share/icons/hicolor/256x256/apps/rattle.png
+Icon=/home/USER/.local/share/icons/hicolor/256x256/apps/rattle.png
