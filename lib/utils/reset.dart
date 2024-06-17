@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Saturday 2024-06-15 14:33:18 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-06-18 08:40:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,14 +21,21 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Yixiang Yin, Graham Williams
 
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xterm/xterm.dart';
+
+// TODO 20240618 gjw DO WE NEED ALL OF `app.dart`? I THINK IT IS JUST
+// `rattleHomeKey` CAN THAT GO INTO A CONSTANTS FILE INSTEAD WHIC WE IMPORT HERE
+// AND INTO app.dart?
+
 import 'package:rattle/app.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
@@ -42,14 +49,17 @@ import 'package:rattle/providers/wordcloud/punctuation.dart';
 import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
-import 'package:xterm/xterm.dart';
 
 void reset(BuildContext context, WidgetRef ref) {
   debugPrint('RESET');
+
   // reset the app
   // ideally if the app renders based on states stored in providers, we just need to reset each provider to the starting value
+
   // MODEL TAB
-  // reset wordcloud tab
+
+  // Reset WORDCLOUD tab.
+
   ref.read(wordCloudBuildProvider.notifier).state = '';
 
   ref.read(checkboxProvider.notifier).state = false;
@@ -58,16 +68,25 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.read(stopwordProvider.notifier).state = false;
   ref.read(maxWordProvider.notifier).state = '';
   ref.read(minFreqProvider.notifier).state = '';
-  // reset the stdoutProvider, this reset the tree tab, forest tab as they depend on it
+
+  // Reset the stdoutProvider, this resets the tree tab and the forest tab as
+  // they depend on it
+
   ref.read(stdoutProvider.notifier).state = '';
+
   // CONSOLE TAB
+
   ref.read(terminalProvider.notifier).state = Terminal();
   rStart(context, ref);
+
   // DATASET TAB
+
   ref.read(pathProvider.notifier).state = '';
   debugPrint('DATASET UNLOADED');
   ref.read(datasetLoaded.notifier).state = false;
+
   // TODO yyx 20240618 might need to reset sub-tabs to the first one.
   // RESET TAB INDEX (including sub-tabs)
+
   rattleHomeKey.currentState?.goToDatasetTab();
 }
