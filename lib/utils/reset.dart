@@ -67,5 +67,7 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.read(pathProvider.notifier).state = '';
   debugPrint('DATASET UNLOADED');
   ref.read(datasetLoaded.notifier).state = false;
+  // TODO yyx 20240618 might need to reset sub-tabs to the first one.
+  // RESET TAB INDEX (including sub-tabs)
   rattleHomeKey.currentState?.goToDatasetTab();
 }
