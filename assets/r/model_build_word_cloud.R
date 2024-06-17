@@ -1,6 +1,6 @@
 # Rattle Scripts: generate a trimmed wordcloud png
 # 
-# Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-06-18 08:31:32 +1000 Graham Williams>
 # 
 # Copyright (C) 2024, Togaware Pty Ltd
 # 
@@ -21,49 +21,74 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 # 
-# Authors: Yixiang Yin
+# Authors: Yixiang Yin, Graham Williams
 
-# Load required library
+# Load required libraries.
+
 library(tm)
 library(wordcloud)
 library(magick)
 
-# Sample text data
+# Load the text data.
+
 text_data <- readLines("FILENAME")
 
 docs <- Corpus(VectorSource(text_data))
 
-# preprocessing
+# Preprocessing.
+
 if (STEM) {
-    docs <- tm_map(docs, stemDocument)
+  docs <- tm_map(docs, stemDocument)
 }
+
 if (PUNCTUATION) {
-    docs <- tm_map(docs, removePunctuation)
+  docs <- tm_map(docs, removePunctuation)
 }
+
+# TODO 20240618 gjw REPALCE "english" WITH A OPTION "LANGUAGE" THAT IS
+# CHOSEN THROUGH THE GUI.
+
 if (STOPWORD) {
-    docs <- tm_map(docs, removeWords, stopwords("english"))
+  docs <- tm_map(docs, removeWords, stopwords("english"))
 }
+
 # Convert text data to a single character string
+#
 # text <- paste(text_data, collapse = " ")
+
 dtm <- TermDocumentMatrix(docs)
 m <- as.matrix(dtm)
-v <- sort(rowSums(m),decreasing=TRUE)
-d <- data.frame(word = names(v),freq=v)
+v <- sort(rowSums(m), decreasing=TRUE)
+d <- data.frame(word=names(v), freq=v)
 
-# Set seed for reproducibility
+# Set seed for reproducibility.
+
 set.seed(123)
 
 # TODO STEM=T|F
 # if STEM: text <- tm_map(text, stemDocument)
 
-png("WORDCLOUDPATH/tmp.png", width = 800, height = 600, units = "px")
+# TODO 20240618 gjw MOVE TO GENERATING SVG OR PDF FORMAT.
 
-# Generate word cloud
-wordcloud(words = d$word, freq = d$freq, scale=c(5,0.5), min.freq = MINFREQ, max.word = MAXWORD, random.order = RANDOMORDER, colors=brewer.pal(8, "Dark2"))
+# TODO 20240618 gjw REPALCE `WORDCLOUDPATH` WITH `TEMPDIR` FOR ALL
+# TEMPARARY FILES.
+
+png("WORDCLOUDPATH/tmp.png", width=800, height=600, units="px")
+
+# Generate word cloud.
+
+wordcloud(words        = d$word,
+          freq         = d$freq,
+          scale        = c(5,0.5),
+          min.freq     = MINFREQ,
+          max.word     = MAXWORD,
+          random.order = RANDOMORDER,
+          colors       = brewer.pal(8, "Dark2"))
 
 dev.off()
 
-# Trim the white space using magick
+# Trim the white space using magick.
+
 image <- image_read("WORDCLOUDPATH/tmp.png")
 trimmed_image <- image_trim(image)
 image_write(trimmed_image, path = "WORDCLOUDPATH/wordcloud.png")
