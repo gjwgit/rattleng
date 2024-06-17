@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2024-06-10 10:10:06 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 15:03:27 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -37,15 +37,67 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/wordcloud.dart';
-import 'package:rattle/constants/home_tabs.dart';
-import 'package:rattle/provider/path.dart';
-import 'package:rattle/provider/stdout.dart';
-import 'package:rattle/provider/target.dart';
-import 'package:rattle/provider/vars.dart';
+import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/target.dart';
+import 'package:rattle/providers/vars.dart';
+import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/tabs/dataset/button.dart';
+import 'package:rattle/tabs/dataset/tab.dart';
+import 'package:rattle/tabs/debug/tab.dart';
+import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/tabs/model.dart';
+import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/status_bar.dart';
+
+// Define the [NavigationRail] tabs for the home page.
+
+final List<Map<String, dynamic>> homeTabs = [
+  {
+    'title': 'Dataset',
+    'icon': Icons.input,
+    'widget': const DatasetTab(),
+  },
+  {
+    'title': 'Explore',
+    'icon': Icons.insights,
+    'widget': const ExploreTab(),
+  },
+  {
+    'title': 'Wrangle',
+    'icon': Icons.transform,
+    'widget': const Center(child: Text('WRANGLE')),
+  },
+  {
+    'title': 'Model',
+    'icon': Icons.model_training,
+    'widget': const ModelTab(),
+  },
+  {
+    'title': 'Evaluate',
+    'icon': Icons.leaderboard,
+    'widget': const Center(child: Text('EVALUATE')),
+  },
+  {
+    'title': 'Console',
+    'icon': Icons.terminal,
+    'widget': const RConsole(),
+  },
+  {
+    'title': 'Script',
+    'icon': Icons.code,
+    'widget': const ScriptTab(),
+  },
+  {
+    'title': 'Debug',
+    'icon': Icons.work,
+    'widget': const DebugTab(),
+  },
+];
 
 class RattleHome extends ConsumerStatefulWidget {
   const RattleHome({super.key});
@@ -56,44 +108,20 @@ class RattleHome extends ConsumerStatefulWidget {
 
 class RattleHomeState extends ConsumerState<RattleHome>
     with SingleTickerProviderStateMixin {
+  // We use a [tabController] to manager what scripts are run on moving from the
+  // DATASET feature. The [tabController] keeps track of the selected index for
+  // the NavigationRail.
+
   late TabController _tabController;
-  var _appVersion = 'Unknown';
+
+  // We will populate the app name and version.
+
   var _appName = 'Unknown';
+  var _appVersion = 'Unknown';
 
-  @override
-  void initState() {
-    super.initState();
-    deleteFileIfExists();
-    _tabController = TabController(length: homeTabs.length, vsync: this);
-    _loadAppInfo();
+  // Helper function to cleanup any wordcloud leftover files.
 
-    // Add a listener to the TabController to perform an action when we leave
-    // the tab.
-
-    _tabController.addListener(() {
-      // Check if we are leaving the tab, not entering it.
-
-      if (!_tabController.indexIsChanging) {
-        if (_tabController.previousIndex == 0) {
-          String path = ref.read(pathProvider);
-          if (path.isNotEmpty) {
-            // On leaving the DATASET tab we set the variables and run the data
-            // template if there is a dataset loaded, as indicated by the path
-            // having a value.
-
-            List<String> vars = rExtractVars(ref.read(stdoutProvider));
-
-            ref.read(varsProvider.notifier).state = vars;
-            ref.read(targetProvider.notifier).state = vars.last;
-            rSource(ref, 'dataset_template');
-          }
-        }
-
-        // You can also perform other actions here, such as showing a snackbar,
-        // calling a function, etc.
-      }
-    });
-  }
+  // TODO 20240613 gjw DO WE NEED THIS?
 
   Future<void> deleteFileIfExists() async {
     // clean up the files from previous use
@@ -109,11 +137,61 @@ class RattleHomeState extends ConsumerState<RattleHome>
     }
   }
 
+  // Helper function to load the app name and version.
+
   Future<void> _loadAppInfo() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
-      _appVersion = packageInfo.version; // Set app version from package info
       _appName = packageInfo.packageName; // Set app version from package info
+      _appVersion = packageInfo.version; // Set app version from package info
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // TODO 20240613 gjw IS THIS REQUIRED?
+
+    deleteFileIfExists();
+
+    // Get the app name and version.
+
+    _loadAppInfo();
+
+    // Create the [tabController] to manage what happens on leaving/entering
+    // tabs.
+
+    _tabController = TabController(length: homeTabs.length, vsync: this);
+
+    // Add a listener to the TabController to perform an action when we leave
+    // the tab.
+
+    _tabController.addListener(() {
+      // Check if we are leaving the tab, not entering it.
+
+      if (!_tabController.indexIsChanging) {
+        if (_tabController.previousIndex == 0) {
+          String path = ref.read(pathProvider);
+
+          // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
+
+          if (path.isNotEmpty) {
+            // On leaving the DATASET tab we set the variables and run the data
+            // template if there is a dataset loaded, as indicated by the path
+            // having a value.
+
+            List<String> vars = rExtractVars(ref.read(stdoutProvider));
+
+            ref.read(varsProvider.notifier).state = vars;
+            ref.read(targetProvider.notifier).state = vars.last;
+            rSource(context, ref, 'dataset_template');
+          }
+        }
+
+        // You can also perform other actions here, such as showing a snackbar,
+        // calling a function, etc.
+      }
     });
   }
 
@@ -150,12 +228,12 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
-              // TODO yyx 20240607 show confirmation but without popup to choose a new dataset afterwards?
-              reset(context, ref);
               // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
-              // Wait until 103 is merged
-
-
+              if (ref.read(datasetLoaded)) {
+                showAlertPopup(context, ref, false);
+              } else {
+                reset(context, ref);
+              }
             },
             tooltip: 'Tap here to clear the current project and\n'
                 'so start a new project with a new dataset.',
@@ -203,49 +281,33 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
       body: Row(
         children: [
-          RotatedBox(
-            quarterTurns: 1,
-            child: TabBar(
-              controller: _tabController,
-              unselectedLabelColor: Colors.grey,
-              isScrollable: false,
-              tabs: homeTabs.map((tab) {
-                // Rotate the tabs back the correct direction.
-
-                return RotatedBox(
-                  quarterTurns: -1,
-
-                  // Wrap the tabs within a container so all have the same
-                  // width, rotated, and the highlight is the same for each one
-                  // irrespective of the text width.
-
-                  child: SizedBox(
-                    width: 100.0,
-                    child: Tab(
-                      icon: Icon(tab['icon']),
-                      child: Text(
-                        tab['title'],
-
-                        // Reduce the font size to not overflow the widget.
-
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+          NavigationRail(
+            selectedIndex: _tabController.index,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _tabController.index = index;
+              });
+            },
+            labelType: NavigationRailLabelType.all,
+            destinations: homeTabs.map((tab) {
+              return NavigationRailDestination(
+                icon: Icon(tab['icon']),
+                label: Text(
+                  tab['title'],
+                  style: const TextStyle(fontSize: 16),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+              );
+            }).toList(),
+            selectedLabelTextStyle: const TextStyle(
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
             ),
+            unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
           ),
-
-          // Associate the Widgets with each of the tabs.
-
+          const VerticalDivider(),
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: homeTabs.map((tab) {
-                return tab['widget'] as Widget;
-              }).toList(),
-            ),
+            child: homeTabs[_tabController.index]['widget'],
           ),
         ],
       ),

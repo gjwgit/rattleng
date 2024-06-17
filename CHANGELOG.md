@@ -7,6 +7,12 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ R script asset read fix to get deployed app working [0.1.16]
++ Refactor the markdown file display for each tab [0.1.15]
++ Re-org features to tab/panels to support future flexibility [0.1.14]
++ Implement pattern for all model tabs [0.1.13]
++ Use a NavigationRail for the left hand navigation [0.1.12]
++ Add ActivityButton as default button for Build/Display [0.1.11]
 + Review status bar, markdown intros, add Under Construction [0.1.10]
 + Wordclound in-pattern with tab/config/panel [0.1.9]
 + Initial EXPLORE framework [0.1.8]

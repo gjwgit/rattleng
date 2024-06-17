@@ -1,12 +1,39 @@
-UNDER DEVELOPMENT - THIS INCLUDES
+# Rattle Scripts: For dataset ds geneate summary.
+#
+# Copyright (C) 2023-2024, Togaware Pty Ltd.
+#
+# License: GNU General Public License, Version 3 (the "License")
+# https://www.gnu.org/licenses/gpl-3.0.en.html
+#
+# Time-stamp: <Thursday 2024-06-13 05:35:09 +1000 Graham Williams>
+#
+# Licensed under the GNU General Public License, Version 3 (the "License");
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Author: Graham Williams
 
-summary
-describe
-skewness
-missing
+# Summary of a Dataset
+#
+# Rattle timestamp: TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials
+# https://survivor.togaware.com/datascience/ for further details.
 
-#=======================================================================
-# Rattle timestamp: 2023-11-05 19:14:09.550017 x86_64-pc-linux-gnu 
+# Load required packages from the local library into the R session.
 
 # The 'Hmisc' package provides the 'contents' function.
 
@@ -14,29 +41,60 @@ library(Hmisc, quietly=TRUE)
 
 # Obtain a summary of the dataset.
 
-contents(crs$dataset[crs$train, c(crs$input, crs$risk, crs$target)])
-summary(crs$dataset[crs$train, c(crs$input, crs$risk, crs$target)])
+contents(ds)
+## summary(ds)
 
-# The 'Hmisc' package provides the 'describe' function.
+## # The 'Hmisc' package provides the 'describe' function.
 
-library(Hmisc, quietly=TRUE)
+## library(Hmisc, quietly=TRUE)
 
-# Generate a description of the dataset.
+## # Generate a description of the dataset.
 
-describe(crs$dataset[crs$train, c(crs$input, crs$risk, crs$target)])
+## describe(ds)
 
-# The 'skewness' package provides the 'fBasics' function.
+## # The 'basicStats' package provides the 'fBasics' function.
 
-library(fBasics, quietly=TRUE)
+## library(fBasics, quietly=TRUE)
 
-# Summarise the skewness of the numeric data.
+## # Generate a description of the numeric data.
 
-skewness(crs$dataset[crs$train, c(crs$input, crs$risk, crs$target)][,c(1:4, 7:116)], na.rm=TRUE)
+## lapply(ds[numc], basicStats)
 
-# The 'mice' package provides the 'md.pattern' function.
+## # The 'kurtosis' package provides the 'fBasics' function.
 
-library(mice, quietly=TRUE)
+## library(fBasics, quietly=TRUE)
 
-# Generate a summary of the missing values in the dataset.
+## # Summarise the kurtosis of the numeric data.
 
-md.pattern(crs$dataset[,c(crs$input, crs$target)])
+## kurtosis(ds[numc], na.rm=TRUE)
+
+## # The 'skewness' package provides the 'fBasics' function.
+
+## library(fBasics, quietly=TRUE)
+
+## # Summarise the skewness of the numeric data.
+
+## skewness(ds[numc], na.rm=TRUE)
+
+## # The 'mice' package provides the 'md.pattern' function.
+
+## library(mice, quietly=TRUE)
+
+## # Generate a summary of the missing values in the dataset.
+
+## md.pattern(ds)
+
+## # The 'CrossTable' package provides the 'descr' function.
+
+## library(descr, quietly=TRUE)
+
+## # Generate cross tabulations for categoric data.
+
+## for (i in catc) 
+## { 
+##   cat(sprintf('CrossTab of %s by target variable %s\n\n', names(ds)[i], target)) 
+##   print(CrossTable(ds[[i]], ds[[target]], expected=TRUE, format='SAS')) 
+##   cat(paste(rep('=', 70), collapse=''), '
+
+## ') 
+## }

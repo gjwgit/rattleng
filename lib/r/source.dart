@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2024-06-10 10:15:30 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 17:43:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,18 +33,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/wordcloud.dart';
-import 'package:rattle/provider/cleanse.dart';
-import 'package:rattle/provider/normalise.dart';
-import 'package:rattle/provider/partition.dart';
-import 'package:rattle/provider/path.dart';
-import 'package:rattle/provider/pty.dart';
-import 'package:rattle/provider/target.dart';
-import 'package:rattle/provider/wordcloud/checkbox.dart';
-import 'package:rattle/provider/wordcloud/maxword.dart';
-import 'package:rattle/provider/wordcloud/minfreq.dart';
-import 'package:rattle/provider/wordcloud/punctuation.dart';
-import 'package:rattle/provider/wordcloud/stem.dart';
-import 'package:rattle/provider/wordcloud/stopword.dart';
+import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/normalise.dart';
+import 'package:rattle/providers/partition.dart';
+import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/target.dart';
+import 'package:rattle/providers/wordcloud/checkbox.dart';
+import 'package:rattle/providers/wordcloud/maxword.dart';
+import 'package:rattle/providers/wordcloud/minfreq.dart';
+import 'package:rattle/providers/wordcloud/punctuation.dart';
+import 'package:rattle/providers/wordcloud/stem.dart';
+import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/timestamp.dart';
@@ -61,7 +61,7 @@ import 'package:rattle/utils/update_script.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-void rSource(WidgetRef ref, String script) {
+void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
   String path = ref.read(pathProvider);
@@ -74,11 +74,14 @@ void rSource(WidgetRef ref, String script) {
   bool partition = ref.read(partitionProvider);
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
+
   // First obtain the text from the script.
 
   debugPrint("R SOURCE:\t\t'$script.R'");
 
-  var code = File('assets/r/$script.R').readAsStringSync();
+  String asset = 'assets/r/$script.R';
+  String code = await DefaultAssetBundle.of(context).loadString(asset);
+  // var code = File('assets/r/$script.R').readAsStringSync();
 
   // Process template variables.
 

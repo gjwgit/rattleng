@@ -146,6 +146,14 @@ format:
 	dart format lib/
 	@echo $(SEPARATOR)
 
+# My emacs IDE is starting to add imports of backups automagically!
+
+.PHONY: bakfix
+bakfix:
+	@echo "Find and fix imports of backups."
+	find lib -type f -name '*.dart*' -exec sed -i 's/\.dart\.~\([0-9]\)~/\.dart/g' {} +
+	@echo $(SEPARATOR)
+
 .PHONY: tests
 tests:: test qtest
 
@@ -316,7 +324,7 @@ BRANCH := $(shell git branch --show-current)
 
 ifeq ($(BRANCH),dev)
 push::
-	@echo '-------------------------------------------------------'
+	@echo $(SEPARATOR)
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
 	-egrep '^version: .*\+.*' pubspec.yaml && \
 	git commit -m "Bump sequence $(VERSEQ)" pubspec.yaml
