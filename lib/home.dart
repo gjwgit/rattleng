@@ -147,6 +147,12 @@ class RattleHomeState extends ConsumerState<RattleHome>
     });
   }
 
+  void goToDatasetTab() {
+    setState(() {
+      _tabController.index = 0;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -228,6 +234,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
               color: Colors.grey,
             ),
             onPressed: () {
+              // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
               if (ref.read(datasetLoaded)) {
                 showAlertPopup(context, ref, false);
               } else {
