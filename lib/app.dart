@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
@@ -34,6 +34,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
+
+// This gives us a reference to the RattleHome to access its method.
+final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
 
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
@@ -82,7 +85,7 @@ class RattleApp extends ConsumerWidget {
               fontSizeDelta: 2.0,
             ),
       ),
-      home: const RattleHome(),
+      home: RattleHome(key: rattleHomeKey),
     );
   }
 }
