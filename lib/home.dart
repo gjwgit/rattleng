@@ -104,7 +104,6 @@ class RattleHome extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<RattleHome> createState() => RattleHomeState();
-
 }
 
 class RattleHomeState extends ConsumerState<RattleHome>
@@ -148,8 +147,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
     });
   }
 
-
-
+  void goToDatasetTab() {
+    setState(() {
+      _tabController.index = 0;
+    });
+  }
 
   @override
   void initState() {
@@ -204,12 +206,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
     _tabController.dispose();
     super.dispose();
   }
-
- void goToDatasetTab() {
-      setState(() {
-        _tabController.index = 0;
-      });
-}
 
   @override
   Widget build(BuildContext context) {
@@ -326,4 +322,3 @@ class RattleHomeState extends ConsumerState<RattleHome>
     );
   }
 }
-
