@@ -35,6 +35,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
 
+// This gives us a reference to the RattleHome to access its method.
+final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
 /// The root widget covers the screen of the app. This widget is stateless as it
@@ -82,7 +84,7 @@ class RattleApp extends ConsumerWidget {
               fontSizeDelta: 2.0,
             ),
       ),
-      home: const RattleHome(),
+      home: RattleHome(key: rattleHomeKey),
     );
   }
 }
