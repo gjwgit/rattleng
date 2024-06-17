@@ -45,25 +45,107 @@ class TreeDisplay extends ConsumerStatefulWidget {
 }
 
 class _TreeDisplayState extends ConsumerState<TreeDisplay> {
+  late PageController _pageController;
+  int _currentPage = 0;
+  // number of pages available
+  int numPages = 2;
+
+    void _goToPreviousPage() {
+    if (_currentPage > 0) {
+      _pageController.animateToPage(
+        _currentPage - 1,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _goToNextPage() {
+    if (_currentPage < numPages - 1) {
+      _pageController.animateToPage(
+        _currentPage + 1,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
     String content = rExtractTree(stdout);
-
-    return content == ''
-        ? showMarkdownFile(treeIntroFile)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
+    // TODO yyx 20240618 create 2 pages: 1 is the intro msg, 2 is the output. make it scrollable horz
+    // return content == ''
+    //     ? showMarkdownFile(treeIntroFile)
+    //     : Expanded(
+    //         child: Container(
+    //           decoration: sunkenBoxDecoration,
+    //           width: double.infinity,
+    //           padding: const EdgeInsets.only(left: 10),
+    //           child: SingleChildScrollView(
+    //             child: SelectableText(
+    //               content,
+    //               style: monoTextStyle,
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    return Row(
+      children: [
+        IconButton(
+          icon: Icon(
+            Icons.arrow_left,
+            color: _currentPage > 0 ? Colors.black : Colors.grey,
+            size: 32,
+          ),
+          onPressed: _currentPage > 0 ? _goToPreviousPage : null,
+        ),
+        Expanded(
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            children: [
+              showMarkdownFile(treeIntroFile),
+              Expanded(
+                child: Container(
+                  decoration: sunkenBoxDecoration,
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SingleChildScrollView(
+                    child: SelectableText(
+                      content,
+                      style: monoTextStyle,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          );
+            ],
+          ),
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.arrow_right,
+            size: 32,
+            color: _currentPage < numPages - 1
+                ? Colors.black
+                : Colors.grey,
+                
+          ),
+          onPressed: _currentPage < numPages - 1
+              ? _goToNextPage
+              : null,
+        ),
+      ],
+    );
   }
 }
