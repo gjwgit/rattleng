@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
@@ -37,6 +37,7 @@ import 'package:rattle/r/start.dart';
 
 // This gives us a reference to the RattleHome to access its method.
 final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
+
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
 /// The root widget covers the screen of the app. This widget is stateless as it

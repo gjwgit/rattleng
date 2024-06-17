@@ -62,8 +62,8 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
             ActivityButton(
               onPressed: () {
                 debugPrint('TREE CONFIG BUTTON');
-                rSource(context,ref, 'model_template');
-                rSource(context,ref, 'model_build_rpart');
+                rSource(context, ref, 'model_template');
+                rSource(context, ref, 'model_build_rpart');
               },
               child: const Text('Build Decision Tree'),
             ),
