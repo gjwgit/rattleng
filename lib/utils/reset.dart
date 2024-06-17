@@ -29,6 +29,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/app.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -66,4 +67,5 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.read(pathProvider.notifier).state = '';
   debugPrint('DATASET UNLOADED');
   ref.read(datasetLoaded.notifier).state = false;
+  rattleHomeKey.currentState?.goToDatasetTab();
 }
