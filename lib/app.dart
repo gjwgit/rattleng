@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-06-15 17:45:53 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-06-18 08:35:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -35,7 +35,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
 
-// This gives us a reference to the RattleHome to access its method.
+// Add a key to reference [RattleHome] to access its method.
+
 final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
 
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
