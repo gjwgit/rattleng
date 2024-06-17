@@ -1,4 +1,4 @@
-Support Vector Machine Model
+**Support Vector Machine Model**
 
 A Support Vector Machine (SVM) searches for so called support vectors
 which are data points that are found to lie at the edge of an area in

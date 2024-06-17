@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 0.1.10+32
+version: 0.1.16+42
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -89,8 +89,11 @@ flutter:
 
   uses-material-design: true
 
+  # Note the full image path is required for the resource: image use
+  # in flutter_markdown.
+
   assets:
-    - assets/images/
+    - assets/images/favicon_small.png
     - assets/markdown/
     - assets/r/
 

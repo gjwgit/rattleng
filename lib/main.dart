@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Sunday 2024-06-02 08:36:11 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 05:57:09 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -34,11 +34,21 @@ import 'package:window_manager/window_manager.dart';
 import 'package:rattle/app.dart';
 import 'package:rattle/utils/is_desktop.dart';
 
+// Check if this is a production (--release) version.
+
+const bool isProduction = bool.fromEnvironment('dart.vm.product');
+
 void main() async {
   // The `main` entry point into any dart app.
   //
   // This is required to be [async] since we use [await] below to initalise the
   // window manager.
+
+  // In production do not display [debguPrint] messages.
+
+  if (isProduction) {
+    debugPrint = (String? message, {int? wrapWidth}) {};
+  }
 
   // Tune the window manager before runApp() to avoid a lag in the UI. For
   // desktop (non-web) versions re-size to a comfortable initial window.

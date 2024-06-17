@@ -6,17 +6,19 @@ it books and papers have been used by educators, consultants, and
 practitioners across industry and government, to turn data into
 knowledge, through machine learning and artificial intelligence.
 
-But now, it is time for a refresh.
+But now, it is time for a refresh. To install the new Rattle visit the
+[Installers](https://github.com/gjwgit/rattleng/tree/dev/installers/README.md).
 
-RattleNG, available from https://github.com/gjwgit/rattleng, remains
-sympathetic to the original Rattle user interface and functionality,
-as presented in the Rattle book
-(https://bit.ly/rattle_data_mining). However, it brings to the
-community a modern user interface refresh implemented in
-**Flutter**. The underlying **R** foundations remain firmly in
-place. A new edition of the Rattle book will soon be available.
+RattleNG, available from [github](https://github.com/gjwgit/rattleng),
+remains sympathetic to the original Rattle user interface,
+functionality, and goals, as presented in the
+[Rattle](https://bit.ly/rattle_data_mining) book. However, it brings
+to the community a modern user interface refresh implemented in
+**Flutter**. The underlying **R** foundations remain firmly in place
+and encapsulated within a more readily extensible framework. A new
+edition of the Rattle book will soon be available.
 
-Over those 15 years we have also matured in how we deliver data
+Over the past 15 years we have also matured in how we deliver data
 science and analytics. RattleNG delivers a new perspective on
 scripting data science in R through templates as introduced in my more
 recent book, *The Essentials of Data Science*

@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2024-05-12 11:16:36 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-06-15 10:45:23 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -34,7 +34,6 @@ DEST=/var/www/html/$(APP)
 INC_BASE=$(HOME)/.local/share/make
 INC_BASE=support
 
-
 # Specific Makefiles will be loaded if they are found in
 # INC_BASE. Sometimes the INC_BASE is shared by multiple local
 # Makefiles and we want to skip specific makes. Simply define the
@@ -61,6 +60,9 @@ define HELP
 $(APP):
 
   rtest       Run the R script tests.
+
+  local	     Install to $(HOME)/.local/share/$(APP)
+  tgz	     Upload the installer to access.togaware.com
 
 endef
 export HELP
@@ -100,3 +102,14 @@ rattle.zip:
 
 %.itest:
 	flutter test --device-id linux --dart-define=PAUSE=0 integration_test/$*_test.dart
+
+# Install locally for linux.
+
+local: tgz
+	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
+
+# Upload to access.togaware.com.
+
+tgz::
+	chmod a+r installers/*.tar.gz
+	rsync -avzh installers/*.tar.gz togaware.com:apps/access/

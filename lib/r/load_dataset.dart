@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Tuesday 2024-06-04 09:51:49 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-06-15 15:13:08 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/path.dart';
+import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/source.dart';
 
@@ -41,7 +41,7 @@ import 'package:rattle/r/source.dart';
 /// different in the case where the dataset variables have been normalised,
 /// which is the default.
 
-void rLoadDataset(WidgetRef ref) {
+void rLoadDataset(BuildContext context, WidgetRef ref) {
   // Get the path from the provider to identify either a filename or a R package
   // dataset.
 
@@ -57,11 +57,11 @@ void rLoadDataset(WidgetRef ref) {
     // The default, when we get here and no path has been specified yet, is to
     // load the weather dataset as the demo dataset from R's rattle package.
 
-    rSource(ref, 'dataset_load_weather');
+    rSource(context, ref, 'dataset_load_weather');
   } else if (path.endsWith('.csv')) {
-    rSource(ref, 'dataset_load_csv');
+    rSource(context, ref, 'dataset_load_csv');
   } else if (path.endsWith('.txt')) {
-    rSource(ref, 'dataset_load_txt');
+    rSource(context, ref, 'dataset_load_txt');
 
     return;
   } else {
@@ -71,13 +71,19 @@ void rLoadDataset(WidgetRef ref) {
   }
 
   // Reset the dataset variables since we have loaded a new dataset
-//  rattle.resetDataset();
+  //
+  //  rattle.resetDataset();
 
-  rSource(ref, 'dataset_prep');
+  rSource(context, ref, 'dataset_prep');
 
-  rExecute(ref, 'names(ds)');
+  // 20240615 gjw Move this `names(ds)` command into `dataset_prep` otherwise on
+  // moving to the asset load with async it actually gets executed before the
+  // `dataset_prep` and thus results in vars not being found at this time and
+  // target becomes `found` as in `ds not found`.
+
+  // rExecute(ref, 'names(ds)');
 
   // this shows the data
-  rSource(ref, 'ds_glimpse');
+  rSource(context, ref, 'ds_glimpse');
   debugPrint('R LOAD DATASET:\tLoaded "$path";');
 }

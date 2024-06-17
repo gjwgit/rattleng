@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/script.dart';
+import 'package:rattle/providers/script.dart';
 
 void updateScript(WidgetRef ref, String code) {
   ref.read(scriptProvider.notifier).state = ref.read(scriptProvider) + code;

@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/provider/status.dart';
+import 'package:rattle/providers/status.dart';
 
 void setStatus(WidgetRef ref, String status) {
   ref.read(statusProvider.notifier).state = status;
