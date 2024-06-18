@@ -109,7 +109,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
         ),
         Expanded(
           child: Container(
-            height: curHeight * 0.67,
+            height: curHeight * displayRatio,
             // avoid this error
             // Horizontal viewport was given unbounded height.
             // Viewports expand in the cross axis to fill their container and constrain their children to match

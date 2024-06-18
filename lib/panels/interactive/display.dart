@@ -51,7 +51,7 @@ class _InteractiveDisplayState extends ConsumerState<InteractiveDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(interactiveIntroFile)
+        ? showMarkdownFile(interactiveIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

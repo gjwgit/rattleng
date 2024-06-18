@@ -51,7 +51,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(boostIntroFile)
+        ? showMarkdownFile(boostIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

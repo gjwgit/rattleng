@@ -130,7 +130,7 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // cloud introductory message, but with the config bar also displayed.
       debugPrint('No model has been built.');
 
-      return showMarkdownFile(wordCloudMsgFile);
+      return showMarkdownFile(wordCloudMsgFile, context);
     }
 
     return wordCloudDisplay(imageDisplay);

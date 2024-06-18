@@ -51,7 +51,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(associationIntroFile)
+        ? showMarkdownFile(associationIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

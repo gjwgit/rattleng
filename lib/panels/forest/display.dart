@@ -51,7 +51,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     String content = rExtractForest(stdout);
 
     return content == ''
-        ? showMarkdownFile(forestIntroFile)
+        ? showMarkdownFile(forestIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,
