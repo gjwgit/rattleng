@@ -106,19 +106,19 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           ),
           onPressed: _currentPage > 0 ? _goToPreviousPage : null,
         ),
-        Container(
-          height: 500,
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            children: [
-              showMarkdownFile(treeIntroFile),
-              Expanded(
-                child: Container(
+        Expanded(
+          child: Container(
+            height: 500, // avoid unlimited height.
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              children: [
+                showMarkdownFile(treeIntroFile),
+                Container(
                   decoration: sunkenBoxDecoration,
                   width: double.infinity,
                   padding: const EdgeInsets.only(left: 10),
@@ -129,8 +129,8 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         IconButton(

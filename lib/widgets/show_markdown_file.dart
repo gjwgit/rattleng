@@ -63,18 +63,17 @@ FutureBuilder showMarkdownFile(String markdownFilePath) {
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        return Expanded(
-          child: Container(
-            decoration: sunkenBoxDecoration,
-            child: Center(
-              child: Markdown(
-                data: snapshot.data!,
-                selectable: true,
-                // Custom image builder to load assets.
-                imageBuilder: (uri, title, alt) {
-                  return Image.asset('$assetsPath/${uri.toString()}');
-                },
-              ),
+        return Container(
+          height: 500,
+          decoration: sunkenBoxDecoration,
+          child: Center(
+            child: Markdown(
+              data: snapshot.data!,
+              selectable: true,
+              // Custom image builder to load assets.
+              imageBuilder: (uri, title, alt) {
+                return Image.asset('$assetsPath/${uri.toString()}');
+              },
             ),
           ),
         );
