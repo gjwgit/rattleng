@@ -96,6 +96,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     //           ),
     //         ),
     //       );
+    final curHeight = MediaQuery.of(context).size.height;
     return Row(
       children: [
         IconButton(
@@ -108,13 +109,13 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
         ),
         Expanded(
           child: Container(
-            height: 500,
+            height: curHeight * 0.67,
             // avoid this error
             // Horizontal viewport was given unbounded height.
             // Viewports expand in the cross axis to fill their container and constrain their children to match
             // their extent in the cross axis. In this case, a horizontal viewport was given an unlimited amount of
             // vertical space in which to expand.
-            
+
             // The relevant error-causing widget was:
             //   PageView PageView:file:///Users/yinyixiang/repo/my_rattleng/lib/panels/tree/display.dart:112:20
             child: PageView(
@@ -125,7 +126,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
                 });
               },
               children: [
-                showMarkdownFile(treeIntroFile),
+                showMarkdownFile(treeIntroFile, context),
                 Container(
                   decoration: sunkenBoxDecoration,
                   width: double.infinity,
