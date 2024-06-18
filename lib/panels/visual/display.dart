@@ -51,7 +51,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(visualIntroFile)
+        ? showMarkdownFile(visualIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

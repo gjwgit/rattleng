@@ -51,7 +51,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(neuralIntroFile)
+        ? showMarkdownFile(neuralIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

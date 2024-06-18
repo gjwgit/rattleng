@@ -51,7 +51,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
     String content = rExtractCluster(stdout);
 
     return content == ''
-        ? showMarkdownFile(clusterIntroFile)
+        ? showMarkdownFile(clusterIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

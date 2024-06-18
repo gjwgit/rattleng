@@ -57,7 +57,7 @@ import 'package:rattle/utils/load_asset.dart';
 //   );
 // }
 
-FutureBuilder showMarkdownFile(String markdownFilePath, Context context) {
+FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
       final curHeight = MediaQuery.of(context).size.height;
 
   return FutureBuilder(
@@ -66,7 +66,7 @@ FutureBuilder showMarkdownFile(String markdownFilePath, Context context) {
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-          height: curHeight * 0.67, 
+          height: curHeight * displayRatio, 
 // avoid this error
 // The following assertion was thrown during performResize():
 // Vertical viewport was given unbounded height.

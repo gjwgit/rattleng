@@ -51,7 +51,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(svmIntroFile)
+        ? showMarkdownFile(svmIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,
