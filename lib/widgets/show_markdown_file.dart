@@ -64,7 +64,21 @@ FutureBuilder showMarkdownFile(String markdownFilePath) {
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-          height: 500,
+          height: 500, 
+// avoid this error
+// The following assertion was thrown during performResize():
+// Vertical viewport was given unbounded height.
+// Viewports expand in the scrolling direction to fill their container. In this case, a vertical
+// viewport was given an unlimited amount of vertical space in which to expand. This situation
+// typically happens when a scrollable widget is nested inside another scrollable widget.
+// If this widget is always nested in a scrollable widget there is no need to use a viewport because
+// there will always be enough vertical space for the children. In this case, consider using a Column
+// or Wrap instead. Otherwise, consider using a CustomScrollView to concatenate arbitrary slivers into
+// a single scrollable.
+// The relevant error-causing widget was:
+//   ListView
+//   ListView:file:///Users/yinyixiang/.pub-cache/hosted/pub.dev/flutter_markdown-0.7.1/lib/src/widget.dart:559:12
+
           decoration: sunkenBoxDecoration,
           child: Center(
             child: Markdown(

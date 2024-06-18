@@ -108,7 +108,15 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
         ),
         Expanded(
           child: Container(
-            height: 500, // avoid unlimited height.
+            height: 500,
+            // avoid this error
+            // Horizontal viewport was given unbounded height.
+            // Viewports expand in the cross axis to fill their container and constrain their children to match
+            // their extent in the cross axis. In this case, a horizontal viewport was given an unlimited amount of
+            // vertical space in which to expand.
+            
+            // The relevant error-causing widget was:
+            //   PageView PageView:file:///Users/yinyixiang/repo/my_rattleng/lib/panels/tree/display.dart:112:20
             child: PageView(
               controller: _pageController,
               onPageChanged: (index) {
