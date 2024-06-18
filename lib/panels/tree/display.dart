@@ -50,7 +50,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
   // number of pages available
   int numPages = 2;
 
-    void _goToPreviousPage() {
+  void _goToPreviousPage() {
     if (_currentPage > 0) {
       _pageController.animateToPage(
         _currentPage - 1,
@@ -69,12 +69,12 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
       );
     }
   }
+
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,19 +106,19 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           ),
           onPressed: _currentPage > 0 ? _goToPreviousPage : null,
         ),
-        Expanded(
-          child: Container(
-            height: 500,
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              children: [
-                showMarkdownFile(treeIntroFile),
-                Container(
+        Container(
+          height: 500,
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            children: [
+              showMarkdownFile(treeIntroFile),
+              Expanded(
+                child: Container(
                   decoration: sunkenBoxDecoration,
                   width: double.infinity,
                   padding: const EdgeInsets.only(left: 10),
@@ -129,22 +129,17 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         IconButton(
           icon: Icon(
             Icons.arrow_right,
             size: 32,
-            color: _currentPage < numPages - 1
-                ? Colors.black
-                : Colors.grey,
-                
+            color: _currentPage < numPages - 1 ? Colors.black : Colors.grey,
           ),
-          onPressed: _currentPage < numPages - 1
-              ? _goToNextPage
-              : null,
+          onPressed: _currentPage < numPages - 1 ? _goToNextPage : null,
         ),
       ],
     );
