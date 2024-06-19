@@ -46,6 +46,7 @@ const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
 // proportion of window that display panel takes
 const double displayRatio = 0.75;
+
 /// A mono font used for displaying R script and output.
 
 const monoTextStyle = TextStyle(
