@@ -80,22 +80,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
     String content = rExtractTree(stdout);
-    // TODO yyx 20240618 create 2 pages: 1 is the intro msg, 2 is the output. make it scrollable horz
-    // return content == ''
-    //     ? showMarkdownFile(treeIntroFile)
-    //     : Expanded(
-    //         child: Container(
-    //           decoration: sunkenBoxDecoration,
-    //           width: double.infinity,
-    //           padding: const EdgeInsets.only(left: 10),
-    //           child: SingleChildScrollView(
-    //             child: SelectableText(
-    //               content,
-    //               style: monoTextStyle,
-    //             ),
-    //           ),
-    //         ),
-    //       );
+
     final curHeight = MediaQuery.of(context).size.height;
 
     return Row(
