@@ -117,12 +117,18 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
                   decoration: sunkenBoxDecoration,
                   width: double.infinity,
                   padding: const EdgeInsets.only(left: 10),
-                  child: SingleChildScrollView(
-                    child: SelectableText(
-                      content,
-                      style: monoTextStyle,
-                    ),
-                  ),
+                  child: content.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Click the build button to see the result',
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          child: SelectableText(
+                            content,
+                            style: monoTextStyle,
+                          ),
+                        ),
                 ),
               ],
             ),
