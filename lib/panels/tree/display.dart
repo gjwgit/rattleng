@@ -54,7 +54,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (_currentPage > 0) {
       _pageController.animateToPage(
         _currentPage - 1,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
@@ -64,7 +64,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (_currentPage < numPages - 1) {
       _pageController.animateToPage(
         _currentPage + 1,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
@@ -97,6 +97,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     //         ),
     //       );
     final curHeight = MediaQuery.of(context).size.height;
+
     return Row(
       children: [
         IconButton(
@@ -108,7 +109,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           onPressed: _currentPage > 0 ? _goToPreviousPage : null,
         ),
         Expanded(
-          child: Container(
+          child: SizedBox(
             height: curHeight * displayRatio,
             // avoid this error
             // Horizontal viewport was given unbounded height.

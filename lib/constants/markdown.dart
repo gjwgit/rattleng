@@ -66,11 +66,11 @@ const String neuralIntroFile = '$assetsPath/markdown/neural.md';
 
 /// PCA tab markdown file welcome message.
 
-const String pcaIntroFile = '$assetsPath/markdown/pca.md';
+// const String pcaIntroFile = '$assetsPath/markdown/pca.md';
 
 /// SCRIPT tab markdown file welcome message.
 
-const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
+// const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
 /// SUMMARY tab markdown file welcome message.
 
@@ -78,7 +78,7 @@ const String summaryIntroFile = '$assetsPath/markdown/summary.md';
 
 /// SURVIVAL tab markdown file welcome message.
 
-const String survivalIntroFile = '$assetsPath/markdown/survival.md';
+// const String survivalIntroFile = '$assetsPath/markdown/survival.md';
 
 /// SVM tab markdown file welcome message.
 
@@ -98,8 +98,8 @@ const String visualIntroFile = '$assetsPath/markdown/visual.md';
 
 /// WELCOME tab markdown file welcome message.
 
-const String welcomeIntroFile = '$assetsPath/markdown/welcome.md';
+// const String welcomeIntroFile = '$assetsPath/markdown/welcome.md';
 
 /// WORD CLOUD tab markdown file welcome message.
 
-const String wordcloudIntroFile = '$assetsPath/markdown/wordcloud.md';
+// const String wordcloudIntroFile = '$assetsPath/markdown/wordcloud.md';
