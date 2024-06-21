@@ -39,7 +39,7 @@ and KDE:
 
 ```bash
 wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattle.desktop -O ${HOME}/.local/share/applications/rattle.desktop
-wget https://github.com/gjwgit/rattleng/blob/dev/installers/rattle.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
+wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
 sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
 ```
 
