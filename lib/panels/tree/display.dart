@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 14:22:34 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-06-18 17:22:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -50,7 +50,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
   // number of pages available
   int numPages = 2;
 
-    void _goToPreviousPage() {
+  void _goToPreviousPage() {
     if (_currentPage > 0) {
       _pageController.animateToPage(
         _currentPage - 1,
@@ -69,12 +69,12 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
       );
     }
   }
+
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,14 +137,9 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           icon: Icon(
             Icons.arrow_right,
             size: 32,
-            color: _currentPage < numPages - 1
-                ? Colors.black
-                : Colors.grey,
-                
+            color: _currentPage < numPages - 1 ? Colors.black : Colors.grey,
           ),
-          onPressed: _currentPage < numPages - 1
-              ? _goToNextPage
-              : null,
+          onPressed: _currentPage < numPages - 1 ? _goToNextPage : null,
         ),
       ],
     );
