@@ -51,7 +51,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     String stdout = ref.watch(stdoutProvider);
 
     return path == ''
-        ? showMarkdownFile(welcomeMsgFile)
+        ? showMarkdownFile(welcomeMsgFile, context)
         : Expanded(
             child: Container(
               width: double.infinity,

@@ -55,7 +55,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     // contents = rMarkdownContents(contents);
 
     return contents == ''
-        ? showMarkdownFile(summaryIntroFile)
+        ? showMarkdownFile(summaryIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,
