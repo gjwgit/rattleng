@@ -29,4 +29,4 @@ const datasetGlimpseKey = Key('dataset_glimpse_text');
 const datasetPathKey = Key('dataset_path_text');
 const scriptTextKey = Key('script_text');
 const statusBarKey = Key('status_bar');
-const welcomeTextKey = Key('rattle_welcome');
+// const welcomeTextKey = Key('rattle_welcome');

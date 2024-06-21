@@ -54,7 +54,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (_currentPage > 0) {
       _pageController.animateToPage(
         _currentPage - 1,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
@@ -64,7 +64,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (_currentPage < numPages - 1) {
       _pageController.animateToPage(
         _currentPage + 1,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
@@ -80,22 +80,9 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
     String content = rExtractTree(stdout);
-    // TODO yyx 20240618 create 2 pages: 1 is the intro msg, 2 is the output. make it scrollable horz
-    // return content == ''
-    //     ? showMarkdownFile(treeIntroFile)
-    //     : Expanded(
-    //         child: Container(
-    //           decoration: sunkenBoxDecoration,
-    //           width: double.infinity,
-    //           padding: const EdgeInsets.only(left: 10),
-    //           child: SingleChildScrollView(
-    //             child: SelectableText(
-    //               content,
-    //               style: monoTextStyle,
-    //             ),
-    //           ),
-    //         ),
-    //       );
+
+    final curHeight = MediaQuery.of(context).size.height;
+
     return Row(
       children: [
         IconButton(
@@ -107,8 +94,16 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           onPressed: _currentPage > 0 ? _goToPreviousPage : null,
         ),
         Expanded(
-          child: Container(
-            height: 500,
+          child: SizedBox(
+            height: curHeight * displayRatio,
+            // avoid this error
+            // Horizontal viewport was given unbounded height.
+            // Viewports expand in the cross axis to fill their container and constrain their children to match
+            // their extent in the cross axis. In this case, a horizontal viewport was given an unlimited amount of
+            // vertical space in which to expand.
+
+            // The relevant error-causing widget was:
+            //   PageView PageView:file:///Users/yinyixiang/repo/my_rattleng/lib/panels/tree/display.dart:112:20
             child: PageView(
               controller: _pageController,
               onPageChanged: (index) {
@@ -117,17 +112,23 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
                 });
               },
               children: [
-                showMarkdownFile(treeIntroFile),
+                showMarkdownFile(treeIntroFile, context),
                 Container(
                   decoration: sunkenBoxDecoration,
                   width: double.infinity,
                   padding: const EdgeInsets.only(left: 10),
-                  child: SingleChildScrollView(
-                    child: SelectableText(
-                      content,
-                      style: monoTextStyle,
-                    ),
-                  ),
+                  child: content.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Click the build button to see the result',
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          child: SelectableText(
+                            content,
+                            style: monoTextStyle,
+                          ),
+                        ),
                 ),
               ],
             ),
