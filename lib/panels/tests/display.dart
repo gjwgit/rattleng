@@ -51,7 +51,7 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(testsIntroFile)
+        ? showMarkdownFile(testsIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

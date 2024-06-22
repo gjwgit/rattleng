@@ -51,7 +51,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(missingIntroFile)
+        ? showMarkdownFile(missingIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,
