@@ -51,7 +51,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(correlationIntroFile)
+        ? showMarkdownFile(correlationIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

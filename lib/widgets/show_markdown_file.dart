@@ -57,24 +57,39 @@ import 'package:rattle/utils/load_asset.dart';
 //   );
 // }
 
-FutureBuilder showMarkdownFile(String markdownFilePath) {
+FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
+  final curHeight = MediaQuery.of(context).size.height;
+
   return FutureBuilder(
     key: const Key('markdown_file'),
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        return Expanded(
-          child: Container(
-            decoration: sunkenBoxDecoration,
-            child: Center(
-              child: Markdown(
-                data: snapshot.data!,
-                selectable: true,
-                // Custom image builder to load assets.
-                imageBuilder: (uri, title, alt) {
-                  return Image.asset('$assetsPath/${uri.toString()}');
-                },
-              ),
+        return Container(
+          height: curHeight * displayRatio,
+// avoid this error
+// The following assertion was thrown during performResize():
+// Vertical viewport was given unbounded height.
+// Viewports expand in the scrolling direction to fill their container. In this case, a vertical
+// viewport was given an unlimited amount of vertical space in which to expand. This situation
+// typically happens when a scrollable widget is nested inside another scrollable widget.
+// If this widget is always nested in a scrollable widget there is no need to use a viewport because
+// there will always be enough vertical space for the children. In this case, consider using a Column
+// or Wrap instead. Otherwise, consider using a CustomScrollView to concatenate arbitrary slivers into
+// a single scrollable.
+// The relevant error-causing widget was:
+//   ListView
+//   ListView:file:///Users/yinyixiang/.pub-cache/hosted/pub.dev/flutter_markdown-0.7.1/lib/src/widget.dart:559:12
+
+          decoration: sunkenBoxDecoration,
+          child: Center(
+            child: Markdown(
+              data: snapshot.data!,
+              selectable: true,
+              // Custom image builder to load assets.
+              imageBuilder: (uri, title, alt) {
+                return Image.asset('$assetsPath/${uri.toString()}');
+              },
             ),
           ),
         );

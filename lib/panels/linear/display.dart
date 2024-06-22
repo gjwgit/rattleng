@@ -51,7 +51,7 @@ class _LinearDisplayState extends ConsumerState<LinearDisplay> {
     String content = rExtractEmpty(stdout);
 
     return content == ''
-        ? showMarkdownFile(linearIntroFile)
+        ? showMarkdownFile(linearIntroFile, context)
         : Expanded(
             child: Container(
               decoration: sunkenBoxDecoration,

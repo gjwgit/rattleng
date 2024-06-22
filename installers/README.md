@@ -16,46 +16,40 @@ Project](https://cloud.r-project.org/).
 
 Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
 
+To try it:
+
 ```bash
 wget https://access.togaware.com/rattleng.tar.gz
-```
-
-Then, to simply try it out locally:
-
-```bash
 tar zxvf rattleng.tar.gz
 rattleng/rattle
 ```
 
-Or, to install for the current user:
+To install for the local user and to make it known to Gnome and KDE,
+with a desktop icon:
 
 ```bash
+wget https://access.togaware.com/rattleng.tar.gz
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
-```
-
-For this user, to install a desktop icon and make it known to Gnome
-and KDE:
-
-```bash
 wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattle.desktop -O ${HOME}/.local/share/applications/rattle.desktop
-wget https://github.com/gjwgit/rattleng/blob/dev/installers/rattle.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
+sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/rattle.desktop
+mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
+wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
 ```
-(You will need to edit the `.desktop` file to fully specify the path
-to the icon.)
 
-Or, for a system-wide install:
+To install for any user on the computer:
 
 ```bash
 sudo tar zxvf rattleng.tar.gz -C /opt/
 sudo ln -s /opt/rattleng/rattle /usr/local/bin/
 ``` 
 
-The `rattle.desktop` can (not-tested) be installed into
-`/usr/local/share/applications/` and `/usr/local/share/icons/`.
+The `rattle.desktop` and app icon can be installed into
+`/usr/local/share/applications/` and `/usr/local/share/icons/`
+respectively.
 
-Once installed you can also run the app through Alt-F2 and type
-`rattle` then Enter.
+Once installed you can run the app through Alt-F2 and type `rattle`
+then Enter.
 
 ## MacOS
 
