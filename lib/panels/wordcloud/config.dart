@@ -145,52 +145,65 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             const Text('Tuning Options:  '),
             // Checkbox for random order of words in the cloud.
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(checkboxProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(checkboxProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Random Order'),
-              ],
+            Tooltip(
+              message: 
+                      'plot words in random order. If false, they will be plotted in decreasing frequency',
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(checkboxProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(checkboxProvider.notifier).state = v!,
+                    },
+                  ), 
+                  const Text('Random Order'),
+                ],
+              ),
             ),
             const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stemProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stemProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Stem'),
-              ],
+            Tooltip(
+              message: 'Stemming reduces words to their base or root form.',
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(stemProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(stemProvider.notifier).state = v!,
+                    },
+                  ),
+                  const Text('Stem'),
+                ],
+              ),
             ),
             const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stopwordProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stopwordProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Remove Stopwords'),
-              ],
+            Tooltip(
+              message: 'Remove punctuation marks such as periods',
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(stopwordProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(stopwordProvider.notifier).state = v!,
+                    },
+                  ),
+                    const Text('Remove Stopwords'),
+                ],
+              ), 
             ),
             const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(punctuationProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(punctuationProvider.notifier).state = v!,
-                  },
-                ),
-                const Text('Remove Punctuation'),
-              ],
+            Tooltip(
+              message: 'Remove punctuation marks such as periods',
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: ref.watch(punctuationProvider),
+                    onChanged: (bool? v) => {
+                      ref.read(punctuationProvider.notifier).state = v!,
+                    },
+                  ),
+                  const Text('Remove Punctuation'),
+                ],
+              ),
             ),
           ],
         ),
@@ -205,28 +218,34 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               const Text('Tuning Parameters:  '),
               const SizedBox(width: 5),
               // max word text field
-              SizedBox(
-                width: 150.0,
-                child: TextField(
-                  controller: maxWordTextController,
-                  style: const TextStyle(fontSize: 16),
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Max Words',
-                    labelStyle: TextStyle(fontSize: 16),
+              Tooltip(
+                message: 'Maximum number of words to be plotted. Least frequent terms dropped',
+                child: SizedBox(
+                  width: 150.0,
+                  child: TextField(
+                    controller: maxWordTextController,
+                    style: const TextStyle(fontSize: 16),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Max Words',
+                      labelStyle: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
               ),
               const SizedBox(width: 20),
-              SizedBox(
-                width: 150.0,
-                child: TextField(
-                  controller: minFreqTextController,
-                  style: const TextStyle(fontSize: 16),
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Min Freq',
-                    labelStyle: TextStyle(fontSize: 16),
+              Tooltip(
+                message: 'By setting a minimum frequency threshold, you can filter out less common words',
+                child: SizedBox(
+                  width: 150.0,
+                  child: TextField(
+                    controller: minFreqTextController,
+                    style: const TextStyle(fontSize: 16),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Min Freq',
+                      labelStyle: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
               ),
