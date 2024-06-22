@@ -146,8 +146,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             const Text('Tuning Options:  '),
             // Checkbox for random order of words in the cloud.
             Tooltip(
-              message: 
-                      'plot words in random order. If false, they will be plotted in decreasing frequency',
+              message:
+                  'plot words in random order. If false, they will be plotted in decreasing frequency',
               child: Row(
                 children: [
                   Checkbox(
@@ -155,7 +155,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     onChanged: (bool? v) => {
                       ref.read(checkboxProvider.notifier).state = v!,
                     },
-                  ), 
+                  ),
                   const Text('Random Order'),
                 ],
               ),
@@ -186,9 +186,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                       ref.read(stopwordProvider.notifier).state = v!,
                     },
                   ),
-                    const Text('Remove Stopwords'),
+                  const Text('Remove Stopwords'),
                 ],
-              ), 
+              ),
             ),
             const SizedBox(width: 20),
             Tooltip(
@@ -219,7 +219,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               const SizedBox(width: 5),
               // max word text field
               Tooltip(
-                message: 'Maximum number of words to be plotted. Least frequent terms dropped',
+                message:
+                    'Maximum number of words to be plotted. Least frequent terms dropped',
                 child: SizedBox(
                   width: 150.0,
                   child: TextField(
@@ -235,7 +236,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ),
               const SizedBox(width: 20),
               Tooltip(
-                message: 'By setting a minimum frequency threshold, you can filter out less common words',
+                message:
+                    'By setting a minimum frequency threshold, you can filter out less common words',
                 child: SizedBox(
                   width: 150.0,
                   child: TextField(

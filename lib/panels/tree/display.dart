@@ -50,11 +50,11 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
   // number of pages available
   int numPages = 2;
 
-    void _goToPreviousPage() {
+  void _goToPreviousPage() {
     if (_currentPage > 0) {
       _pageController.animateToPage(
         _currentPage - 1,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
@@ -64,17 +64,17 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (_currentPage < numPages - 1) {
       _pageController.animateToPage(
         _currentPage + 1,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
   }
+
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           onPressed: _currentPage > 0 ? _goToPreviousPage : null,
         ),
         Expanded(
-          child: Container(
+          child: SizedBox(
             height: 500,
             child: PageView(
               controller: _pageController,
@@ -137,14 +137,9 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           icon: Icon(
             Icons.arrow_right,
             size: 32,
-            color: _currentPage < numPages - 1
-                ? Colors.black
-                : Colors.grey,
-                
+            color: _currentPage < numPages - 1 ? Colors.black : Colors.grey,
           ),
-          onPressed: _currentPage < numPages - 1
-              ? _goToNextPage
-              : null,
+          onPressed: _currentPage < numPages - 1 ? _goToNextPage : null,
         ),
       ],
     );
