@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Wednesday 2024-06-12 12:09:05 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-23 14:28:50 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -147,7 +147,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             // Checkbox for random order of words in the cloud.
             Tooltip(
               message:
-                  'plot words in random order. If false, they will be plotted in decreasing frequency',
+                  'Plot words in random order, otherwise in decreasing frequency.',
               child: Row(
                 children: [
                   Checkbox(
@@ -177,7 +177,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ),
             const SizedBox(width: 20),
             Tooltip(
-              message: 'Remove punctuation marks such as periods',
+              message: 'Remove common language words for the wordcloud.',
               child: Row(
                 children: [
                   Checkbox(
@@ -192,7 +192,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ),
             const SizedBox(width: 20),
             Tooltip(
-              message: 'Remove punctuation marks such as periods',
+              message: 'Remove punctuation marks such as periods.',
               child: Row(
                 children: [
                   Checkbox(
@@ -220,7 +220,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               // max word text field
               Tooltip(
                 message:
-                    'Maximum number of words to be plotted. Least frequent terms dropped',
+                    'Maximum number of words plotted. Drop least frequent words.',
                 child: SizedBox(
                   width: 150.0,
                   child: TextField(
@@ -236,8 +236,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ),
               const SizedBox(width: 20),
               Tooltip(
-                message:
-                    'By setting a minimum frequency threshold, you can filter out less common words',
+                message: 'Filter out less frequent words.',
                 child: SizedBox(
                   width: 150.0,
                   child: TextField(
