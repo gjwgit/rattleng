@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Saturday 2024-06-15 10:45:23 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-06-24 06:31:23 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -18,7 +18,7 @@
 #   Trivial update or bug fix
 
 APP=$(shell pwd | xargs basename)
-VER=
+VER = $(shell egrep '^version:' pubspec.yaml | cut -d' ' -f2)
 DATE=$(shell date +%Y-%m-%d)
 
 # Identify a destination used by install.mk
@@ -105,7 +105,7 @@ rattle.zip:
 
 # Linux: Install locally.
 
-local: tgz
+local: $(APP)-$(VER)-linux-x86_64.tar.gz
 	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
 
 # Linux: Upload to Solid Community installers for general access.
