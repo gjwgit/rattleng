@@ -103,12 +103,12 @@ rattle.zip:
 %.itest:
 	flutter test --device-id linux --dart-define=PAUSE=0 integration_test/$*_test.dart
 
-# Install locally for linux.
+# Linux: Install locally.
 
 local: tgz
 	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
 
-# Upload to access.togaware.com.
+# Linux: Upload to Solid Community installers for general access.
 
 tgz::
 	chmod a+r installers/*.tar.gz
