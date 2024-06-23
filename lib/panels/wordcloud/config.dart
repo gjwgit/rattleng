@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Sunday 2024-06-23 14:28:50 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-23 20:28:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -48,6 +48,7 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class WordCloudConfig extends ConsumerStatefulWidget {
   const WordCloudConfig({super.key});
@@ -145,65 +146,68 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             const Text('Tuning Options:  '),
             // Checkbox for random order of words in the cloud.
-            Tooltip(
-              message:
-                  'Plot words in random order, otherwise in decreasing frequency.',
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(checkboxProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(checkboxProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Random Order'),
-                ],
-              ),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(checkboxProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(checkboxProvider.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message:
+                      'Plot words in random order, otherwise in decreasing frequency.',
+                  child: Text('Random Order'),
+                ),
+              ],
             ),
             const SizedBox(width: 20),
-            Tooltip(
-              message: 'Stemming reduces words to their base or root form.',
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(stemProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(stemProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Stem'),
-                ],
-              ),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(stemProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(stemProvider.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message:
+                      'Stemming reduces words to their base or root form.\n'
+                      'Two different words, when stemmed, can become the same\n'
+                      'and so can reduce unecessary clutter in the wordcloud.',
+                  child: Text('Stem'),
+                ),
+              ],
             ),
             const SizedBox(width: 20),
-            Tooltip(
-              message: 'Remove common language words for the wordcloud.',
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(stopwordProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(stopwordProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Remove Stopwords'),
-                ],
-              ),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(stopwordProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(stopwordProvider.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message: 'Remove common language words for the wordcloud.',
+                  child: Text('Remove Stopwords'),
+                ),
+              ],
             ),
             const SizedBox(width: 20),
-            Tooltip(
-              message: 'Remove punctuation marks such as periods.',
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: ref.watch(punctuationProvider),
-                    onChanged: (bool? v) => {
-                      ref.read(punctuationProvider.notifier).state = v!,
-                    },
-                  ),
-                  const Text('Remove Punctuation'),
-                ],
-              ),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(punctuationProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(punctuationProvider.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message: 'Remove punctuation marks such as periods.',
+                  child: Text('Remove Punctuation'),
+                ),
+              ],
             ),
           ],
         ),
@@ -218,11 +222,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               const Text('Tuning Parameters:  '),
               const SizedBox(width: 5),
               // max word text field
-              Tooltip(
-                message:
-                    'Maximum number of words plotted. Drop least frequent words.',
-                child: SizedBox(
-                  width: 150.0,
+              SizedBox(
+                width: 150.0,
+                child: DelayedTooltip(
+                  message: 'Maximum number of words plotted.\n'
+                      'Drop least frequent words.',
                   child: TextField(
                     controller: maxWordTextController,
                     style: const TextStyle(fontSize: 16),
@@ -235,10 +239,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ),
               const SizedBox(width: 20),
-              Tooltip(
-                message: 'Filter out less frequent words.',
-                child: SizedBox(
-                  width: 150.0,
+              SizedBox(
+                width: 150.0,
+                child: DelayedTooltip(
+                  message: 'Filter out less frequent words.',
                   child: TextField(
                     controller: minFreqTextController,
                     style: const TextStyle(fontSize: 16),

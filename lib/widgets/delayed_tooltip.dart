@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -28,8 +29,6 @@ class DelayedTooltip extends StatelessWidget {
   final Widget child;
   final String message;
   final Duration wait;
-
-//  const StatusBar({Key? key}) : super(key: key);
 
   const DelayedTooltip({
     super.key,
