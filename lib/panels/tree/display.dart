@@ -71,7 +71,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
   }
 
   void goToResultPage() {
-    debugPrint("go to result page");
+    debugPrint('go to result page');
     // TODO yyx 20240624 might need change when we have more pages than 2.
     _goToNextPage();
   }
