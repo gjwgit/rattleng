@@ -27,7 +27,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/panels/tree/display.dart';
 import 'package:rattle/panels/tree/panel.dart';
 
 import 'package:rattle/r/source.dart';
