@@ -27,6 +27,8 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/panels/tree/display.dart';
+import 'package:rattle/panels/tree/panel.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -64,6 +66,7 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
                 debugPrint('TREE CONFIG BUTTON');
                 rSource(context, ref, 'model_template');
                 rSource(context, ref, 'model_build_rpart');
+                treeDisplayKey.currentState?.goToResultPage();
               },
               child: const Text('Build Decision Tree'),
             ),

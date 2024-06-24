@@ -33,6 +33,8 @@ import 'package:rattle/panels/tree/config.dart';
 import 'package:rattle/panels/tree/display.dart';
 
 /// The TREE tab supports building decision tree models.
+final GlobalKey<TreeDisplayState> treeDisplayKey =
+    GlobalKey<TreeDisplayState>();
 
 class TreePanel extends StatelessWidget {
   const TreePanel({super.key});
@@ -42,7 +44,7 @@ class TreePanel extends StatelessWidget {
     // A per the RattleNG pattern, a Tab consists of a Config bar and the
     // results Display().
 
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           TreeConfig(),
@@ -58,7 +60,7 @@ class TreePanel extends StatelessWidget {
           // remaining space to introduce this particular tab's functionality
           // which is then replaced with the output of the build.
 
-          TreeDisplay(),
+          TreeDisplay(key: treeDisplayKey,),
         ],
       ),
     );
