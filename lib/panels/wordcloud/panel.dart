@@ -31,7 +31,8 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/panels/wordcloud/config.dart';
 import 'package:rattle/panels/wordcloud/display.dart';
-
+final GlobalKey<WordCloudDisplayState> wordCloudDisplayKey =
+    GlobalKey<WordCloudDisplayState>();
 class WordCloudPanel extends StatelessWidget {
   const WordCloudPanel({super.key});
   @override
@@ -39,7 +40,7 @@ class WordCloudPanel extends StatelessWidget {
     // A per the RattleNG pattern, a Tab consists of a Config bar and the
     // results Display().
 
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           // TODO 20240605 gjw NOT QUIT THE RIGHT SOLUTION YET. IF I SET MAX
@@ -66,7 +67,7 @@ class WordCloudPanel extends StatelessWidget {
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
 
-          WordCloudDisplay(),
+          WordCloudDisplay(key: wordCloudDisplayKey,),
         ],
       ),
     );

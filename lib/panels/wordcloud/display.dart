@@ -42,7 +42,7 @@ import 'package:rattle/widgets/show_markdown_file.dart';
 class WordCloudDisplay extends ConsumerStatefulWidget {
   const WordCloudDisplay({super.key});
   @override
-  ConsumerState<WordCloudDisplay> createState() => _WordCloudDisplayState();
+  ConsumerState<WordCloudDisplay> createState() => WordCloudDisplayState();
 }
 
 bool buildButtonPressed(String buildTime) {
@@ -50,7 +50,7 @@ bool buildButtonPressed(String buildTime) {
 }
 
 // TODO yyx 20240626 make 2 panes, the first one display the intro file and the second one is the wordcloud png
-class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
+class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
   late PageController _pageController;
   int _currentPage = 0;
   // number of pages available
@@ -73,6 +73,12 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         curve: Curves.easeInOut,
       );
     }
+  }
+
+  void goToResultPage() {
+    debugPrint('go to result page');
+    // TODO yyx 20240624 might need change when we have more pages than 2.
+    _goToNextPage();
   }
 
   @override
