@@ -94,19 +94,19 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     String lastBuildTime = ref.watch(wordCloudBuildProvider);
     debugPrint('received rebuild on $lastBuildTime');
     var wordCloudFile = File(wordCloudImagePath);
-    bool fileExists = wordCloudFile.existsSync();
 
     // Identify a widget for the display of the word cloud image file. Default
     // to a BUG display! The traditional 'This should not happen'.
 
-    Widget imageDisplay = const Text('This should not happen.');
+    Widget imageDisplay = const Text('Click the build button to see the result');
     // file exists | build not empty
     // 1 | 1 -> show the png
     // 1 | 0 -> show not built
     // 0 | 0 -> show not built
     // 0 | 1 -> show loading
+    // build button pressed but png not exists (never reached)
     if (buildButtonPressed(lastBuildTime)) {
-      if (fileExists) {
+      // The check to see if file exists is not necessary.
         // build button pressed and png file exists
         debugPrint('Model built. Now Sleeping as needed to await file.');
 
@@ -147,15 +147,6 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
             image,
           ],
         );
-      } else {
-        // build button pressed but png not exists
-        imageDisplay = const Column(
-          children: [
-            SizedBox(height: 50),
-            Text('Loading'),
-          ],
-        );
-      }
     }
 
     return Row(
