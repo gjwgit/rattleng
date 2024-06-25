@@ -47,7 +47,7 @@ class WordCloudDisplay extends ConsumerStatefulWidget {
 bool buildButtonPressed(String buildTime) {
   return buildTime.isNotEmpty;
 }
-
+// TODO yyx 20240626 make 2 panes, the first one display the intro file and the second one is the wordcloud png
 class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
   @override
   Widget build(BuildContext context) {
@@ -129,6 +129,7 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // If there is no image built then return a widget that displays the word
       // cloud introductory message, but with the config bar also displayed.
       debugPrint('No model has been built.');
+      // TODO seperate into a seperate page
 
       return showMarkdownFile(wordCloudMsgFile, context);
     }
