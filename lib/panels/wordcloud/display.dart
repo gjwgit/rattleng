@@ -87,6 +87,8 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // top configuration and the main panel showing the generated image. Before
     // the build we display a introdcurory text to the functionality.
     final curHeight = MediaQuery.of(context).size.height;
+    Widget? imageDisplay;
+
     // Reload the wordcloud image.
 
     imageCache.clear();
@@ -98,7 +100,6 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // Identify a widget for the display of the word cloud image file. Default
     // to a BUG display! The traditional 'This should not happen'.
 
-    Widget imageDisplay = const Text('Click the build button to see the result');
     // file exists | build not empty
     // 1 | 1 -> show the png
     // 1 | 0 -> show not built
@@ -107,46 +108,46 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // build button pressed but png not exists (never reached)
     if (buildButtonPressed(lastBuildTime)) {
       // The check to see if file exists is not necessary.
-        // build button pressed and png file exists
-        debugPrint('Model built. Now Sleeping as needed to await file.');
+      // build button pressed and png file exists
+      debugPrint('Model built. Now Sleeping as needed to await file.');
 
-        // Reload the image:
-        // https://nambiarakhilraj01.medium.com/
-        // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+      // Reload the image:
+      // https://nambiarakhilraj01.medium.com/
+      // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
 
-        var bytes = wordCloudFile.readAsBytesSync();
+      var bytes = wordCloudFile.readAsBytesSync();
 
-        // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
-        //
-        // _Exception was thrown resolving an image codec:
-        // Exception: Invalid image data
-        //
-        // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
-        // LOADED SUCCESSFULLY.
-        //
-        // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
-        // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
-        // UNTIL THE FILE IS READY.
-        //
-        // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
+      // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
+      //
+      // _Exception was thrown resolving an image codec:
+      // Exception: Invalid image data
+      //
+      // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
+      // LOADED SUCCESSFULLY.
+      //
+      // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
+      // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
+      // UNTIL THE FILE IS READY.
+      //
+      // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
 
-        while (bytes.lengthInBytes == 0) {
-          sleep(const Duration(seconds: 1));
-          bytes = wordCloudFile.readAsBytesSync();
-        }
+      while (bytes.lengthInBytes == 0) {
+        sleep(const Duration(seconds: 1));
+        bytes = wordCloudFile.readAsBytesSync();
+      }
 
-        Image image = Image.memory(bytes);
+      Image image = Image.memory(bytes);
 
-        // Build the widget to display the image. Make it a row, centering the
-        // image horizontally, and so ensuring the scrollbar is all the way to the
-        // right.
+      // Build the widget to display the image. Make it a row, centering the
+      // image horizontally, and so ensuring the scrollbar is all the way to the
+      // right.
 
-        imageDisplay = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            image,
-          ],
-        );
+      imageDisplay = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          image,
+        ],
+      );
     }
 
     return Row(
@@ -173,9 +174,14 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
                 showMarkdownFile(wordCloudMsgFile, context),
                 Container(
                   decoration: sunkenBoxDecoration,
-                  child: SingleChildScrollView(
-                    child: imageDisplay,
-                  ),
+                  child: buildButtonPressed(lastBuildTime)
+                      ? SingleChildScrollView(
+                          child: imageDisplay,
+                        )
+                      : const Center(
+                          child:
+                              Text('Click the build button to see the result'),
+                        ),
                 ),
               ],
             ),
