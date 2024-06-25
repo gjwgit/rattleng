@@ -32,6 +32,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/app.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/wordcloud.dart';
@@ -47,14 +48,45 @@ class WordCloudDisplay extends ConsumerStatefulWidget {
 bool buildButtonPressed(String buildTime) {
   return buildTime.isNotEmpty;
 }
+
 // TODO yyx 20240626 make 2 panes, the first one display the intro file and the second one is the wordcloud png
 class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
+  late PageController _pageController;
+  int _currentPage = 0;
+  // number of pages available
+  int numPages = 2;
+  void _goToPreviousPage() {
+    if (_currentPage > 0) {
+      _pageController.animateToPage(
+        _currentPage - 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _goToNextPage() {
+    if (_currentPage < numPages - 1) {
+      _pageController.animateToPage(
+        _currentPage + 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build the word cloud widget to be displayed in the tab, consisting of the
     // top configuration and the main panel showing the generated image. Before
     // the build we display a introdcurory text to the functionality.
-
+    final curHeight = MediaQuery.of(context).size.height;
     // Reload the wordcloud image.
 
     imageCache.clear();
@@ -124,27 +156,49 @@ class _WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           ],
         );
       }
-    } else {
-      // build button not pressed
-      // If there is no image built then return a widget that displays the word
-      // cloud introductory message, but with the config bar also displayed.
-      debugPrint('No model has been built.');
-      // TODO seperate into a seperate page
-
-      return showMarkdownFile(wordCloudMsgFile, context);
     }
 
-    return wordCloudDisplay(imageDisplay);
+    return Row(
+      children: [
+        IconButton(
+          icon: Icon(
+            Icons.arrow_left,
+            color: _currentPage > 0 ? Colors.black : Colors.grey,
+            size: 32,
+          ),
+          onPressed: _currentPage > 0 ? _goToPreviousPage : null,
+        ),
+        Expanded(
+          child: SizedBox(
+            height: curHeight * displayRatio,
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              children: [
+                showMarkdownFile(wordCloudMsgFile, context),
+                Container(
+                  decoration: sunkenBoxDecoration,
+                  child: SingleChildScrollView(
+                    child: imageDisplay,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.arrow_right,
+            size: 32,
+            color: _currentPage < numPages - 1 ? Colors.black : Colors.grey,
+          ),
+          onPressed: _currentPage < numPages - 1 ? _goToNextPage : null,
+        ),
+      ],
+    );
   }
-}
-
-Widget wordCloudDisplay(Widget wordCloudBody) {
-  return Expanded(
-    child: Container(
-      decoration: sunkenBoxDecoration,
-      child: SingleChildScrollView(
-        child: wordCloudBody,
-      ),
-    ),
-  );
 }
