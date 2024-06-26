@@ -103,9 +103,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     debugPrint('received rebuild on $lastBuildTime');
     var wordCloudFile = File(wordCloudImagePath);
 
-    // Identify a widget for the display of the word cloud image file. Default
-    // to a BUG display! The traditional 'This should not happen'.
-
     // file exists | build not empty
     // 1 | 1 -> show the png
     // 1 | 0 -> show not built
