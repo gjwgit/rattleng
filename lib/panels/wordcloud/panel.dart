@@ -31,8 +31,10 @@ import 'package:flutter/material.dart';
 
 import 'package:rattle/panels/wordcloud/config.dart';
 import 'package:rattle/panels/wordcloud/display.dart';
+
 final GlobalKey<WordCloudDisplayState> wordCloudDisplayKey =
     GlobalKey<WordCloudDisplayState>();
+
 class WordCloudPanel extends StatelessWidget {
   const WordCloudPanel({super.key});
   @override
@@ -48,14 +50,14 @@ class WordCloudPanel extends StatelessWidget {
           // PARAMETER BUT AFTER THE BUILD/REFRESH THE 10 IS LOST FROM THE
           // CONFIG BAR SINCE IT IS REBUILT. HOW TO FIX THAT AND RETAIN THE
           // MESSAGE WITHTHE CONFIG BAR.
-          WordCloudConfig(),
+          const WordCloudConfig(),
 
           // Add a little space below the underlined input widget so the
           // underline is not lost. Thouoght to include this in config but then
           // I would need an extra Column widget(). Seems okay logically to add
           // the spacer here as part of the tab.
 
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
           // BUTTON TOP RIGHT. KEEP HERE AS A COMMENT UNTIL IMPLEMENTED.
           //
@@ -67,7 +69,9 @@ class WordCloudPanel extends StatelessWidget {
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
 
-          WordCloudDisplay(key: wordCloudDisplayKey,),
+          WordCloudDisplay(
+            key: wordCloudDisplayKey,
+          ),
         ],
       ),
     );
