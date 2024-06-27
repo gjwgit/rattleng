@@ -47,10 +47,6 @@ class TreeDisplay extends ConsumerStatefulWidget {
 }
 
 class TreeDisplayState extends ConsumerState<TreeDisplay> {
-  // number of pages available
-  // calculate from the pages number
-  // int numPages = 2;
-
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
