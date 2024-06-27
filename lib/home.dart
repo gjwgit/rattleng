@@ -293,29 +293,33 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
       body: Row(
         children: [
-          NavigationRail(
-            selectedIndex: _tabController.index,
-            onDestinationSelected: (int index) {
-              setState(() {
-                _tabController.index = index;
-              });
-            },
-            labelType: NavigationRailLabelType.all,
-            destinations: homeTabs.map((tab) {
-              return NavigationRailDestination(
-                icon: Icon(tab['icon']),
-                label: Text(
-                  tab['title'],
-                  style: const TextStyle(fontSize: 16),
+          SingleChildScrollView(
+            child: IntrinsicHeight(
+              child: NavigationRail(
+                selectedIndex: _tabController.index,
+                onDestinationSelected: (int index) {
+                  setState(() {
+                    _tabController.index = index;
+                  });
+                },
+                labelType: NavigationRailLabelType.all,
+                destinations: homeTabs.map((tab) {
+                  return NavigationRailDestination(
+                    icon: Icon(tab['icon']),
+                    label: Text(
+                      tab['title'],
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  );
+                }).toList(),
+                selectedLabelTextStyle: const TextStyle(
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-              );
-            }).toList(),
-            selectedLabelTextStyle: const TextStyle(
-              color: Colors.deepPurple,
-              fontWeight: FontWeight.bold,
+                unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
+              ),
             ),
-            unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
           ),
           const VerticalDivider(),
           Expanded(
