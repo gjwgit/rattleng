@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-06-27 13:48:49 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-06-28 08:13:34 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -213,7 +213,19 @@ class RattleHomeState extends ConsumerState<RattleHome>
       appBar: AppBar(
         // The title aligned to the left.
 
-        title: const Text(appTitle),
+        //title: const Text(appTitle),
+
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/rattle_logo.png',
+              width: 40,
+              height: 40,
+            ),
+            const SizedBox(width: 20),
+            const Text(appTitle),
+          ],
+        ),
 
         // Deploy the buttons aligned to the top right for actions.
 
