@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ New Pages() widget for multiple page display [0.1.19]
 + Rename `panels` to `features` as a standard [0.1.18]
 + Implement sliding panels for wordcloud display [0.1.17]
 + R script asset read fix to get deployed app working [0.1.16]
