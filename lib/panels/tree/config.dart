@@ -65,6 +65,8 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
                 debugPrint('TREE CONFIG BUTTON');
                 rSource(context, ref, 'model_template');
                 rSource(context, ref, 'model_build_rpart');
+                // TODO yyx 20240627 How should I restore this effect in the new Widget Pages?
+                // treeDisplayKey.currentState?.goToResultPage();
               },
               child: const Text('Build Decision Tree'),
             ),
