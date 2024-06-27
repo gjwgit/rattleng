@@ -58,7 +58,7 @@ class LinearPanel extends StatelessWidget {
           // remaining space to introduce this particular tab's functionality
           // which is then replaced with the output of the build.
 
-          LinearDisplay(),
+          Expanded(child: LinearDisplay()),
         ],
       ),
     );

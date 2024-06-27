@@ -69,8 +69,10 @@ class WordCloudPanel extends StatelessWidget {
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
 
-          WordCloudDisplay(
-            key: wordCloudDisplayKey,
+          Expanded(
+            child: WordCloudDisplay(
+              key: wordCloudDisplayKey,
+            ),
           ),
         ],
       ),
