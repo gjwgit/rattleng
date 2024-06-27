@@ -30,15 +30,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/panels/cluster/panel.dart';
-import 'package:rattle/panels/forest/panel.dart';
-import 'package:rattle/panels/tree/panel.dart';
-import 'package:rattle/panels/association/panel.dart';
-import 'package:rattle/panels/boost/panel.dart';
-import 'package:rattle/panels/svm/panel.dart';
-import 'package:rattle/panels/linear/panel.dart';
-import 'package:rattle/panels/neural/panel.dart';
-import 'package:rattle/panels/wordcloud/panel.dart';
+import 'package:rattle/features/cluster/panel.dart';
+import 'package:rattle/features/forest/panel.dart';
+import 'package:rattle/features/tree/panel.dart';
+import 'package:rattle/features/association/panel.dart';
+import 'package:rattle/features/boost/panel.dart';
+import 'package:rattle/features/svm/panel.dart';
+import 'package:rattle/features/linear/panel.dart';
+import 'package:rattle/features/neural/panel.dart';
+import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/model.dart';
 
 final List<Map<String, dynamic>> modelPanels = [

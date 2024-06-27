@@ -30,13 +30,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/panels/summary/panel.dart';
-import 'package:rattle/panels/visual/panel.dart';
-import 'package:rattle/panels/missing/panel.dart';
-import 'package:rattle/panels/correlation/panel.dart';
-import 'package:rattle/panels/tests/panel.dart';
-import 'package:rattle/panels/interactive/panel.dart';
-//TODO import 'package:rattle/panels/wordcloud/panel.dart';
+import 'package:rattle/features/summary/panel.dart';
+import 'package:rattle/features/visual/panel.dart';
+import 'package:rattle/features/missing/panel.dart';
+import 'package:rattle/features/correlation/panel.dart';
+import 'package:rattle/features/tests/panel.dart';
+import 'package:rattle/features/interactive/panel.dart';
+//TODO import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/explore.dart';
 
 final List<Map<String, dynamic>> explorePanels = [
