@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Implement sliding panels for wordcloud display [0.1.17]
 + R script asset read fix to get deployed app working [0.1.16]
 + Refactor the markdown file display for each tab [0.1.15]
 + Re-org features to tab/panels to support future flexibility [0.1.14]
