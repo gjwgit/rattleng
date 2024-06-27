@@ -32,7 +32,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/constants/app.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/wordcloud.dart';
@@ -179,8 +178,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
                         child: imageDisplay,
                       )
                     : const Center(
-                        child:
-                            Text('Click the build button to see the result'),
+                        child: Text('Click the build button to see the result'),
                       ),
               ),
             ],
