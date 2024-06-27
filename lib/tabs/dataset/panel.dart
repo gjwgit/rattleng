@@ -52,17 +52,15 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
 
     return path == ''
         ? showMarkdownFile(welcomeMsgFile, context)
-        : Expanded(
-            child: Container(
-              width: double.infinity,
-              color: Colors.white,
-              padding: const EdgeInsets.only(left: 10),
-              child: SelectableText(
-                rExtractGlimpse(stdout),
-                key: datasetGlimpseKey,
-                style: monoTextStyle,
-              ),
-            ),
-          );
+        : Container(
+          width: double.infinity,
+          color: Colors.white,
+          padding: const EdgeInsets.only(left: 10),
+          child: SelectableText(
+            rExtractGlimpse(stdout),
+            key: datasetGlimpseKey,
+            style: monoTextStyle,
+          ),
+        );
   }
 }
