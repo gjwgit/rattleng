@@ -20,13 +20,14 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/panels/tree/panel.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -64,6 +65,7 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
                 debugPrint('TREE CONFIG BUTTON');
                 rSource(context, ref, 'model_template');
                 rSource(context, ref, 'model_build_rpart');
+                treeDisplayKey.currentState?.goToResultPage();
               },
               child: const Text('Build Decision Tree'),
             ),
