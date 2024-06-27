@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-06-18 17:22:57 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-28 09:34:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,9 +33,8 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_tree.dart';
+import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
-
-import '../../widgets/pages.dart';
 
 /// The tree panel displays the tree instructions or the tree biuld output.
 
