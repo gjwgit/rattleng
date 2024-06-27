@@ -92,7 +92,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // Build the word cloud widget to be displayed in the tab, consisting of the
     // top configuration and the main panel showing the generated image. Before
     // the build we display a introdcurory text to the functionality.
-    final curHeight = MediaQuery.of(context).size.height;
     Widget? imageDisplay;
 
     // Reload the wordcloud image.
@@ -164,30 +163,27 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           onPressed: _currentPage > 0 ? _goToPreviousPage : null,
         ),
         Expanded(
-          child: SizedBox(
-            height: curHeight * displayRatio,
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              children: [
-                showMarkdownFile(wordCloudMsgFile, context),
-                Container(
-                  decoration: sunkenBoxDecoration,
-                  child: buildButtonPressed(lastBuildTime)
-                      ? SingleChildScrollView(
-                          child: imageDisplay,
-                        )
-                      : const Center(
-                          child:
-                              Text('Click the build button to see the result'),
-                        ),
-                ),
-              ],
-            ),
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            children: [
+              showMarkdownFile(wordCloudMsgFile, context),
+              Container(
+                decoration: sunkenBoxDecoration,
+                child: buildButtonPressed(lastBuildTime)
+                    ? SingleChildScrollView(
+                        child: imageDisplay,
+                      )
+                    : const Center(
+                        child:
+                            Text('Click the build button to see the result'),
+                      ),
+              ),
+            ],
           ),
         ),
         IconButton(
