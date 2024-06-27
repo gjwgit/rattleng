@@ -36,6 +36,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
+import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 class WordCloudDisplay extends ConsumerStatefulWidget {
@@ -48,50 +49,15 @@ bool buildButtonPressed(String buildTime) {
   return buildTime.isNotEmpty;
 }
 
-// TODO yyx 20240626 make 2 panes, the first one display the intro file and the second one is the wordcloud png
 class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
-  late PageController _pageController;
-  int _currentPage = 0;
-  // number of pages available
-  int numPages = 2;
-  void _goToPreviousPage() {
-    if (_currentPage > 0) {
-      _pageController.animateToPage(
-        _currentPage - 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void _goToNextPage() {
-    if (_currentPage < numPages - 1) {
-      _pageController.animateToPage(
-        _currentPage + 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void goToResultPage() {
-    debugPrint('go to result page');
-    // TODO yyx 20240624 might need change when we have more pages than 2.
-    _goToNextPage();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-  }
-
   @override
   Widget build(BuildContext context) {
     // Build the word cloud widget to be displayed in the tab, consisting of the
     // top configuration and the main panel showing the generated image. Before
     // the build we display a introdcurory text to the functionality.
-    Widget? imageDisplay;
+    List<Widget> pages = [
+      showMarkdownFile(wordCloudMsgFile, context),
+    ];
 
     // Reload the wordcloud image.
 
@@ -143,56 +109,19 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // image horizontally, and so ensuring the scrollbar is all the way to the
       // right.
 
-      imageDisplay = Row(
+      Widget imageDisplay = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           image,
         ],
       );
+      pages.add(
+        SingleChildScrollView(
+          child: imageDisplay,
+        ),
+      );
     }
 
-    return Row(
-      children: [
-        IconButton(
-          icon: Icon(
-            Icons.arrow_left,
-            color: _currentPage > 0 ? Colors.black : Colors.grey,
-            size: 32,
-          ),
-          onPressed: _currentPage > 0 ? _goToPreviousPage : null,
-        ),
-        Expanded(
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            children: [
-              showMarkdownFile(wordCloudMsgFile, context),
-              Container(
-                decoration: sunkenBoxDecoration,
-                child: buildButtonPressed(lastBuildTime)
-                    ? SingleChildScrollView(
-                        child: imageDisplay,
-                      )
-                    : const Center(
-                        child: Text('Click the build button to see the result'),
-                      ),
-              ),
-            ],
-          ),
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.arrow_right,
-            size: 32,
-            color: _currentPage < numPages - 1 ? Colors.black : Colors.grey,
-          ),
-          onPressed: _currentPage < numPages - 1 ? _goToNextPage : null,
-        ),
-      ],
-    );
+    return Pages(children: pages);
   }
 }
