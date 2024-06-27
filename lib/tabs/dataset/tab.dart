@@ -58,7 +58,7 @@ class DatasetTab extends StatelessWidget {
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
 
-          DatasetPanel(),
+          Expanded(child: DatasetPanel()),
         ],
       ),
     );
