@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-06-15 15:03:27 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-06-27 13:48:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -264,11 +264,17 @@ class RattleHomeState extends ConsumerState<RattleHome>
             onPressed: () {
               showAboutDialog(
                 context: context,
+                applicationIcon: Image.asset(
+                  'assets/images/rattle_logo.png',
+                  width: 80,
+                  height: 80,
+                ),
                 applicationName:
                     '${_appName[0].toUpperCase()}${_appName.substring(1)}',
-                applicationVersion: _appVersion,
+                applicationVersion: 'Version $_appVersion',
+                applicationLegalese: '© 2006-2024 Togaware Pty Ltd',
                 children: [
-                  const SelectableText('RattleNG is a modern rewrite of the '
+                  const SelectableText('\nRattleNG is a modern rewrite of the '
                       'very popular Rattle Data Mining and Data Science tool.\n\n'
                       'Authors: Graham Williams, Yixiang Yin.'),
                 ],
