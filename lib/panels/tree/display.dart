@@ -75,7 +75,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
       );
     }
     return Pages(
-      key: treePagesKey, // to go to the result page after clicking build button
+      // key: treePagesKey, // to go to the result page after clicking build button
       children: pages,
     );
   }

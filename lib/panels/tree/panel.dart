@@ -34,7 +34,7 @@ import 'package:rattle/panels/tree/display.dart';
 import 'package:rattle/widgets/pages.dart';
 
 /// The TREE tab supports building decision tree models.
-final GlobalKey<PagesState> treePagesKey = GlobalKey<PagesState>();
+// final GlobalKey<PagesState> treePagesKey = GlobalKey<PagesState>();
 
 class TreePanel extends StatelessWidget {
   const TreePanel({super.key});

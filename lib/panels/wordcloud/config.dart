@@ -129,7 +129,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 debugPrint('build clicked on ${timestamp()}');
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
 
-                wordCloudDisplayKey.currentState?.goToResultPage();
+                // wordCloudDisplayKey.currentState?.goToResultPage();
               },
               child: const Text('Display Word Cloud'),
             ),
