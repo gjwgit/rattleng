@@ -41,10 +41,10 @@ class TreeDisplay extends ConsumerStatefulWidget {
   const TreeDisplay({super.key});
 
   @override
-  ConsumerState<TreeDisplay> createState() => _TreeDisplayState();
+  ConsumerState<TreeDisplay> createState() => TreeDisplayState();
 }
 
-class _TreeDisplayState extends ConsumerState<TreeDisplay> {
+class TreeDisplayState extends ConsumerState<TreeDisplay> {
   late PageController _pageController;
   int _currentPage = 0;
   // number of pages available
@@ -68,6 +68,12 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
         curve: Curves.easeInOut,
       );
     }
+  }
+
+  void goToResultPage() {
+    debugPrint('go to result page');
+    // TODO yyx 20240624 might need change when we have more pages than 2.
+    _goToNextPage();
   }
 
   @override
