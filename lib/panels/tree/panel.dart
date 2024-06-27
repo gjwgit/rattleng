@@ -60,8 +60,10 @@ class TreePanel extends StatelessWidget {
           // remaining space to introduce this particular tab's functionality
           // which is then replaced with the output of the build.
 
-          TreeDisplay(
-            key: treeDisplayKey,
+          Expanded(
+            child: TreeDisplay(
+              key: treeDisplayKey,
+            ),
           ),
         ],
       ),

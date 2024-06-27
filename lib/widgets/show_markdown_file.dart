@@ -58,16 +58,13 @@ import 'package:rattle/utils/load_asset.dart';
 // }
 
 FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
-  final curHeight = MediaQuery.of(context).size.height;
-
   return FutureBuilder(
     key: const Key('markdown_file'),
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-          height: curHeight * displayRatio,
-// avoid this error
+// To avoid this error, provide a height limit at a higher (parent) level using the expanded() widget. The higher the better.
 // The following assertion was thrown during performResize():
 // Vertical viewport was given unbounded height.
 // Viewports expand in the scrolling direction to fill their container. In this case, a vertical
@@ -80,7 +77,6 @@ FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
 // The relevant error-causing widget was:
 //   ListView
 //   ListView:file:///Users/yinyixiang/.pub-cache/hosted/pub.dev/flutter_markdown-0.7.1/lib/src/widget.dart:559:12
-
           decoration: sunkenBoxDecoration,
           child: Center(
             child: Markdown(
