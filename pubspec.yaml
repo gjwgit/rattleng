@@ -94,6 +94,7 @@ flutter:
 
   assets:
     - assets/images/favicon_small.png
+    - assets/images/rattle_logo.png
     - assets/markdown/
     - assets/r/
 
