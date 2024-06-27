@@ -27,7 +27,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/features/tree/panel.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -65,7 +64,9 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
                 debugPrint('TREE CONFIG BUTTON');
                 rSource(context, ref, 'model_template');
                 rSource(context, ref, 'model_build_rpart');
-                treeDisplayKey.currentState?.goToResultPage();
+                // TODO yyx 20240627 How should I restore this effect in the new Widget Pages?
+                // it failed to work only when user first click build on the panel because the pages are not yet updated.
+                // treePagesKey.currentState?.goToResultPage();
               },
               child: const Text('Build Decision Tree'),
             ),
