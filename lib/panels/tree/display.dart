@@ -51,33 +51,32 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
   // calculate from the pages number
   // int numPages = 2;
 
-
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
     String content = rExtractTree(stdout);
 
     return Pages(
-            children: [
-    showMarkdownFile(treeIntroFile, context),
-    Container(
-      decoration: sunkenBoxDecoration,
-      width: double.infinity,
-      padding: const EdgeInsets.only(left: 10),
-      child: content.isEmpty
-          ? const Center(
-              child: Text(
-                'Click the build button to see the result',
-              ),
-            )
-          : SingleChildScrollView(
-              child: SelectableText(
-                content,
-                style: monoTextStyle,
-              ),
-            ),
-    ),
-            ],
-          );
+      children: [
+        showMarkdownFile(treeIntroFile, context),
+        Container(
+          decoration: sunkenBoxDecoration,
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 10),
+          child: content.isEmpty
+              ? const Center(
+                  child: Text(
+                    'Click the build button to see the result',
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: SelectableText(
+                    content,
+                    style: monoTextStyle,
+                  ),
+                ),
+        ),
+      ],
+    );
   }
 }

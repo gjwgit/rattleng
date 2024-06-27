@@ -66,7 +66,8 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
                 rSource(context, ref, 'model_template');
                 rSource(context, ref, 'model_build_rpart');
                 // TODO yyx 20240627 How should I restore this effect in the new Widget Pages?
-                // treeDisplayKey.currentState?.goToResultPage();
+                // it failed to work only when user first click build on the panel because the pages are not yet updated.
+                treePagesKey.currentState?.goToResultPage();
               },
               child: const Text('Build Decision Tree'),
             ),

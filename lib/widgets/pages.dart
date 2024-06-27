@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 class Pages extends StatefulWidget {
   final List<Widget> children;
 
-  const Pages({super.key, required this.children,});
+  const Pages({
+    super.key,
+    required this.children,
+  });
 
   @override
   PagesState createState() => PagesState();
@@ -17,7 +20,10 @@ class PagesState extends State<Pages> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0);
+    // By default, show the result page after build.
+    // TODO yyx 20240627 not run after the second build.
+    _pageController = PageController(initialPage: widget.children.length - 1);
+    // debugPrint('in pageController');
   }
 
   void _goToPreviousPage() {
