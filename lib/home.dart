@@ -295,6 +295,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
         children: [
           SingleChildScrollView(
             child: IntrinsicHeight(
+              // Because the height constraint is unbounded, we need to provide a height limit
               child: NavigationRail(
                 selectedIndex: _tabController.index,
                 onDestinationSelected: (int index) {
