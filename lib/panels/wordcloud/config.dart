@@ -34,7 +34,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/wordcloud.dart';
-import 'package:rattle/panels/wordcloud/panel.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 // TODO 20240605 gjw WE WILL HAVE OTHER PROVIDERS AS THE APP GROWS. maxword
 // MIGHT BE USED IN OTHER PANELS TOO. PERHAPS WE NEED TO IDENTIFY THESE AS

@@ -33,7 +33,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/widgets/pages.dart';
@@ -50,42 +49,6 @@ bool buildButtonPressed(String buildTime) {
 }
 
 class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
-  late PageController _pageController;
-  int _currentPage = 0;
-  // number of pages available
-  int numPages = 2;
-  void _goToPreviousPage() {
-    if (_currentPage > 0) {
-      _pageController.animateToPage(
-        _currentPage - 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void _goToNextPage() {
-    if (_currentPage < numPages - 1) {
-      _pageController.animateToPage(
-        _currentPage + 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void goToResultPage() {
-    debugPrint('go to result page');
-    // TODO yyx 20240624 might need change when we have more pages than 2.
-    _goToNextPage();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-  }
-
   @override
   Widget build(BuildContext context) {
     // Build the word cloud widget to be displayed in the tab, consisting of the

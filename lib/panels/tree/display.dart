@@ -36,7 +36,6 @@ import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 import '../../widgets/pages.dart';
-import 'panel.dart';
 
 /// The tree panel displays the tree instructions or the tree biuld output.
 
@@ -74,6 +73,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
         ),
       );
     }
+
     return Pages(
       // key: treePagesKey, // to go to the result page after clicking build button
       children: pages,
