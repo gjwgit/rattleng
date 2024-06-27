@@ -81,8 +81,6 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     String stdout = ref.watch(stdoutProvider);
     String content = rExtractTree(stdout);
 
-    final curHeight = MediaQuery.of(context).size.height;
-
     return Row(
       children: [
         IconButton(
@@ -94,44 +92,42 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           onPressed: _currentPage > 0 ? _goToPreviousPage : null,
         ),
         Expanded(
-          child: SizedBox(
-            height: curHeight * displayRatio,
-            // avoid this error
-            // Horizontal viewport was given unbounded height.
-            // Viewports expand in the cross axis to fill their container and constrain their children to match
-            // their extent in the cross axis. In this case, a horizontal viewport was given an unlimited amount of
-            // vertical space in which to expand.
+          child:
+              // To avoid this error, provide a height limit at a higher (parent) level using the expanded() widget.
+              // Horizontal viewport was given unbounded height.
+              // Viewports expand in the cross axis to fill their container and constrain their children to match
+              // their extent in the cross axis. In this case, a horizontal viewport was given an unlimited amount of
+              // vertical space in which to expand.
 
-            // The relevant error-causing widget was:
-            //   PageView PageView:file:///Users/yinyixiang/repo/my_rattleng/lib/panels/tree/display.dart:112:20
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              children: [
-                showMarkdownFile(treeIntroFile, context),
-                Container(
-                  decoration: sunkenBoxDecoration,
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(left: 10),
-                  child: content.isEmpty
-                      ? const Center(
-                          child: Text(
-                            'Click the build button to see the result',
-                          ),
-                        )
-                      : SingleChildScrollView(
-                          child: SelectableText(
-                            content,
-                            style: monoTextStyle,
-                          ),
+              // The relevant error-causing widget was:
+              //   PageView PageView:file:///Users/yinyixiang/repo/my_rattleng/lib/panels/tree/display.dart:112:20
+              PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            children: [
+              showMarkdownFile(treeIntroFile, context),
+              Container(
+                decoration: sunkenBoxDecoration,
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 10),
+                child: content.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'Click the build button to see the result',
                         ),
-                ),
-              ],
-            ),
+                      )
+                    : SingleChildScrollView(
+                        child: SelectableText(
+                          content,
+                          style: monoTextStyle,
+                        ),
+                      ),
+              ),
+            ],
           ),
         ),
         IconButton(
