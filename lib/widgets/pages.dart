@@ -24,7 +24,7 @@ class PagesState extends State<Pages> {
     // TODO yyx 20240627 not run after the second build.
     // _pageController = PageController(initialPage: widget.children.length - 1);
     _pageController = PageController(initialPage: 0);
-    // debugPrint('in pageController');
+    debugPrint('PAGE CONTROLLER: ${widget.children.length}');
   }
 
   void _goToPreviousPage() {
