@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 14:23:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-28 10:00:04 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,6 +33,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_forest.dart';
+import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The tree panel displays the tree instructions or the tree biuld output.
@@ -50,20 +51,27 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     String stdout = ref.watch(stdoutProvider);
     String content = rExtractForest(stdout);
 
-    return content == ''
-        ? showMarkdownFile(forestIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
-              ),
+    List<Widget> pages = [showMarkdownFile(forestIntroFile, context)];
+
+    if (content.isNotEmpty) {
+      pages.add(
+        Container(
+          decoration: sunkenBoxDecoration,
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 10),
+          child: SingleChildScrollView(
+            child: SelectableText(
+              content,
+              style: monoTextStyle,
             ),
-          );
+          ),
+        ),
+      );
+    }
+
+    return Pages(
+      // key: treePagesKey, // to go to the result page after clicking build button
+      children: pages,
+    );
   }
 }
