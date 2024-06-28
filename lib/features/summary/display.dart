@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 14:29:04 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-06-28 10:06:14 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,6 +35,7 @@ import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The panel displays the instructions or the output.
@@ -51,32 +52,39 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
 
-    String contents = rExtract(stdout, 'contents(ds)');
+    String content = rExtract(stdout, 'contents(ds)');
     // contents = rMarkdownContents(contents);
 
-    return contents == ''
-        ? showMarkdownFile(summaryIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const MarkdownBody(
-                      data: '**Contents of the Dataset**'
-                          '    generated using contents(ds)',
-                    ),
-                    SelectableText(
-                      contents,
-                      style: monoTextStyle,
-                    ),
-                  ],
+    List<Widget> pages = [showMarkdownFile(summaryIntroFile, context)];
+
+    if (content.isNotEmpty) {
+      pages.add(
+        Container(
+          decoration: sunkenBoxDecoration,
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 10),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const MarkdownBody(
+                  data: '**Contents of the Dataset**'
+                      '    generated using contents(ds)',
                 ),
-              ),
+                SelectableText(
+                  content,
+                  style: monoTextStyle,
+                ),
+              ],
             ),
-          );
+          ),
+        ),
+      );
+    }
+
+    return Pages(
+      // key: treePagesKey, // to go to the result page after clicking build button
+      children: pages,
+    );
   }
 }
