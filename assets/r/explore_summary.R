@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-06-29 15:17:36 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-06-29 21:21:34 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -75,29 +75,17 @@ library(fBasics, quietly=TRUE)
 
 skewness(ds[numc], na.rm=TRUE)
 
-# The 'mice' package provides the 'md.pattern' function.
+# The 'CrossTable' package provides the 'descr' function. Needs work
+# to make it useful in RattleNG.
 
-library(mice, quietly=TRUE)
+library(descr, quietly=TRUE)
 
-# Generate a summary of the missing values in the dataset.
+# Generate cross tabulations for categoric data.
 
-png("explore_summary.png", width=800, height=600, units="px")
+for (i in catc) { 
+  cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target)) 
+  print(CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS")) 
+  cat(paste(rep("=", 70), collapse=""), "
 
-md.pattern(ds)
-
-dev.off()
-
-## # The 'CrossTable' package provides the 'descr' function.
-
-## library(descr, quietly=TRUE)
-
-## # Generate cross tabulations for categoric data.
-
-## for (i in catc) 
-## { 
-##   cat(sprintf('CrossTab of %s by target variable %s\n\n', names(ds)[i], target)) 
-##   print(CrossTable(ds[[i]], ds[[target]], expected=TRUE, format='SAS')) 
-##   cat(paste(rep('=', 70), collapse=''), '
-
-## ') 
-## }
+") 
+}
