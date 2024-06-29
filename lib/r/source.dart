@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Saturday 2024-06-15 17:43:00 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-06-30 08:55:42 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -96,10 +96,15 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('VERSION', '0.0.1');
 
-  // Do we split the dataset? The option is presented on the DATASET GUI, and if
-  // set we split the dataset.
-
   code = code.replaceAll('FILENAME', path);
+
+  // TODO 20240630 gjw EVENTUALLY SELECTIVELY REPLACE
+  // AS REQUIRED FOR THE CURRENT FEATURE.
+
+  ////////////////////////////////////////////////////////////////////////
+  // WORD CLOUD
+  ////////////////////////////////////////////////////////////////////////
+
   code = code.replaceAll('WORDCLOUDPATH', tmpDirPath);
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
@@ -113,6 +118,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
       ? code = code.replaceAll('MAXWORD', num.parse(maxWord).toInt().toString())
       : code = code.replaceAll('MAXWORD', 'Inf');
+
+  // Do we split the dataset? The option is presented on the DATASET GUI, and if
+  // set we split the dataset.
 
   // TODO if (script.contains('^dataset_')) {
 

@@ -1,6 +1,6 @@
 # Rattle Scripts: generate a trimmed wordcloud png
 # 
-# Time-stamp: <Tuesday 2024-06-18 08:31:32 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-06-30 08:47:30 +1000 Graham Williams>
 # 
 # Copyright (C) 2024, Togaware Pty Ltd
 # 
@@ -92,3 +92,7 @@ dev.off()
 image <- image_read("WORDCLOUDPATH/tmp.png")
 trimmed_image <- image_trim(image)
 image_write(trimmed_image, path = "WORDCLOUDPATH/wordcloud.png")
+
+# Show the top words
+
+d %>% filter(freq >= MINFREQ) %>% print(row.names=FALSE)
