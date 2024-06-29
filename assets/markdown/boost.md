@@ -1,4 +1,4 @@
-**Boosting Model**
+# Boosting Model
 
 The basic idea of boosting is to associate a weight with each observation
 in the dataset. A series of models are built and the weights are
