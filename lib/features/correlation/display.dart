@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 14:30:58 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-30 06:57:06 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,12 +28,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
+import 'package:rattle/r/extract.dart';
+import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_empty.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -48,22 +48,41 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractEmpty(stdout);
+    List<Widget> pages = [showMarkdownFile(missingIntroFile, context)];
 
-    return content == ''
-        ? showMarkdownFile(correlationIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
-              ),
-            ),
-          );
+    String content = '';
+    List<String> lines = [];
+
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'print(round(cor,2))');
+
+    // Add a blank line between each sub-table.
+
+    lines = content.split('\n');
+
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].startsWith('  ')) {
+        lines[i] = '\n${lines[i]}';
+      }
+    }
+
+    content = lines.join('\n');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Correlation - Numeric Data\n\n'
+              'Generated using `stats::cor()`',
+          content: content,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    return Pages(
+      children: pages,
+    );
   }
 }
