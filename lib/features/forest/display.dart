@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-28 10:00:04 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-29 18:01:54 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,15 +28,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/text_page.dart';
 
-/// The tree panel displays the tree instructions or the tree biuld output.
+/// The FOREST panel displays the instructions and then the build output.
 
 class ForestDisplay extends ConsumerStatefulWidget {
   const ForestDisplay({super.key});
@@ -49,28 +48,22 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractForest(stdout);
 
     List<Widget> pages = [showMarkdownFile(forestIntroFile, context)];
 
+    String content = rExtractForest(stdout);
+
     if (content.isNotEmpty) {
       pages.add(
-        Container(
-          decoration: sunkenBoxDecoration,
-          width: double.infinity,
-          padding: const EdgeInsets.only(left: 10),
-          child: SingleChildScrollView(
-            child: SelectableText(
-              content,
-              style: monoTextStyle,
-            ),
-          ),
+        TextPage(
+          title: '# Random Forest Model\n\n'
+              'Generated using `randomForest()`.\n\n',
+          content: '\n$content',
         ),
       );
     }
 
     return Pages(
-      // key: treePagesKey, // to go to the result page after clicking build button
       children: pages,
     );
   }

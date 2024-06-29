@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-28 10:02:32 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-29 17:51:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,13 +28,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The CLUSTER panel displays the tree instructions or the tree biuld output.
 
@@ -49,22 +48,17 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractCluster(stdout);
 
     List<Widget> pages = [showMarkdownFile(clusterIntroFile, context)];
 
+    String content = rExtractCluster(stdout);
+
     if (content.isNotEmpty) {
       pages.add(
-        Container(
-          decoration: sunkenBoxDecoration,
-          width: double.infinity,
-          padding: const EdgeInsets.only(left: 10),
-          child: SingleChildScrollView(
-            child: SelectableText(
-              content,
-              style: monoTextStyle,
-            ),
-          ),
+        TextPage(
+          title: '# Cluster Analysis\n\n'
+              'Generated using `kmeans()`.\n\n',
+          content: '\n$content',
         ),
       );
     }

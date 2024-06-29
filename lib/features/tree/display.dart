@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-28 09:34:52 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-29 18:01:01 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,15 +28,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/text_page.dart';
 
-/// The tree panel displays the tree instructions or the tree biuld output.
+/// The TREE panel displays the tree instructions and then build output.
 
 class TreeDisplay extends ConsumerStatefulWidget {
   const TreeDisplay({super.key});
@@ -49,32 +48,22 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractTree(stdout);
+
     List<Widget> pages = [showMarkdownFile(treeIntroFile, context)];
+
+    String content = rExtractTree(stdout);
+
     if (content.isNotEmpty) {
       pages.add(
-        Container(
-          decoration: sunkenBoxDecoration,
-          width: double.infinity,
-          padding: const EdgeInsets.only(left: 10),
-          child: content.isEmpty
-              ? const Center(
-                  child: Text(
-                    'Click the build button to see the result',
-                  ),
-                )
-              : SingleChildScrollView(
-                  child: SelectableText(
-                    content,
-                    style: monoTextStyle,
-                  ),
-                ),
+        TextPage(
+          title: '# Decision Tree Model\n\n'
+              'Generated using `rpart()`.\n\n',
+          content: '\n$content',
         ),
       );
     }
 
     return Pages(
-      // key: treePagesKey, // to go to the result page after clicking build button
       children: pages,
     );
   }
