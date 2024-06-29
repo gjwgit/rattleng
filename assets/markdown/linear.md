@@ -1,4 +1,4 @@
-**Linear and Generalised Linear Models**
+# Linear and Generalised Linear Models
 
 A linear regression model is the traditional method for fitting a
 statistical model to data. It is appropriate when the target variable

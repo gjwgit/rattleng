@@ -1,4 +1,4 @@
-**Decision Trees**
+# Decision Trees
 
 A **decision tree** is the prototypical data mining tool used widely
 for its ease of interpretation. 

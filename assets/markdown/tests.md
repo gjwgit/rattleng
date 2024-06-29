@@ -1,4 +1,4 @@
-**Statistical Tests**
+# Statistical Tests
 
 These tests apply to two samples. The paired two sample tests assume
 that we have two samples or observations, and that we are testing for

@@ -1,4 +1,4 @@
-**Cluster Analysis**
+# Cluster Analysis
 
 A cluster analysis will identify groups within a dataset. The KMeans
 clustering algorithm will search for K clusters (which you specify).
