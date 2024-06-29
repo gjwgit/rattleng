@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-06-13 05:35:09 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-06-29 15:17:36 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,47 +42,50 @@ library(Hmisc, quietly=TRUE)
 # Obtain a summary of the dataset.
 
 contents(ds)
-## summary(ds)
 
-## # The 'Hmisc' package provides the 'describe' function.
+# Standard R summary of the dataset.
 
-## library(Hmisc, quietly=TRUE)
+summary(ds)
 
-## # Generate a description of the dataset.
+# Generate a description of the dataset.
 
-## describe(ds)
+describe(ds)
 
-## # The 'basicStats' package provides the 'fBasics' function.
+# The 'basicStats' package provides the 'fBasics' function.
 
-## library(fBasics, quietly=TRUE)
+library(fBasics, quietly=TRUE)
 
-## # Generate a description of the numeric data.
+# Generate a description of the numeric data.
 
-## lapply(ds[numc], basicStats)
+lapply(ds[numc], basicStats)
 
-## # The 'kurtosis' package provides the 'fBasics' function.
+# The 'kurtosis' package provides the 'fBasics' function.
 
-## library(fBasics, quietly=TRUE)
+library(fBasics, quietly=TRUE)
 
-## # Summarise the kurtosis of the numeric data.
+# Summarise the kurtosis of the numeric data.
 
-## kurtosis(ds[numc], na.rm=TRUE)
+kurtosis(ds[numc], na.rm=TRUE)
 
-## # The 'skewness' package provides the 'fBasics' function.
+# The 'skewness' package provides the 'fBasics' function.
 
-## library(fBasics, quietly=TRUE)
+library(fBasics, quietly=TRUE)
 
-## # Summarise the skewness of the numeric data.
+# Summarise the skewness of the numeric data.
 
-## skewness(ds[numc], na.rm=TRUE)
+skewness(ds[numc], na.rm=TRUE)
 
-## # The 'mice' package provides the 'md.pattern' function.
+# The 'mice' package provides the 'md.pattern' function.
 
-## library(mice, quietly=TRUE)
+library(mice, quietly=TRUE)
 
-## # Generate a summary of the missing values in the dataset.
+# Generate a summary of the missing values in the dataset.
 
-## md.pattern(ds)
+png("explore_summary.png", width=800, height=600, units="px")
+
+md.pattern(ds)
+
+dev.off()
 
 ## # The 'CrossTable' package provides the 'descr' function.
 
