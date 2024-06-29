@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 13:51:45 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-29 15:45:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -63,7 +63,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               onPressed: () {
                 rSource(context, ref, 'explore_summary');
               },
-              child: const Text('Display Dataset Summary'),
+              child: const Text('Generate Dataset Summary'),
             ),
             const SizedBox(width: 20.0),
             const Text(
