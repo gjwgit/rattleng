@@ -1,4 +1,4 @@
-**Univariate Dataset Summary**
+# Univariate Dataset Summary
 
 The first task for a data scientist, on loading their dataset into
 RattleNG, is to understand what the data looks like and how it is
@@ -20,3 +20,7 @@ comprehensive summary of each variable.
 
 **Kurtosis** and **Skewness** allow these measures to be compared
 across the available numeric variables.
+
+## Data Scientist
+
+Your task is to check for anything that looks odd or unexpected.
