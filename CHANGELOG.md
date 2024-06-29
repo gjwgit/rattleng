@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Complete SUMMARY text features [0.1.20]
 + New Pages() widget for multiple page display [0.1.19]
 + Rename `panels` to `features` as a standard [0.1.18]
 + Implement sliding panels for wordcloud display [0.1.17]
