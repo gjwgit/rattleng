@@ -1,11 +1,11 @@
-/// Widget to display the SUMMARY introduction or output.
+/// Widget to display the SUMMARY introduction and display output.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-06-29 15:33:58 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-29 21:08:26 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -214,32 +214,6 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           title: '# Detailed Variable Statistics\n\n'
               'Generated using `fBasics::basicStats`\n\n',
           content: '\n$content',
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    content = rExtract(stdout, 'md.pattern(ds)');
-
-    // Add a blank line between each sub-table.
-
-    lines = content.split('\n');
-
-    for (int i = 0; i < lines.length; i++) {
-      if (lines[i].startsWith(' ') && !RegExp(r'^\s+\d').hasMatch(lines[i])) {
-        lines[i] = '\n${lines[i]}';
-      }
-    }
-
-    content = lines.join('\n');
-
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '# Patterns of Missing Data - Textual\n\n'
-              'Generated using `mice::md.pattern(ds)`',
-          content: content,
         ),
       );
     }
