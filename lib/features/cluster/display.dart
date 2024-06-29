@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-06-29 17:51:51 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-29 18:07:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -57,7 +57,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       pages.add(
         TextPage(
           title: '# Cluster Analysis\n\n'
-              'Generated using `kmeans()`.\n\n',
+              'Built using `kmeans()`.\n\n',
           content: '\n$content',
         ),
       );

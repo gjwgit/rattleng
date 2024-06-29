@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-06-29 18:01:54 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-06-29 18:07:14 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -57,7 +57,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       pages.add(
         TextPage(
           title: '# Random Forest Model\n\n'
-              'Generated using `randomForest()`.\n\n',
+              'Built using `randomForest()`.\n\n',
           content: '\n$content',
         ),
       );
