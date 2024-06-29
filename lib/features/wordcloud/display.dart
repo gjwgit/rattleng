@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Friday 2024-06-28 09:35:11 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-30 08:20:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,8 +35,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
+import 'package:rattle/r/extract.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 class WordCloudDisplay extends ConsumerStatefulWidget {
   const WordCloudDisplay({super.key});
@@ -51,12 +54,15 @@ bool buildButtonPressed(String buildTime) {
 class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
   @override
   Widget build(BuildContext context) {
+    String stdout = ref.watch(stdoutProvider);
+
     // Build the word cloud widget to be displayed in the tab, consisting of the
     // top configuration and the main panel showing the generated image. Before
     // the build we display a introdcurory text to the functionality.
-    List<Widget> pages = [
-      showMarkdownFile(wordCloudMsgFile, context),
-    ];
+
+    List<Widget> pages = [showMarkdownFile(wordCloudMsgFile, context)];
+
+    String content = '';
 
     // Reload the wordcloud image.
 
@@ -120,6 +126,22 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'd %>% filter(freq >=');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Word Frequency\n\n'
+              'Generated using `TermDocumentMatrix()`',
+          content: content,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
 
     return Pages(children: pages);
   }
