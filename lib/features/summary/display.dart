@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-30 09:18:35 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-30 12:40:56 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -57,6 +57,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
+    // BASIC R SUMMARY
+    ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'summary(ds)');
 
@@ -97,6 +99,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+    // HMISC CONTENTS
+    ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'contents(ds)');
 
@@ -122,6 +126,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       );
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    // HMISC DESCRIBE
     ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'describe(ds)');
@@ -165,6 +171,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+    // KURTOSIS AND SKEWNESS
+    ////////////////////////////////////////////////////////////////////////
 
     content = 'Kurtosis:\n';
     content += rExtract(stdout, 'kurtosis(ds[numc], na.rm=TRUE)');
@@ -199,6 +207,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       );
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    // FBASICS STATS
     ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'lapply(ds[numc], basicStats)');

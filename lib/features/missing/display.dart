@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-30 07:01:03 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-30 12:38:42 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -54,6 +54,8 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     String content = '';
     List<String> lines = [];
 
+    ////////////////////////////////////////////////////////////////////////
+    // TEXT PATTERN OF MISSING VALUES
     ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'md.pattern(ds)');

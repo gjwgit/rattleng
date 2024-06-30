@@ -2,12 +2,13 @@
 
 Recorded here are the high level changes for the RattleNG app.
 
-Instructions: For release 0.7 we list the incremental updates 0.6.1 etc.
-numbers.
+Guide: Each version update is recorded here with a short user-oriented
+description of the update. Updates in the 0.2.n series are heading
+toward a 0.2 release.
 
-## 0.2.0 FUTURE
+## 0.2 FUTURE
 
-+ Update TREE and FOREST display [0.1.24]
++ Update TREE and FOREST display [0.1.24 20240630]
 + Add word frequency to WORDCLOUD [0.1.23]
 + Add MISSING and CORRELATION features [0.1.22]
 + Update tree/cluster/forest to use TextPage() [0.1.21] 
@@ -32,7 +33,7 @@ numbers.
 + Add wordcloud introductory message [0.1.2]
 + WordCloud cleanup. Improve image display. [0.1.1]
 
-## 0.1.0 Word Clouds, Basic Trees, and Basic Forests
+## 0.1 Word Clouds, Basic Trees, and Basic Forests
 
 + Comprehensive cleanup with dart code metrics [0.1.0]
 + Wordcloud -> WordCloud - it is generally two words [0.0.7]
