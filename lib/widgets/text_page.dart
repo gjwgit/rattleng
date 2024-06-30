@@ -1,4 +1,4 @@
-/// Helper function to build the common text based pages.
+/// Helper widget to build the common text based pages.
 //
 // Time-stamp: <Saturday 2024-06-29 14:01:56 +1000 Graham Williams>
 //
