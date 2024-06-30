@@ -105,7 +105,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // WORD CLOUD
   ////////////////////////////////////////////////////////////////////////
 
-  code = code.replaceAll('WORDCLOUDPATH', tmpDirPath);
+  code = code.replaceAll('TEMPDIR', tmpDirPath);
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
