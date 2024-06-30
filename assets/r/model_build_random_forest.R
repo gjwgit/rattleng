@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-02 16:19:17 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-06-30 10:05:38 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -64,10 +64,43 @@ print(pROC::roc(model_randomForest$y,
 
 # Calculate the AUC Confidence Interval.
 
-##### print(pROC::ci.auc(crs$rf$y, as.numeric(crs$rf$predicted)))
+print(pROC::ci.auc(model_randomForest$y, as.numeric(model_randomForest$predicted)))
 
 # List the importance of the variables.
 
-##### rn <- round(randomForest::importance(crs$rf), 2)
-##### print(rn[order(rn[,3], decreasing=TRUE),])
+rn <- round(randomForest::importance(model_randomForest), 2)
+rn[order(rn[,3], decreasing=TRUE),]
 
+# Plot the relative importance of the variables.
+
+png("random_forest.png", width=800, height=600, units="px")
+ggVarImp(model_randomForest,
+         title="Variable Importance Random Forest weather.csv")
+dev.off()
+
+# p <- ggVarImp(crs$rf,
+#              title="Variable Importance Random Forest weather.csv")
+# p
+
+# Plot the error rate against the number of trees.
+
+## plot(crs$rf, main="")
+## legend("topright", c("OOB", "No", "Yes"), text.col=1:6, lty=1:3, col=1:3)
+## title(main="Error Rates Random Forest weather.csv",
+##     sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+# Display tree number 1.
+
+printRandomForests(model_randomForest, 1)
+
+# Plot the OOB ROC curve.
+
+## library(verification)
+## aucc <- verification::roc.area(as.integer(as.factor(crs$dataset[crs$train, crs$target]))-1,
+##                  crs$rf$votes[,2])$A
+## verification::roc.plot(as.integer(as.factor(crs$dataset[crs$train, crs$target]))-1,
+##          crs$rf$votes[,2], main="")
+## legend("bottomright", bty="n",
+##        sprintf("Area Under the Curve (AUC) = %1.3f", aucc))
+## title(main="OOB ROC Curve Random Forest weather.csv",
+##     sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
