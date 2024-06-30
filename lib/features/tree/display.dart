@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-06-29 18:07:22 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-30 09:18:18 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -51,7 +52,11 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     List<Widget> pages = [showMarkdownFile(treeIntroFile, context)];
 
-    String content = rExtractTree(stdout);
+    String content = '';
+
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtractTree(stdout);
 
     if (content.isNotEmpty) {
       pages.add(
@@ -63,8 +68,22 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
       );
     }
 
-    return Pages(
-      children: pages,
-    );
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'asRules(model_rpart)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Decision Tree as Rules\n\n'
+              'Built using `rattle::asRules()`.\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    return Pages(children: pages);
   }
 }

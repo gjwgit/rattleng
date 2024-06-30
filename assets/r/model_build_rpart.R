@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2023-11-06 15:53:21 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-06-30 09:13:53 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -67,3 +67,15 @@ model_rpart <- rpart(
 print(model_rpart)
 printcp(model_rpart)
 cat("\n")
+
+# Plot the resulting Decision Tree. 
+
+# We use the rpart.plot package.
+
+png("decision_tree.png", width=800, height=600, units="px")
+fancyRpartPlot(model_rpart, main="Decision Tree weather.csv $ RainTomorrow")
+dev.off()
+
+# List the rules from the tree using a Rattle support function.
+
+asRules(model_rpart)
