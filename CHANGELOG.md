@@ -7,6 +7,7 @@ numbers.
 
 ## 0.2.0 FUTURE
 
++ Update TREE and FOREST display [0.1.24]
 + Add word frequency to WORDCLOUD [0.1.23]
 + Add MISSING and CORRELATION features [0.1.22]
 + Update tree/cluster/forest to use TextPage() [0.1.21] 
