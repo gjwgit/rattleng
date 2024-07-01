@@ -38,5 +38,21 @@ String tmpDirPath = systemTempDir.path;
 String wordCloudImagePath = '$tmpDirPath/wordcloud.png';
 String tmpImagePath = '$tmpDirPath/tmp.png';
 
-const List<String> stopwordLanguages = <String>['english', 'catalan', 'romanian',  'SMART (english extended)', 'danish', 'dutch', 'finnish',
-'french', 'german', 'hungarian', 'italian', 'norwegian', 'portuguese', 'russian', 'spanish', 'swedish',];
+const List<String> stopwordLanguages = <String>[
+  'english',
+  'catalan',
+  'romanian',
+  'SMART (english extended)',
+  'danish',
+  'dutch',
+  'finnish',
+  'french',
+  'german',
+  'hungarian',
+  'italian',
+  'norwegian',
+  'portuguese',
+  'russian',
+  'spanish',
+  'swedish',
+];
