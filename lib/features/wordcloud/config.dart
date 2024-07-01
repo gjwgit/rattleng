@@ -224,7 +224,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 onSelected: (String? value) {
                   ref.read(languageProvider.notifier).state = value!;
                 },
-                
               ),
             ),
           ],
