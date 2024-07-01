@@ -215,14 +215,17 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ],
             ),
             const SizedBox(width: 20),
-            DropdownMenu<String>(
-              initialSelection: stopwordLanguages.first,
-              dropdownMenuEntries: stopwordLanguages.map((s) {
-                return DropdownMenuEntry(value: s, label: s);
-              }).toList(),
-              onSelected: (String? value) {
-                ref.read(languageProvider.notifier).state = value!;
-              },
+            Expanded(
+              child: DropdownMenu<String>(
+                initialSelection: stopwordLanguages.first,
+                dropdownMenuEntries: stopwordLanguages.map((s) {
+                  return DropdownMenuEntry(value: s, label: s);
+                }).toList(),
+                onSelected: (String? value) {
+                  ref.read(languageProvider.notifier).state = value!;
+                },
+                
+              ),
             ),
           ],
         ),
