@@ -49,7 +49,7 @@ if (PUNCTUATION) {
 # CHOSEN THROUGH THE GUI.
 
 if (STOPWORD) {
-  docs <- tm_map(docs, removeWords, stopwords("english"))
+  docs <- tm_map(docs, removeWords, stopwords("LANGUAGE"))
 }
 
 # Convert text data to a single character string

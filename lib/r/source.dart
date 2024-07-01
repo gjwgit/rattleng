@@ -39,6 +39,7 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
+import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
 import 'package:rattle/providers/wordcloud/minfreq.dart';
 import 'package:rattle/providers/wordcloud/punctuation.dart';
@@ -73,6 +74,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   bool partition = ref.read(partitionProvider);
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
+  String language = ref.read(languageProvider);
 
   // First obtain the text from the script.
 
@@ -110,6 +112,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
   code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('LANGUAGE', language);
 
   (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
       ? code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString())
