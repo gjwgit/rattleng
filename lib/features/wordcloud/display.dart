@@ -52,6 +52,7 @@ bool buildButtonPressed(String buildTime) {
 }
 
 class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
@@ -83,11 +84,9 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // build button pressed and png file exists
       debugPrint('Model built. Now Sleeping as needed to await file.');
 
-      // Reload the image:
-      // https://nambiarakhilraj01.medium.com/
-      // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
-
-      var bytes = wordCloudFile.readAsBytesSync();
+      setState(() {
+        _isLoading = true;
+      });
 
       // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
       //
@@ -103,10 +102,24 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       //
       // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
 
-      while (bytes.lengthInBytes == 0) {
+      // while (bytes.lengthInBytes == 0) {
+      //   sleep(const Duration(seconds: 1));
+      //   bytes = wordCloudFile.readAsBytesSync();
+      // }
+      // TODO yyx 20240701 what is the diff between sync and async?
+      // wait to read the file until the file is available.
+      // attempt to read it before that might give PathNotFound Exception (https://github.com/gjwgit/rattleng/issues/169)
+      while (!wordCloudFile.existsSync()) {
         sleep(const Duration(seconds: 1));
-        bytes = wordCloudFile.readAsBytesSync();
       }
+      // Reload the image:
+      // https://nambiarakhilraj01.medium.com/
+      // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+      var bytes = wordCloudFile.readAsBytesSync();
+
+      setState(() {
+        _isLoading = false;
+      });
 
       Image image = Image.memory(bytes);
 
@@ -121,8 +134,13 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ],
       );
       pages.add(
-        SingleChildScrollView(
-          child: imageDisplay,
+        Stack(
+          children: [
+            SingleChildScrollView(
+              child: imageDisplay,
+            ),
+            if (_isLoading) const CircularProgressIndicator(),
+          ],
         ),
       );
     }

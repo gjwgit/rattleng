@@ -117,13 +117,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
 
-                final file = File(wordCloudImagePath);
-                while (true) {
-                  if (await file.exists()) {
-                    debugPrint('file exists');
-                    break;
-                  }
-                }
+                // final file = File(wordCloudImagePath);
+                // while (true) {
+                //   if (await file.exists()) {
+                //     debugPrint('file exists');
+                //     break;
+                //   }
+                // }
                 // Toggle the state to trigger rebuild
                 debugPrint('build clicked on ${timestamp()}');
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
