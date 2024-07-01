@@ -108,7 +108,9 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       //   bytes = wordCloudFile.readAsBytesSync();
       //   debugPrint('after exception 2');
       // }
-
+      // TODO yyx 20240701 what is the diff between sync and async?
+      // wait to read the file until the file is available. 
+      // attempt to read it before that might give PathNotFound Exception (https://github.com/gjwgit/rattleng/issues/169)
       while (!wordCloudFile.existsSync()) {
         sleep(const Duration(seconds: 1));
       }
