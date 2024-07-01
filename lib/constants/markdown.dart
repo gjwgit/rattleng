@@ -42,7 +42,7 @@ const String clusterIntroFile = '$assetsPath/markdown/cluster.md';
 
 /// CORRELATION tab markdown file welcome message.
 
-const String correlationIntroFile = '$assetsPath/markdown/correlation.md';
+// const String correlationIntroFile = '$assetsPath/markdown/correlation.md';
 
 /// FOREST tab markdown file welcome message.
 
