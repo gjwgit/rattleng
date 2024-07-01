@@ -117,7 +117,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
       // debugPrint('before exception 1');
       var bytes = wordCloudFile.readAsBytesSync();
-      debugPrint(bytes.lengthInBytes.toString());
+      // debugPrint(bytes.lengthInBytes.toString());
       // debugPrint('after exception 1');
 
       setState(() {
