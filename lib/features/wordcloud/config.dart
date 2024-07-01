@@ -181,6 +181,22 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ],
             ),
+
+            const SizedBox(width: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(punctuationProvider),
+                  onChanged: (bool? v) => {
+                    ref.read(punctuationProvider.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message: 'Remove punctuation marks such as periods.',
+                  child: Text('Remove Punctuation'),
+                ),
+              ],
+            ),
             const SizedBox(width: 20),
             Row(
               children: [
@@ -197,19 +213,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ],
             ),
             const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(punctuationProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(punctuationProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: 'Remove punctuation marks such as periods.',
-                  child: Text('Remove Punctuation'),
-                ),
-              ],
+            DropdownMenu<String>(
+              initialSelection: stopwordLanguage.first,
+              dropdownMenuEntries: stopwordLanguage.map((s) {
+                return DropdownMenuEntry(value: s, label: s);
+              }).toList(),
             ),
           ],
         ),
