@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Sunday 2024-06-23 20:28:29 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 20:14:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -217,6 +217,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             const SizedBox(width: 20),
             Expanded(
               child: DropdownMenu<String>(
+                label: const Text('Language'),
+                leadingIcon: const Icon(Icons.language),
                 initialSelection: stopwordLanguages.first,
                 dropdownMenuEntries: stopwordLanguages.map((s) {
                   return DropdownMenuEntry(value: s, label: s);
