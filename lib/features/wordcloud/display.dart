@@ -104,9 +104,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
       // while (bytes.lengthInBytes == 0) {
       //   sleep(const Duration(seconds: 1));
-      //   debugPrint('before exception 2');
       //   bytes = wordCloudFile.readAsBytesSync();
-      //   debugPrint('after exception 2');
       // }
       // TODO yyx 20240701 what is the diff between sync and async?
       // wait to read the file until the file is available. 
@@ -117,10 +115,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // Reload the image:
       // https://nambiarakhilraj01.medium.com/
       // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
-      // debugPrint('before exception 1');
       var bytes = wordCloudFile.readAsBytesSync();
-      // debugPrint(bytes.lengthInBytes.toString());
-      // debugPrint('after exception 1');
 
       setState(() {
         _isLoading = false;
