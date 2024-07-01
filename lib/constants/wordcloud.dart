@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2024-06-10 10:08:49 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 20:02:11 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -42,7 +42,7 @@ const List<String> stopwordLanguages = <String>[
   'english',
   'catalan',
   'romanian',
-  'SMART (english extended)',
+  'SMART',
   'danish',
   'dutch',
   'finnish',
