@@ -73,7 +73,7 @@ List<String> rExtractVars(String txt) {
 
   String vars = result.join(' ');
 
-  debugPrint('R EXTRACT VARS JOIN: $vars');
+  // debugPrint('R EXTRACT VARS JOIN: $vars');
 
   // Remove the [1] etc line numbering in the output.
 
@@ -95,7 +95,7 @@ List<String> rExtractVars(String txt) {
 
   // Return the list of variable names.
 
-  debugPrint('R EXTRACT VARS FINAL: $result');
+  // debugPrint('R EXTRACT VARS FINAL: $result');
 
   return result;
 }

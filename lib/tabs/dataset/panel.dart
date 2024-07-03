@@ -33,6 +33,7 @@ import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_glimpse.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
@@ -45,22 +46,93 @@ class DatasetPanel extends ConsumerStatefulWidget {
 }
 
 class _DatasetPanelState extends ConsumerState<DatasetPanel> {
+  Map<String, String> _selectedChoices = {};
+  List<String> choices = [
+    'Input',
+    'Target',
+    'Risk',
+    'Ident',
+    'Ignore',
+    'Weight',
+  ];
   @override
   Widget build(BuildContext context) {
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
+    // debugPrint(rExtractGlimpse(stdout));
+    // extract column names
+    List<String> vars = rExtractVars(stdout);
+    // Initialize the map with the first choice for each column
+    for (var column in vars) {
+      _selectedChoices[column] = choices[0];
+    }
+    // for (var i in vars) {
+    //   debugPrint(i);
+    // }
+    // TODO yyx 20240703 create a list of row. Each row contains a column name, datatype, choicechip and some content in order.
 
     return path == ''
         ? showMarkdownFile(welcomeMsgFile, context)
-        : Container(
-            width: double.infinity,
-            color: Colors.white,
-            padding: const EdgeInsets.only(left: 10),
-            child: SelectableText(
-              rExtractGlimpse(stdout),
-              key: datasetGlimpseKey,
-              style: monoTextStyle,
-            ),
+        : ListView.builder(
+            itemCount: vars.length,
+            itemBuilder: (context, index) {
+              String columnName = vars[index];
+              String dataType =
+                  'String'; // Example data type, replace with actual
+              String content = 'Content for $columnName'; // Example content
+
+              // TODO yyx 20240704 overflow horizontal
+              return Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Row(
+                  children: [
+                    Text(columnName),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(dataType),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Wrap(
+                      spacing: 5.0,
+                      children: choices.map((choice) {
+                        return ChoiceChip(
+                          label: Text(choice),
+                          selected: _selectedChoices[columnName] == choice,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              if (selected) {
+                                _selectedChoices[columnName] = choice;
+                                debugPrint('$columnName set to $choice');
+                              } else {
+                                _selectedChoices[columnName] = '';
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(content),
+                    ),
+                  ],
+                ),
+              );
+            },
           );
+    // : Container(
+    //     width: double.infinity,
+    //     color: Colors.white,
+    //     padding: const EdgeInsets.only(left: 10),
+    //     child: SelectableText(
+    //       rExtractGlimpse(stdout),
+    //       key: datasetGlimpseKey,
+    //       style: monoTextStyle,
+    //     ),
+    //   );
   }
 }
