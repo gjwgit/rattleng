@@ -70,7 +70,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     // for (var i in vars) {
     //   debugPrint(i);
     // }
-    // TODO yyx 20240703 create a list of row. Each row contains a column name, datatype, choicechip and some content in order.
+    // TODO yyx 20240703 extract datatype, content
 
     return path == ''
         ? showMarkdownFile(welcomeMsgFile, context)
