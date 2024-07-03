@@ -57,15 +57,16 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
   ];
   @override
   Widget build(BuildContext context) {
+    debugPrint('rebuild dataset panel');
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
     // debugPrint(rExtractGlimpse(stdout));
     // extract column names
     List<String> vars = rExtractVars(stdout);
     // Initialize the map with the first choice for each column
-    for (var column in vars) {
-      _selectedChoices[column] = choices[0];
-    }
+    // for (var column in vars) {
+    //   _selectedChoices[column] = choices[0];
+    // }
     // for (var i in vars) {
     //   debugPrint(i);
     // }
