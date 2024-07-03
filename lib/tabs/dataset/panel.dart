@@ -36,6 +36,29 @@ import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
+
+  List<VariableInfo> extractVariables(String text) {
+    final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
+    final matches = regex.allMatches(text);
+
+    return matches.map((match) {
+      final name = match.group(1)!;
+      final type = match.group(2)!;
+      final details = match.group(3)!;
+      return VariableInfo(name: name, type: type, details: details);
+    }).toList();
+  }
+  class VariableInfo {
+  final String name;
+  final String type;
+  final String details;
+
+  VariableInfo({
+    required this.name,
+    required this.type,
+    required this.details,
+  });
+}
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
 class DatasetPanel extends ConsumerStatefulWidget {
@@ -62,25 +85,23 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     String stdout = ref.watch(stdoutProvider);
     // debugPrint(rExtractGlimpse(stdout));
     // extract column names
-    List<String> vars = rExtractVars(stdout);
-    // Initialize the map with the first choice for each column
+    List<VariableInfo> vars = extractVariables(stdout);
+    // TODO yyx 20240704 Initialize the map with the first choice for each column
     // for (var column in vars) {
     //   _selectedChoices[column] = choices[0];
     // }
     // for (var i in vars) {
     //   debugPrint(i);
     // }
-    // TODO yyx 20240703 extract datatype, content
-
     return path == ''
         ? showMarkdownFile(welcomeMsgFile, context)
         : ListView.builder(
             itemCount: vars.length,
             itemBuilder: (context, index) {
-              String columnName = vars[index];
+              String columnName = vars[index].name;
               String dataType =
-                  'String'; // Example data type, replace with actual
-              String content = 'Content for $columnName'; // Example content
+                  vars[index].type; // Example data type, replace with actual
+              String content = vars[index].details; // Example content
 
               // TODO yyx 20240704 overflow horizontal
               return Padding(
