@@ -23,7 +23,6 @@
 /// Authors: Graham Williams
 library;
 
-import 'package:flutter/foundation.dart' show debugPrint;
 
 List<String> rExtractVars(String txt) {
   // Command/string to identify start point of the extracttion.
