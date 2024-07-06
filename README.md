@@ -1,10 +1,11 @@
 # Rattle the Next Generation Data Scientist
 
-Rattle has been in development and use for more than 15 years as a
-Data Mining and now Data Science toolkit. The open source software and
-it books and papers have been used by educators, consultants, and
-practitioners across industry and government, to turn data into
-knowledge, through machine learning and artificial intelligence.
+Rattle has been in development and use for almost 20 years as a Data
+Mining and now Data Science toolkit for the apprentice and practising
+Data Scientist. The open source software and it books and papers have
+been used by educators, consultants, and practitioners across industry
+and government, to turn data into knowledge, through machine learning
+and artificial intelligence.
 
 But now, it is time for a refresh. To install the new Rattle visit the
 [Installers](https://github.com/gjwgit/rattleng/tree/dev/installers/README.md).
