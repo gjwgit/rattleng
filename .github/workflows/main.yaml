@@ -43,6 +43,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: build/linux/x64/release/bundle/rattle-${{github.ref_name}}-linux.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-zip
+          path: release-linux.zip
 
   build-and-release-windows:
     runs-on: windows-latest
@@ -75,6 +80,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: build/windows/x64/runner/Release/rattle-${{github.ref_name}}-windows.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-zip
+          path: release-linux.zip
 
   build-and-release-macos:
     runs-on: macos-latest
@@ -108,3 +118,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: build/macos/Build/Products/Release/rattle-${{github.ref_name}}-macos.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-zip
+          path: release-linux.zip
