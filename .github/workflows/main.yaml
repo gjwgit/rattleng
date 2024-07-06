@@ -10,7 +10,10 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+      - name: Checkout the repository
       - uses: actions/checkout@v4
+        run: git status
+        run: echo "GRAHAM"
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
