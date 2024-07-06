@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-zip
-          path: release-linux.zip
+          path: build/linux/x64/release/bundle/rattle-${{github.ref_name}}-linux.zip
 
   build-and-release-windows:
     runs-on: windows-latest
