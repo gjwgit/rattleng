@@ -18,10 +18,13 @@ jobs:
           channel: 'stable'
           architecture: x64
           flutter-version: '3.22.2'
+      - run: flutter --version
       - name: Install dependencies
         run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-0 libgtk-3-dev libblkid1 liblzma5
       - name: Install project dependencies
         run: flutter pub get
+      - run: flutter pub upgrade
+      - run: flutter pub get
       - name: Generate intermediates
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Enable linux build
