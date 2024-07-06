@@ -86,7 +86,7 @@ Currently implemented features:
 + Script
 
 ## Installing RattleNG from Pre-Built Packages
-xs
+
 The basic process is to install the [R statistical
 software](https://cloud.r-project.org/), then fire up R to install the
 pre-requisite packages:
