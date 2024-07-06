@@ -6,6 +6,7 @@ on:
       - dev
 
 jobs:
+
   build-and-release-linux:
     runs-on: ubuntu-22.04
 
@@ -83,8 +84,8 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: release-zip
-          path: release-linux.zip
+          name: rattle-windows
+          path: build/windows/x64/runner/Release/rattle-${{github.ref_name}}-windows.zip
 
   build-and-release-macos:
     runs-on: macos-latest
@@ -121,5 +122,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: release-zip
-          path: release-linux.zip
+          name: rattle-macos
+          path: build/macos/Build/Products/Release/rattle-${{github.ref_name}}-macos.zip
