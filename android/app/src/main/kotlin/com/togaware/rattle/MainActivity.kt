@@ -1,4 +1,4 @@
-package com.example.rattle
+package com.togaware.rattle
 
 import io.flutter.embedding.android.FlutterActivity
 
