@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  build-and-release-linux:
+  build-release-upload-linux:
     runs-on: ubuntu-22.04
 
     steps:
@@ -47,10 +47,10 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: release-zip
+          name: rattle-linux
           path: build/linux/x64/release/bundle/rattle-${{github.ref_name}}-linux.zip
 
-  build-and-release-windows:
+  build-release-upload-windows:
     runs-on: windows-latest
 
     steps:
@@ -87,7 +87,7 @@ jobs:
           name: rattle-windows
           path: build/windows/x64/runner/Release/rattle-${{github.ref_name}}-windows.zip
 
-  build-and-release-macos:
+  build-release-upload-macos:
     runs-on: macos-latest
 
     steps:
