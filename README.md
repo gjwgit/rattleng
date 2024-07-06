@@ -38,12 +38,14 @@ original Rattle author), Chief Scientist of the Software Innovation
 Institute of the Australian National University.  Significant
 contributions have also been made by Yixiang Yin.
 
-## Current Status Quick Start 2024-03-01
+## Quick Start and Current Status 2024-07-07
 
 You will need to install R, separate to the  app itself. Visit
 https://www.r-project.org/ for details.
 
-The install RattleNG for your operating system.
+Then install RattleNG for your operating system as detailed below.
+
+Then:
 
 + Start RattleNG.
 + Tap the **Script** tab to see the R code that has been run.
@@ -69,17 +71,22 @@ The install RattleNG for your operating system.
 
 Currently implemented features:
 
-+ **Dataset**
++ Dataset
+  + CSV
+  + Demo
 + Explore
-  + **WordCloud**
+  + Summary
+  + Correlation
 + Model
-  + **Tree**
-  + **Forest**
-+ **Console**
-+ **Script**
+  + Cluster
+  + Tree
+  + Forest
+  + Word Cloud
++ Console
++ Script
 
 ## Installing RattleNG from Pre-Built Packages
-
+xs
 The basic process is to install the [R statistical
 software](https://cloud.r-project.org/), then fire up R to install the
 pre-requisite packages:
