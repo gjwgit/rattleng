@@ -44,7 +44,9 @@ contributions have also been made by Yixiang Yin.
 You will need to install R, separate to the  app itself. Visit
 https://www.r-project.org/ for details.
 
-Then install RattleNG for your operating system as detailed below.
+Then install RattleNG for your operating system as detailed in the
+installers <a
+href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md>README</a>.
 
 Then:
 
@@ -86,83 +88,30 @@ Currently implemented features:
 + Console
 + Script
 
-## Installing RattleNG from Pre-Built Packages
+## Building RattleNG from Source
 
-The basic process is to install the [R statistical
-software](https://cloud.r-project.org/), then fire up R to install the
-pre-requisite packages:
+Ensure you have R installed, as described in the installer <a
+href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md>README</a>.
 
-```r
-install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))
-```
+Install Flutter as describe in the <a
+href="https://docs.flutter.dev/get-started/install">Flutter Install
+Guide</a> In short, to install on Windows, download the flutter sdk,
+unzip it to your home folder, add `C:\Users\<user>\flutter\bin` to the
+PATH environment variable, and in a CMD console run `flutter help`.
 
-Then you can install the rattleng app from the packages available on
-github or snap or build it yourself from source.
+*Currently (20230918), on Azure Windows VM, `flutter doctor` just sits
+there!*
 
-Specific OS instructions follow.
-
-### Linux
-
-+ Install R
-  + Debian/Ubuntu: `wajig install r-recommended`
-+ Install required R packages
-  + `> install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))`
-+ Install RattleNG with `snap install --dangerous rattle.snap`
-
-The *dangerous* refers to side-loading the app from outside of the
-snap store. This will not be required for the snap store version but
-for this development version we are side-loading the package.
-
-### MacOS
-
-Please check back later.
-
-### Windows
-
-+ Download and install R
-  + Visit https://cloud.r-project.org/ and navigate to Windows install
-  + Click on *Download R for Windows*
-  + Open the downloaded file to install R into *C:\Program Files\R*
-  + Add *C:\Program Files\R\bin* to the PATH environment variable
-    + Open *Edit the system environment variables* from Control panel
-	+ Click *Environment Variables...*
-	+ Click the *Path* entry and then *Edit...*
-    + Click *New* and then add *C:\Program Files\R\bin*
-    + Click *OK* a few times to close the windows.
-+ Download https://rattle.togaware.com/rattle.msix
-+ Add the rattle certificate to your store:
-  + Right click the downloaded file in Explorer
-  + Choose *Properties*
-  + Choose the *Digital Signatures* tab. 
-  + Highlight the *Togaware* line
-  + Click *Details*. 
-  + Click *View Certificate...* 
-  + Click *Install Certificate...*
-  + Choose *Local Machine*
-  + Click *Next*
-  + Choose *Place all certificates in the following store*
-  + Click *Browse...*
-  + Select **Trusted Root Certification Authorities**
-  + Click *OK*
-  + Click *Next* and *Finish*.
-  + A popup says **The import was successful**
-+ Open the downloaded `rattle.msix` to install and run rattle
-  + Or in PowerShell: `Add-AppxPackage -Path .\rattle.msix`
-
-## Running RattleNG from Source
-
-Ensure you have R installed, as described above. Also you will need to
-install Flutter.
-
-Then clone the rattleng repository:
+Then clone the <a
+href="https://github.com/gjwgit/rattleng">rattleng</a> repository:
 
 ```bash
 git clone https://github.com/gjwgit/rattleng
 cd rattleng
-flutter run -d <os>
+flutter run
 ```
 
-Replace `<os>` with `linux`, `macos`, or `windows`.
+Choose your target platform when prompted.
 
 After firing up the rattleng app, check in the Console tab to make
 sure the following packages were loaded:
@@ -175,8 +124,8 @@ library(tidyverse)
 glimpse(weather)
 ```
 
-RattleNG will eventually check for these and prompt if they are not
-available.
+RattleNG will itself eventually check for these and prompt if they are
+not available.
 
 ### Latest Code
 
@@ -199,24 +148,15 @@ is to make them through pull requests on github. You can fork my
 repository, make your changes, and push them back as a pull request to
 my repository where I can review and merge into the main product.
 
-There is plenty to do, and if you have a favourite part of Rattle,
+There is plenty to do, and if you have a favourite feature of Rattle,
 consider either implementing the GUI in Flutter for that component, or
 else write a simple template R script that takes a dataset `ds` and
 any other template parameters (as ``<<PARAMETER>>`` in the script) to
 then do it's stuff! The `<<PARAMETER>>` strings are filled in by the
-Flutter interface. See the growing number of scripts in `assets/scripts/`
+Flutter interface. See the growing number of scripts in
+`assets/scripts/`
 
 Suggested tasks can be found as github issues.
-
-### Install Flutter on Windows
-
-+ Download the flutter sdk
-+ Unzip it to your home folder
-+ Add C:\Users\<user>\flutter\bin to Path
-+ In a CMD console run `flutter help`
-
-Currently (20230918), on Azure Windows VM, `flutter doctor` just sits
-there!
 
 ## Rattle Resources
 
@@ -277,9 +217,9 @@ file.
 
 ### Everything Captured as Scripts
 
-An be assured, the most important of functionalities, the **Script**
-tab's capturing of your interactions remains a key feature of
-Rattle. Indeed, all of your interactions with R through Rattle are
+And be assured, the most important of functionalities, the **Script**
+tab's capturing of your interactions, remains a key feature of
+Rattle. All of your interactions with R through Rattle are
 captured as a documented and nicely formatted script that you can save
 to file and replicate your whole project simply by asking R to run the
 script. It is also he starting point for modifying a script to do
