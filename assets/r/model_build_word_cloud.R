@@ -45,9 +45,6 @@ if (PUNCTUATION) {
   docs <- tm_map(docs, removePunctuation)
 }
 
-# TODO 20240618 gjw REPALCE "english" WITH A OPTION "LANGUAGE" THAT IS
-# CHOSEN THROUGH THE GUI.
-
 if (STOPWORD) {
   docs <- tm_map(docs, removeWords, stopwords("LANGUAGE"))
 }
