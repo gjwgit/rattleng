@@ -29,26 +29,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_glimpse.dart';
-import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/providers/variable_selection.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
+List<VariableInfo> extractVariables(String text) {
+  final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
+  final matches = regex.allMatches(text);
 
-  List<VariableInfo> extractVariables(String text) {
-    final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
-    final matches = regex.allMatches(text);
+  return matches.map((match) {
+    final name = match.group(1)!;
+    final type = match.group(2)!;
+    final details = match.group(3)!;
+    return VariableInfo(name: name, type: type, details: details);
+  }).toList();
+}
 
-    return matches.map((match) {
-      final name = match.group(1)!;
-      final type = match.group(2)!;
-      final details = match.group(3)!;
-      return VariableInfo(name: name, type: type, details: details);
-    }).toList();
-  }
-  class VariableInfo {
+class VariableInfo {
   final String name;
   final String type;
   final String details;
@@ -59,6 +57,7 @@ import 'package:rattle/widgets/show_markdown_file.dart';
     required this.details,
   });
 }
+
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
 class DatasetPanel extends ConsumerStatefulWidget {
@@ -69,7 +68,6 @@ class DatasetPanel extends ConsumerStatefulWidget {
 }
 
 class _DatasetPanelState extends ConsumerState<DatasetPanel> {
-  Map<String, String> _selectedChoices = {};
   List<String> choices = [
     'Input',
     'Target',
@@ -83,10 +81,19 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     debugPrint('rebuild dataset panel');
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
+    Map<String, String> currentSelections = ref.read(selectionsProvider);
+
     // debugPrint(rExtractGlimpse(stdout));
     // extract column names
     List<VariableInfo> vars = extractVariables(stdout);
+    // initialise, default to input
+    if (currentSelections.isEmpty && vars.isNotEmpty) {
+      for (var column in vars) {
+        ref.read(selectionsProvider.notifier).state[column.name] = choices[0];
+      }
+    }
     // TODO yyx 20240704 Initialize the map with the first choice for each column
+    // TODO yyx 20240710 what happen for other type of files?
     // for (var column in vars) {
     //   _selectedChoices[column] = choices[0];
     // }
@@ -121,14 +128,14 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                       children: choices.map((choice) {
                         return ChoiceChip(
                           label: Text(choice),
-                          selected: _selectedChoices[columnName] == choice,
+                          selected: currentSelections[columnName] == choice,
                           onSelected: (bool selected) {
                             setState(() {
                               if (selected) {
-                                _selectedChoices[columnName] = choice;
+                                ref.read(selectionsProvider.notifier).state[columnName] = choice;
                                 debugPrint('$columnName set to $choice');
                               } else {
-                                _selectedChoices[columnName] = '';
+                                ref.read(selectionsProvider.notifier).state[columnName] = '';
                               }
                             });
                           },
