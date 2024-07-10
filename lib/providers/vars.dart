@@ -27,4 +27,5 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// TODO yyx 20240710 Is it better to store other attribute about the vars, such as the datatype and content?
 final varsProvider = StateProvider<List<String>>((ref) => []);
