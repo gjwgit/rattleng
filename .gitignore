@@ -10,6 +10,8 @@ script.R
 NOTES.md
 
 installers/*.tar.gz
+installers/*-macos.zip
+installers/*-windows.zip
 
 ########################################################################
 # From https://github.com/flutter/flutter/blob/master/.gitignore

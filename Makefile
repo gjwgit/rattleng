@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2024-06-24 06:31:23 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-07-01 20:19:19 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -62,7 +62,7 @@ $(APP):
   rtest       Run the R script tests.
 
   local	     Install to $(HOME)/.local/share/$(APP)
-  tgz	     Upload the installer to access.togaware.com
+    tgz	     Upload the installer to access.togaware.com
 
 endef
 export HELP

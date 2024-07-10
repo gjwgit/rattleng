@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Monday 2024-07-01 20:14:44 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-07 20:46:42 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -175,9 +175,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   },
                 ),
                 const DelayedTooltip(
-                  message:
-                      'Stemming reduces words to their base or root form.\n'
-                      'Two different words, when stemmed, can become the same\n'
+                  message: 'Stemming reduces words to their base or root form. '
+                      'Two different words, when stemmed, can become the same '
                       'and so can reduce unecessary clutter in the wordcloud.',
                   child: Text('Stem'),
                 ),
@@ -244,7 +243,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               SizedBox(
                 width: 150.0,
                 child: DelayedTooltip(
-                  message: 'Maximum number of words plotted.\n'
+                  message: 'Maximum number of words plotted. '
                       'Drop least frequent words.',
                   child: TextField(
                     controller: maxWordTextController,
