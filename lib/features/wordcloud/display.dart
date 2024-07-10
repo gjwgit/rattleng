@@ -52,7 +52,6 @@ bool buildButtonPressed(String buildTime) {
 }
 
 class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
-  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
@@ -84,10 +83,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // build button pressed and png file exists
       debugPrint('Model built. Now Sleeping as needed to await file.');
 
-      setState(() {
-        _isLoading = true;
-      });
-
       // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
       //
       // _Exception was thrown resolving an image codec:
@@ -117,10 +112,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
       var bytes = wordCloudFile.readAsBytesSync();
 
-      setState(() {
-        _isLoading = false;
-      });
-
       Image image = Image.memory(bytes);
 
       // Build the widget to display the image. Make it a row, centering the
@@ -134,13 +125,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ],
       );
       pages.add(
-        Stack(
-          children: [
-            SingleChildScrollView(
-              child: imageDisplay,
-            ),
-            if (_isLoading) const CircularProgressIndicator(),
-          ],
+        SingleChildScrollView(
+          child: imageDisplay,
         ),
       );
     }
