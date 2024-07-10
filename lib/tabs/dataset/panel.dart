@@ -78,7 +78,6 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     'Ignore',
     'Weight',
   ];
-  // TODO reset the selections
   @override
   Widget build(BuildContext context) {
     String path = ref.watch(pathProvider);
