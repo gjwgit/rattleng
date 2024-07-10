@@ -23,7 +23,6 @@
 /// Authors: Graham Williams
 library;
 
-
 List<String> rExtractVars(String txt) {
   // Command/string to identify start point of the extracttion.
 
@@ -99,8 +98,9 @@ List<String> rExtractVars(String txt) {
   return result;
 }
 
-
 List<VariableInfo> extractVariables(String text) {
+  // extract the variable information from the glimpse(ds)
+  // TODO yyx 20240710 make it more robust like rExtractVars
   final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
   final matches = regex.allMatches(text);
 
