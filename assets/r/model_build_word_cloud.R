@@ -70,7 +70,7 @@ set.seed(123)
 # TODO 20240618 gjw REPALCE `WORDCLOUDPATH` WITH `TEMPDIR` FOR ALL
 # TEMPARARY FILES.
 
-png("TEMPDIR/tmp_wordcloud.png", width=800, height=600, units="px")
+svg("TEMPDIR/tmp_wordcloud.svg")
 
 # Generate word cloud.
 
@@ -86,9 +86,9 @@ dev.off()
 
 # Trim the white space using magick.
 
-image <- image_read("TEMPDIR/tmp_wordcloud.png")
-trimmed_image <- image_trim(image)
-image_write(trimmed_image, path = "TEMPDIR/wordcloud.png")
+# image <- image_read("TEMPDIR/tmp_wordcloud.png")
+# trimmed_image <- image_trim(image)
+# image_write(trimmed_image, path = "TEMPDIR/wordcloud.png")
 
 # Show the top words
 
