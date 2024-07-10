@@ -157,6 +157,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   ),
                   SizedBox(width: 10),
                   Expanded(
+                    flex: 4,
                     child: Wrap(
                       spacing: 5.0,
                       children: choices.map((choice) {
@@ -183,6 +184,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   ),
                   SizedBox(width: 10),
                   Expanded(
+                    flex: 3,
                     child: Text(content),
                   ),
                 ],
