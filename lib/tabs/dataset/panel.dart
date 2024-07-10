@@ -74,9 +74,10 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
       // initialise, default to input
       if (currentSelections.isEmpty && vars.isNotEmpty) {
         for (var column in vars) {
-          ref.read(selectionsProvider.notifier).state[column.name] = choices[0];
+          ref.read(selectionsProvider.notifier).state[column.name] = choices.first;
         }
       }
+      
       return ListView.builder(
         itemCount: vars.length + 1, // Add 1 for the extra header row
         itemBuilder: (context, index) {

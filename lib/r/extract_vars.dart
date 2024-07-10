@@ -108,6 +108,7 @@ List<VariableInfo> extractVariables(String text) {
     final name = match.group(1)!;
     final type = match.group(2)!;
     final details = match.group(3)!;
+    
     return VariableInfo(name: name, type: type, details: details);
   }).toList();
 }
