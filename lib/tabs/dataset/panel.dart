@@ -95,62 +95,100 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
         }
       }
       return ListView.builder(
-        itemCount: vars.length,
+        itemCount: vars.length + 1, // Add 1 for the extra header row
         itemBuilder: (context, index) {
-          String columnName = vars[index].name;
-          String dataType = vars[index].type;
-          String content = vars[index].details;
-          // TODO yyx 20240704 overflow horizontal
-          return Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment
-                  .start, // Align items at the top of each row
-              children: [
-                // Column Name
-                SizedBox(
-                  width: 120, // Adjust width as needed
-                  child: Text(columnName),
-                ),
-                SizedBox(width: 10),
-                // Data Type
-                SizedBox(
-                  width: 100, // Adjust width as needed
-                  child: Text(dataType),
-                ),
-                SizedBox(width: 10),
-                // Choice Chips
-                Wrap(
-                  spacing: 5.0,
-                  children: choices.map((choice) {
-                    return ChoiceChip(
-                      label: Text(choice),
-                      selected: currentSelections[columnName] == choice,
-                      onSelected: (bool selected) {
-                        setState(() {
-                          if (selected) {
-                            ref
-                                .read(selectionsProvider.notifier)
-                                .state[columnName] = choice;
-                            debugPrint('$columnName set to $choice');
-                          } else {
-                            ref
-                                .read(selectionsProvider.notifier)
-                                .state[columnName] = '';
-                          }
-                        });
-                      },
-                    );
-                  }).toList(),
-                ),
-                SizedBox(width: 10),
-                // Content
-                Expanded(
-                  child: Text(content),
-                ),
-              ],
-            ),
-          );
+          if (index == 0) {
+            // Render the extra header row
+            return Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Variable',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Data Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    flex: 4,
+                    child: Text(
+                      'Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      'Content',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            // Regular data rows
+            final variableIndex = index - 1; // Adjust index for regular data
+            String columnName = vars[variableIndex].name;
+            String dataType = vars[variableIndex].type;
+            String content = vars[variableIndex].details;
+
+            return Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(columnName),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(dataType),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Wrap(
+                      spacing: 5.0,
+                      children: choices.map((choice) {
+                        return ChoiceChip(
+                          label: Text(choice),
+                          selected: currentSelections[columnName] == choice,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              if (selected) {
+                                ref
+                                    .read(selectionsProvider.notifier)
+                                    .state[columnName] = choice;
+                                debugPrint('$columnName set to $choice');
+                              } else {
+                                ref
+                                    .read(selectionsProvider.notifier)
+                                    .state[columnName] = '';
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(content),
+                  ),
+                ],
+              ),
+            );
+          }
         },
       );
     } else {
