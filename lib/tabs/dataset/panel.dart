@@ -98,23 +98,28 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
         itemCount: vars.length,
         itemBuilder: (context, index) {
           String columnName = vars[index].name;
-          String dataType =
-              vars[index].type; // Example data type, replace with actual
-          String content = vars[index].details; // Example content
-
+          String dataType = vars[index].type;
+          String content = vars[index].details;
           // TODO yyx 20240704 overflow horizontal
           return Padding(
             padding: const EdgeInsets.all(6.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment
+                  .start, // Align items at the top of each row
               children: [
-                Text(columnName),
-                const SizedBox(
-                  width: 10,
+                // Column Name
+                SizedBox(
+                  width: 120, // Adjust width as needed
+                  child: Text(columnName),
                 ),
-                Text(dataType),
-                const SizedBox(
-                  width: 10,
+                SizedBox(width: 10),
+                // Data Type
+                SizedBox(
+                  width: 100, // Adjust width as needed
+                  child: Text(dataType),
                 ),
+                SizedBox(width: 10),
+                // Choice Chips
                 Wrap(
                   spacing: 5.0,
                   children: choices.map((choice) {
@@ -138,9 +143,8 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                     );
                   }).toList(),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                SizedBox(width: 10),
+                // Content
                 Expanded(
                   child: Text(content),
                 ),
