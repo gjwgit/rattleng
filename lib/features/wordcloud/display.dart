@@ -37,6 +37,7 @@ import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -64,13 +65,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
     String content = '';
 
-    // Reload the wordcloud image.
-
-    imageCache.clear();
-    imageCache.clearLiveImages();
     String lastBuildTime = ref.watch(wordCloudBuildProvider);
     debugPrint('received rebuild on $lastBuildTime');
-    var wordCloudFile = File(wordCloudImagePath);
 
     // file exists | build not empty
     // 1 | 1 -> show the png
@@ -83,50 +79,11 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // build button pressed and png file exists
       debugPrint('Model built. Now Sleeping as needed to await file.');
 
-      // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
-      //
-      // _Exception was thrown resolving an image codec:
-      // Exception: Invalid image data
-      //
-      // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
-      // LOADED SUCCESSFULLY.
-      //
-      // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
-      // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
-      // UNTIL THE FILE IS READY.
-      //
-      // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
-
-      // while (bytes.lengthInBytes == 0) {
-      //   sleep(const Duration(seconds: 1));
-      //   bytes = wordCloudFile.readAsBytesSync();
-      // }
-      // TODO yyx 20240701 what is the diff between sync and async?
-      // wait to read the file until the file is available.
-      // attempt to read it before that might give PathNotFound Exception (https://github.com/gjwgit/rattleng/issues/169)
-      while (!wordCloudFile.existsSync()) {
-        sleep(const Duration(seconds: 1));
-      }
-      // Reload the image:
-      // https://nambiarakhilraj01.medium.com/
-      // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
-      var bytes = wordCloudFile.readAsBytesSync();
-
-      Image image = Image.memory(bytes);
-
-      // Build the widget to display the image. Make it a row, centering the
-      // image horizontally, and so ensuring the scrollbar is all the way to the
-      // right.
-
-      Widget imageDisplay = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          image,
-        ],
-      );
       pages.add(
-        SingleChildScrollView(
-          child: imageDisplay,
+        ImagePage(
+          title: '# Word Cloud\n\n'
+              'Generated using `wordcloud::wordcloud()`',
+          path: wordCloudImagePath,
         ),
       );
     }

@@ -27,12 +27,9 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-
-import 'package:flutter_markdown/flutter_markdown.dart';
-
-import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -46,23 +43,49 @@ class ImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: sunkenBoxDecoration,
-      width: double.infinity,
-      padding: const EdgeInsets.only(left: 10),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MarkdownBody(
-              data: title,
-            ),
-            SelectableText(
-              path,
-              style: monoTextStyle,
-            ),
-          ],
-        ),
+    // Reload the wordcloud image.
+
+    imageCache.clear();
+    imageCache.clearLiveImages();
+    var imageFile = File(path);
+    // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
+    //
+    // _Exception was thrown resolving an image codec:
+    // Exception: Invalid image data
+    //
+    // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
+    // LOADED SUCCESSFULLY.
+    //
+    // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
+    // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
+    // UNTIL THE FILE IS READY.
+    //
+    // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
+
+    // while (bytes.lengthInBytes == 0) {
+    //   sleep(const Duration(seconds: 1));
+    //   bytes = wordCloudFile.readAsBytesSync();
+    // }
+    // TODO yyx 20240701 what is the diff between sync and async?
+    // wait to read the file until the file is available.
+    // attempt to read it before that might give PathNotFound Exception (https://github.com/gjwgit/rattleng/issues/169)
+    while (!imageFile.existsSync()) {
+      sleep(const Duration(seconds: 1));
+    }
+    // Reload the image:
+    // https://nambiarakhilraj01.medium.com/
+    // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
+    var bytes = imageFile.readAsBytesSync();
+
+    Image image = Image.memory(bytes);
+
+    // Build the widget to display the image. Make it a row, centering the
+    // image horizontally, and so ensuring the scrollbar is all the way to the
+    // right.
+    return SingleChildScrollView(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [image],
       ),
     );
   }
