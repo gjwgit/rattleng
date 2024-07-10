@@ -84,18 +84,18 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
           if (index == 0) {
             // Render the extra header row
             return Padding(
-              padding: EdgeInsets.all(6.0),
+              padding: const EdgeInsets.all(6.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Variable',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   space,
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Data Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -104,7 +104,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   space,
                   Expanded(
                     flex: typeFlex,
-                    child: Text(
+                    child: const Text(
                       'Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -112,7 +112,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   space,
                   Expanded(
                     flex: contentFlex,
-                    child: Text(
+                    child: const Text(
                       'Content',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
