@@ -98,3 +98,28 @@ List<String> rExtractVars(String txt) {
 
   return result;
 }
+
+
+List<VariableInfo> extractVariables(String text) {
+  final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
+  final matches = regex.allMatches(text);
+
+  return matches.map((match) {
+    final name = match.group(1)!;
+    final type = match.group(2)!;
+    final details = match.group(3)!;
+    return VariableInfo(name: name, type: type, details: details);
+  }).toList();
+}
+
+class VariableInfo {
+  final String name;
+  final String type;
+  final String details;
+
+  VariableInfo({
+    required this.name,
+    required this.type,
+    required this.details,
+  });
+}

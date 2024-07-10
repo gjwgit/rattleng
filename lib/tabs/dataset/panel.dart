@@ -34,31 +34,8 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/variable_selection.dart';
 import 'package:rattle/r/extract_glimpse.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
-
-List<VariableInfo> extractVariables(String text) {
-  final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
-  final matches = regex.allMatches(text);
-
-  return matches.map((match) {
-    final name = match.group(1)!;
-    final type = match.group(2)!;
-    final details = match.group(3)!;
-    return VariableInfo(name: name, type: type, details: details);
-  }).toList();
-}
-
-class VariableInfo {
-  final String name;
-  final String type;
-  final String details;
-
-  VariableInfo({
-    required this.name,
-    required this.type,
-    required this.details,
-  });
-}
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
@@ -70,6 +47,11 @@ class DatasetPanel extends ConsumerStatefulWidget {
 }
 
 class _DatasetPanelState extends ConsumerState<DatasetPanel> {
+  Widget space = const SizedBox(
+    width: 10,
+  );
+  int typeFlex = 4;
+  int contentFlex = 3;
   List<String> choices = [
     'Input',
     'Target',
@@ -78,6 +60,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     'Ignore',
     'Weight',
   ];
+
   @override
   Widget build(BuildContext context) {
     String path = ref.watch(pathProvider);
@@ -86,7 +69,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
       return showMarkdownFile(welcomeMsgFile, context);
     } else if (path == 'rattle::weather' || path.endsWith('.csv')) {
       Map<String, String> currentSelections = ref.read(selectionsProvider);
-      // extract column names
+      // extract variable information
       List<VariableInfo> vars = extractVariables(stdout);
       // initialise, default to input
       if (currentSelections.isEmpty && vars.isNotEmpty) {
@@ -101,7 +84,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
           if (index == 0) {
             // Render the extra header row
             return Padding(
-              padding: const EdgeInsets.all(6.0),
+              padding: EdgeInsets.all(6.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -111,24 +94,24 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  space,
                   Expanded(
                     child: Text(
                       'Data Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  space,
                   Expanded(
-                    flex: 4,
+                    flex: typeFlex,
                     child: Text(
                       'Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  space,
                   Expanded(
-                    flex: 3,
+                    flex: contentFlex,
                     child: Text(
                       'Content',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -152,13 +135,13 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   Expanded(
                     child: Text(columnName),
                   ),
-                  SizedBox(width: 10),
+                  space,
                   Expanded(
                     child: Text(dataType),
                   ),
-                  SizedBox(width: 10),
+                  space,
                   Expanded(
-                    flex: 4,
+                    flex: typeFlex,
                     child: Wrap(
                       spacing: 5.0,
                       children: choices.map((choice) {
@@ -183,9 +166,9 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                       }).toList(),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  space,
                   Expanded(
-                    flex: 3,
+                    flex: contentFlex,
                     child: Text(content),
                   ),
                 ],
