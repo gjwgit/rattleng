@@ -67,9 +67,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // CLEANSE
 
         DelayedTooltip(
-          message: 'Undertake data cleansing for a CSV dataset.\n'
-              'This will remove constant columns\n'
-              'and convert character columns to factors.\n'
+          message: 'Undertake data cleansing for a CSV dataset. '
+              'This will remove constant columns '
+              'and convert character columns to factors. '
               'If you do not require cleansing, turn this off.',
           child: Icon(Icons.cleaning_services),
         ),
@@ -77,8 +77,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // NORMALISE
 
         DelayedTooltip(
-          message: 'Variable/column names of a CSV dataset are normalised.\n'
-              'Names are lowercased, separated by underscore.\n'
+          message: 'Variable/column names of a CSV dataset are normalised. '
+              'Names are lowercased, separated by underscore. '
               'If you do not requires normalisation, turn this off.',
           child: Icon(Icons.auto_fix_high_outlined),
           // child: Icon(Icons.art_track),
@@ -88,7 +88,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // PARTITION
 
         DelayedTooltip(
-          message: 'Partition a CSV dataset for modelling into 70/15/15.\n'
+          message: 'Partition a CSV dataset for modelling into 70/15/15. '
               'If you do not require partitioning, turn this off.',
           child: Icon(Icons.horizontal_split),
           // child: Icon(Icons.assessment_outlined),

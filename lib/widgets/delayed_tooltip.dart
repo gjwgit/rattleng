@@ -1,6 +1,8 @@
 /// A delayed tooltip to avoid clutter of tooltips.
-///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+//
+// Time-stamp: <Sunday 2024-07-07 20:42:43 +1000 Graham Williams>
+//
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
@@ -25,23 +27,61 @@ library;
 
 import 'package:flutter/material.dart';
 
+/// A [Tooltip] that is delayed before being displayed.
+
 class DelayedTooltip extends StatelessWidget {
-  final Widget child;
-  final String message;
-  final Duration wait;
+  /// Identify the required parameters.
 
   const DelayedTooltip({
-    super.key,
     required this.child,
     required this.message,
+    super.key,
     this.wait = const Duration(seconds: 1),
   });
+
+  /// The widget to be displayed as the tooltip.
+
+  final Widget child;
+
+  /// the message to be displayed.
+
+  final String message;
+
+  /// How long to delay before displayiung the tooltip.
+
+  final Duration wait;
 
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: message,
+      richMessage: WidgetSpan(
+        alignment: PlaceholderAlignment.baseline,
+        baseline: TextBaseline.alphabetic,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(maxWidth: 350),
+          child: Text(
+            message,
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+          ),
+        ),
+      ),
+      //message: message,
+      // TODO 20240707 gjw THIS exitDuration WORKS ON DESKTOP BUT DOES NOT SEEM
+      // TO HAVE A AFFECT ON ANDROID.
+      showDuration: const Duration(seconds: 5),
       waitDuration: wait,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: const Color(0XFFDFE0FF), //Colors.amber,
+        // gradient:
+        //     const LinearGradient(colors: <Color>[Colors.amber, Colors.red]),
+      ),
+      // textStyle: const TextStyle(
+      //   fontSize: 18,
+      // ),
       child: child,
     );
   }
