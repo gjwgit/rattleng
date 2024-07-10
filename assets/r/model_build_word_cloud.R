@@ -70,7 +70,7 @@ set.seed(123)
 # TODO 20240618 gjw REPALCE `WORDCLOUDPATH` WITH `TEMPDIR` FOR ALL
 # TEMPARARY FILES.
 
-svg("TEMPDIR/tmp_wordcloud.svg")
+svg("TEMPDIR/wordcloud.svg")
 
 # Generate word cloud.
 
