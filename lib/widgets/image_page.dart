@@ -79,9 +79,7 @@ class ImagePage extends StatelessWidget {
 
     Image image = Image.memory(bytes);
 
-    // Build the widget to display the image. Make it a row, centering the
-    // image horizontally, and so ensuring the scrollbar is all the way to the
-    // right.
+    // centering the image horizontally, and make it scrollable.
     return SingleChildScrollView(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
