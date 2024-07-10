@@ -97,6 +97,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
       return ListView.builder(
         itemCount: vars.length + 1, // Add 1 for the extra header row
         itemBuilder: (context, index) {
+          // both the header row and the regular row shares the same flex index
           if (index == 0) {
             // Render the extra header row
             return Padding(
