@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-30 10:05:38 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-11 20:56:08 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -73,7 +73,7 @@ rn[order(rn[,3], decreasing=TRUE),]
 
 # Plot the relative importance of the variables.
 
-png("random_forest.png", width=800, height=600, units="px")
+svg("TEMPDIR/random_forest.svg")
 ggVarImp(model_randomForest,
          title="Variable Importance Random Forest weather.csv")
 dev.off()

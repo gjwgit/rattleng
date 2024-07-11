@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-30 06:56:28 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-11 20:56:42 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -57,7 +57,7 @@ print(round(cor,2))
 
 # Graphically display the correlations.
 
-png("explore_correlation.png", width=800, height=600, units="px")
+svg("TEMPDIR/explore_correlation.svg")
 
 corrplot(cor, mar=c(0,0,1,0))
 title(main="Correlation weather.csv using Pearson",
