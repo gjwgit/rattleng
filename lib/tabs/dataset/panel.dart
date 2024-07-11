@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-11 17:23:38 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-11 20:50:34 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -149,6 +149,12 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                       children: choices.map((choice) {
                         return ChoiceChip(
                           label: Text(choice),
+                          disabledColor: Colors.grey,
+                          selectedColor: Colors.orangeAccent,
+                          backgroundColor: Colors.white,
+                          shadowColor: Colors.grey,
+                          pressElevation: 8.0,
+                          elevation: 2.0,
                           selected: currentSelections[columnName] == choice,
                           onSelected: (bool selected) {
                             setState(() {
@@ -171,7 +177,10 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   space,
                   Expanded(
                     flex: contentFlex,
-                    child: Text(content),
+                    child: Text(
+                      content,
+                      style: const TextStyle(fontSize: 14),
+                    ),
                   ),
                 ],
               ),
