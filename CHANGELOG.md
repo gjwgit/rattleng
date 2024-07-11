@@ -6,8 +6,15 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 0.2.n series are heading
 toward a 0.2 release.
 
-## 0.2 FUTURE
+## 0.3 FUTURE
 
+
+
+## 0.2 Dataset Roles, Display Pages.
+
++ Move to SVG iamges [20240711]
++ Implement ImagePage() [20240711]
++ Add dataset role selector [20240711]
 + Update TREE and FOREST display [0.1.24 20240630]
 + Add word frequency to WORDCLOUD [0.1.23]
 + Add MISSING and CORRELATION features [0.1.22]
