@@ -32,7 +32,9 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/variable_selection.dart';
 import 'package:rattle/r/extract_glimpse.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
@@ -45,22 +47,148 @@ class DatasetPanel extends ConsumerStatefulWidget {
 }
 
 class _DatasetPanelState extends ConsumerState<DatasetPanel> {
+  Widget space = const SizedBox(
+    width: 10,
+  );
+  int typeFlex = 4;
+  int contentFlex = 3;
+  List<String> choices = [
+    'Input',
+    'Target',
+    'Risk',
+    'Ident',
+    'Ignore',
+    'Weight',
+  ];
+
   @override
   Widget build(BuildContext context) {
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
+    if (path == '') {
+      return showMarkdownFile(welcomeMsgFile, context);
+    } else if (path == 'rattle::weather' || path.endsWith('.csv')) {
+      Map<String, String> currentSelections = ref.read(selectionsProvider);
+      // extract variable information
+      List<VariableInfo> vars = extractVariables(stdout);
+      // initialise, default to input
+      if (currentSelections.isEmpty && vars.isNotEmpty) {
+        for (var column in vars) {
+          ref.read(selectionsProvider.notifier).state[column.name] = choices.first;
+        }
+      }
+      
+      return ListView.builder(
+        itemCount: vars.length + 1, // Add 1 for the extra header row
+        itemBuilder: (context, index) {
+          // both the header row and the regular row shares the same flex index
+          if (index == 0) {
+            // Render the extra header row
+            return Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Variable',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  space,
+                  const Expanded(
+                    child: Text(
+                      'Data Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  space,
+                  Expanded(
+                    flex: typeFlex,
+                    child: const Text(
+                      'Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  space,
+                  Expanded(
+                    flex: contentFlex,
+                    child: const Text(
+                      'Content',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            // Regular data rows
+            final variableIndex = index - 1; // Adjust index for regular data
+            String columnName = vars[variableIndex].name;
+            String dataType = vars[variableIndex].type;
+            String content = vars[variableIndex].details;
 
-    return path == ''
-        ? showMarkdownFile(welcomeMsgFile, context)
-        : Container(
-            width: double.infinity,
-            color: Colors.white,
-            padding: const EdgeInsets.only(left: 10),
-            child: SelectableText(
-              rExtractGlimpse(stdout),
-              key: datasetGlimpseKey,
-              style: monoTextStyle,
-            ),
-          );
+            return Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(columnName),
+                  ),
+                  space,
+                  Expanded(
+                    child: Text(dataType),
+                  ),
+                  space,
+                  Expanded(
+                    flex: typeFlex,
+                    child: Wrap(
+                      spacing: 5.0,
+                      children: choices.map((choice) {
+                        return ChoiceChip(
+                          label: Text(choice),
+                          selected: currentSelections[columnName] == choice,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              if (selected) {
+                                ref
+                                    .read(selectionsProvider.notifier)
+                                    .state[columnName] = choice;
+                                debugPrint('$columnName set to $choice');
+                              } else {
+                                ref
+                                    .read(selectionsProvider.notifier)
+                                    .state[columnName] = '';
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  space,
+                  Expanded(
+                    flex: contentFlex,
+                    child: Text(content),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      );
+    } else {
+      return Container(
+        width: double.infinity,
+        color: Colors.white,
+        padding: const EdgeInsets.only(left: 10),
+        child: SelectableText(
+          rExtractGlimpse(stdout),
+          key: datasetGlimpseKey,
+          style: monoTextStyle,
+        ),
+      );
+    }
   }
 }
