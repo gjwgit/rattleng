@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-30 12:37:32 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-11 20:27:01 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -34,6 +34,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The TREE panel displays the tree instructions and then build output.
@@ -87,6 +88,13 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+
+    pages.add(
+      const ImagePage(
+        title: 'TREE',
+        path: '/tmp/decision_tree.svg',
+      ),
+    );
 
     return Pages(children: pages);
   }

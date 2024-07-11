@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-30 06:57:06 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-11 21:03:00 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -80,6 +81,13 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+
+    pages.add(
+      const ImagePage(
+        title: 'VAR IMPORTANCE',
+        path: '/tmp/explore_correlation.svg',
+      ),
+    );
 
     return Pages(
       children: pages,
