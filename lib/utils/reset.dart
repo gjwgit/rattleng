@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Tuesday 2024-06-18 08:40:52 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-11 17:13:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,6 +30,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/selections.dart';
 import 'package:xterm/xterm.dart';
 
 // TODO 20240618 gjw DO WE NEED ALL OF `app.dart`? I THINK IT IS JUST
@@ -84,6 +85,7 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.read(pathProvider.notifier).state = '';
   debugPrint('DATASET UNLOADED');
   ref.read(datasetLoaded.notifier).state = false;
+  ref.read(selectionsProvider.notifier).state = {};
 
   // TODO yyx 20240618 might need to reset sub-tabs to the first one.
   // RESET TAB INDEX (including sub-tabs)

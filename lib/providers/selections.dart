@@ -1,13 +1,12 @@
-/// A provider for the list of variables.
-///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
-///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Record variable selection on the dataset tab
+//
+// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+//
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,10 +21,10 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Yixiang Yin
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// TODO yyx 20240710 Is it better to store other attribute about the vars, such as the datatype and content?
-final varsProvider = StateProvider<List<String>>((ref) => []);
+final selectionsProvider = StateProvider<Map<String, String>>((ref) => {});
