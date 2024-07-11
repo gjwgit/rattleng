@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-30 09:13:53 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-11 20:04:44 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -72,7 +72,7 @@ cat("\n")
 
 # We use the rpart.plot package.
 
-png("decision_tree.png", width=800, height=600, units="px")
+svg("TEMPDIR/decision_tree.svg")
 fancyRpartPlot(model_rpart, main="Decision Tree weather.csv $ RainTomorrow")
 dev.off()
 
