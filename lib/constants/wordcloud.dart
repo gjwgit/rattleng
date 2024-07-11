@@ -35,7 +35,7 @@ const String wordCloudMsgFile = 'assets/markdown/wordcloud.md';
 var systemTempDir = Directory.systemTemp;
 
 String tmpDirPath = systemTempDir.path;
-String wordCloudImagePath = '$tmpDirPath/wordcloud.png';
+String wordCloudImagePath = '$tmpDirPath/wordcloud.svg';
 String tmpImagePath = '$tmpDirPath/tmp.png';
 
 const List<String> stopwordLanguages = <String>[

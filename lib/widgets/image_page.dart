@@ -30,6 +30,7 @@ library;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -43,6 +44,11 @@ class ImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO yyx 20240711 after rebuild svg accumulate.
+//     ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+// The following StateError was thrown building SvgPicture("Instance of 'SvgBytesLoader'",
+// clipBehavior: hardEdge, colorFilter: "null"):
+// Bad state: Invalid SVG data
     // Reload the wordcloud image.
 
     imageCache.clear();
@@ -77,13 +83,13 @@ class ImagePage extends StatelessWidget {
     // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
     var bytes = imageFile.readAsBytesSync();
 
-    Image image = Image.memory(bytes);
+    // Image image = Image.memory(bytes);
 
     // centering the image horizontally, and make it scrollable.
     return SingleChildScrollView(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [image],
+        children: [SvgPicture.memory(bytes)],
       ),
     );
   }
