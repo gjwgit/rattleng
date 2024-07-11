@@ -8,7 +8,7 @@ toward a 0.2 release.
 
 ## 0.3 FUTURE
 
-
++ Add EXPORT to ImagePage() [0.2.1 20240712]
 
 ## 0.2 Dataset Roles, Display Pages.
 
