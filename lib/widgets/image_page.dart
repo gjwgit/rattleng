@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Friday 2024-07-12 05:33:23 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-12 09:39:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -104,6 +104,7 @@ class ImagePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [SvgPicture.memory(bytes)],
