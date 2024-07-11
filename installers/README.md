@@ -2,8 +2,9 @@
 
 Flutter supports multiple platform targets and Flutter based apps will
 run native on Android, iOS, Linux, MacOS, and Windows, as well as
-directly in a browser from the web. While the Flutter functionality is
-in theory identical across all platforms, rattleng relies on running R
+directly in a browser from the web. Flutter functionality is essentially identical
+across all platforms so the experience across different platforms will
+be very similar. RattleNG relies on running R
 locally and so it requires R to be installed on your platform. At
 present R is supported on the desktops (Linux, MacOS, and Windows).
 
@@ -32,9 +33,9 @@ github or snap or build it yourself from source as described below.
 
 ### Tar Install
 
-+ Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
+Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
 
-To try it:
+To try it out:
 
 ```bash
 wget https://access.togaware.com/rattleng.tar.gz
@@ -43,11 +44,19 @@ rattleng/rattle
 ```
 
 To install for the local user and to make it known to GNOME and KDE,
-with a desktop icon for their desktop:
+with a desktop icon for their desktop, begin by downloading the **.tar.gz** and
+installing that:
 
 ```bash
 wget https://access.togaware.com/rattleng.tar.gz
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
+```
+
+Those two steps can also be repeated to update your installation.
+
+Then set up your local installation (only required once):
+
+```bash
 ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
 wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattle.desktop -O ${HOME}/.local/share/applications/rattle.desktop
 sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/rattle.desktop
@@ -87,7 +96,7 @@ wget https://access.togaware.com/rattleng-macos.zip
 
 Unzip and run rattle.
 
-### Dmg Install
+### Dmg Install - UNDER DEVELOPMENT
 
 The package file `rattleng.dmg` can be installed on MacOS. Download
 the file and open it on your Mac. Then, holding the Control key click
@@ -120,12 +129,12 @@ wget https://access.togaware.com/rattleng-windows.zip
 Unzip and run `rattle.exe`. You can add the unzipped path to the
 system PATH environment variable.
 
-### Inno Install 
+### Inno Install - UNDER DEVELOPMENT 
 
 Download and run the `rattleng.exe` to self install the app on
 Windows.
 
-### Msix Install
+### Msix Install - UNDER DEVELOPMENT
 
 + Download https://rattle.togaware.com/rattle.msix
 + Add the rattle certificate to your store:

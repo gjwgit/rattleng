@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Sunday 2024-06-02 14:57:36 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-07-11 17:12:19 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -41,6 +41,7 @@ import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/vars.dart';
+import 'package:rattle/providers/selections.dart';
 import 'package:rattle/utils/count_lines.dart';
 import 'package:rattle/utils/truncate.dart';
 
@@ -63,6 +64,10 @@ class RattleStateText extends ConsumerWidget {
     bool normalise = ref.watch(normaliseProvider);
     bool partition = ref.watch(partitionProvider);
 
+    Map<String, String> selection = ref.watch(selectionsProvider);
+    String select = selection.toString();
+    select = select.replaceAll(',', '\n${" " * 13}');
+
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
@@ -75,6 +80,7 @@ class RattleStateText extends ConsumerWidget {
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
+            'VARIABLES:   $select\n'
             'VARS:        ${truncate(vars.toString())}\n'
             'TARGET:      $target\n'
             'RISK:        \$risk \n'
