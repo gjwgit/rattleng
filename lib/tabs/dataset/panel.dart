@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 14:28:13 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-11 17:23:38 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,7 +32,7 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/variable_selection.dart';
+import 'package:rattle/providers/selections.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -74,10 +74,11 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
       // initialise, default to input
       if (currentSelections.isEmpty && vars.isNotEmpty) {
         for (var column in vars) {
-          ref.read(selectionsProvider.notifier).state[column.name] = choices.first;
+          ref.read(selectionsProvider.notifier).state[column.name] =
+              choices.first;
         }
       }
-      
+
       return ListView.builder(
         itemCount: vars.length + 1, // Add 1 for the extra header row
         itemBuilder: (context, index) {
@@ -98,7 +99,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   space,
                   const Expanded(
                     child: Text(
-                      'Data Type',
+                      'Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -106,7 +107,7 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
                   Expanded(
                     flex: typeFlex,
                     child: const Text(
-                      'Type',
+                      'Role',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
