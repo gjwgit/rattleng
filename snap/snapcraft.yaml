@@ -1,22 +1,22 @@
 name: rattle
-version: 0.0.1
+version: 0.2.0
 summary: Rattle Next Generation Data Science App
 description: Rattle is the data scientists toolkit.
 
 confinement: strict
-base: core20
+base: core22
 grade: stable
 
 slots:
-  dbus-rattle: # adjust accordingly to your app name
+  dbus-rattle:
     interface: dbus
     bus: session
-    name: com.togaware.rattle # adjust accordingly to your app name and
+    name: com.togaware.rattle
     
 apps:
   rattle:
     command: rattle
-    extensions: [flutter-master] # Where "master" defines which Flutter channel to use for the build
+    extensions: [gnome] # gnome includes the libraries required by flutter
     plugs:
     - network
     slots:

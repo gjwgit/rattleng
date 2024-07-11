@@ -87,7 +87,7 @@ wget https://access.togaware.com/rattleng-macos.zip
 
 Unzip and run rattle.
 
-### Dmg Install
+### Dmg Install - UNDER DEVELOPMENT
 
 The package file `rattleng.dmg` can be installed on MacOS. Download
 the file and open it on your Mac. Then, holding the Control key click
@@ -120,12 +120,12 @@ wget https://access.togaware.com/rattleng-windows.zip
 Unzip and run `rattle.exe`. You can add the unzipped path to the
 system PATH environment variable.
 
-### Inno Install 
+### Inno Install - UNDER DEVELOPMENT 
 
 Download and run the `rattleng.exe` to self install the app on
 Windows.
 
-### Msix Install
+### Msix Install - UNDER DEVELOPMENT
 
 + Download https://rattle.togaware.com/rattle.msix
 + Add the rattle certificate to your store:
