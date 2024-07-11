@@ -69,17 +69,15 @@ class ImagePage extends StatelessWidget {
         var bytes = snapshot.data;
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.connectionState == ConnectionState.waiting ||
-            bytes == null ||
-            bytes.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
+        } else if (snapshot.hasData && bytes != null && bytes.isNotEmpty) {
           return SingleChildScrollView(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [SvgPicture.memory(bytes)],
             ),
           );
+        } else {
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );
