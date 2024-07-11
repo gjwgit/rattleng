@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Saturday 2024-06-29 14:01:56 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-11 19:50:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,6 +30,9 @@ library;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+
+import 'package:rattle/constants/sunken_box_decoration.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -80,10 +83,23 @@ class ImagePage extends StatelessWidget {
     Image image = Image.memory(bytes);
 
     // centering the image horizontally, and make it scrollable.
-    return SingleChildScrollView(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [image],
+    return Container(
+      decoration: sunkenBoxDecoration,
+      width: double.infinity,
+      padding: const EdgeInsets.only(left: 10),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MarkdownBody(
+              data: title,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [image],
+            ),
+          ],
+        ),
       ),
     );
   }
