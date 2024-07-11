@@ -3,7 +3,11 @@ Welcome to **RattleNG** the *Next Generation of Rattle*
 
 Click the `Dataset` button to pick a dataset to load from file or
 package, or to load the demo Canberra weather dataset
-`rattle::weather`. Visit the **Script** tab to see the **R** code.
+`rattle::weather`. 
+
+Be sure to visit the **Script** tab to see the **R** code that is
+generated for all of your activity. You can export the script and it
+is then a standalone R program you can run.
 
 RattleNG is an application for data science, statistical analyses,
 data visualisation 📊, machine learning, and artificial
