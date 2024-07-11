@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-30 12:38:42 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-12 09:41:07 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/pages.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -83,6 +84,44 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////
+    // USING VIM
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'aggr(ds');
+
+    // Add a blank line between each sub-table.
+
+    lines = content.split('\n');
+
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].startsWith(' ') && !RegExp(r'^\s+\d').hasMatch(lines[i])) {
+        lines[i] = '\n${lines[i]}';
+      }
+    }
+
+    content = lines.join('\n');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Variables with Missing Data - Sorted\n\n'
+              'Generated using `VIM::aggr(ds)`',
+          content: content,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    pages.add(
+      const ImagePage(
+        title: 'Missing Value Visualisation\n\n'
+            'Generated using `VIM::aggr(ds)`',
+        path: '/tmp/explore_missing_vim.svg',
+      ),
+    );
 
     return Pages(
       children: pages,
