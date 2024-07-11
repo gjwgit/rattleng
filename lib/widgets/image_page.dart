@@ -28,69 +28,60 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'dart:io';
-
+import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
   final String path;
 
   const ImagePage({
-    super.key,
+    Key? key,
     required this.title,
     required this.path,
-  });
+  }) : super(key: key);
+
+  Future<Uint8List> _loadImageBytes() async {
+    var imageFile = File(path);
+
+    // Wait until the file exists
+    while (!await imageFile.exists()) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    // Read file as bytes
+    return await imageFile.readAsBytes();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO yyx 20240711 after rebuild svg accumulate.
-//     ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
-// The following StateError was thrown building SvgPicture("Instance of 'SvgBytesLoader'",
-// clipBehavior: hardEdge, colorFilter: "null"):
-// Bad state: Invalid SVG data
-    // Reload the wordcloud image.
+    debugPrint('Image Path is $path');
 
+    // Clear the image cache
     imageCache.clear();
     imageCache.clearLiveImages();
-    var imageFile = File(path);
-    // TODO 20240601 gjw WITHOUT A DELAY HERE WE SEE AN EXCEPTION ON LINUX
-    //
-    // _Exception was thrown resolving an image codec:
-    // Exception: Invalid image data
-    //
-    // ON PRINTING bytes WE SEE AN EMPYT LIST OF BYTES UNTIL THE FILE IS
-    // LOADED SUCCESSFULLY.
-    //
-    // WITH THE SLEEP WE AVOID IT. SO WE SLEEP LONG ENOUGH FOR THE FILE THE BE
-    // SUCCESSFULLY LOADED (BECUSE IT IS NOT YET WRITTEN?) SO WE NEED TO WAIT
-    // UNTIL THE FILE IS READY.
-    //
-    // THERE MIGHT BE A BETTER WAY TO DO THIS - WAIT SYNCHRONLOUSLY?
 
-    // while (bytes.lengthInBytes == 0) {
-    //   sleep(const Duration(seconds: 1));
-    //   bytes = wordCloudFile.readAsBytesSync();
-    // }
-    // TODO yyx 20240701 what is the diff between sync and async?
-    // wait to read the file until the file is available.
-    // attempt to read it before that might give PathNotFound Exception (https://github.com/gjwgit/rattleng/issues/169)
-    while (!imageFile.existsSync()) {
-      sleep(const Duration(seconds: 1));
-    }
-    // Reload the image:
-    // https://nambiarakhilraj01.medium.com/
-    // what-to-do-if-fileimage-imagepath-does-not-update-on-build-in-flutter-622ad5ac8bca
-    var bytes = imageFile.readAsBytesSync();
-
-    // Image image = Image.memory(bytes);
-
-    // centering the image horizontally, and make it scrollable.
-    return SingleChildScrollView(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [SvgPicture.memory(bytes)],
-      ),
+    return FutureBuilder<Uint8List>(
+      future: _loadImageBytes(),
+      builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
+        var bytes = snapshot.data;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.connectionState == ConnectionState.waiting ||
+            bytes == null ||
+            bytes.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return SingleChildScrollView(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [SvgPicture.memory(bytes)],
+            ),
+          );
+        }
+      },
     );
   }
 }
