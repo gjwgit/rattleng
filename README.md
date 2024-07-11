@@ -204,6 +204,11 @@ A decision tree model is one of the most widely built AI models.
 
 ![](assets/screenshots/model_rpart.png)
 
+Visualisations are now built and presented by default, compared to
+Rattle of Old.
+
+![](assets/screenshots/model_rpart_plot.png)
+
 ### The R Console
 
 The R console is where everything in R happens. The user can review
