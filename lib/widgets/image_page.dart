@@ -38,10 +38,10 @@ class ImagePage extends StatelessWidget {
   final String path;
 
   const ImagePage({
-    Key? key,
+    super.key,
     required this.title,
     required this.path,
-  }) : super(key: key);
+  });
 
   Future<Uint8List> _loadImageBytes() async {
     var imageFile = File(path);
