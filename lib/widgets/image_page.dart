@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Thursday 2024-07-11 19:58:01 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-12 05:33:23 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,6 +37,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
+import 'package:rattle/utils/select_file.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -83,8 +84,25 @@ class ImagePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MarkdownBody(
-                    data: title,
+                  Row(
+                    children: [
+                      MarkdownBody(
+                        data: title,
+                      ),
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: () async {
+                          String? pathToSave = await selectFile();
+                          if (pathToSave != null) {
+                            // Copy generated image from /tmp to user's location.
+                            await File(path).copy(pathToSave);
+                          }
+                        },
+                        child: const Text(
+                          'Export',
+                        ),
+                      ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
