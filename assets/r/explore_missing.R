@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-07-12 09:36:41 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-07-12 09:45:14 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,9 +44,7 @@ library(mice, quietly=TRUE)
 vars_na <- names(ds)[sapply(ds, anyNA)]
 
 svg("TEMPDIR/explore_summary.svg")
-
 md.pattern(ds[vars_na])
-
 dev.off()
 
 # install.packages("VIM")
