@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Thursday 2024-07-11 19:50:01 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-11 19:58:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -75,35 +75,29 @@ class ImagePage extends StatelessWidget {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData && bytes != null && bytes.isNotEmpty) {
-          return SingleChildScrollView(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [SvgPicture.memory(bytes)],
+          return Container(
+            decoration: sunkenBoxDecoration,
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 10),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MarkdownBody(
+                    data: title,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [SvgPicture.memory(bytes)],
+                  ),
+                ],
+              ),
             ),
           );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
       },
-    // centering the image horizontally, and make it scrollable.
-//    return Container(
-//      decoration: sunkenBoxDecoration,
-//      width: double.infinity,
-//      padding: const EdgeInsets.only(left: 10),
-//      child: SingleChildScrollView(
-//        child: Column(
-//          crossAxisAlignment: CrossAxisAlignment.start,
-//          children: [
-//            MarkdownBody(
-//              data: title,
-//            ),
-//           Row(
-//              mainAxisAlignment: MainAxisAlignment.center,
-//              children: [image],
-//            ),
-//          ],
-//        ),
-//      ),
     );
   }
 }
