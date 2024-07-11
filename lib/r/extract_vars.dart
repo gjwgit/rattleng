@@ -23,8 +23,6 @@
 /// Authors: Graham Williams
 library;
 
-import 'package:flutter/foundation.dart' show debugPrint;
-
 List<String> rExtractVars(String txt) {
   // Command/string to identify start point of the extracttion.
 
@@ -73,7 +71,7 @@ List<String> rExtractVars(String txt) {
 
   String vars = result.join(' ');
 
-  debugPrint('R EXTRACT VARS JOIN: $vars');
+  // debugPrint('R EXTRACT VARS JOIN: $vars');
 
   // Remove the [1] etc line numbering in the output.
 
@@ -95,7 +93,34 @@ List<String> rExtractVars(String txt) {
 
   // Return the list of variable names.
 
-  debugPrint('R EXTRACT VARS FINAL: $result');
+  // debugPrint('R EXTRACT VARS FINAL: $result');
 
   return result;
+}
+
+List<VariableInfo> extractVariables(String text) {
+  // extract the variable information from the glimpse(ds)
+  // TODO yyx 20240710 make it more robust like rExtractVars
+  final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
+  final matches = regex.allMatches(text);
+
+  return matches.map((match) {
+    final name = match.group(1)!;
+    final type = match.group(2)!;
+    final details = match.group(3)!;
+    
+    return VariableInfo(name: name, type: type, details: details);
+  }).toList();
+}
+
+class VariableInfo {
+  final String name;
+  final String type;
+  final String details;
+
+  VariableInfo({
+    required this.name,
+    required this.type,
+    required this.details,
+  });
 }
