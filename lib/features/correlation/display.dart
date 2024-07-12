@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-11 21:03:00 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-12 11:39:05 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -84,7 +84,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     pages.add(
       const ImagePage(
-        title: 'VAR IMPORTANCE',
+        title: 'Variable Correlation Plot\n\n'
+            'Generated using `corrplot::corrplot(ds)`',
         path: '/tmp/explore_correlation.svg',
       ),
     );
