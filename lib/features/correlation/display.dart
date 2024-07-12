@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-07-12 11:39:05 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-12 21:12:33 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -49,7 +49,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    List<Widget> pages = [showMarkdownFile(missingIntroFile, context)];
+    List<Widget> pages = [showMarkdownFile(correlationIntroFile, context)];
 
     String content = '';
     List<String> lines = [];
