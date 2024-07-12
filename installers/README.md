@@ -15,7 +15,11 @@ software](https://cloud.r-project.org/), then fire up R to install the
 pre-requisite packages:
 
 ```r
-install.packages(c("rattle", "magrittr", "janitor", "tidyverse"))
+install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
+                   "mice", "VIM", "naniar", "reshape", "corrplor",
+                   "Hmisc", "fBasics", "descr", "randomForest",
+                   "verification", "magrittr", "janitor", "rpart",
+                   "readr", "tm", "wordcloud", "magick"))
 ```
 
 Then you can install the rattleng app from the packages available on
@@ -26,10 +30,8 @@ github or snap or build it yourself from source as described below.
 
 ### Prerequisite
 
-+ Install R
-  + Debian/Ubuntu: `wajig install r-recommended`
-+ Install required R packages
-  + `> install.packages(c("rattle","magrittr","janitor","tidyverse"))`
++ Install R. For Debian/Ubuntu: `wajig install r-recommended`
++ Install required R packages as above
 
 ### Tar Install
 
