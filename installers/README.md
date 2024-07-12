@@ -31,7 +31,7 @@ github or snap or build it yourself from source as described below.
 ### Prerequisite
 
 + Install R. For Debian/Ubuntu: `wajig install r-recommended`
-+ Install required R packages as above
++ Install prerequisite R packages as above
 
 ### Tar Install
 
