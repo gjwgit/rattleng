@@ -191,6 +191,10 @@ using `ggplot` and the `tidyverse`.
 
 ![](assets/screenshots/explore_plot.png)
 
+The traditional missing data plots have been updated:
+
+![](assets/screenshots/explore_missing_vim.png)
+
 ### Summarising Through WordClouds
 
 For a text file we can gain an insight into the document through a
