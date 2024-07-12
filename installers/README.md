@@ -1,10 +1,11 @@
 # Rattleng Installers
 
-Flutter supports multiple platform targets and Flutter based apps will
-run native on Android, iOS, Linux, MacOS, and Windows, as well as
-directly in a browser from the web. Flutter functionality is essentially identical
-across all platforms so the experience across different platforms will
-be very similar. RattleNG relies on running R
+RattleNG is implemented using the modern Flutter framework for
+dart. Flutter supports multiple platform targets and Flutter based
+apps will run native on Android, iOS, Linux, MacOS, and Windows, as
+well as directly in a browser from the web. Flutter functionality is
+essentially identical across all platforms so the experience across
+different platforms will be very similar. RattleNG relies on running R
 locally and so it requires R to be installed on your platform. At
 present R is supported on the desktops (Linux, MacOS, and Windows).
 
