@@ -195,6 +195,10 @@ The traditional missing data plots have been updated:
 
 ![](assets/screenshots/explore_missing_vim.png)
 
+The correlation plot removes repeated information from the plot:
+
+![](assets/screenshots/explore_correlation_corrplot.png)
+
 ### Summarising Through WordClouds
 
 For a text file we can gain an insight into the document through a
