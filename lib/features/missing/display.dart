@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-07-12 09:47:32 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-12 21:09:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -59,7 +59,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     // TEXT PATTERN OF MISSING VALUES
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'md.pattern(ds)');
+    content = rExtract(stdout, 'md.pattern(ds');
 
     // Add a blank line between each sub-table.
 
@@ -91,15 +91,11 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     content = rExtract(stdout, 'aggr(ds');
 
-    // Add a blank line between each sub-table.
+    // Remove the line beginning with + (a continuation)
 
     lines = content.split('\n');
 
-    for (int i = 0; i < lines.length; i++) {
-      if (lines[i].startsWith(' ') && !RegExp(r'^\s+\d').hasMatch(lines[i])) {
-        lines[i] = '\n${lines[i]}';
-      }
-    }
+    lines = lines.where((line) => !line.startsWith('+')).toList();
 
     content = lines.join('\n');
 
