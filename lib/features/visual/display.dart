@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-14 10:09:45 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 19:47:59 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -50,66 +51,66 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     List<String> lines = [];
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Box Plot\n\n'
             'Generated using `ggplot2::geom_boxplot()`',
-        path: '/tmp/explore_visual_boxplot.svg',
+        path: '$tempDir/explore_visual_boxplot.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Histogram Plot\n\n'
             'Generated using `ggplot2::geom_density()`',
-        path: '/tmp/explore_visual_histogram.svg',
+        path: '$tempDir/explore_visual_histogram.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Cummulative Plot\n\n'
             'Generated using `Hmisc::Ecdf()`',
-        path: '/tmp/explore_visual_cummulative.svg',
+        path: '$tempDir/explore_visual_cummulative.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Benford Plot\n\n'
             'Generated using `ggplot2`',
-        path: '/tmp/explore_visual_benford.svg',
+        path: '$tempDir/explore_visual_benford.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Pairs Plot\n\n'
             'Generated using `ggpairs`',
-        path: '/tmp/explore_visual_pairs.svg',
+        path: '$tempDir/explore_visual_pairs.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Bar Chart\n\n'
             'Generated using `gplots::barplot2()`',
-        path: '/tmp/explore_visual_bars.svg',
+        path: '$tempDir/explore_visual_bars.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Dot Plot\n\n'
             'Generated using `dotchart()`',
-        path: '/tmp/explore_visual_dots.svg',
+        path: '$tempDir/explore_visual_dots.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Pairs Plot\n\n'
             'Generated using `mosaicplot()`',
-        path: '/tmp/explore_visual_mosaic.svg',
+        path: '$tempDir/explore_visual_mosaic.svg',
       ),
     );
 

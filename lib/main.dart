@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Saturday 2024-06-15 05:57:09 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-14 19:39:13 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -26,12 +26,15 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/is_desktop.dart';
 
 // Check if this is a production (--release) version.
@@ -89,6 +92,13 @@ void main() async {
       await windowManager.setAlwaysOnTop(false);
     });
   }
+
+  // Initialise a global temporary directory where generated files, such as
+  // charts, are saved and can be removed on exit from rattleng or on loading a
+  // new dataset.
+
+  final rattleDir = await Directory.systemTemp.createTemp('rattle');
+  tempDir = rattleDir.path;
 
   // The runApp() function takes the given Widget and makes it the root of the
   // widget tree. Here we wrap the app within RiverPod's ProviderScope() to

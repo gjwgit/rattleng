@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-07-12 11:31:09 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 20:27:21 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Correlation Analysis of a Dataset
 #
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -60,5 +60,5 @@ print(round(cor,2))
 svg("TEMPDIR/explore_correlation.svg")
 corrplot(cor, method='ellipse', order='AOE', type='lower',tl.srt=45, mar=c(0,0,1,0))
 title(main="Correlation weather.csv using Pearson",
-      sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+      sub="TIMESTAMP")
 dev.off()

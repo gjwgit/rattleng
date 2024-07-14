@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-07-12 09:52:16 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 20:28:00 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Summary of missing in the dataset
 #
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -55,7 +55,10 @@ library(VIM)
 
 svg("TEMPDIR/explore_missing_vim.svg", width=14)
 aggr(ds, numbers=TRUE, sortVars=TRUE, labels=names(ds),
-     cex.axis = .7, gap = 3, ylab = c("Missing data", "Pattern"))
+     cex.axis = .7,
+     gap      = 3,
+     ylab     = c("Missing data", "Pattern"),
+     sub      = "TIMESTAMP")
 dev.off()
 
 ## # TODO

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-06-09 12:42:22 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 20:29:04 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Cluster using KMeans
 #
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #

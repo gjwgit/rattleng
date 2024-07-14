@@ -1,6 +1,6 @@
 # Rattle Scripts: generate a trimmed wordcloud png
 # 
-# Time-stamp: <Sunday 2024-06-30 08:47:30 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 20:30:52 +1000 Graham Williams>
 # 
 # Copyright (C) 2024, Togaware Pty Ltd
 # 
@@ -22,6 +22,8 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 # 
 # Authors: Yixiang Yin, Graham Williams
+
+# TIMESTAMP
 
 # Load required libraries.
 

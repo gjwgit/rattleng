@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-07-14 10:14:39 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-14 20:18:19 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,7 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
@@ -86,7 +86,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Process template variables.
 
-  code = code.replaceAll('TIMESTAMP', timestamp());
+  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()} USER');
 
   // Populate the VERSION.
 
@@ -103,7 +103,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // TODO 20240630 gjw EVENTUALLY SELECTIVELY REPLACE
   // AS REQUIRED FOR THE CURRENT FEATURE.
 
-  code = code.replaceAll('TEMPDIR', tmpDirPath);
+  code = code.replaceAll('TEMPDIR', tempDir);
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD

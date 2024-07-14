@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Sunday 2024-07-14 12:19:00 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 19:29:19 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -28,14 +28,17 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
+//import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+//import 'package:path_provider/path_provider.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selections.dart';
+//import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/pages.dart';
@@ -64,6 +67,22 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     'Ignore',
     'Weight',
   ];
+
+//   Future<String> loadAndWriteWeather() async {
+//     // Load the CSV file from assets
+//     String csvContent = await rootBundle.loadString('assets/data/weather.csv');
+
+//     print('TEMP DIR IS $tempDir');
+
+//     // Create a temporary file
+// //    File tempFile = File('$tempDir/temp.csv');
+
+//     // Write the CSV content to the temporary file
+//   //  await tempFile.writeAsString(csvContent);
+
+//     // Return the path of the temporary file
+//     //return tempFile.path;
+//   }
 
   @override
   Widget build(BuildContext context) {

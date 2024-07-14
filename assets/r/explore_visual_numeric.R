@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 09:52:50 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 20:28:30 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Visual presentation of variables.
 #
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -35,11 +35,12 @@
 
 # Load required packages from the local library into the R session.
 
-# Display box plot for the selected variable. 
-
-# Use ggplot2 to generate box plot for MinTemp
-
+########################################################################
 # BOX PLOT
+########################################################################
+
+# Display box plot for the selected variable. Use ggplot2 to generate
+# box plot.
 
 svg("TEMPDIR/explore_visual_boxplot.svg", width=10)
 
@@ -50,13 +51,15 @@ ds %>%
   ggplot2::stat_summary(ggplot2::aes(x="All"), fun=mean, geom="point", shape=8) +
   ggplot2::geom_boxplot(ggplot2::aes(x=VAR_TARGET, fill=VAR_TARGET), notch=TRUE) +
   ggplot2::stat_summary(ggplot2::aes(x=VAR_TARGET), fun=mean, geom="point", shape=8) +
-  ggplot2::xlab("RainTomorrow\n\nRattle 2024-Jul-14 06:08:38 gjw") +
+  ggplot2::xlab(paste("VAR_TARGET\n\n", "TIMESTAMP", sep="")) +
   ggplot2::ggtitle("Distribution of min_temp by VAR_TARGET") +
   ggplot2::theme(legend.position="none")
 
 dev.off()
 
+########################################################################
 # HISTOGRAM
+########################################################################
 
 svg("TEMPDIR/explore_visual_histogram.svg", width=10)
 
@@ -66,13 +69,15 @@ ds %>%
   ggplot2::ggplot(ggplot2::aes(x=min_temp)) +
   ggplot2::geom_density(lty=3) +
   ggplot2::geom_density(ggplot2::aes(fill=VAR_TARGET, colour=VAR_TARGET), alpha=0.55) +
-  ggplot2::xlab("min_temp\n\nRattle 2024-Jul-14 06:31:29 gjw") +
+  ggplot2::xlab(paste("min_temp\n\n", "TIMESTAMP", sep="")) +
   ggplot2::ggtitle("Distribution of min_temp by VAR_TARGET") +
   ggplot2::labs(fill="VAR_TARGET", y="Density")
 
 dev.off()
 
+########################################################################
 # CUMMULATIVE
+########################################################################
 
 svg("TEMPDIR/explore_visual_cummulative.svg", width=10)
 
@@ -99,8 +104,7 @@ legend("bottomright", c("All","No","Yes"), bty="n",  col=colorspace::rainbow_hcl
 
 # Add a title to the plot.
 
-title(main="Distribution of min_temp by VAR_TARGET",
-      sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+title(main="Distribution of min_temp by VAR_TARGET", sub="TIMESTAMP")
 
 dev.off()
 
@@ -135,6 +139,8 @@ for (i in unique(ds[[target]]))
 svg("TEMPDIR/explore_visual_benford.svg", width=10)
 p <- plotDigitFreq(tds)
 p <- p + ggtitle("Digital Analysis of First Digit of min_temp by VAR_TARGET")
+p <- p + ggplot2::xlab(paste("Digits\n\n", "TIMESTAMP", sep=""))
+
 print(p)
 dev.off()
 
@@ -161,8 +167,10 @@ ds %>%
                            combo="denstrip",
                            discrete="facetbar"),
                 legend=3) +
-  ggplot2::theme(panel.grid.major=ggplot2::element_blank(), legend.position="bottom")
+  ggplot2::theme(panel.grid.major=ggplot2::element_blank(), legend.position="right") +
+  ggplot2::xlab(paste("\n\n", "TIMESTAMP", sep=""))
 
+  
 # ggplot2::scale_alpha_continuous(guide=FALSE) +
 #  ggplot2::scale_fill_brewer(palette=rattlePalette) +
 #  ggplot2::scale_colour_brewer(palette=rattlePalette)
