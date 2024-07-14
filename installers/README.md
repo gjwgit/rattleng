@@ -18,9 +18,9 @@ pre-requisite packages:
 ```bash
 R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
                          "mice", "VIM", "naniar", "reshape", "corrplor",
-                        "Hmisc", "fBasics", "descr", "randomForest",
-                        "verification", "magrittr", "janitor", "rpart",
-                        "readr", "tm", "wordcloud", "magick"))'
+                         "Hmisc", "fBasics", "descr", "randomForest",
+                         "verification", "magrittr", "janitor", "rpart",
+                         "readr", "tm", "wordcloud", "magick"))'
 ```
 
 Then you can install the rattleng app from the packages available on
