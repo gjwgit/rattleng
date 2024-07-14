@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/tabs/dataset/popup.dart';
+import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
