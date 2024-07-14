@@ -1,6 +1,6 @@
 /// Strip comments from an R console log string.
 //
-// Time-stamp: <Thursday 2024-06-13 16:13:27 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 08:21:00 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,14 @@ String rStripComments(String txt) {
     if (!lines[i].startsWith('#') && lines[i].isNotEmpty) {
       // Strip comments at the end of the line.
 
-      result.add(lines[i].replaceAll(RegExp(r' *#.*'), ''));
+      // Need to be clever to not strip # where # is embedded like in
+      //
+      // Ecdf(eds[eds$grp=="All",1], col="#E495A5", ...)
+      //
+      // Uase a pattern with a negative lookbehind assertion (?<!\") which
+      // ensures that the # is not preceded by a ".
+
+      result.add(lines[i].replaceAll(RegExp(r' *(?<!\")#.*'), ''));
     }
   }
 

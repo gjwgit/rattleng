@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-06-30 08:55:42 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-14 10:14:39 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -96,18 +96,19 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // TODO 20231102 gjw THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE
   // VERSION FOR NOW.
 
-  code = code.replaceAll('VERSION', '0.0.1');
+  code = code.replaceAll('VERSION', '0.0.0');
 
   code = code.replaceAll('FILENAME', path);
 
   // TODO 20240630 gjw EVENTUALLY SELECTIVELY REPLACE
   // AS REQUIRED FOR THE CURRENT FEATURE.
 
+  code = code.replaceAll('TEMPDIR', tmpDirPath);
+
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD
   ////////////////////////////////////////////////////////////////////////
 
-  code = code.replaceAll('TEMPDIR', tmpDirPath);
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
@@ -184,7 +185,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
 
   // Add the code to the script provider so it will be displayed in the script
-  // tab and available to be exprted there.
+  // tab and available to be exported there.
 
   updateScript(
     ref,
