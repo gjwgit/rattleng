@@ -1,13 +1,13 @@
-# Rattleng Installers
+# RattleNG Installers
 
-RattleNG is implemented using the modern Flutter framework for
-dart. Flutter supports multiple platform targets and Flutter based
-apps will run native on Android, iOS, Linux, MacOS, and Windows, as
-well as directly in a browser from the web. Flutter functionality is
-essentially identical across all platforms so the experience across
-different platforms will be very similar. RattleNG relies on running R
-locally and so it requires R to be installed on your platform. At
-present R is supported on the desktops (Linux, MacOS, and Windows).
+RattleNG is a re-implementation of Rattle using the modern Flutter
+framework for dart. Flutter supports multiple platform targets and
+Flutter based apps will run native on Linux, MacOS, and Windows. The
+functionality is essentially identical across all platforms so the
+experience across different platforms will be very similar. RattleNG
+relies on running R locally and so it requires R to be installed on
+your platform. At present R is supported on the desktops (Linux,
+MacOS, and Windows).
 
 ## Prerequisite
 
@@ -24,7 +24,8 @@ R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
 ```
 
 Then you can install the rattleng app from the packages available on
-github or snap or build it yourself from source as described below.
+github or snap or build it yourself from source as described further
+below.
 
 
 ## Linux
@@ -92,6 +93,9 @@ sudo mkdir -p /usr/local/share/applications/
 sudo wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattleng.desktop -O /usr/local/share/applications/rattle.desktop
 sudo wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O /opt/rattleng/rattle.png
 ``` 
+
+If installing somewhere other than`/opt/` you will need to modify the
+steps and edit the `rattle.desktop`.
 
 Once installed users can run the app from the GNOME desktop through
 the Window key then type `rattle`.
