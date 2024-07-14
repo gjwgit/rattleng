@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 14:32:25 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 10:09:45 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,11 +28,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_empty.dart';
+import 'package:rattle/widgets/pages.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The panel displays the instructions or the output.
@@ -47,23 +45,76 @@ class VisualDisplay extends ConsumerStatefulWidget {
 class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   @override
   Widget build(BuildContext context) {
-    String stdout = ref.watch(stdoutProvider);
-    String content = rExtractEmpty(stdout);
+    List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
 
-    return content == ''
-        ? showMarkdownFile(visualIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
-              ),
-            ),
-          );
+    List<String> lines = [];
+
+    pages.add(
+      const ImagePage(
+        title: 'Box Plot\n\n'
+            'Generated using `ggplot2::geom_boxplot()`',
+        path: '/tmp/explore_visual_boxplot.svg',
+      ),
+    );
+
+    pages.add(
+      const ImagePage(
+        title: 'Histogram Plot\n\n'
+            'Generated using `ggplot2::geom_density()`',
+        path: '/tmp/explore_visual_histogram.svg',
+      ),
+    );
+
+    pages.add(
+      const ImagePage(
+        title: 'Cummulative Plot\n\n'
+            'Generated using `Hmisc::Ecdf()`',
+        path: '/tmp/explore_visual_cummulative.svg',
+      ),
+    );
+
+    pages.add(
+      const ImagePage(
+        title: 'Benford Plot\n\n'
+            'Generated using `ggplot2`',
+        path: '/tmp/explore_visual_benford.svg',
+      ),
+    );
+
+    pages.add(
+      const ImagePage(
+        title: 'Pairs Plot\n\n'
+            'Generated using `ggpairs`',
+        path: '/tmp/explore_visual_pairs.svg',
+      ),
+    );
+
+    pages.add(
+      const ImagePage(
+        title: 'Bar Chart\n\n'
+            'Generated using `gplots::barplot2()`',
+        path: '/tmp/explore_visual_bars.svg',
+      ),
+    );
+
+    pages.add(
+      const ImagePage(
+        title: 'Dot Plot\n\n'
+            'Generated using `dotchart()`',
+        path: '/tmp/explore_visual_dots.svg',
+      ),
+    );
+
+    pages.add(
+      const ImagePage(
+        title: 'Pairs Plot\n\n'
+            'Generated using `mosaicplot()`',
+        path: '/tmp/explore_visual_mosaic.svg',
+      ),
+    );
+
+    return Pages(
+      children: pages,
+    );
   }
 }

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-06-29 21:24:27 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-07-13 06:56:10 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -67,7 +67,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             ),
             const SizedBox(width: 20.0),
             const Text(
-              'A variety of R functions are utilised to explore correlations in the dataset.',
+              'R functions are utilised to explore correlations between variables in the dataset.',
             ),
           ],
         ),

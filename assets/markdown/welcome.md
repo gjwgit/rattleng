@@ -1,6 +1,8 @@
 Welcome to **RattleNG** the *Next Generation of Rattle*
 (https://rattle.togaware.com).
 
+The Rattle toolbox aims to
+
 Click the `Dataset` button to pick a dataset to load from file or
 package, or to load the demo Canberra weather dataset
 `rattle::weather`. 

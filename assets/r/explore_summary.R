@@ -1,11 +1,11 @@
-# Rattle Scripts: For dataset ds geneate summary.
+# Rattle Scripts: For dataset ds generate summary statistics.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-06-29 21:21:34 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 06:10:14 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #

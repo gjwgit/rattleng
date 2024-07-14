@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-06-12 12:22:12 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 10:03:43 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The VISUAL tab config currently consists of just a BUILD button.
@@ -61,9 +61,16 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             ActivityButton(
               onPressed: () {
-                showUnderConstruction(context);
+                // TODO 20240714 gjw CHOOSE DEPENDING ON SELECTED VARIABLE
+
+                rSource(context, ref, 'explore_visual_numeric');
+                rSource(context, ref, 'explore_visual_categoric');
               },
               child: const Text('Display'),
+            ),
+            const SizedBox(width: 20.0),
+            const Text(
+              'R packages like ggplot are utilised to build a variety of charts, plots, and graphs.',
             ),
           ],
         ),

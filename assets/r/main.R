@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-05-19 14:53:30 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 09:48:13 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -50,3 +50,8 @@ library(tidyverse)    # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
 # repeatable.
 
 set.seed(42)
+
+# A palette for rattle!
+
+rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
+                   "#0072B2", "#D55E00", "#CC79A7", "#000000")
