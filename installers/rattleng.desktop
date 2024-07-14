@@ -4,5 +4,5 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=RattleNG
-Exec=/opt/rattleng/rattle
+Exec=/usr/local/bin/rattleng
 Icon=/opt/rattleng/rattle.png
