@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-11 20:27:01 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 20:34:36 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_tree.dart';
@@ -90,9 +91,9 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     ////////////////////////////////////////////////////////////////////////
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'TREE',
-        path: '/tmp/decision_tree.svg',
+        path: '$tempDir/model_tree_rpart.svg',
       ),
     );
 

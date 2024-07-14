@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-07-12 21:09:52 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 20:21:19 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/pages.dart';
@@ -112,18 +113,18 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     ////////////////////////////////////////////////////////////////////////
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Missing Value Visualisation\n\n'
             'Generated using `mice::md(ds)`',
-        path: '/tmp/explore_missing_mice.svg',
+        path: '$tempDir/explore_missing_mice.svg',
       ),
     );
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Missing Value Visualisation\n\n'
             'Generated using `VIM::aggr(ds)`',
-        path: '/tmp/explore_missing_vim.svg',
+        path: '$tempDir/explore_missing_vim.svg',
       ),
     );
 

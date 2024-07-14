@@ -1,11 +1,11 @@
-/// Wordcloud specific constants for RattleNG
+/// Temporary directory path.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-07-14 19:25:09 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 19:47:01 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -26,30 +26,4 @@
 
 library;
 
-import 'package:rattle/constants/temp_dir.dart';
-
-/// Location of the markdown file containing the word cloud welcome message.
-
-const String wordCloudMsgFile = 'assets/markdown/wordcloud.md';
-
-String wordCloudImagePath = '$tempDir/wordcloud.svg';
-String tmpImagePath = '$tempDir/tmp.png';
-
-const List<String> stopwordLanguages = <String>[
-  'english',
-  'catalan',
-  'romanian',
-  'SMART',
-  'danish',
-  'dutch',
-  'finnish',
-  'french',
-  'german',
-  'hungarian',
-  'italian',
-  'norwegian',
-  'portuguese',
-  'russian',
-  'spanish',
-  'swedish',
-];
+String tempDir = '';

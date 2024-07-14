@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-07-11 20:56:08 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 20:46:11 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Random Forest using randomForest()
 #
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -42,9 +42,11 @@ mdesc <- "Forest"
 
 # Typically we use na.roughfix() for na.action.
 
+tds <- ds[tr, vars]
+
 model_randomForest <- randomForest(
   form,
-  data=ds[tr, vars], 
+  data=tds, 
   ntree=RF_NUM_TREES,
   mtry=RF_MTRY,
   importance=TRUE,
@@ -73,7 +75,7 @@ rn[order(rn[,3], decreasing=TRUE),]
 
 # Plot the relative importance of the variables.
 
-svg("TEMPDIR/random_forest.svg")
+svg("TEMPDIR/model_random_forest_varimp.svg")
 ggVarImp(model_randomForest,
          title="Variable Importance Random Forest weather.csv")
 dev.off()

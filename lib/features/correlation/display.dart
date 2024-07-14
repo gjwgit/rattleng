@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-07-12 21:12:33 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-14 20:26:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -83,10 +84,10 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     ////////////////////////////////////////////////////////////////////////
 
     pages.add(
-      const ImagePage(
+      ImagePage(
         title: 'Variable Correlation Plot\n\n'
             'Generated using `corrplot::corrplot(ds)`',
-        path: '/tmp/explore_correlation.svg',
+        path: '$tempDir/explore_correlation.svg',
       ),
     );
 

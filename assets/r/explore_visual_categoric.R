@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 10:09:04 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-14 20:28:16 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Visual presentation of variables.
 #
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -36,10 +36,8 @@
 # Load required packages from the local library into the R session.
 
 ########################################################################
-
-# Display box plot for the selected variable. 
-
 # Bar Plot 
+########################################################################
 
 svg("TEMPDIR/explore_visual_bars.svg", width=10)
 
@@ -64,13 +62,13 @@ legend("topright", bty="n", c("All","No","Yes"),  fill=colorspace::rainbow_hcl(3
 # Add a title to the plot.
 
 title(main="Distribution of wind_gust_dir (sample)\nby VAR_TARGET",
-    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+    sub="TIMESTAMP")
 
 dev.off()
 
-#=======================================================================
-
+########################################################################
 # Dot Plot 
+########################################################################
 
 svg("TEMPDIR/explore_visual_dots.svg", width=10)
 
@@ -86,7 +84,14 @@ ord <- order(tds[1,], decreasing=TRUE)
 
 # Plot the data.
 
-dotchart(tds[nrow(tds):1,ord], main="Distribution of wind_gust_dir (sample)\nby VAR_TARGET", sub="Rattle 2024-Jul-14 09:55:56 gjw", col=rev(colorspace::rainbow_hcl(3)), labels="", xlab="Frequency", ylab="wind_gust_dir", pch=c(1:2, 19))
+dotchart(tds[nrow(tds):1,ord],
+         main   = "Distribution of wind_gust_dir (sample)\nby VAR_TARGET",
+         sub    = "TIMESTAMP",
+         col    = rev(colorspace::rainbow_hcl(3)),
+         labels = "",
+         xlab   = "Frequency",
+         ylab   = "wind_gust_dir",
+         pch    = c(1:2, 19))
 
 # Add a legend.
 
@@ -94,10 +99,9 @@ legend("bottomright", bty="n", c("All","No","Yes"), col=colorspace::rainbow_hcl(
 
 dev.off()
 
-#=======================================================================
-# Rattle timestamp: 2024-07-14 09:55:56.616066 x86_64-pc-linux-gnu 
-
+########################################################################
 # Mosaic Plot 
+########################################################################
 
 svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
 
@@ -111,7 +115,12 @@ ord <- order(apply(tds, 1, sum), decreasing=TRUE)
 
 # Plot the data.
 
-mosaicplot(tds[ord,], main="Mosaic of wind_gust_dir (sample)
-by VAR_TARGET", sub="Rattle 2024-Jul-14 09:55:56 gjw", color=colorspace::rainbow_hcl(3)[-1], cex=0.7, xlab="wind_gust_dir", ylab="VAR_TARGET")
+mosaicplot(tds[ord,],
+           main  = "Mosaic of wind_gust_dir (sample) by VAR_TARGET",
+           sub   = "TIMESTAMP",
+           color = colorspace::rainbow_hcl(3)[-1],
+           cex   = 0.7,
+           xlab  = "wind_gust_dir",
+           ylab  = "VAR_TARGET")
 
 dev.off()
