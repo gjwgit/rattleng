@@ -94,7 +94,7 @@ sudo wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O /o
 ``` 
 
 Once installed users can run the app from the GNOME desktop through
-Alt-F2 and type `rattle` then Enter.
+the Window key then type `rattle`.
 
 ### Snap Install - UNDER DEVELOPMENT
 
