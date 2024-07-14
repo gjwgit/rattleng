@@ -38,6 +38,8 @@ github or snap or build it yourself from source as described below.
 
 Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
 
+**Quick Start**
+
 To try it out:
 
 ```bash
@@ -46,16 +48,18 @@ tar zxvf rattleng.tar.gz
 rattleng/rattle
 ```
 
+**Local User Install**
+
 To install for the local user and to make it known to GNOME and KDE,
-with a desktop icon for their desktop, begin by downloading the **.tar.gz** and
-installing that:
+with a desktop icon for their desktop, begin by downloading the
+**.tar.gz** and installing that:
 
 ```bash
 wget https://access.togaware.com/rattleng.tar.gz
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 ```
 
-Those two steps can also be repeated to update your installation.
+Those two steps can also be repeated to **update** your installation.
 
 Then set up your local installation (only required once):
 
@@ -67,18 +71,29 @@ mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
 wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
 ```
 
-To install for any user on the computer:
+**System Install**
+
+To install for any user on the computer begin by downloading the
+**.tar.gz** and installing that into `/opt/` or wherever your system
+suggests optional installations live:
 
 ```bash
+wget https://access.togaware.com/rattleng.tar.gz
 sudo tar zxvf rattleng.tar.gz -C /opt/
+```
+
+Those two steps can also be repeated to **update** your installation.
+
+Then set up your local installation (only required once):
+
+```bash
 sudo ln -s /opt/rattleng/rattle /usr/local/bin/
+sudo mkdir -p /usr/local/share/applications/
+sudo wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattleng.desktop -O /usr/local/share/applications/rattle.desktop
+sudo wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O /opt/rattleng/rattle.png
 ``` 
 
-The `rattle.desktop` and app icon can be installed into
-`/usr/local/share/applications/` and `/usr/local/share/icons/`
-respectively.
-
-Once installed you can run the app from the GNOME desktop through
+Once installed users can run the app from the GNOME desktop through
 Alt-F2 and type `rattle` then Enter.
 
 ### Snap Install - UNDER DEVELOPMENT
