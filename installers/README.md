@@ -15,12 +15,12 @@ The basic process is to install the [R statistical
 software](https://cloud.r-project.org/), then fire up R to install the
 pre-requisite packages:
 
-```r
-install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
-                   "mice", "VIM", "naniar", "reshape", "corrplor",
-                   "Hmisc", "fBasics", "descr", "randomForest",
-                   "verification", "magrittr", "janitor", "rpart",
-                   "readr", "tm", "wordcloud", "magick"))
+```bash
+R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
+                         "mice", "VIM", "naniar", "reshape", "corrplor",
+                        "Hmisc", "fBasics", "descr", "randomForest",
+                        "verification", "magrittr", "janitor", "rpart",
+                        "readr", "tm", "wordcloud", "magick"))'
 ```
 
 Then you can install the rattleng app from the packages available on
