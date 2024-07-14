@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Sunday 2024-07-14 19:29:19 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-15 08:00:25 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -34,7 +34,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //import 'package:path_provider/path_provider.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selections.dart';
@@ -43,17 +42,18 @@ import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
-class DatasetPanel extends ConsumerStatefulWidget {
-  const DatasetPanel({super.key});
+class DatasetDisplay extends ConsumerStatefulWidget {
+  const DatasetDisplay({super.key});
 
   @override
-  ConsumerState<DatasetPanel> createState() => _DatasetPanelState();
+  ConsumerState<DatasetDisplay> createState() => _DatasetDisplayState();
 }
 
-class _DatasetPanelState extends ConsumerState<DatasetPanel> {
+class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget space = const SizedBox(
     width: 10,
   );
@@ -67,22 +67,6 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
     'Ignore',
     'Weight',
   ];
-
-//   Future<String> loadAndWriteWeather() async {
-//     // Load the CSV file from assets
-//     String csvContent = await rootBundle.loadString('assets/data/weather.csv');
-
-//     print('TEMP DIR IS $tempDir');
-
-//     // Create a temporary file
-// //    File tempFile = File('$tempDir/temp.csv');
-
-//     // Write the CSV content to the temporary file
-//   //  await tempFile.writeAsString(csvContent);
-
-//     // Return the path of the temporary file
-//     //return tempFile.path;
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -239,18 +223,15 @@ class _DatasetPanelState extends ConsumerState<DatasetPanel> {
 
     String content = rExtractGlimpse(stdout);
 
-    pages.add(
-      Container(
-        width: double.infinity,
-        color: Colors.white,
-        padding: const EdgeInsets.only(left: 10),
-        child: SelectableText(
-          content,
-          key: datasetGlimpseKey,
-          style: monoTextStyle,
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Dataset Glimpse\n\n'
+              'Generated using `glimpse(ds)`',
+          content: '\n$content',
         ),
-      ),
-    );
+      );
+    }
 
     return Pages(children: pages);
   }

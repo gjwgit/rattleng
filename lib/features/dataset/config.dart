@@ -26,10 +26,10 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/tabs/dataset/button.dart';
-import 'package:rattle/tabs/dataset/clear_text_field.dart';
-import 'package:rattle/tabs/dataset/text_field.dart';
-import 'package:rattle/tabs/dataset/toggles.dart';
+import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/dataset/clear_text_field.dart';
+import 'package:rattle/features/dataset/text_field.dart';
+import 'package:rattle/features/dataset/toggles.dart';
 
 const double widthSpace = 5;
 
