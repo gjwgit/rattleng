@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2024-06-28 10:10:44 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-14 12:48:57 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -128,7 +128,12 @@ class DatasetPopup extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () {
                   // TODO 20231101 gjw DEFINE setPath()
+
                   ref.read(pathProvider.notifier).state = 'rattle::weather';
+
+                  // TODO 20240714 gjw HOW TO GET THE weather.csv FROM ASSETS
+                  // ref.read(pathProvider.notifier).state =
+                  //     'assets/data/weather.csv';
                   rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
                   Navigator.pop(context, 'Demo');
