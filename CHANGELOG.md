@@ -8,6 +8,7 @@ toward a 0.2 release.
 
 ## 0.3 FUTURE
 
++ Initial R code and integration of exploration plots [0.2.2 20240715]
 + Add EXPORT to ImagePage() [0.2.1 20240712]
 
 ## 0.2 Dataset Roles, Display Pages.
