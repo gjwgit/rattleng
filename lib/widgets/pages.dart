@@ -59,6 +59,21 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     debugPrint('PAGE CONTROLLER: ${widget.children.length}');
   }
 
+  // We need to initialise the tab controller
+  // because the number of pages in it is not changed after the number of pages increase.
+  @override
+  void didUpdateWidget(covariant Pages oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.children.length != widget.children.length) {
+            _initialiseControllers();
+    }
+  }
+
+  void _initialiseControllers() {
+    // _pageController = PageController(initialPage: 0);
+    _tabController = TabController(length: widget.children.length, vsync: this);
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -94,6 +109,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Number of pages is ${widget.children.length}');
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -115,7 +131,14 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
           },
           children: widget.children,
         ),
-        PageIndicator(tabController: _tabController, currentPageIndex: _currentPage, onUpdateCurrentPageIndex: _updateCurrentPageIndex, isOnDesktopAndWeb: _isOnDesktopAndWeb),
+        PageIndicator(
+          tabController: _tabController,
+          currentPageIndex: _currentPage,
+          onUpdateCurrentPageIndex: _updateCurrentPageIndex,
+          isOnDesktopAndWeb: _isOnDesktopAndWeb,
+          pageController: _pageController,
+          numOfPages: widget.children.length,
+        ),
         // IconButton(
         //   icon: Icon(
         //     Icons.arrow_right,
@@ -130,16 +153,18 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
       ],
     );
   }
-  
-    void _updateCurrentPageIndex(int index) {
+
+  void _updateCurrentPageIndex(int index) {
+    debugPrint('in the tab controller it says there are ${_tabController.length} pages');
     _tabController.index = index;
     _pageController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
-    bool get _isOnDesktopAndWeb {
+
+  bool get _isOnDesktopAndWeb {
     if (kIsWeb) {
       return true;
     }
@@ -156,8 +181,6 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   }
 }
 
-
-
 /// Page indicator for desktop and web platforms.
 ///
 /// On Desktop and Web, drag gesture for horizontal scrolling in a PageView is disabled by default.
@@ -170,13 +193,17 @@ class PageIndicator extends StatelessWidget {
   const PageIndicator({
     super.key,
     required this.tabController,
+    required this.pageController,
     required this.currentPageIndex,
     required this.onUpdateCurrentPageIndex,
     required this.isOnDesktopAndWeb,
+    required this.numOfPages,
   });
 
+  final int numOfPages;
   final int currentPageIndex;
   final TabController tabController;
+  final PageController pageController;
   final void Function(int) onUpdateCurrentPageIndex;
   final bool isOnDesktopAndWeb;
 
@@ -186,10 +213,6 @@ class PageIndicator extends StatelessWidget {
       return const SizedBox.shrink();
     }
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-// This error occurs when you click the right arrow at the last page
-//     The following assertion was thrown while handling a gesture:
-// 'package:flutter/src/material/tab_controller.dart': Failed assertion: line 193 pos 12: 'value >= 0
-// && (value < length || length == 0)': is not true.
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -200,10 +223,9 @@ class PageIndicator extends StatelessWidget {
             splashRadius: 16.0,
             padding: EdgeInsets.zero,
             onPressed: () {
-              if (currentPageIndex == 0) {
-                return;
+              if (currentPageIndex > 0) {
+                onUpdateCurrentPageIndex(currentPageIndex - 1);
               }
-              onUpdateCurrentPageIndex(currentPageIndex - 1);
             },
             icon: const Icon(
               Icons.arrow_left_rounded,
@@ -219,10 +241,9 @@ class PageIndicator extends StatelessWidget {
             splashRadius: 16.0,
             padding: EdgeInsets.zero,
             onPressed: () {
-              if (currentPageIndex == 2) {
-                return;
+              if (currentPageIndex < numOfPages - 1) {
+                onUpdateCurrentPageIndex(currentPageIndex + 1);
               }
-              onUpdateCurrentPageIndex(currentPageIndex + 1);
             },
             icon: const Icon(
               Icons.arrow_right_rounded,
