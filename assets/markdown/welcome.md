@@ -1,25 +1,39 @@
 Welcome to **RattleNG** the *Next Generation of Rattle*
 (https://rattle.togaware.com).
 
-The Rattle toolbox aims to
+RattleNG is the working name for a new generation toolbox for data
+science, statistical analyses, data visualisation 📊, machine
+learning, and artificial intelligence. This is a new version of the 20
+year old Rattle, used extensively in teaching and in industry world
+wide. The Rattle toolbox supports the Data Scientist in turning their
+data into stories that will have genuine business impact.
 
-Click the `Dataset` button to pick a dataset to load from file or
-package, or to load the demo Canberra weather dataset
-`rattle::weather`. 
+The new front end is implemented using [Flutter](https://flutter.dev)
+with [R](https://rproject.org) at the back end, utilising many of the
+original Rattle scripts. The scripts are being modernised to take
+advantage of the latest developments in R.
 
-Be sure to visit the **Script** tab to see the **R** code that is
-generated for all of your activity. You can export the script and it
-is then a standalone R program you can run.
+Push the **Dataset** button to choose a data source. You can load a
+**csv** (for structured data analysis, including data mining) or
+**txt** (for unstructured data analysis including text mining)
+file. The data contained in the file becomes your dataset used
+throughout Rattle.  A **Demo** csv data file can also be loaded as
+your dataset. The demo contains one year of observations from a
+weather station in Canberra.  It can be used to quickly learn how to
+interact with Rattle.
 
-RattleNG is an application for data science, statistical analyses,
-data visualisation 📊, machine learning, and artificial
-intelligence. The front end is implemented in **Flutter** with **R**
-as the back end. Flutter is a cross-platform framework implemented in
-Dart (https://flutter.dev). R is a software environment for
-statistical computing (https://rproject.org).
+All of the major functionality is implemented through **R template
+scripts**. The templates are completed through the configurations
+specified in the app and the sent to R to be performed. The results
+are then presented through Rattle.
 
-Rattle's GUI is well covered in *Data Mining with Rattle and R*
-(https://bit.ly/rattle_data_mining) while the concept of templates for
+At any time, be sure to visit the **Script** tab to see the **R** code
+that is automatically generated for you from all of your activity. You
+can export the script, as `script.R` and it is then a standalone R
+program you can run. Visit the Script tab for more details.
+
+Rattle's GUI is well covered in the book *Data Mining with Rattle and
+R* (https://bit.ly/rattle_data_mining). The concept of R templates for
 data science was introduced in *The Essentials of Data Science*
 (https://bit.ly/essentials_data_science). Both books are available
 from Amazon. The Togaware Desktop Data Mining Survival Guide includes
@@ -29,7 +43,8 @@ Rattle documentation and is freely available from Togaware
 Rattle is licensed 🪪 under the GNU General Public License,
 Version 3. Rattle comes with ABSOLUTELY NO WARRANTY.
 
-Rattle, RattleNG and the collection of R scripts are Copyright ©
-2006-2024 Togaware Pty Ltd. Rattle is a registered trademark of
-Togaware Pty Ltd. Rattle was created and implemented by Graham
-Williams with many contributions as acknowledged in the About menu.
+Rattle, RattleNG, and the collection of R template scripts are
+Copyright © 2006-2024 Togaware Pty Ltd. Rattle is a registered
+trademark of Togaware Pty Ltd. Rattle was created and implemented by
+Graham Williams with many contributions as acknowledged in the About
+menu.
