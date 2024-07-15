@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Sunday 2024-07-14 12:48:57 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-07-15 11:19:56 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -107,21 +107,21 @@ class DatasetPopup extends ConsumerWidget {
 
               const SizedBox(width: widthSpace),
 
-              // PACKAGE
+              // PACKAGE - Remove for now but include once implemented.
 
-              ElevatedButton(
-                onPressed: () {
-                  // TODO 20231018 gjw datasetSelectPackage();
-                  Navigator.pop(context, 'Package');
+              // ElevatedButton(
+              //   onPressed: () {
+              //     // TODO 20231018 gjw datasetSelectPackage();
+              //     Navigator.pop(context, 'Package');
 
-                  datasetLoadedUpdate(ref);
-                },
-                child: const Text('Package'),
-              ),
+              //     datasetLoadedUpdate(ref);
+              //   },
+              //   child: const Text('Package'),
+              // ),
 
-              // SPACE
+              // // SPACE
 
-              const SizedBox(width: widthSpace),
+              // const SizedBox(width: widthSpace),
 
               // DEMO
 
