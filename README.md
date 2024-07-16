@@ -79,6 +79,8 @@ Currently implemented features:
   + Demo
 + Explore
   + Summary
+  + Visual (no config yet)
+  + Missing
   + Correlation
 + Model
   + Cluster
