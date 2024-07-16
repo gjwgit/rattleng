@@ -1,23 +1,47 @@
 # Statistical Tests
 
-These tests apply to two samples. The paired two sample tests assume
-that we have two samples or observations, and that we are testing for
-a change, usually from one time period to another.
+Statistics plays a crucial role in providing insights into our
+data. The statistical tests supported here allow us to compare the
+distributions of values of two variables at a time.
 
-Distribution of the Data
+**Two-sample tests** compare the distribution of the values of two
+independent variables to determine whether they come from the
+same population and the same statistical properties. 
 
-* Kolomogorov-Smirnov     Non-parametric    Are the distributions different?
-* Wilcoxon Signed Rank    Non-parametric    Do paired samples have different distribution?
+**Paired two-sample tests** assume that we have two samples or
+observations, and that we are testing for a change, usually from one
+time period to another.
 
-Location of the Average
+## Available Tests
 
-* T-test               Parametric        Are the means different?
-* Wilcoxon Rank-Sum    Non-parametric    Are the medians different?
+**Distribution of the Data**
 
-Variation in the Data
+The **Kolomogorov-Smirnov** test is a non-parametric test of the
+hypothesis that the distributions are different.
 
-* F-test    Parametric    Are the variances different?
+The **Wilcoxon Signed Rank** test is a    non-parametric test of the
+hypothesis that the paired samples have different distributions.
 
-Correlation
+**Location of the Average**
 
-* Correlation    Pearsons    Are the values from the paired samples correlated?
+The two-sample **t-Test** is a parametric test used to compare the
+means of two independent groups to see if there is a statistically
+significant difference between them. The test assumes that data are
+continuous and approximately normally distributed, that the two
+variables are independent of each other, and that the variances of the
+two variables are equal (standard t-test).
+
+The **Wilcoxon Rank-Sum** test is a     non-parametric test of the
+hypothesis that the medians are different.
+
+**Variation in the Data**
+
+The **f-Test** is a parametric test of the hypothesis that the
+variances are different.
+
+**Correlation**
+
+The **Pearsons** correlation is a test of the hypothesis that the
+values from paired samples are correlated.
+
+
