@@ -1,19 +1,20 @@
 # RattleNG Installers
 
 RattleNG is a re-implementation of Rattle using the modern Flutter
-framework for dart. Flutter supports multiple platform targets and
-Flutter based apps will run native on Linux, MacOS, and Windows. The
-functionality is essentially identical across all platforms so the
-experience across different platforms will be very similar. RattleNG
-relies on running R locally and so it requires R to be installed on
-your platform. At present R is supported on the desktops (Linux,
-MacOS, and Windows).
+framework for Dart. Flutter supports multiple platforms so that
+Flutter based apps will run native and similarly on Linux, MacOS, and
+Windows. 
 
 ## Prerequisite
 
-The basic process is to install the [R statistical
-software](https://cloud.r-project.org/), then fire up R to install the
-pre-requisite packages:
+RattleNG relies on running R locally and so it requires R to be
+installed on your computer. At present R is supported on desktops
+(Linux, MacOS, and Windows). You can download R from the [R
+statistical software](https://cloud.r-project.org/) repository. 
+
+Once R is installed, open a terminal and run the R command to then
+install the pre-requisite packages by pasting the folloing after the
+prompt `> `:
 
 ```bash
 R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
@@ -23,10 +24,8 @@ R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
                          "readr", "tm", "wordcloud", "magick"))'
 ```
 
-Then you can install the rattleng app from the packages available on
-github or snap or build it yourself from source as described further
-below.
-
+RattleNG can then be installed from the installation packages
+available from Togaware as described below.
 
 ## Linux
 
