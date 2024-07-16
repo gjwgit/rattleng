@@ -37,35 +37,50 @@ below.
 
 ### Tar Install
 
-Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
+Download
+[rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz):
+
+```bash
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
+```
 
 **Quick Start**
 
 To try it out:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
 tar zxvf rattleng.tar.gz
+```
+
+Then simply run the executable:
+
+```bash
 rattleng/rattle
 ```
 
 **Local User Install**
 
-To install for the local user and to make it known to GNOME and KDE,
-with a desktop icon for their desktop, begin by downloading the
-**.tar.gz** and installing that:
+To install for the local user the package can be placed into `~/.local/share`:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 ```
 
-Those two steps can also be repeated to **update** your installation.
+These two steps can also be repeated to **update** your installation.
 
-Then set up your local installation (only required once):
+Set up a link to the binary to be able to run the `rattle` command
+from a terminal:
 
 ```bash
 ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
+```
+
+Then set up your local installation (only required once) to make it
+known to GNOME and KDE, with a desktop icon for your desktop:
+
+```bash
 wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattle.desktop -O ${HOME}/.local/share/applications/rattle.desktop
 sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/rattle.desktop
 mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
@@ -79,7 +94,7 @@ To install for any user on the computer begin by downloading the
 suggests optional installations live:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
 sudo tar zxvf rattleng.tar.gz -C /opt/
 ```
 
