@@ -68,7 +68,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   void didUpdateWidget(covariant Pages oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.children.length != widget.children.length) {
-            _initialiseControllers();
+      _initialiseControllers();
     }
   }
 
@@ -87,6 +87,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     debugPrint('Number of pages is ${widget.children.length}');
+    
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -113,7 +114,9 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   }
 
   void _updateCurrentPageIndex(int index) {
-    debugPrint('in the tab controller it says there are ${_tabController.length} pages');
+    debugPrint(
+      'in the tab controller it says there are ${_tabController.length} pages',
+    );
     _tabController.index = index;
     _pageController.animateToPage(
       index,
