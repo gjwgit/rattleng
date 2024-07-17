@@ -28,6 +28,7 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class Pages extends StatefulWidget {
   final List<Widget> children;
@@ -41,8 +42,10 @@ class Pages extends StatefulWidget {
   PagesState createState() => PagesState();
 }
 
-class PagesState extends State<Pages> {
+class PagesState extends State<Pages> with TickerProviderStateMixin {
+  // in order to use the 'this' as vsync below
   late PageController _pageController;
+  late TabController _tabController;
   int _currentPage = 0;
 
   @override
@@ -51,71 +54,165 @@ class PagesState extends State<Pages> {
     // By default, show the result page after build.
     // TODO yyx 20240627 not run after the second build.
     // _pageController = PageController(initialPage: widget.children.length - 1);
-    _pageController = PageController(initialPage: 0);
+    // if (widget.children.length == 2) {
+    //   _currentPage = 1;
+    // }
+    _pageController = PageController(initialPage: _currentPage);
+    _tabController = TabController(length: widget.children.length, vsync: this);
     debugPrint('PAGE CONTROLLER: ${widget.children.length}');
   }
 
-  void _goToPreviousPage() {
-    if (_currentPage > 0) {
-      _pageController.animateToPage(
-        _currentPage - 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+  // We need to initialise the tab controller
+  // because the number of pages in it is not changed after the number of pages increase.
+  @override
+  void didUpdateWidget(covariant Pages oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.children.length != widget.children.length) {
+      _initialiseControllers();
     }
   }
 
-  void _goToNextPage() {
-    if (_currentPage < widget.children.length - 1) {
-      _pageController.animateToPage(
-        _currentPage + 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
+  void _initialiseControllers() {
+    // _pageController = PageController(initialPage: 0);
+    _tabController = TabController(length: widget.children.length, vsync: this);
   }
 
-  void goToResultPage() {
-    debugPrint('go to result page');
-    // TODO yyx 20240624 might need change when we have more pages than 2.
-    _goToNextPage();
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+    _tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    debugPrint('Number of pages is ${widget.children.length}');
+    
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
-        IconButton(
-          icon: Icon(
-            Icons.arrow_left,
-            color: _currentPage > 0 ? Colors.black : Colors.grey,
-            size: 32,
-          ),
-          onPressed: _currentPage > 0 ? _goToPreviousPage : null,
+        // I didn't use expanded here because we assume expanded is used at each tab file.
+        PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentPage = index;
+            });
+          },
+          children: widget.children,
         ),
-        Expanded(
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            children: widget.children,
-          ),
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.arrow_right,
-            size: 32,
-            color: _currentPage < widget.children.length - 1
-                ? Colors.black
-                : Colors.grey,
-          ),
-          onPressed:
-              _currentPage < widget.children.length - 1 ? _goToNextPage : null,
+        PageIndicator(
+          tabController: _tabController,
+          currentPageIndex: _currentPage,
+          onUpdateCurrentPageIndex: _updateCurrentPageIndex,
+          isOnDesktopAndWeb: _isOnDesktopAndWeb,
+          pageController: _pageController,
+          numOfPages: widget.children.length,
         ),
       ],
+    );
+  }
+
+  void _updateCurrentPageIndex(int index) {
+    debugPrint(
+      'in the tab controller it says there are ${_tabController.length} pages',
+    );
+    _tabController.index = index;
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  bool get _isOnDesktopAndWeb {
+    if (kIsWeb) {
+      return true;
+    }
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.macOS:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+        return true;
+      case TargetPlatform.android:
+      case TargetPlatform.iOS:
+      case TargetPlatform.fuchsia:
+        return false;
+    }
+  }
+}
+
+/// Page indicator for desktop and web platforms.
+///
+/// On Desktop and Web, drag gesture for horizontal scrolling in a PageView is disabled by default.
+/// You can defined a custom scroll behavior to activate drag gestures,
+/// see https://docs.flutter.dev/release/breaking-changes/default-scroll-behavior-drag.
+///
+/// In this sample, we use a TabPageSelector to navigate between pages,
+/// in order to build natural behavior similar to other desktop applications.
+class PageIndicator extends StatelessWidget {
+  const PageIndicator({
+    super.key,
+    required this.tabController,
+    required this.pageController,
+    required this.currentPageIndex,
+    required this.onUpdateCurrentPageIndex,
+    required this.isOnDesktopAndWeb,
+    required this.numOfPages,
+  });
+
+  final int numOfPages;
+  final int currentPageIndex;
+  final TabController tabController;
+  final PageController pageController;
+  final void Function(int) onUpdateCurrentPageIndex;
+  final bool isOnDesktopAndWeb;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isOnDesktopAndWeb) {
+      return const SizedBox.shrink();
+    }
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+            splashRadius: 16.0,
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              if (currentPageIndex > 0) {
+                onUpdateCurrentPageIndex(currentPageIndex - 1);
+              }
+            },
+            icon: const Icon(
+              Icons.arrow_left_rounded,
+              size: 32.0,
+            ),
+          ),
+          TabPageSelector(
+            controller: tabController,
+            color: colorScheme.surface,
+            selectedColor: colorScheme.primary,
+          ),
+          IconButton(
+            splashRadius: 16.0,
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              if (currentPageIndex < numOfPages - 1) {
+                onUpdateCurrentPageIndex(currentPageIndex + 1);
+              }
+            },
+            icon: const Icon(
+              Icons.arrow_right_rounded,
+              size: 32.0,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
