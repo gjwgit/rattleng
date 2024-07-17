@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Sunday 2024-07-14 12:48:57 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-07-15 11:34:29 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/status.dart';
-import 'package:rattle/tabs/dataset/select_file.dart';
+import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
@@ -107,7 +107,7 @@ class DatasetPopup extends ConsumerWidget {
 
               const SizedBox(width: widthSpace),
 
-              // PACKAGE
+              // PACKAGE - Remove for now but include once implemented.
 
               ElevatedButton(
                 onPressed: () {

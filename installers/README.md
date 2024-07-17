@@ -1,31 +1,31 @@
-# Rattleng Installers
+# RattleNG Installers
 
-RattleNG is implemented using the modern Flutter framework for
-dart. Flutter supports multiple platform targets and Flutter based
-apps will run native on Android, iOS, Linux, MacOS, and Windows, as
-well as directly in a browser from the web. Flutter functionality is
-essentially identical across all platforms so the experience across
-different platforms will be very similar. RattleNG relies on running R
-locally and so it requires R to be installed on your platform. At
-present R is supported on the desktops (Linux, MacOS, and Windows).
+RattleNG is a re-implementation of Rattle using the modern Flutter
+framework for Dart. Flutter supports multiple platforms so that
+Flutter based apps will run native and similarly on Linux, MacOS, and
+Windows. 
 
 ## Prerequisite
 
-The basic process is to install the [R statistical
-software](https://cloud.r-project.org/), then fire up R to install the
-pre-requisite packages:
+RattleNG relies on running R locally and so it requires R to be
+installed on your computer. At present R is supported on desktops
+(Linux, MacOS, and Windows). You can download R from the [R
+statistical software](https://cloud.r-project.org/) repository. 
 
-```r
-install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
-                   "mice", "VIM", "naniar", "reshape", "corrplor",
-                   "Hmisc", "fBasics", "descr", "randomForest",
-                   "verification", "magrittr", "janitor", "rpart",
-                   "readr", "tm", "wordcloud", "magick"))
+Once R is installed, open a terminal and run the R command to then
+install the pre-requisite packages by pasting the folloing after the
+prompt `> `:
+
+```bash
+R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
+                         "mice", "VIM", "naniar", "reshape", "corrplor",
+                         "Hmisc", "fBasics", "descr", "randomForest",
+                         "verification", "magrittr", "janitor", "rpart",
+                         "readr", "tm", "wordcloud", "magick"))'
 ```
 
-Then you can install the rattleng app from the packages available on
-github or snap or build it yourself from source as described below.
-
+RattleNG can then be installed from the installation packages
+available from Togaware as described below.
 
 ## Linux
 
@@ -36,50 +36,83 @@ github or snap or build it yourself from source as described below.
 
 ### Tar Install
 
-Download [rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz)
+Download
+[rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz):
+
+```bash
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
+```
+
+**Quick Start**
 
 To try it out:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
 tar zxvf rattleng.tar.gz
+```
+
+Then simply run the executable:
+
+```bash
 rattleng/rattle
 ```
 
-To install for the local user and to make it known to GNOME and KDE,
-with a desktop icon for their desktop, begin by downloading the **.tar.gz** and
-installing that:
+**Local User Install**
+
+To install for the local user the package can be placed into `~/.local/share`:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
 tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 ```
 
-Those two steps can also be repeated to update your installation.
+These two steps can also be repeated to **update** your installation.
 
-Then set up your local installation (only required once):
+Set up a link to the binary to be able to run the `rattle` command
+from a terminal:
 
 ```bash
 ln -s ${HOME}/.local/share/rattleng/rattle ${HOME}/.local/bin/
+```
+
+Then set up your local installation (only required once) to make it
+known to GNOME and KDE, with a desktop icon for your desktop:
+
+```bash
 wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattle.desktop -O ${HOME}/.local/share/applications/rattle.desktop
 sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/rattle.desktop
 mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
 wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/rattle.png
 ```
 
-To install for any user on the computer:
+**System Install**
+
+To install for any user on the computer begin by downloading the
+**.tar.gz** and installing that into `/opt/` or wherever your system
+suggests optional installations live:
 
 ```bash
+wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
 sudo tar zxvf rattleng.tar.gz -C /opt/
+```
+
+Those two steps can also be repeated to **update** your installation.
+
+Then set up your local installation (only required once):
+
+```bash
 sudo ln -s /opt/rattleng/rattle /usr/local/bin/
+sudo mkdir -p /usr/local/share/applications/
+sudo wget https://raw.githubusercontent.com/gjwgit/rattleng/dev/installers/rattleng.desktop -O /usr/local/share/applications/rattle.desktop
+sudo wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O /opt/rattleng/rattle.png
 ``` 
 
-The `rattle.desktop` and app icon can be installed into
-`/usr/local/share/applications/` and `/usr/local/share/icons/`
-respectively.
+If installing somewhere other than`/opt/` you will need to modify the
+steps and edit the `rattle.desktop`.
 
-Once installed you can run the app from the GNOME desktop through
-Alt-F2 and type `rattle` then Enter.
+Once installed users can run the app from the GNOME desktop through
+the Window key then type `rattle`.
 
 ### Snap Install - UNDER DEVELOPMENT
 

@@ -1,6 +1,6 @@
 /// Dataset tab.
 ///
-/// Time-stamp: <Sunday 2024-06-09 05:23:48 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-07-15 07:59:04 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -29,13 +29,13 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/tabs/dataset/config.dart';
-import 'package:rattle/tabs/dataset/panel.dart';
+import 'package:rattle/features/dataset/config.dart';
+import 'package:rattle/features/dataset/display.dart';
 
 /// The dataset tab introduces RattleNG and supports loading a dataset.
 
-class DatasetTab extends StatelessWidget {
-  const DatasetTab({super.key});
+class DatasetPanel extends StatelessWidget {
+  const DatasetPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,9 @@ class DatasetTab extends StatelessWidget {
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
 
-          Expanded(child: DatasetPanel()),
+          Expanded(
+            child: DatasetDisplay(),
+          ),
         ],
       ),
     );

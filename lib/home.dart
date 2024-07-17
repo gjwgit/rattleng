@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-07-14 10:12:59 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-07-15 08:06:09 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -45,8 +45,8 @@ import 'package:rattle/providers/vars.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/tabs/dataset/button.dart';
-import 'package:rattle/tabs/dataset/tab.dart';
+import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/tabs/debug/tab.dart';
 import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
@@ -60,12 +60,12 @@ final List<Map<String, dynamic>> homeTabs = [
   {
     'title': 'Dataset',
     'icon': Icons.input,
-    'widget': const DatasetTab(),
+    'widget': const DatasetPanel(),
   },
   {
     'title': 'Explore',
     'icon': Icons.insights,
-    'widget': const ExploreTab(),
+    'widget': const ExploreTabs(),
   },
   {
     'title': 'Wrangle',
@@ -75,7 +75,7 @@ final List<Map<String, dynamic>> homeTabs = [
   {
     'title': 'Model',
     'icon': Icons.model_training,
-    'widget': const ModelTab(),
+    'widget': const ModelTabs(),
   },
   {
     'title': 'Evaluate',

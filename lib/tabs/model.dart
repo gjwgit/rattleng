@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-06-14 10:08:52 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-15 08:07:31 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -82,14 +82,14 @@ final List<Map<String, dynamic>> modelPanels = [
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
 
-class ModelTab extends ConsumerStatefulWidget {
-  const ModelTab({super.key});
+class ModelTabs extends ConsumerStatefulWidget {
+  const ModelTabs({super.key});
 
   @override
-  ConsumerState<ModelTab> createState() => _ModelTabState();
+  ConsumerState<ModelTabs> createState() => _ModelTabsState();
 }
 
-class _ModelTabState extends ConsumerState<ModelTab>
+class _ModelTabsState extends ConsumerState<ModelTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
 

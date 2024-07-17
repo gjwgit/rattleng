@@ -291,7 +291,7 @@ realclean::
 
 tgz:: $(APP)-$(VER)-linux-x86_64.tar.gz
 
-$(APP)-$(VER)-linux-x86_64.tar.gz:
+$(APP)-$(VER)-linux-x86_64.tar.gz: clean
 	mkdir -p installers
 	rm -rf build/linux/x64/release
 	flutter build linux --release
