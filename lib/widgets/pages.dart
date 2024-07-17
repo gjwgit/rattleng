@@ -84,46 +84,12 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     _tabController.dispose();
   }
 
-  // void _goToPreviousPage() {
-  //   if (_currentPage > 0) {
-  //     _pageController.animateToPage(
-  //       _currentPage - 1,
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   }
-  // }
-
-  // void _goToNextPage() {
-  //   if (_currentPage < widget.children.length - 1) {
-  //     _pageController.animateToPage(
-  //       _currentPage + 1,
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   }
-  // }
-
-  // void goToResultPage() {
-  //   debugPrint('go to result page');
-  //   // TODO yyx 20240624 might need change when we have more pages than 2.
-  //   _goToNextPage();
-  // }
-
   @override
   Widget build(BuildContext context) {
     debugPrint('Number of pages is ${widget.children.length}');
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        // IconButton(
-        //   icon: Icon(
-        //     Icons.arrow_left,
-        //     color: _currentPage > 0 ? Colors.black : Colors.grey,
-        //     size: 32,
-        //   ),
-        //   onPressed: _currentPage > 0 ? _goToPreviousPage : null,
-        // ),
         // I didn't use expanded here because we assume expanded is used at each tab file.
         PageView(
           controller: _pageController,
@@ -142,17 +108,6 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
           pageController: _pageController,
           numOfPages: widget.children.length,
         ),
-        // IconButton(
-        //   icon: Icon(
-        //     Icons.arrow_right,
-        //     size: 32,
-        //     color: _currentPage < widget.children.length - 1
-        //         ? Colors.black
-        //         : Colors.grey,
-        //   ),
-        //   onPressed:
-        //       _currentPage < widget.children.length - 1 ? _goToNextPage : null,
-        // ),
       ],
     );
   }
