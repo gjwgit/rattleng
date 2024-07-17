@@ -48,7 +48,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   Widget build(BuildContext context) {
     List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
 
-    List<String> lines = [];
+    // List<String> lines = [];
 
     pages.add(
       ImagePage(
