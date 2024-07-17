@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-06-14 14:58:36 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-15 08:07:16 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -71,14 +71,14 @@ final List<Map<String, dynamic>> explorePanels = [
   // },
 ];
 
-class ExploreTab extends ConsumerStatefulWidget {
-  const ExploreTab({super.key});
+class ExploreTabs extends ConsumerStatefulWidget {
+  const ExploreTabs({super.key});
 
   @override
-  ConsumerState<ExploreTab> createState() => _ExploreTabState();
+  ConsumerState<ExploreTabs> createState() => _ExploreTabsState();
 }
 
-class _ExploreTabState extends ConsumerState<ExploreTab>
+class _ExploreTabsState extends ConsumerState<ExploreTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -103,7 +103,7 @@ class _ExploreTabState extends ConsumerState<ExploreTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('ExploreTab: Rebuild.');
+    debugPrint('ExploreTabs: Rebuild.');
 
     return Column(
       children: [

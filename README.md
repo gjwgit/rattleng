@@ -79,6 +79,8 @@ Currently implemented features:
   + Demo
 + Explore
   + Summary
+  + Visual (no config yet)
+  + Missing
   + Correlation
 + Model
   + Cluster
@@ -164,14 +166,13 @@ Suggested tasks can be found as github issues.
 
 ## Some RattleNG teasers
 
-### Rattle's 4 Click First AI Model
+### Rattle's 5 Click to Your First AI Model
 
 The traditional Rattle Welcome screen provides an overview of
 Rattle. To build your first model, simply click the **Dataset** button
 to choose **Demo**, which will load the `rattle::weather`
-dataset. Then click the **Model** tab and the **Build** button and
-your first decision tree (an AI model) will be displayed in the text
-window.
+dataset. Then click the **Model** tab and the **Tree** feature to then
+**Build** your first decision tree (an AI model).
 
 ![](assets/screenshots/data_page.png)
 
