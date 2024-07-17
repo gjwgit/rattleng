@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-06-29 20:05:44 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-17 14:11:20 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,7 +61,7 @@ class MissingConfigState extends ConsumerState<MissingConfig> {
 
             ActivityButton(
               onPressed: () {
-                rSource(context, ref, 'explore_missing');
+                rSource(context, ref, 'explore_missing', packages: ['VIM']);
               },
               child: const Text('Generate Missing Analysis'),
             ),

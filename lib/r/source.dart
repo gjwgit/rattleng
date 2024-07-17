@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-07-14 20:18:19 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-07-17 15:21:59 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,9 +23,11 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+
 library;
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -37,6 +39,7 @@ import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
@@ -45,8 +48,11 @@ import 'package:rattle/providers/wordcloud/minfreq.dart';
 import 'package:rattle/providers/wordcloud/punctuation.dart';
 import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
+import 'package:rattle/r/execute.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/utils/ask_package_install.dart.~3~';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -61,7 +67,12 @@ import 'package:rattle/utils/update_script.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-void rSource(BuildContext context, WidgetRef ref, String script) async {
+void rSource(
+  BuildContext context,
+  WidgetRef ref,
+  String script, {
+  List<String> packages = const [],
+}) async {
   // Initialise the state variables used here.
 
   String path = ref.read(pathProvider);
@@ -75,10 +86,31 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
   String language = ref.read(languageProvider);
+  String stdout = ref.read(stdoutProvider);
+
+  debugPrint("R SOURCE:\t'$script.R'");
+
+  if (packages.isNotEmpty) {
+    debugPrint('R SOURCE:\tRequires ${packages.join(", ")}');
+    String pkgCode = 'system.file(package="${packages[0]}")';
+    rExecute(ref, pkgCode);
+    // THE RESULT IS NOT IN STDOUT
+    // YET???????????????????????????????????????????  PERHAPS JUST CONTINUE
+    // WITH THE PREREQUSITIES TO BE MANUALLY INSTALLED
+    debugPrint('START');
+    debugPrint(stdout);
+    debugPrint('END');
+    String installed = rExtract(stdout, pkgCode);
+    debugPrint('R SOURCE:\tInstalled "$installed"');
+    if (installed == '[1] ""') {
+      bool wantInstall = await askPackageInstall(context, packages[0]);
+      debugPrint(wantInstall ? 'YES' : 'NO');
+    } else {
+      debugPrint('${packages[0]} ALREADY INSTALLED');
+    }
+  }
 
   // First obtain the text from the script.
-
-  debugPrint("R SOURCE:\t\t'$script.R'");
 
   String asset = 'assets/r/$script.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);

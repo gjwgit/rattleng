@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-16 07:39:06 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-17 15:08:18 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,7 +21,10 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
+
+import 'package:flutter/material.dart';
 
 // TODO 20230916 gjw ADD EXTRA PARAMETER AS THE PATTERN TO EXTRACT SINCE ALL
 // THREE SO FAR ARE BASICALLY THE SAME
@@ -44,6 +47,8 @@ String rExtract(String txt, String pat) {
     }
   }
 
+  debugPrint('$startIndex');
+
   if (startIndex != -1) {
     for (int i = startIndex + 1; i < lines.length; i++) {
       if (lines[i].startsWith('>')) {
@@ -52,6 +57,7 @@ String rExtract(String txt, String pat) {
 
         break;
       }
+      debugPrint(lines[i]);
       result.add(lines[i]);
     }
   }
