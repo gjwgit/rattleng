@@ -54,7 +54,10 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     // By default, show the result page after build.
     // TODO yyx 20240627 not run after the second build.
     // _pageController = PageController(initialPage: widget.children.length - 1);
-    _pageController = PageController(initialPage: 0);
+    // if (widget.children.length == 2) {
+    //   _currentPage = 1;
+    // }
+    _pageController = PageController(initialPage: _currentPage);
     _tabController = TabController(length: widget.children.length, vsync: this);
     debugPrint('PAGE CONTROLLER: ${widget.children.length}');
   }
@@ -81,31 +84,31 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     _tabController.dispose();
   }
 
-  void _goToPreviousPage() {
-    if (_currentPage > 0) {
-      _pageController.animateToPage(
-        _currentPage - 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
+  // void _goToPreviousPage() {
+  //   if (_currentPage > 0) {
+  //     _pageController.animateToPage(
+  //       _currentPage - 1,
+  //       duration: const Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   }
+  // }
 
-  void _goToNextPage() {
-    if (_currentPage < widget.children.length - 1) {
-      _pageController.animateToPage(
-        _currentPage + 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
+  // void _goToNextPage() {
+  //   if (_currentPage < widget.children.length - 1) {
+  //     _pageController.animateToPage(
+  //       _currentPage + 1,
+  //       duration: const Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   }
+  // }
 
-  void goToResultPage() {
-    debugPrint('go to result page');
-    // TODO yyx 20240624 might need change when we have more pages than 2.
-    _goToNextPage();
-  }
+  // void goToResultPage() {
+  //   debugPrint('go to result page');
+  //   // TODO yyx 20240624 might need change when we have more pages than 2.
+  //   _goToNextPage();
+  // }
 
   @override
   Widget build(BuildContext context) {
