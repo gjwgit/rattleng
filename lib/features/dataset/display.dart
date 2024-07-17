@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
@@ -171,6 +171,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       onSelected: (bool selected) {
                         setState(() {
                           if (selected) {
+                            // only one variable is Target, Risk and Weight.
+                            if (choice == 'Target' ||
+                                choice == 'Risk' ||
+                                choice == 'Weight') {
+                              currentSelections.forEach((key, value) {
+                                if (value == choice) {
+                                  ref
+                                      .read(selectionsProvider.notifier)
+                                      .state[key] = 'Input';
+                                }
+                              });
+                            }
                             ref
                                 .read(selectionsProvider.notifier)
                                 .state[columnName] = choice;
