@@ -172,10 +172,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                         setState(() {
                           if (selected) {
                             // only one variable is Target, Risk and Weight.
-                            if (choice == 'Target' || choice == 'Risk' || choice == 'Weight') {
+                            if (choice == 'Target' ||
+                                choice == 'Risk' ||
+                                choice == 'Weight') {
                               currentSelections.forEach((key, value) {
                                 if (value == choice) {
-                                  ref.read(selectionsProvider.notifier).state[key] = 'Input';
+                                  ref
+                                      .read(selectionsProvider.notifier)
+                                      .state[key] = 'Input';
                                 }
                               });
                             }
