@@ -1,6 +1,6 @@
 /// An "Under Construction" dialog to popup as required.
 //
-// Time-stamp: <Tuesday 2024-06-11 08:52:22 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-18 16:48:49 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 Future<void> showUnderConstruction(BuildContext context) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: false, // user must press button!
     builder: (BuildContext context) {
       return AlertDialog(
         title: const Row(

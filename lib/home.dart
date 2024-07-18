@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2024-07-15 08:06:09 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-07-18 16:46:17 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -253,7 +253,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
                 reset(context, ref);
               }
             },
-            tooltip: 'Tap here to clear the current project and\n'
+            tooltip: 'Press here to clear the current project and\n'
                 'so start a new project with a new dataset.',
           ),
 

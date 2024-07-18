@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for RattleNG
 //
-// Time-stamp: <Friday 2024-06-14 14:47:47 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-18 16:48:18 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -71,8 +71,8 @@ class ActivityButton extends ConsumerWidget {
                   ],
                 ),
                 content: const Text('There is currently no dataset loaded.\n'
-                    'Please tap on the **Dataset** feature\n'
-                    'to select a dataset to load.'),
+                    'Please choose a dataset to load from '
+                    'the **Dataset** feature.\n'),
                 actions: [
                   TextButton(
                     onPressed: () {
