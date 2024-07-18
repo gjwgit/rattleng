@@ -109,7 +109,11 @@ class ImagePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(child: InteractiveViewer(child: SvgPicture.memory(bytes))),
+                      Expanded(
+                        child: InteractiveViewer(
+                          child: SvgPicture.memory(bytes),
+                        ),
+                      ),
                     ],
                   ),
                 ],

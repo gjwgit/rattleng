@@ -87,7 +87,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     debugPrint('Number of pages is ${widget.children.length}');
-    
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
