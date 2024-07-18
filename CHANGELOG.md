@@ -6,8 +6,9 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 0.2.n series are heading
 toward a 0.2 release.
 
-## 0.3 FUTURE
+## 0.3 FUTURE Wrangle tab implementation
 
++ Add a shell for the Wrangle tab functionality [0.2.5 20240719 gjw]
 + Move Page navigation to the bottom [0.2.4 20240718 yyx]
 + Refactor dataset feature [0.2.3 20240715 gjw]
 + Initial R code and integration of exploration plots [0.2.2 20240715 gjw]
