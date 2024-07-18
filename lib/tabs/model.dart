@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2024-07-15 08:07:31 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-19 09:34:24 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/features/model/panel.dart';
 import 'package:rattle/features/cluster/panel.dart';
 import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/features/tree/panel.dart';
@@ -42,6 +43,10 @@ import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/model.dart';
 
 final List<Map<String, dynamic>> modelPanels = [
+  {
+    'title': 'Overview',
+    'widget': const ModelPanel(),
+  },
   {
     'title': 'Cluster',
     'widget': const ClusterPanel(),

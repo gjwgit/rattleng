@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-07-18 16:46:17 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-07-19 09:48:41 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -51,6 +51,7 @@ import 'package:rattle/tabs/debug/tab.dart';
 import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
+import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -70,7 +71,7 @@ final List<Map<String, dynamic>> homeTabs = [
   {
     'title': 'Wrangle',
     'icon': Icons.transform,
-    'widget': const Center(child: Text('COMING SOON: WRANGLE')),
+    'widget': const TransformTabs(),
   },
   {
     'title': 'Model',

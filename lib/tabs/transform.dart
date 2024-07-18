@@ -1,11 +1,11 @@
-/// The Explore tab for publishing on the app home page.
+/// The Transform tab for transforming our dataset.
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-07-19 09:31:18 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-19 09:49:04 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams
 
 library;
 
@@ -30,71 +30,55 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/features/explore/panel.dart';
-import 'package:rattle/features/summary/panel.dart';
-import 'package:rattle/features/visual/panel.dart';
-import 'package:rattle/features/missing/panel.dart';
-import 'package:rattle/features/correlation/panel.dart';
-import 'package:rattle/features/tests/panel.dart';
-import 'package:rattle/features/interactive/panel.dart';
-//TODO import 'package:rattle/features/wordcloud/panel.dart';
-import 'package:rattle/providers/explore.dart';
+import 'package:rattle/features/transform/panel.dart';
+import 'package:rattle/features/rescale/panel.dart';
+import 'package:rattle/features/impute/panel.dart';
+import 'package:rattle/features/recode/panel.dart';
+import 'package:rattle/features/cleanup/panel.dart';
+import 'package:rattle/providers/transform.dart';
 
-final List<Map<String, dynamic>> explorePanels = [
+final List<Map<String, dynamic>> transformPanels = [
   {
     'title': 'Overview',
-    'widget': const ExplorePanel(),
+    'widget': const TransformPanel(),
   },
   {
-    'title': 'Summary',
-    'widget': const SummaryPanel(),
+    'title': 'Rescale',
+    'widget': const RescalePanel(),
   },
   {
-    'title': 'Visual',
-    'widget': const VisualPanel(),
+    'title': 'Impute',
+    'widget': const ImputePanel(),
   },
   {
-    'title': 'Missing',
-    'widget': const MissingPanel(),
+    'title': 'Recode',
+    'widget': const RecodePanel(),
   },
   {
-    'title': 'Correlation',
-    'widget': const CorrelationPanel(),
+    'title': 'Cleanup',
+    'widget': const CleanupPanel(),
   },
-  {
-    'title': 'Tests',
-    'widget': const TestsPanel(),
-  },
-  {
-    'title': 'Interactive',
-    'widget': const InteractivePanel(),
-  },
-  // TODO ADD WORDCLOUD HERE
-  // {
-  //   'title': 'Word Cloud',
-  //   'widget': const WordCloudPanel(),
-  // },
 ];
 
-class ExploreTabs extends ConsumerStatefulWidget {
-  const ExploreTabs({super.key});
+class TransformTabs extends ConsumerStatefulWidget {
+  const TransformTabs({super.key});
 
   @override
-  ConsumerState<ExploreTabs> createState() => _ExploreTabsState();
+  ConsumerState<TransformTabs> createState() => _TransformTabsState();
 }
 
-class _ExploreTabsState extends ConsumerState<ExploreTabs>
+class _TransformTabsState extends ConsumerState<TransformTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: explorePanels.length, vsync: this);
+    _tabController = TabController(length: transformPanels.length, vsync: this);
 
     _tabController.addListener(() {
-      ref.read(exploreProvider.notifier).state =
-          explorePanels[_tabController.index]['title'];
+      ref.read(transformProvider.notifier).state =
+          transformPanels[_tabController.index]['title'];
       debugPrint('Selected tab: ${_tabController.index}');
     });
   }
@@ -108,14 +92,14 @@ class _ExploreTabsState extends ConsumerState<ExploreTabs>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('ExploreTabs: Rebuild.');
+    debugPrint('TransformTabs: Rebuild.');
 
     return Column(
       children: [
         TabBar(
           unselectedLabelColor: Colors.grey,
           controller: _tabController,
-          tabs: explorePanels.map((tab) {
+          tabs: transformPanels.map((tab) {
             return Tab(
               text: tab['title'],
             );
@@ -124,7 +108,7 @@ class _ExploreTabsState extends ConsumerState<ExploreTabs>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: explorePanels.map((tab) {
+            children: transformPanels.map((tab) {
               return tab['widget'] as Widget;
             }).toList(),
           ),

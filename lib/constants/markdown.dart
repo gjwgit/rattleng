@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-07-12 21:11:50 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-19 09:43:21 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -28,6 +28,12 @@ library;
 
 import 'package:rattle/constants/app.dart';
 
+// TODO 20240719 gjw RE ENGINEER THE MARKDOWN FILE NAMING
+//
+// All these constants have exactly the same structure. I need to constant
+// called features as a list and then name all the features and then a constant
+// called introFile indexed by features to return the path to the intro file.
+
 /// ASSOCIATE tab markdown file welcome message.
 
 const String associationIntroFile = '$assetsPath/markdown/association.md';
@@ -44,6 +50,10 @@ const String clusterIntroFile = '$assetsPath/markdown/cluster.md';
 
 const String correlationIntroFile = '$assetsPath/markdown/correlation.md';
 
+/// EXPLORE tab markdown file welcome message.
+
+const String exploreIntroFile = '$assetsPath/markdown/explore.md';
+
 /// FOREST tab markdown file welcome message.
 
 const String forestIntroFile = '$assetsPath/markdown/forest.md';
@@ -59,6 +69,10 @@ const String linearIntroFile = '$assetsPath/markdown/linear.md';
 /// MISSING tab markdown file welcome message.
 
 const String missingIntroFile = '$assetsPath/markdown/missing.md';
+
+/// MODEL tab markdown file welcome message.
+
+const String modelIntroFile = '$assetsPath/markdown/model.md';
 
 /// NNET tab markdown file welcome message.
 
@@ -87,6 +101,26 @@ const String svmIntroFile = '$assetsPath/markdown/svm.md';
 /// TESTS tab markdown file welcome message.
 
 const String testsIntroFile = '$assetsPath/markdown/tests.md';
+
+/// TRANSFORM tab markdown file welcome message.
+
+const String transformIntroFile = '$assetsPath/markdown/transform.md';
+
+/// TRANSFORM tab markdown file welcome message.
+
+const String rescaleIntroFile = '$assetsPath/markdown/rescale.md';
+
+/// TRANSFORM tab markdown file welcome message.
+
+const String recodeIntroFile = '$assetsPath/markdown/recode.md';
+
+/// TRANSFORM tab markdown file welcome message.
+
+const String imputeIntroFile = '$assetsPath/markdown/impute.md';
+
+/// TRANSFORM tab markdown file welcome message.
+
+const String cleanupIntroFile = '$assetsPath/markdown/cleanup.md';
 
 /// TREE tab markdown file welcome message.
 
