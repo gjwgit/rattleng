@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Monday 2024-07-15 08:00:25 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-18 09:06:54 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -28,17 +28,14 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
-//import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-//import 'package:path_provider/path_provider.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selections.dart';
-//import 'package:rattle/constants/temp_dir.dart';
-import 'package:rattle/r/extract_glimpse.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -233,13 +230,21 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       );
     }
 
-    String content = rExtractGlimpse(stdout);
+    String content = '';
+    String title = '';
+
+    if (path == 'rattle::weather' || path.endsWith('.csv')) {
+      content = rExtract(stdout, '> glimpse(ds)');
+      title = '# Dataset Glimpse\n\nGenerated using `glimpse(ds)`';
+    } else {
+      content = rExtract(stdout, '> cat(ds,');
+      title = '# Text Content\n\nGenerated using `cat(ds)`';
+    }
 
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Dataset Glimpse\n\n'
-              'Generated using `glimpse(ds)`',
+          title: title,
           content: '\n$content',
         ),
       );
