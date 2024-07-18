@@ -1,11 +1,11 @@
-/// Utility to extract the latest print(model_rpart) from R.
+/// Utility to extract the latest R command output.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2023-09-16 07:39:06 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-18 09:00:28 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,10 +21,17 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 // TODO 20230916 gjw ADD EXTRA PARAMETER AS THE PATTERN TO EXTRACT SINCE ALL
 // THREE SO FAR ARE BASICALLY THE SAME
+
+/// Extract output lines from an R command.
+///
+/// The supplied [txt] is expected to be [stdout] from the R console and [pat]
+/// is usually an R command to search for. Find the most recent instance of the
+/// command and return its output.
 
 String rExtract(String txt, String pat) {
   // Split the string into lines.
@@ -36,6 +43,9 @@ String rExtract(String txt, String pat) {
   // Initialize with a value that indicates no start index found.
 
   int startIndex = -1;
+
+  // Starting from the end of the supplied [txt], often being the [stdout] from
+  // the R console, find the most recent instance of [pat]
 
   for (int i = lines.length - 1; i >= 0; i--) {
     if (lines[i].contains(pat)) {
