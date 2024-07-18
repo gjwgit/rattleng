@@ -108,7 +108,13 @@ class ImagePage extends StatelessWidget {
                   const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [SvgPicture.memory(bytes)],
+                    children: [
+                      Expanded(
+                        child: InteractiveViewer(
+                          child: SvgPicture.memory(bytes),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
