@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:28:00 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-18 15:49:56 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,12 +39,13 @@
 
 library(mice, quietly=TRUE)
 
-# Generate a summary of the missing values in the dataset.
+# Generate a summary of the missing values in the dataset. 20240718
+# Why was this required. Rattle simply used inputs + target.
 
 vars_na <- names(ds)[sapply(ds, anyNA)]
 
 svg("TEMPDIR/explore_missing_mice.svg")
-md.pattern(ds[vars_na], rotate.names=TRUE)
+md.pattern(ds[vars], rotate.names=TRUE)
 dev.off()
 
 # install.packages("VIM")
