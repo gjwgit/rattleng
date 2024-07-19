@@ -37,7 +37,8 @@ available from Togaware as described below.
 
 ```bash
 sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
-	 r-cran-tidyverse r-cran-vim r-cran-hmisc r-cran-mice
+	 r-cran-tidyverse r-cran-vim r-cran-hmisc r-cran-mice \
+	 r-cran-reshape
 ```
 
 ### Tar Install
