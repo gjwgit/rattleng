@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Saturday 2024-06-15 15:13:08 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-21 05:57:18 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -83,6 +83,7 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
   // rExecute(ref, 'names(ds)');
 
   // this shows the data
-  rSource(context, ref, 'ds_glimpse');
+
+  rSource(context, ref, 'dataset_glimpse');
   debugPrint('R LOAD DATASET:\tLoaded "$path";');
 }
