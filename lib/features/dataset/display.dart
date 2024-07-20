@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Thursday 2024-07-18 09:06:54 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 06:36:25 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -34,7 +34,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/selections.dart';
+import 'package:rattle/providers/roles.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/pages.dart';
@@ -73,14 +73,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     List<Widget> pages = [showMarkdownFile(welcomeMsgFile, context)];
 
     if (path == 'rattle::weather' || path.endsWith('.csv')) {
-      Map<String, String> currentSelections = ref.read(selectionsProvider);
+      Map<String, String> currentRoles = ref.read(rolesProvider);
       // extract variable information
       List<VariableInfo> vars = extractVariables(stdout);
       // initialise, default to input
-      if (currentSelections.isEmpty && vars.isNotEmpty) {
+      if (currentRoles.isEmpty && vars.isNotEmpty) {
         for (var column in vars) {
-          ref.read(selectionsProvider.notifier).state[column.name] =
-              choices.first;
+          ref.read(rolesProvider.notifier).state[column.name] = choices.first;
         }
       }
 
@@ -164,7 +163,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       shadowColor: Colors.grey,
                       pressElevation: 8.0,
                       elevation: 2.0,
-                      selected: currentSelections[columnName] == choice,
+                      selected: currentRoles[columnName] == choice,
                       onSelected: (bool selected) {
                         setState(() {
                           if (selected) {
@@ -172,22 +171,19 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                             if (choice == 'Target' ||
                                 choice == 'Risk' ||
                                 choice == 'Weight') {
-                              currentSelections.forEach((key, value) {
+                              currentRoles.forEach((key, value) {
                                 if (value == choice) {
-                                  ref
-                                      .read(selectionsProvider.notifier)
-                                      .state[key] = 'Input';
+                                  ref.read(rolesProvider.notifier).state[key] =
+                                      'Input';
                                 }
                               });
                             }
-                            ref
-                                .read(selectionsProvider.notifier)
-                                .state[columnName] = choice;
+                            ref.read(rolesProvider.notifier).state[columnName] =
+                                choice;
                             debugPrint('$columnName set to $choice');
                           } else {
-                            ref
-                                .read(selectionsProvider.notifier)
-                                .state[columnName] = '';
+                            ref.read(rolesProvider.notifier).state[columnName] =
+                                '';
                           }
                         });
                       },

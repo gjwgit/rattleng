@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-06-12 21:18:56 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-21 06:00:40 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -40,8 +40,8 @@
 
 # Identify variable roles.
 
-target <- "VAR_TARGET"
-risk   <- "VAR_RISK"
+target <- "TARGET_VAR"
+risk   <- "RISK_VAR"
 id     <- c(VARS_ID)
 
 # Record the number of observations.
