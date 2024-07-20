@@ -55,7 +55,7 @@ Rattle relies on the scale function from the base package to perform
 the re-centering:
 
 ```r
-> ds$RRC_evaporation <- scale(ds$evaporation)[,1]
+> ds %<>% mutate(RRC_evaporation = scale(evaporation)[,1]
 > summary(ds$RRC_evapration)
 ```
 
