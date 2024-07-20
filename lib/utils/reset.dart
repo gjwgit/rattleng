@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Thursday 2024-07-11 17:13:21 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 06:38:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,21 +27,32 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/selections.dart';
-import 'package:xterm/xterm.dart';
 
 // TODO 20240618 gjw DO WE NEED ALL OF `app.dart`? I THINK IT IS JUST
 // `rattleHomeKey` CAN THAT GO INTO A CONSTANTS FILE INSTEAD WHIC WE IMPORT HERE
 // AND INTO app.dart?
 
 import 'package:rattle/app.dart';
+import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/model.dart';
+import 'package:rattle/providers/normalise.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/script.dart';
+import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/status.dart';
+import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/terminal.dart';
+import 'package:rattle/providers/vars.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -57,35 +68,47 @@ void reset(BuildContext context, WidgetRef ref) {
   // reset the app
   // ideally if the app renders based on states stored in providers, we just need to reset each provider to the starting value
 
+  // GENERAL PROVIDERS
+
+  ref.invalidate(statusProvider);
+  ref.invalidate(stderrProvider);
+  ref.invalidate(stdoutProvider);
+
+  // DATASET TAB
+
+  ref.invalidate(cleanseProvider);
+  ref.invalidate(datasetLoaded);
+  ref.invalidate(normaliseProvider);
+  ref.invalidate(partitionProvider);
+  ref.invalidate(pathProvider);
+  ref.invalidate(rolesProvider);
+  ref.invalidate(scriptProvider);
+  ref.invalidate(varsProvider);
+
   // MODEL TAB
+
+  ref.invalidate(modelProvider);
+  ref.invalidate(targetProvider);
 
   // Reset WORDCLOUD tab.
 
-  ref.read(wordCloudBuildProvider.notifier).state = '';
-
-  ref.read(checkboxProvider.notifier).state = false;
-  ref.read(punctuationProvider.notifier).state = false;
-  ref.read(stemProvider.notifier).state = false;
-  ref.read(stopwordProvider.notifier).state = false;
-  ref.read(maxWordProvider.notifier).state = '';
-  ref.read(minFreqProvider.notifier).state = '';
+  ref.invalidate(wordCloudBuildProvider);
+  ref.invalidate(checkboxProvider);
+  ref.invalidate(punctuationProvider);
+  ref.invalidate(stemProvider);
+  ref.invalidate(stopwordProvider);
+  ref.invalidate(maxWordProvider);
+  ref.invalidate(minFreqProvider);
 
   // Reset the stdoutProvider, this resets the tree tab and the forest tab as
   // they depend on it
 
-  ref.read(stdoutProvider.notifier).state = '';
+  ref.invalidate(stdoutProvider);
 
   // CONSOLE TAB
 
-  ref.read(terminalProvider.notifier).state = Terminal();
+  ref.invalidate(terminalProvider);
   rStart(context, ref);
-
-  // DATASET TAB
-
-  ref.read(pathProvider.notifier).state = '';
-  debugPrint('DATASET UNLOADED');
-  ref.read(datasetLoaded.notifier).state = false;
-  ref.read(selectionsProvider.notifier).state = {};
 
   // TODO yyx 20240618 might need to reset sub-tabs to the first one.
   // RESET TAB INDEX (including sub-tabs)
