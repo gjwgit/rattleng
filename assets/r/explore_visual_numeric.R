@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:28:30 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-21 07:54:30 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,14 +45,14 @@
 svg("TEMPDIR/explore_visual_boxplot.svg", width=10)
 
 ds %>%
-  dplyr::mutate(VAR_TARGET=as.factor(VAR_TARGET)) %>%
+  dplyr::mutate(TARGET_VAR=as.factor(TARGET_VAR)) %>%
   ggplot2::ggplot(ggplot2::aes(y=min_temp)) +
   ggplot2::geom_boxplot(ggplot2::aes(x="All"), notch=TRUE, fill="grey") +
   ggplot2::stat_summary(ggplot2::aes(x="All"), fun=mean, geom="point", shape=8) +
-  ggplot2::geom_boxplot(ggplot2::aes(x=VAR_TARGET, fill=VAR_TARGET), notch=TRUE) +
-  ggplot2::stat_summary(ggplot2::aes(x=VAR_TARGET), fun=mean, geom="point", shape=8) +
-  ggplot2::xlab(paste("VAR_TARGET\n\n", "TIMESTAMP", sep="")) +
-  ggplot2::ggtitle("Distribution of min_temp by VAR_TARGET") +
+  ggplot2::geom_boxplot(ggplot2::aes(x=TARGET_VAR, fill=TARGET_VAR), notch=TRUE) +
+  ggplot2::stat_summary(ggplot2::aes(x=TARGET_VAR), fun=mean, geom="point", shape=8) +
+  ggplot2::xlab(paste("TARGET_VAR\n\n", "TIMESTAMP", sep="")) +
+  ggplot2::ggtitle("Distribution of min_temp by TARGET_VAR") +
   ggplot2::theme(legend.position="none")
 
 dev.off()
@@ -64,14 +64,14 @@ dev.off()
 svg("TEMPDIR/explore_visual_histogram.svg", width=10)
 
 ds %>%
-  dplyr::mutate(VAR_TARGET=as.factor(VAR_TARGET)) %>%
-  dplyr::select(min_temp, VAR_TARGET) %>%
+  dplyr::mutate(TARGET_VAR=as.factor(TARGET_VAR)) %>%
+  dplyr::select(min_temp, TARGET_VAR) %>%
   ggplot2::ggplot(ggplot2::aes(x=min_temp)) +
   ggplot2::geom_density(lty=3) +
-  ggplot2::geom_density(ggplot2::aes(fill=VAR_TARGET, colour=VAR_TARGET), alpha=0.55) +
+  ggplot2::geom_density(ggplot2::aes(fill=TARGET_VAR, colour=TARGET_VAR), alpha=0.55) +
   ggplot2::xlab(paste("min_temp\n\n", "TIMESTAMP", sep="")) +
-  ggplot2::ggtitle("Distribution of min_temp by VAR_TARGET") +
-  ggplot2::labs(fill="VAR_TARGET", y="Density")
+  ggplot2::ggtitle("Distribution of min_temp by TARGET_VAR") +
+  ggplot2::labs(fill="TARGET_VAR", y="Density")
 
 dev.off()
 
@@ -84,8 +84,8 @@ svg("TEMPDIR/explore_visual_cummulative.svg", width=10)
 # Generate just the data for an Ecdf plot of the variable 'min_temp'.
 
 eds <- rbind(data.frame(dat=ds[,"min_temp"], grp="All"),
-            data.frame(dat=ds[ds$VAR_TARGET=="No","min_temp"], grp="No"),
-            data.frame(dat=ds[ds$VAR_TARGET=="Yes","min_temp"], grp="Yes"))
+            data.frame(dat=ds[ds$TARGET_VAR=="No","min_temp"], grp="No"),
+            data.frame(dat=ds[ds$TARGET_VAR=="Yes","min_temp"], grp="Yes"))
 
 # The 'Hmisc' package provides the 'Ecdf' function.
 
@@ -104,7 +104,7 @@ legend("bottomright", c("All","No","Yes"), bty="n",  col=colorspace::rainbow_hcl
 
 # Add a title to the plot.
 
-title(main="Distribution of min_temp by VAR_TARGET", sub="TIMESTAMP")
+title(main="Distribution of min_temp by TARGET_VAR", sub="TIMESTAMP")
 
 dev.off()
 
@@ -122,7 +122,7 @@ library(reshape, quietly=TRUE)
 
 # Initialies the parameters.
 
-target <- "VAR_TARGET"
+target <- "TARGET_VAR"
 var    <- "min_temp"
 digit  <- 1
 len    <- 1
@@ -138,7 +138,7 @@ for (i in unique(ds[[target]]))
 
 svg("TEMPDIR/explore_visual_benford.svg", width=10)
 p <- plotDigitFreq(tds)
-p <- p + ggtitle("Digital Analysis of First Digit of min_temp by VAR_TARGET")
+p <- p + ggtitle("Digital Analysis of First Digit of min_temp by TARGET_VAR")
 p <- p + ggplot2::xlab(paste("Digits\n\n", "TIMESTAMP", sep=""))
 
 print(p)
@@ -155,9 +155,9 @@ dev.off()
 svg("TEMPDIR/explore_visual_pairs.svg", width=10)
 
 ds %>%
-  dplyr::mutate(VAR_TARGET=as.factor(VAR_TARGET)) %>%
+  dplyr::mutate(TARGET_VAR=as.factor(TARGET_VAR)) %>%
   GGally::ggpairs(columns=c(3,4),
-        mapping=ggplot2::aes(colour=VAR_TARGET, alpha=0.5, shape=VAR_TARGET),
+        mapping=ggplot2::aes(colour=TARGET_VAR, alpha=0.5, shape=TARGET_VAR),
                 diag=list(continuous="densityDiag",
                           discrete="barDiag"),
                 upper=list(continuous="cor",

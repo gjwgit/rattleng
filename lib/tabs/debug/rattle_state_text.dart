@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Thursday 2024-07-11 17:12:19 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-21 07:51:10 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -41,7 +41,7 @@ import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/vars.dart';
-import 'package:rattle/providers/selections.dart';
+import 'package:rattle/providers/roles.dart';
 import 'package:rattle/utils/count_lines.dart';
 import 'package:rattle/utils/truncate.dart';
 
@@ -58,15 +58,29 @@ class RattleStateText extends ConsumerWidget {
     String stderr = ref.watch(stderrProvider);
     String stdout = ref.watch(stdoutProvider);
     String model = ref.watch(modelProvider);
-    String target = ref.watch(targetProvider);
+    String target = 'NULL'; // ref.watch(targetProvider);
     List<String> vars = ref.watch(varsProvider);
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
     bool partition = ref.watch(partitionProvider);
 
-    Map<String, String> selection = ref.watch(selectionsProvider);
-    String select = selection.toString();
-    select = select.replaceAll(',', '\n${" " * 13}');
+    // The rolesProvider listes the roles for the different variables which we
+    // need to know for parsing the R scripts.
+
+    Map<String, String> roles = ref.watch(rolesProvider);
+
+    // We will print out the roles.
+
+    String role = roles.toString();
+    role = role.replaceAll(',', '\n${" " * 13}');
+
+    // Extract the target variable from the rolesProvider.
+
+    roles.forEach((key, value) {
+      if (value == 'Target') {
+        target = key;
+      }
+    });
 
     return SingleChildScrollView(
       child: Builder(
@@ -80,7 +94,7 @@ class RattleStateText extends ConsumerWidget {
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
-            'VARIABLES:   $select\n'
+            'ROLES:       $role\n'
             'VARS:        ${truncate(vars.toString())}\n'
             'TARGET:      $target\n'
             'RISK:        \$risk \n'

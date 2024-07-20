@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-07-19 09:48:41 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-21 06:52:46 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -188,10 +188,14 @@ class RattleHomeState extends ConsumerState<RattleHome>
             // template if there is a dataset loaded, as indicated by the path
             // having a value.
 
+            // TODO 20240721 gjw THIS NO LONGER MAKES SENSE SINCE WE HAVE PAGES
+
             List<String> vars = rExtractVars(ref.read(stdoutProvider));
 
-            ref.read(varsProvider.notifier).state = vars;
-            ref.read(targetProvider.notifier).state = vars.last;
+            debugPrint('LEAVING DATASET TAB AND SET VARS AND TARGET HERE????');
+            // TODO 20240721 gjw PERHAPS THESE ARE NO LONGER NEEDED - USE ROLES.
+            //ref.read(varsProvider.notifier).state = vars;
+            //ref.read(targetProvider.notifier).state = vars.last;
             rSource(context, ref, 'dataset_template');
           }
         }

@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-07-14 20:18:19 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-21 07:51:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -37,7 +37,7 @@ import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';
-import 'package:rattle/providers/target.dart';
+import 'package:rattle/providers/roles.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -154,15 +154,27 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // id
   // split
 
-  // TODO 20231102 gjw THE FOLLOWING HARD CODED AND ONLY WORKS FOR THE DEMO
-  // DATASET!!!!
+  // The rolesProvider listes the roles for the different variables which we
+  // need to know for parsing the R scripts.
 
-  code = code.replaceAll('VAR_TARGET', ref.read(targetProvider));
+  Map<String, String> roles = ref.watch(rolesProvider);
+
+  // Extract the target variable from the rolesProvider.
+
+  String target = 'NULL';
+  roles.forEach((key, value) {
+    if (value == 'Target') {
+      target = key;
+    }
+  });
+
+  code = code.replaceAll('TARGET_VAR', target);
+  //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
 
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );
-  code = code.replaceAll('VAR_RISK', normalise ? 'risk_mm' : 'RISK_MM');
-  code = code.replaceAll('VARS_ID', '"date", "location"');
+  code = code.replaceAll('RISK_VAR', normalise ? 'risk_mm' : 'RISK_MM');
+  code = code.replaceAll('ID_VARS', '"date", "location"');
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
 

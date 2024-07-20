@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:36:51 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-07-20 14:58:29 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -73,7 +73,7 @@ cat("\n")
 # We use the rpart.plot package.
 
 svg("TEMPDIR/model_tree_rpart.svg")
-fancyRpartPlot(model_rpart, main="Decision Tree weather.csv $ RainTomorrow", sub="TIMESTAMP")
+fancyRpartPlot(model_rpart, main="Decision Tree weather.csv $ TARGET_VAR", sub="TIMESTAMP")
 dev.off()
 
 # List the rules from the tree using a Rattle support function.

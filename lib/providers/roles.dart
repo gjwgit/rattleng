@@ -1,6 +1,6 @@
 /// Record variable selection on the dataset tab
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 07:33:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,4 +27,13 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final selectionsProvider = StateProvider<Map<String, String>>((ref) => {});
+final rolesProvider = StateProvider<Map<String, String>>((ref) => {});
+
+// Custom getter to access the 'Target' value
+
+extension RolesProviderX on WidgetRef {
+  String get target {
+    final rolesMap = watch(rolesProvider);
+    return rolesMap['Target'] ?? 'NULL';
+  }
+}
