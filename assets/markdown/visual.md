@@ -21,7 +21,7 @@ Here you can choose a variables and different types of charts will be
 generated to present the data from different perspectives. A variety
 of different charts will be generated for a single variable.
 
-You can choose to 
+> 
 
 ## Numeric Data
 
@@ -35,6 +35,8 @@ A **Benford Plot** ...
 
 A **Pairs Plot** ...
 
+> 
+
 ## Categoric Data
 
 A **Bar Chart** ...
@@ -44,3 +46,5 @@ A **Dot Plot** ...
 A **Mosaic Plot** ...
 
 A **Pairs Plot** ...
+
+> 
