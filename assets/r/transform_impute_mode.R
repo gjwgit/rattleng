@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 10:21:50 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-07-20 14:35:14 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,12 +23,12 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Graham Williams
-# Transform variables by rescaling. 
 
-# Transform "SELECTED_VAR" into "RRC_SELETED_VAR" using median/mad or
-# robust rescaling. The rescaling happens by subtracting the median
-# and dividing by median abs deviation.
+# Transform "SELECTED_VAR" by replaceng NA.
 
-ds$SELECTED_VAR %>%
-  reshape::rescaler("robust") ->
-ds$RRC_SELECTED_VAR
+miss_value <- rattle::modalvalue(ds$SELECTED_VAR, na.rm=TRUE)
+
+ds %<>%
+  mutate(IMO_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
+                                   miss_value,
+                                   SELECTED_VAR))
