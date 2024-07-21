@@ -1,6 +1,6 @@
 /// Word wrap a string.
 //
-// Time-stamp: <Sunday 2024-07-21 16:03:12 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 17:06:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,7 +25,7 @@
 
 library;
 
-String wordWrap(String text, [int width = 40]) {
+String wordWrap(String text, [int width = 60]) {
   // Remove newlines and repeated spaces.
 
   text = text.replaceAll(RegExp(r'\n'), ' ').replaceAll(RegExp(r' +'), ' ');
