@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for RattleNG
 //
-// Time-stamp: <Thursday 2024-07-18 16:48:18 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 16:14:47 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/utils/show_ok.dart';
 
 class ActivityButton extends ConsumerWidget {
   final VoidCallback? onPressed;
@@ -59,30 +60,15 @@ class ActivityButton extends ConsumerWidget {
         String path = ref.read(pathProvider);
 
         if (path.isEmpty) {
-          showDialog(
+          showOk(
             context: context,
-            builder: (_) {
-              return AlertDialog(
-                title: const Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.red),
-                    SizedBox(width: 20),
-                    Text('Missing a Dataset'),
-                  ],
-                ),
-                content: const Text('There is currently no dataset loaded.\n'
-                    'Please choose a dataset to load from '
-                    'the **Dataset** feature.\n'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Dismiss the dialog
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            },
+            title: 'Missing a Dataset',
+            content: '''
+
+            There is currently no dataset loaded.  Please choose a dataset to
+            load from the **Dataset** tab.
+
+            ''',
           );
         } else if (onPressed != null) {
           onPressed!();
