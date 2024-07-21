@@ -1,6 +1,10 @@
+// DON'T USE THIS FOR NOW. WHILE THE EXECUTE IN R WORKSTHE RESULT DOESE NOT GET
+// INTO THE STDOUT UNTIL LATER ON AND SO I CAN'T IMMEDIATELY CHECK THE
+// VALUE. NEEDS TO BE FIXED.
+
 /// R Scripts: Support for running an R command.
 ///
-/// Time-stamp: <Monday 2023-11-06 07:55:22 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-07-22 08:22:39 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +27,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 // import 'dart:convert';
@@ -32,20 +37,9 @@ library;
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // import 'package:rattle/providers/pty.dart';
-// import 'package:rattle/r/strip_comments.dart';
-// import 'package:rattle/r/strip_header.dart';
 // import 'package:rattle/utils/update_script.dart';
 
-/// Run the R [script] and append to the [rattle] script.
-///
-/// Various PARAMETERS that are found in the R script will be replaced with
-/// actual values before the code is run. An early approach was to wrap the
-/// PARAMETERS within anlg brackets, as in <<PARAMETERS>> but then the R scripts
-/// do not run standalone. Whlist it did ensure the parameters were properly
-/// mapped, it is useful to be able to run the scripts as is outside of
-/// rattleNG. So decided to remove the angle brackets. The scripts still can not
-/// tun standalone as such since they will have undefined vairables, but we can
-/// define the variables and then run the scripts.
+// /// Run the R [code] and append to the [rattle] script.
 
 // void rExecute(WidgetRef ref, String code) {
 //   debugPrint("R EXECUTE:\t\t'$code'");
@@ -55,13 +49,9 @@ library;
 
 //   updateScript(
 //     ref,
-//     "\n${'#' * 72}\n## -- Generated Code --\n${'#' * 72}"
-//     '\n${rStripHeader(code)}\n',
+//     "\n${'#' * 72}\n## -- Extra Code --\n${'#' * 72}"
+//     '\n$code}\n',
 //   );
-
-//   // Run the code without comments.
-
-//   code = rStripComments(code);
 
 //   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
 // }
