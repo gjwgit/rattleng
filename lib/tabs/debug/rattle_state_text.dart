@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Sunday 2024-07-21 07:51:10 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-21 08:54:47 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -39,9 +39,9 @@ import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/vars.dart';
 import 'package:rattle/providers/roles.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/count_lines.dart';
 import 'package:rattle/utils/truncate.dart';
 
@@ -96,7 +96,7 @@ class RattleStateText extends ConsumerWidget {
             'PARTITION:   $partition\n'
             'ROLES:       $role\n'
             'VARS:        ${truncate(vars.toString())}\n'
-            'TARGET:      $target\n'
+            'TARGET:      ${getTarget(ref)}\n'
             'RISK:        \$risk \n'
             'IDENTIFIERS: \$identifiers \n'
             'IGNORE:      \$ignore\n'
