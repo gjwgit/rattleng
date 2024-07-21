@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-21 16:15:16 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 17:08:42 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -73,9 +73,12 @@ class TreeConfigState extends ConsumerState<TreeConfig> {
                     title: 'No Target Specified',
                     content: '''
 
-                    There is no target variable identified.  Please choose a
-                    variable as the target for the model from the **Dataset**
-                    tab.
+                    Please choose a variable from amongst those variables in the
+                    dataset as the **Target** for the model. You can do this
+                    from the **Dataset** tab's **Roles** feature. When building
+                    a predictive model, like a decision tree, we need a target
+                    variable that we will model so that we can predict it's
+                    value.
 
                     ''',
                   );
