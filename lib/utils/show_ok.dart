@@ -1,6 +1,6 @@
 /// A dialog to show a message and only allow OK.
 //
-// Time-stamp: <Sunday 2024-07-21 16:14:30 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 17:25:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,6 +29,8 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_markdown/flutter_markdown.dart';
+
 import 'package:rattle/utils/word_wrap.dart';
 
 showOk({
@@ -56,8 +58,10 @@ showOk({
         Text(title),
       ],
     ),
-    content: Text(
-      wordWrap(content),
+    content: MarkdownBody(
+      data: wordWrap(content),
+      selectable: true,
+      softLineBreak: true,
     ),
     actions: [
       okButton,
