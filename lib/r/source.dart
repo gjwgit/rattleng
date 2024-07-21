@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-07-21 07:51:45 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-21 08:49:16 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -157,7 +157,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // The rolesProvider listes the roles for the different variables which we
   // need to know for parsing the R scripts.
 
-  Map<String, String> roles = ref.watch(rolesProvider);
+  Map<String, String> roles = ref.read(rolesProvider);
 
   // Extract the target variable from the rolesProvider.
 
