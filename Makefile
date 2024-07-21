@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Friday 2024-07-19 09:56:36 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-21 20:59:10 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -105,7 +105,7 @@ rattle.zip:
 
 # Linux: Install locally.
 
-local: $(APP)-$(VER)-linux-x86_64.tar.gz
+local: tgz
 	sudo tar zxvf installers/$(APP).tar.gz -C /opt/
 
 # Linux: Upload to Solid Community installers for general access.
