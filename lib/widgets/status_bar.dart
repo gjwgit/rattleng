@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Sunday 2024-06-16 15:30:56 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-07-21 17:28:48 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
@@ -49,6 +50,10 @@ class StatusBar extends ConsumerWidget {
       child: Markdown(
         key: statusBarKey,
         selectable: true,
+        onTapLink: (text, href, title) {
+          final Uri url = Uri.parse(href ?? '');
+          launchUrl(url);
+        },
         data: '![](resource:assets/images/favicon_small.png)   '
             '[togware.com](https://togaware.com)  '
             '$path'

@@ -26,6 +26,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
@@ -82,6 +83,10 @@ FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
             child: Markdown(
               data: snapshot.data!,
               selectable: true,
+              onTapLink: (text, href, title) {
+                final Uri url = Uri.parse(href ?? '');
+                launchUrl(url);
+              },
               // Custom image builder to load assets.
               imageBuilder: (uri, title, alt) {
                 return Image.asset('$assetsPath/${uri.toString()}');
