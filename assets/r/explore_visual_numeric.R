@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-21 07:54:30 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-07-22 07:46:39 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -46,13 +46,13 @@ svg("TEMPDIR/explore_visual_boxplot.svg", width=10)
 
 ds %>%
   dplyr::mutate(TARGET_VAR=as.factor(TARGET_VAR)) %>%
-  ggplot2::ggplot(ggplot2::aes(y=min_temp)) +
+  ggplot2::ggplot(ggplot2::aes(y=SELECTED_VAR)) +
   ggplot2::geom_boxplot(ggplot2::aes(x="All"), notch=TRUE, fill="grey") +
   ggplot2::stat_summary(ggplot2::aes(x="All"), fun=mean, geom="point", shape=8) +
   ggplot2::geom_boxplot(ggplot2::aes(x=TARGET_VAR, fill=TARGET_VAR), notch=TRUE) +
   ggplot2::stat_summary(ggplot2::aes(x=TARGET_VAR), fun=mean, geom="point", shape=8) +
   ggplot2::xlab(paste("TARGET_VAR\n\n", "TIMESTAMP", sep="")) +
-  ggplot2::ggtitle("Distribution of min_temp by TARGET_VAR") +
+  ggplot2::ggtitle("Distribution of SELECTED_VAR by TARGET_VAR") +
   ggplot2::theme(legend.position="none")
 
 dev.off()
@@ -65,12 +65,12 @@ svg("TEMPDIR/explore_visual_histogram.svg", width=10)
 
 ds %>%
   dplyr::mutate(TARGET_VAR=as.factor(TARGET_VAR)) %>%
-  dplyr::select(min_temp, TARGET_VAR) %>%
-  ggplot2::ggplot(ggplot2::aes(x=min_temp)) +
+  dplyr::select(SELECTED_VAR, TARGET_VAR) %>%
+  ggplot2::ggplot(ggplot2::aes(x=SELECTED_VAR)) +
   ggplot2::geom_density(lty=3) +
   ggplot2::geom_density(ggplot2::aes(fill=TARGET_VAR, colour=TARGET_VAR), alpha=0.55) +
-  ggplot2::xlab(paste("min_temp\n\n", "TIMESTAMP", sep="")) +
-  ggplot2::ggtitle("Distribution of min_temp by TARGET_VAR") +
+  ggplot2::xlab(paste("SELECTED_VAR\n\n", "TIMESTAMP", sep="")) +
+  ggplot2::ggtitle("Distribution of SELECTED_VAR by TARGET_VAR") +
   ggplot2::labs(fill="TARGET_VAR", y="Density")
 
 dev.off()
@@ -81,11 +81,11 @@ dev.off()
 
 svg("TEMPDIR/explore_visual_cummulative.svg", width=10)
 
-# Generate just the data for an Ecdf plot of the variable 'min_temp'.
+# Generate just the data for an Ecdf plot of the variable 'SELECTED_VAR'.
 
-eds <- rbind(data.frame(dat=ds[,"min_temp"], grp="All"),
-            data.frame(dat=ds[ds$TARGET_VAR=="No","min_temp"], grp="No"),
-            data.frame(dat=ds[ds$TARGET_VAR=="Yes","min_temp"], grp="Yes"))
+eds <- rbind(data.frame(dat=ds[,"SELECTED_VAR"], grp="All"),
+            data.frame(dat=ds[ds$TARGET_VAR=="No","SELECTED_VAR"], grp="No"),
+            data.frame(dat=ds[ds$TARGET_VAR=="Yes","SELECTED_VAR"], grp="Yes"))
 
 # The 'Hmisc' package provides the 'Ecdf' function.
 
@@ -93,7 +93,7 @@ library(Hmisc, quietly=TRUE)
 
 # Plot the data.
 
-Ecdf(eds[eds$grp=="All",1], col="#E495A5", xlab="min_temp", lwd=2, ylab=expression(Proportion <= x), subtitles=FALSE)
+Ecdf(eds[eds$grp=="All",1], col="#E495A5", xlab="SELECTED_VAR", lwd=2, ylab=expression(Proportion <= x), subtitles=FALSE)
 Ecdf(eds[eds$grp=="No",1], col="#86B875", lty=2, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
 Ecdf(eds[eds$grp=="Yes",1], col="#7DB0DD", lty=3, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
 
@@ -104,7 +104,7 @@ legend("bottomright", c("All","No","Yes"), bty="n",  col=colorspace::rainbow_hcl
 
 # Add a title to the plot.
 
-title(main="Distribution of min_temp by TARGET_VAR", sub="TIMESTAMP")
+title(main="Distribution of SELECTED_VAR by TARGET_VAR", sub="TIMESTAMP")
 
 dev.off()
 
@@ -123,7 +123,7 @@ library(reshape, quietly=TRUE)
 # Initialies the parameters.
 
 target <- "TARGET_VAR"
-var    <- "min_temp"
+var    <- "SELECTED_VAR"
 digit  <- 1
 len    <- 1
 
@@ -138,7 +138,7 @@ for (i in unique(ds[[target]]))
 
 svg("TEMPDIR/explore_visual_benford.svg", width=10)
 p <- plotDigitFreq(tds)
-p <- p + ggtitle("Digital Analysis of First Digit of min_temp by TARGET_VAR")
+p <- p + ggtitle("Digital Analysis of First Digit of SELECTED_VAR by TARGET_VAR")
 p <- p + ggplot2::xlab(paste("Digits\n\n", "TIMESTAMP", sep=""))
 
 print(p)
