@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Saturday 2024-06-29 14:01:56 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 21:05:28 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,6 +30,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
@@ -56,6 +57,11 @@ class TextPage extends StatelessWidget {
           children: [
             MarkdownBody(
               data: title,
+              selectable: true,
+              onTapLink: (text, href, title) {
+                final Uri url = Uri.parse(href ?? '');
+                launchUrl(url);
+              },
             ),
             SelectableText(
               content,
