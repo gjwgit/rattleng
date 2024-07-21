@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-07-22 05:45:36 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-22 05:46:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -80,7 +80,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     pages.add(
       ImagePage(
         title: 'Benford Plot\n\n'
-            'Generated using [rattle::plotDigitFreq]'
+            'Generated using [rattle::plotDigitFreq()]'
             '(https://www.rdocumentation.org/packages/rattle).',
         path: '$tempDir/explore_visual_benford.svg',
       ),
@@ -89,7 +89,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     pages.add(
       ImagePage(
         title: 'Pairs Plot\n\n'
-            'Generated using [GGally::ggpairs]'
+            'Generated using [GGally::ggpairs()]'
             '(https://www.rdocumentation.org/packages/GGally/topics/ggpairs).',
         path: '$tempDir/explore_visual_pairs.svg',
       ),

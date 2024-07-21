@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-21 21:24:21 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-22 05:47:37 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -204,7 +204,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       pages.add(
         TextPage(
           title: '# Kurtosis and Skewness\n\n'
-              'Generated using [fBasics::kurtosis() and fBasics::skewness()]'
+              'Generated using [fBasics::kurtosis(ds) and fBasics::skewness(ds)]'
               '(https://www.rdocumentation.org/packages/fBasics).\n\n',
           content: '\n$content',
         ),
@@ -226,7 +226,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       pages.add(
         TextPage(
           title: '# Detailed Variable Statistics\n\n'
-              'Generated using [fBasics::basicStats]'
+              'Generated using [fBasics::basicStats(ds)]'
               '(https://www.rdocumentation.org/packages/fBasics/topics/BasicStatistics).\n\n',
           content: '\n$content',
         ),
