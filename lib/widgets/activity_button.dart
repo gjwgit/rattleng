@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for RattleNG
 //
-// Time-stamp: <Sunday 2024-07-21 16:14:47 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 21:01:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -62,11 +62,11 @@ class ActivityButton extends ConsumerWidget {
         if (path.isEmpty) {
           showOk(
             context: context,
-            title: 'Missing a Dataset',
+            title: 'No Dataset Loaded',
             content: '''
 
-            There is currently no dataset loaded.  Please choose a dataset to
-            load from the **Dataset** tab.
+            Please choose a dataset to load from the **Dataset** tab. There is
+            not much we can do until we have loaded a dataset.
 
             ''',
           );
