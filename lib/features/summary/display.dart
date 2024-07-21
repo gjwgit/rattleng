@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-30 12:40:56 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-21 21:24:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -82,7 +82,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       pages.add(
         TextPage(
           title: '# Summary of the Dataset\n\n'
-              'Generated using `base::summary(ds)`.\n\n'
+              'Generated using [base::summary(ds)]'
+              '(https://www.rdocumentation.org/packages/base/topics/summary).\n\n'
               'This is the most basic R command for summarising the dataset.\n\n'
               'For **numeric data** the minimum, and maximum values are listed. '
               'Between these we can see listed the first and thrid quartiles as '
@@ -112,7 +113,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       pages.add(
         TextPage(
           title: '# Contents of the Dataset\n\n'
-              'Generated using `Hmisc::contents(ds)`.\n\n'
+              'Generated using [Hmisc::contents(ds)]'
+              '(https://hbiostat.org/r/hmisc/).\n\n'
               'This content-oriented summary of the data lists the number of '
               '**levels** (the different values for the categoric variable) '
               'for each categoric variable, as well as identifying '
@@ -164,7 +166,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       pages.add(
         TextPage(
           title: '# Describe the Dataset\n\n'
-              'Generated using `Hmisc::describe(ds)`',
+              'Generated using [Hmisc::describe(ds)]'
+              '(https://hbiostat.org/r/hmisc/)',
           content: content,
         ),
       );
@@ -201,7 +204,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       pages.add(
         TextPage(
           title: '# Kurtosis and Skewness\n\n'
-              'Generated using `fBasics::kurtosis` and `fBasics::skewness`\n\n',
+              'Generated using [fBasics::kurtosis() and fBasics::skewness()]'
+              '(https://www.rdocumentation.org/packages/fBasics).\n\n',
           content: '\n$content',
         ),
       );
@@ -222,7 +226,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       pages.add(
         TextPage(
           title: '# Detailed Variable Statistics\n\n'
-              'Generated using `fBasics::basicStats`\n\n',
+              'Generated using [fBasics::basicStats]'
+              '(https://www.rdocumentation.org/packages/fBasics/topics/BasicStatistics).\n\n',
           content: '\n$content',
         ),
       );
