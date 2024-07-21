@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-14 10:03:43 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-22 08:36:28 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,12 +24,19 @@
 
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/utils/get_risk.dart';
+import 'package:rattle/utils/get_target.dart';
+import 'package:rattle/utils/show_ok.dart';
 
 /// The VISUAL tab config currently consists of just a BUILD button.
 ///
@@ -45,6 +52,8 @@ class VisualConfig extends ConsumerStatefulWidget {
 class VisualConfigState extends ConsumerState<VisualConfig> {
   @override
   Widget build(BuildContext context) {
+    String stdout = ref.watch(stdoutProvider);
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -61,10 +70,78 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             ActivityButton(
               onPressed: () {
-                // TODO 20240714 gjw CHOOSE DEPENDING ON SELECTED VARIABLE
+                // Business Rules for Building a Tree
 
-                rSource(context, ref, 'explore_visual_numeric');
-                rSource(context, ref, 'explore_visual_categoric');
+                // Require a risk and target variable.
+
+                String risk = getRisk(ref);
+                String target = getTarget(ref);
+
+                if (risk == 'NULL' && target == 'NULL') {
+                  showOk(
+                    context: context,
+                    title: 'No Risk or Target Variable Specified',
+                    content: '''
+
+                    Please choose a variable from amongst those variables in the
+                    dataset as the **Risk** variable and anopther as the
+                    **Target** variable. The risk variable will be the variable
+                    that we will visualise here. The selected risk variable will
+                    be reviewed against the target variable
+                    outcomes/categories. Within some of the visualisations you
+                    will then see any relationship between the risk variable
+                    under review and the target variable. You can choose the
+                    risk and target variables from the **Dataset** tab **Roles**
+                    feature.
+
+                    ''',
+                  );
+                } else if (risk == 'NULL') {
+                  showOk(
+                    context: context,
+                    title: 'No Risk Variable Specified',
+                    content: '''
+
+                    Please choose a variable from amongst those variables in the
+                    dataset as the **Risk** variable. This will be the variable
+                    that we will visualise here. The selected risk variable will
+                    be reviewed against the target outcomes/categories. Within
+                    some of the visualisations you will then see any
+                    relationship between the risk variable under review and the
+                    target variable. You can choose the risk variable from the
+                    **Dataset** tab **Roles** feature.
+
+                    ''',
+                  );
+                } else if (target == 'NULL') {
+                  showOk(
+                    context: context,
+                    title: 'No Target Specified',
+                    content: '''
+
+                    Please choose a variable from amongst those variables in the
+                    dataset as the **Target**. This will be used to visualise
+                    the selected **Risk** variable against the target
+                    outcomes/categories. Within some of the visualisations you
+                    can then see its relationship with the risk variable that
+                    you have under review. You can choose the target variable
+                    from the **Dataset** tab **Roles** feature.
+
+                    ''',
+                  );
+                } else {
+                  // Run the R scripts.
+
+                  // Choose which visualisations to run depending on the
+                  // selected variable.
+
+                  String numc = rExtract(stdout, '+ numc');
+                  if (numc.contains('"$risk"')) {
+                    rSource(context, ref, 'explore_visual_numeric');
+                  } else {
+                    rSource(context, ref, 'explore_visual_categoric');
+                  }
+                }
               },
               child: const Text('Display'),
             ),

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:28:16 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-07-22 08:36:20 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -43,9 +43,9 @@ svg("TEMPDIR/explore_visual_bars.svg", width=10)
 
 # Generate the summary data for plotting.
 
-tds <- rbind(summary(na.omit(ds$wind_gust_dir)),
-    summary(na.omit(ds[ds$TARGET_VAR=="No",]$wind_gust_dir)),
-    summary(na.omit(ds[ds$TARGET_VAR=="Yes",]$wind_gust_dir)))
+tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
+    summary(na.omit(ds[ds$TARGET_VAR=="No",]$SELECTED_VAR)),
+    summary(na.omit(ds[ds$TARGET_VAR=="Yes",]$SELECTED_VAR)))
 
 # Sort the entries.
 
@@ -53,7 +53,7 @@ ord <- order(tds[1,], decreasing=TRUE)
 
 # Plot the data.
 
-bp <-  gplots::barplot2(tds[,ord], beside=TRUE, ylab="Frequency", xlab="wind_gust_dir", ylim=c(0, 62), col=colorspace::rainbow_hcl(3))
+bp <-  gplots::barplot2(tds[,ord], beside=TRUE, ylab="Frequency", xlab="SELECTED_VAR", ylim=c(0, 62), col=colorspace::rainbow_hcl(3))
 
 # Add a legend to the plot.
 
@@ -61,7 +61,7 @@ legend("topright", bty="n", c("All","No","Yes"),  fill=colorspace::rainbow_hcl(3
 
 # Add a title to the plot.
 
-title(main="Distribution of wind_gust_dir (sample)\nby TARGET_VAR",
+title(main="Distribution of SELECTED_VAR (sample)\nby TARGET_VAR",
     sub="TIMESTAMP")
 
 dev.off()
@@ -74,9 +74,9 @@ svg("TEMPDIR/explore_visual_dots.svg", width=10)
 
 # Generate the summary data for the plot.
 
-tds <- rbind(summary(na.omit(ds$wind_gust_dir)),
-    summary(na.omit(ds[ds$TARGET_VAR=="No",]$wind_gust_dir)),
-    summary(na.omit(ds[ds$TARGET_VAR=="Yes",]$wind_gust_dir)))
+tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
+    summary(na.omit(ds[ds$TARGET_VAR=="No",]$SELECTED_VAR)),
+    summary(na.omit(ds[ds$TARGET_VAR=="Yes",]$SELECTED_VAR)))
 
 # Sort the entries.
 
@@ -85,12 +85,12 @@ ord <- order(tds[1,], decreasing=TRUE)
 # Plot the data.
 
 dotchart(tds[nrow(tds):1,ord],
-         main   = "Distribution of wind_gust_dir (sample)\nby TARGET_VAR",
+         main   = "Distribution of SELECTED_VAR (sample)\nby TARGET_VAR",
          sub    = "TIMESTAMP",
          col    = rev(colorspace::rainbow_hcl(3)),
          labels = "",
          xlab   = "Frequency",
-         ylab   = "wind_gust_dir",
+         ylab   = "SELECTED_VAR",
          pch    = c(1:2, 19))
 
 # Add a legend.
@@ -107,7 +107,7 @@ svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
 
 # Generate the table data for plotting.
 
-tds <- table(ds$wind_gust_dir, ds$TARGET_VAR)
+tds <- table(ds$SELECTED_VAR, ds$TARGET_VAR)
 
 # Sort the entries.
 
@@ -116,11 +116,11 @@ ord <- order(apply(tds, 1, sum), decreasing=TRUE)
 # Plot the data.
 
 mosaicplot(tds[ord,],
-           main  = "Mosaic of wind_gust_dir (sample) by TARGET_VAR",
+           main  = "Mosaic of SELECTED_VAR (sample) by TARGET_VAR",
            sub   = "TIMESTAMP",
            color = colorspace::rainbow_hcl(3)[-1],
            cex   = 0.7,
-           xlab  = "wind_gust_dir",
+           xlab  = "SELECTED_VAR",
            ylab  = "TARGET_VAR")
 
 dev.off()

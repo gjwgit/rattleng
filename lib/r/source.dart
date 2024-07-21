@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-07-21 08:49:16 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-07-22 08:12:16 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -171,10 +171,22 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('TARGET_VAR', target);
   //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
 
+  // Extract the risk variable from the rolesProvider and use that for now as
+  // the variable to visualise.
+
+  String risk = 'NULL';
+  roles.forEach((key, value) {
+    if (value == 'Risk') {
+      risk = key;
+    }
+  });
+
+  code = code.replaceAll('SELECTED_VAR', risk);
+
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );
-  code = code.replaceAll('RISK_VAR', normalise ? 'risk_mm' : 'RISK_MM');
-  code = code.replaceAll('ID_VARS', '"date", "location"');
+  code = code.replaceAll('RISK_VAR', risk);
+  code = code.replaceAll('ID_VARS', '"ID_TODO_1", "ID_TODO_2"');
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
 
