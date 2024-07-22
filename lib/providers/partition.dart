@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2023-11-01 17:19:56 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-07-22 16:42:13 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,4 +25,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final partitionProvider = StateProvider<bool>((ref) => true);
+// For COMP3430 2024 S2 set the default off since that is what they are asked to
+// do. Perhaps default off is good in general?
+
+final partitionProvider = StateProvider<bool>((ref) => false);
