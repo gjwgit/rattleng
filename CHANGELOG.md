@@ -8,6 +8,7 @@ toward a 0.2 release.
 
 ## 0.3 FUTURE Wrangle tab implementation
 
++ Add transform R scripts. Activate URL links. Visualise RSIK var. [0.2.6 20240722 gjw]
 + Add a shell for the Wrangle tab functionality [0.2.5 20240719 gjw]
 + Move Page navigation to the bottom [0.2.4 20240718 yyx]
 + Refactor dataset feature [0.2.3 20240715 gjw]
