@@ -38,6 +38,7 @@ import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/variable_selection.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -75,6 +76,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
   String language = ref.read(languageProvider);
+  String selectedVar = ref.read(varProvider);
 
   // First obtain the text from the script.
 
@@ -181,7 +183,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     }
   });
 
-  code = code.replaceAll('SELECTED_VAR', risk);
+  code = code.replaceAll('SELECTED_VAR', selectedVar);
 
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );

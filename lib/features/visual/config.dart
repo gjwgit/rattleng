@@ -24,13 +24,14 @@
 
 library;
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/roles.dart';
 
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/variable_selection.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -53,6 +54,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
+    List<String> vars = ref.watch(rolesProvider).keys.toList();
 
     return Column(
       children: [
@@ -148,6 +150,17 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             const SizedBox(width: 20.0),
             const Text(
               'R packages like ggplot are utilised to build a variety of charts, plots, and graphs.',
+            ),
+            const SizedBox(width: 20.0),
+            DropdownMenu(
+              label: const Text('Variable Selection'),
+              initialSelection: vars.first,
+              dropdownMenuEntries: vars.map((s) {
+                return DropdownMenuEntry(value: s, label: s);
+              }).toList(),
+              onSelected: (String? value) {
+                ref.read(varProvider.notifier).state = value!;
+              },
             ),
           ],
         ),
