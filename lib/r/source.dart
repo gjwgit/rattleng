@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2024-07-22 08:12:16 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-23 08:57:29 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -38,7 +38,7 @@ import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/roles.dart';
-import 'package:rattle/providers/variable_selection.dart';
+import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -76,7 +76,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
   String language = ref.read(languageProvider);
-  String selectedVar = ref.read(varProvider);
+  String selected = ref.read(selectedProvider);
 
   // First obtain the text from the script.
 
@@ -183,7 +183,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     }
   });
 
-  code = code.replaceAll('SELECTED_VAR', selectedVar);
+  code = code.replaceAll('SELECTED_VAR', selected);
 
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );

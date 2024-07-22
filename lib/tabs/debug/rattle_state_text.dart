@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Sunday 2024-07-21 08:54:47 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-23 08:56:04 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -39,6 +39,7 @@ import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars.dart';
 import 'package:rattle/providers/roles.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -59,6 +60,7 @@ class RattleStateText extends ConsumerWidget {
     String stdout = ref.watch(stdoutProvider);
     String model = ref.watch(modelProvider);
     String target = 'NULL'; // ref.watch(targetProvider);
+    String selected = ref.watch(selectedProvider);
     List<String> vars = ref.watch(varsProvider);
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
@@ -100,6 +102,7 @@ class RattleStateText extends ConsumerWidget {
             'RISK:        \$risk \n'
             'IDENTIFIERS: \$identifiers \n'
             'IGNORE:      \$ignore\n'
+            'SELECTED:    $selected\n'
             'MODEL:       $model\n',
             style: monoSmallTextStyle,
           );
