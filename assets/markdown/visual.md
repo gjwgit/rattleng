@@ -17,9 +17,15 @@ I like to refer to this as living and breathing your data. It is
 essential to understand your data as you begin to analyse and model
 it.
 
-Here you can choose a variables and different types of charts will be
-generated to present the data from different perspectives. A variety
-of different charts will be generated for a single variable.
+A variety of R packages like
+[ggplot2](https://www.rdocumentation.org/packages/ggplot2) are
+utilised to build a variety of charts, plots, and graphs.
+
+For each visualisation you can choose a variable and review the
+distribution of its values. Many different types of charts are
+generated for the chosen variable to present the data from different
+perspectives. While reviewing a specific chart you can change the
+selected variable to review it's distribution.
 
 > 
 
