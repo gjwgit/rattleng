@@ -1,6 +1,6 @@
-/// A provider for the selected variable
+/// A provider for the selected variable across multiple configs.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-23 08:54:25 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,8 +23,9 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Yixiang Yin
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final varProvider = StateProvider<String>((ref) => '');
+final selectedProvider = StateProvider<String>((ref) => 'NULL');
