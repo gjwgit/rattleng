@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-07-23 14:45:40 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-23 20:34:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -229,8 +229,6 @@ Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
 
   @override
   Widget build(BuildContext context) {
-    print(about);
-
     return Scaffold(
       appBar: AppBar(
         // The title aligned to the left.

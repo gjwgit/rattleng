@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Tuesday 2024-07-23 19:48:21 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 20:34:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -90,8 +90,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ref.read(rolesProvider.notifier).state[column.name] = 'Input';
           ref.read(typesProvider.notifier).state[column.name] =
               isNumeric(column.type) ? Type.numeric : Type.categoric;
- 
-         if (column.name.toLowerCase().startsWith('risk_')) {
+
+          if (column.name.toLowerCase().startsWith('risk_')) {
             ref.read(rolesProvider.notifier).state[column.name] = 'Risk';
           }
         }
