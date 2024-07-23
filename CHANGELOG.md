@@ -8,7 +8,8 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
-+ Add variable selection to VISUALISE. Add glimpse to TRANSFORM [6.2.7 20240723 gjw]
++ Add variable selection to VISUALISE [6.2.7 20240723 gjw]
++ Add glimpse to TRANSFORM
 + Add transform R scripts. Activate URL links. VISUALISE risk var [6.2.6 20240722 gjw]
 + Add a shell for the Wrangle tab functionality [6.2.5 20240719 gjw]
 + Move Page navigation to the bottom [6.2.4 20240718 yyx]
