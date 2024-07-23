@@ -28,7 +28,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/group_by.dart';
-import 'package:rattle/providers/roles.dart';
 
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selected.dart';
@@ -64,7 +63,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
 
-
     String selected = ref.watch(selectedProvider);
     if (selected == 'NULL') {
       if (inputs.isNotEmpty) {
@@ -91,7 +89,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     if (groupBy == 'NULL') {
       groupBy = getTarget(ref);
     }
-
 
     String numc = rExtract(stdout, '+ numc');
 
@@ -216,7 +213,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                     value ?? 'IMPOSSIBLE';
                 build();
               },
-            ),            
+            ),
             const SizedBox(width: 20.0),
             Text(title),
           ],

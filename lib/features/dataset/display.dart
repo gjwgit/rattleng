@@ -79,11 +79,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       Map<String, String> currentRoles = ref.read(rolesProvider);
       // extract variable information
       List<VariableInfo> vars = extractVariables(stdout);
-      // initialise, default to input and assign types 
+      // initialise, default to input and assign types
       if (currentRoles.isEmpty && vars.isNotEmpty) {
         for (var column in vars) {
           ref.read(rolesProvider.notifier).state[column.name] = choices.first;
-          ref.read(typesProvider.notifier).state[column.name] = isNumeric(column.type) ? Type.numeric : Type.categoric;
+          ref.read(typesProvider.notifier).state[column.name] =
+              isNumeric(column.type) ? Type.numeric : Type.categoric;
         }
       }
 
