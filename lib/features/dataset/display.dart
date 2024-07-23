@@ -35,9 +35,11 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/types.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -79,14 +81,17 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       // extract variable information
       List<VariableInfo> vars = extractVariables(stdout);
 
-      // Initialise, default to input.
+      // initialise, default to input and assign types
 
       if (currentRoles.isEmpty && vars.isNotEmpty) {
         // Default is Input.
 
         for (var column in vars) {
           ref.read(rolesProvider.notifier).state[column.name] = 'Input';
-          if (column.name.toLowerCase().startsWith('risk_')) {
+          ref.read(typesProvider.notifier).state[column.name] =
+              isNumeric(column.type) ? Type.numeric : Type.categoric;
+ 
+         if (column.name.toLowerCase().startsWith('risk_')) {
             ref.read(rolesProvider.notifier).state[column.name] = 'Risk';
           }
         }

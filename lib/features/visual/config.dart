@@ -27,11 +27,13 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/group_by.dart';
 
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/get_catergoric.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -81,6 +83,13 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
       }
     }
 
+    String groupBy = ref.watch(groupByProvider);
+    // By default, choose the target variable
+    // assume target exists
+    if (groupBy == 'NULL') {
+      groupBy = getTarget(ref);
+    }
+
     String numc = rExtract(stdout, '+ numc');
 
     // BUILD button action.
@@ -114,10 +123,12 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
         // Choose which visualisations to run depending on the
         // selected variable.
-
+        String numc = rExtract(stdout, '+ numc');
         if (numc.contains('"$selected"')) {
+          debugPrint('run numeric script');
           rSource(context, ref, 'explore_visual_numeric');
         } else {
+          debugPrint('run categoric script');
           rSource(context, ref, 'explore_visual_categoric');
         }
       }
@@ -143,6 +154,30 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             ActivityButton(
               onPressed: () {
+                // Had to update here because
+                // Unhandled Exception: Tried to modify a provider while the widget tree was building.
+                // If you are encountering this error, chances are you tried to modify a provider
+                // in a widget life-cycle, such as but not limited to:
+                // - build
+                // - initState
+                // - dispose
+                // - didUpdateWidget
+                // - didChangeDependencies
+
+                // Modifying a provider inside those life-cycles is not allowed, as it could
+                // lead to an inconsistent UI state. For example, two widgets could listen to the
+                // same provider, but incorrectly receive different states.
+
+                // To fix this problem, you have one of two solutions:
+                // - (preferred) Move the logic for modifying your provider outside of a widget
+                //   life-cycle. For example, maybe you could update your provider inside a button's
+                //   onPressed instead.
+
+                // - Delay your modification, such as by encapsulating the modification
+                //   in a `Future(() {...})`.
+                //   This will perform your update after the widget tree is done building
+                ref.read(selectedProvider.notifier).state = selected;
+                ref.read(groupByProvider.notifier).state = groupBy;
                 build();
               },
               child: const Text('Visualise'),
@@ -150,24 +185,36 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             const SizedBox(width: 20.0),
 
-            // Use Expanded to avoid overflow when the width is small.
-
-            Expanded(
-              child: DropdownMenu(
-                label: const Text('Input'),
-                initialSelection: selected,
-                dropdownMenuEntries: inputs.map((s) {
-                  return DropdownMenuEntry(value: s, label: s);
-                }).toList(),
-                // On selection as well as recording what was selected rebuild the
-                // visualisations.
-                onSelected: (String? value) {
-                  ref.read(selectedProvider.notifier).state =
-                      value ?? 'IMPOSSIBLE';
-                  build();
-                },
-              ),
+            DropdownMenu(
+              label: const Text('Input'),
+              initialSelection: selected,
+              dropdownMenuEntries: inputs.map((s) {
+                return DropdownMenuEntry(value: s, label: s);
+              }).toList(),
+              // On selection as well as recording what was selected rebuild the
+              // visualisations.
+              onSelected: (String? value) {
+                ref.read(selectedProvider.notifier).state =
+                    value ?? 'IMPOSSIBLE';
+                build();
+              },
             ),
+            const SizedBox(width: 20.0),
+            DropdownMenu(
+              label: const Text('Group by'),
+              initialSelection: groupBy,
+              dropdownMenuEntries: getCategoric(ref).map((s) {
+                return DropdownMenuEntry(value: s, label: s);
+              }).toList(),
+              // On selection as well as recording what was selected rebuild the
+              // visualisations.
+              onSelected: (String? value) {
+                ref.read(groupByProvider.notifier).state =
+                    value ?? 'IMPOSSIBLE';
+                build();
+              },
+            ),
+            const SizedBox(width: 20.0),
             Text(title),
           ],
         ),

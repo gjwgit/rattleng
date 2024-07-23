@@ -1,4 +1,4 @@
-/// Record variable selection on the dataset tab
+/// Record types for each variables
 //
 // Time-stamp: <Sunday 2024-07-21 07:33:03 +1000 Graham Williams>
 //
@@ -27,16 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// map from variable to role
-final rolesProvider = StateProvider<Map<String, String>>((ref) => {});
+enum Type { numeric, categoric }
 
-// Custom getter to access the 'Target' value
-
-extension RolesProviderX on WidgetRef {
-  String get target {
-    final rolesMap = watch(rolesProvider);
-    // TODO yyx 20240723 Isn't it mapping from variable to role?
-
-    return rolesMap['Target'] ?? 'NULL';
-  }
-}
+// map from variable to type
+final typesProvider = StateProvider<Map<String, Type>>((ref) => {});
