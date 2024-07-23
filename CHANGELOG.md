@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Add group by selector for VISUALISE [6.2.8 20240723 gjw]
 + Add variable selection to VISUALISE [6.2.7 20240723 gjw]
 + Add glimpse to TRANSFORM
 + Add transform R scripts. Activate URL links. VISUALISE risk var [6.2.6 20240722 gjw]
