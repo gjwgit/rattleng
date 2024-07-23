@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-23 09:14:21 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 10:03:40 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -63,7 +63,11 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // first input variable.
 
     String selected = ref.read(selectedProvider.notifier).state;
-    if (selected == 'NULL') selected = inputs.first;
+    if (selected == 'NULL') {
+      selected = inputs.first;
+      // This causes an exception.... Really want to initialise.
+      // ref.read(selectedProvider.notifier).state = selected;
+    }
 
     // BUILD button action.
 
@@ -73,7 +77,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
       // Require a target variable which is used to categorise the
       // plots.
 
-      String risk = getRisk(ref);
       String target = getTarget(ref);
 
       if (target == 'NULL') {
@@ -99,7 +102,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
         // selected variable.
 
         String numc = rExtract(stdout, '+ numc');
-        if (numc.contains('"$risk"')) {
+        if (numc.contains('"$selected"')) {
           rSource(context, ref, 'explore_visual_numeric');
         } else {
           rSource(context, ref, 'explore_visual_categoric');
