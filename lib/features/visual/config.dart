@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-23 12:44:07 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 14:13:09 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -139,6 +139,8 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             ),
 
             const SizedBox(width: 20.0),
+
+            // Use Expanded to avoid overflow when the width is small.
 
             Expanded(
               child: DropdownMenu(
