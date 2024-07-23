@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-23 11:10:42 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 12:44:07 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,7 +61,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
 
-    String selected = ref.read(selectedProvider.notifier).state;
+    String selected = ref.watch(selectedProvider.notifier).state;
     if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
       // TODO 20240723 gjw HOW TO INITIALISE THE selected PROVIDER?.
@@ -70,6 +70,8 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
       //
       // ref.read(selectedProvider.notifier).state = selected;
     }
+
+    String numc = rExtract(stdout, '+ numc');
 
     // BUILD button action.
 
@@ -103,7 +105,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
         // Choose which visualisations to run depending on the
         // selected variable.
 
-        String numc = rExtract(stdout, '+ numc');
         if (numc.contains('"$selected"')) {
           rSource(context, ref, 'explore_visual_numeric');
         } else {
@@ -111,6 +112,10 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
         }
       }
     }
+
+    String title = 'Visualisations for the '
+        '${numc.contains(selected) ? "numeric" : "categoric"} '
+        'variable $selected.';
 
     return Column(
       children: [
@@ -132,6 +137,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               },
               child: const Text('Visualise'),
             ),
+
             const SizedBox(width: 20.0),
 
             Expanded(
@@ -150,6 +156,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 },
               ),
             ),
+            Text(title),
           ],
         ),
       ],
