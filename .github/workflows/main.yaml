@@ -3,11 +3,12 @@ name: Flutter CI
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
 
   build-release-upload-linux:
+#    if: contains(github.event.head_commit.message, 'Bump version')
     runs-on: ubuntu-22.04
 
     steps:
@@ -67,6 +68,7 @@ jobs:
           files: build/linux/x64/release/bundle/rattle-${{github.ref_name}}-linux.zip
 
   build-release-upload-windows:
+    if: contains(github.event.head_commit.message, 'Bump version')
     runs-on: windows-latest
 
     steps:
@@ -104,6 +106,7 @@ jobs:
           path: build/windows/x64/runner/Release/rattle-${{github.ref_name}}-windows.zip
 
   build-release-upload-macos:
+    if: contains(github.event.head_commit.message, 'Bump version')
     runs-on: macos-latest
 
     steps:
