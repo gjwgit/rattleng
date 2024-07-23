@@ -1,6 +1,6 @@
 /// Word wrap a string.
 //
-// Time-stamp: <Sunday 2024-07-21 17:06:41 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 14:43:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,6 +34,8 @@ String wordWrap(String text, [int width = 60]) {
 
   text =
       text.replaceAllMapped(pattern, (match) => '${match.group(0)!}\n').trim();
+
+  text = text.replaceAll(RegExp(r'^ +'), '');
 
   return text;
 }
