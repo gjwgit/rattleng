@@ -12,8 +12,8 @@ installed on your computer. At present R is supported on desktops
 (Linux, MacOS, and Windows). You can download R from the [R
 statistical software](https://cloud.r-project.org/) repository. 
 
-Once R is installed, open a terminal and run the R command to then
-install the pre-requisite packages by pasting the folloing after the
+Once R is installed, open a terminal and run the R command. You can then
+install the pre-requisite packages for Rattle by pasting the following after the
 prompt `> `:
 
 ```bash
