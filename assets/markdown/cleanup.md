@@ -11,8 +11,9 @@ dataset that are marked as Ignore.  As an example, suppose we have
 loaded the demonstrator audit dataset. In the **Dataset** tab we might
 choose to set the role of Age, Employment, Education, Marital, and
 Occupation to be Ignore. In the **Console** tab we can use the
-`object.size()` function to determine the current amount of memory the
-dataset is taking up:
+[object.size()](https://www.rdocumentation.org/packages/utils/topics/object.size)
+function to determine the current amount of memory the dataset is
+taking up:
 
 ```r
 > object.size(ds)
