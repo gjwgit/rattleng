@@ -67,19 +67,26 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // CLEANSE
 
         DelayedTooltip(
-          message: 'Undertake data cleansing for a CSV dataset. '
-              'This will remove constant columns '
-              'and convert character columns to factors. '
-              'If you do not require cleansing, turn this off.',
+          message: '''
+
+          Undertake data cleansing for a CSV dataset.  This will remove constant
+          columns and convert character columns to factors.  If you do not
+          require cleansing, turn this off.
+
+              ''',
           child: Icon(Icons.cleaning_services),
         ),
 
         // NORMALISE
 
         DelayedTooltip(
-          message: 'Variable/column names of a CSV dataset are normalised. '
-              'Names are lowercased, separated by underscore. '
-              'If you do not requires normalisation, turn this off.',
+          message: '''
+
+          Variable/column names of a CSV dataset are normalised.  Names are
+          lowercased, separated by underscore.  If you do not requires
+          normalisation, turn this off.
+
+          ''',
           child: Icon(Icons.auto_fix_high_outlined),
           // child: Icon(Icons.art_track),
           // child: Icon(Icons.ac_unit),
@@ -88,8 +95,14 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         // PARTITION
 
         DelayedTooltip(
-          message: 'Partition a CSV dataset for modelling into 70/15/15. '
-              'If you do not require partitioning, turn this off.',
+          message: '''
+
+          Partition a CSV dataset for modelling into 70/15/15.  Generally
+          paritioning is good for building predictive models and so best to turn
+          it on for that scenario. If you are exploring your data still then
+          keep the partitioning off.
+
+          ''',
           child: Icon(Icons.horizontal_split),
           // child: Icon(Icons.assessment_outlined),
         ),

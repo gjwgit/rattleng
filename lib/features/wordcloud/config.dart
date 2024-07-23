@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Wednesday 2024-07-17 11:57:00 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-22 19:41:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -175,9 +175,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   },
                 ),
                 const DelayedTooltip(
-                  message: 'Stemming reduces words to their base or root form. '
-                      'Two different words, when stemmed, can become the same '
-                      'and so can reduce unecessary clutter in the wordcloud.',
+                  message: '''
+
+                  Stemming reduces words to their base or root form.  Two
+                  different words, when stemmed, can become the same and so can
+                  reduce unecessary clutter in the wordcloud.
+
+                  ''',
                   child: Text('Stem'),
                 ),
               ],
@@ -260,9 +264,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               SizedBox(
                 width: 150.0,
                 child: DelayedTooltip(
-                  message: 'Filter out less frequent words. '
-                      'If this results in all words being filtered out '
-                      'the threshold will not be used.',
+                  message: '''
+
+                  Filter out less frequent words.  If this results in all words
+                  being filtered out the threshold will not be used.
+
+                      ''',
                   child: TextField(
                     controller: minFreqTextController,
                     style: const TextStyle(fontSize: 16),

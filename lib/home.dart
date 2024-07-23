@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-07-21 06:52:46 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-07-22 19:39:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -40,8 +40,6 @@ import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/target.dart';
-import 'package:rattle/providers/vars.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
@@ -293,7 +291,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
                 children: [
                   const SelectableText('\nRattleNG is a modern rewrite of the '
                       'very popular Rattle Data Mining and Data Science tool.\n\n'
-                      'Authors: Graham Williams, Yixiang Yin.'),
+                      'Author: Graham Williams\n\n'
+                      'Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.'),
                 ],
               );
             },
