@@ -27,11 +27,14 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/group_by.dart';
+import 'package:rattle/providers/roles.dart';
 
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/get_catergoric.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -62,6 +65,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // then we choose the first input variable.
 
     String selected = ref.watch(selectedProvider.notifier).state;
+    debugPrint('selected is $selected');
     if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
       // TODO 20240723 gjw HOW TO INITIALISE THE selected PROVIDER?.
@@ -70,6 +74,14 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
       //
       // ref.read(selectedProvider.notifier).state = selected;
     }
+
+    String groupBy = ref.watch(groupByProvider);
+    // By default, choose the target variable
+    // assume target exists
+    if (groupBy == 'NULL') {
+      groupBy = getTarget(ref);
+    }
+
 
     String numc = rExtract(stdout, '+ numc');
 
@@ -140,22 +152,36 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             const SizedBox(width: 20.0),
 
-            Expanded(
-              child: DropdownMenu(
-                label: const Text('Input'),
-                initialSelection: selected,
-                dropdownMenuEntries: inputs.map((s) {
-                  return DropdownMenuEntry(value: s, label: s);
-                }).toList(),
-                // On selection as well as recording what was selected rebuild the
-                // visualisations.
-                onSelected: (String? value) {
-                  ref.read(selectedProvider.notifier).state =
-                      value ?? 'IMPOSSIBLE';
-                  build();
-                },
-              ),
+            DropdownMenu(
+              label: const Text('Input'),
+              initialSelection: selected,
+              dropdownMenuEntries: inputs.map((s) {
+                return DropdownMenuEntry(value: s, label: s);
+              }).toList(),
+              // On selection as well as recording what was selected rebuild the
+              // visualisations.
+              onSelected: (String? value) {
+                ref.read(selectedProvider.notifier).state =
+                    value ?? 'IMPOSSIBLE';
+                build();
+              },
             ),
+            const SizedBox(width: 20.0),
+            DropdownMenu(
+              label: const Text('Group by'),
+              initialSelection: groupBy,
+              dropdownMenuEntries: getCategoric(ref).map((s) {
+                return DropdownMenuEntry(value: s, label: s);
+              }).toList(),
+              // On selection as well as recording what was selected rebuild the
+              // visualisations.
+              onSelected: (String? value) {
+                ref.read(groupByProvider.notifier).state =
+                    value ?? 'IMPOSSIBLE';
+                build();
+              },
+            ),            
+            const SizedBox(width: 20.0),
             Text(title),
           ],
         ),
