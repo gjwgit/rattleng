@@ -21,16 +21,17 @@ to contribute code to the project.
 
 ## Using Rattle
 
-To get started, push the **Dataset** button to choose a data
-source. You can load a **csv** (for structured data analysis,
+To get started, push the **Dataset** button to choose a data source,
+and for a quick start press **Demo**. This loads a dataset consisting
+of one year of observations from a weather station in Canberra that
+you can use to explore Rattle's functionality.
+
+You can instead load a **csv** (for structured data analysis,
 including data mining) or **txt** (for unstructured data analysis
 including text mining) file. The data contained in the file becomes
-your dataset used throughout Rattle.  A **Demo** csv data file can
-also be loaded as your dataset. The demo contains one year of
-observations from a weather station in Canberra.  It can be used to
-quickly learn how to interact with Rattle.
+your dataset used throughout Rattle.
 
-All of the major data analytics is implemented through **R template
+The major data analytics in Rattle is implemented through **R template
 scripts**. The templates are run after their configurations are tuned
 through the user interface. The updated template is then sent to **R**
 to undertake the analysis. The results are presented through the
@@ -40,6 +41,32 @@ At any time, be sure to visit the **Script** tab to see the **R** code
 that is automatically generated for you from all of your activity. You
 can export the script, as `script.R` and it is then a standalone R
 program you can run. Visit the Script tab for more details.
+
+> 
+
+## Dataset Variable Roles
+
+Each variable in a dataset is identified with a **Role**. Most
+variables will be identified as **Input** (or independent) variables,
+used as the inputs to a model used to predict a **Target** (dependent)
+variable. The Input variables are also those that can be selected for
+visualising, etc.
+
+Variables can also be identified as a so-called **Risk** variable (a
+variable which is not used for modelling as such) or as **Ignore**
+which are ignored completely for our purposes. The default role for
+most variables is that of an Input (i.e., independent)
+variable. Generally, these are the variables that will be used to
+predict the value of a Target (or dependent) variable.
+
+Any variable that has a unique value for each observation is
+automatically identified as an **Ident** (identifier). Any number of
+variables can be tagged as being an Ident. All Ident variables are
+ignored when modelling.
+
+Rattle uses simple heuristics to guess at the roles of variables. Most
+are Input, one is identified as a Target, often the last variable or
+another which is categoric with only a few distinct values.
 
 > 
 
