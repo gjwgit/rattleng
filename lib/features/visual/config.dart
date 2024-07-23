@@ -34,7 +34,6 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/utils/get_inputs.dart';
-import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 
