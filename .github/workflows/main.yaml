@@ -50,21 +50,21 @@ jobs:
       - name: Zip the bundle
         uses: thedoctor0/zip-release@master
         with:
-          type: 'tar'
-          filename: ../rattle-${{github.ref_name}}-linux.tar.gz
+          type: 'zip'
+          filename: rattle-${{github.ref_name}}-linux.zip
           directory: build/linux/x64/release/bundle
       - name: Upload the zip bundle to Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: rattle-linux
-          path: build/linux/x64/release/rattle-${{github.ref_name}}-linux.tar.gz
+          path: build/linux/x64/release/bundle/rattle-${{github.ref_name}}-linux.zip
       - name: Linux Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: build/linux/x64/release/rattle-${{github.ref_name}}-linux.tar.gz
+          files: build/linux/x64/release/bundle/rattle-${{github.ref_name}}-linux.zip
 
   build-release-upload-windows:
     runs-on: windows-latest
