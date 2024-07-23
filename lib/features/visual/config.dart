@@ -152,15 +152,17 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               'R packages like ggplot are utilised to build a variety of charts, plots, and graphs.',
             ),
             const SizedBox(width: 20.0),
-            DropdownMenu(
-              label: const Text('Variable Selection'),
-              initialSelection: vars.first,
-              dropdownMenuEntries: vars.map((s) {
-                return DropdownMenuEntry(value: s, label: s);
-              }).toList(),
-              onSelected: (String? value) {
-                ref.read(varProvider.notifier).state = value!;
-              },
+            Expanded(
+              child: DropdownMenu(
+                label: const Text('Variable Selection'),
+                initialSelection: vars.first,
+                dropdownMenuEntries: vars.map((s) {
+                  return DropdownMenuEntry(value: s, label: s);
+                }).toList(),
+                onSelected: (String? value) {
+                  ref.read(varProvider.notifier).state = value!;
+                },
+              ),
             ),
           ],
         ),
