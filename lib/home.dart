@@ -213,15 +213,13 @@ class RattleHomeState extends ConsumerState<RattleHome>
     super.dispose();
   }
 
-  String about = wordWrap('''
+  String about = '''${wordWrap('''
 
   RattleNG is a modern rewrite of the very popular Rattle Data Mining and Data
   Science tool. Visit the [Rattle Home Page](https://rattle.togaware.com) for
   details.
 
-  ''') +
-      '''
-
+  ''')}
 
 Author: Graham Williams
 

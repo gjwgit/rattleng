@@ -27,9 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum Type {
-  numeric,
-  categoric
-}
+enum Type { numeric, categoric }
+
 // map from variable to type
 final typesProvider = StateProvider<Map<String, Type>>((ref) => {});
