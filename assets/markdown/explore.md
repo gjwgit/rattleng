@@ -25,3 +25,5 @@ insight. You will also see, for example, measures called **Kurtosis**
 and **Skewness** for numeric variables that allow us to measure the
 spread of the data. We can compare this across the available numeric
 variables.
+
+> 

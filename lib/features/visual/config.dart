@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-07-22 08:36:28 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 10:03:40 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,17 +24,16 @@
 
 library;
 
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/roles.dart';
 
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/variable_selection.dart';
+import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
@@ -54,13 +53,68 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    List<String> vars = ref.watch(rolesProvider).keys.toList();
+
+    // Retireve the list of inputs as the label and value of the dropdown menu.
+
+    List<String> inputs = getInputs(ref);
+
+    // Retrieve the current selected variable and use that as the initial value
+    // for the dropdown menu. If there is no current value then we choose the
+    // first input variable.
+
+    String selected = ref.read(selectedProvider.notifier).state;
+    if (selected == 'NULL') {
+      selected = inputs.first;
+      // This causes an exception.... Really want to initialise.
+      // ref.read(selectedProvider.notifier).state = selected;
+    }
+
+    // BUILD button action.
+
+    void build() {
+      // Business Rules for Building a Tree
+
+      // Require a target variable which is used to categorise the
+      // plots.
+
+      String target = getTarget(ref);
+
+      if (target == 'NULL') {
+        showOk(
+          context: context,
+          title: 'No Target Specified',
+          content: '''
+
+                    Please choose a variable from amongst those variables in the
+                    dataset as the **Target**. This will be used to visualise
+                    the selected **Risk** variable against the target
+                    outcomes/categories. Within some of the visualisations you
+                    can then see its relationship with the risk variable that
+                    you have under review. You can choose the target variable
+                    from the **Dataset** tab **Roles** feature.
+
+                    ''',
+        );
+      } else {
+        // Run the R scripts.
+
+        // Choose which visualisations to run depending on the
+        // selected variable.
+
+        String numc = rExtract(stdout, '+ numc');
+        if (numc.contains('"$selected"')) {
+          rSource(context, ref, 'explore_visual_numeric');
+        } else {
+          rSource(context, ref, 'explore_visual_categoric');
+        }
+      }
+    }
 
     return Column(
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
 
         Row(
           children: [
@@ -72,95 +126,25 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             ActivityButton(
               onPressed: () {
-                // Business Rules for Building a Tree
-
-                // Require a risk and target variable.
-
-                String risk = getRisk(ref);
-                String target = getTarget(ref);
-
-                if (risk == 'NULL' && target == 'NULL') {
-                  showOk(
-                    context: context,
-                    title: 'No Risk or Target Variable Specified',
-                    content: '''
-
-                    Please choose a variable from amongst those variables in the
-                    dataset as the **Risk** variable and anopther as the
-                    **Target** variable. The risk variable will be the variable
-                    that we will visualise here. The selected risk variable will
-                    be reviewed against the target variable
-                    outcomes/categories. Within some of the visualisations you
-                    will then see any relationship between the risk variable
-                    under review and the target variable. You can choose the
-                    risk and target variables from the **Dataset** tab **Roles**
-                    feature.
-
-                    ''',
-                  );
-                } else if (risk == 'NULL') {
-                  showOk(
-                    context: context,
-                    title: 'No Risk Variable Specified',
-                    content: '''
-
-                    Please choose a variable from amongst those variables in the
-                    dataset as the **Risk** variable. This will be the variable
-                    that we will visualise here. The selected risk variable will
-                    be reviewed against the target outcomes/categories. Within
-                    some of the visualisations you will then see any
-                    relationship between the risk variable under review and the
-                    target variable. You can choose the risk variable from the
-                    **Dataset** tab **Roles** feature.
-
-                    ''',
-                  );
-                } else if (target == 'NULL') {
-                  showOk(
-                    context: context,
-                    title: 'No Target Specified',
-                    content: '''
-
-                    Please choose a variable from amongst those variables in the
-                    dataset as the **Target**. This will be used to visualise
-                    the selected **Risk** variable against the target
-                    outcomes/categories. Within some of the visualisations you
-                    can then see its relationship with the risk variable that
-                    you have under review. You can choose the target variable
-                    from the **Dataset** tab **Roles** feature.
-
-                    ''',
-                  );
-                } else {
-                  // Run the R scripts.
-
-                  // Choose which visualisations to run depending on the
-                  // selected variable.
-
-                  String numc = rExtract(stdout, '+ numc');
-                  if (numc.contains('"$risk"')) {
-                    rSource(context, ref, 'explore_visual_numeric');
-                  } else {
-                    rSource(context, ref, 'explore_visual_categoric');
-                  }
-                }
+                build();
               },
-              child: const Text('Display'),
+              child: const Text('Visualise'),
             ),
             const SizedBox(width: 20.0),
-            const Text(
-              'R packages like ggplot are utilised to build a variety of charts, plots, and graphs.',
-            ),
-            const SizedBox(width: 20.0),
+
             Expanded(
               child: DropdownMenu(
-                label: const Text('Variable Selection'),
-                initialSelection: vars.first,
-                dropdownMenuEntries: vars.map((s) {
+                label: const Text('Input'),
+                initialSelection: selected,
+                dropdownMenuEntries: inputs.map((s) {
                   return DropdownMenuEntry(value: s, label: s);
                 }).toList(),
+                // On selection as well as recording what was selected rebuild the
+                // visualisations.
                 onSelected: (String? value) {
-                  ref.read(varProvider.notifier).state = value!;
+                  ref.read(selectedProvider.notifier).state =
+                      value ?? 'IMPOSSIBLE';
+                  build();
                 },
               ),
             ),

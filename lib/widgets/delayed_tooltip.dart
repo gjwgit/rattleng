@@ -1,6 +1,6 @@
 /// A delayed tooltip to avoid clutter of tooltips.
 //
-// Time-stamp: <Sunday 2024-07-07 20:42:43 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-22 16:50:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -26,6 +26,8 @@
 library;
 
 import 'package:flutter/material.dart';
+
+import 'package:rattle/utils/word_wrap.dart';
 
 /// A [Tooltip] that is delayed before being displayed.
 
@@ -61,7 +63,11 @@ class DelayedTooltip extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           constraints: const BoxConstraints(maxWidth: 350),
           child: Text(
-            message,
+            // Use the text tidying aspects of [wordWrap] so we can present the
+            // message using triple quotes and formated with space before and
+            // after, which looks a lot nicer in the code. Set the width high to
+            // avoid embedded '\n'.
+            wordWrap(message, 1000),
             style: const TextStyle(
               fontSize: 18,
             ),

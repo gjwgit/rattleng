@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Sunday 2024-07-21 06:36:25 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 06:56:19 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -36,6 +36,7 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/roles.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -230,7 +231,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String title = '';
 
     if (path == 'rattle::weather' || path.endsWith('.csv')) {
-      content = rExtract(stdout, '> glimpse(ds)');
+      content = rExtractGlimpse(stdout);
       title = '# Dataset Glimpse\n\nGenerated using `glimpse(ds)`';
     } else {
       content = rExtract(stdout, '> cat(ds,');
