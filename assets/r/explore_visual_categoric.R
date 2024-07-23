@@ -44,8 +44,8 @@ svg("TEMPDIR/explore_visual_bars.svg", width=10)
 # Generate the summary data for plotting.
 
 tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
-    summary(na.omit(ds[ds$TARGET_VAR=="No",]$SELECTED_VAR)),
-    summary(na.omit(ds[ds$TARGET_VAR=="Yes",]$SELECTED_VAR)))
+    summary(na.omit(ds[ds$GROUP_BY_VAR=="No",]$SELECTED_VAR)),
+    summary(na.omit(ds[ds$GROUP_BY_VAR=="Yes",]$SELECTED_VAR)))
 
 # Sort the entries.
 
@@ -61,7 +61,7 @@ legend("topright", bty="n", c("All","No","Yes"),  fill=colorspace::rainbow_hcl(3
 
 # Add a title to the plot.
 
-title(main="Distribution of SELECTED_VAR (sample)\nby TARGET_VAR",
+title(main="Distribution of SELECTED_VAR (sample)\nby GROUP_BY_VAR",
     sub="TIMESTAMP")
 
 dev.off()
@@ -75,8 +75,8 @@ svg("TEMPDIR/explore_visual_dots.svg", width=10)
 # Generate the summary data for the plot.
 
 tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
-    summary(na.omit(ds[ds$TARGET_VAR=="No",]$SELECTED_VAR)),
-    summary(na.omit(ds[ds$TARGET_VAR=="Yes",]$SELECTED_VAR)))
+    summary(na.omit(ds[ds$GROUP_BY_VAR=="No",]$SELECTED_VAR)),
+    summary(na.omit(ds[ds$GROUP_BY_VAR=="Yes",]$SELECTED_VAR)))
 
 # Sort the entries.
 
@@ -85,7 +85,7 @@ ord <- order(tds[1,], decreasing=TRUE)
 # Plot the data.
 
 dotchart(tds[nrow(tds):1,ord],
-         main   = "Distribution of SELECTED_VAR (sample)\nby TARGET_VAR",
+         main   = "Distribution of SELECTED_VAR (sample)\nby GROUP_BY_VAR",
          sub    = "TIMESTAMP",
          col    = rev(colorspace::rainbow_hcl(3)),
          labels = "",
@@ -107,7 +107,7 @@ svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
 
 # Generate the table data for plotting.
 
-tds <- table(ds$SELECTED_VAR, ds$TARGET_VAR)
+tds <- table(ds$SELECTED_VAR, ds$GROUP_BY_VAR)
 
 # Sort the entries.
 
@@ -116,11 +116,11 @@ ord <- order(apply(tds, 1, sum), decreasing=TRUE)
 # Plot the data.
 
 mosaicplot(tds[ord,],
-           main  = "Mosaic of SELECTED_VAR (sample) by TARGET_VAR",
+           main  = "Mosaic of SELECTED_VAR (sample) by GROUP_BY_VAR",
            sub   = "TIMESTAMP",
            color = colorspace::rainbow_hcl(3)[-1],
            cex   = 0.7,
            xlab  = "SELECTED_VAR",
-           ylab  = "TARGET_VAR")
+           ylab  = "GROUP_BY_VAR")
 
 dev.off()

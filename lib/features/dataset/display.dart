@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Tuesday 2024-07-23 06:56:19 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 19:48:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -35,12 +35,15 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/types.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
+import 'package:rattle/utils/get_unique_columns.dart';
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
@@ -77,10 +80,31 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       Map<String, String> currentRoles = ref.read(rolesProvider);
       // extract variable information
       List<VariableInfo> vars = extractVariables(stdout);
-      // initialise, default to input
+
+      // initialise, default to input and assign types
+
       if (currentRoles.isEmpty && vars.isNotEmpty) {
+        // Default is Input.
+
         for (var column in vars) {
-          ref.read(rolesProvider.notifier).state[column.name] = choices.first;
+          ref.read(rolesProvider.notifier).state[column.name] = 'Input';
+          ref.read(typesProvider.notifier).state[column.name] =
+              isNumeric(column.type) ? Type.numeric : Type.categoric;
+ 
+         if (column.name.toLowerCase().startsWith('risk_')) {
+            ref.read(rolesProvider.notifier).state[column.name] = 'Risk';
+          }
+        }
+
+        // Treat the last variable as a Target by default. We will eventually
+        // implement Rattle heuristics to identify the Target.
+
+        ref.read(rolesProvider.notifier).state[vars.last.name] = 'Target';
+
+        // Identify any variables that are named risk_ and flag them as Risk.
+
+        for (var id in getUniqueColumns(ref)) {
+          ref.read(rolesProvider.notifier).state[id] = 'Ident';
         }
       }
 
