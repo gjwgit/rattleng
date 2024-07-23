@@ -21,16 +21,17 @@ to contribute code to the project.
 
 ## Using Rattle
 
-To get started, push the **Dataset** button to choose a data
-source. You can load a **csv** (for structured data analysis,
+To get started, push the **Dataset** button to choose a data source,
+and for a quick start press **Demo**. This loads a dataset consisting
+of one year of observations from a weather station in Canberra that
+you can use to explore Rattle's functionality.
+
+You can instead load a **csv** (for structured data analysis,
 including data mining) or **txt** (for unstructured data analysis
 including text mining) file. The data contained in the file becomes
-your dataset used throughout Rattle.  A **Demo** csv data file can
-also be loaded as your dataset. The demo contains one year of
-observations from a weather station in Canberra.  It can be used to
-quickly learn how to interact with Rattle.
+your dataset used throughout Rattle.
 
-All of the major data analytics is implemented through **R template
+The major data analytics in Rattle is implemented through **R template
 scripts**. The templates are run after their configurations are tuned
 through the user interface. The updated template is then sent to **R**
 to undertake the analysis. The results are presented through the
