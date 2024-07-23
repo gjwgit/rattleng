@@ -32,8 +32,7 @@ available from Togaware as described below.
 ### Prerequisite
 
 + Install R. For Debian/Ubuntu: `wajig install r-recommended`
-+ Install prerequisite R packages from the operating system or else
-  using the above R command if you don't have admin access.
++ Install prerequisite R packages from the operating system using the `apt`command below. If you don't have admin access the above R `package-install` command will install the packages into your account. 
 
 ```bash
 sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
