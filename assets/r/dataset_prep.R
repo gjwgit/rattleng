@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-06-15 15:06:46 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-23 19:29:27 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -56,6 +56,27 @@ if (CLEANSE_DATASET) {
 
   ds %<>% remove_constant()
 }
+
+# Check for unique valued columns.
+
+# First  check if values in a column are unique.
+
+check_unique <- function(x) {
+  !any(duplicated(x))
+}
+
+# Then find columns with unique values.
+
+unique_columns <- function(df) {
+  col_names <- names(df)
+  unique_cols <- col_names[sapply(df, check_unique)]
+  return(unique_cols)
+}
+
+# Usage
+
+unique_columns(ds)
+
 
 # Index the original variable names by the new names.
 
