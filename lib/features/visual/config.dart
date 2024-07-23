@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-23 10:03:40 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 11:10:42 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -58,13 +58,16 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     List<String> inputs = getInputs(ref);
 
     // Retrieve the current selected variable and use that as the initial value
-    // for the dropdown menu. If there is no current value then we choose the
-    // first input variable.
+    // for the dropdown menu. If there is no current value and we do have inputs
+    // then we choose the first input variable.
 
     String selected = ref.read(selectedProvider.notifier).state;
-    if (selected == 'NULL') {
+    if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
-      // This causes an exception.... Really want to initialise.
+      // TODO 20240723 gjw HOW TO INITIALISE THE selected PROVIDER?.
+      //
+      // The following raises an exception.
+      //
       // ref.read(selectedProvider.notifier).state = selected;
     }
 
