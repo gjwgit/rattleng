@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-07-22 08:35:18 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-23 12:47:01 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,12 +30,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
-import 'package:rattle/utils/get_risk.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -50,13 +50,14 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
+
     List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
 
     // List<String> lines = [];
 
-    String risk = getRisk(ref);
+    String selected = ref.watch(selectedProvider.notifier).state;
     String numc = rExtract(stdout, '+ numc');
-    bool numeric = numc.contains('"$risk"');
+    bool numeric = numc.contains('"$selected"');
 
     if (numeric) {
       pages.add(
