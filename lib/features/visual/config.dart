@@ -34,7 +34,6 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/utils/get_inputs.dart';
-import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 
@@ -131,19 +130,22 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               child: const Text('Visualise'),
             ),
             const SizedBox(width: 20.0),
-            DropdownMenu(
-              label: const Text('Input'),
-              initialSelection: selected,
-              dropdownMenuEntries: inputs.map((s) {
-                return DropdownMenuEntry(value: s, label: s);
-              }).toList(),
-              // On selection as well as recording what was selected rebuild the
-              // visualisations.
-              onSelected: (String? value) {
-                ref.read(selectedProvider.notifier).state =
-                    value ?? 'IMPOSSIBLE';
-                build();
-              },
+
+            Expanded(
+              child: DropdownMenu(
+                label: const Text('Input'),
+                initialSelection: selected,
+                dropdownMenuEntries: inputs.map((s) {
+                  return DropdownMenuEntry(value: s, label: s);
+                }).toList(),
+                // On selection as well as recording what was selected rebuild the
+                // visualisations.
+                onSelected: (String? value) {
+                  ref.read(selectedProvider.notifier).state =
+                      value ?? 'IMPOSSIBLE';
+                  build();
+                },
+              ),
             ),
           ],
         ),
