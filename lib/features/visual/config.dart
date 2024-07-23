@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-23 16:47:41 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-24 08:17:18 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,28 +64,16 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // then we choose the first input variable.
 
     String selected = ref.watch(selectedProvider);
-    if (selected == 'NULL') {
-      if (inputs.isNotEmpty) {
-        selected = inputs.first;
-
-        // TODO 20240723 gjw HOW TO INITIALISE THE selected PROVIDER?.
-        //
-        // The following raises an exception.
-        //
-        // ref.read(selectedProvider.notifier).state = selected;
-      } else {
-        // By setting inputs to having a single empty element the DropdownMenu
-        // no longer character wraps Input! Also set the selected to empty
-        // string as an indication of no dataset loaded.
-
-        selected = '';
-        inputs = [''];
-      }
+    if (selected == 'NULL' && inputs.isNotEmpty) {
+      selected = inputs.first;
     }
 
+    List<String> cats = getCategoric(ref);
+
     String groupBy = ref.watch(groupByProvider);
-    // By default, choose the target variable
-    // assume target exists
+
+    // By default, choose the target variable assume target exists.
+
     if (groupBy == 'NULL') {
       groupBy = getTarget(ref);
     }
@@ -187,6 +175,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             DropdownMenu(
               label: const Text('Input'),
+              width: 200,
               initialSelection: selected,
               dropdownMenuEntries: inputs.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
@@ -199,11 +188,14 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 build();
               },
             ),
+
             const SizedBox(width: 20.0),
+
             DropdownMenu(
               label: const Text('Group by'),
+              width: 200.0,
               initialSelection: groupBy,
-              dropdownMenuEntries: getCategoric(ref).map((s) {
+              dropdownMenuEntries: cats.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
               // On selection as well as recording what was selected rebuild the
@@ -214,7 +206,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 build();
               },
             ),
+
             const SizedBox(width: 20.0),
+
             Text(title),
           ],
         ),
