@@ -27,8 +27,6 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,7 +46,6 @@ import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/roles.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/terminal.dart';
