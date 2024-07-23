@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Wednesday 2024-07-24 08:36:10 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-07-24 09:10:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -201,7 +201,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
       ids = '$ids${ids.isNotEmpty ? ", " : ""}"$key"';
     }
   });
-  print(ids);
+
   code = code.replaceAll('ID_VARS', ids);
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
