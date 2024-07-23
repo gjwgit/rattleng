@@ -170,6 +170,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 //   in a `Future(() {...})`.
                 //   This will perform your update after the widget tree is done building
                 ref.read(selectedProvider.notifier).state = selected;
+                ref.read(groupByProvider.notifier).state = groupBy;
                 build();
               },
               child: const Text('Visualise'),
