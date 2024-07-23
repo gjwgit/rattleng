@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
@@ -77,6 +78,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String minFreq = ref.read(minFreqProvider);
   String language = ref.read(languageProvider);
   String selected = ref.read(selectedProvider);
+  String groupBy = ref.read(groupByProvider);
 
   // First obtain the text from the script.
 
@@ -184,6 +186,8 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   });
 
   code = code.replaceAll('SELECTED_VAR', selected);
+
+  code = code.replaceAll('GROUP_BY_VAR', groupBy);
 
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );

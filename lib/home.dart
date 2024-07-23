@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2024-07-22 19:39:58 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-23 14:45:40 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -32,8 +32,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/wordcloud.dart';
@@ -51,6 +53,7 @@ import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
+import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 // Define the [NavigationRail] tabs for the home page.
@@ -210,8 +213,24 @@ class RattleHomeState extends ConsumerState<RattleHome>
     super.dispose();
   }
 
+  String about = '''${wordWrap('''
+
+  RattleNG is a modern rewrite of the very popular Rattle Data Mining and Data
+  Science tool. Visit the [Rattle Home Page](https://rattle.togaware.com) for
+  details.
+
+  ''')}
+
+Author: Graham Williams
+
+Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
+
+  ''';
+
   @override
   Widget build(BuildContext context) {
+    print(about);
+
     return Scaffold(
       appBar: AppBar(
         // The title aligned to the left.
@@ -287,12 +306,17 @@ class RattleHomeState extends ConsumerState<RattleHome>
                 applicationName:
                     '${_appName[0].toUpperCase()}${_appName.substring(1)}',
                 applicationVersion: 'Version $_appVersion',
-                applicationLegalese: '© 2006-2024 Togaware Pty Ltd',
+                applicationLegalese: '© 2006-2024 Togaware Pty Ltd\n',
                 children: [
-                  const SelectableText('\nRattleNG is a modern rewrite of the '
-                      'very popular Rattle Data Mining and Data Science tool.\n\n'
-                      'Author: Graham Williams\n\n'
-                      'Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.'),
+                  MarkdownBody(
+                    data: about,
+                    selectable: true,
+                    softLineBreak: true,
+                    onTapLink: (text, href, about) {
+                      final Uri url = Uri.parse(href ?? '');
+                      launchUrl(url);
+                    },
+                  ),
                 ],
               );
             },
