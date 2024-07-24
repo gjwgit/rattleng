@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-07-23 20:34:45 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-07-24 11:07:15 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -41,9 +41,7 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/console.dart';
-import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/panel.dart';
@@ -185,18 +183,12 @@ class RattleHomeState extends ConsumerState<RattleHome>
           // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
 
           if (path.isNotEmpty) {
-            // On leaving the DATASET tab we set the variables and run the data
-            // template if there is a dataset loaded, as indicated by the path
-            // having a value.
+            // On leaving the DATASET tab we run the data template if there is a
+            // dataset loaded, as indicated by the path having a value.
+            //
+            // Note that variable roles are set up in
+            // `features/dataset/display.dart`.
 
-            // TODO 20240721 gjw THIS NO LONGER MAKES SENSE SINCE WE HAVE PAGES
-
-            List<String> vars = rExtractVars(ref.read(stdoutProvider));
-
-            debugPrint('LEAVING DATASET TAB AND SET VARS AND TARGET HERE????');
-            // TODO 20240721 gjw PERHAPS THESE ARE NO LONGER NEEDED - USE ROLES.
-            //ref.read(varsProvider.notifier).state = vars;
-            //ref.read(targetProvider.notifier).state = vars.last;
             rSource(context, ref, 'dataset_template');
           }
         }

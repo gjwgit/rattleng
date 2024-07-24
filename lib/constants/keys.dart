@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2023-10-10 05:24:09 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-24 11:23:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,8 +25,6 @@ library;
 
 import 'package:flutter/material.dart' show Key;
 
-const datasetGlimpseKey = Key('dataset_glimpse_text');
 const datasetPathKey = Key('dataset_path_text');
 const scriptTextKey = Key('script_text');
 const statusBarKey = Key('status_bar');
-// const welcomeTextKey = Key('rattle_welcome');
