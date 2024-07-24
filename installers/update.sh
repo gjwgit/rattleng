@@ -38,5 +38,6 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     rsync -avzh rattleng-dev-windows.zip rattleng-${version}-windows.zip togaware.com:apps/access/
     
 else
+    echo "Latest github actions has not completed. Exiting."
     exit 1
 fi
