@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Initial experiment with WRANGLE gui WIP [6.2.10 20240725 gjw]
 + Automate build and installation updates [6.2.9 20240724 gjw]
 + Add group by selector for VISUALISE [6.2.8 20240723 yyx]
 + Add variable selection to VISUALISE [6.2.7 20240723 yyx]
