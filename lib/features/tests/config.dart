@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
@@ -52,18 +53,16 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
     // for the dropdown menu. If there is no current value then we choose the
     // first input variable.
     List<String> inputs = getInputs(ref);
-    String selected = ref.read(selectedProvider.notifier).state;
-    if (selected == 'NULL') {
+    String selected = ref.watch(selectedProvider);
+    if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
-      // This causes an exception.... Really want to initialise.
-      // ref.read(selectedProvider.notifier).state = selected;
     }
-        String selected2 = ref.read(selected2Provider.notifier).state;
-    if (selected2 == 'NULL') {
+
+    String selected2 = ref.watch(selected2Provider);
+    if (selected2 == 'NULL' && inputs.isNotEmpty) {
       selected2 = inputs.first;
-      // This causes an exception.... Really want to initialise.
-      // ref.read(selectedProvider.notifier).state = selected;
     }
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -80,7 +79,10 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
 
             ActivityButton(
               onPressed: () {
-                showUnderConstruction(context);
+                ref.read(selectedProvider.notifier).state = selected;
+                ref.read(selected2Provider.notifier).state = selected2;
+                rSource(context, ref, 'test');
+                // showUnderConstruction(context);
               },
               child: const Text('Display'),
             ),
@@ -101,7 +103,9 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                 // build();
               },
             ),
-            const SizedBox(width: 10,),
+            const SizedBox(
+              width: 10,
+            ),
             DropdownMenu(
               label: const Text('Second'),
               initialSelection: selected2,
@@ -115,7 +119,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                     value ?? 'IMPOSSIBLE';
                 // build();
               },
-            ),            
+            ),
           ],
         ),
       ],
