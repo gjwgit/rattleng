@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Tuesday 2024-07-23 19:48:21 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-24 11:05:15 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -60,6 +60,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   );
   int typeFlex = 4;
   int contentFlex = 3;
+
+  // List choices for variable ROLES.
+
   List<String> choices = [
     'Input',
     'Target',
@@ -78,30 +81,37 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (path == 'rattle::weather' || path.endsWith('.csv')) {
       Map<String, String> currentRoles = ref.read(rolesProvider);
-      // extract variable information
+
+      // Extract variable information from the R console.
+
       List<VariableInfo> vars = extractVariables(stdout);
 
-      // initialise, default to input and assign types
+      // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
+      // IDENTS. Also record variable types.
 
       if (currentRoles.isEmpty && vars.isNotEmpty) {
-        // Default is Input.
+        // Default is INPUT unless the variable name begins with `risk_`.
 
         for (var column in vars) {
           ref.read(rolesProvider.notifier).state[column.name] = 'Input';
           ref.read(typesProvider.notifier).state[column.name] =
               isNumeric(column.type) ? Type.numeric : Type.categoric;
- 
-         if (column.name.toLowerCase().startsWith('risk_')) {
+
+          if (column.name.toLowerCase().startsWith('risk_')) {
             ref.read(rolesProvider.notifier).state[column.name] = 'Risk';
           }
         }
 
-        // Treat the last variable as a Target by default. We will eventually
-        // implement Rattle heuristics to identify the Target.
+        // Treat the last variable as a TARGET by default. We will eventually
+        // implement Rattle heuristics to identify the TARGET if the final
+        // variable has more than 5 levels. If so we'll check if the first
+        // variable looks like a TARGET (another common practise) and if not
+        // then no TARGET will be identified by default.
 
         ref.read(rolesProvider.notifier).state[vars.last.name] = 'Target';
 
-        // Identify any variables that are named risk_ and flag them as Risk.
+        // Any variables that have a unique value for every row in the dataset
+        // is considered to be an IDENTifier.
 
         for (var id in getUniqueColumns(ref)) {
           ref.read(rolesProvider.notifier).state[id] = 'Ident';

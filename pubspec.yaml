@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.2.7+69
+version: 6.2.9+70
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -58,8 +58,8 @@ dev_dependencies:
 
   dart_code_metrics:
     git:
-      url: https://github.com/Zheyuan-Robert-Xu/dart-code-metrics.git
-      ref: master
+      url: https://github.com/anusii/dart-code-metrics.git
+      ref: dev
 
   # The `flutter_lints` package contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the
