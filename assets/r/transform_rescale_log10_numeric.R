@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 14:27:46 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-25 09:40:48 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -31,3 +31,5 @@ ds %<>%
   mutate(R10_SELECTED_VAR = log10(SELECTED_VAR),
          R10_SELECTED_VAR = ifelse(is.infinite(R10_SELECTED_VAR),
                                    NA, R10_SELECTED_VAR))
+
+glimpse(ds)
