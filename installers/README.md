@@ -32,13 +32,15 @@ available from Togaware as described below.
 ### Prerequisite
 
 + Install R. For Debian/Ubuntu: `wajig install r-recommended`
-+ Install prerequisite R packages from the operating system using the `apt`command below. If you don't have admin access the above R `package-install` command will install the packages into your account. 
++ Install prerequisite R packages from the operating system using the `apt`command below. If you don't have admin access the above R `install.packages` command will install the packages into your account. 
 
 ```bash
 sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
 	 r-cran-tidyverse r-cran-vim r-cran-hmisc r-cran-mice \
 	 r-cran-reshape
 ```
+
+You are then rest to install the Rattle software using one of the methods below.
 
 ### Tar Install
 
@@ -66,7 +68,7 @@ rattleng/rattle
 
 **Local User Install**
 
-To install for the local user the package can be placed into `~/.local/share`:
+To install for use just by you the package can be placed into `~/.local/share`:
 
 ```bash
 wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
@@ -75,7 +77,7 @@ tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
 
 These two steps can also be repeated to **update** your installation.
 
-Set up a link to the binary to be able to run the `rattle` command
+Now set up a link to the binary to be able to run the `rattle` command
 from a terminal:
 
 ```bash
