@@ -32,7 +32,10 @@ available from Togaware as described below.
 ### Prerequisite
 
 + Install R. For Debian/Ubuntu: `wajig install r-recommended`
-+ Install prerequisite R packages from the operating system using the `apt`command below. If you don't have admin access the above R `install.packages` command will install the packages into your account. 
++ Install prerequisite R packages from the operating system using the
+  `apt`command below. If you don't have admin access the above R
+  `install.packages` command will install the packages into your
+  account.
 
 ```bash
 sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
@@ -42,13 +45,13 @@ sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
 
 You are then rest to install the Rattle software using one of the methods below.
 
-### Tar Install
+### Zip Install
 
 Download
-[rattleng.tar.gz](https://access.togaware.com/rattleng.tar.gz):
+[rattleng-dev-linux.zip](https://access.togaware.com/rattleng-dev-linux.zip):
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
+wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev.zip
 ```
 
 **Quick Start**
@@ -56,8 +59,8 @@ wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
 To try it out:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
-tar zxvf rattleng.tar.gz
+wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
+unzip rattleng-dev-linux.zip -d rattleng
 ```
 
 Then simply run the executable:
@@ -71,8 +74,8 @@ rattleng/rattle
 To install for use just by you the package can be placed into `~/.local/share`:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
-tar zxvf rattleng.tar.gz -C ${HOME}/.local/share/
+wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
+unzip rattleng-dev-linux.zip -d ${HOME}/.local/share/rattleng
 ```
 
 These two steps can also be repeated to **update** your installation.
@@ -97,12 +100,12 @@ wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O ${HOME}
 **System Install**
 
 To install for any user on the computer begin by downloading the
-**.tar.gz** and installing that into `/opt/` or wherever your system
+**.zip** and installing that into `/opt/` or wherever your system
 suggests optional installations live:
 
 ```bash
-wget https://access.togaware.com/rattleng.tar.gz -O rattleng.tar.gz
-sudo tar zxvf rattleng.tar.gz -C /opt/
+wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
+sudo unzip rattleng-dev-linux.zip -d /opt/rattleng
 ```
 
 Those two steps can also be repeated to **update** your installation.
