@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Tuesday 2024-07-23 08:56:04 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-07-24 11:15:17 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -40,6 +40,7 @@ import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/types.dart';
 import 'package:rattle/providers/vars.dart';
 import 'package:rattle/providers/roles.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -59,30 +60,26 @@ class RattleStateText extends ConsumerWidget {
     String stderr = ref.watch(stderrProvider);
     String stdout = ref.watch(stdoutProvider);
     String model = ref.watch(modelProvider);
-    String target = 'NULL'; // ref.watch(targetProvider);
     String selected = ref.watch(selectedProvider);
     List<String> vars = ref.watch(varsProvider);
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
     bool partition = ref.watch(partitionProvider);
 
-    // The rolesProvider listes the roles for the different variables which we
-    // need to know for parsing the R scripts.
+    // The rolesProvider lists the roles for the different variables which we
+    // need to know for parsing the R scripts. The typesProvider is a record of
+    // the data types of each variable.
 
     Map<String, String> roles = ref.watch(rolesProvider);
+    Map<String, Type> types = ref.watch(typesProvider);
 
-    // We will print out the roles.
+    // We will print out the roles and types so format them.
 
     String role = roles.toString();
     role = role.replaceAll(',', '\n${" " * 13}');
 
-    // Extract the target variable from the rolesProvider.
-
-    roles.forEach((key, value) {
-      if (value == 'Target') {
-        target = key;
-      }
-    });
+    String type = types.toString();
+    type = type.replaceAll(',', '\n${" " * 13}');
 
     return SingleChildScrollView(
       child: Builder(
@@ -97,6 +94,7 @@ class RattleStateText extends ConsumerWidget {
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
             'ROLES:       $role\n'
+            'TYPES:       $type\n'
             'VARS:        ${truncate(vars.toString())}\n'
             'TARGET:      ${getTarget(ref)}\n'
             'RISK:        \$risk \n'
