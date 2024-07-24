@@ -1,6 +1,6 @@
 /// Record types for each variables
 //
-// Time-stamp: <Sunday 2024-07-21 07:33:03 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-24 11:10:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,5 +29,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum Type { numeric, categoric }
 
-// map from variable to type
+// Map from variable name to type.
+
 final typesProvider = StateProvider<Map<String, Type>>((ref) => {});

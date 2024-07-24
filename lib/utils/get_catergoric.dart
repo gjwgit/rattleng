@@ -13,6 +13,6 @@ List<String> getCategoric(WidgetRef ref) {
       rtn.add(key);
     }
   });
-  
+
   return rtn;
 }
