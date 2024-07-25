@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Remove WEIGHTS (not used).
 + Attempt to give MacOS permission to run R [6.2.13 20240725 gjw]
 + Updating formats, links, etc, particularly for MISSING [6.2.12 20240725 gjw]
 + Testing github actions [6.2.11 20240725 gjw]
