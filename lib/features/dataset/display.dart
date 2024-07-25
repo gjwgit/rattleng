@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Thursday 2024-07-25 13:42:02 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-26 09:13:22 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -69,7 +69,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     'Risk',
     'Ident',
     'Ignore',
-    'Weight',
+    // 'Weight',
   ];
 
   @override
