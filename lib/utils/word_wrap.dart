@@ -1,6 +1,6 @@
 /// Word wrap a string.
 //
-// Time-stamp: <Tuesday 2024-07-23 14:43:48 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 14:29:47 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,17 +25,63 @@
 
 library;
 
-String wordWrap(String text, [int width = 60]) {
-  // Remove newlines and repeated spaces.
+String wordWrap(
+  String text, {
+  int width = 60,
+}) {
+  // Split into lines.
 
-  text = text.replaceAll(RegExp(r'\n'), ' ').replaceAll(RegExp(r' +'), ' ');
+  List<String> lines = text.split('\n');
+
+  // Trim white space.
+
+  lines = lines.map((str) => str.trim()).toList();
+
+  // Split into paragraphs since each paragraph is going to be word wrapped.
+
+  List<String> para = [];
+  String currentPara = '';
+
+  for (String line in lines) {
+    if (line.isEmpty) {
+      if (currentPara.isNotEmpty) {
+        para.add(currentPara.trim());
+        currentPara = '';
+      }
+    } else {
+      if (currentPara.isNotEmpty) {
+        currentPara += ' ';
+      }
+      currentPara += line.trim();
+    }
+  }
+
+  // Add the last paragraph if there's any left after the loop
+
+  if (currentPara.isNotEmpty) {
+    para.add(currentPara.trim());
+  }
 
   final RegExp pattern = RegExp('.{1,${width.toString()}}(\\s+|\$)');
 
-  text =
-      text.replaceAllMapped(pattern, (match) => '${match.group(0)!}\n').trim();
+  //  para = para.map((str) => actualWordWrap(str, width)).toList();
 
-  text = text.replaceAll(RegExp(r'^ +'), '');
+  para = para
+      .map(
+        (str) =>
+            str.replaceAllMapped(pattern, (match) => '${match.group(0)!}\n'),
+      )
+      .toList();
+
+  // Combine the paragraphs into one string with empty lines between them
+
+  text = para.join('\n\n');
+
+  // text = result
+  //     .replaceAllMapped(pattern, (match) => '${match.group(0)!}\n')
+  //     .trim();
+
+  // text = text.replaceAll(RegExp(r'^ +'), '');
 
   return text;
 }
