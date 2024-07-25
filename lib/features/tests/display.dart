@@ -33,6 +33,8 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_empty.dart';
+import 'package:rattle/r/extract_tests.dart';
+import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
 /// The panel displays the instructions or the output.
@@ -48,7 +50,7 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractEmpty(stdout);
+    String content = rExtractTests(stdout);
 
     return content == ''
         ? showMarkdownFile(testsIntroFile, context)
