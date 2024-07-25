@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Sunday 2024-07-21 21:05:28 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 12:14:15 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,6 +34,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
+import 'package:rattle/utils/word_wrap.dart';
 
 class TextPage extends StatelessWidget {
   final String title;
@@ -56,7 +57,7 @@ class TextPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MarkdownBody(
-              data: title,
+              data: wordWrap(title),
               selectable: true,
               onTapLink: (text, href, title) {
                 final Uri url = Uri.parse(href ?? '');
