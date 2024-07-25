@@ -51,7 +51,7 @@ Download
 [rattleng-dev-linux.zip](https://access.togaware.com/rattleng-dev-linux.zip):
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev.zip
+wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 ```
 
 **Quick Start**
