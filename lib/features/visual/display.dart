@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-23 12:47:01 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 11:06:03 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -62,7 +62,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     if (numeric) {
       pages.add(
         ImagePage(
-          title: 'Box Plot\n\n'
+          title: '# Box Plot\n\n'
               'Generated using [ggplot2::geom_boxplot()]'
               '(https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot).',
           path: '$tempDir/explore_visual_boxplot.svg',
@@ -71,7 +71,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       pages.add(
         ImagePage(
-          title: 'Histogram Plot\n\n'
+          title: '# Histogram Plot\n\n'
               'Generated using [ggplot2::geom_density()]'
               '(https://www.rdocumentation.org/packages/ggplot2/topics/geom_density).',
           path: '$tempDir/explore_visual_histogram.svg',
@@ -80,7 +80,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       pages.add(
         ImagePage(
-          title: 'Cummulative Plot\n\n'
+          title: '# Cummulative Plot\n\n'
               'Generated using [Hmisc::Ecdf()]'
               '(https://www.rdocumentation.org/packages/Hmisc/topics/Ecdf).',
           path: '$tempDir/explore_visual_cummulative.svg',
@@ -89,7 +89,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       pages.add(
         ImagePage(
-          title: 'Benford Plot\n\n'
+          title: '# Benford Plot\n\n'
               'Generated using [rattle::plotDigitFreq()]'
               '(https://www.rdocumentation.org/packages/rattle).',
           path: '$tempDir/explore_visual_benford.svg',
@@ -111,7 +111,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     if (!numeric) {
       pages.add(
         ImagePage(
-          title: 'Bar Chart\n\n'
+          title: '# Bar Chart\n\n'
               'Generated using [gplots::barplot2()]'
               '(https://www.rdocumentation.org/packages/gplots/topics/barplot2).',
           path: '$tempDir/explore_visual_bars.svg',
@@ -120,7 +120,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       pages.add(
         ImagePage(
-          title: 'Dot Plot\n\n'
+          title: '# Dot Plot\n\n'
               'Generated using [graphics::dotchart()]'
               '(https://www.rdocumentation.org/packages/graphics/topics/dotchart).',
           path: '$tempDir/explore_visual_dots.svg',
@@ -129,7 +129,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       pages.add(
         ImagePage(
-          title: 'Pairs Plot\n\n'
+          title: '# Pairs Plot\n\n'
               'Generated using [graphics::mosaicplot()]'
               '(https://www.rdocumentation.org/packages/graphics/topics/mosaicplot).',
           path: '$tempDir/explore_visual_mosaic.svg',

@@ -1,6 +1,6 @@
 /// Widget to display the Rattle introduction or data view.
 //
-// Time-stamp: <Wednesday 2024-07-24 11:05:15 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 13:42:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -266,10 +266,24 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (path == 'rattle::weather' || path.endsWith('.csv')) {
       content = rExtractGlimpse(stdout);
-      title = '# Dataset Glimpse\n\nGenerated using `glimpse(ds)`';
+      title = '''
+
+      # Dataset Glimpse
+
+      Generated using
+      [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
+
+      ''';
     } else {
       content = rExtract(stdout, '> cat(ds,');
-      title = '# Text Content\n\nGenerated using `cat(ds)`';
+      title = '''
+
+      # Text Content
+
+      Generated using
+      [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
+
+      ''';
     }
 
     if (content.isNotEmpty) {

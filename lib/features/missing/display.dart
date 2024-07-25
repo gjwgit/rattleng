@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-14 20:21:19 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 14:34:39 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -77,17 +77,33 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Patterns of Missing Data - Textual\n\n'
-              'Generated using `mice::md.pattern(ds)`',
+          title: '''
+
+          # Patterns of Missing Data - Textual
+
+          Generated using
+          [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
+
+          ''',
           content: content,
         ),
       );
     }
 
-    ////////////////////////////////////////////////////////////////////////
+    pages.add(
+      ImagePage(
+        title: '''
 
-    ////////////////////////////////////////////////////////////////////////
-    // USING VIM
+        # Patterns of Missing Values - Visual
+
+        Generated using
+        [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
+
+        ''',
+        path: '$tempDir/explore_missing_mice.svg',
+      ),
+    );
+
     ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'aggr(ds');
@@ -98,13 +114,25 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     lines = lines.where((line) => !line.startsWith('+')).toList();
 
+    // Rejoin the lines.
+
     content = lines.join('\n');
+
+    // Rename Count to Proportion!
+
+    content = content.replaceAll('     Count', 'Proportion');
 
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Variables with Missing Data - Sorted\n\n'
-              'Generated using `VIM::aggr(ds)`',
+          title: '''
+
+          # Aggregation of Missing Values - Textual
+
+          Generated using
+          [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
+
+          ''',
           content: content,
         ),
       );
@@ -114,16 +142,14 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     pages.add(
       ImagePage(
-        title: 'Missing Value Visualisation\n\n'
-            'Generated using `mice::md(ds)`',
-        path: '$tempDir/explore_missing_mice.svg',
-      ),
-    );
+        title: '''
 
-    pages.add(
-      ImagePage(
-        title: 'Missing Value Visualisation\n\n'
-            'Generated using `VIM::aggr(ds)`',
+        # Aggregation of Missing Values - Visual
+
+        Generated using
+        [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
+
+        ''',
         path: '$tempDir/explore_missing_vim.svg',
       ),
     );
