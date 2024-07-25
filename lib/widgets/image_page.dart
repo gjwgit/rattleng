@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Saturday 2024-07-20 15:12:07 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 13:34:54 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -38,6 +38,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/select_file.dart';
+import 'package:rattle/utils/word_wrap.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -86,8 +87,13 @@ class ImagePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      MarkdownBody(
-                        data: title,
+                      // Introduce the Flexible wrapper to avoid the markdow
+                      // text overflowing to the elevarted Export
+                      // button. 20240725 gjw
+                      Flexible(
+                        child: MarkdownBody(
+                          data: wordWrap(title),
+                        ),
                       ),
                       const Spacer(),
                       ElevatedButton(
