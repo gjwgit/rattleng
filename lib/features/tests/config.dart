@@ -32,7 +32,6 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The TESTS tab config currently consists of just a BUILD button.
