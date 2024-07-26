@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2024-07-24 11:07:15 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-07-26 16:55:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -255,7 +255,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
           IconButton(
             icon: const Icon(
               Icons.autorenew,
-              color: Colors.grey,
+              color: Colors.blue,
             ),
             onPressed: () {
               // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
@@ -269,18 +269,23 @@ Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
                 'so start a new project with a new dataset.',
           ),
 
+          // 20240726 gjw Remove the global SAVE button for now in favour of the
+          // local widget save buttons. It is probably a better concept to have
+          // the save buttons associated with the individual widgets than trying
+          // to find the current widget and calling a save() if it has one.
+
           // SAVE - Context specific.
 
-          IconButton(
-            icon: const Icon(
-              Icons.save,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              debugPrint('SAVE PRESSED NO ACTION YET');
-            },
-            tooltip: 'TODO: Save the current view to file.',
-          ),
+          // IconButton(
+          //   icon: const Icon(
+          //     Icons.save,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {
+          //     debugPrint('SAVE PRESSED NO ACTION YET');
+          //   },
+          //   tooltip: 'TODO: Save the current view to file.',
+          // ),
 
           // INFO - ABOUT
 

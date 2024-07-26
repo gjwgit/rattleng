@@ -1,6 +1,6 @@
 /// Promote the user to pick a location to save the file
 //
-// Time-stamp: <Friday 2024-07-12 05:32:21 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-26 17:07:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,10 +34,12 @@ Future<String?> selectFile() async {
   // main UI thread.
 
   String? result = await FilePicker.platform.saveFile(
-    dialogTitle: 'pick a location to save the file',
-    // TODO 20240604 gjw THE DEFAULT FILE NAME DOES NOT APPEAR IN THE DIALOG ON
-    // LINUX. COULD BE A PACKAGE BUG? SHOULD REPORT IF SO.
+    dialogTitle: 'Save SVG image to a .svg file',
+    // TODO 20240604 gjw THE DEFAULT FILE NAME, TILE, ETC DOES NOT APPEAR IN THE
+    // DIALOG ON LINUX. COULD BE A PACKAGE BUG? SHOULD REPORT IF SO.
     fileName: 'image.svg',
+    type: FileType.custom,
+    allowedExtensions: ['svg'],
   );
 
   return result;
