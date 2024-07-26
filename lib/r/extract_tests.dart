@@ -1,4 +1,3 @@
-
 /// Utility to extract the latest tests from R log.
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
@@ -25,7 +24,6 @@
 library;
 
 import 'package:rattle/r/extract.dart';
-
 
 String rExtractTests(String log) {
   final String cTest = rExtract(log, '> correlationTest');
