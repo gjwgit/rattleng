@@ -24,6 +24,8 @@
 
 library;
 
+import 'package:flutter/material.dart';
+
 // TODO 20230916 gjw ADD EXTRA PARAMETER AS THE PATTERN TO EXTRACT SINCE ALL
 // THREE SO FAR ARE BASICALLY THE SAME
 
@@ -46,7 +48,6 @@ String rExtract(String txt, String pat) {
 
   // Starting from the end of the supplied [txt], often being the [stdout] from
   // the R console, find the most recent instance of [pat]
-
   for (int i = lines.length - 1; i >= 0; i--) {
     if (lines[i].contains(pat)) {
       startIndex = i;
@@ -59,9 +60,9 @@ String rExtract(String txt, String pat) {
       if (lines[i].startsWith('>')) {
         // Found the next line starting with '>'. Stop adding lines to the
         // result.
-
         break;
       }
+
       result.add(lines[i]);
     }
   }

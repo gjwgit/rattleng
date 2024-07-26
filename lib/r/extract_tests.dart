@@ -33,6 +33,6 @@ String rExtractTests(String log) {
   final String wTest = rExtract(log, '> wilcox.test');
   final String lTest = rExtract(log, '> locationTest');
   final String vTest = rExtract(log, '> varianceTest');
-  
+
   return '$cTest\n\n$ks2Test\n\n$wTest\n\n$lTest\n\n$vTest';
 }

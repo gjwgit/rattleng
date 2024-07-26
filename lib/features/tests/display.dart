@@ -54,18 +54,16 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
 
     return content == ''
         ? showMarkdownFile(testsIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
-              ),
+        : Container(
+          decoration: sunkenBoxDecoration,
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 10),
+          child: SingleChildScrollView(
+            child: SelectableText(
+              content,
+              style: monoTextStyle,
             ),
-          );
+          ),
+        );
   }
 }
