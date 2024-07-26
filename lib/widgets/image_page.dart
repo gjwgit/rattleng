@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Thursday 2024-07-25 13:34:54 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-07-26 17:04:58 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -86,17 +86,32 @@ class ImagePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    // 20240726 gjw Ensure the Save button is aligned at the
+                    // top.
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Introduce the Flexible wrapper to avoid the markdow
+                      // 20240726 gjw Remove the Flexible for now. Perhaps avoid
+                      // long text in the Image Page for now. Save button was
+                      // not getting pushed all the way to the right after
+                      // adding Flexible.
+                      //
+                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdow
                       // text overflowing to the elevarted Export
-                      // button. 20240725 gjw
-                      Flexible(
-                        child: MarkdownBody(
-                          data: wordWrap(title),
-                        ),
+                      // button.
+
+//                      Flexible(
+//                        child:
+                      MarkdownBody(
+                        data: wordWrap(title),
                       ),
+//                      ),
                       const Spacer(),
-                      ElevatedButton(
+//                      ElevatedButton(
+                      IconButton(
+                        icon: const Icon(
+                          Icons.save,
+                          color: Colors.blue,
+                        ),
                         onPressed: () async {
                           String? pathToSave = await selectFile();
                           if (pathToSave != null) {
@@ -104,9 +119,9 @@ class ImagePage extends StatelessWidget {
                             await File(path).copy(pathToSave);
                           }
                         },
-                        child: const Text(
-                          'Export',
-                        ),
+                        // child: const Text(
+                        //   'Export',
+                        // ),
                       ),
                       const SizedBox(width: 5),
                     ],
