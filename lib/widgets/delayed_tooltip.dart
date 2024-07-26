@@ -1,6 +1,6 @@
 /// A delayed tooltip to avoid clutter of tooltips.
 //
-// Time-stamp: <Monday 2024-07-22 16:50:01 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 11:21:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -67,7 +67,7 @@ class DelayedTooltip extends StatelessWidget {
             // message using triple quotes and formated with space before and
             // after, which looks a lot nicer in the code. Set the width high to
             // avoid embedded '\n'.
-            wordWrap(message, 1000),
+            wordWrap(message, width: 1000),
             style: const TextStyle(
               fontSize: 18,
             ),

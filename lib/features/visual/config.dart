@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-07-24 08:17:18 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 08:28:15 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -80,10 +80,10 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
     String numc = rExtract(stdout, '+ numc');
 
-    // BUILD button action.
+    // BUILD Action.
 
-    void build() {
-      // Business Rules for Building a Tree
+    void buildAction() {
+      // Business Logic for Building a Tree
 
       // Require a target variable which is used to categorise the
       // plots.
@@ -166,7 +166,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 //   This will perform your update after the widget tree is done building
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(groupByProvider.notifier).state = groupBy;
-                build();
+                buildAction();
               },
               child: const Text('Visualise'),
             ),
@@ -185,7 +185,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               onSelected: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                build();
+                buildAction();
               },
             ),
 
@@ -203,7 +203,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               onSelected: (String? value) {
                 ref.read(groupByProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                build();
+                buildAction();
               },
             ),
 

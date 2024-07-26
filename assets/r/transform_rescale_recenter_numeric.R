@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 07:31:26 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-25 09:40:34 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,6 +32,8 @@ ds$SELECTED_VAR %>%
   scale() %>%
   '['(,1) ->
 ds$RRC_SELECTED_VAR
+
+glimpse(ds)
 
 # Testing
 #

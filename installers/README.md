@@ -18,7 +18,7 @@ prompt `> `:
 
 ```bash
 R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
-                         "mice", "VIM", "naniar", "reshape", "corrplor",
+                         "mice", "VIM", "naniar", "reshape", "corrplot",
                          "Hmisc", "fBasics", "descr", "randomForest",
                          "verification", "magrittr", "janitor", "rpart",
                          "readr", "tm", "wordcloud", "magick"))'
@@ -43,7 +43,7 @@ sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
 	 r-cran-reshape
 ```
 
-You are then rest to install the Rattle software using one of the methods below.
+You are then ready to install the Rattle software using one of the methods below.
 
 ### Zip Install
 
@@ -51,7 +51,7 @@ Download
 [rattleng-dev-linux.zip](https://access.togaware.com/rattleng-dev-linux.zip):
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev.zip
+wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 ```
 
 **Quick Start**
@@ -138,10 +138,10 @@ for this development version we are side-loading the package.
 ### Zip Install
 
 ```bash
-wget https://access.togaware.com/rattleng-macos.zip
+wget https://access.togaware.com/rattleng-dev-macos.zip
+unzip rattlemg-dev-macos.zip -d rattleng
+open rattleng/rattle.app
 ```
-
-Unzip and run rattle.
 
 ### Dmg Install - UNDER DEVELOPMENT
 
@@ -170,7 +170,7 @@ warning next time.
 ### Zip Install
 
 ```bash
-wget https://access.togaware.com/rattleng-windows.zip
+wget https://access.togaware.com/rattleng-dev-windows.zip
 ```
 
 Unzip and run `rattle.exe`. You can add the unzipped path to the
