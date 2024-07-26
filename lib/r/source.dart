@@ -40,6 +40,7 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/roles.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -79,6 +80,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String language = ref.read(languageProvider);
   String selected = ref.read(selectedProvider);
   String groupBy = ref.read(groupByProvider);
+  String selected2 = ref.read(selected2Provider);
 
   // First obtain the text from the script.
 
@@ -186,6 +188,8 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   });
 
   code = code.replaceAll('SELECTED_VAR', selected);
+
+  code = code.replaceAll('SELECTED_2_VAR', selected2);
 
   code = code.replaceAll('GROUP_BY_VAR', groupBy);
 
