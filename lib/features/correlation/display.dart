@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-14 20:26:02 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-07-25 15:58:15 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -74,8 +74,14 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Correlation - Numeric Data\n\n'
-              'Generated using `stats::cor()`',
+          title: '''
+
+          # Correlation - Numeric Data
+          
+          Generated using
+          [stats::cor()](https://www.rdocumentation.org/packages/stats/topics/cor)
+
+          ''',
           content: content,
         ),
       );
@@ -85,8 +91,14 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     pages.add(
       ImagePage(
-        title: 'Variable Correlation Plot\n\n'
-            'Generated using `corrplot::corrplot(ds)`',
+        title: '''
+
+        # Variable Correlation Plot
+        
+        Generated using
+        [corrplot::corrplot(ds)](https://www.rdocumentation.org/packages/corrplot/topics/corrplot)
+
+        ''',
         path: '$tempDir/explore_correlation.svg',
       ),
     );

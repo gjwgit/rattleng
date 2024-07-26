@@ -54,18 +54,21 @@ Then:
 + Tap the **Script** tab to see the R code that has been run.
 + Tap the **Console** tab to see the R code being run within an R
   session. You can even type R commands there to have them run.
-+ Tap the **Dataset** tab to return the to startup screen for
++ Tap the **Dataset** tab to return the to the startup screen for
   RattleNG. Tap the **Dataset** button and then choose **Demo** to
   load the `rattle::weather` dataset. You can also load your own CSV
   or TXT file by tapping the **Filename** button instead. The result
   panel of the page will provide view or summary of the dataset.
-+ Notice the toggle buttons to the top right of the tab page:
++ Tap the right pointing arrow to view the **Roles** page where you
+  can specify the role for each variable. Defaults will have been set.
++ Notice the toggle buttons to the top right of the **Dataset** page:
   **Cleanse**, **Normalise** and **Partition**. Hover the mouse to
   view the tooltips.
-+ Tap the **Model** tab and then the **Tree** radio button (selected
-  by default) and then the **Build** button to build and view a
-  decision tree from a CSV dataset. Scroll the window to see the whole
-  tree.
++ To build an AI model, tap the **Model** tab and then the **Tree**
+  radio button (selected by default) and then the **Build** button to
+  build and view a decision tree from a CSV dataset. Scroll through
+  the pages to the page showing the decision tree, textually and
+  visually.
 + Tap the **Script** tab and scroll the window to view the latest R
   commands run. Then tap the **Export** button to save the full script
   to `script.R` (no options currently to change the name or location
@@ -79,9 +82,11 @@ Currently implemented features:
   + Demo
 + Explore
   + Summary
-  + Visual (no config yet)
+  + Visual
   + Missing
   + Correlation
++ Wrangle
+  + Recenter
 + Model
   + Cluster
   + Tree
@@ -206,6 +211,17 @@ For a text file we can gain an insight into the document through a
 word cloud.
 
 ![](assets/screenshots/explore_wordcloud.png)
+
+### Wrangling the Data
+
+A suite of transformation functions are available in Rattle to map
+variables in different ways. Each transformation will create a new
+variable from the old variable. Here we see `min_temp` being
+transformed using the RECENTER feature and each of the transform
+functions available. The new variables are prefixed with an indicator
+of the type of transformation performed.
+
+![](assets/screenshots/wrangle_recenter.png)
 
 ### Building Models
 

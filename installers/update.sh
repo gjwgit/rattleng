@@ -5,6 +5,11 @@
 if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "completed" ]; then
     rm -f rattle-dev-linux.zip
 
+    # Identify the latest Bump Version.
+
+    bumpId=$(gh run list --limit 100 --json databaseId,displayTitle \
+		 | jq -r '.[] | select(.displayTitle | startswith("Bump version")) | .databaseId' | head -n 1)
+
     # Determine the latest version. Assumes the latest action is a
     # Bump veriosn push.
     
@@ -15,7 +20,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     # Linux
     
-    gh run download $(gh run list --limit 1 --json databaseId --jq '.[0].databaseId') --name rattle-linux
+    gh run download ${bumpId} --name rattle-linux
     mv rattle-dev-linux.zip rattleng-dev-linux.zip
     cp rattleng-dev-linux.zip rattleng-${version}-linux.zip
     chmod a+r rattleng*.zip
@@ -23,7 +28,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     # MacOS
     
-    gh run download $(gh run list --limit 1 --json databaseId --jq '.[0].databaseId') --name rattle-macos
+    gh run download ${bumpId} --name rattle-macos
     mv rattle-dev-macos.zip rattleng-dev-macos.zip
     cp rattleng-dev-macos.zip rattleng-${version}-macos.zip
     chmod a+r rattleng*.zip
@@ -31,12 +36,13 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     # Windows
     
-    gh run download $(gh run list --limit 1 --json databaseId --jq '.[0].databaseId') --name rattle-windows
+    gh run download ${bumpId} --name rattle-windows
     mv rattle-dev-windows.zip rattleng-dev-windows.zip
     cp rattleng-dev-windows.zip rattleng-${version}-windows.zip
     chmod a+r rattleng*.zip
     rsync -avzh rattleng-dev-windows.zip rattleng-${version}-windows.zip togaware.com:apps/access/
     
 else
+    echo "Latest github actions has not completed. Exiting."
     exit 1
 fi

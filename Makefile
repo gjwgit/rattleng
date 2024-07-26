@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2024-07-21 20:59:10 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-25 09:53:43 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -108,8 +108,11 @@ rattle.zip:
 local: tgz
 	sudo tar zxvf installers/$(APP).tar.gz -C /opt/
 
-# Linux: Upload to Solid Community installers for general access.
+# No more tgz to togaware. Moved to zip archives.
+#
+# tgz::
+#	chmod a+r installers/*.tar.gz
+#	rsync -avzh installers/*.tar.gz togaware.com:apps/access/
 
-tgz::
-	chmod a+r installers/*.tar.gz
-	rsync -avzh installers/*.tar.gz togaware.com:apps/access/
+ginstall:
+	(cd installers; make $@)

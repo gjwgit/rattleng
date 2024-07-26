@@ -8,6 +8,11 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Remove WEIGHTS (not used).
++ Attempt to give MacOS permission to run R [6.2.13 20240725 gjw]
++ Updating formats, links, etc, particularly for MISSING [6.2.12 20240725 gjw]
++ Testing github actions [6.2.11 20240725 gjw]
++ Initial experiment with WRANGLE gui WIP [6.2.10 20240725 gjw]
 + Automate build and installation updates [6.2.9 20240724 gjw]
 + Add group by selector for VISUALISE [6.2.8 20240723 yyx]
 + Add variable selection to VISUALISE [6.2.7 20240723 yyx]

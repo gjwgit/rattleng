@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-07-18 15:49:56 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-25 14:24:35 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -54,11 +54,16 @@ library(VIM)
 
 # Aggregate plot of missing values
 
-svg("TEMPDIR/explore_missing_vim.svg", width=14)
-aggr(ds, numbers=TRUE, sortVars=TRUE, labels=names(ds),
-     cex.axis = .7,
+svg("TEMPDIR/explore_missing_vim.svg", width=16)
+aggr(ds,
+     numbers=TRUE,
+     combined=FALSE,
+     only.miss=TRUE,
+     sortVars=TRUE,
+     labels=names(ds),
+     cex.axis = .6,
      gap      = 3,
-     ylab     = c("Missing data", "Pattern"),
+     ylab     = c("Proportion of Values Missing", "Proportions of Combinations of Missing Values"),
      sub      = "TIMESTAMP")
 dev.off()
 

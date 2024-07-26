@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 10:21:50 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-07-25 09:40:23 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,10 +25,11 @@
 # Author: Graham Williams
 # Transform variables by rescaling. 
 
-# Transform "SELECTED_VAR" into "RRC_SELETED_VAR" using median/mad or
+# Transform "SELECTED_VAR" into "RMD_SELETED_VAR" using median/mad or
 # robust rescaling. The rescaling happens by subtracting the median
 # and dividing by median abs deviation.
 
-ds$SELECTED_VAR %>%
-  reshape::rescaler("robust") ->
-ds$RRC_SELECTED_VAR
+ds %<>%
+  mutate(RMD_SELECTED_VAR = reshape::rescaler(SELECTED_VAR, "robust"))
+
+glimpse(ds)
