@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-25 08:28:15 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-28 08:39:39 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -122,10 +122,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
       }
     }
 
-    String title = 'Visualisations for the '
-        '${numc.contains(selected) ? "numeric" : "categoric"} '
-        'variable $selected.';
-
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -206,10 +202,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 buildAction();
               },
             ),
-
-            const SizedBox(width: 20.0),
-
-            Text(title),
           ],
         ),
       ],
