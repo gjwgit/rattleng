@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-25 11:06:03 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-07-27 10:56:56 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -71,19 +71,19 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       pages.add(
         ImagePage(
-          title: '# Histogram Plot\n\n'
+          title: '# Density Plot of Values\n\n'
               'Generated using [ggplot2::geom_density()]'
               '(https://www.rdocumentation.org/packages/ggplot2/topics/geom_density).',
-          path: '$tempDir/explore_visual_histogram.svg',
+          path: '$tempDir/explore_visual_density.svg',
         ),
       );
 
       pages.add(
         ImagePage(
           title: '# Cummulative Plot\n\n'
-              'Generated using [Hmisc::Ecdf()]'
-              '(https://www.rdocumentation.org/packages/Hmisc/topics/Ecdf).',
-          path: '$tempDir/explore_visual_cummulative.svg',
+              'Generated using [ggplot2::stat_ecdf()]'
+              '(https://www.rdocumentation.org/packages/ggplot2/topics/stat_ecdf).',
+          path: '$tempDir/explore_visual_ecdf.svg',
         ),
       );
 

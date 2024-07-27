@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-07-22 07:46:39 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-07-27 16:00:23 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,12 +35,14 @@
 
 # Load required packages from the local library into the R session.
 
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(rattle)) install.packages("rattle")
+
 ########################################################################
 # BOX PLOT
 ########################################################################
 
-# Display box plot for the selected variable. Use ggplot2 to generate
-# box plot.
+# Display box plot for the selected variable.
 
 svg("TEMPDIR/explore_visual_boxplot.svg", width=10)
 
@@ -53,15 +55,16 @@ ds %>%
   ggplot2::stat_summary(ggplot2::aes(x=GROUP_BY_VAR), fun=mean, geom="point", shape=8) +
   ggplot2::xlab(paste("GROUP_BY_VAR\n\n", "TIMESTAMP", sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
-  ggplot2::theme(legend.position="none")
+  ggplot2::theme(legend.position="none") +
+  theme_rattle()
 
 dev.off()
 
 ########################################################################
-# HISTOGRAM
+# DENSITY
 ########################################################################
 
-svg("TEMPDIR/explore_visual_histogram.svg", width=10)
+svg("TEMPDIR/explore_visual_density.svg", width=10)
 
 ds %>%
   dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
@@ -71,40 +74,29 @@ ds %>%
   ggplot2::geom_density(ggplot2::aes(fill=GROUP_BY_VAR, colour=GROUP_BY_VAR), alpha=0.55) +
   ggplot2::xlab(paste("SELECTED_VAR\n\n", "TIMESTAMP", sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
-  ggplot2::labs(fill="GROUP_BY_VAR", y="Density")
+  ggplot2::labs(fill="GROUP_BY_VAR", y="Density") +
+  theme_rattle()
 
 dev.off()
 
 ########################################################################
-# CUMMULATIVE
+# EMPIRICAL CUMULATIVE DISTRIBUTION FUNCTION
 ########################################################################
 
-svg("TEMPDIR/explore_visual_cummulative.svg", width=10)
+svg("TEMPDIR/explore_visual_ecdf.svg", width=10)
 
-# Generate just the data for an Ecdf plot of the variable 'SELECTED_VAR'.
-
-eds <- rbind(data.frame(dat=ds[,"SELECTED_VAR"], grp="All"),
-            data.frame(dat=ds[ds$GROUP_BY_VAR=="No","SELECTED_VAR"], grp="No"),
-            data.frame(dat=ds[ds$GROUP_BY_VAR=="Yes","SELECTED_VAR"], grp="Yes"))
-
-# The 'Hmisc' package provides the 'Ecdf' function.
-
-library(Hmisc, quietly=TRUE)
-
-# Plot the data.
-
-Ecdf(eds[eds$grp=="All",1], col="#E495A5", xlab="SELECTED_VAR", lwd=2, ylab=expression(Proportion <= x), subtitles=FALSE)
-Ecdf(eds[eds$grp=="No",1], col="#86B875", lty=2, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
-Ecdf(eds[eds$grp=="Yes",1], col="#7DB0DD", lty=3, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
-
-
-# Add a legend to the plot.
-
-legend("bottomright", c("All","No","Yes"), bty="n",  col=colorspace::rainbow_hcl(3) , lwd=2, lty=1:3, inset=c(0.05,0.05))
-
-# Add a title to the plot.
-
-title(main="Distribution of SELECTED_VAR by GROUP_BY_VAR", sub="TIMESTAMP")
+ds %>%
+  dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
+  dplyr::select(SELECTED_VAR, GROUP_BY_VAR) %>%
+  ggplot2::ggplot() +
+  # Overall ECDF
+  ggplot2::stat_ecdf(aes(x = SELECTED_VAR), geom = "step", color = "black", size = 1) +
+  # Group ECDFs
+  ggplot2::stat_ecdf(aes(x = SELECTED_VAR, color = GROUP_BY_VAR), geom = "step") +
+  ggplot2::xlab(paste("SELECTED_VAR\n\n", "TIMESTAMP", sep="")) +
+  ggplot2::ggtitle("Empirical Cumulative Distribution of SELECTED_VAR by GROUP_BY_VAR") +
+  ggplot2::labs(fill="GROUP_BY_VAR", y=expression("ECDF - Proportion <= x")) +
+  theme_rattle()
 
 dev.off()
 
@@ -112,36 +104,28 @@ dev.off()
 # BENFORD'S LAW 
 ########################################################################
 
-# The 'ggplot2' package provides the 'ggplot' function.
-
-library(ggplot2, quietly=TRUE)
-
-# The 'reshape' package provides the 'melt' function.
-
-library(reshape, quietly=TRUE)
-
 # Initialies the parameters.
 
-target <- "GROUP_BY_VAR"
-var    <- "SELECTED_VAR"
 digit  <- 1
 len    <- 1
 
 # Build the dataset
 
-tds <- merge(benfordDistr(digit, len),
-            digitDistr(ds[var], digit, len, "All"))
-for (i in unique(ds[[target]]))
-  tds <- merge(tds, digitDistr(ds[ds[target]==i, var], digit, len, i))
+tds <- merge(rattle::benfordDistr(digit, len),
+             rattle::digitDistr(ds$SELECTED_VAR, digit, len, "All"))
+
+for (i in unique(ds$GROUP_BY_VAR))
+  tds <- merge(tds, rattle::digitDistr(ds[ds$GROUP_BY_VAR==i, "SELECTED_VAR"], digit, len, i))
 
 # Plot the digital distribution
 
 svg("TEMPDIR/explore_visual_benford.svg", width=10)
-p <- plotDigitFreq(tds)
-p <- p + ggtitle("Digital Analysis of First Digit of SELECTED_VAR by GROUP_BY_VAR")
-p <- p + ggplot2::xlab(paste("Digits\n\n", "TIMESTAMP", sep=""))
 
-print(p)
+tds %>% plotDigitFreq() +
+  ggtitle("Digital Analysis of First Digit of SELECTED_VAR by GROUP_BY_VAR") +
+  ggplot2::xlab(paste("Digits\n\n", "TIMESTAMP", sep="")) +
+  theme_rattle()
+
 dev.off()
 
 ########################################################################
@@ -152,27 +136,27 @@ dev.off()
 
 # Use GGally's ggpairs() to do the hard work.
 
-svg("TEMPDIR/explore_visual_pairs.svg", width=10)
+## svg("TEMPDIR/explore_visual_pairs.svg", width=10)
 
-ds %>%
-  dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
-  GGally::ggpairs(columns=c(3,4),
-        mapping=ggplot2::aes(colour=GROUP_BY_VAR, alpha=0.5, shape=GROUP_BY_VAR),
-                diag=list(continuous="densityDiag",
-                          discrete="barDiag"),
-                upper=list(continuous="cor",
-                           combo="box",
-                           discrete="ratio"),
-                lower=list(continuous="points",
-                           combo="denstrip",
-                           discrete="facetbar"),
-                legend=3) +
-  ggplot2::theme(panel.grid.major=ggplot2::element_blank(), legend.position="right") +
-  ggplot2::xlab(paste("\n\n", "TIMESTAMP", sep=""))
+## ds %>%
+##   dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
+##   GGally::ggpairs(columns=c(3,4),
+##         mapping=ggplot2::aes(colour=GROUP_BY_VAR, alpha=0.5, shape=GROUP_BY_VAR),
+##                 diag=list(continuous="densityDiag",
+##                           discrete="barDiag"),
+##                 upper=list(continuous="cor",
+##                            combo="box",
+##                            discrete="ratio"),
+##                 lower=list(continuous="points",
+##                            combo="denstrip",
+##                            discrete="facetbar"),
+##                 legend=3) +
+##   ggplot2::theme(panel.grid.major=ggplot2::element_blank(), legend.position="right") +
+##   ggplot2::xlab(paste("\n\n", "TIMESTAMP", sep=""))
 
   
 # ggplot2::scale_alpha_continuous(guide=FALSE) +
 #  ggplot2::scale_fill_brewer(palette=rattlePalette) +
 #  ggplot2::scale_colour_brewer(palette=rattlePalette)
 
-dev.off()
+# dev.off()

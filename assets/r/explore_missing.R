@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-07-25 14:24:35 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-07-27 15:12:59 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,6 +35,10 @@
 
 # Load required packages from the local library into the R session.
 
+if(!require(mice)) install.packages("mice")
+if(!require(VIM)) install.packages("VIM")
+
+########################################################################
 # The 'mice' package provides the 'md.pattern' function.
 
 library(mice, quietly=TRUE)
@@ -48,14 +52,12 @@ svg("TEMPDIR/explore_missing_mice.svg")
 md.pattern(ds[vars], rotate.names=TRUE)
 dev.off()
 
-# install.packages("VIM")
-
-library(VIM)
-
+########################################################################bv
 # Aggregate plot of missing values
 
 svg("TEMPDIR/explore_missing_vim.svg", width=16)
-aggr(ds,
+
+VIM::aggr(ds,
      numbers=TRUE,
      combined=FALSE,
      only.miss=TRUE,
@@ -65,6 +67,7 @@ aggr(ds,
      gap      = 3,
      ylab     = c("Proportion of Values Missing", "Proportions of Combinations of Missing Values"),
      sub      = "TIMESTAMP")
+
 dev.off()
 
 ## # TODO
