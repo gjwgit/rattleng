@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 09:48:13 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-07-27 15:58:40 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,12 +39,29 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-# Load required packages from the local library into the R session.
+########################################################################
+# Load required packages or install if not already.
+########################################################################
 
-library(rattle)       # Access the weather dataset and utilities.
-library(magrittr)     # Utilise %>% and %<>% pipeline operators.
-library(janitor)      # Cleanup: clean_names() remove_constant().
-library(tidyverse)    # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+# Access the weather dataset and utilities.
+
+if(!require(rattle)) install.packages("rattle")
+
+# Utilise %>% and %<>% pipeline operators.
+
+if(!require(magrittr)) install.packages("magrittr")
+
+# Cleanup: clean_names() remove_constant().
+
+if(!require(janitor)) install.packages("janitor")
+
+# ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+
+if(!require(tidyverse)) install.packages("tidyverse")
+
+# ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+
+if(!require(ggthemes)) install.packages("ggthemese")
 
 # A pre-defined value for the random seed ensures that results are
 # repeatable.
@@ -55,3 +72,26 @@ set.seed(42)
 
 rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
                    "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+# A ggplot2 theme for rattle.
+
+## theme_rattle <- function(base_size = 11, base_family = "") {
+##   theme_grey(base_size = base_size, base_family = base_family) +
+##     theme(
+##       # Customize text elements
+##       plot.title = element_text(color = "darkblue",
+##                                 face = "bold",
+##                                 size = base_size * 1.2),
+##       axis.title = element_text(color = "darkblue"),
+##       axis.text = element_text(color = "darkblue"),
+##       legend.title = element_text(color = "darkblue"),
+##       legend.text = element_text(color = "darkblue"),
+##       # Customize panel background
+##       panel.background = element_rect(fill = "white"),
+##       # Customize grid lines
+##       panel.grid.major = element_line(color = "lightgrey"),
+##       panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
+##     )
+## }
+
+theme_rattle <- theme_economist

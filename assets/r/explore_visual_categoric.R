@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-07-22 08:36:20 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-07-27 15:52:09 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,34 +35,23 @@
 
 # Load required packages from the local library into the R session.
 
+if(!require(ggplot2)) install.packages("ggplot2")
+
 ########################################################################
 # Bar Plot 
 ########################################################################
 
 svg("TEMPDIR/explore_visual_bars.svg", width=10)
 
-# Generate the summary data for plotting.
-
-tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
-    summary(na.omit(ds[ds$GROUP_BY_VAR=="No",]$SELECTED_VAR)),
-    summary(na.omit(ds[ds$GROUP_BY_VAR=="Yes",]$SELECTED_VAR)))
-
-# Sort the entries.
-
-ord <- order(tds[1,], decreasing=TRUE)
-
-# Plot the data.
-
-bp <-  gplots::barplot2(tds[,ord], beside=TRUE, ylab="Frequency", xlab="SELECTED_VAR", ylim=c(0, 62), col=colorspace::rainbow_hcl(3))
-
-# Add a legend to the plot.
-
-legend("topright", bty="n", c("All","No","Yes"),  fill=colorspace::rainbow_hcl(3))
-
-# Add a title to the plot.
-
-title(main="Distribution of SELECTED_VAR (sample)\nby GROUP_BY_VAR",
-    sub="TIMESTAMP")
+ds %>%
+  ggplot(aes(x = wind_gust_dir, fill = rain_tomorrow)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of SELECTED_VAR by GROUP_BY_VAR",
+       sub = "TIMESTAMP",
+       x = "SELECTED_VAR",
+       y = "Frequency",
+       fill = "GROUP_BY_VAR") +
+  theme_rattle()
 
 dev.off()
 
@@ -72,36 +61,62 @@ dev.off()
 
 svg("TEMPDIR/explore_visual_dots.svg", width=10)
 
-# Generate the summary data for the plot.
+overall_freq <- as.data.frame(table(ds$SELECTED_VAR))
+colnames(overall_freq) <- c("SELECTED_VAR", "Frequency")
+overall_freq$GROUP_BY_VAR <- "Overall"
 
-tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
-    summary(na.omit(ds[ds$GROUP_BY_VAR=="No",]$SELECTED_VAR)),
-    summary(na.omit(ds[ds$GROUP_BY_VAR=="Yes",]$SELECTED_VAR)))
+# Calculate grouped frequencies
+grouped_freq <- as.data.frame(table(ds$SELECTED_VAR, ds$GROUP_BY_VAR))
+colnames(grouped_freq) <- c("SELECTED_VAR", "GROUP_BY_VAR", "Frequency")
 
-# Sort the entries.
+# Combine datasets
+combined_data <- rbind(overall_freq, grouped_freq)
 
-ord <- order(tds[1,], decreasing=TRUE)
+# Create the dot plot
+ggplot(combined_data, aes(y = SELECTED_VAR, x = Frequency, fill = GROUP_BY_VAR)) +
+  geom_dotplot(binaxis = 'y', stackdir = 'center', position = position_dodge(0.8), dotsize = 0.5) +
+  geom_segment(data = subset(combined_data, GROUP_BY_VAR == "Overall"),
+               aes(y = SELECTED_VAR, yend = SELECTED_VAR, x = 0, xend = Frequency), color = "red", linetype = "dotted") +
+  labs(title = "Frequency of SELECTED_VAR (Overall and Grouped by GROUP_BY_VAR)",
+       x = "SELECTED_VAR",
+       y = "Frequency",
+       fill = "Legend") +
+  theme_rattle()
 
-# Plot the data.
+## # Generate the summary data for the plot.
 
-dotchart(tds[nrow(tds):1,ord],
-         main   = "Distribution of SELECTED_VAR (sample)\nby GROUP_BY_VAR",
-         sub    = "TIMESTAMP",
-         col    = rev(colorspace::rainbow_hcl(3)),
-         labels = "",
-         xlab   = "Frequency",
-         ylab   = "SELECTED_VAR",
-         pch    = c(1:2, 19))
+## tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
+##     summary(na.omit(ds[ds$GROUP_BY_VAR=="No",]$SELECTED_VAR)),
+##     summary(na.omit(ds[ds$GROUP_BY_VAR=="Yes",]$SELECTED_VAR)))
 
-# Add a legend.
+## # Sort the entries.
 
-legend("bottomright", bty="n", c("All","No","Yes"), col=colorspace::rainbow_hcl(3), pch=c(19, 2:1))
+## ord <- order(tds[1,], decreasing=TRUE)
+
+## # Plot the data.
+
+## dotchart(tds[nrow(tds):1,ord],
+##          main   = "Distribution of SELECTED_VAR (sample)\nby GROUP_BY_VAR",
+##          sub    = "TIMESTAMP",
+##          col    = rev(colorspace::rainbow_hcl(3)),
+##          labels = "",
+##          xlab   = "Frequency",
+##          ylab   = "SELECTED_VAR",
+##          pch    = c(1:2, 19))
+
+## # Add a legend.
+
+## legend("bottomright", bty="n", c("All","No","Yes"), col=colorspace::rainbow_hcl(3), pch=c(19, 2:1))
 
 dev.off()
 
 ########################################################################
 # Mosaic Plot 
 ########################################################################
+
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(vcd)) install.packages("vcd")
+if(!require(ggplotify)) install.packages("ggplotify")
 
 svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
 
