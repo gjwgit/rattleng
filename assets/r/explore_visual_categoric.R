@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-27 15:52:09 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-28 05:58:39 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -78,8 +78,8 @@ ggplot(combined_data, aes(y = SELECTED_VAR, x = Frequency, fill = GROUP_BY_VAR))
   geom_segment(data = subset(combined_data, GROUP_BY_VAR == "Overall"),
                aes(y = SELECTED_VAR, yend = SELECTED_VAR, x = 0, xend = Frequency), color = "red", linetype = "dotted") +
   labs(title = "Frequency of SELECTED_VAR (Overall and Grouped by GROUP_BY_VAR)",
-       x = "SELECTED_VAR",
-       y = "Frequency",
+       y = "SELECTED_VAR",
+       x = "Frequency",
        fill = "Legend") +
   theme_rattle()
 
