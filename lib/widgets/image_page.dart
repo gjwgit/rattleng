@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Friday 2024-07-26 17:04:58 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-28 21:04:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,9 +32,10 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/select_file.dart';
@@ -103,6 +104,11 @@ class ImagePage extends StatelessWidget {
 //                        child:
                       MarkdownBody(
                         data: wordWrap(title),
+                        selectable: true,
+                        onTapLink: (text, href, title) {
+                          final Uri url = Uri.parse(href ?? '');
+                          launchUrl(url);
+                        },
                       ),
 //                      ),
                       const Spacer(),
