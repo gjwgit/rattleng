@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Add more survivor links. [6.2.16 20240729 gjw]
 + Re-implement Tests and update markdown and add survivor links. [6.2.15 20240729 gjw]
 + Implement TESTS [6.2.14 20240726 yyx]
 + Remove WEIGHTS (not used). Remove Global Save [6.2.14 20240726 gjw]
