@@ -27,5 +27,20 @@ insight. You will also see, for example, measures called
 variables that allow us to measure the spread of the data. We can
 compare this across the available numeric variables.
 
+The **Visual** features presents the data distribution as plots or
+charts. The various plots include box plots, density plots, cumulative
+plots and a Benford's plot for numeric data. For categoric data we
+will be presented with a bar chart, a dot plot, and a mosaic plot.
+
+Understanding missing data can be important in understand some
+limitations of our dataset. The **Missing** feature presents several
+textual and graphical views of the missing data and patterns of
+missing data.
+
+Exploring **Correlations**  between variables in our dataset can
+deliver further insight into the dataset.
+
+Statistical **Tests** provide robust observations of the data.
+
 > 
 
