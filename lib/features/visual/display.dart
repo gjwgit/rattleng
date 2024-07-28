@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-07-27 10:56:56 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-29 08:21:38 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -62,9 +62,15 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     if (numeric) {
       pages.add(
         ImagePage(
-          title: '# Box Plot\n\n'
-              'Generated using [ggplot2::geom_boxplot()]'
-              '(https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot).',
+          title: '''
+
+          # Box Plot
+
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/box-plot.html) and
+          [ggplot2::geom_boxplot()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot).
+
+              ''',
           path: '$tempDir/explore_visual_boxplot.svg',
         ),
       );
