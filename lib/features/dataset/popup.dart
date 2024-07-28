@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Monday 2024-07-15 11:34:29 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-07-27 17:15:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yiming Lu
+
 library;
 
 import 'package:flutter/material.dart';
@@ -40,7 +41,6 @@ const double heightSpace = 20;
 const double widthSpace = 10;
 
 void datasetLoadedUpdate(WidgetRef ref) {
-  debugPrint('DATASET LOADED');
   ref.read(datasetLoaded.notifier).state = true;
 }
 
