@@ -1,6 +1,6 @@
-/// Widget to display the Rattle introduction or data view.
+/// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Friday 2024-07-26 09:13:22 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-07-27 19:46:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -33,17 +33,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/types.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/get_target.dart';
+import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
-import 'package:rattle/utils/get_unique_columns.dart';
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
@@ -79,6 +80,40 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     List<Widget> pages = [showMarkdownFile(welcomeMsgFile, context)];
 
+    String content = '';
+    String title = '';
+
+    if (path == 'rattle::weather' || path.endsWith('.csv')) {
+      content = rExtractGlimpse(stdout);
+      title = '''
+
+      # Dataset Glimpse
+
+      Generated using
+      [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
+
+      ''';
+    } else {
+      content = rExtract(stdout, '> cat(ds,');
+      title = '''
+
+      # Text Content
+
+      Generated using
+      [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
+
+      ''';
+    }
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: title,
+          content: '\n$content',
+        ),
+      );
+    }
+
     if (path == 'rattle::weather' || path.endsWith('.csv')) {
       Map<String, String> currentRoles = ref.read(rolesProvider);
 
@@ -100,6 +135,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           if (column.name.toLowerCase().startsWith('risk_')) {
             ref.read(rolesProvider.notifier).state[column.name] = 'Risk';
           }
+
+          if (column.name.toLowerCase().startsWith('ignore_')) {
+            ref.read(rolesProvider.notifier).state[column.name] = 'Ignore';
+          }
+
+          if (column.name.toLowerCase().startsWith('target_')) {
+            ref.read(rolesProvider.notifier).state[column.name] = 'Target';
+          }
         }
 
         // Treat the last variable as a TARGET by default. We will eventually
@@ -108,7 +151,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         // variable looks like a TARGET (another common practise) and if not
         // then no TARGET will be identified by default.
 
-        ref.read(rolesProvider.notifier).state[vars.last.name] = 'Target';
+        if (getTarget(ref) == 'NULL') {
+          ref.read(rolesProvider.notifier).state[vars.last.name] = 'Target';
+        }
 
         // Any variables that have a unique value for every row in the dataset
         // is considered to be an IDENTifier.
@@ -257,40 +302,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               return dataline(columnName, dataType, content);
             }
           },
-        ),
-      );
-    }
-
-    String content = '';
-    String title = '';
-
-    if (path == 'rattle::weather' || path.endsWith('.csv')) {
-      content = rExtractGlimpse(stdout);
-      title = '''
-
-      # Dataset Glimpse
-
-      Generated using
-      [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
-
-      ''';
-    } else {
-      content = rExtract(stdout, '> cat(ds,');
-      title = '''
-
-      # Text Content
-
-      Generated using
-      [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
-
-      ''';
-    }
-
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: title,
-          content: '\n$content',
         ),
       );
     }
