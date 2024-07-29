@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Cleanup ready for release [6.2.17 20240729 gjw]
 + Add more survivor links. [6.2.16 20240729 gjw]
 + Re-do Tests. Update markdown. Add survivor links. [6.2.15 20240729 gjw]
 + Implement TESTS [6.2.14 20240726 yyx]
