@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-23 19:29:27 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-07-29 15:02:47 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -55,6 +55,22 @@ if (CLEANSE_DATASET) {
   # Remove any constant columns,
 
   ds %<>% remove_constant()
+
+  # Check if the last variable is numeric and has 5 or fewer unique
+  # values then treat it as a factor since it is probably a target
+  # variable. This is a little risky but perhaps worth doing. It may
+  # need it's own toggle.
+
+  # Get the name of the last column
+
+  last_col_name <- names(ds)[ncol(ds)]
+
+  # Check if the last column is numeric and has 5 or fewer unique values
+
+  if (is.numeric(ds[[last_col_name]]) && length(unique(ds[[last_col_name]])) <= 5) {
+    ds[[last_col_name]] <- as.factor(ds[[last_col_name]])
+  }
+
 }
 
 # Check for unique valued columns.
