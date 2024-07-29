@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Saturday 2023-10-28 08:21:18 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-07-29 09:19:06 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -42,7 +42,14 @@ class ScriptSaveButton extends ConsumerWidget {
       child: const Text('Export'),
       onPressed: () {
         debugPrint("SAVE BUTTON EXPORT: 'script.R'");
-        File('script.R').writeAsString(ref.read(scriptProvider));
+        String script = ref.read(scriptProvider);
+        // Remove the svg/dev.off lines.
+        List<String> lines = script.split('\n');
+        lines = lines.where((line) => !line.trim().startsWith('svg')).toList();
+        lines =
+            lines.where((line) => !line.trim().startsWith('dev.off')).toList();
+        script = lines.join('\n');
+        File('script.R').writeAsString(script);
       },
     );
   }
