@@ -21,7 +21,7 @@ R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
                          "mice", "VIM", "naniar", "reshape", "corrplot",
                          "Hmisc", "fBasics", "descr", "randomForest",
                          "verification", "magrittr", "janitor", "rpart",
-                         "readr", "tm", "wordcloud", "magick"))'
+                         "readr", "tm", "wordcloud", "magick", ggthemes'))'
 ```
 
 RattleNG can then be installed from the installation packages
@@ -167,7 +167,7 @@ warning next time.
     + Click *New* and then add *C:\Program Files\R\bin*
     + Click *OK* a few times to close the windows.
 
-### Zip Install
+### Zip Install UNDER DEVELOPMENT
 
 ```bash
 wget https://access.togaware.com/rattleng-dev-windows.zip
@@ -175,6 +175,42 @@ wget https://access.togaware.com/rattleng-dev-windows.zip
 
 Unzip and run `rattle.exe`. You can add the unzipped path to the
 system PATH environment variable.
+
+*Status 20240729*
+
+The R process within the flutter-based RattleNG app is not picking up
+locally installed R packages. You may be able to see this if you
+compare the output of `.libPaths()` in the RattleNG **Console** tab to
+the output when you run R in your CMD window. The RattleNG version may
+not have your local path
+(e.g. `C:/Users/fred/AppData/Local/R/win-library/4.4`) and it may only
+have the system path (e.g., `C:/Program
+Files/R/R-4.4.1/library`). Often this is resolved by creating a new
+environment variable `R_LIBS_USER` with the value of your local
+path. 
+
+```
+setx R_LIBS_USER "C:/path/to/your/library"
+```
+
+Testing has not yet been successful.  On starting RattleNG you can go
+to the **Console** tab and enter the following:
+
+```r
+> .libPaths("C:/Users/fred/AppData/Local/R/win-library/4.4")
+```
+
+Then go to the **Script** tab, copy the whole of the right hand script
+(Ctrl-A) and paste that into the **Console**. This will show that R is
+now operational. You can load the Demo dataset but the Roles page
+fails. Under **Explore** the Summary works but not the plots (which
+need a Target).
+
+**Yet to try:** put the following in ~/.Renviron
+
+```
+.libPaths("/Users/bill/Library/R/3.4/library")
+```
 
 ### Inno Install - UNDER DEVELOPMENT 
 
