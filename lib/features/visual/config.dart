@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-28 08:39:39 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-29 14:16:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -67,6 +67,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
     }
+
+    // Retrieve the categoric variables that will be used to group the
+    // visualisations by. Be sure to also include the Target,
 
     List<String> cats = getCategoric(ref);
 
@@ -176,8 +179,8 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               dropdownMenuEntries: inputs.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
-              // On selection as well as recording what was selected rebuild the
-              // visualisations.
+              // On selection we record the variable that was selected AND we
+              // rebuild the visualisations.
               onSelected: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
@@ -194,8 +197,8 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               dropdownMenuEntries: cats.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
-              // On selection as well as recording what was selected rebuild the
-              // visualisations.
+              // On selection we record the variable that was selected AND we
+              // rebuild the visualisations.
               onSelected: (String? value) {
                 ref.read(groupByProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
