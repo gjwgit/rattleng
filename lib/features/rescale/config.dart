@@ -154,6 +154,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
+                
               },
               child: const Text('Transform'),
             ),

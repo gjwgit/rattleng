@@ -42,6 +42,7 @@ import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -162,19 +163,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ref.read(rolesProvider.notifier).state[id] = 'Ident';
         }
       }
-
       // When a new row is added after transformation, initialise its role and update the role of the old variable
-      for (var column in vars) {
-        if (!ref.read(rolesProvider.notifier).state.containsKey(column.name)) {
-          if (column.name.startsWith('RRC_')) {
-            ref.read(rolesProvider.notifier).state[column.name] = 'Input';
-            ref.read(rolesProvider.notifier).state[column.name.replaceFirst('RRC_', '')] = 'Ignore';
-          }
-          else {
-            debugPrint('uninitialised new variables!');
-          }
-        }
-      }
+      updateRolesProvider(vars, ref);
 
       var headline = Padding(
         padding: const EdgeInsets.all(6.0),

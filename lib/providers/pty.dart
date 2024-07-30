@@ -26,6 +26,7 @@ library;
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -50,6 +51,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
   pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen((data) {
     terminal.write(data);
+    // debugPrint('update stdoutProvider');
     ref.read(stdoutProvider.notifier).state =
         ref.read(stdoutProvider) + cleanString(data);
   });
