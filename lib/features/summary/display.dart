@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-07-22 05:47:37 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-31 05:59:04 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_summary.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -60,7 +61,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     // BASIC R SUMMARY
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'summary(ds)');
+    content = rExtractSummary(stdout);
 
     // Add a blank line between each sub-table.
 
@@ -81,19 +82,27 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Summary of the Dataset\n\n'
-              'Generated using [base::summary(ds)]'
-              '(https://www.rdocumentation.org/packages/base/topics/summary).\n\n'
-              'This is the most basic R command for summarising the dataset.\n\n'
-              'For **numeric data** the minimum, and maximum values are listed. '
-              'Between these we can see listed the first and thrid quartiles as '
-              'well as the median (the second quartile) and the mean.\n\n'
-              'For **categoric data** a frequency table is provided, showing the '
-              'frequency of the categoric values from the most frequent to '
-              'the least frequent. '
-              'Only the top few categoric values will be listed.\n\n'
-              'A count of **missing values** is shown for variables with '
-              'missing values.',
+          title: '''
+
+          # Summary of the Dataset
+          
+          Generated using
+          [base::summary(ds)](https://www.rdocumentation.org/packages/base/topics/summary).
+          
+          This is the most basic R command for summarising the dataset.
+          
+          For **numeric data** the minimum, and maximum values are listed.
+          Between these we can see listed the first and thrid quartiles as well
+          as the median (the second quartile) and the mean.
+          
+          For **categoric data** a frequency table is provided, showing the
+          frequency of the categoric values from the most frequent to the least
+          frequent.  Only the top few categoric values will be listed.
+          
+          A count of **missing values** is shown for variables with 
+          missing values.
+
+          ''',
           content: content,
         ),
       );
