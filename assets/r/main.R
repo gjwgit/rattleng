@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-27 15:58:40 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 13:17:33 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,6 +42,11 @@
 ########################################################################
 # Load required packages or install if not already.
 ########################################################################
+
+# Keep R from asking to select a CRAN site.
+
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+options(install.packages.ask = FALSE)
 
 # Access the weather dataset and utilities.
 
