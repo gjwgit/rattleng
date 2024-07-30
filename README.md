@@ -46,7 +46,7 @@ https://www.r-project.org/ for details.
 
 Then install RattleNG for your operating system as detailed in the
 installers <a
-href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md>README</a>.
+href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md">README</a>.
 
 Then:
 
@@ -98,7 +98,7 @@ Currently implemented features:
 ## Building RattleNG from Source
 
 Ensure you have R installed, as described in the installer <a
-href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md>README</a>.
+href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md">README</a>.
 
 Install Flutter as describe in the <a
 href="https://docs.flutter.dev/get-started/install">Flutter Install
