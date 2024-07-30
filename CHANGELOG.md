@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Implement IMPUTE. Use pacman:: rather than library() [6.2.18 20240730 gjw]
 + Cleanup ready for release [6.2.17 20240729 gjw]
 + Add more survivor links. [6.2.16 20240729 gjw]
 + Re-do Tests. Update markdown. Add survivor links. [6.2.15 20240729 gjw]

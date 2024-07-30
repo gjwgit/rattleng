@@ -20,7 +20,7 @@ fBasics::ks2Test(na.omit(ds$SELECTED_VAR), na.omit(ds$SELECTED_2_VAR))
 
 #ks2Test(na.omit(crs$dataset[crs$dataset[["RainTomorrow"]] == "No", "Rainfall"]), na.omit(crs$dataset[crs$dataset[["RainTomorrow"]] == "Yes", "Rainfall"]))
 
-fBasics::wilcox.test(na.omit(ds$SELECTED_VAR), na.omit(ds$SELECTED_2_VAR))
+wilcox.test(na.omit(ds$SELECTED_VAR), na.omit(ds$SELECTED_2_VAR))
 
 # locationTest(na.omit(crs$dataset[, "Rainfall"]), na.omit(crs$dataset[, "MaxTemp"]))
 

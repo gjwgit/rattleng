@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-07-29 08:22:52 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-30 14:58:01 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -59,7 +59,7 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
     // CORRELATION
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, '> correlationTest(');
+    content = rExtract(stdout, '> fBasics::correlationTest(');
 
     if (content.isNotEmpty) {
       pages.add(
@@ -83,7 +83,7 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
     // KOLMOGOROV-SMIRNOV TWO SAMPLE TEST
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, '> ks2Test(');
+    content = rExtract(stdout, '> fBasics::ks2Test(');
 
     if (content.isNotEmpty) {
       pages.add(
@@ -129,7 +129,7 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
     // CORRELATION
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, '> locationTest(');
+    content = rExtract(stdout, '> fBasics::locationTest(');
 
     if (content.isNotEmpty) {
       pages.add(
@@ -151,7 +151,7 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
     // CORRELATION
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, '> varianceTest');
+    content = rExtract(stdout, '> fBascis::varianceTest');
 
     if (content.isNotEmpty) {
       pages.add(
