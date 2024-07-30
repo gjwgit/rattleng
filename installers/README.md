@@ -19,7 +19,7 @@ prompt `> `:
 ```bash
 R -e 'install.packages(c("rattle", "Hmisc", "VIM",
                          "corrplot", "descr", "fBasics", ggthemes, "janitor",
-                         "magrittr", "magick", "mice", "naniar",
+                         "magick", "magrittr", "mice", "naniar",
                          "randomForest", "readr", "reshape", "rpart",
                          "tidyverse", "tm", "verification", "wordcloud"'))'
 ```
