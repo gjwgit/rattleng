@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 14:34:55 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 10:28:16 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replaceng NA.
+# Transform "SELECTED_VAR" by replacing NA with the mean value.
 
 miss_value <- mean(ds$SELECTED_VAR, na.rm=TRUE)
 
@@ -32,3 +32,6 @@ ds %<>%
   mutate(IMN_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
                                    miss_value,
                                    SELECTED_VAR))
+
+glimpse(ds)
+summary(ds)

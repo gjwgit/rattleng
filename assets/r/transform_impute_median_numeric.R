@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 14:34:44 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 10:28:46 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,3 +32,6 @@ ds %<>%
   mutate(IMD_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
                                    miss_value,
                                    SELECTED_VAR))
+
+glimpse(ds)
+summary(ds)

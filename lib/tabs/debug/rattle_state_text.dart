@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Wednesday 2024-07-24 11:15:17 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-30 11:13:41 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,21 +30,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/imputed.dart';
+import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/roles.dart';
 import 'package:rattle/providers/script.dart';
+import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/types.dart';
 import 'package:rattle/providers/vars.dart';
-import 'package:rattle/providers/roles.dart';
-import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/count_lines.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/truncate.dart';
 
 class RattleStateText extends ConsumerWidget {
@@ -61,6 +62,7 @@ class RattleStateText extends ConsumerWidget {
     String stdout = ref.watch(stdoutProvider);
     String model = ref.watch(modelProvider);
     String selected = ref.watch(selectedProvider);
+    String imputed = ref.watch(imputedProvider);
     List<String> vars = ref.watch(varsProvider);
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
@@ -101,6 +103,7 @@ class RattleStateText extends ConsumerWidget {
             'IDENTIFIERS: \$identifiers \n'
             'IGNORE:      \$ignore\n'
             'SELECTED:    $selected\n'
+            'IMPUTED:     $imputed\n'
             'MODEL:       $model\n',
             style: monoSmallTextStyle,
           );

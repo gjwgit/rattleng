@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 11:21:28 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 10:27:33 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,13 +24,19 @@
 #
 # Author: Graham Williams
 
-# TODO 20240720 gjw combine into impute_constant
+# Transform "SELECTED_VAR" by replacing NA with zero or 'Missing'
 
-# Transform "SELECTED_VAR" into "IMP_SELECTED_VAR" by imputing a value.
+
+if (is.numeric(ds$SELECTED_VAR))
+{
+  miss_value <- 0
+} else {
+  miss_value <- 'Missing'
+  }
 
 ds %<>%
-  mutate(IMP_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                   IMPUTED_VALUE,
+  mutate(IZR_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
+                                   miss_value,
                                    SELECTED_VAR))
 glimpse(ds)
 summary(ds)
