@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-07-26 16:55:49 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-30 06:09:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -68,7 +68,7 @@ final List<Map<String, dynamic>> homeTabs = [
     'widget': const ExploreTabs(),
   },
   {
-    'title': 'Wrangle',
+    'title': 'Transform',
     'icon': Icons.transform,
     'widget': const TransformTabs(),
   },

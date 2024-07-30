@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Wednesday 2024-07-24 09:10:45 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-30 11:21:39 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -34,6 +34,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/group_by.dart';
+import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
@@ -67,19 +68,21 @@ import 'package:rattle/utils/update_script.dart';
 void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
-  String path = ref.read(pathProvider);
   bool checkbox = ref.read(checkboxProvider);
-  bool stem = ref.read(stemProvider);
-  bool punctuation = ref.read(punctuationProvider);
-  bool stopword = ref.read(stopwordProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
   bool partition = ref.read(partitionProvider);
+  bool punctuation = ref.read(punctuationProvider);
+  bool stem = ref.read(stemProvider);
+  bool stopword = ref.read(stopwordProvider);
+
+  String groupBy = ref.read(groupByProvider);
+  String imputed = ref.read(imputedProvider);
+  String language = ref.read(languageProvider);
   String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider);
-  String language = ref.read(languageProvider);
+  String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
-  String groupBy = ref.read(groupByProvider);
   String selected2 = ref.read(selected2Provider);
 
   // First obtain the text from the script.
@@ -192,6 +195,8 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('SELECTED_2_VAR', selected2);
 
   code = code.replaceAll('GROUP_BY_VAR', groupBy);
+
+  code = code.replaceAll('IMPUTED_VALUE', imputed);
 
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );

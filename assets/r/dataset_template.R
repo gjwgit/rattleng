@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-07-24 08:30:56 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 10:20:18 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -101,4 +101,11 @@ ds %>%
   print() ->
 catc
 
+# Identify variables by name that have missing values.
 
+missing <- colnames(ds)[colSums(is.na(ds)) > 0]
+
+missing
+
+glimpse(ds)
+summary(ds)

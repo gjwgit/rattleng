@@ -1,11 +1,11 @@
-/// Widget to configure the RESCALE feature of the WRANGLE tab.
+/// Widget to configure the RESCALE feature of the TRANSFORM tab.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-25 09:40:12 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-30 08:48:39 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -46,9 +46,9 @@ class RescaleConfig extends ConsumerStatefulWidget {
 }
 
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
-  // List choice of transforms for rescaling.
+  // List choice of methods for rescaling.
 
-  List<String> transforms = [
+  List<String> methods = [
     'Recenter',
     'Scale [0-1]',
     '-Median/MAD',
@@ -81,7 +81,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     return Expanded(
       child: Wrap(
         spacing: 5.0,
-        children: transforms.map((transform) {
+        children: methods.map((transform) {
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,
@@ -155,7 +155,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
               },
-              child: const Text('Preform Rescale Transform'),
+              child: const Text('Transform'),
             ),
             configWidgetSpace,
             variableChooser(inputs, selected),
