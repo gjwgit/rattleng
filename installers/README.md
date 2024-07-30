@@ -135,12 +135,40 @@ for this development version we are side-loading the package.
 
 ## MacOS
 
-### Zip Install
+### Prerequisite
+
++ Install R. 
++ Install prerequisite R packages.
++ Test from command line:
+
+```console
+$ R
+ ...
+
+> library(tidyverse)
+> library(rattle)
+```
+
+You are then ready to install the RattleNG software using one of the
+methods below.
+
+### Zip Install UNDER DEVELOPMENT
+
+Download the zip archive, unpack it, and run.
 
 ```bash
 wget https://access.togaware.com/rattleng-dev-macos.zip
 unzip rattlemg-dev-macos.zip -d rattleng
 open rattleng/rattle.app
+```
+
+**Status 20240729**
+
+The app starts up and in the **Console** tab we can see the R code but
+there is no R process running to execute the code? There is a message:
+
+```console
+the process exited with exit code 255
 ```
 
 ### Dmg Install - UNDER DEVELOPMENT
@@ -176,7 +204,7 @@ wget https://access.togaware.com/rattleng-dev-windows.zip
 Unzip and run `rattle.exe`. You can add the unzipped path to the
 system PATH environment variable.
 
-*Status 20240729*
+**Status 20240729**
 
 The R process within the flutter-based RattleNG app is not picking up
 locally installed R packages. You may be able to see this if you
@@ -211,6 +239,9 @@ need a Target).
 ```
 .libPaths("/Users/bill/Library/R/3.4/library")
 ```
+
+Also it would appear the flutter is not sending 
+
 
 ### Inno Install - UNDER DEVELOPMENT 
 
