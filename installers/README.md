@@ -160,10 +160,15 @@ methods below.
 
 ### Zip Install UNDER DEVELOPMENT
 
-Download the zip archive, unpack it, and run.
+Download the zip archive:
 
 ```bash
 wget https://access.togaware.com/rattleng-dev-macos.zip
+```
+
+Unpack it, and run.
+
+```bash
 unzip rattlemg-dev-macos.zip -d rattleng
 open rattleng/rattle.app
 ```
