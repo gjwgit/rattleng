@@ -28,5 +28,11 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSAppleEventsUsageDescription</key>
+    <string>Your app needs access to Apple Events to function properly.</string>
+    <key>NSFileSystemUsageDescription</key>
+    <string>Your app needs access to the file system to function properly.</string>
+    <key>NSFullDiskAccessUsageDescription</key>
+    <string>Your app needs full disk access to function properly.</string>
 </dict>
 </plist>
