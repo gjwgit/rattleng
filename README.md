@@ -85,8 +85,10 @@ Currently implemented features:
   + Visual
   + Missing
   + Correlation
-+ Wrangle
-  + Recenter
+  + Tests
++ Transform
+  + Rescale
+  + Impute
 + Model
   + Cluster
   + Tree
