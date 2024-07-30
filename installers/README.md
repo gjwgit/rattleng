@@ -17,15 +17,20 @@ install the pre-requisite packages for Rattle by pasting the following after the
 prompt `> `:
 
 ```bash
-R -e 'install.packages(c("rattle", "magrittr", "janitor", "tidyverse",
-                         "mice", "VIM", "naniar", "reshape", "corrplot",
-                         "Hmisc", "fBasics", "descr", "randomForest",
-                         "verification", "magrittr", "janitor", "rpart",
-                         "readr", "tm", "wordcloud", "magick", ggthemes'))'
+R -e 'install.packages(c("rattle", "Hmisc", "VIM",
+                         "corrplot", "descr", "fBasics", ggthemes, "janitor",
+                         "magrittr", "magick", "mice", "naniar",
+                         "randomForest", "readr", "reshape", "rpart",
+                         "tidyverse", "tm", "verification", "wordcloud"'))'
 ```
 
 RattleNG can then be installed from the installation packages
 available from Togaware as described below.
+
+**NOTE** If the packages are not installed the RattleNG will install
+them into your local folder for you the first time it starts up, which
+can take some time. Check the **Console** tab to see what is
+happening.
 
 ## Linux
 
@@ -56,10 +61,9 @@ wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zi
 
 **Quick Start**
 
-To try it out:
+To try it out, after downloading the zip file, unzip it locally:
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 unzip rattleng-dev-linux.zip -d rattleng
 ```
 
@@ -71,14 +75,16 @@ rattleng/rattle
 
 **Local User Install**
 
-To install for use just by you the package can be placed into `~/.local/share`:
+To install for use just by you the package can be placed into
+`~/.local/share`. After downloading the **zip** file unzip it into
+that location:
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 unzip rattleng-dev-linux.zip -d ${HOME}/.local/share/rattleng
 ```
 
-These two steps can also be repeated to **update** your installation.
+These two steps, wget and unzip, can also be repeated to **update**
+your installation.
 
 Now set up a link to the binary to be able to run the `rattle` command
 from a terminal:
@@ -100,15 +106,15 @@ wget https://github.com/gjwgit/rattleng/raw/dev/installers/rattle.png -O ${HOME}
 **System Install**
 
 To install for any user on the computer begin by downloading the
-**.zip** and installing that into `/opt/` or wherever your system
-suggests optional installations live:
+**zip** and unzip that into `/opt/` or wherever your system suggests
+optional installations live:
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 sudo unzip rattleng-dev-linux.zip -d /opt/rattleng
 ```
 
-Those two steps can also be repeated to **update** your installation.
+Those two steps, wget and unzip, can also be repeated to **update**
+your installation.
 
 Then set up your local installation (only required once):
 
