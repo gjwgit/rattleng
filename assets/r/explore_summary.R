@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:27:37 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 13:26:18 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,13 +35,9 @@
 
 # Load required packages from the local library into the R session.
 
-# The 'Hmisc' package provides the 'contents' function.
-
-library(Hmisc, quietly=TRUE)
-
 # Obtain a summary of the dataset.
 
-contents(ds)
+Hmisc::contents(ds)
 
 # Standard R summary of the dataset.
 
@@ -49,42 +45,25 @@ summary(ds)
 
 # Generate a description of the dataset.
 
-describe(ds)
-
-# The 'basicStats' package provides the 'fBasics' function.
-
-library(fBasics, quietly=TRUE)
+Hmisc::describe(ds)
 
 # Generate a description of the numeric data.
 
-lapply(ds[numc], basicStats)
-
-# The 'kurtosis' package provides the 'fBasics' function.
-
-library(fBasics, quietly=TRUE)
+lapply(ds[numc], fBasics::basicStats)
 
 # Summarise the kurtosis of the numeric data.
 
-kurtosis(ds[numc], na.rm=TRUE)
-
-# The 'skewness' package provides the 'fBasics' function.
-
-library(fBasics, quietly=TRUE)
+fBasics::kurtosis(ds[numc], na.rm=TRUE)
 
 # Summarise the skewness of the numeric data.
 
-skewness(ds[numc], na.rm=TRUE)
-
-# The 'CrossTable' package provides the 'descr' function. Needs work
-# to make it useful in RattleNG.
-
-library(descr, quietly=TRUE)
+fBasics::skewness(ds[numc], na.rm=TRUE)
 
 # Generate cross tabulations for categoric data.
 
 for (i in catc) { 
   cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target)) 
-  print(CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS")) 
+  print(descr::CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS")) 
   cat(paste(rep("=", 70), collapse=""), "
 
 ") 
