@@ -98,11 +98,59 @@ List<String> rExtractVars(String txt) {
   return result;
 }
 
-List<VariableInfo> extractVariables(String text) {
-  // extract the variable information from the glimpse(ds)
+List<VariableInfo> extractVariables(String txt) {
+  // extract the variable information from the latest glimpse(ds)
+  // TODO this caused problem of duplicated rows in dataset tab
   // TODO yyx 20240710 make it more robust like rExtractVars
+
+  // Command/string to identify start point of the extracttion.
+  String cmd = '> glimpse(ds)';
+
+  // Split the string based on lines.
+
+  List<String> lines = txt.split('\n');
+
+  // The result is a list of variable names (Strings).
+
+  List<String> result = [];
+
+  // Find the start of the latest string of interest, searching from the last
+  // line backwards. Begin by initializing a value that indicates no start index
+  // found.
+
+  int startIndex = -1;
+
+  for (int i = lines.length - 1; i >= 0; i--) {
+    if (lines[i].contains(cmd)) {
+      startIndex = i;
+      break;
+    }
+  }
+
+  // If the pattern of interest was found then begin collecting lines of output
+  // from the R Console.
+
+  if (startIndex != -1) {
+    for (int i = startIndex + 1; i < lines.length; i++) {
+      if (lines[i].startsWith('>')) {
+        // Found the next line starting with the R prompt '>'. Stop adding lines
+        // to the result. Assumes no lines, after the pattern of interest, that
+        // contain the output we want to capture start with the R prompt '>'.
+
+        break;
+      }
+
+      result.add(lines[i]);
+    }
+  }
+
+  // Join all lines into one string to work on it now to extract the variable
+  // names.
+
+  String vars = result.join('\n');
+
   final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
-  final matches = regex.allMatches(text);
+  final matches = regex.allMatches(vars);
 
   return matches.map((match) {
     final name = match.group(1)!;
@@ -112,6 +160,7 @@ List<VariableInfo> extractVariables(String text) {
     return VariableInfo(name: name, type: type, details: details);
   }).toList();
 }
+
 
 class VariableInfo {
   final String name;
