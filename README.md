@@ -45,8 +45,8 @@ You will need to install R, separate to the  app itself. Visit
 https://www.r-project.org/ for details.
 
 Then install RattleNG for your operating system as detailed in the
-installers <a
-href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md">README</a>.
+installers
+[README](https://github.com/gjwgit/rattleng/blob/dev/installers/README.md).
 
 Then:
 
@@ -97,20 +97,20 @@ Currently implemented features:
 
 ## Building RattleNG from Source
 
-Ensure you have R installed, as described in the installer <a
-href="https://github.com/gjwgit/rattleng/blob/dev/installers/README.md">README</a>.
+Ensure you have R installed, as described in the installer
+[README](https://github.com/gjwgit/rattleng/blob/dev/installers/README.md).
 
-Install Flutter as describe in the <a
-href="https://docs.flutter.dev/get-started/install">Flutter Install
-Guide</a> In short, to install on Windows, download the flutter sdk,
-unzip it to your home folder, add `C:\Users\<user>\flutter\bin` to the
-PATH environment variable, and in a CMD console run `flutter help`.
+Install Flutter as describe in the [Flutter Install
+Guide](https://docs.flutter.dev/get-started/install). In short, to
+install on Windows, download the flutter sdk, unzip it to your home
+folder, add `C:\Users\<user>\flutter\bin` to the PATH environment
+variable, and in a CMD console run `flutter help`.
 
 *Currently (20230918), on Azure Windows VM, `flutter doctor` just sits
 there!*
 
-Then clone the <a
-href="https://github.com/gjwgit/rattleng">rattleng</a> repository:
+Then clone the [rattleng](https://github.com/gjwgit/rattleng)
+repository:
 
 ```bash
 git clone https://github.com/gjwgit/rattleng
