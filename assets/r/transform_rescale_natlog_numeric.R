@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-07-25 09:40:59 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 13:47:50 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,3 +32,4 @@ ds %<>%
                                    NA, RLG_SELECTED_VAR)) 
 
 glimpse(ds)
+summary(ds)
