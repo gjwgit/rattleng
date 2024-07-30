@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-07-19 09:49:04 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-31 08:38:50 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -79,7 +79,6 @@ class _TransformTabsState extends ConsumerState<TransformTabs>
     _tabController.addListener(() {
       ref.read(transformProvider.notifier).state =
           transformPanels[_tabController.index]['title'];
-      debugPrint('Selected tab: ${_tabController.index}');
     });
   }
 
@@ -92,7 +91,7 @@ class _TransformTabsState extends ConsumerState<TransformTabs>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('TransformTabs: Rebuild.');
+    debugPrint('TRANSFORM: Rebuild.');
 
     return Column(
       children: [
