@@ -45,23 +45,28 @@
 
 # Access the weather dataset and utilities.
 
-if(!require(rattle)) install.packages("rattle")
+# if(!require(rattle)) install.packages("rattle")
+library("rattle")
 
-# Utilise %>% and %<>% pipeline operators.
+# # Utilise %>% and %<>% pipeline operators.
 
-if(!require(magrittr)) install.packages("magrittr")
+# if(!require(magrittr)) install.packages("magrittr")
 
-# Cleanup: clean_names() remove_constant().
+library("magrittr")
+# # Cleanup: clean_names() remove_constant().
 
-if(!require(janitor)) install.packages("janitor")
+# if(!require(janitor)) install.packages("janitor")
+library("janitor")
 
-# ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+# # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
 
-if(!require(tidyverse)) install.packages("tidyverse")
+# if(!require(tidyverse)) install.packages("tidyverse")
+library("tidyverse")
 
-# ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+# # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
 
-if(!require(ggthemes)) install.packages("ggthemese")
+# if(!require(ggthemes)) install.packages("ggthemese")
+library("ggthemese")
 
 # A pre-defined value for the random seed ensures that results are
 # repeatable.
