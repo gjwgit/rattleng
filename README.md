@@ -75,7 +75,7 @@ Then:
   of the saved script file).
 + From your own command line run `Rscript script.R`
 
-Currently implemented features:
+Currently implemented features as of version 6.2.18:
 
 + Dataset
   + CSV
