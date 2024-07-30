@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:17:33 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-07-30 13:39:32 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -48,25 +48,30 @@
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 options(install.packages.ask = FALSE)
 
-# Access the weather dataset and utilities.
+# Load or else install the required packages.
 
-if(!require(rattle)) install.packages("rattle")
+if(!require(pacman)) install.packages("pacman")
 
-# Utilise %>% and %<>% pipeline operators.
-
-if(!require(magrittr)) install.packages("magrittr")
-
-# Cleanup: clean_names() remove_constant().
-
-if(!require(janitor)) install.packages("janitor")
-
-# ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-
-if(!require(tidyverse)) install.packages("tidyverse")
-
-# ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-
-if(!require(ggthemes)) install.packages("ggthemese")
+pacman::p_load(rattle,     # Access the weather dataset and utilities.
+               Hmisc,
+               VIM,
+               corrplot,
+               descr,
+               fBasics,
+               ggthemes,
+               janitor,    # Cleanup: clean_names() remove_constant().
+               magick,
+               magrittr,   # Utilise %>% and %<>% pipeline operators.
+               mice,
+               randomForest,
+               readr,
+               reshape,
+               rpart,
+               skimr,
+               tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+               tm,
+               verification,
+               wordcloud)
 
 # A pre-defined value for the random seed ensures that results are
 # repeatable.
