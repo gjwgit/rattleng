@@ -56,7 +56,18 @@ extension RoleExtension on Role {
     }
   }
 }
-// List choices for variable ROLES.
+
+bool remap(Role role, Role choice) {
+  // ignoreAfterTransformed mapped to ignore in the gui
+  if (role == Role.ignoreAfterTransformed) {
+    if (choice == Role.ignore) {
+      return true;
+    }
+  }
+  return role == choice;
+}
+
+// These are roles to displayed in the GUI.
 List<Role> choices = [
   Role.input,
   Role.target,
