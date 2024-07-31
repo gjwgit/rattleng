@@ -95,7 +95,7 @@ class _RConsoleState extends ConsumerState<RConsole> {
           autofocus: true,
           backgroundOpacity: 1.0,
           padding: const EdgeInsets.all(8.0),
-          textScaleFactor: 1.2,
+          textScaler: const TextScaler.linear(1.2),
           textStyle: const TerminalStyle(fontFamily: 'RobotoMono'),
           theme: blackOnWhite,
         ),
