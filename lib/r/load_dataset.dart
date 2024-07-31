@@ -67,6 +67,20 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
   } else {
     debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
 
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('PATH NOT RECOGNISED'),
+        content: const Text('Unable to load dataset'),
+        actions: <Widget>[
+          ElevatedButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+
     return;
   }
 
