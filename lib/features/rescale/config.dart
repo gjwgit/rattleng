@@ -33,6 +33,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
@@ -129,9 +130,15 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
   @override
   Widget build(BuildContext context) {
+    // this ensures that the new var immedicately appear in the menu.
+    updateRolesProvider(ref);
+
+    // Variables that were automatically ignored through a transform should still be listed in the TRANSFORM selected list because I might want to do some more transforms on it.
+    // Variables the user has marked as IGNORE should not be listed in the TRANSFORM tab.
+
     // Retireve the list of inputs as the label and value of the dropdown menu.
 
-    List<String> inputs = getInputs(ref);
+    List<String> inputs = getInputsAndIgnoreTransformed(ref);
 
     // TODO 20240725 gjw ONLY WANT NUMC VAIABLES AVAILABLE FOR RESCALE
 
