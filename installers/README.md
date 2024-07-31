@@ -12,12 +12,29 @@ installed on your computer. At present R is supported on desktops
 (Linux, MacOS, and Windows). You can download R from the [R
 statistical software](https://cloud.r-project.org/) repository. 
 
-Once R is installed, open a terminal and run the R command. You can then
-install the pre-requisite packages for Rattle by pasting the following after the
-prompt `> `:
+RattleNG will attempt to install any missing R packages each time it
+starts up. For those packages it installs it won't need to attempt to
+install them again (next startup). You can check this in the
+**Console** tab. However you may need to install one R package before
+starting RattleNG for the first time:
 
 ```bash
-R -e 'install.packages(c("rattle", "Hmisc", "VIM",
+$ R
+...
+> install.packages('pacman')
+```
+
+For a new install of R this will likely prompt you for a local install
+folder. Choose `yess` to go with the defaults. Once setup the `pacman`
+package will manage the package installs within RattleNG.
+
+If you want to separately make sure you have the required R packages
+installed, once R itself is installed, open a terminal and run the R
+command. You can then install the pre-requisite packages for RattleNG
+by pasting the following after the prompt `> `:
+
+```bash
+R -e 'install.packages(c("pacman", "rattle", "Hmisc", "VIM",
                          "corrplot", "descr", "fBasics", ggthemes, "janitor",
                          "magick", "magrittr", "mice", "naniar",
                          "randomForest", "readr", "reshape", "rpart",
@@ -27,9 +44,9 @@ R -e 'install.packages(c("rattle", "Hmisc", "VIM",
 RattleNG can then be installed from the installation packages
 available from Togaware as described below.
 
-**NOTE** If the packages are not installed the RattleNG will install
-them into your local folder for you the first time it starts up, which
-can take some time. Check the **Console** tab to see what is
+**NOTE** If the R packages are not installed then RattleNG will
+install them into your local folder for you the first time it starts
+up, which can take some time. Check the **Console** tab to see what is
 happening.
 
 ## Linux
@@ -37,16 +54,19 @@ happening.
 ### Prerequisite
 
 + Install R. For Debian/Ubuntu: `wajig install r-recommended`
-+ Install prerequisite R packages from the operating system using the
-  `apt`command below. If you don't have admin access the above R
-  `install.packages` command will install the packages into your
-  account.
++ Install prerequisite R packages from the
+  operating system using the `apt` command below. If you don't have
+  admin access the above R `install.packages` command will install the
+  packages into your account.
 
 ```bash
 sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
 	 r-cran-tidyverse r-cran-vim r-cran-hmisc r-cran-mice \
 	 r-cran-reshape
 ```
+
+At a minimum, you will need to install `pacman` through R as detailed
+int eh above prerequisites section.
 
 You are then ready to install the Rattle software using one of the methods below.
 

@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-07-19 09:34:24 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-31 08:39:09 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -106,7 +106,6 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
           modelPanels[_tabController.index]['title'];
-      debugPrint('Selected tab: ${_tabController.index}');
     });
   }
 
@@ -119,7 +118,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('modeltab rebuild.');
+    debugPrint('MODEL: rebuild');
 
     return Column(
       children: [
