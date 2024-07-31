@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:39:32 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-01 09:28:54 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -48,7 +48,7 @@
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 options(install.packages.ask = FALSE)
 
-# Load or else install the required packages.
+# Load or else install `pacman` to manage package requirements.
 
 if(!require(pacman)) install.packages("pacman")
 
