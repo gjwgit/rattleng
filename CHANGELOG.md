@@ -8,7 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
-+ RESCALE updates [6.2.20 20240731 yyx]
++ RESCALE update [6.2.20 20240731 yyx]
 + Add a table view icon [6.2.19 20240731 gjw]
 + Implement IMPUTE.  [6.2.18 20240730 gjw]
 + Use pacman:: rather than library() [6.2.18 20240730 gjw]
