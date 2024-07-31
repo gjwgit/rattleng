@@ -29,8 +29,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 
 import 'package:rattle/widgets/activity_button.dart';
 
@@ -48,6 +51,11 @@ class TestsConfig extends ConsumerStatefulWidget {
 class TestsConfigState extends ConsumerState<TestsConfig> {
   @override
   Widget build(BuildContext context) {
+    String stdout = ref.watch(stdoutProvider);
+
+    // update the rolesProvider to get the latest inputs
+    List<VariableInfo> vars = extractVariables(stdout);
+    updateRolesProvider(vars, ref);
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value then we choose the
     // first input variable.
