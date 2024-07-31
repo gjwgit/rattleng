@@ -41,16 +41,107 @@ class ScriptSaveButton extends ConsumerWidget {
     return ElevatedButton(
       child: const Text('Export'),
       onPressed: () {
-        debugPrint("SAVE BUTTON EXPORT: 'script.R'");
-        String script = ref.read(scriptProvider);
-        // Remove the svg/dev.off lines.
-        List<String> lines = script.split('\n');
-        lines = lines.where((line) => !line.trim().startsWith('svg')).toList();
-        lines =
-            lines.where((line) => !line.trim().startsWith('dev.off')).toList();
-        script = lines.join('\n');
-        File('script.R').writeAsString(script);
+        _showFileNameDialog(context, ref);
       },
+    );
+  }
+
+  // Function to display a dialog for the user to enter the file name.
+  void _showFileNameDialog(BuildContext context, WidgetRef ref) {
+    final TextEditingController controller =
+        TextEditingController(text: 'script.R');
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Save Script'),
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(
+              hintText: 'Enter file name',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog without saving.
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                final String fileName = controller.text;
+                if (fileName.isNotEmpty) {
+                  // Validate the file name ends with .R.
+                  if (fileName.endsWith('.R')) {
+                    _saveScript(ref, fileName, context);
+                    Navigator.of(context).pop();
+                  } else {
+                    // Show an error message if the file name does not end with .R.
+                    _showErrorDialog(context, 'File name must end with .R');
+                  }
+                } else {
+                  // Show an error message if the file name is empty.
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('File name cannot be empty')),
+                  );
+                }
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Function to display an error dialog.
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Function to save the script to a file.
+  void _saveScript(WidgetRef ref, String fileName, BuildContext context) {
+    debugPrint("SAVE BUTTON EXPORT: '$fileName'");
+
+    // Get the script content from the provider.
+    String script = ref.read(scriptProvider);
+
+    // Remove the lines starting with 'svg' and 'dev.off'
+    List<String> lines = script.split('\n');
+    lines = lines.where((line) => !line.trim().startsWith('svg')).toList();
+    lines = lines.where((line) => !line.trim().startsWith('dev.off')).toList();
+    script = lines.join('\n');
+
+    if (!fileName.endsWith('.R')) {
+      fileName = '$fileName.R';
+    }
+    final file = File(fileName);
+
+    // Write the script content to the file.
+    file.writeAsString(script);
+
+    // Show a confirmation message.
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('File saved as $fileName.R')),
     );
   }
 }
