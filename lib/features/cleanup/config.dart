@@ -67,6 +67,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
               child: const Text('Preform Cleanup Transform'),
             ),
+            const SizedBox(width: 20),
             Row(
               children: [
                 Checkbox(
@@ -82,6 +83,63 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
                   ''',
                   child: Text('Delete Ignored'),
+                ),
+              ],
+            ),
+            const SizedBox(width: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(deleteSelected),
+                  onChanged: (bool? v) => {
+                    ref.read(deleteSelected.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message: '''
+
+                  Delete the variable selected.
+
+                  ''',
+                  child: Text('Delete Selected'),
+                ),
+              ],
+            ),
+            const SizedBox(width: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(deleteMissing),
+                  onChanged: (bool? v) => {
+                    ref.read(deleteMissing.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message: '''
+
+                  Delete variables that have any missing values.
+
+                  ''',
+                  child: Text('Delete Missing'),
+                ),
+              ],
+            ),
+            const SizedBox(width: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(deleteObsWithMissing),
+                  onChanged: (bool? v) => {
+                    ref.read(deleteObsWithMissing.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message: '''
+
+                  Delete rows that have any missing values.
+
+                  ''',
+                  child: Text('Delete Obs with Missing'),
                 ),
               ],
             ),

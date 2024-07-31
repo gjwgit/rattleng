@@ -28,3 +28,6 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final deleteIgnored = StateProvider<bool>((ref) => false);
+final deleteSelected = StateProvider<bool>((ref) => false);
+final deleteMissing = StateProvider<bool>((ref) => false);
+final deleteObsWithMissing = StateProvider<bool>((ref) => false);
