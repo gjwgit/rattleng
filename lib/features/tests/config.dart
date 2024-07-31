@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-06-12 12:21:49 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-30 19:49:58 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -67,7 +67,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
 
     String selected2 = ref.watch(selected2Provider);
     if (selected2 == 'NULL' && inputs.isNotEmpty) {
-      selected2 = inputs.first;
+      selected2 = inputs[1];
     }
 
     return Column(

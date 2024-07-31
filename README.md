@@ -75,7 +75,7 @@ Then:
   of the saved script file).
 + From your own command line run `Rscript script.R`
 
-Currently implemented features:
+Currently implemented features as of version 6.2.18:
 
 + Dataset
   + CSV
@@ -85,8 +85,10 @@ Currently implemented features:
   + Visual
   + Missing
   + Correlation
-+ Wrangle
-  + Recenter
+  + Tests
++ Transform
+  + Rescale
+  + Impute
 + Model
   + Cluster
   + Tree
@@ -120,15 +122,13 @@ flutter run
 
 Choose your target platform when prompted.
 
-After firing up the rattleng app, check in the Console tab to make
-sure the following packages were loaded:
+After firing up the rattleng app, check in the **Console** tab to make
+sure R is running. You should see some R code and the console is
+waiting at the R prompt:
 
 ```r
-library(rattle)
-library(magrittr)
-library(janitor)
-library(tidyverse)
-glimpse(weather)
+...
+> 
 ```
 
 RattleNG will itself eventually check for these and prompt if they are

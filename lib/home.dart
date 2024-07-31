@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-07-30 06:09:45 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-07-31 08:46:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -42,6 +42,7 @@ import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/console.dart';
+import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/panel.dart';
@@ -249,6 +250,19 @@ Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
 
           Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
           const SizedBox(width: 50),
+
+          // RESET
+
+          IconButton(
+            icon: const Icon(
+              Icons.table_view,
+              color: Colors.blue,
+            ),
+            onPressed: () {
+              rExecute(ref, 'view(ds)\n');
+            },
+            tooltip: 'Press here to view the current dataset.',
+          ),
 
           // RESET
 

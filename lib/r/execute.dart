@@ -4,7 +4,7 @@
 
 /// R Scripts: Support for running an R command.
 ///
-/// Time-stamp: <Monday 2024-07-22 08:22:39 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-07-31 06:49:59 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,28 +30,28 @@
 
 library;
 
-// import 'dart:convert';
+import 'dart:convert';
 
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// import 'package:rattle/providers/pty.dart';
-// import 'package:rattle/utils/update_script.dart';
+import 'package:rattle/providers/pty.dart';
+import 'package:rattle/utils/update_script.dart';
 
-// /// Run the R [code] and append to the [rattle] script.
+/// Run the R [code] and append to the [rattle] script.
 
-// void rExecute(WidgetRef ref, String code) {
-//   debugPrint("R EXECUTE:\t\t'$code'");
+void rExecute(WidgetRef ref, String code) {
+  debugPrint("R EXECUTE:\t\t'$code'");
 
-//   // Add the code to the script provider so it will be displayed in the script
-//   // tab.
+  // Add the code to the script provider so it will be displayed in the script
+  // tab.
 
-//   updateScript(
-//     ref,
-//     "\n${'#' * 72}\n## -- Extra Code --\n${'#' * 72}"
-//     '\n$code}\n',
-//   );
+  updateScript(
+    ref,
+    "\n${'#' * 72}\n## -- Extra Code --\n${'#' * 72}"
+    '\n$code}\n',
+  );
 
-//   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
-// }
+  ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+}

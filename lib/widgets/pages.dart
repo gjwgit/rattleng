@@ -1,6 +1,6 @@
 /// A widget to handle multiple pages for the display widget.
 //
-// Time-stamp: <Sunday 2024-06-30 12:44:39 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-07-31 08:37:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -59,7 +59,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     // }
     _pageController = PageController(initialPage: _currentPage);
     _tabController = TabController(length: widget.children.length, vsync: this);
-    debugPrint('PAGE CONTROLLER: ${widget.children.length}');
+    debugPrint('PAGES: pageController: length: ${widget.children.length}');
   }
 
   // We need to initialise the tab controller
@@ -86,8 +86,6 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Number of pages is ${widget.children.length}');
-
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -114,9 +112,6 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   }
 
   void _updateCurrentPageIndex(int index) {
-    debugPrint(
-      'in the tab controller it says there are ${_tabController.length} pages',
-    );
     _tabController.index = index;
     _pageController.animateToPage(
       index,
@@ -150,6 +145,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
 ///
 /// In this sample, we use a TabPageSelector to navigate between pages,
 /// in order to build natural behavior similar to other desktop applications.
+
 class PageIndicator extends StatelessWidget {
   const PageIndicator({
     super.key,
