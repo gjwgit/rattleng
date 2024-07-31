@@ -6,13 +6,13 @@ List<String> getVars(WidgetRef ref) {
   // The rolesProvider lists the roles for the different variables which we
   // need to know for parsing the R scripts.
 
-  Map<String, String> roles = ref.read(rolesProvider);
+  Map<String, Role> roles = ref.read(rolesProvider);
 
   // Extract the input variable from the rolesProvider.
 
   List<String> vars = [];
   roles.forEach((key, value) {
-    if (value == 'Input' || value == 'Risk' || value == 'Target') {
+    if (value == Role.input || value == Role.risk || value == Role.target) {
       vars.add(key);
     }
   });
