@@ -27,9 +27,11 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/delete_vars.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
 ///
@@ -64,6 +66,24 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 showUnderConstruction(context);
               },
               child: const Text('Preform Cleanup Transform'),
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: ref.watch(deleteIgnored),
+                  onChanged: (bool? v) => {
+                    ref.read(deleteIgnored.notifier).state = v!,
+                  },
+                ),
+                const DelayedTooltip(
+                  message: '''
+
+                  Delete the variables marked as IGNORE role.
+
+                  ''',
+                  child: Text('Delete Ignored'),
+                ),
+              ],
             ),
           ],
         ),
