@@ -73,7 +73,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String content = '';
     String title = '';
 
-    if (path == 'rattle::weather' || path.endsWith('.csv')) {
+    if (path == weatherDemoFile || path.endsWith('.csv')) {
       content = rExtractGlimpse(stdout);
       title = '''
 
@@ -104,7 +104,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       );
     }
 
-    if (path == 'rattle::weather' || path.endsWith('.csv')) {
+    if (path == weatherDemoFile || path.endsWith('.csv')) {
       Map<String, Role> currentRoles = ref.read(rolesProvider);
 
       // Extract variable information from the R console.
