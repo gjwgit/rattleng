@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
 
@@ -52,7 +53,7 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
 
   debugPrint("R LOAD DATASET:\t'$path'");
 
-  if (path == '' || path == 'rattle::weather') {
+  if (path == '' || path == weatherDemoFile) {
     // The default, when we get here and no path has been specified yet, is to
     // load the weather dataset as the demo dataset from R's rattle package.
 
@@ -65,6 +66,20 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
     return;
   } else {
     debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('PATH NOT RECOGNISED'),
+        content: const Text('Unable to load dataset'),
+        actions: <Widget>[
+          ElevatedButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
 
     return;
   }

@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
@@ -129,7 +130,7 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   // TODO 20231101 gjw DEFINE setPath()
 
-                  ref.read(pathProvider.notifier).state = 'rattle::weather';
+                  ref.read(pathProvider.notifier).state = weatherDemoFile;
 
                   // TODO 20240714 gjw HOW TO GET THE weather.csv FROM ASSETS
                   // ref.read(pathProvider.notifier).state =
