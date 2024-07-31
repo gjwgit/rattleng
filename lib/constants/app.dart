@@ -44,6 +44,10 @@ const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
+/// File name of demo file (weather.csv).
+
+const String weatherDemoFile = 'rattle::weather';
+
 // proportion of window that display panel takes
 // const double displayRatio = 0.75;
 
