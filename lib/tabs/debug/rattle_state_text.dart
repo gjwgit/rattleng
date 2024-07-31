@@ -72,7 +72,7 @@ class RattleStateText extends ConsumerWidget {
     // need to know for parsing the R scripts. The typesProvider is a record of
     // the data types of each variable.
 
-    Map<String, String> roles = ref.watch(rolesProvider);
+    Map<String, Role> roles = ref.watch(rolesProvider);
     Map<String, Type> types = ref.watch(typesProvider);
 
     // We will print out the roles and types so format them.

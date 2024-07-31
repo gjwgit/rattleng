@@ -27,19 +27,57 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum Role {
+  input,
+  target,
+  risk,
+  ident,
+  ignore,
+  ignoreAfterTransformed,
+  weight,
+}
+
+// Define an extension on TemperatureType to override the toString method
+extension RoleExtension on Role {
+  String get displayString {
+    switch (this) {
+      case Role.input:
+        return 'Input';
+      case Role.target:
+        return 'Target';
+      case Role.risk:
+        return 'Risk';
+      case Role.ident:
+        return 'Ident';
+      case Role.ignore:
+        return 'Ignore';
+      default:
+        return '';
+    }
+  }
+}
+// List choices for variable ROLES.
+List<Role> choices = [
+  Role.input,
+  Role.target,
+  Role.risk,
+  Role.ident,
+  Role.ignore,
+  // 'Weight',
+];
 
 // ignore can be done by user or automatically.
 // They have different roles: ignore or ignore_transformed
 // map from variable to role
-final rolesProvider = StateProvider<Map<String, String>>((ref) => {});
+final rolesProvider = StateProvider<Map<String, Role>>((ref) => {});
 
 // Custom getter to access the 'Target' value
 
-extension RolesProviderX on WidgetRef {
-  String get target {
-    final rolesMap = watch(rolesProvider);
-    // TODO yyx 20240723 Isn't it mapping from variable to role?
+// extension RolesProviderX on WidgetRef {
+//   String get target {
+//     final rolesMap = watch(rolesProvider);
+//     // TODO yyx 20240723 Isn't it mapping from variable to role?
 
-    return rolesMap['Target'] ?? 'NULL';
-  }
-}
+//     return rolesMap['Target'] ?? 'NULL';
+//   }
+// }

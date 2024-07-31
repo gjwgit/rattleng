@@ -47,9 +47,10 @@ import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-bool abc(String role, String choice) {
-  if (role == 'Ignore_transformed') {
-    if (choice == 'Ignore') {
+bool remap(Role role, Role choice) {
+  // ignoreAfterTransformed mapped to ignore in the gui
+  if (role == Role.ignoreAfterTransformed) {
+    if (choice == Role.ignore) {
       return true;
     }
   }
@@ -72,15 +73,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   int typeFlex = 4;
   int contentFlex = 3;
 
-  // List choices for variable ROLES.
-  List<String> choices = [
-    'Input',
-    'Target',
-    'Risk',
-    'Ident',
-    'Ignore',
-    // 'Weight',
-  ];
+
 
 
   @override
@@ -125,7 +118,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
 
     if (path == 'rattle::weather' || path.endsWith('.csv')) {
-      Map<String, String> currentRoles = ref.read(rolesProvider);
+      Map<String, Role> currentRoles = ref.read(rolesProvider);
 
       // Extract variable information from the R console.
 
@@ -138,20 +131,20 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         // Default is INPUT unless the variable name begins with `risk_`.
 
         for (var column in vars) {
-          ref.read(rolesProvider.notifier).state[column.name] = 'Input';
+          ref.read(rolesProvider.notifier).state[column.name] = Role.input;
           ref.read(typesProvider.notifier).state[column.name] =
               isNumeric(column.type) ? Type.numeric : Type.categoric;
 
           if (column.name.toLowerCase().startsWith('risk_')) {
-            ref.read(rolesProvider.notifier).state[column.name] = 'Risk';
+            ref.read(rolesProvider.notifier).state[column.name] = Role.risk;
           }
 
           if (column.name.toLowerCase().startsWith('ignore_')) {
-            ref.read(rolesProvider.notifier).state[column.name] = 'Ignore';
+            ref.read(rolesProvider.notifier).state[column.name] = Role.ignore;
           }
 
           if (column.name.toLowerCase().startsWith('target_')) {
-            ref.read(rolesProvider.notifier).state[column.name] = 'Target';
+            ref.read(rolesProvider.notifier).state[column.name] = Role.target;
           }
         }
 
@@ -162,14 +155,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         // then no TARGET will be identified by default.
 
         if (getTarget(ref) == 'NULL') {
-          ref.read(rolesProvider.notifier).state[vars.last.name] = 'Target';
+          ref.read(rolesProvider.notifier).state[vars.last.name] = Role.target;
         }
 
         // Any variables that have a unique value for every row in the dataset
         // is considered to be an IDENTifier.
 
         for (var id in getUniqueColumns(ref)) {
-          ref.read(rolesProvider.notifier).state[id] = 'Ident';
+          ref.read(rolesProvider.notifier).state[id] = Role.ident;
         }
       }
       // When a new row is added after transformation, initialise its role and update the role of the old variable
@@ -248,25 +241,25 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   spacing: 5.0,
                   children: choices.map((choice) {
                     return ChoiceChip(
-                      label: Text(choice),
+                      label: Text(choice.displayString),
                       disabledColor: Colors.grey,
                       selectedColor: Colors.lightBlue[200],
                       backgroundColor: Colors.lightBlue[50],
                       shadowColor: Colors.grey,
                       pressElevation: 8.0,
                       elevation: 2.0,
-                      selected: abc(currentRoles[columnName]!,choice),
+                      selected: remap(currentRoles[columnName]!,choice),
                       onSelected: (bool selected) {
                         setState(() {
                           if (selected) {
                             // only one variable is Target, Risk and Weight.
-                            if (choice == 'Target' ||
-                                choice == 'Risk' ||
-                                choice == 'Weight') {
+                            if (choice == Role.target ||
+                                choice == Role.risk ||
+                                choice == Role.weight) {
                               currentRoles.forEach((key, value) {
                                 if (value == choice) {
                                   ref.read(rolesProvider.notifier).state[key] =
-                                      'Input';
+                                      Role.input;
                                 }
                               });
                             }
@@ -274,8 +267,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                                 choice;
                             debugPrint('$columnName set to $choice');
                           } else {
-                            ref.read(rolesProvider.notifier).state[columnName] =
-                                '';
+                            debugPrint('This should not happen');
+                            // ref.read(rolesProvider.notifier).state[columnName] =
+                            //     ;
                           }
                         });
                       },
