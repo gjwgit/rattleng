@@ -166,7 +166,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // The rolesProvider listes the roles for the different variables which we
   // need to know for parsing the R scripts.
 
-  Map<String, String> roles = ref.read(rolesProvider);
+  Map<String, Role> roles = ref.read(rolesProvider);
 
   // Extract the target variable from the rolesProvider.
 
