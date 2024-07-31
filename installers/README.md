@@ -16,7 +16,8 @@ RattleNG will attempt to install any missing R packages each time it
 starts up. For those packages it installs it won't need to attempt to
 install them again (next startup). You can check this in the
 **Console** tab. However you may need to install one R package before
-starting RattleNG for the first time:
+starting RattleNG for the first time to initialise your local R
+folder:
 
 ```bash
 $ R
@@ -25,7 +26,7 @@ $ R
 ```
 
 For a new install of R this will likely prompt you for a local install
-folder. Choose `yess` to go with the defaults. Once setup the `pacman`
+folder. Choose `yes` to go with the defaults. Once setup the `pacman`
 package will manage the package installs within RattleNG.
 
 If you want to separately make sure you have the required R packages
