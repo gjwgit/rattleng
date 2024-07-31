@@ -51,11 +51,8 @@ class TestsConfig extends ConsumerStatefulWidget {
 class TestsConfigState extends ConsumerState<TestsConfig> {
   @override
   Widget build(BuildContext context) {
-    String stdout = ref.watch(stdoutProvider);
-
     // update the rolesProvider to get the latest inputs
-    List<VariableInfo> vars = extractVariables(stdout);
-    updateRolesProvider(vars, ref);
+    updateRolesProvider(ref);
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value then we choose the
     // first input variable.
