@@ -47,7 +47,6 @@ import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
 class DatasetDisplay extends ConsumerStatefulWidget {
@@ -57,16 +56,12 @@ class DatasetDisplay extends ConsumerStatefulWidget {
   ConsumerState<DatasetDisplay> createState() => _DatasetDisplayState();
 }
 
-
 class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget space = const SizedBox(
     width: 10,
   );
   int typeFlex = 4;
   int contentFlex = 3;
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -240,7 +235,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       shadowColor: Colors.grey,
                       pressElevation: 8.0,
                       elevation: 2.0,
-                      selected: remap(currentRoles[columnName]!,choice),
+                      selected: remap(currentRoles[columnName]!, choice),
                       onSelected: (bool selected) {
                         setState(() {
                           if (selected) {

@@ -12,7 +12,7 @@ String getTarget(WidgetRef ref) {
 
   String target = 'NULL';
   roles.forEach((key, value) {
-    if (value ==  Role.target) {
+    if (value == Role.target) {
       target = key;
     }
   });

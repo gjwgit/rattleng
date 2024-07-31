@@ -30,8 +30,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/selected.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
