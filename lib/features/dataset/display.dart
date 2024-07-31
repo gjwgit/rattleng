@@ -166,7 +166,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         }
       }
       // When a new row is added after transformation, initialise its role and update the role of the old variable
-      updateRolesProvider(vars, ref);
+      updateRolesProvider(ref);
 
       var headline = Padding(
         padding: const EdgeInsets.all(6.0),

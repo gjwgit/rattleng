@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_vars.dart';
 
 Set<String> transformPrefix = {
@@ -28,7 +29,10 @@ bool isTransformedVar(String name) {
   return false;
 }
 
-void updateRolesProvider(List<VariableInfo> vars, WidgetRef ref) {
+void updateRolesProvider(WidgetRef ref) {
+  // get the most recent vars information from glimpse.
+  String stdout = ref.watch(stdoutProvider);
+  List<VariableInfo> vars = extractVariables(stdout);
   // When a new row is added after transformation, initialise its role and update the role of the old variable
   for (var column in vars) {
     if (!ref.read(rolesProvider.notifier).state.containsKey(column.name)) {

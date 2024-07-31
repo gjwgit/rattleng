@@ -59,8 +59,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     String stdout = ref.watch(stdoutProvider);
 
     // update the rolesProvider to get the latest inputs
-    List<VariableInfo> vars = extractVariables(stdout);
-    updateRolesProvider(vars, ref);
+    updateRolesProvider(ref);
 
     // Retireve the list of inputs as the label and value of the dropdown menu.
 
