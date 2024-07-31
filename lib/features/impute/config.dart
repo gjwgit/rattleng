@@ -156,6 +156,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   @override
   Widget build(BuildContext context) {
+    // this ensures that the new var immedicately appear in the menu.
+    // updateRolesProvider(ref);
     // Retireve the list of variables that have missing values as the label and
     // value of the dropdown menu.
 
@@ -180,6 +182,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     if (constant == 'NULL') {
       constant = '';
     }
+    
     return Column(
       children: [
         configTopSpace,

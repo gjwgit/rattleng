@@ -34,6 +34,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/get_catergoric.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -54,6 +55,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
+
+    // update the rolesProvider to get the latest inputs
+    updateRolesProvider(ref);
 
     // Retireve the list of inputs as the label and value of the dropdown menu.
 
@@ -81,7 +85,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
       groupBy = getTarget(ref);
     }
 
-    String numc = rExtract(stdout, '+ numc');
+    // String numc = rExtract(stdout, '+ numc');
 
     // BUILD Action.
 

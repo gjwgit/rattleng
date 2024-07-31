@@ -166,13 +166,13 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // The rolesProvider listes the roles for the different variables which we
   // need to know for parsing the R scripts.
 
-  Map<String, String> roles = ref.read(rolesProvider);
+  Map<String, Role> roles = ref.read(rolesProvider);
 
   // Extract the target variable from the rolesProvider.
 
   String target = 'NULL';
   roles.forEach((key, value) {
-    if (value == 'Target') {
+    if (value == Role.target) {
       target = key;
     }
   });
@@ -185,7 +185,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   String risk = 'NULL';
   roles.forEach((key, value) {
-    if (value == 'Risk') {
+    if (value == Role.risk) {
       risk = key;
     }
   });
@@ -206,7 +206,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   String ids = '';
   roles.forEach((key, value) {
-    if (value == 'Ident') {
+    if (value == Role.ident) {
       ids = '$ids${ids.isNotEmpty ? ", " : ""}"$key"';
     }
   });
