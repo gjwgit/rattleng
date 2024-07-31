@@ -50,6 +50,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
   pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen((data) {
     terminal.write(data);
+    // debugPrint('update stdoutProvider');
     ref.read(stdoutProvider.notifier).state =
         ref.read(stdoutProvider) + cleanString(data);
   });

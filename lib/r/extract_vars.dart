@@ -23,6 +23,8 @@
 /// Authors: Graham Williams
 library;
 
+import 'package:rattle/r/extract.dart';
+
 List<String> rExtractVars(String txt) {
   // Command/string to identify start point of the extracttion.
 
@@ -98,11 +100,13 @@ List<String> rExtractVars(String txt) {
   return result;
 }
 
-List<VariableInfo> extractVariables(String text) {
-  // extract the variable information from the glimpse(ds)
-  // TODO yyx 20240710 make it more robust like rExtractVars
+List<VariableInfo> extractVariables(String txt) {
+  // extract the variable information from the latest glimpse(ds)
+  String cmd = '> glimpse(ds)';
+  String vars = rExtract(txt, cmd);
+
   final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
-  final matches = regex.allMatches(text);
+  final matches = regex.allMatches(vars);
 
   return matches.map((match) {
     final name = match.group(1)!;
