@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Thursday 2024-08-01 05:37:41 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-01 08:23:06 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/normalise.dart';
@@ -39,6 +40,7 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/roles.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -56,6 +58,7 @@ class RattleStateText extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialise the state variables used here.
 
+    String groupBy = ref.watch(groupByProvider);
     String path = ref.watch(pathProvider);
     String status = ref.watch(statusProvider);
     String script = ref.watch(scriptProvider);
@@ -63,6 +66,7 @@ class RattleStateText extends ConsumerWidget {
     String stdout = ref.watch(stdoutProvider);
     String model = ref.watch(modelProvider);
     String selected = ref.watch(selectedProvider);
+    String selected2 = ref.watch(selected2Provider);
     String imputed = ref.watch(imputedProvider);
     List<String> vars = ref.watch(varsProvider);
     bool cleanse = ref.watch(cleanseProvider);
@@ -104,6 +108,8 @@ class RattleStateText extends ConsumerWidget {
             'IDENTIFIERS: \$identifiers \n'
             'IGNORE:      \$ignore\n'
             'SELECTED:    $selected\n'
+            'SELECTED2:   $selected2\n'
+            'GROUP BY:    $groupBy\n'
             'IMPUTED:     $imputed\n'
             'MODEL:       $model\n',
             style: monoSmallTextStyle,
