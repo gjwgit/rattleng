@@ -64,6 +64,7 @@ bool remap(Role role, Role choice) {
       return true;
     }
   }
+  
   return role == choice;
 }
 

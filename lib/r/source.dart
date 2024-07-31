@@ -172,7 +172,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   String target = 'NULL';
   roles.forEach((key, value) {
-    if (value == 'Target') {
+    if (value == Role.target) {
       target = key;
     }
   });
@@ -185,7 +185,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   String risk = 'NULL';
   roles.forEach((key, value) {
-    if (value == 'Risk') {
+    if (value == Role.risk) {
       risk = key;
     }
   });
@@ -206,7 +206,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   String ids = '';
   roles.forEach((key, value) {
-    if (value == 'Ident') {
+    if (value == Role.ident) {
       ids = '$ids${ids.isNotEmpty ? ", " : ""}"$key"';
     }
   });

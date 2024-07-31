@@ -34,7 +34,6 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/show_under_construction.dart';
-import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// This is a StatefulWidget to pass the REF across to the rSource as well as to
@@ -183,6 +182,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     if (constant == 'NULL') {
       constant = '';
     }
+    
     return Column(
       children: [
         configTopSpace,

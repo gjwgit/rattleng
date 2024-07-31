@@ -28,11 +28,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/group_by.dart';
-import 'package:rattle/providers/roles.dart';
 
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selected.dart';
-import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/get_catergoric.dart';
@@ -87,7 +85,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
       groupBy = getTarget(ref);
     }
 
-    String numc = rExtract(stdout, '+ numc');
+    // String numc = rExtract(stdout, '+ numc');
 
     // BUILD Action.
 
