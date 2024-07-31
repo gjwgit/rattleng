@@ -47,15 +47,7 @@ import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-bool remap(Role role, Role choice) {
-  // ignoreAfterTransformed mapped to ignore in the gui
-  if (role == Role.ignoreAfterTransformed) {
-    if (choice == Role.ignore) {
-      return true;
-    }
-  }
-  return role == choice;
-}
+
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
 class DatasetDisplay extends ConsumerStatefulWidget {

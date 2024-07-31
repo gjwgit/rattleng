@@ -100,10 +100,8 @@ List<String> rExtractVars(String txt) {
 
 List<VariableInfo> extractVariables(String txt) {
   // extract the variable information from the latest glimpse(ds)
-  // TODO this caused problem of duplicated rows in dataset tab
-  // TODO yyx 20240710 make it more robust like rExtractVars
-
-  // Command/string to identify start point of the extracttion.
+  
+  // Command/string to identify start point of the extraction.
   String cmd = '> glimpse(ds)';
 
   // Split the string based on lines.
