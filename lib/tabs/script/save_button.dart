@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Monday 2024-07-29 09:19:06 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-01 09:42:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -39,7 +39,7 @@ class ScriptSaveButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
-      child: const Text('Export'),
+      child: const Text('Save'),
       onPressed: () {
         _showFileNameDialog(context, ref);
       },
