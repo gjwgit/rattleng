@@ -11,7 +11,7 @@ void updateRolesProvider(List<VariableInfo> vars, WidgetRef ref) {
         ref.read(rolesProvider.notifier).state[column.name] = 'Input';
         ref
             .read(rolesProvider.notifier)
-            .state[column.name.replaceFirst('RRC_', '')] = 'Ignore';
+            .state[column.name.replaceFirst('RRC_', '')] = 'Ignore_transformed';
       } else {
         debugPrint('uninitialised new variables!');
       }

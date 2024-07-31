@@ -129,9 +129,12 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
   @override
   Widget build(BuildContext context) {
+    // Variables that were automatically ignored through a transform should still be listed in the TRANSFORM selected list because I might want to do some more transforms on it.
+    // Variables the user has marked as IGNORE should not be listed in the TRANSFORM tab.
+
     // Retireve the list of inputs as the label and value of the dropdown menu.
 
-    List<String> inputs = getInputs(ref);
+    List<String> inputs = getInputsAndIgnoreTransformed(ref);
 
     // TODO 20240725 gjw ONLY WANT NUMC VAIABLES AVAILABLE FOR RESCALE
 
@@ -154,7 +157,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
-                
               },
               child: const Text('Transform'),
             ),

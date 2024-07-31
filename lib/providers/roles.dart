@@ -27,6 +27,9 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
+// ignore can be done by user or automatically.
+// They have different roles: ignore or ignore_transformed
 // map from variable to role
 final rolesProvider = StateProvider<Map<String, String>>((ref) => {});
 
