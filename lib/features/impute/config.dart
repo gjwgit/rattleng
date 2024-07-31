@@ -182,7 +182,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     if (constant == 'NULL') {
       constant = '';
     }
-    
+
     return Column(
       children: [
         configTopSpace,
