@@ -18,7 +18,15 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 		  | head -n 1 \
 	          | cut -d' ' -f3)
 
-    # Linux
+    # Ubuntu 20.04 20240801
+    
+    # gh run download ${bumpId} --name rattle-ubuntu
+    # mv rattle-dev-ubuntu.zip rattleng-dev-ubuntu.zip
+    # cp rattleng-dev-ubuntu.zip rattleng-${version}-ubuntu.zip
+    # chmod a+r rattleng*.zip
+    # rsync -avzh rattleng-dev-ubuntu.zip rattleng-${version}-ubuntu.zip togaware.com:apps/access/
+
+    # Linux Ubuntu 20.04 20240801 moved from 22.04
     
     gh run download ${bumpId} --name rattle-linux
     mv rattle-dev-linux.zip rattleng-dev-linux.zip
