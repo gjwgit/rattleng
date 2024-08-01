@@ -61,9 +61,8 @@ happening.
   packages into your account.
 
 ```bash
-sudo apt install r-cran-magrittr \
-	 r-cran-tidyverse r-cran-vim r-cran-hmisc r-cran-mice \
-	 r-cran-reshape
+sudo apt install r-cran-magrittr r-cran-tidyverse \
+	 r-cran-vim r-cran-hmisc r-cran-mice r-cran-reshape
 ```
 
 At a minimum, you will need to install `pacman` through R as detailed
