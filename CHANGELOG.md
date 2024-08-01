@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ R script cleanup. Docs update. Ubuntu 20.04 build [6.2.23 20240801 gjw]
 + Prompt for script name on saving [6.2.22 20240801 zx]
 + Fine tuning [6.2.21 20240801 gjw]
 + RESCALE update [6.2.20 20240731 yyx]
