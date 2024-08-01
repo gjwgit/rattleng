@@ -61,13 +61,13 @@ happening.
   packages into your account.
 
 ```bash
-sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
+sudo apt install r-cran-magrittr \
 	 r-cran-tidyverse r-cran-vim r-cran-hmisc r-cran-mice \
 	 r-cran-reshape
 ```
 
 At a minimum, you will need to install `pacman` through R as detailed
-int eh above prerequisites section.
+in the above prerequisites section.
 
 You are then ready to install the Rattle software using one of the methods below.
 
@@ -79,6 +79,9 @@ Download
 ```bash
 wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 ```
+
+This version was compiled on Ubuntu 22.04 and is known to run on
+Ubuntu 24.04 and Mint 21.3.
 
 **Quick Start**
 
