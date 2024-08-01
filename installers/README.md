@@ -80,8 +80,8 @@ Download
 wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 ```
 
-This version was compiled on Ubuntu 22.04 and is known to run on
-Ubuntu 24.04 and Mint 21.3.
+This version was compiled on Ubuntu 20.04 and is known to run on
+Ubuntu 22.04, Ubuntu 24.04, and Mint 21.3.
 
 **Quick Start**
 
