@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-07-31 21:25:27 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-01 19:22:09 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -237,6 +237,42 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           title: '# Detailed Variable Statistics\n\n'
               'Generated using [fBasics::basicStats(ds)]'
               '(https://www.rdocumentation.org/packages/fBasics/topics/BasicStatistics).\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // CROSSTAB
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'descr::CrossTable(ds');
+
+    // Remove any line beginning with +.
+
+    lines = content.split('\n');
+
+    // Iterate over the lines and modify them.
+
+    // Remove lines starting with '+'
+
+    lines = lines.where((line) => !line.trimLeft().startsWith('+')).toList();
+
+    // Join the lines back into a single string.
+
+    content = lines.join('\n');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Cross Tabulation
+
+          Generated using
+          [descr::CrossTable(ds)](https://www.rdocumentation.org/packages/descr/topics/CrossTable)
+
+              ''',
           content: '\n$content',
         ),
       );
