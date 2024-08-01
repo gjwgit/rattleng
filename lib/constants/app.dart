@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-06-08 06:04:31 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-02 08:58:43 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 
 /// The Rattle app's title.
 
-const String appTitle = 'Rattle the Next Generation Data Scientist';
+const String appTitle = 'Rattle Next Generation Data Science';
 
 /// Project assets folder path used in the APP.
 
