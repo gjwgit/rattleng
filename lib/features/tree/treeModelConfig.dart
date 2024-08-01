@@ -29,6 +29,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
@@ -77,6 +78,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     // Define a smaller text style.
     const TextStyle smallTextStyle = TextStyle(fontSize: 12.0);
 
+    // Define a text style for disabled fields.
+    const TextStyle disabledTextStyle = TextStyle(
+      fontSize: 12.0,
+      color: Colors.grey, // Grey out the text
+    );
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -87,9 +94,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             children: [
               ActivityButton(
                 onPressed: () {
-
                   // Require a target variable.
-
                   if (getTarget(ref) == 'NULL') {
                     showOk(
                       context: context,
@@ -100,19 +105,18 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     dataset as the **Target** for the model. You can do this
                     from the **Dataset** tab's **Roles** feature. When building
                     a predictive model, like a decision tree, we need a target
-                    variable that we will model so that we can predict it's
+                    variable that we will model so that we can predict its
                     value.
 
                     ''',
                     );
                   } else {
                     // Run the R scripts.
-
                     rSource(context, ref, 'model_template');
                     rSource(context, ref, 'model_build_rpart');
                   }
                   // TODO yyx 20240627 How should I restore this effect in the new Widget Pages?
-                  // it failed to work only when user first click build on the panel because the pages are not yet updated.
+                  // it failed to work only when the user first clicks build on the panel because the pages are not yet updated.
                   // treePagesKey.currentState?.goToResultPage();
                 },
                 child: const Text('Build Decision Tree'),
@@ -140,7 +144,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   ),
                 );
               }),
-
               const Text(
                 'Include Missing',
                 style: smallTextStyle,
@@ -162,7 +165,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             ],
           ),
 
-          // Min Split and Max Depth.
+          // Min Split, Max Depth, and Min Bucket.
           Row(
             children: [
               _buildNumberField(
@@ -185,25 +188,34 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             ],
           ),
 
-          // Priors and Loss Matrix.
+          // Complexity, Priors, and Loss Matrix.
           Row(
             children: [
               _buildNumberField(
                 'Complexity:',
                 _complexityController,
-                smallTextStyle,
+                _selectedAlgorithm == AlgorithmType.conditional
+                    ? disabledTextStyle // Use disabled style if conditional.
+                    : smallTextStyle, // Normal style otherwise.
+                enabled: _selectedAlgorithm != AlgorithmType.conditional,
               ),
               const SizedBox(width: 16),
               _buildTextField(
                 'Priors:',
                 _priorsController,
-                smallTextStyle,
+                _selectedAlgorithm == AlgorithmType.conditional
+                    ? disabledTextStyle
+                    : smallTextStyle,
+                enabled: _selectedAlgorithm != AlgorithmType.conditional,
               ),
               const SizedBox(width: 16),
               _buildTextField(
                 'Loss Matrix:',
                 _lossMatrixController,
-                smallTextStyle,
+                _selectedAlgorithm == AlgorithmType.conditional
+                    ? disabledTextStyle
+                    : smallTextStyle,
+                enabled: _selectedAlgorithm != AlgorithmType.conditional,
               ),
             ],
           ),
@@ -214,7 +226,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
   // Helper method to create a text field.
   Widget _buildTextField(
-      String label, TextEditingController controller, TextStyle textStyle,) {
+    String label,
+    TextEditingController controller,
+    TextStyle textStyle, {
+    bool enabled = true, // Default enabled
+  }) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,6 +242,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               border: OutlineInputBorder(),
             ),
             style: textStyle,
+            enabled: enabled, // Control enable state
           ),
         ],
       ),
@@ -234,7 +251,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
   // Helper method to create a number field.
   Widget _buildNumberField(
-      String label, TextEditingController controller, TextStyle textStyle,) {
+    String label,
+    TextEditingController controller,
+    TextStyle textStyle, {
+    bool enabled = true, // Default enabled
+  }) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,6 +268,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             ),
             keyboardType: TextInputType.number,
             style: textStyle,
+            enabled: enabled, // Control enable state
           ),
         ],
       ),
