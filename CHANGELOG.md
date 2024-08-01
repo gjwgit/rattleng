@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Bug fix: do not reset toggles on dataset load [6.2.25 20240801 gjw]
 + Add CrossTable to SUMMARY [6.2.24 20240801 gjw]
 + R script cleanup. Docs update. Ubuntu 20.04 build [6.2.23 20240801 gjw]
 + Prompt for script name on saving [6.2.22 20240801 zx]
