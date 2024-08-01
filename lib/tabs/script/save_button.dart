@@ -140,8 +140,9 @@ class ScriptSaveButton extends ConsumerWidget {
     file.writeAsString(script);
 
     // Show a confirmation message.
+    final filePath = file.absolute.path;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('File saved as $fileName.R')),
+      SnackBar(content: Text('File saved as $fileName at $filePath')),
     );
   }
 }
