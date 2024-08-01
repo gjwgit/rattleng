@@ -29,8 +29,8 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/features/tree/config.dart';
 import 'package:rattle/features/tree/display.dart';
+import 'package:rattle/features/tree/treeModelConfig.dart';
 
 /// The TREE tab supports building decision tree models.
 // final GlobalKey<PagesState> treePagesKey = GlobalKey<PagesState>();
@@ -46,7 +46,7 @@ class TreePanel extends StatelessWidget {
     return const Scaffold(
       body: Column(
         children: [
-          TreeConfig(),
+          TreeModelConfig(),
 
           // Add a little space blow the config widgets so that things like any
           // underline is not lost not buttons,looking chopped off. We include

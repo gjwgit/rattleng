@@ -52,7 +52,9 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
 
-    List<Widget> pages = [showMarkdownFile(treeIntroFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile(treeIntroFile, context),
+    ];
 
     String content = '';
 
