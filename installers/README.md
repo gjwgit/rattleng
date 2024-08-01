@@ -37,7 +37,7 @@ by pasting the following after the prompt `> `:
 ```bash
 R -e 'install.packages(c("pacman", "rattle", "Hmisc", "VIM",
                          "corrplot", "descr", "fBasics", ggthemes, "janitor",
-                         "magick", "magrittr", "mice", "naniar",
+                         "magrittr", "mice", "naniar",
                          "randomForest", "readr", "reshape", "rpart",
                          "tidyverse", "tm", "verification", "wordcloud"'))'
 ```
