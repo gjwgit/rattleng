@@ -35,7 +35,7 @@ jobs:
         with:
           type: 'zip'
           filename: rattle-${{github.ref_name}}-ubuntu.zip
-          directory: build/ubuntu/x64/release/bundle
+          directory: build/linux/x64/release/bundle
       - name: Upload the zip bundle to Artifacts
         uses: actions/upload-artifact@v4
         with:
