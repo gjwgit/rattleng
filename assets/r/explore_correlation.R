@@ -1,11 +1,11 @@
-# Rattle Scripts: For dataset ds geneate correlation analysis.
+# Rattle Scripts: Correlation Analysis
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:27:21 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-01 11:33:49 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,22 +24,19 @@
 #
 # Author: Graham Williams
 
-# Correlation Analysis of a Dataset
+# Correlation Analysis
 #
 # TIMESTAMP
 #
 # References:
 #
 # @williams:2017:essentials
+#
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Load required packages from the local library into the R session.
 
 # Generate a correlation plot for the variables. 
-
-# The 'corrplot' package provides the 'corrplot' function.
-
-library(corrplot, quietly=TRUE)
 
 # Correlations work for numeric variables only.
 
@@ -50,15 +47,19 @@ cor <- cor(ds[numc], use="pairwise", method="pearson")
 ord <- order(cor[1,])
 cor <- cor[ord, ord]
 
-# Display the actual correlations.
+# Display a textual table of the actual correlations.
 
 print(round(cor,2))
-# crs$cor
 
-# Graphically display the correlations.
+# Generate the chart.
 
 svg("TEMPDIR/explore_correlation.svg")
-corrplot(cor, method='ellipse', order='AOE', type='lower',tl.srt=45, mar=c(0,0,1,0))
-title(main="Correlation weather.csv using Pearson",
-      sub="TIMESTAMP")
+corrplot::corrplot(cor,
+                   method = 'ellipse',
+                   order  = 'AOE',
+                   type   = 'full',
+                   tl.srt = 45,
+                   mar    = c(0,0,1,0))
+title(main = "Correlation weather.csv using Pearson",
+      sub  = "TIMESTAMP")
 dev.off()
