@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Add RANK function to RESCALE feature of TRANSFORM tab [6.2.30 20240802 yyx]
 + Ensure transformed vars added to types provider [6.2.29 20240802 yyx]
 + Review and cleanup. [6.2.28 20240802 gjw]
 + Working MacOS and Windows. Fixed R path for MacOS [6.2.27 20240802 gjw]
