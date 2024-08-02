@@ -1,14 +1,14 @@
 # The 'reshape' package provides the 'rescaler' function.
 
-library(reshape, quietly=TRUE)
 
-# Rescale MinTemp.
+# Rescale SELECTED.
 
-crs$dataset[["RRK_SELECTED_VAR"]] <- crs$dataset[["SELECTED_VAR"]]
+ds[["RRK_SELECTED_VAR"]] <- ds[["SELECTED_VAR"]]
 
 # Convert values to ranks.
 
-if (building)
-{
-  crs$dataset[["RRK_SELECTED_VAR"]] <-  rescaler(crs$dataset[["SELECTED_VAR"]], "rank")
-}
+ds[["RRK_SELECTED_VAR"]] <-  reshape::rescaler(ds[["SELECTED_VAR"]], "rank")
+
+glimpse(ds)
+summary(ds)
+
