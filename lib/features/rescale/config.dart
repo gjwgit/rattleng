@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
@@ -47,6 +48,17 @@ class RescaleConfig extends ConsumerStatefulWidget {
 }
 
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
+  void _increment() {
+    ref.read(intervalProvider.notifier).update((state) => state + 1);
+  }
+
+  void _decrement() {
+    setState(() {
+      if (ref.read(intervalProvider.notifier).state > 1) {
+        ref.read(intervalProvider.notifier).update((state) => state - 1);
+      }
+    });
+  }
   // List choice of methods for rescaling.
 
   List<String> methods = [
@@ -81,10 +93,65 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   }
 
   Widget transformChooser() {
+    int interval = ref.watch(intervalProvider);
     return Expanded(
       child: Wrap(
         spacing: 5.0,
         children: methods.map((transform) {
+          if (transform == 'Interval') {
+            return Row(
+              children: [
+                ChoiceChip(
+                  label: Text(transform),
+                  disabledColor: Colors.grey,
+                  selectedColor: Colors.lightBlue[200],
+                  backgroundColor: Colors.lightBlue[50],
+                  shadowColor: Colors.grey,
+                  pressElevation: 8.0,
+                  elevation: 2.0,
+                  selected: selectedTransform == transform,
+                  onSelected: (bool selected) {
+                    setState(() {
+                      selectedTransform = selected ? transform : '';
+                    });
+                  },
+                ),
+                configWidgetSpace,
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$interval',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                      Column(
+                        children: [
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(Icons.arrow_drop_up),
+                            onPressed: _increment,
+                          ),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(Icons.arrow_drop_down),
+                            onPressed: _decrement,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,
@@ -124,6 +191,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
       case 'Rank':
         rSource(context, ref, 'transform_rescale_rank');
       case 'Interval':
+        // debugPrint('run interval');
         rSource(context, ref, 'transform_rescale_interval');
       default:
         showUnderConstruction(context);
