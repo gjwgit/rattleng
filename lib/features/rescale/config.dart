@@ -56,6 +56,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     'Natural Log',
     'Log 10',
     'Rank',
+    'Interval',
   ];
 
   String selectedTransform = 'Recenter';
@@ -122,6 +123,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         rSource(context, ref, 'transform_rescale_log10_numeric');
       case 'Rank':
         rSource(context, ref, 'transform_rescale_rank');
+      case 'Interval':
+        rSource(context, ref, 'transform_rescale_interval');
       default:
         showUnderConstruction(context);
     }

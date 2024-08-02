@@ -14,6 +14,7 @@ Set<String> transformPrefix = {
   'RLG',
   'R10',
   'RRK',
+  'RIN',
 // Impute
   'IZR',
   'IMN',
