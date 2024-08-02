@@ -54,7 +54,9 @@ it starts up, which can take some time. Check the **Console** tab to
 see what is happening.
 
 For reference, these are the packages that should be loaded from the R
-library into your **Console**:
+library into your **Console**. They should be loaded automatically by
+RattleNG and listed here only in case something goes wrong. Do report
+an issue if you need to do this manually on your platform.
 
 ```r
 library(Hmisc)
@@ -97,7 +99,7 @@ flutter run
 
 You can also download the source code from
 [github](https://github.com/gjwgit/rattleng) by clicking the *Code*
-drop down menu then the *Download ZIP* button. Simply unzip, then cd
+drop down menu then the *Download ZIP* button. Next unzip, then cd
 into the unzip'ed folder `rattleng-dev` to then run `flutter run`.
 
 ## Linux
@@ -140,7 +142,7 @@ To try it out, after downloading the zip file, unzip it locally:
 unzip rattleng-dev-linux.zip -d rattleng
 ```
 
-Then simply run the executable:
+Then run the executable:
 
 ```bash
 rattleng/rattle
@@ -216,7 +218,7 @@ for this development version we are side-loading the package.
 
 ### Prerequisite
 
-+ Install R into **/usr/local/bin/R**
++ [Install R](https://cloud.r-project.org/) into **/usr/local/bin/R**
 + Install prerequisite R packages, e.g. "pacman".
 + Test from command line:
 
@@ -245,7 +247,7 @@ To try it out, after downloading the zip file, unzip it locally:
 unzip rattleng-dev-macos.zip -d rattleng
 ```
 
-Then simply run the app:
+Then run the app:
 
 ```bash
 open rattleng/rattle.app
