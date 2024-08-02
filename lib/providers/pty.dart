@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Friday 2024-08-02 15:44:14 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-02 15:55:53 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
