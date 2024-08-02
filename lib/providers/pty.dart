@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Friday 2024-08-02 15:55:53 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-02 16:14:30 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -80,5 +80,9 @@ final ptyProvider = StateProvider<Pty>((ref) {
 /// does an R.exe.
 
 String get shell {
-  return Platform.isWindows ? 'R.exe' : '/usr/local/bin/R';
+  return Platform.isWindows
+      ? 'R.exe'
+      : Platform.isMacOS
+          ? '/usr/local/bin/R'
+          : 'R';
 }
