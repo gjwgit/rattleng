@@ -48,7 +48,6 @@ import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/utils/count_lines.dart';
 import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/get_target.dart';
-import 'package:rattle/utils/truncate.dart';
 
 class RattleStateText extends ConsumerWidget {
   const RattleStateText({super.key});

@@ -49,7 +49,8 @@ void updateVariablesProvider(WidgetRef ref) {
     }
     // update types
     if (!ref.read(typesProvider.notifier).state.containsKey(column.name)) {
-      ref.read(typesProvider.notifier).state[column.name] = isNumeric(column.type) ? Type.numeric : Type.categoric;
+      ref.read(typesProvider.notifier).state[column.name] =
+          isNumeric(column.type) ? Type.numeric : Type.categoric;
     }
   }
 }
