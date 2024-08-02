@@ -33,7 +33,9 @@ package will manage the package installs within RattleNG.
 If you want to separately make sure you have the required R packages
 installed, once R itself is installed, open a terminal and run the R
 command. You can then install the pre-requisite packages for RattleNG
-by pasting the following after the prompt `> `:
+by running the following command line, or pasting just the
+`install.packages(...)` part after the R prompt `> ` after starting up
+R:
 
 ```bash
 R -e 'install.packages(c("pacman", "rattle", "Hmisc", "VIM",
@@ -53,8 +55,9 @@ happening.
 
 ## Source Install
 
-You can run the app from the source code on github on Linux, MacOS,
-and Windows by installing flutter on your computer (see the [flutter
+You can run the app from the source code on
+[github](https://github.com/gjwgit/rattleng) on Linux, MacOS, and
+Windows by installing flutter on your computer (see the [flutter
 install guide](https://docs.flutter.dev/get-started/install)), then
 clone the github repository with the git command (see the [git install
 guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
@@ -68,8 +71,8 @@ flutter run
 
 You can also download the source code from
 [github](https://github.com/gjwgit/rattleng) by clicking the *Code*
-drop down menu then the *Download ZIP* button. Simply unzip the cd
-into the unzip'ed folder `rattlng-dev` to then run `flutter run`.
+drop down menu then the *Download ZIP* button. Simply unzip, then cd
+into the unzip'ed folder `rattleng-dev` to then run `flutter run`.
 
 ## Linux
 
@@ -202,7 +205,7 @@ $ R
 You are then ready to install the RattleNG software using one of the
 methods below.
 
-### Zip Install UNDER DEVELOPMENT
+### Zip Install
 
 Download the zip archive:
 
@@ -255,7 +258,7 @@ warning next time.
 Test that this works for the normal user by starting up the CMD
 terminal, running R, and then, for example `library(pacman)`.
 
-### Zip Install UNDER DEVELOPMENT
+### Zip Install
 
 Download
 [rattleng-dev-macos.zip](https://access.togaware.com/rattleng-dev-macos.zip):
