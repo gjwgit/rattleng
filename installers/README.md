@@ -261,7 +261,7 @@ terminal, running R, and then, for example `library(pacman)`.
 ### Zip Install
 
 Download
-[rattleng-dev-macos.zip](https://access.togaware.com/rattleng-dev-macos.zip):
+[rattleng-dev-windows.zip](https://access.togaware.com/rattleng-dev-windows.zip):
 
 ```bash
 wget https://access.togaware.com/rattleng-dev-windows.zip
@@ -324,18 +324,6 @@ to the **Console** tab and enter the following:
 
 ```r
 > .libPaths("C:/Users/fred/AppData/Local/R/win-library/4.4")
-```
-
-Then go to the **Script** tab, copy the whole of the right hand script
-(Ctrl-A) and paste that into the **Console**. This will show that R is
-now operational. You can load the Demo dataset but the Roles page
-fails. Under **Explore** the Summary works but not the plots (which
-need a Target).
-
-Yet to try: put the following in ~/.Renviron
-
-```
-.libPaths("/Users/bill/Library/R/3.4/library")
 ```
 
 ### Inno Install - UNDER DEVELOPMENT 
