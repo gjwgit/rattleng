@@ -37,19 +37,17 @@ import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/types.dart';
-import 'package:rattle/providers/vars.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/utils/count_lines.dart';
 import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/get_target.dart';
-import 'package:rattle/utils/truncate.dart';
 
 class RattleStateText extends ConsumerWidget {
   const RattleStateText({super.key});
@@ -68,7 +66,6 @@ class RattleStateText extends ConsumerWidget {
     String selected = ref.watch(selectedProvider);
     String selected2 = ref.watch(selected2Provider);
     String imputed = ref.watch(imputedProvider);
-    List<String> vars = ref.watch(varsProvider);
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
     bool partition = ref.watch(partitionProvider);
@@ -102,7 +99,6 @@ class RattleStateText extends ConsumerWidget {
             'PARTITION:   $partition\n'
             'ROLES:       $role\n'
             'TYPES:       $type\n'
-            'VARS:        ${truncate(vars.toString())}\n'
             'TARGET:      ${getTarget(ref)}\n'
             'RISK:        ${getRisk(ref)} \n'
             'IDENTIFIERS: \$identifiers \n'

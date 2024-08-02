@@ -131,7 +131,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   @override
   Widget build(BuildContext context) {
     // this ensures that the new var immedicately appear in the menu.
-    updateRolesProvider(ref);
+    updateVariablesProvider(ref);
 
     // Variables that were automatically ignored through a transform should still be listed in the TRANSFORM selected list because I might want to do some more transforms on it.
     // Variables the user has marked as IGNORE should not be listed in the TRANSFORM tab.

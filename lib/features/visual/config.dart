@@ -29,10 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/group_by.dart';
 
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/get_catergoric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -54,10 +53,8 @@ class VisualConfig extends ConsumerStatefulWidget {
 class VisualConfigState extends ConsumerState<VisualConfig> {
   @override
   Widget build(BuildContext context) {
-    String stdout = ref.watch(stdoutProvider);
-
     // update the rolesProvider to get the latest inputs
-    updateRolesProvider(ref);
+    updateVariablesProvider(ref);
 
     // Retireve the list of inputs as the label and value of the dropdown menu.
 
@@ -84,8 +81,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     if (groupBy == 'NULL') {
       groupBy = getTarget(ref);
     }
-
-    // String numc = rExtract(stdout, '+ numc');
 
     // BUILD Action.
 
@@ -118,8 +113,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
         // Choose which visualisations to run depending on the
         // selected variable.
-        String numc = rExtract(stdout, '+ numc');
-        if (numc.contains('"$selected"')) {
+        if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
           debugPrint('run numeric script');
           rSource(context, ref, 'explore_visual_numeric');
         } else {
