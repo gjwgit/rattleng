@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Friday 2024-08-02 12:49:08 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-02 12:53:59 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -95,7 +95,9 @@ void main() async {
 
   // Initialise a global temporary directory where generated files, such as
   // charts, are saved and can be removed on exit from rattleng or on loading a
-  // new dataset.
+  // new dataset. Notice on Windows the path is of the form
+  // `C:\AppDir\Users\...` which is not acceptable by R (which requires `\\`) so
+  // map them to `/` which is accepted by R on Windows.
 
   final rattleDir = await Directory.systemTemp.createTemp('rattle');
   tempDir = rattleDir.path.replaceAll(r'\', '/');
