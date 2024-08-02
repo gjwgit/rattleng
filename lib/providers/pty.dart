@@ -80,5 +80,5 @@ final ptyProvider = StateProvider<Pty>((ref) {
 /// does an R.exe.
 
 String get shell {
-  return Platform.isWindows ? 'R.exe' : 'R';
+  return Platform.isWindows ? 'R.exe' : '/usr/local/bin/R';
 }
