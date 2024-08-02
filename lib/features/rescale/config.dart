@@ -120,6 +120,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         rSource(context, ref, 'transform_rescale_natlog_numeric');
       case 'Log 10':
         rSource(context, ref, 'transform_rescale_log10_numeric');
+      case 'Rank':
+        rSource(context, ref, 'transform_rescale_rank');
       default:
         showUnderConstruction(context);
     }
