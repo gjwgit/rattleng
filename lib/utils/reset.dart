@@ -40,13 +40,12 @@ import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/script.dart';
-import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/terminal.dart';
-import 'package:rattle/providers/vars.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -78,7 +77,6 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.invalidate(pathProvider);
   ref.invalidate(rolesProvider);
   ref.invalidate(scriptProvider);
-  ref.invalidate(varsProvider);
 
   // MODEL TAB
 
