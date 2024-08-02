@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Sunday 2024-07-14 19:39:13 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-02 12:49:08 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -98,7 +98,7 @@ void main() async {
   // new dataset.
 
   final rattleDir = await Directory.systemTemp.createTemp('rattle');
-  tempDir = rattleDir.path;
+  tempDir = rattleDir.path.replaceAll(r'\', '/');
 
   // The runApp() function takes the given Widget and makes it the root of the
   // widget tree. Here we wrap the app within RiverPod's ProviderScope() to
