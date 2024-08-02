@@ -33,9 +33,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/types.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
@@ -153,7 +153,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         }
       }
       // When a new row is added after transformation, initialise its role and update the role of the old variable
-      updateRolesProvider(ref);
+      updateVariablesProvider(ref);
 
       var headline = Padding(
         padding: const EdgeInsets.all(6.0),
