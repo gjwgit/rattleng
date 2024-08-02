@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2024-07-31 08:46:45 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-08-03 05:55:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -333,6 +333,8 @@ Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
               Icons.info,
               color: Colors.blue,
             ),
+            tooltip: 'Press here to view information about RattleNG and\n'
+                'those who have contributed to the software.',
           ),
         ],
       ),
