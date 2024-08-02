@@ -39,7 +39,7 @@ R:
 
 ```bash
 R -e 'install.packages(c("pacman", "rattle", "Hmisc", "VIM",
-                         "corrplot", "descr", "fBasics", ggthemes, "janitor",
+                         "corrplot", "descr", "fBasics", "ggthemes", "janitor",
                          "magrittr", "mice", "naniar",
                          "randomForest", "readr", "reshape", "rpart",
                          "tidyverse", "tm", "verification", "wordcloud"'))'
@@ -286,7 +286,7 @@ library(pacman)
 
 *Rattle R Initialisation Missing*
 
-If you do not see in the **Console** an R command like:
+If you do not see in the **Console** the R command like:
 
 ```console
 > theme_rattle <- theme_economist
@@ -294,10 +294,13 @@ If you do not see in the **Console** an R command like:
 
 then R has not initialised the main Rattle script. To remedy this
 visit https://github.com/gjwgit/rattleng/blob/dev/assets/r/main.R and
-copy and paste the contents into the **Console**.
+copy and paste the contents into the **Console**. This should be done
+as the very first thing on starting up RattleNG.
 
 RattleNG should then be ready to communicate with R. Try loading the
 Demo dataset.
+
+This issue is being investigated.
 
 *R Packages Not Found*
 
