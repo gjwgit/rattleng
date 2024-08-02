@@ -38,10 +38,10 @@ by running the following command line, or pasting just the
 R:
 
 ```bash
-R -e 'install.packages(c("pacman", "rattle", "Hmisc", "VIM",
+R -e 'install.packages(c("Hmisc", "VIM",
                          "corrplot", "descr", "fBasics", "ggthemes", "janitor",
-                         "magrittr", "mice", "naniar",
-                         "randomForest", "readr", "reshape", "rpart",
+                         "magrittr", "mice", "pacman",
+                         "randomForest",  "rattle", "readr", "reshape", "rpart",
                          "tidyverse", "tm", "verification", "wordcloud"'))'
 ```
 
@@ -49,17 +49,43 @@ RattleNG can then be installed from the installation packages
 available from Togaware as described below.
 
 **NOTE** If the R packages are not installed then RattleNG will
-install them into your local folder for you the first time it starts
-up, which can take some time. Check the **Console** tab to see what is
-happening.
+attempt to install them into your local folder for you the first time
+it starts up, which can take some time. Check the **Console** tab to
+see what is happening.
+
+For reference, these are the packages that should be loaded from the R
+library into your **Console**:
+
+```r
+library(Hmisc)
+library(VIM)
+library(corrplot)
+library(descr)
+library(fBasics)
+library(ggthemes)
+library(janitor)
+library(magrittr)
+library(mice)
+library(pacman)
+library(randomForest)
+library(rattle)
+library(readr)
+library(reshape)
+library(rpart)
+library(tidyverse)
+library(tm)
+library(verification)
+library(wordcloud)
+```
 
 ## Source Install
 
-You can run the app from the source code on
-[github](https://github.com/gjwgit/rattleng) on Linux, MacOS, and
-Windows by installing flutter on your computer (see the [flutter
-install guide](https://docs.flutter.dev/get-started/install)), then
-clone the github repository with the git command (see the [git install
+You can run the app from the source code available from
+[github](https://github.com/gjwgit/rattleng). This has been tested on
+Linux, MacOS, and Windows. Begin by installing flutter on your
+computer (see the [flutter install
+guide](https://docs.flutter.dev/get-started/install)), then clone the
+github repository with the git command (see the [git install
 guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
 and then build/run the app:
 
@@ -196,14 +222,11 @@ for this development version we are side-loading the package.
 
 ```console
 $ R
- ...
-
-> library(tidyverse)
 > library(rattle)
 ```
 
 You are then ready to install the RattleNG software using one of the
-methods below.
+methods below. Be sure that R is on your PATH.
 
 ### Zip Install
 
