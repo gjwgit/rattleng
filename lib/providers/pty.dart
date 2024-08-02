@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Tuesday 2024-06-04 09:45:48 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-02 15:43:04 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -61,7 +61,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
   terminal.onOutput = (data) {
     // This gets called when a user types into the R console. So typing the
-    // command `ls()` in the R conosle the command is echoed in the R
+    // command `ls()` in the R console the command is echoed in the R
     // console. This is not capturing the output from the console.
 
     pty.write(const Utf8Encoder().convert(data));
