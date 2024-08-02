@@ -6,21 +6,6 @@ Flutter based apps will run native and similarly on Linux, MacOS, and
 Windows. Below we identify the prerequisite to install R on your
 computer.
 
-**UPDATE 20240802** Currently the zip distributions of RattleNG for
-MacOS and Windows fail to startup R. For now, until we resolve the zip
-issue on MacOS and Windows, install flutter on your computer (see the
-[flutter install
-guide](https://docs.flutter.dev/get-started/install)), then clone the
-github repository with the git command (see the [git install
-guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
-and then build/run the app:
-
-```bash
-git clone git@github.com:gjwgit/rattleng.git
-cd rattleng
-flutter run
-```
-
 ## Prerequisite
 
 RattleNG relies on running R locally and so it requires R to be
@@ -65,6 +50,26 @@ available from Togaware as described below.
 install them into your local folder for you the first time it starts
 up, which can take some time. Check the **Console** tab to see what is
 happening.
+
+## Source Install
+
+You can run the app from the source code on github on Linux, MacOS,
+and Windows by installing flutter on your computer (see the [flutter
+install guide](https://docs.flutter.dev/get-started/install)), then
+clone the github repository with the git command (see the [git install
+guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+and then build/run the app:
+
+```bash
+git clone git@github.com:gjwgit/rattleng.git
+cd rattleng
+flutter run
+```
+
+You can also download the source code from
+[github](https://github.com/gjwgit/rattleng) by clicking the *Code*
+drop down menu then the *Download ZIP* button. Simply unzip the cd
+into the unzip'ed folder `rattlng-dev` to then run `flutter run`.
 
 ## Linux
 
@@ -233,7 +238,7 @@ warning next time.
 
 ### Prerequisite
 
-+ Download and install R
++ As Admin download and install R
   + Visit https://cloud.r-project.org/ and navigate to Windows install
   + Click on *Download R for Windows*
   + Open the downloaded file to install R into the suggested path
@@ -244,20 +249,57 @@ warning next time.
 	+ Click the *Path* entry and then *Edit...*
     + Click *New* and then add *C:\Program Files\R\bin*
     + Click *OK* a few times to close the windows.
++ As Admin, start up R in a CMD terminal and install the required
+  R packages with the `install.packages` command above.
+  
+Test that this works for the normal user by starting up the CMD
+terminal, running R, and then, for example `library(pacman)`.
 
 ### Zip Install UNDER DEVELOPMENT
+
+Download
+[rattleng-dev-macos.zip](https://access.togaware.com/rattleng-dev-macos.zip):
 
 ```bash
 wget https://access.togaware.com/rattleng-dev-windows.zip
 ```
 
+**Quick Start**
+
 Unzip and run `rattle.exe`. You can add the unzipped path to the
 system PATH environment variable.
 
-**Status 20240729**
+**Trouble Shooting 20240802**
+
+*Checking R Packages Available*
+
+With the admin install of the R packages, rattle should find the
+appropriate packages. Test in the **Console** tab by typing the
+following command:
+
+```bash
+library(pacman)
+```
+
+*Rattle R Initialisation Missing*
+
+If you do not see in the **Console** an R command like:
+
+```console
+> theme_rattle <- theme_economist
+```
+
+then R has not initialised the main Rattle script. To remedy this
+visit https://github.com/gjwgit/rattleng/blob/dev/assets/r/main.R and
+copy and paste the contents into the **Console**.
+
+RattleNG should then be ready to communicate with R. Try loading the
+Demo dataset.
+
+*R Packages Not Found*
 
 The R process within the flutter-based RattleNG app is not picking up
-locally installed R packages. You may be able to see this if you
+local user installed R packages. You may be able to see this if you
 compare the output of `.libPaths()` in the RattleNG **Console** tab to
 the output when you run R in your CMD window. The RattleNG version may
 not have your local path
@@ -284,14 +326,11 @@ now operational. You can load the Demo dataset but the Roles page
 fails. Under **Explore** the Summary works but not the plots (which
 need a Target).
 
-**Yet to try:** put the following in ~/.Renviron
+Yet to try: put the following in ~/.Renviron
 
 ```
 .libPaths("/Users/bill/Library/R/3.4/library")
 ```
-
-Also it would appear the flutter is not sending 
-
 
 ### Inno Install - UNDER DEVELOPMENT 
 
