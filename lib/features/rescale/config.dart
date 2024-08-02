@@ -55,6 +55,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     '-Median/MAD',
     'Natural Log',
     'Log 10',
+    'Rank',
   ];
 
   String selectedTransform = 'Recenter';
