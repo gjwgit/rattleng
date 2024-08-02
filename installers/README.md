@@ -1,6 +1,6 @@
 # RattleNG Installers
 
-RattleNG is a re-implementation of Rattle using the modern Flutter
+RattleNG is a new implementation of Rattle using the modern Flutter
 framework for Dart. Flutter supports multiple platforms so that
 Flutter based apps will run native and similarly on Linux, MacOS, and
 Windows. Below we identify the prerequisite to install R on your
@@ -18,7 +18,7 @@ starts up. For those packages it installs it won't need to attempt to
 install them again (next startup). You can check this in the
 **Console** tab. However you may need to install one R package before
 starting RattleNG for the first time to initialise your local R
-folder:
+folder. For example:
 
 ```bash
 $ R
@@ -216,40 +216,39 @@ for this development version we are side-loading the package.
 
 ### Prerequisite
 
-+ Install R. 
-+ Install prerequisite R packages.
++ Install R into **/usr/local/bin/R**
++ Install prerequisite R packages, e.g. "pacman".
 + Test from command line:
 
 ```console
 $ R
-> library(rattle)
+> library(pacman)
 ```
 
 You are then ready to install the RattleNG software using one of the
-methods below. Be sure that R is on your PATH.
+methods below. Be sure that R is installed in `/usr/local/bin/R`.
 
 ### Zip Install
 
-Download the zip archive:
+Download
+[rattleng-dev-macos.zip](https://access.togaware.com/rattleng-dev-macos.zip):
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-macos.zip
+wget https://access.togaware.com/rattleng-dev-macos.zip -O rattleng-dev-macos.zip
 ```
 
-Unpack it, and run.
+**Quick Start**
+
+To try it out, after downloading the zip file, unzip it locally:
 
 ```bash
-unzip rattlemg-dev-macos.zip -d rattleng
+unzip rattleng-dev-macos.zip -d rattleng
+```
+
+Then simply run the app:
+
+```bash
 open rattleng/rattle.app
-```
-
-**Status 20240729**
-
-The app starts up and in the **Console** tab we can see the R code but
-there is no R process running to execute the code? There is a message:
-
-```console
-the process exited with exit code 255
 ```
 
 ### Dmg Install - UNDER DEVELOPMENT
@@ -287,7 +286,7 @@ Download
 [rattleng-dev-windows.zip](https://access.togaware.com/rattleng-dev-windows.zip):
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-windows.zip
+wget https://access.togaware.com/rattleng-dev-windows.zip -O rattleng-dev-windows.zip
 ```
 
 **Quick Start**
