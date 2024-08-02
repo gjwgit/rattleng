@@ -311,20 +311,8 @@ the output when you run R in your CMD window. The RattleNG version may
 not have your local path
 (e.g. `C:/Users/fred/AppData/Local/R/win-library/4.4`) and it may only
 have the system path (e.g., `C:/Program
-Files/R/R-4.4.1/library`). Often this is resolved by creating a new
-environment variable `R_LIBS_USER` with the value of your local
-path. 
-
-```
-setx R_LIBS_USER "C:/path/to/your/library"
-```
-
-Testing has not yet been successful.  On starting RattleNG you can go
-to the **Console** tab and enter the following:
-
-```r
-> .libPaths("C:/Users/fred/AppData/Local/R/win-library/4.4")
-```
+Files/R/R-4.4.1/library`). A workaround is to ensure your packages are
+installed by the Admin user.
 
 ### Inno Install - UNDER DEVELOPMENT 
 
