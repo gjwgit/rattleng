@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Friday 2024-08-02 15:43:04 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-02 15:44:14 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -74,7 +74,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
   return pty;
 });
 
-/// We are only interested in running R on whichever desktop.
+/// We are interested in running R on whichever desktop.
 ///
 /// Linux and MacOS desktops initiate R simply through the R command. Windows
 /// does an R.exe.
