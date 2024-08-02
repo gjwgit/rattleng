@@ -3,7 +3,23 @@
 RattleNG is a re-implementation of Rattle using the modern Flutter
 framework for Dart. Flutter supports multiple platforms so that
 Flutter based apps will run native and similarly on Linux, MacOS, and
-Windows. 
+Windows. Below we identify the prerequisite to install R on your
+computer.
+
+**UPDATE 20240802** Currently the zip distributions of RattleNG for
+MacOS and Windows fail to startup R. For now, until we resolve the zip
+issue on MacOS and Windows, install flutter on your computer (see the
+[flutter install
+guide](https://docs.flutter.dev/get-started/install)), then clone the
+github repository with the git command (see the [git install
+guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+and then build/run the app:
+
+```bash
+git clone git@github.com:gjwgit/rattleng.git
+cd rattleng
+flutter run
+```
 
 ## Prerequisite
 
