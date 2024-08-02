@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/vars/roles.dart';
 
 List<String> getInputs(WidgetRef ref) {
   // The rolesProvider lists the roles for the different variables which we
