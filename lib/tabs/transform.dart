@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-07-31 08:38:50 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-02 13:40:38 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -43,12 +43,12 @@ final List<Map<String, dynamic>> transformPanels = [
     'widget': const TransformPanel(),
   },
   {
-    'title': 'Rescale',
-    'widget': const RescalePanel(),
-  },
-  {
     'title': 'Impute',
     'widget': const ImputePanel(),
+  },
+  {
+    'title': 'Rescale',
+    'widget': const RescalePanel(),
   },
   {
     'title': 'Recode',
