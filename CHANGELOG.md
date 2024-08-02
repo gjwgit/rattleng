@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Review and cleanup. [6.2.28 20240802 gjw]
 + Working MacOS and Windows. Fixed R path for MacOS [6.2.27 20240802 gjw]
 + Bug fix: handle Windows path for temp dir [6.2.26 20240802 gjw]
 + Bug fix: do not reset toggles on dataset load [6.2.25 20240801 gjw]
