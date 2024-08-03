@@ -210,7 +210,15 @@ the Window key then type `rattle`.
 
 Download [rattle_dev_amd64.snap](https://access.togaware.com/rattle_dev_amd64.snap)
 
-Install RattleNG with `snap install --dangerous rattle_dev_amd64.snap`
+```bash
+wget https://access.togaware.com/rattle_dev_amd64.snap -O rattle_dev_amd64.snap
+```
+
+Install RattleNG with:
+
+```bash
+sudo snap install --dangerous rattle_dev_amd64.snap
+```
 
 The *dangerous* refers to side-loading the app from outside of the
 snap store. This will not be required for the snap store version but

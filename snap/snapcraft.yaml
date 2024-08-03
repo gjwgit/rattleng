@@ -45,9 +45,7 @@ plugs:
     read:
       - /usr/bin/R
     write:
-      - $SNAP/usr/lib/R  # Allows writing to the R path within the snap
-
-      # Might need to remove the above $SNAP
+      - /usr/lib/R  # Allows writing to the R path within the snap
       
 environment:
   LIBGL_ALWAYS_SOFTWARE: 1  # Ensures compatibility with different systems
