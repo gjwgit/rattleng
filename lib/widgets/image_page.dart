@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Sunday 2024-07-28 21:04:07 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-03 05:54:31 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,6 +39,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/select_file.dart';
+import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/word_wrap.dart';
 
 class ImagePage extends StatelessWidget {
@@ -110,9 +111,20 @@ class ImagePage extends StatelessWidget {
                           launchUrl(url);
                         },
                       ),
-//                      ),
+                      //                      ),
                       const Spacer(),
-//                      ElevatedButton(
+                      //                      ElevatedButton(
+                      IconButton(
+                        icon: const Icon(
+                          Icons.open_in_new,
+                          color: Colors.blue,
+                        ),
+                        onPressed: () {
+                          showUnderConstruction(context);
+                        },
+                        tooltip: 'Press here to view the plot\n'
+                            'in a separate window.',
+                      ),
                       IconButton(
                         icon: const Icon(
                           Icons.save,
@@ -125,9 +137,8 @@ class ImagePage extends StatelessWidget {
                             await File(path).copy(pathToSave);
                           }
                         },
-                        // child: const Text(
-                        //   'Export',
-                        // ),
+                        tooltip: 'Press here to save the plot\n'
+                            'into an SVG file locally.',
                       ),
                       const SizedBox(width: 5),
                     ],

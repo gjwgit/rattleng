@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Sunday 2024-07-21 06:38:29 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-01 20:36:24 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,20 +36,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // AND INTO app.dart?
 
 import 'package:rattle/app.dart';
-import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/model.dart';
-import 'package:rattle/providers/normalise.dart';
-import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/script.dart';
-import 'package:rattle/providers/roles.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/terminal.dart';
-import 'package:rattle/providers/vars.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -62,8 +58,10 @@ import 'package:rattle/r/start.dart';
 void reset(BuildContext context, WidgetRef ref) {
   debugPrint('RESET');
 
-  // reset the app
-  // ideally if the app renders based on states stored in providers, we just need to reset each provider to the starting value
+  // Reset the app.
+  //
+  // Ideally if the app renders based on states stored in providers, we just
+  // need to reset each provider to the starting value.
 
   // GENERAL PROVIDERS
 
@@ -73,14 +71,12 @@ void reset(BuildContext context, WidgetRef ref) {
 
   // DATASET TAB
 
-  ref.invalidate(cleanseProvider);
+  // Note that we do not reset the toggles - they need to remain as they are.
+
   ref.invalidate(datasetLoaded);
-  ref.invalidate(normaliseProvider);
-  ref.invalidate(partitionProvider);
   ref.invalidate(pathProvider);
   ref.invalidate(rolesProvider);
   ref.invalidate(scriptProvider);
-  ref.invalidate(varsProvider);
 
   // MODEL TAB
 

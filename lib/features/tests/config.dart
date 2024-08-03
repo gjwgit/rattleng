@@ -50,7 +50,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
   @override
   Widget build(BuildContext context) {
     // update the rolesProvider to get the latest inputs
-    updateRolesProvider(ref);
+    updateVariablesProvider(ref);
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value then we choose the
     // first input variable.

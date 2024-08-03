@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Thursday 2024-08-01 09:42:58 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-02 08:22:28 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -140,8 +140,9 @@ class ScriptSaveButton extends ConsumerWidget {
     file.writeAsString(script);
 
     // Show a confirmation message.
+    final filePath = file.absolute.path;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('File saved as $fileName.R')),
+      SnackBar(content: Text('R script file saved as $filePath')),
     );
   }
 }
