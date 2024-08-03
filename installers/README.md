@@ -206,13 +206,17 @@ steps and edit the `rattle.desktop`.
 Once installed users can run the app from the GNOME desktop through
 the Window key then type `rattle`.
 
-### Snap Install - UNDER DEVELOPMENT
+### Snap Install
 
-+ Install RattleNG with `snap install --dangerous rattle.snap`
+Download [rattle_dev_amd64.snap](https://access.togaware.com/rattle_dev_amd64.snap)
+
+Install RattleNG with `snap install --dangerous rattle_dev_amd64.snap`
 
 The *dangerous* refers to side-loading the app from outside of the
 snap store. This will not be required for the snap store version but
 for this development version we are side-loading the package.
+
+Run the app from `/snap/rattle/current/rattle`.
 
 ## MacOS
 
