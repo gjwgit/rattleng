@@ -31,3 +31,8 @@ Charts](https://survivor.togaware.com/datascience/bar-chart.html),
 [Dot Plots](https://survivor.togaware.com/datascience/dot-plot.html),
 and the [Mosaic
 Plot](https://survivor.togaware.com/datascience/mosaic-plot.html).
+
+Different themes can be chosen for any of the *ggplot2* based
+plots. See the [Data Science Desktop Survival
+Guide](https://survivor.togaware.com/datascience/themes-in-rattle.html)
+for details.
