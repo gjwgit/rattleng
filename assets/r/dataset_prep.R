@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 10:20:25 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-08-03 10:37:51 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,8 +24,11 @@
 #
 # Author: Graham Williams
 
-# Run this after the variable `ds` (dataset) has been instantiated.
-# This script will prepare the dataset for template variable processing.
+# Run this after the variable `ds` (dataset) has been instantiated, as
+# in loaded into Rattle.  This script will prepare the dataset for
+# template variable processing. Place into `dataset_template.R` the
+# setup when the data within the dataset has changed, which may be
+# called again after, for example, TRANSFORM.
 #
 # References:
 #
