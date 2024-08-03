@@ -27,6 +27,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,7 +51,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   final TextEditingController _minSplitController =
       TextEditingController(text: '20');
   final TextEditingController _maxDepthController =
-      TextEditingController(text: '20');
+      TextEditingController(text: '30');
   final TextEditingController _minBucketController =
       TextEditingController(text: '7');
   final TextEditingController _complexityController =
@@ -76,11 +77,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   @override
   Widget build(BuildContext context) {
     // Define a smaller text style.
-    const TextStyle smallTextStyle = TextStyle(fontSize: 12.0);
+    const TextStyle normalTextStyle = TextStyle(fontSize: 14.0);
 
     // Define a text style for disabled fields.
     const TextStyle disabledTextStyle = TextStyle(
-      fontSize: 12.0,
+      fontSize: 14.0,
       color: Colors.grey, // Grey out the text
     );
 
@@ -124,7 +125,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               const SizedBox(width: 16),
               const Text(
                 'Algorithm:',
-                style: smallTextStyle,
+                style: normalTextStyle,
               ),
               ...AlgorithmType.values.map((algorithmType) {
                 return SizedBox(
@@ -132,7 +133,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   child: RadioListTile<AlgorithmType>(
                     title: Text(
                       algorithmType.displayName,
-                      style: smallTextStyle,
+                      style: normalTextStyle,
                     ),
                     value: algorithmType,
                     groupValue: _selectedAlgorithm,
@@ -146,7 +147,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               }),
               const Text(
                 'Include Missing',
-                style: smallTextStyle,
+                style: normalTextStyle,
               ),
               Checkbox(
                 value: _includeMissing,
@@ -160,7 +161,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               // Model Builder Title.
               const Text(
                 'Model Builder: rpart',
-                style: smallTextStyle,
+                style: normalTextStyle,
               ),
             ],
           ),
@@ -169,53 +170,95 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
           Row(
             children: [
               _buildNumberField(
-                'Min Split:',
-                _minSplitController,
-                smallTextStyle,
+                label: 'Min Split:',
+                controller: _minSplitController,
+                textStyle: normalTextStyle,
+                tooltip: ''' This is the minimum number of observations
+ that must exist in a dataset at any node in
+ order for a split of that node to be attempted. 
+ The default is 20.''',
+                enabled: true,
+                inputFormatter:
+                    FilteringTextInputFormatter.digitsOnly, // Integers only
+                validator: (value) => _validateInteger(value, min: 0),
+                maxWidth: 5,
               ),
               const SizedBox(width: 16),
               _buildNumberField(
-                'Max Depth:',
-                _maxDepthController,
-                smallTextStyle,
+                label: 'Max Depth:',
+                controller: _maxDepthController,
+                textStyle: normalTextStyle,
+                tooltip:
+                    ''' This is the maximum depth of any node of the final tree. 
+ The root node is considered to be depth 0. 
+ Note that a depth beyond 30 will give nonsense
+ results on 32-bit machines. The default is 30.''',
+                enabled: true,
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                validator: (value) => _validateInteger(value, min: 1),
+                maxWidth: 5,
               ),
               const SizedBox(width: 16),
               _buildNumberField(
-                'Min Bucket:',
-                _minBucketController,
-                smallTextStyle,
+                label: 'Min Bucket:',
+                controller: _minBucketController,
+                textStyle: normalTextStyle,
+                tooltip: ''' This is the minimum number of observations 
+ allowed in any leaf node of the decision tree. 
+ The default value is one third of the Min Split.''',
+                enabled: true,
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                validator: (value) => _validateInteger(value, min: 1),
+                maxWidth: 5,
               ),
-            ],
-          ),
-
-          // Complexity, Priors, and Loss Matrix.
-          Row(
-            children: [
+              const SizedBox(width: 16),
               _buildNumberField(
-                'Complexity:',
-                _complexityController,
-                _selectedAlgorithm == AlgorithmType.conditional
-                    ? disabledTextStyle // Use disabled style if conditional.
-                    : smallTextStyle, // Normal style otherwise.
+                label: 'Complexity:',
+                controller: _complexityController,
+                textStyle: _selectedAlgorithm == AlgorithmType.conditional
+                    ? disabledTextStyle // Use disabled style if conditional
+                    : normalTextStyle, // Normal style otherwise
+                tooltip:
+                    ''' The complexity parameter is used to control the size 
+ of the decision tree and to select the optimal tree size.''',
                 enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+                ),
+                validator: (value) => _validateComplexity(value),
+                maxWidth: 5,
               ),
               const SizedBox(width: 16),
               _buildTextField(
-                'Priors:',
-                _priorsController,
-                _selectedAlgorithm == AlgorithmType.conditional
+                label: 'Priors:',
+                controller: _priorsController,
+                textStyle: _selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
-                    : smallTextStyle,
+                    : normalTextStyle,
+                tooltip: ''' Set the prior probabilities for each class. 
+ E.g. for two classes: 0.5,0.5. Must add up to 1.''',
                 enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                validator: (value) => _validatePriors(value),
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(r'^[0-9]+(,[0-9]+)*$'),
+                ),
+                maxWidth: 10,
               ),
               const SizedBox(width: 16),
               _buildTextField(
-                'Loss Matrix:',
-                _lossMatrixController,
-                _selectedAlgorithm == AlgorithmType.conditional
+                label: 'Loss Matrix:',
+                controller: _lossMatrixController,
+                textStyle: _selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
-                    : smallTextStyle,
+                    : normalTextStyle,
+                tooltip: ''' Weight the outcome classes differently. 
+ E.g., 0,10,1,0 (TN, FP, FN, TP).''',
                 enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(r'^[0-9]+(,[0-9]+)*$'),
+                ),
+                validator: (value) => _validateLossMatrix(value),
+                maxWidth: 10,
               ),
             ],
           ),
@@ -224,53 +267,133 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     );
   }
 
+  // Validation logic for integer fields.
+  String? _validateInteger(String? value, {required int min}) {
+    if (value == null || value.isEmpty) return 'Cannot be empty';
+    int? intValue = int.tryParse(value);
+    if (intValue == null || intValue < min) {
+      return 'Must >= $min';
+    }
+    return null;
+  }
+
+  // Validation logic for complexity field.
+  String? _validateComplexity(String? value) {
+    if (value == null || value.isEmpty) return 'Cannot be empty';
+    double? doubleValue = double.tryParse(value);
+    if (doubleValue == null || doubleValue < 0.0000 || doubleValue > 1.0000) {
+      return 'Must be between 0.0000 and 1.0000';
+    }
+    return null;
+  }
+
+  // Validation logic for priors field.
+  String? _validatePriors(String? value) {
+    if (value == null || value.isEmpty) return 'Cannot be empty';
+    List<String> parts = value.split(',');
+
+    double sum = 0.0;
+    for (var part in parts) {
+      double? num = double.tryParse(part.trim());
+      if (num == null) return 'Each part must be a number';
+      sum += num;
+    }
+    if (sum != 1.0) return 'The sum must equal 1.0';
+    return null;
+  }
+
+  // Validation logic for loss matrix field.
+  String? _validateLossMatrix(String? value) {
+    if (value == null || value.isEmpty) return 'Cannot be empty';
+    List<String> parts = value.split(',');
+    if (parts.length != 4) return 'Must contain four comma-separated integers';
+    for (var part in parts) {
+      if (int.tryParse(part.trim()) == null) {
+        return 'Each part must be an integer';
+      }
+    }
+    return null;
+  }
+
   // Helper method to create a text field.
-  Widget _buildTextField(
-    String label,
-    TextEditingController controller,
-    TextStyle textStyle, {
-    bool enabled = true, // Default enabled
+  Widget _buildTextField({
+    required String label,
+    required TextEditingController controller,
+    required TextStyle textStyle,
+    required String tooltip,
+    required bool enabled,
+    required String? Function(String?) validator,
+    required TextInputFormatter inputFormatter,
+    required int maxWidth,
   }) {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: textStyle),
-          TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+      child: Tooltip(
+        message: tooltip,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label, style: textStyle),
+            SizedBox(
+              width: maxWidth * 15.0, // Set maximum width for the input field
+              child: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  errorText: validator(controller.text),
+                  errorStyle: const TextStyle(fontSize: 10),
+                ),
+                style: textStyle,
+                enabled: enabled, // Control enable state
+                inputFormatters: [
+                  FilteringTextInputFormatter.singleLineFormatter,
+                ],
+              ),
             ),
-            style: textStyle,
-            enabled: enabled, // Control enable state
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   // Helper method to create a number field.
-  Widget _buildNumberField(
-    String label,
-    TextEditingController controller,
-    TextStyle textStyle, {
-    bool enabled = true, // Default enabled
+  Widget _buildNumberField({
+    required String label,
+    required TextEditingController controller,
+    required TextStyle textStyle,
+    required String tooltip,
+    required bool enabled,
+    required String? Function(String?) validator,
+    required TextInputFormatter inputFormatter,
+    required int maxWidth,
   }) {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: textStyle),
-          TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+      child: Tooltip(
+        message: tooltip,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label, style: textStyle),
+            SizedBox(
+              width: maxWidth * 15.0, // Set maximum width for the input field
+              child: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  errorText: validator(controller.text),
+                  errorStyle: const TextStyle(
+                    fontSize: 10,
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                style: textStyle,
+                enabled: enabled, // Control enable state
+                inputFormatters: [
+                  FilteringTextInputFormatter.singleLineFormatter,
+                ],
+              ),
             ),
-            keyboardType: TextInputType.number,
-            style: textStyle,
-            enabled: enabled, // Control enable state
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
