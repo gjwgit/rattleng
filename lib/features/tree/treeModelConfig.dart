@@ -289,29 +289,35 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
   // Validation logic for priors field.
   String? _validatePriors(String? value) {
-    if (value == null || value.isEmpty) return 'Cannot be empty';
-    List<String> parts = value.split(',');
+    if (value != null && value.isNotEmpty) {
+      List<String> parts = value.split(',');
 
-    double sum = 0.0;
-    for (var part in parts) {
-      double? num = double.tryParse(part.trim());
-      if (num == null) return 'Each part must be a number';
-      sum += num;
+      double sum = 0.0;
+      for (var part in parts) {
+        double? num = double.tryParse(part.trim());
+        if (num == null) return 'Each part must be a number';
+        sum += num;
+      }
+      if (sum != 1.0) return 'The sum must equal 1.0';
     }
-    if (sum != 1.0) return 'The sum must equal 1.0';
+
     return null;
   }
 
   // Validation logic for loss matrix field.
   String? _validateLossMatrix(String? value) {
-    if (value == null || value.isEmpty) return 'Cannot be empty';
-    List<String> parts = value.split(',');
-    if (parts.length != 4) return 'Must contain four comma-separated integers';
-    for (var part in parts) {
-      if (int.tryParse(part.trim()) == null) {
-        return 'Each part must be an integer';
+    if (value != null && value.isNotEmpty) {
+      List<String> parts = value.split(',');
+      if (parts.length != 4) {
+        return 'Must contain four comma-separated integers';
+      }
+      for (var part in parts) {
+        if (int.tryParse(part.trim()) == null) {
+          return 'Each part must be an integer';
+        }
       }
     }
+
     return null;
   }
 
