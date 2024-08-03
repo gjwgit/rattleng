@@ -1,17 +1,23 @@
+# 20240803
+#
+# It runs R if we run from /snap/rattle/current/rattle
+#
+# It fails to run R is started from /snap/bin/rattle?
+
 name: rattle
-version: 0.2.0
-summary: Rattle Next Generation Data Science App
+version: 6.2.31
+summary: Rattle Next Generation Data Science
 description: Rattle is the data scientists toolkit.
 
 confinement: strict
 base: core22
 grade: stable
 
-slots:
-  dbus-rattle:
-    interface: dbus
-    bus: session
-    name: com.togaware.rattle
+#slots:
+#  dbus-rattle:
+#    interface: dbus
+#    bus: session
+#    name: com.togaware.rattle
     
 apps:
   rattle:
@@ -19,16 +25,29 @@ apps:
     extensions: [gnome] # gnome includes the libraries required by flutter
     plugs:
     - network
-    slots:
-      - dbus-rattle
+    - home
+    - removable-media
+    - system-files
+#    slots:
+#      - dbus-rattle
+
 parts:
   rattle:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
+    stage-packages:
+      - r-recommended
 
 plugs:
-  r-executable:
+  system-files:
     interface: system-files
     read:
       - /usr/bin/R
+    write:
+      - $SNAP/usr/lib/R  # Allows writing to the R path within the snap
+
+      # Might need to remove the above $SNAP
+      
+environment:
+  LIBGL_ALWAYS_SOFTWARE: 1  # Ensures compatibility with different systems
