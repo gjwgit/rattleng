@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/types.dart';
+import 'package:rattle/providers/vars/types.dart';
 
 List<String> getCategoric(WidgetRef ref) {
   // The typesProvider lists the types for the different variables which we

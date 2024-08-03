@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-25 15:58:15 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-01 20:57:17 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -78,7 +78,9 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
           # Correlation - Numeric Data
           
-          Generated using
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/correlated-numeric-variables.html)
+          and
           [stats::cor()](https://www.rdocumentation.org/packages/stats/topics/cor)
 
           ''',
@@ -95,8 +97,10 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
         # Variable Correlation Plot
         
-        Generated using
-        [corrplot::corrplot(ds)](https://www.rdocumentation.org/packages/corrplot/topics/corrplot)
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/correlated-numeric-variables.html)
+          and
+          [corrplot::corrplot(ds)](https://www.rdocumentation.org/packages/corrplot/topics/corrplot)
 
         ''',
         path: '$tempDir/explore_correlation.svg',
