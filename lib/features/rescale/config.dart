@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:input_quantity/input_quantity.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/interval.dart';
@@ -117,38 +118,50 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                   },
                 ),
                 configWidgetSpace,
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '$interval',
-                        style: TextStyle(fontSize: 24.0),
-                      ),
-                      Column(
-                        children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: Icon(Icons.arrow_drop_up),
-                            onPressed: _increment,
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: Icon(Icons.arrow_drop_down),
-                            onPressed: _decrement,
-                          ),
-                        ],
-                      ),
-                    ],
+                // spinbox for interval
+                const InputQty.int(
+                  maxVal: 500,
+                  initVal: 100,
+                  minVal: 1,
+                  steps: 1,
+                  decoration: QtyDecorationProps(
+                    qtyStyle: QtyStyle.btnOnRight,
+                    orientation: ButtonOrientation.vertical,
                   ),
                 ),
+                // customised one
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 8.0),
+                //   decoration: BoxDecoration(
+                //     border: Border.all(color: Colors.grey),
+                //     borderRadius: BorderRadius.circular(8.0),
+                //   ),
+                //   child: Row(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Text(
+                //         '$interval',
+                //         style: TextStyle(fontSize: 24.0),
+                //       ),
+                //       Column(
+                //         children: [
+                //           IconButton(
+                //             padding: EdgeInsets.zero,
+                //             constraints: BoxConstraints(),
+                //             icon: Icon(Icons.arrow_drop_up),
+                //             onPressed: _increment,
+                //           ),
+                //           IconButton(
+                //             padding: EdgeInsets.zero,
+                //             constraints: BoxConstraints(),
+                //             icon: Icon(Icons.arrow_drop_down),
+                //             onPressed: _decrement,
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             );
           }
