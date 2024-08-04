@@ -8,7 +8,6 @@ class Stepper extends StatefulWidget {
 }
 
 class _StepperState extends State<Stepper> {
-  
   @override
   Widget build(BuildContext context) {
     return const Placeholder();

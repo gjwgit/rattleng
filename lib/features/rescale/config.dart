@@ -26,11 +26,9 @@ library;
 
 import 'dart:async';
 
-import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:input_quantity/input_quantity.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/interval.dart';
@@ -168,7 +166,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 // ),
                 // customised one
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(8.0),
@@ -183,13 +181,18 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             if (timer?.isActive ?? false) timer!.cancel();
-                            timer = Timer(Duration(milliseconds: 600), () {
+                            timer =
+                                Timer(const Duration(milliseconds: 600), () {
                               ref.read(intervalProvider.notifier).state =
                                   int.tryParse(value) ?? 100;
                               // when the user chooses enter 100g, the gui is not updated because the provider not changed no rebuild triggered.
-                              _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+                              _valCtrl.text = ref
+                                  .read(intervalProvider.notifier)
+                                  .state
+                                  .toString();
                               debugPrint(
-                                  'Interval updated to ${ref.read(intervalProvider.notifier).state}.');
+                                'Interval updated to ${ref.read(intervalProvider.notifier).state}.',
+                              );
                             });
                           },
                         ),
@@ -202,8 +205,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                             onLongPressEnd: (details) => endTimer.call(),
                             child: IconButton(
                               padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              icon: Icon(Icons.arrow_drop_up),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_drop_up),
                               onPressed: _increment,
                             ),
                           ),
@@ -213,8 +216,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                             onLongPressEnd: (details) => endTimer.call(),
                             child: IconButton(
                               padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              icon: Icon(Icons.arrow_drop_down),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_drop_down),
                               onPressed: _decrement,
                             ),
                           ),
