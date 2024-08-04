@@ -27,5 +27,5 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final intervalProvider = StateProvider<int>((ref) => 100);
+const initInterval = 100;
+final intervalProvider = StateProvider<int>((ref) => initInterval);
