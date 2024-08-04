@@ -41,6 +41,7 @@ dependencies:
       url: https://github.com/Multi-Tech-s-r-l/xterm.dart
       ref: master
   input_quantity: ^2.3.2
+  cart_stepper: ^4.3.0
   
 dev_dependencies:
 
