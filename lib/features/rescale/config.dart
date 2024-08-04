@@ -24,6 +24,8 @@
 
 library;
 
+import 'dart:async';
+
 import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 
@@ -50,6 +52,28 @@ class RescaleConfig extends ConsumerStatefulWidget {
 }
 
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
+
+
+    final TextEditingController _valCtrl = TextEditingController();
+  /// timer for  periodic call function
+  Timer? timer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+  }
+  /// start timer and chhange value
+  void startTimer(Function? ontap) {
+    ontap?.call();
+    timer = Timer.periodic(const Duration(milliseconds: 80), (timer) {
+      ontap?.call();
+    });
+  }
+
+  void endTimer() => timer?.cancel();
+
   void _increment() {
     ref.read(intervalProvider.notifier).update((state) => state + 1);
   }
@@ -152,24 +176,34 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // TextFormField(controller:_valCtrl ,),
                       Text(
                         '$interval',
                         style: TextStyle(fontSize: 24.0),
                       ),
                       Column(
                         children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: Icon(Icons.arrow_drop_up),
-                            onPressed: _increment,
+                          GestureDetector(
+                            onLongPressStart: (details) =>
+                                startTimer.call(_increment),
+                            onLongPressEnd: (details) => endTimer.call(),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              icon: Icon(Icons.arrow_drop_up),
+                              onPressed: _increment,
+                            ),
                           ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: Icon(Icons.arrow_drop_down),
-                            onPressed: _decrement,
-
+                          GestureDetector(
+                            onLongPressStart: (details) =>
+                                startTimer.call(_decrement),
+                            onLongPressEnd: (details) => endTimer.call(),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              icon: Icon(Icons.arrow_drop_down),
+                              onPressed: _decrement,
+                            ),
                           ),
                         ],
                       ),
