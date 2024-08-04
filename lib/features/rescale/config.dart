@@ -119,6 +119,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   Widget transformChooser() {
     int interval = ref.watch(intervalProvider);
     _valCtrl.text = interval.toString();
+    
     return Expanded(
       child: Wrap(
         spacing: 5.0,
@@ -231,6 +232,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               ],
             );
           }
+          
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,
