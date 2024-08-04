@@ -95,6 +95,51 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             children: [
               ActivityButton(
                 onPressed: () {
+                  // Perform manual validation.
+                  String? minSplitError =
+                      _validateInteger(_minSplitController.text, min: 0);
+                  String? maxDepthError =
+                      _validateInteger(_maxDepthController.text, min: 1);
+                  String? minBucketError =
+                      _validateInteger(_minBucketController.text, min: 1);
+                  String? complexityError =
+                      _validateComplexity(_complexityController.text);
+                  String? priorsError = _validatePriors(_priorsController.text);
+                  String? lossMatrixError =
+                      _validateLossMatrix(_lossMatrixController.text);
+
+                  // Collect all errors.
+                  List<String> errors = [
+                    if (minSplitError != null) 'Min Split: $minSplitError',
+                    if (maxDepthError != null) 'Max Depth: $maxDepthError',
+                    if (minBucketError != null) 'Min Bucket: $minBucketError',
+                    if (complexityError != null) 'Complexity: $complexityError',
+                    if (priorsError != null) 'Priors: $priorsError',
+                    if (lossMatrixError != null)
+                      'Loss Matrix: $lossMatrixError',
+                  ];
+
+                  // Check if there are any errors.
+                  if (errors.isNotEmpty) {
+                    // Show a warning dialog if validation fails.
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Validation Error'),
+                        content: Text(
+                            'Please ensure all input fields are valid before building the decision tree:\n\n${errors.join('\n')}',),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                    return;
+                  }
                   // Require a target variable.
                   if (getTarget(ref) == 'NULL') {
                     showOk(
@@ -395,6 +440,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 enabled: enabled, // Control enable state
                 inputFormatters: [
                   FilteringTextInputFormatter.singleLineFormatter,
+                  inputFormatter,
                 ],
               ),
             ),
@@ -405,7 +451,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   }
 }
 
-// Enum for algorithm types
+// Enum for algorithm types.
 enum AlgorithmType {
   traditional('Traditional'),
   conditional('Conditional');
