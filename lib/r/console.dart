@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Sunday 2024-08-04 20:12:29 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-04 20:14:08 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _RConsoleState extends ConsumerState<RConsole> {
   // There is no TerminalThemes for the black on white that I prefer and am
   // using for the app. The black on white does not stand out as much as a
   // Console white on black does. But the black on white is more in line with
-  // hte theme of the app.
+  // the theme of the app.
 
   final blackOnWhite = TerminalTheme(
     cursor: const Color(0XFFAEAFAD),
