@@ -249,6 +249,11 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' MINBUCKET', ', minbucket = ${minBucket.toString()}');
   code = code.replaceAll(' CP', ', cp = ${complexity.toString()}');
 
+  if (includingMissing) {
+    code = code.replaceAll('usesurrogate=0,', '');
+    code = code.replaceAll('maxsurrogate=0', '');
+  }
+
   // TODO if (script == 'model_build_random_forest')) {
 
   code = code.replaceAll('RF_NUM_TREES', '500');
