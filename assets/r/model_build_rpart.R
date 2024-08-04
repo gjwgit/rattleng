@@ -59,7 +59,7 @@ model_rpart <- rpart(
   method=method,
   parms=list(split="information" PRIORS LOSS),
   control=rpart.control(usesurrogate=0,
-                        maxsurrogate=0 MINSPLIT MINBUCKET CP),
+                        maxsurrogate=0 MINSPLIT MINBUCKET MAXDEPTH CP),
   model=TRUE)
 
 # Generate a textual view of the Decision Tree model.
