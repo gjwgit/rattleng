@@ -24,6 +24,7 @@
 
 library;
 
+import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -118,50 +119,63 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                   },
                 ),
                 configWidgetSpace,
+                // CartStepper(
+                //   value: interval,
+                //   didChangeCount: (value) {
+                //     ref.read(intervalProvider.notifier).state = value;
+                //   },
+                // ),
                 // spinbox for interval
-                const InputQty.int(
-                  maxVal: 500,
-                  initVal: 100,
-                  minVal: 1,
-                  steps: 1,
-                  decoration: QtyDecorationProps(
-                    qtyStyle: QtyStyle.btnOnRight,
-                    orientation: ButtonOrientation.vertical,
-                  ),
-                ),
-                // customised one
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: 8.0),
-                //   decoration: BoxDecoration(
-                //     border: Border.all(color: Colors.grey),
-                //     borderRadius: BorderRadius.circular(8.0),
-                //   ),
-                //   child: Row(
-                //     mainAxisSize: MainAxisSize.min,
-                //     children: [
-                //       Text(
-                //         '$interval',
-                //         style: TextStyle(fontSize: 24.0),
-                //       ),
-                //       Column(
-                //         children: [
-                //           IconButton(
-                //             padding: EdgeInsets.zero,
-                //             constraints: BoxConstraints(),
-                //             icon: Icon(Icons.arrow_drop_up),
-                //             onPressed: _increment,
-                //           ),
-                //           IconButton(
-                //             padding: EdgeInsets.zero,
-                //             constraints: BoxConstraints(),
-                //             icon: Icon(Icons.arrow_drop_down),
-                //             onPressed: _decrement,
-                //           ),
-                //         ],
-                //       ),
-                //     ],
+                // problem 1 it doesn't reflect the interval value
+                // problem 2 it can't update the interval value
+                // const InputQty.int(
+                //   maxVal: 500,
+                //   initVal: nun.tryParse(interval,
+                //   minVal: 1,
+                //   steps: 1,
+                //   onQtyChanged: (value) {
+                //     ref.read(intervalProvider.notifier).state = Int(value);
+                //   },
+                //   decoration: QtyDecorationProps(
+                //     qtyStyle: QtyStyle.btnOnRight,
+                //     orientation: ButtonOrientation.vertical,
                 //   ),
                 // ),
+                // customised one
+                // TODO enable text editing and onTap
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$interval',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                      Column(
+                        children: [
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(Icons.arrow_drop_up),
+                            onPressed: _increment,
+                          ),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(Icons.arrow_drop_down),
+                            onPressed: _decrement,
+
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           }
