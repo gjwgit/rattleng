@@ -180,11 +180,13 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                           controller: _valCtrl,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
+                            // add small delay to update the provider
                             if (timer?.isActive ?? false) timer!.cancel();
                             timer =
                                 Timer(const Duration(milliseconds: 600), () {
+                              // reset to default if not a int
                               ref.read(intervalProvider.notifier).state =
-                                  int.tryParse(value) ?? 100;
+                                  int.tryParse(value) ?? initInterval;
                               // when the user chooses enter 100g, the gui is not updated because the provider not changed no rebuild triggered.
                               _valCtrl.text = ref
                                   .read(intervalProvider.notifier)
