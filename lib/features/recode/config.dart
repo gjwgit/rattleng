@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 17:05:36 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-04 07:46:33 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -63,7 +63,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               onPressed: () {
                 showUnderConstruction(context);
               },
-              child: const Text('Preform Recode Transform'),
+              child: const Text("Recode Variable's Values"),
             ),
           ],
         ),

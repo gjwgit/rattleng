@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-01 08:52:10 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-04 07:42:34 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -165,7 +165,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 ref.read(groupByProvider.notifier).state = groupBy;
                 buildAction();
               },
-              child: const Text('Visualise'),
+              child: const Text('Generate Plots'),
             ),
 
             const SizedBox(width: 20.0),
