@@ -31,6 +31,14 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/complexity.dart';
+import 'package:rattle/providers/loss_matrix.dart';
+import 'package:rattle/providers/max_depth.dart';
+import 'package:rattle/providers/min_bucket.dart';
+import 'package:rattle/providers/min_split.dart';
+import 'package:rattle/providers/priors.dart';
+import 'package:rattle/providers/tree_algorithm.dart';
+import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
@@ -127,7 +135,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                       builder: (context) => AlertDialog(
                         title: const Text('Validation Error'),
                         content: Text(
-                            'Please ensure all input fields are valid before building the decision tree:\n\n${errors.join('\n')}',),
+                          'Please ensure all input fields are valid before building the decision tree:\n\n${errors.join('\n')}',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -157,6 +166,29 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     ''',
                     );
                   } else {
+                    // Update provider value.
+
+                    ref.read(minSplitProvider.notifier).state =
+                        int.parse(_minSplitController.text);
+                    ref.read(maxDepthProvider.notifier).state =
+                        int.parse(_maxDepthController.text);
+                    ref.read(minBucketProvider.notifier).state =
+                        int.parse(_minBucketController.text);
+
+                    ref.read(complexityProvider.notifier).state =
+                        double.parse(_complexityController.text);
+
+                    ref.read(priorsProvider.notifier).state =
+                        _priorsController.text;
+
+                    ref.read(treeIncludeMissingProvider.notifier).state =
+                        _includeMissing;
+                    ref.read(lossMatrixProvider.notifier).state =
+                        _lossMatrixController.text;
+
+                    ref.read(treeAlgorithmProvider.notifier).state =
+                        _selectedAlgorithm;
+
                     // Run the R scripts.
                     rSource(context, ref, 'model_template');
                     rSource(context, ref, 'model_build_rpart');
@@ -356,10 +388,15 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
       if (parts.length != 4) {
         return 'Must contain four comma-separated integers';
       }
+
       for (var part in parts) {
         if (int.tryParse(part.trim()) == null) {
           return 'Each part must be an integer';
         }
+      }
+      // Check if the first and last elements are zero (for diagonal zeros).
+      if (parts[0].trim() != '0' || parts[3].trim() != '0') {
+        return 'Loss matrix must have zeros on diagonals (first and last elements)';
       }
     }
 
