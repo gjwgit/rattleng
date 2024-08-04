@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Friday 2024-08-02 16:14:30 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-08-03 20:54:20 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -84,5 +84,5 @@ String get shell {
       ? 'R.exe'
       : Platform.isMacOS
           ? '/usr/local/bin/R'
-          : 'R';
+          : '/usr/bin/R';
 }

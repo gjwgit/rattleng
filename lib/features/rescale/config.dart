@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-30 08:48:39 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-04 07:46:47 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -317,7 +317,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
               },
-              child: const Text('Transform'),
+              child: const Text("Rescale Variable's Values"),
             ),
             configWidgetSpace,
             variableChooser(inputs, selected),
