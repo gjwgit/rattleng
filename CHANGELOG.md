@@ -47,7 +47,7 @@ toward a 6.3 release.
 
 ## 6.2 Dataset Roles, Display Pages.
 
-+ Move to SVG iamges [20240711 yyx]
++ Move to SVG images [20240711 yyx]
 + Implement ImagePage() [20240711 yyx]
 + Add dataset role selector [20240711 yyx]
 + Update TREE and FOREST display [6.1.24 20240630 gjw]
