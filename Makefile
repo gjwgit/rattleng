@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2024-07-25 09:53:43 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-08-04 08:42:33 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -18,7 +18,7 @@
 #   Trivial update or bug fix
 
 APP=$(shell pwd | xargs basename)
-VER = $(shell egrep '^version:' pubspec.yaml | cut -d' ' -f2)
+VER = $(shell egrep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 DATE=$(shell date +%Y-%m-%d)
 
 # Identify a destination used by install.mk
@@ -88,6 +88,7 @@ snap:
 	flutter clean
 	snapcraft clean rattle
 	snapcraft
+	scp rattle_$(VER)_amd64.snap togaware.com:apps/access/rattle_dev_amd64.snap
 
 .PHONY: isnap
 isnap:
