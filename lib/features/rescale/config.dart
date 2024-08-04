@@ -52,9 +52,8 @@ class RescaleConfig extends ConsumerStatefulWidget {
 }
 
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
+  final TextEditingController _valCtrl = TextEditingController();
 
-
-    final TextEditingController _valCtrl = TextEditingController();
   /// timer for  periodic call function
   Timer? timer;
 
@@ -64,6 +63,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     super.initState();
     _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
   }
+
   /// start timer and chhange value
   void startTimer(Function? ontap) {
     ontap?.call();
@@ -120,6 +120,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
   Widget transformChooser() {
     int interval = ref.watch(intervalProvider);
+    _valCtrl.text = interval.toString();
     return Expanded(
       child: Wrap(
         spacing: 5.0,
@@ -166,7 +167,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 //   ),
                 // ),
                 // customised one
-                // TODO enable text editing and onTap
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
@@ -176,11 +176,21 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // TextFormField(controller:_valCtrl ,),
-                      Text(
-                        '$interval',
-                        style: TextStyle(fontSize: 24.0),
+                      SizedBox(
+                        width: 100,
+                        child: TextFormField(
+                          controller: _valCtrl,
+                          onChanged: (value) {
+                            // TODO yyx 20240804 when the user chooses enter 100g, the gui is not updated because the provider not changed no rebuild triggered
+                            ref.read(intervalProvider.notifier).state = int.tryParse(value) ?? 100;
+                            debugPrint('Interval updated to ${ref.read(intervalProvider.notifier).state}.');
+                          },
+                        ),
                       ),
+                      // Text(
+                      //   '$interval',
+                      //   style: TextStyle(fontSize: 24.0),
+                      // ),
                       Column(
                         children: [
                           GestureDetector(
