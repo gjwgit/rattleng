@@ -9,7 +9,7 @@ ds[["RIN_SELECTED_VAR_INTERVAL"]] <- ds[["SELECTED_VAR"]]
 # Rescale to 0 to INTERVAL within each group.
 
 ds[["RIN_SELECTED_VAR_INTERVAL"]] <-
-    reshape::rescale.by.group(ds[["SELECTED_VAR"]], type="irank", itop=INTERVAL)
+    rattle::rescale.by.group(ds[["SELECTED_VAR"]], type="irank", itop=INTERVAL)
 
 glimpse(ds)
 summary(ds)
