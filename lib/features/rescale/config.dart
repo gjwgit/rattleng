@@ -180,10 +180,17 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                         width: 100,
                         child: TextFormField(
                           controller: _valCtrl,
+                          keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            // TODO yyx 20240804 when the user chooses enter 100g, the gui is not updated because the provider not changed no rebuild triggered
-                            ref.read(intervalProvider.notifier).state = int.tryParse(value) ?? 100;
-                            debugPrint('Interval updated to ${ref.read(intervalProvider.notifier).state}.');
+                            if (timer?.isActive ?? false) timer!.cancel();
+                            timer = Timer(Duration(milliseconds: 600), () {
+                              ref.read(intervalProvider.notifier).state =
+                                  int.tryParse(value) ?? 100;
+                              // when the user chooses enter 100g, the gui is not updated because the provider not changed no rebuild triggered.
+                              _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+                              debugPrint(
+                                  'Interval updated to ${ref.read(intervalProvider.notifier).state}.');
+                            });
                           },
                         ),
                       ),
