@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Fine tune buttons. [6.2.33 20240804 gjw]
 + Build snapcraft package for distribution [6.2.32 20240804 gjw]
 + Bug fixes: update dateset template after transforms [6.2.31 20240803 gjw]
 + Add RANK function to RESCALE feature of TRANSFORM tab [6.2.30 20240802 yyx]
