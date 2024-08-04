@@ -194,10 +194,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                           },
                         ),
                       ),
-                      // Text(
-                      //   '$interval',
-                      //   style: TextStyle(fontSize: 24.0),
-                      // ),
                       Column(
                         children: [
                           GestureDetector(
