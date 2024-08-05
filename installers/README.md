@@ -42,7 +42,7 @@ R -e 'install.packages(c("Hmisc", "VIM",
                          "corrplot", "descr", "fBasics", "ggthemes", "janitor",
                          "magrittr", "mice", "pacman",
                          "randomForest",  "rattle", "readr", "reshape", "rpart",
-                         "tidyverse", "tm", "verification", "wordcloud"'))'
+                         "tidyverse", "tm", "verification", "wordcloud"))'
 ```
 
 RattleNG can then be installed from the installation packages
@@ -265,6 +265,9 @@ Then run the app:
 open rattleng/rattle.app
 ```
 
+If the OS complains that the app is not trusted and will not be run,
+tap the Security link and allow rattle to be run.
+
 ### Dmg Install - UNDER DEVELOPMENT
 
 The package file `rattleng.dmg` can be installed on MacOS. Download
@@ -277,19 +280,29 @@ warning next time.
 
 ### Prerequisite
 
-+ As Admin download and install R
++  Download and Install R
   + Visit https://cloud.r-project.org/ and navigate to Windows install
   + Click on *Download R for Windows*
-  + Open the downloaded file to install R into the suggested path
-    *C:\Program Files\R*
-  + Add *C:\Program Files\R\bin* to the PATH environment variable
+  + Open the downloaded **exe** file  **as Administrator**
+    + Install R with all the defaults into *C:\Program Files\R*
+  + Add *C:\Program Files\R\R-4.4.1\bin* to the PATH environment
+    variable (change the version number to match that which you
+    installed).
     + Open *Edit the system environment variables* from **Control panel**
 	+ Click *Environment Variables...*
 	+ Click the *Path* entry and then *Edit...*
-    + Click *New* and then add *C:\Program Files\R\bin*
+    + Click *New* and then add *C:\Program Files\R\R-4.4.1\bin*
     + Click *OK* a few times to close the windows.
-+ As Admin, start up R in a CMD terminal and install the required
-  R packages with the `install.packages` command above.
++ **As Admin**, start a CMD terminal, run R, and install the required
+  R packages with the `install.packages`:
+  
+```r
+install.packages(c("Hmisc", "VIM",
+                   "corrplot", "descr", "fBasics", "ggthemes", "janitor",
+                   "magrittr", "mice", "pacman",
+                   "randomForest",  "rattle", "readr", "reshape", "rpart",
+                   "tidyverse", "tm", "verification", "wordcloud"))
+```
   
 Test that this works for the normal user by starting up the CMD
 terminal, running R, and then, for example `library(pacman)`.
@@ -305,10 +318,15 @@ wget https://access.togaware.com/rattleng-dev-windows.zip -O rattleng-dev-window
 
 **Quick Start**
 
-Unzip and run `rattle.exe`. You can add the unzipped path to the
-system PATH environment variable.
+Unzip the archive and then run `rattle.exe`. You can add the unzipped
+path to the system PATH environment variable. 
 
-**Trouble Shooting 20240802**
+If the OS complains that the app is not trusted and will not be run,
+tap the Security link and allow rattle to be run.
+
+For Windows it is likely the following will be required:
+
+**Trouble Shooting 20240805**
 
 *Checking R Packages Available*
 
@@ -320,6 +338,14 @@ following command:
 library(pacman)
 ```
 
+*MSVCP140.dll was not found*
+
+Install the Microsoft Visual C++ libraries by visiting
+[answers.microsoft.com](https://answers.microsoft.com/en-us/windows/forum/all/error-message-for-msvcp140dll-and-vcruntime140dll/8c2c0803-08ac-4275-838e-b692077b5c9e)
+and the download and install one of
+[vc_redist.x64.exe](https://aka.ms/vs/16/release/vc_redist.x64.exe) or
+[vc_redist.x86.exe](https://aka.ms/vs/16/release/vc_redist.x86.exe).
+
 *Rattle R Initialisation Missing*
 
 If you do not see in the **Console** the R command like:
@@ -328,7 +354,7 @@ If you do not see in the **Console** the R command like:
 > theme_rattle <- theme_economist
 ```
 
-then R has not initialised the main Rattle script. To remedy this
+then R has not initialised the main Rattle script. To remedy this,
 visit https://github.com/gjwgit/rattleng/blob/dev/assets/r/main.R and
 copy and paste the contents into the **Console**. This should be done
 as the very first thing on starting up RattleNG.
