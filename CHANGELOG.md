@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Update xterm and fix selected transparency. [6.2.34 20240805 gjw]
 + Fine tune buttons. [6.2.33 20240804 gjw]
 + Build snapcraft package for distribution [6.2.32 20240804 gjw]
 + Bug fixes: update dateset template after transforms [6.2.31 20240803 gjw]
