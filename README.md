@@ -80,6 +80,8 @@ Currently implemented features as of version 6.2.18:
 + Dataset
   + CSV
   + Demo
+  + Glimpse
+  + Roles
 + Explore
   + Summary
   + Visual
@@ -87,8 +89,10 @@ Currently implemented features as of version 6.2.18:
   + Correlation
   + Tests
 + Transform
-  + Rescale
   + Impute
+  + Rescale
+  + Recode
+  + Cleanup
 + Model
   + Cluster
   + Tree
