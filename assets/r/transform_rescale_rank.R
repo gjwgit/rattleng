@@ -1,7 +1,7 @@
 # The 'reshape' package provides the 'rescaler' function.
 
 
-# Rescale SELECTED.
+# Rescale SELECTED_VAR.
 
 ds[["RRK_SELECTED_VAR"]] <- ds[["SELECTED_VAR"]]
 
