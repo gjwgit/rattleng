@@ -328,6 +328,15 @@ For Windows it is likely the following will be required:
 
 **Trouble Shooting 20240805**
 
+*MSVCP140.dll was not found*
+
+You will need to install the Microsoft Visual C++ libraries for
+running the flutter app. See
+[answers.microsoft.com](https://answers.microsoft.com/en-us/windows/forum/all/error-message-for-msvcp140dll-and-vcruntime140dll/8c2c0803-08ac-4275-838e-b692077b5c9e). From
+there you can download and install one of
+[vc_redist.x64.exe](https://aka.ms/vs/16/release/vc_redist.x64.exe) or
+[vc_redist.x86.exe](https://aka.ms/vs/16/release/vc_redist.x86.exe).
+
 *Checking R Packages Available*
 
 With the admin install of the R packages, rattle should find the
@@ -338,13 +347,8 @@ following command:
 library(pacman)
 ```
 
-*MSVCP140.dll was not found*
-
-Install the Microsoft Visual C++ libraries by visiting
-[answers.microsoft.com](https://answers.microsoft.com/en-us/windows/forum/all/error-message-for-msvcp140dll-and-vcruntime140dll/8c2c0803-08ac-4275-838e-b692077b5c9e)
-and the download and install one of
-[vc_redist.x64.exe](https://aka.ms/vs/16/release/vc_redist.x64.exe) or
-[vc_redist.x86.exe](https://aka.ms/vs/16/release/vc_redist.x86.exe).
+If the package is not found then be sure to check that you installed
+the packages with R as the administrator.
 
 *Rattle R Initialisation Missing*
 
