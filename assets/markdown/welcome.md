@@ -46,9 +46,10 @@ the Script tab for details.
 
 ## Resources
 
-Rattle is well covered in the book **Data Mining with Rattle and R**
-(https://bit.ly/rattle_data_mining). The concept of R templates for
-data science was introduced in **The Essentials of Data Science**
+The original Rattle is well covered in the book **Data Mining with
+Rattle and R** (https://bit.ly/rattle_data_mining). The concept of R
+templates for data science, upon which the R back-end is based, was
+introduced in **The Essentials of Data Science**
 (https://bit.ly/essentials_data_science). Both books are available
 from Amazon. The [Desktop Data Science Survival
 Guide](https://survivor.togaware.com/datascience) includes Rattle
