@@ -85,16 +85,18 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     // CONVERT TO RULES
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'asRules(model_rpart)');
+    if (treeAlgorithm == AlgorithmType.traditional) {
+      content = rExtract(stdout, 'asRules(model_rpart)');
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '# Decision Tree as Rules\n\n'
-              'Built using `rattle::asRules()`.\n\n',
-          content: '\n$content',
-        ),
-      );
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: '# Decision Tree as Rules\n\n'
+                'Built using `rattle::asRules()`.\n\n',
+            content: '\n$content',
+          ),
+        );
+      }
     }
 
     ////////////////////////////////////////////////////////////////////////
