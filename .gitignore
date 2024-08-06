@@ -10,6 +10,7 @@ script.R
 NOTES.md
 
 installers/*.tar.gz
+installers/*-linux.zip
 installers/*-macos.zip
 installers/*-windows.zip
 
