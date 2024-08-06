@@ -46,7 +46,6 @@ import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
@@ -94,7 +93,6 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
 
-
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
   String priors = ref.read(priorsProvider);
@@ -102,7 +100,6 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
-  AlgorithmType treeAlgorithm = ref.read(treeAlgorithmProvider);
 
   int interval = ref.read(intervalProvider);
 

@@ -45,15 +45,11 @@ mdesc <- "Conditional Inference Tree"
 # Define the formula for the model
 form <- as.formula(paste(target, "~ ."))
 
-controls <- ctree_control(
-  MINSPLIT MINBUCKET MAXDEPTH
-)
 
 # Train a Conditional Inference Tree model using ctree
 model_ctree <- ctree(
   formula = form,
   data = ds[tr, vars],
-#   controls = controls
 )
 
 # Generate a textual view of the Conditional Inference Tree model
