@@ -20,4 +20,8 @@ through the Transform tab it is a good idea to save the data through
 the Export button. We will be prompted for the name of a CSV file into
 which the current transformation of the dataset will be saved.
 
+Visit the [Data Science Survival
+Guide](https://survivor.togaware.com/datascience/transforming-data-in-rattle.html)
+for further details.
+
 > 

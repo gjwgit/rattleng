@@ -32,7 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -49,6 +49,7 @@ class VisualDisplay extends ConsumerStatefulWidget {
 class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   @override
   Widget build(BuildContext context) {
+    // This is here to add the page when stdout changes / after image are built.
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
@@ -56,10 +57,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     // List<String> lines = [];
 
     String selected = ref.watch(selectedProvider.notifier).state;
-    String numc = rExtract(stdout, '+ numc');
-    bool numeric = numc.contains('"$selected"');
 
-    if (numeric) {
+    if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
+      debugPrint('add pages for numeric');
       pages.add(
         ImagePage(
           title: '''
@@ -132,7 +132,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     //   ),
     // );
 
-    if (!numeric) {
+    if (ref.read(typesProvider.notifier).state[selected] == Type.categoric) {
+      debugPrint('add pages for categoric');
+
       pages.add(
         ImagePage(
           title: '''

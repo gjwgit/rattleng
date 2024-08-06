@@ -27,7 +27,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/keys.dart';
+import 'package:rattle/constants/status.dart';
+import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/r/load_dataset.dart';
+import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends ConsumerWidget {
@@ -68,6 +72,12 @@ class DatasetTextField extends ConsumerWidget {
 
           onChanged: (newPath) {
             ref.watch(pathProvider.notifier).state = newPath;
+          },
+          onSubmitted: (newPath) {
+            rLoadDataset(context, ref);
+            setStatus(ref, statusChooseVariableRoles);
+
+            datasetLoadedUpdate(ref);
           },
 
           // For an empty value we show a helpful message.

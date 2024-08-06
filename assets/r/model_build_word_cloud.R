@@ -1,6 +1,6 @@
 # Rattle Scripts: generate a trimmed wordcloud png
 # 
-# Time-stamp: <Sunday 2024-07-14 20:30:52 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-02 08:40:25 +1000 Graham Williams>
 # 
 # Copyright (C) 2024, Togaware Pty Ltd
 # 
@@ -29,7 +29,6 @@
 
 library(tm)
 library(wordcloud)
-library(magick)
 
 # Load the text data.
 

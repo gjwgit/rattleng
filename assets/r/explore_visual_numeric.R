@@ -1,11 +1,11 @@
-# Rattle Scripts: For dataset ds generate visual displays.
+# Rattle Scripts: Visual Displays
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-27 16:00:23 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-01 11:40:55 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -31,12 +31,8 @@
 # References:
 #
 # @williams:2017:essentials
+#
 # https://survivor.togaware.com/datascience/ for further details.
-
-# Load required packages from the local library into the R session.
-
-if(!require(ggplot2)) install.packages("ggplot2")
-if(!require(rattle)) install.packages("rattle")
 
 ########################################################################
 # BOX PLOT

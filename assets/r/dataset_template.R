@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 10:20:18 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-08-03 14:37:53 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,8 +24,9 @@
 #
 # Author: Graham Williams
 
-# Run this after the variable `ds` (dataset) has been instantiated.
-# This script will initialise the data template variables.
+# Run this after the variable `ds` (dataset) has been loaded and
+# prep'd or changed in some way, as after a TRANSFORM session.  This
+# script will initialise or update the data template variables.
 #
 # References:
 #

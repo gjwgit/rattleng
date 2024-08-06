@@ -1,6 +1,6 @@
-/// A provider for the list of variables.
+/// A provider for interval (transform/rescale)
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-30 11:11:48 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,10 +22,11 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Yixiang Yin
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// TODO yyx 20240710 Is it better to store other attribute about the vars, such as the datatype and content?
-final varsProvider = StateProvider<List<String>>((ref) => []);
+const initInterval = 100;
+final intervalProvider = StateProvider<int>((ref) => initInterval);

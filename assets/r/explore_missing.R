@@ -1,11 +1,11 @@
-# Rattle Scripts: For dataset ds geneate missing analysis.
+# Rattle Scripts: Missing Analysis.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-27 15:12:59 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-01 11:38:54 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,39 +24,31 @@
 #
 # Author: Graham Williams
 
-# Summary of missing in the dataset
+# Summary of MISSING in the dataset.
 #
 # TIMESTAMP
 #
 # References:
 #
 # @williams:2017:essentials
-# https://survivor.togaware.com/datascience/ for further details.
-
-# Load required packages from the local library into the R session.
-
-if(!require(mice)) install.packages("mice")
-if(!require(VIM)) install.packages("VIM")
+#
+# https://survivor.togaware.com/datascience/
 
 ########################################################################
-# The 'mice' package provides the 'md.pattern' function.
-
-library(mice, quietly=TRUE)
+# MICE :: MD.PATTERNS
+########################################################################
 
 # Generate a summary of the missing values in the dataset. 20240718
-# Why was this required. Rattle simply used inputs + target.
-
-vars_na <- names(ds)[sapply(ds, anyNA)]
 
 svg("TEMPDIR/explore_missing_mice.svg")
-md.pattern(ds[vars], rotate.names=TRUE)
+mice::md.pattern(ds[vars], rotate.names=TRUE)
 dev.off()
 
 ########################################################################bv
-# Aggregate plot of missing values
+# VIM :: AGGREGATION
+########################################################################bv
 
 svg("TEMPDIR/explore_missing_vim.svg", width=16)
-
 VIM::aggr(ds,
      numbers=TRUE,
      combined=FALSE,
@@ -67,19 +59,23 @@ VIM::aggr(ds,
      gap      = 3,
      ylab     = c("Proportion of Values Missing", "Proportions of Combinations of Missing Values"),
      sub      = "TIMESTAMP")
-
 dev.off()
 
-## # TODO
+########################################################################
+# FUTURE - NANIAR :: 
+########################################################################
+##
 ## install.packages("naniar")
 ## library(naniar)
+##
 ## # Visualize the proportion of missing values in each variable
+##
 ## gg_miss_var(ds)
-
+##
 ## # Visualize a heatmap of missing values
+##
 ## vis_miss(ds)
-
+##
 ## # Visualize missing data using an UpSet plot
+##
 ## gg_miss_upset(ds)
-
-
