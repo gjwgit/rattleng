@@ -52,6 +52,7 @@ import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -116,6 +117,15 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // AS REQUIRED FOR THE CURRENT FEATURE.
 
   code = code.replaceAll('TEMPDIR', tempDir);
+
+  ////////////////////////////////////////////////////////////////////////
+  // CLEANUP
+  ////////////////////////////////////////////////////////////////////////
+  List<String> ignoredVars = getIgnored(ref);
+  //  c("location", "date", "min_temp", "sunshine")
+  // Build the string in R vector format
+  String ignoredVarsString = 'c(${ignoredVars.map((v) => '"$v"').join(', ')})';
+  code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD

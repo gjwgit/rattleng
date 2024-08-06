@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/delete_vars.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -88,6 +89,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
     switch (selectedCleanup) {
       case 'Delete Ignored':
+        debugPrint('deleted ignored vars: ${getIgnored(ref).toString()}');
         rSource(context, ref, 'transform_clean_delete_ignored');
       case 'Delete Selected':
         rSource(context, ref, 'transform_clean_delete_selected');
@@ -122,7 +124,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
             ActivityButton(
               onPressed: () {
-                showUnderConstruction(context);
+                buildAction();
               },
               child: const Text('Cleanup the Dataset'),
             ),
