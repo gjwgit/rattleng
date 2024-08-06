@@ -43,6 +43,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 class TreeModelConfig extends ConsumerStatefulWidget {
   const TreeModelConfig({super.key});
@@ -250,7 +251,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
           // Min Split, Max Depth, and Min Bucket.
           Row(
             children: [
-              _buildNumberField(
+              NumberField(
                 label: 'Min Split:',
                 controller: _minSplitController,
                 textStyle: normalTextStyle,
@@ -262,10 +263,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 inputFormatter:
                     FilteringTextInputFormatter.digitsOnly, // Integers only
                 validator: (value) => _validateInteger(value, min: 0),
-                maxWidth: 5,
               ),
               const SizedBox(width: 16),
-              _buildNumberField(
+              NumberField(
                 label: 'Max Depth:',
                 controller: _maxDepthController,
                 textStyle: normalTextStyle,
@@ -277,10 +277,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => _validateInteger(value, min: 1),
-                maxWidth: 5,
               ),
               const SizedBox(width: 16),
-              _buildNumberField(
+              NumberField(
                 label: 'Min Bucket:',
                 controller: _minBucketController,
                 textStyle: normalTextStyle,
@@ -290,10 +289,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => _validateInteger(value, min: 1),
-                maxWidth: 5,
               ),
               const SizedBox(width: 16),
-              _buildNumberField(
+              NumberField(
                 label: 'Complexity:',
                 controller: _complexityController,
                 textStyle: _selectedAlgorithm == AlgorithmType.conditional
@@ -307,7 +305,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
                 validator: (value) => _validateComplexity(value),
-                maxWidth: 5,
+                interval: 0.0005,
+                decimalPlaces: 4,
               ),
               const SizedBox(width: 16),
               _buildTextField(
