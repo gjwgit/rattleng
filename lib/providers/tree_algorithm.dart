@@ -28,7 +28,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final treeAlgorithmProvider =
-    StateProvider<AlgorithmType>((ref) => AlgorithmType.conditional);
+    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
 
 // Enum for algorithm types.
 enum AlgorithmType {
