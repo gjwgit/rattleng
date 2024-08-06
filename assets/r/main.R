@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:39:32 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-02 15:32:30 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,29 +45,27 @@
 
 # Keep R from asking to select a CRAN site.
 
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-options(install.packages.ask = FALSE)
+# options(repos = c(CRAN = "https://cloud.r-project.org"))
+# options(install.packages.ask = FALSE)
 
-# Load or else install the required packages.
+# Load or else install `pacman` to manage package requirements.
 
 if(!require(pacman)) install.packages("pacman")
 
-pacman::p_load(rattle,     # Access the weather dataset and utilities.
-               Hmisc,
+pacman::p_load(Hmisc,
                VIM,
                corrplot,
                descr,
                fBasics,
                ggthemes,
                janitor,    # Cleanup: clean_names() remove_constant().
-               magick,
                magrittr,   # Utilise %>% and %<>% pipeline operators.
                mice,
                randomForest,
+               rattle,     # Access the weather dataset and utilities.
                readr,
                reshape,
                rpart,
-               skimr,
                tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
                tm,
                verification,

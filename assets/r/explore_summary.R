@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:26:18 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-08-06 10:25:06 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -53,11 +53,11 @@ lapply(ds[numc], fBasics::basicStats)
 
 # Summarise the kurtosis of the numeric data.
 
-fBasics::kurtosis(ds[numc], na.rm=TRUE)
+timeDate::kurtosis(ds[numc], na.rm=TRUE)
 
 # Summarise the skewness of the numeric data.
 
-fBasics::skewness(ds[numc], na.rm=TRUE)
+timeDate::skewness(ds[numc], na.rm=TRUE)
 
 # Generate cross tabulations for categoric data.
 

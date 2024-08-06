@@ -1,9 +1,10 @@
 # RattleNG Installers
 
-RattleNG is a re-implementation of Rattle using the modern Flutter
+RattleNG is a new implementation of Rattle using the modern Flutter
 framework for Dart. Flutter supports multiple platforms so that
 Flutter based apps will run native and similarly on Linux, MacOS, and
-Windows. 
+Windows. Below we identify the prerequisite to install R on your
+computer.
 
 ## Prerequisite
 
@@ -16,7 +17,8 @@ RattleNG will attempt to install any missing R packages each time it
 starts up. For those packages it installs it won't need to attempt to
 install them again (next startup). You can check this in the
 **Console** tab. However you may need to install one R package before
-starting RattleNG for the first time:
+starting RattleNG for the first time to initialise your local R
+folder. For example:
 
 ```bash
 $ R
@@ -25,29 +27,80 @@ $ R
 ```
 
 For a new install of R this will likely prompt you for a local install
-folder. Choose `yess` to go with the defaults. Once setup the `pacman`
+folder. Choose `yes` to go with the defaults. Once setup the `pacman`
 package will manage the package installs within RattleNG.
 
 If you want to separately make sure you have the required R packages
 installed, once R itself is installed, open a terminal and run the R
 command. You can then install the pre-requisite packages for RattleNG
-by pasting the following after the prompt `> `:
+by running the following command line, or pasting just the
+`install.packages(...)` part after the R prompt `> ` after starting up
+R:
 
 ```bash
-R -e 'install.packages(c("pacman", "rattle", "Hmisc", "VIM",
-                         "corrplot", "descr", "fBasics", ggthemes, "janitor",
-                         "magick", "magrittr", "mice", "naniar",
-                         "randomForest", "readr", "reshape", "rpart",
-                         "tidyverse", "tm", "verification", "wordcloud"'))'
+R -e 'install.packages(c("Hmisc", "VIM",
+                         "corrplot", "descr", "fBasics", "ggthemes", "janitor",
+                         "magrittr", "mice", "pacman",
+                         "randomForest",  "rattle", "readr", "reshape", "rpart",
+                         "tidyverse", "tm", "verification", "wordcloud"))'
 ```
 
 RattleNG can then be installed from the installation packages
 available from Togaware as described below.
 
 **NOTE** If the R packages are not installed then RattleNG will
-install them into your local folder for you the first time it starts
-up, which can take some time. Check the **Console** tab to see what is
-happening.
+attempt to install them into your local folder for you the first time
+it starts up, which can take some time. Check the **Console** tab to
+see what is happening.
+
+For reference, these are the packages that should be loaded from the R
+library into your **Console**. They should be loaded automatically by
+RattleNG and listed here only in case something goes wrong. Do report
+an issue if you need to do this manually on your platform.
+
+```r
+library(Hmisc)
+library(VIM)
+library(corrplot)
+library(descr)
+library(fBasics)
+library(ggthemes)
+library(janitor)
+library(magrittr)
+library(mice)
+library(pacman)
+library(randomForest)
+library(rattle)
+library(readr)
+library(reshape)
+library(rpart)
+library(tidyverse)
+library(tm)
+library(verification)
+library(wordcloud)
+```
+
+## Source Install
+
+You can run the app from the source code available from
+[github](https://github.com/gjwgit/rattleng). This has been tested on
+Linux, MacOS, and Windows. Begin by installing flutter on your
+computer (see the [flutter install
+guide](https://docs.flutter.dev/get-started/install)), then clone the
+github repository with the git command (see the [git install
+guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+and then build/run the app:
+
+```bash
+git clone git@github.com:gjwgit/rattleng.git
+cd rattleng
+flutter run
+```
+
+You can also download the source code from
+[github](https://github.com/gjwgit/rattleng) by clicking the *Code*
+drop down menu then the *Download ZIP* button. Next unzip, then cd
+into the unzip'ed folder `rattleng-dev` to then run `flutter run`.
 
 ## Linux
 
@@ -60,13 +113,12 @@ happening.
   packages into your account.
 
 ```bash
-sudo apt install r-cran-rattle r-cran-magrittr r-cran-janitor \
-	 r-cran-tidyverse r-cran-vim r-cran-hmisc r-cran-mice \
-	 r-cran-reshape
+sudo apt install r-cran-magrittr r-cran-tidyverse \
+	 r-cran-vim r-cran-hmisc r-cran-mice r-cran-reshape
 ```
 
 At a minimum, you will need to install `pacman` through R as detailed
-int eh above prerequisites section.
+in the above prerequisites section.
 
 You are then ready to install the Rattle software using one of the methods below.
 
@@ -79,6 +131,9 @@ Download
 wget https://access.togaware.com/rattleng-dev-linux.zip -O rattleng-dev-linux.zip
 ```
 
+This version was compiled on Ubuntu 20.04 and is known to run on
+Ubuntu 22.04, Ubuntu 24.04, and Mint 21.3.
+
 **Quick Start**
 
 To try it out, after downloading the zip file, unzip it locally:
@@ -87,7 +142,7 @@ To try it out, after downloading the zip file, unzip it locally:
 unzip rattleng-dev-linux.zip -d rattleng
 ```
 
-Then simply run the executable:
+Then run the executable:
 
 ```bash
 rattleng/rattle
@@ -151,56 +206,67 @@ steps and edit the `rattle.desktop`.
 Once installed users can run the app from the GNOME desktop through
 the Window key then type `rattle`.
 
-### Snap Install - UNDER DEVELOPMENT
+### Snap Install
 
-+ Install RattleNG with `snap install --dangerous rattle.snap`
+Download [rattle_dev_amd64.snap](https://access.togaware.com/rattle_dev_amd64.snap)
+
+```bash
+wget https://access.togaware.com/rattle_dev_amd64.snap -O rattle_dev_amd64.snap
+```
+
+Install RattleNG with:
+
+```bash
+sudo snap install --dangerous rattle_dev_amd64.snap
+```
 
 The *dangerous* refers to side-loading the app from outside of the
 snap store. This will not be required for the snap store version but
 for this development version we are side-loading the package.
 
+Run the app from `/snap/rattle/current/rattle`.
+
 ## MacOS
 
 ### Prerequisite
 
-+ Install R. 
-+ Install prerequisite R packages.
++ [Install R](https://cloud.r-project.org/) into **/usr/local/bin/R**
++ Install prerequisite R packages, e.g. "pacman".
 + Test from command line:
 
 ```console
 $ R
- ...
-
-> library(tidyverse)
-> library(rattle)
+> library(pacman)
 ```
 
 You are then ready to install the RattleNG software using one of the
-methods below.
+methods below. Be sure that R is installed in `/usr/local/bin/R`.
 
-### Zip Install UNDER DEVELOPMENT
+### Zip Install
 
-Download the zip archive:
+Download
+[rattleng-dev-macos.zip](https://access.togaware.com/rattleng-dev-macos.zip):
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-macos.zip
+wget https://access.togaware.com/rattleng-dev-macos.zip -O rattleng-dev-macos.zip
 ```
 
-Unpack it, and run.
+**Quick Start**
+
+To try it out, after downloading the zip file, unzip it locally:
 
 ```bash
-unzip rattlemg-dev-macos.zip -d rattleng
+unzip rattleng-dev-macos.zip -d rattleng
+```
+
+Then run the app:
+
+```bash
 open rattleng/rattle.app
 ```
 
-**Status 20240729**
-
-The app starts up and in the **Console** tab we can see the R code but
-there is no R process running to execute the code? There is a message:
-
-```console
-the process exited with exit code 255
-```
+If the OS complains that the app is not trusted and will not be run,
+tap the Security link and allow rattle to be run.
 
 ### Dmg Install - UNDER DEVELOPMENT
 
@@ -214,65 +280,105 @@ warning next time.
 
 ### Prerequisite
 
-+ Download and install R
++  Download and Install R
   + Visit https://cloud.r-project.org/ and navigate to Windows install
   + Click on *Download R for Windows*
-  + Open the downloaded file to install R into the suggested path
-    *C:\Program Files\R*
-  + Add *C:\Program Files\R\bin* to the PATH environment variable
+  + Open the downloaded **exe** file  **as Administrator**
+    + Install R with all the defaults into *C:\Program Files\R*
+  + Add *C:\Program Files\R\R-4.4.1\bin* to the PATH environment
+    variable (change the version number to match that which you
+    installed).
     + Open *Edit the system environment variables* from **Control panel**
 	+ Click *Environment Variables...*
 	+ Click the *Path* entry and then *Edit...*
-    + Click *New* and then add *C:\Program Files\R\bin*
+    + Click *New* and then add *C:\Program Files\R\R-4.4.1\bin*
     + Click *OK* a few times to close the windows.
++ **As Admin**, start a CMD terminal, run R, and install the required
+  R packages with the `install.packages`:
+  
+```r
+install.packages(c("Hmisc", "VIM",
+                   "corrplot", "descr", "fBasics", "ggthemes", "janitor",
+                   "magrittr", "mice", "pacman",
+                   "randomForest",  "rattle", "readr", "reshape", "rpart",
+                   "tidyverse", "tm", "verification", "wordcloud"))
+```
+  
+Test that this works for the normal user by starting up the CMD
+terminal, running R, and then, for example `library(pacman)`.
 
-### Zip Install UNDER DEVELOPMENT
+### Zip Install
+
+Download
+[rattleng-dev-windows.zip](https://access.togaware.com/rattleng-dev-windows.zip):
 
 ```bash
-wget https://access.togaware.com/rattleng-dev-windows.zip
+wget https://access.togaware.com/rattleng-dev-windows.zip -O rattleng-dev-windows.zip
 ```
 
-Unzip and run `rattle.exe`. You can add the unzipped path to the
-system PATH environment variable.
+**Quick Start**
 
-**Status 20240729**
+Unzip the archive and then run `rattle.exe`. You can add the unzipped
+path to the system PATH environment variable. 
+
+If the OS complains that the app is not trusted and will not be run,
+tap the Security link and allow rattle to be run.
+
+For Windows it is likely the following will be required:
+
+**Trouble Shooting 20240805**
+
+*MSVCP140.dll was not found*
+
+You will need to install the Microsoft Visual C++ libraries for
+running the flutter app. See
+[answers.microsoft.com](https://answers.microsoft.com/en-us/windows/forum/all/error-message-for-msvcp140dll-and-vcruntime140dll/8c2c0803-08ac-4275-838e-b692077b5c9e). From
+there you can download and install one of
+[vc_redist.x64.exe](https://aka.ms/vs/16/release/vc_redist.x64.exe) or
+[vc_redist.x86.exe](https://aka.ms/vs/16/release/vc_redist.x86.exe).
+
+*Checking R Packages Available*
+
+With the admin install of the R packages, rattle should find the
+appropriate packages. Test in the **Console** tab by typing the
+following command:
+
+```bash
+library(pacman)
+```
+
+If the package is not found then be sure to check that you installed
+the packages with R as the administrator.
+
+*Rattle R Initialisation Missing*
+
+If you do not see in the **Console** the R command like:
+
+```console
+> theme_rattle <- theme_economist
+```
+
+then R has not initialised the main Rattle script. To remedy this,
+visit https://github.com/gjwgit/rattleng/blob/dev/assets/r/main.R and
+copy and paste the contents into the **Console**. This should be done
+as the very first thing on starting up RattleNG.
+
+RattleNG should then be ready to communicate with R. Try loading the
+Demo dataset.
+
+This issue is being investigated.
+
+*R Packages Not Found*
 
 The R process within the flutter-based RattleNG app is not picking up
-locally installed R packages. You may be able to see this if you
+local user installed R packages. You may be able to see this if you
 compare the output of `.libPaths()` in the RattleNG **Console** tab to
 the output when you run R in your CMD window. The RattleNG version may
 not have your local path
 (e.g. `C:/Users/fred/AppData/Local/R/win-library/4.4`) and it may only
 have the system path (e.g., `C:/Program
-Files/R/R-4.4.1/library`). Often this is resolved by creating a new
-environment variable `R_LIBS_USER` with the value of your local
-path. 
-
-```
-setx R_LIBS_USER "C:/path/to/your/library"
-```
-
-Testing has not yet been successful.  On starting RattleNG you can go
-to the **Console** tab and enter the following:
-
-```r
-> .libPaths("C:/Users/fred/AppData/Local/R/win-library/4.4")
-```
-
-Then go to the **Script** tab, copy the whole of the right hand script
-(Ctrl-A) and paste that into the **Console**. This will show that R is
-now operational. You can load the Demo dataset but the Roles page
-fails. Under **Explore** the Summary works but not the plots (which
-need a Target).
-
-**Yet to try:** put the following in ~/.Renviron
-
-```
-.libPaths("/Users/bill/Library/R/3.4/library")
-```
-
-Also it would appear the flutter is not sending 
-
+Files/R/R-4.4.1/library`). A workaround is to ensure your packages are
+installed by the Admin user.
 
 ### Inno Install - UNDER DEVELOPMENT 
 

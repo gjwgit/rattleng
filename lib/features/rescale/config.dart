@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-07-30 08:48:39 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-04 07:46:47 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,11 +24,14 @@
 
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
@@ -47,6 +50,39 @@ class RescaleConfig extends ConsumerStatefulWidget {
 }
 
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
+  final TextEditingController _valCtrl = TextEditingController();
+
+  /// timer for  periodic call function
+  Timer? timer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+  }
+
+  /// start timer and chhange value
+  void startTimer(Function? ontap) {
+    ontap?.call();
+    timer = Timer.periodic(const Duration(milliseconds: 80), (timer) {
+      ontap?.call();
+    });
+  }
+
+  void endTimer() => timer?.cancel();
+
+  void _increment() {
+    ref.read(intervalProvider.notifier).update((state) => state + 1);
+  }
+
+  void _decrement() {
+    setState(() {
+      if (ref.read(intervalProvider.notifier).state > 1) {
+        ref.read(intervalProvider.notifier).update((state) => state - 1);
+      }
+    });
+  }
   // List choice of methods for rescaling.
 
   List<String> methods = [
@@ -55,6 +91,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     '-Median/MAD',
     'Natural Log',
     'Log 10',
+    'Rank',
+    'Interval',
   ];
 
   String selectedTransform = 'Recenter';
@@ -79,10 +117,122 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   }
 
   Widget transformChooser() {
+    int interval = ref.watch(intervalProvider);
+    _valCtrl.text = interval.toString();
+    
     return Expanded(
       child: Wrap(
         spacing: 5.0,
         children: methods.map((transform) {
+          if (transform == 'Interval') {
+            return Row(
+              children: [
+                ChoiceChip(
+                  label: Text(transform),
+                  disabledColor: Colors.grey,
+                  selectedColor: Colors.lightBlue[200],
+                  backgroundColor: Colors.lightBlue[50],
+                  shadowColor: Colors.grey,
+                  pressElevation: 8.0,
+                  elevation: 2.0,
+                  selected: selectedTransform == transform,
+                  onSelected: (bool selected) {
+                    setState(() {
+                      selectedTransform = selected ? transform : '';
+                    });
+                  },
+                ),
+                configWidgetSpace,
+                // CartStepper(
+                //   value: interval,
+                //   didChangeCount: (value) {
+                //     ref.read(intervalProvider.notifier).state = value;
+                //   },
+                // ),
+                // spinbox for interval
+                // problem 1 it doesn't reflect the interval value
+                // problem 2 it can't update the interval value
+                // const InputQty.int(
+                //   maxVal: 500,
+                //   initVal: nun.tryParse(interval,
+                //   minVal: 1,
+                //   steps: 1,
+                //   onQtyChanged: (value) {
+                //     ref.read(intervalProvider.notifier).state = Int(value);
+                //   },
+                //   decoration: QtyDecorationProps(
+                //     qtyStyle: QtyStyle.btnOnRight,
+                //     orientation: ButtonOrientation.vertical,
+                //   ),
+                // ),
+                // customised one
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        width: 100,
+                        child: TextFormField(
+                          controller: _valCtrl,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            // add small delay to update the provider
+                            if (timer?.isActive ?? false) timer!.cancel();
+                            timer =
+                                Timer(const Duration(milliseconds: 600), () {
+                              // reset to default if not a int
+                              ref.read(intervalProvider.notifier).state =
+                                  int.tryParse(value) ?? initInterval;
+                              // when the user chooses enter 100g, the gui is not updated because the provider not changed no rebuild triggered.
+                              _valCtrl.text = ref
+                                  .read(intervalProvider.notifier)
+                                  .state
+                                  .toString();
+                              debugPrint(
+                                'Interval updated to ${ref.read(intervalProvider.notifier).state}.',
+                              );
+                            });
+                          },
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onLongPressStart: (details) =>
+                                startTimer.call(_increment),
+                            onLongPressEnd: (details) => endTimer.call(),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_drop_up),
+                              onPressed: _increment,
+                            ),
+                          ),
+                          GestureDetector(
+                            onLongPressStart: (details) =>
+                                startTimer.call(_decrement),
+                            onLongPressEnd: (details) => endTimer.call(),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_drop_down),
+                              onPressed: _decrement,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }
+          
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,
@@ -119,6 +269,11 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         rSource(context, ref, 'transform_rescale_natlog_numeric');
       case 'Log 10':
         rSource(context, ref, 'transform_rescale_log10_numeric');
+      case 'Rank':
+        rSource(context, ref, 'transform_rescale_rank');
+      case 'Interval':
+        // debugPrint('run interval');
+        rSource(context, ref, 'transform_rescale_interval');
       default:
         showUnderConstruction(context);
     }
@@ -131,7 +286,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   @override
   Widget build(BuildContext context) {
     // this ensures that the new var immedicately appear in the menu.
-    updateRolesProvider(ref);
+    updateVariablesProvider(ref);
 
     // Variables that were automatically ignored through a transform should still be listed in the TRANSFORM selected list because I might want to do some more transforms on it.
     // Variables the user has marked as IGNORE should not be listed in the TRANSFORM tab.
@@ -162,7 +317,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
               },
-              child: const Text('Transform'),
+              child: const Text("Rescale Variable's Values"),
             ),
             configWidgetSpace,
             variableChooser(inputs, selected),

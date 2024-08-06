@@ -1,11 +1,11 @@
-# Rattle Scripts: Data Transformation/Wrangling
+# Rattle Scripts: Data Transformation impute 0 or Missing
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 10:27:33 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-08-03 14:04:45 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -29,14 +29,14 @@
 
 if (is.numeric(ds$SELECTED_VAR))
 {
-  miss_value <- 0
+  ds %<>%
+    mutate(IZR_SELECTED_VAR = replace_na(SELECTED_VAR, 0))
 } else {
-  miss_value <- 'Missing'
-  }
+  ds %<>%
+    mutate(IZR_SELECTED_VAR = replace_na(as.character(SELECTED_VAR),
+                                         'Missing'),
+           IZR_SELECTED_VAR = factor(IZR_SELECTED_VAR))
+}
 
-ds %<>%
-  mutate(IZR_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                   miss_value,
-                                   SELECTED_VAR))
 glimpse(ds)
 summary(ds)

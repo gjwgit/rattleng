@@ -8,6 +8,22 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ fBasics to timeDate for kurtosis and skewness [6.2.36 20240806 gjw]
++ Add INTERVAL to RESCALE [6.2.35 20240806 yyx]
++ Update xterm and fix selected transparency. [6.2.34 20240805 gjw]
++ Fine tune buttons. [6.2.33 20240804 gjw]
++ Build snapcraft package for distribution [6.2.32 20240804 gjw]
++ Bug fixes: update dateset template after transforms [6.2.31 20240803 gjw]
++ Add RANK function to RESCALE feature of TRANSFORM tab [6.2.30 20240802 yyx]
++ Ensure transformed vars added to types provider [6.2.29 20240802 yyx]
++ Review and cleanup. [6.2.28 20240802 gjw]
++ Working MacOS and Windows. Fixed R path for MacOS [6.2.27 20240802 gjw]
++ Bug fix: handle Windows path for temp dir [6.2.26 20240802 gjw]
++ Bug fix: do not reset toggles on dataset load [6.2.25 20240801 gjw]
++ Add CrossTable to SUMMARY [6.2.24 20240801 gjw]
++ R script cleanup. Docs update. Ubuntu 20.04 build [6.2.23 20240801 gjw]
++ Prompt for script name on saving [6.2.22 20240801 zy]
++ Fine tuning [6.2.21 20240801 gjw]
 + RESCALE update [6.2.20 20240731 yyx]
 + Add a table view icon [6.2.19 20240731 gjw]
 + Implement IMPUTE.  [6.2.18 20240730 gjw]
@@ -34,7 +50,7 @@ toward a 6.3 release.
 
 ## 6.2 Dataset Roles, Display Pages.
 
-+ Move to SVG iamges [20240711 yyx]
++ Move to SVG images [20240711 yyx]
 + Implement ImagePage() [20240711 yyx]
 + Add dataset role selector [20240711 yyx]
 + Update TREE and FOREST display [6.1.24 20240630 gjw]

@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Saturday 2024-06-08 08:45:40 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-06 13:27:37 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -55,32 +56,32 @@ class _RConsoleState extends ConsumerState<RConsole> {
   // There is no TerminalThemes for the black on white that I prefer and am
   // using for the app. The black on white does not stand out as much as a
   // Console white on black does. But the black on white is more in line with
-  // hte theme of the app.
+  // the theme of the app.
 
-  static const blackOnWhite = TerminalTheme(
-    cursor: Color(0XFFAEAFAD),
-    selection: Color(0XFFAEAFAD),
-    foreground: Color(0XFF222222),
-    background: Color(0XFFFFFFFF),
-    black: Color(0XFF000000),
-    red: Color(0XFFCD3131),
-    green: Color(0XFF0DBC79),
-    yellow: Color(0XFFE5E510),
-    blue: Color(0XFF2472C8),
-    magenta: Color(0XFFBC3FBC),
-    cyan: Color(0XFF11A8CD),
-    white: Color(0XFFE5E5E5),
-    brightBlack: Color(0XFF666666),
-    brightRed: Color(0XFFF14C4C),
-    brightGreen: Color(0XFF23D18B),
-    brightYellow: Color(0XFFF5F543),
-    brightBlue: Color(0XFF3B8EEA),
-    brightMagenta: Color(0XFFD670D6),
-    brightCyan: Color(0XFF29B8DB),
-    brightWhite: Color(0XFFFFFFFF),
-    searchHitBackground: Color(0XFFFFFF2B),
-    searchHitBackgroundCurrent: Color(0XFF31FF26),
-    searchHitForeground: Color(0XFF000000),
+  final blackOnWhite = TerminalTheme(
+    cursor: const Color(0XFFAEAFAD),
+    selection: const Color(0XFFAEAFAD).withOpacity(0.2),
+    foreground: const Color(0XFF222222),
+    background: const Color(0XFFFFFFFF),
+    black: const Color(0XFF000000),
+    red: const Color(0XFFCD3131),
+    green: const Color(0XFF0DBC79),
+    yellow: const Color(0XFFE5E510),
+    blue: const Color(0XFF2472C8),
+    magenta: const Color(0XFFBC3FBC),
+    cyan: const Color(0XFF11A8CD),
+    white: const Color(0XFFE5E5E5),
+    brightBlack: const Color(0XFF666666),
+    brightRed: const Color(0XFFF14C4C),
+    brightGreen: const Color(0XFF23D18B),
+    brightYellow: const Color(0XFFF5F543),
+    brightBlue: const Color(0XFF3B8EEA),
+    brightMagenta: const Color(0XFFD670D6),
+    brightCyan: const Color(0XFF29B8DB),
+    brightWhite: const Color(0XFFFFFFFF),
+    searchHitBackground: const Color(0XFFFFFF2B),
+    searchHitBackgroundCurrent: const Color(0XFF31FF26),
+    searchHitForeground: const Color(0XFF000000),
   );
 
   @override
@@ -95,7 +96,6 @@ class _RConsoleState extends ConsumerState<RConsole> {
           autofocus: true,
           backgroundOpacity: 1.0,
           padding: const EdgeInsets.all(8.0),
-          textScaleFactor: 1.2,
           textStyle: const TerminalStyle(fontFamily: 'RobotoMono'),
           theme: blackOnWhite,
         ),
