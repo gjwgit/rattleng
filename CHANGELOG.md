@@ -8,6 +8,8 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Add INTERVAL to RESCALE [6.2.35 20240806 yyx]
++ Update xterm and fix selected transparency. [6.2.34 20240805 gjw]
 + Fine tune buttons. [6.2.33 20240804 gjw]
 + Build snapcraft package for distribution [6.2.32 20240804 gjw]
 + Bug fixes: update dateset template after transforms [6.2.31 20240803 gjw]
@@ -47,7 +49,7 @@ toward a 6.3 release.
 
 ## 6.2 Dataset Roles, Display Pages.
 
-+ Move to SVG iamges [20240711 yyx]
++ Move to SVG images [20240711 yyx]
 + Implement ImagePage() [20240711 yyx]
 + Add dataset role selector [20240711 yyx]
 + Update TREE and FOREST display [6.1.24 20240630 gjw]

@@ -40,6 +40,7 @@ import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/min_split.dart';
+import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
@@ -93,6 +94,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
 
+
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
   String priors = ref.read(priorsProvider);
@@ -101,6 +103,8 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
   AlgorithmType treeAlgorithm = ref.read(treeAlgorithmProvider);
+
+  int interval = ref.read(intervalProvider);
 
   // First obtain the text from the script.
 
@@ -207,6 +211,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     }
   });
 
+  code = code.replaceAll('INTERVAL', interval.toString());
   code = code.replaceAll('SELECTED_VAR', selected);
 
   code = code.replaceAll('SELECTED_2_VAR', selected2);

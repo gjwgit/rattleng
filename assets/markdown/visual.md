@@ -18,13 +18,13 @@ Guide](https://survivor.togaware.com/datascience/data-visualisation.html)
 provides a detailed exploration of what is possible.
 
 For **numeric** data Rattle supports [Box
-Plots](https://survivor.togaware.com/datascience/box-plot.html), a
+Plots](https://survivor.togaware.com/datascience/box-plot.html),
 [Density
-Plots](https://survivor.togaware.com/datascience/density-plot.html), a
-Cumulative
-Plots(https://survivor.togaware.com/datascience/cumulative-plot.html),
-and the Benford's
-Plot(https://survivor.togaware.com/datascience/benfords-plot.html).
+Plots](https://survivor.togaware.com/datascience/density-plot.html),
+[Cumulative
+Plots](https://survivor.togaware.com/datascience/cumulative-plot.html),
+and the [Benford's
+Plot](https://survivor.togaware.com/datascience/benfords-plot.html).
 
 For **categoric** data Rattle supports [Bar
 Charts](https://survivor.togaware.com/datascience/bar-chart.html),
@@ -32,7 +32,8 @@ Charts](https://survivor.togaware.com/datascience/bar-chart.html),
 and the [Mosaic
 Plot](https://survivor.togaware.com/datascience/mosaic-plot.html).
 
-Different themes can be chosen for any of the *ggplot2* based
-plots. See the [Data Science Desktop Survival
+Different themes (colour ans style) for your plots can be chosen for
+all of the *ggplot2* based plots. See the [Data Science Desktop
+Survival
 Guide](https://survivor.togaware.com/datascience/themes-in-rattle.html)
 for details.

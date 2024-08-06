@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-01 19:22:09 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-06 12:27:08 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -92,7 +92,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           This is the most basic R command for summarising the dataset.
           
           For **numeric data** the minimum, and maximum values are listed.
-          Between these we can see listed the first and thrid quartiles as well
+          Between these we can see listed the first and third quartiles as well
           as the median (the second quartile) and the mean.
           
           For **categoric data** a frequency table is provided, showing the
@@ -187,9 +187,9 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     ////////////////////////////////////////////////////////////////////////
 
     content = 'Kurtosis:\n';
-    content += rExtract(stdout, 'kurtosis(ds[numc], na.rm=TRUE)');
+    content += rExtract(stdout, 'timeDate::kurtosis(ds[numc], na.rm=TRUE)');
     content += '\nSkewness:\n';
-    content += rExtract(stdout, 'skewness(ds[numc], na.rm=TRUE)');
+    content += rExtract(stdout, 'timeDate::skewness(ds[numc], na.rm=TRUE)');
 
     // Add some spacing to the output.
 
@@ -212,9 +212,16 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     if (lines.length > 4) {
       pages.add(
         TextPage(
-          title: '# Kurtosis and Skewness\n\n'
-              'Generated using [fBasics::kurtosis(ds) and fBasics::skewness(ds)]'
-              '(https://www.rdocumentation.org/packages/fBasics).\n\n',
+          title: '''
+
+          # Kurtosis and Skewness
+
+          Generated using
+          [timeDate::kurtosis(ds)](https://www.rdocumentation.org/packages/timeDate/topics/kurtosis)
+          and
+          [timeDate::skewness(ds)](https://www.rdocumentation.org/packages/timeDate/topics/skewness).
+
+          ''',
           content: '\n$content',
         ),
       );
@@ -243,7 +250,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
-    // CROSSTAB
+    // CROSSTAB<
     ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'descr::CrossTable(ds');
