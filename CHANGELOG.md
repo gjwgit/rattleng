@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ fBasics to timeDate for kurtosis and skewness [6.2.36 20240806 gjw]
 + Add INTERVAL to RESCALE [6.2.35 20240806 yyx]
 + Update xterm and fix selected transparency. [6.2.34 20240805 gjw]
 + Fine tune buttons. [6.2.33 20240804 gjw]
