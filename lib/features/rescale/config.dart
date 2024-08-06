@@ -31,13 +31,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/interval_selector.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
 /// monitor the selected variable.
@@ -50,39 +50,7 @@ class RescaleConfig extends ConsumerStatefulWidget {
 }
 
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
-  final TextEditingController _valCtrl = TextEditingController();
 
-  /// timer for  periodic call function
-  Timer? timer;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
-  }
-
-  /// start timer and chhange value
-  void startTimer(Function? ontap) {
-    ontap?.call();
-    timer = Timer.periodic(const Duration(milliseconds: 80), (timer) {
-      ontap?.call();
-    });
-  }
-
-  void endTimer() => timer?.cancel();
-
-  void _increment() {
-    ref.read(intervalProvider.notifier).update((state) => state + 1);
-  }
-
-  void _decrement() {
-    setState(() {
-      if (ref.read(intervalProvider.notifier).state > 1) {
-        ref.read(intervalProvider.notifier).update((state) => state - 1);
-      }
-    });
-  }
   // List choice of methods for rescaling.
 
   List<String> methods = [
@@ -117,9 +85,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   }
 
   Widget transformChooser() {
-    int interval = ref.watch(intervalProvider);
-    _valCtrl.text = interval.toString();
-    
     return Expanded(
       child: Wrap(
         spacing: 5.0,
@@ -166,69 +131,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 //   ),
                 // ),
                 // customised one
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 100,
-                        child: TextFormField(
-                          controller: _valCtrl,
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            // add small delay to update the provider
-                            if (timer?.isActive ?? false) timer!.cancel();
-                            timer =
-                                Timer(const Duration(milliseconds: 600), () {
-                              // reset to default if not a int
-                              ref.read(intervalProvider.notifier).state =
-                                  int.tryParse(value) ?? initInterval;
-                              // when the user chooses enter 100g, the gui is not updated because the provider not changed no rebuild triggered.
-                              _valCtrl.text = ref
-                                  .read(intervalProvider.notifier)
-                                  .state
-                                  .toString();
-                              debugPrint(
-                                'Interval updated to ${ref.read(intervalProvider.notifier).state}.',
-                              );
-                            });
-                          },
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onLongPressStart: (details) =>
-                                startTimer.call(_increment),
-                            onLongPressEnd: (details) => endTimer.call(),
-                            child: IconButton(
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                              icon: const Icon(Icons.arrow_drop_up),
-                              onPressed: _increment,
-                            ),
-                          ),
-                          GestureDetector(
-                            onLongPressStart: (details) =>
-                                startTimer.call(_decrement),
-                            onLongPressEnd: (details) => endTimer.call(),
-                            child: IconButton(
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                              icon: const Icon(Icons.arrow_drop_down),
-                              onPressed: _decrement,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                const IntervalSelector(),
               ],
             );
           }
