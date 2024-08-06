@@ -20,11 +20,9 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
-
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -50,7 +48,6 @@ class RescaleConfig extends ConsumerStatefulWidget {
 }
 
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
-
   // List choice of methods for rescaling.
 
   List<String> methods = [
@@ -131,11 +128,11 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 //   ),
                 // ),
                 // customised one
-                const IntervalSelector(),
+                const NumberChooser(),
               ],
             );
           }
-          
+
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,

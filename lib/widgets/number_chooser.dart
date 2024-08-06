@@ -1,16 +1,41 @@
+/// Widget to select the interval in rescale tab
+///
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// Time-stamp: <Sunday 2024-08-04 07:46:47 +1000 Graham Williams>
+//
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program.  If not, see <https://www.gnu.org/licenses/>.
+///
+/// Authors: Yixiang Yin
+
+library;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/interval.dart';
 
-class IntervalSelector extends ConsumerStatefulWidget {
-  const IntervalSelector({super.key});
+class NumberChooser extends ConsumerStatefulWidget {
+  const NumberChooser({super.key});
 
   @override
-  IntervalSelectorState createState() => IntervalSelectorState();
+  NumberChooserState createState() => NumberChooserState();
 }
 
-class IntervalSelectorState extends ConsumerState<IntervalSelector> {
+class NumberChooserState extends ConsumerState<NumberChooser> {
   final TextEditingController _valCtrl = TextEditingController();
   Timer? timer;
 
@@ -67,13 +92,12 @@ class IntervalSelectorState extends ConsumerState<IntervalSelector> {
                   int? v = int.tryParse(value);
                   if (v == null) {
                     ref.read(intervalProvider.notifier).state = initInterval;
-
                   } else {
                     ref.read(intervalProvider.notifier).state = interval;
                   }
                   // This ensures the gui get updated
-                    _valCtrl.text =
-                        ref.read(intervalProvider.notifier).state.toString();
+                  _valCtrl.text =
+                      ref.read(intervalProvider.notifier).state.toString();
                   debugPrint(
                     'Interval updated to ${ref.read(intervalProvider.notifier).state}.',
                   );
