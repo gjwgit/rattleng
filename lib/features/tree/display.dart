@@ -99,16 +99,21 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    if (treeAlgorithm == AlgorithmType.traditional) {
-      String image = '$tempDir/model_tree_rpart.svg';
+    String image = '';
 
-      pages.add(
-        ImagePage(
-          title: 'TREE',
-          path: image,
-        ),
-      );
+    if (treeAlgorithm == AlgorithmType.traditional) {
+      image = '$tempDir/model_tree_rpart.svg';
+    } else {
+      image = '$tempDir/model_tree_ctree.svg';
     }
+
+    pages.add(
+      ImagePage(
+        title: 'TREE',
+        path: image,
+      ),
+    );
+
     return Pages(children: pages);
   }
 }
