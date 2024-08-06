@@ -35,7 +35,7 @@ import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/interval_selector.dart';
+import 'package:rattle/widgets/number_chooser.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
 /// monitor the selected variable.
