@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/delete_vars.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
@@ -45,6 +46,41 @@ class CleanupConfig extends ConsumerStatefulWidget {
 }
 
 class CleanupConfigState extends ConsumerState<CleanupConfig> {
+  // List choice of methods for cleanup.
+
+  List<String> methods = [
+    'Delete Ignored',
+    'Delete Selected',
+    'Delete Missing',
+    'Delete Obs with Missing',
+  ];
+
+  String selectedCleanup = 'Delete Ignored';
+  Widget cleanupChooser() {
+    return Expanded(
+      child: Wrap(
+        spacing: 5.0,
+        children: methods.map((cleanupMethod) {
+          return ChoiceChip(
+            label: Text(cleanupMethod),
+            disabledColor: Colors.grey,
+            selectedColor: Colors.lightBlue[200],
+            backgroundColor: Colors.lightBlue[50],
+            shadowColor: Colors.grey,
+            pressElevation: 8.0,
+            elevation: 2.0,
+            selected: selectedCleanup == cleanupMethod,
+            onSelected: (bool selected) {
+              setState(() {
+                selectedCleanup = selected ? cleanupMethod : '';
+              });
+            },
+          );
+        }).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,82 +103,83 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
               child: const Text('Cleanup the Dataset'),
             ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(deleteIgnored),
-                  onChanged: (bool? v) => {
-                    ref.read(deleteIgnored.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: '''
+            configWidgetSpace,
+            cleanupChooser(),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       value: ref.watch(deleteIgnored),
+            //       onChanged: (bool? v) => {
+            //         ref.read(deleteIgnored.notifier).state = v!,
+            //       },
+            //     ),
+            //     const DelayedTooltip(
+            //       message: '''
 
-                  Delete the variables marked as IGNORE role.
+            //       Delete the variables marked as IGNORE role.
 
-                  ''',
-                  child: Text('Delete Ignored'),
-                ),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(deleteSelected),
-                  onChanged: (bool? v) => {
-                    ref.read(deleteSelected.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: '''
+            //       ''',
+            //       child: Text('Delete Ignored'),
+            //     ),
+            //   ],
+            // ),
+            // const SizedBox(width: 20),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       value: ref.watch(deleteSelected),
+            //       onChanged: (bool? v) => {
+            //         ref.read(deleteSelected.notifier).state = v!,
+            //       },
+            //     ),
+            //     const DelayedTooltip(
+            //       message: '''
 
-                  Delete the variable selected.
+            //       Delete the variable selected.
 
-                  ''',
-                  child: Text('Delete Selected'),
-                ),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(deleteMissing),
-                  onChanged: (bool? v) => {
-                    ref.read(deleteMissing.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: '''
+            //       ''',
+            //       child: Text('Delete Selected'),
+            //     ),
+            //   ],
+            // ),
+            // const SizedBox(width: 20),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       value: ref.watch(deleteMissing),
+            //       onChanged: (bool? v) => {
+            //         ref.read(deleteMissing.notifier).state = v!,
+            //       },
+            //     ),
+            //     const DelayedTooltip(
+            //       message: '''
 
-                  Delete variables that have any missing values.
+            //       Delete variables that have any missing values.
 
-                  ''',
-                  child: Text('Delete Missing'),
-                ),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(deleteObsWithMissing),
-                  onChanged: (bool? v) => {
-                    ref.read(deleteObsWithMissing.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: '''
+            //       ''',
+            //       child: Text('Delete Missing'),
+            //     ),
+            //   ],
+            // ),
+            // const SizedBox(width: 20),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       value: ref.watch(deleteObsWithMissing),
+            //       onChanged: (bool? v) => {
+            //         ref.read(deleteObsWithMissing.notifier).state = v!,
+            //       },
+            //     ),
+            //     const DelayedTooltip(
+            //       message: '''
 
-                  Delete rows that have any missing values.
+            //       Delete rows that have any missing values.
 
-                  ''',
-                  child: Text('Delete Obs with Missing'),
-                ),
-              ],
-            ),
+            //       ''',
+            //       child: Text('Delete Obs with Missing'),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ],
