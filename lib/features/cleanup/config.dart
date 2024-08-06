@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/delete_vars.dart';
+import 'package:rattle/r/source.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -79,6 +80,28 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         }).toList(),
       ),
     );
+  }
+    // BUILD button action.
+
+  void buildAction() {
+    // Run the R scripts.
+
+    switch (selectedCleanup) {
+      case 'Delete Ignored':
+        rSource(context, ref, 'transform_clean_delete_ignored');
+      case 'Delete Selected':
+        rSource(context, ref, 'transform_clean_delete_selected');
+      case 'Delete Missing':
+        rSource(context, ref, 'transform_clean_delete_vars_missing');
+      case 'Delete Obs with Missing':
+        rSource(context, ref, 'transform_clean_delete_obs_missing');
+      default:
+        showUnderConstruction(context);
+    }
+    // Notice that rSource is asynchronous so this glimpse is oftwn happening
+    // before the above transformation.
+    //
+    // rSource(context, ref, 'glimpse');
   }
 
   @override
