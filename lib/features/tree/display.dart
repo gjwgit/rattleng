@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/widgets/pages.dart';
@@ -52,6 +53,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
 
+    AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
+
     List<Widget> pages = [
       showMarkdownFile(treeIntroFile, context),
     ];
@@ -62,7 +65,11 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     // DEFAULT TREE TEXT
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtractTree(stdout);
+    if (treeAlgorithm == AlgorithmType.traditional) {
+      content = rExtractTree(stdout);
+    } else {
+      content = rExtract(stdout, 'print(model_ctree)');
+    }
 
     if (content.isNotEmpty) {
       pages.add(
@@ -92,13 +99,16 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    pages.add(
-      ImagePage(
-        title: 'TREE',
-        path: '$tempDir/model_tree_rpart.svg',
-      ),
-    );
+    if (treeAlgorithm == AlgorithmType.traditional) {
+      String image = '$tempDir/model_tree_rpart.svg';
 
+      pages.add(
+        ImagePage(
+          title: 'TREE',
+          path: image,
+        ),
+      );
+    }
     return Pages(children: pages);
   }
 }

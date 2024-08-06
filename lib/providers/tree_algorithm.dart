@@ -27,7 +27,15 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/features/tree/treeModelConfig.dart';
-
 final treeAlgorithmProvider =
     StateProvider<AlgorithmType>((ref) => AlgorithmType.conditional);
+
+// Enum for algorithm types.
+enum AlgorithmType {
+  traditional('Traditional'),
+  conditional('Conditional');
+
+  final String displayName;
+
+  const AlgorithmType(this.displayName);
+}
