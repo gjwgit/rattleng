@@ -34,6 +34,9 @@ bool isTransformedVar(String name) {
 }
 
 void updateVariablesProvider(WidgetRef ref) {
+  // reset the rolesProvider and typesProvider
+  // ref.read(rolesProvider.notifier).state = {};
+  // ref.read(typesProvider.notifier).state = {};
   // get the most recent vars information from glimpse and update the information in roles provider and types provider
   String stdout = ref.watch(stdoutProvider);
   List<VariableInfo> vars = extractVariables(stdout);
