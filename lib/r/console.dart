@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Sunday 2024-08-04 20:14:08 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-06 13:27:37 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -93,7 +93,6 @@ class _RConsoleState extends ConsumerState<RConsole> {
         child: TerminalView(
           terminal,
           controller: terminalController,
-          cursorType: TerminalCursorType.verticalBar,
           autofocus: true,
           backgroundOpacity: 1.0,
           padding: const EdgeInsets.all(8.0),
