@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-08-03 10:45:00 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-08-07 09:48:08 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -235,7 +235,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
         title: Row(
           children: [
             Image.asset(
-              'assets/images/rattle_logo.png',
+              'assets/icons/icon.png',
               width: 40,
               height: 40,
             ),
@@ -312,7 +312,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Yixiang Yin.
               showAboutDialog(
                 context: context,
                 applicationIcon: Image.asset(
-                  'assets/images/rattle_logo.png',
+                  'assets/icons/icon.png',
                   width: 80,
                   height: 80,
                 ),
