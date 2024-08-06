@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-08-06 12:27:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-06 13:40:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -191,15 +191,32 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     content += '\nSkewness:\n';
     content += rExtract(stdout, 'timeDate::skewness(ds[numc], na.rm=TRUE)');
 
-    // Add some spacing to the output.
+    // Regular expression to match lines like '[1] "xxxx"'
+
+    final pattern = RegExp(r'^\[1\] "(.*)"$', multiLine: true);
+
+    // Replace matched lines with 'calculated using method="xxxx"'
+
+    content = content.replaceAllMapped(pattern, (match) {
+      String method = match.group(1) ?? '';
+      return 'Calculated using method="$method"';
+    });
+
+    // Iterate over the lines and modify them.
 
     // Split the string into lines.
 
     lines = content.split('\n');
 
+    // Filter out lines that match 'attr(,"method")'
+
+    lines = lines.where((line) => line.trim() != 'attr(,"method")').toList();
+
     // Iterate over the lines and modify them.
 
     for (int i = 0; i < lines.length; i++) {
+      // Add some spacing to the output.
+
       if (!RegExp(r'^\s*[\d-]').hasMatch(lines[i])) {
         lines[i] = '\n${lines[i]}';
       }
