@@ -32,7 +32,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
-import 'package:rattle/features/tree/treeModelConfig.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';

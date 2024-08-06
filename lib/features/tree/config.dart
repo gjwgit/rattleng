@@ -191,7 +191,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
                     // Run the R scripts.
                     rSource(context, ref, 'model_template');
-                    rSource(context, ref, 'model_build_rpart');
+                    if (_selectedAlgorithm == AlgorithmType.conditional) {
+                      rSource(context, ref, 'model_build_ctree');
+                    } else {
+                      rSource(context, ref, 'model_build_rpart');
+                    }
                   }
                   // TODO yyx 20240627 How should I restore this effect in the new Widget Pages?
                   // it failed to work only when the user first clicks build on the panel because the pages are not yet updated.
@@ -486,14 +490,4 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
       ),
     );
   }
-}
-
-// Enum for algorithm types.
-enum AlgorithmType {
-  traditional('Traditional'),
-  conditional('Conditional');
-
-  final String displayName;
-
-  const AlgorithmType(this.displayName);
 }
