@@ -224,7 +224,9 @@ The *dangerous* refers to side-loading the app from outside of the
 snap store. This will not be required for the snap store version but
 for this development version we are side-loading the package.
 
-Run the app from `/snap/rattle/current/rattle`.
+Run the app from `/snap/rattle/current/rattle`. Running from the
+default install location as `/snap/bin/rattle` fails to start up R. We
+are investigating.
 
 ## MacOS
 
