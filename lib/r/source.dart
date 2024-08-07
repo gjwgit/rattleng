@@ -33,13 +33,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
+import 'package:rattle/providers/loss_matrix.dart';
+import 'package:rattle/providers/max_depth.dart';
+import 'package:rattle/providers/min_bucket.dart';
+import 'package:rattle/providers/min_split.dart';
 import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
@@ -85,6 +92,14 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
+
+  int minSplit = ref.read(minSplitProvider);
+  int maxDepth = ref.read(maxDepthProvider);
+  String priors = ref.read(priorsProvider);
+  bool includingMissing = ref.read(treeIncludeMissingProvider);
+  int minBucket = ref.read(minBucketProvider);
+  double complexity = ref.read(complexityProvider);
+  String lossMatrix = ref.read(lossMatrixProvider);
 
   int interval = ref.read(intervalProvider);
 
@@ -224,12 +239,21 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // TODO 20231016 gjw THESE SHOULD BE SET IN THE MODEL TAB AND ARE THEN
   // REPLACED WITHING model_build_rpart.R
 
-  code = code.replaceAll(' PRIORS', '');
-  code = code.replaceAll(' LOSS', '');
-  code = code.replaceAll(' MAXDEPTH', '');
-  code = code.replaceAll(' MINSPLIT', '');
-  code = code.replaceAll(' MINBUCKET', '');
-  code = code.replaceAll(' CP', '');
+  code = code.replaceAll(
+    ' PRIORS',
+    priors.isNotEmpty ? ', prior = c($priors)' : '',
+  );
+  code = code.replaceAll(
+      ' LOSS', lossMatrix.isNotEmpty ? ' loss = matrix(c($lossMatrix))' : '',);
+  code = code.replaceAll(' MAXDEPTH', ' maxdepth = ${maxDepth.toString()}');
+  code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
+  code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
+  code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
+
+  if (includingMissing) {
+    code = code.replaceAll('usesurrogate=0,', '');
+    code = code.replaceAll('maxsurrogate=0', '');
+  }
 
   // TODO if (script == 'model_build_random_forest')) {
 

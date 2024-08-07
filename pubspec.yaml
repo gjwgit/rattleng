@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.2.36+84
+version: 6.2.37+86
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -43,6 +43,7 @@ dependencies:
   
 dev_dependencies:
 
+  flutter_launcher_icons: "^0.13.1"
   flutter_test:
     sdk: flutter
 
@@ -96,7 +97,7 @@ flutter:
 
   assets:
     - assets/images/favicon_small.png
-    - assets/images/rattle_logo.png
+    - assets/icons/icon.png
     - assets/markdown/
     - assets/r/
 
@@ -149,3 +150,20 @@ msix_config:
   certificate_path: CERTIFICATE.pfx
   certificate_password: rattle1234
   execution_alias: rattle
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/icons/icon.png"
+  windows:
+    generate: true
+    image_path: "assets/icons/icon.png"
+    icon_size: 48
+  macos:
+    generate: true
+    image_path: "assets/icons/icon.png"
