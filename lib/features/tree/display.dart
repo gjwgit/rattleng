@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/widgets/pages.dart';
@@ -52,7 +53,11 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
 
-    List<Widget> pages = [showMarkdownFile(treeIntroFile, context)];
+    AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
+
+    List<Widget> pages = [
+      showMarkdownFile(treeIntroFile, context),
+    ];
 
     String content = '';
 
@@ -60,7 +65,11 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     // DEFAULT TREE TEXT
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtractTree(stdout);
+    if (treeAlgorithm == AlgorithmType.traditional) {
+      content = rExtractTree(stdout);
+    } else {
+      content = rExtract(stdout, 'print(model_ctree)');
+    }
 
     if (content.isNotEmpty) {
       pages.add(
@@ -76,24 +85,34 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     // CONVERT TO RULES
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'asRules(model_rpart)');
+    if (treeAlgorithm == AlgorithmType.traditional) {
+      content = rExtract(stdout, 'asRules(model_rpart)');
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '# Decision Tree as Rules\n\n'
-              'Built using `rattle::asRules()`.\n\n',
-          content: '\n$content',
-        ),
-      );
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: '# Decision Tree as Rules\n\n'
+                'Built using `rattle::asRules()`.\n\n',
+            content: '\n$content',
+          ),
+        );
+      }
     }
 
     ////////////////////////////////////////////////////////////////////////
 
+    String image = '';
+
+    if (treeAlgorithm == AlgorithmType.traditional) {
+      image = '$tempDir/model_tree_rpart.svg';
+    } else {
+      image = '$tempDir/model_tree_ctree.svg';
+    }
+
     pages.add(
       ImagePage(
         title: 'TREE',
-        path: '$tempDir/model_tree_rpart.svg',
+        path: image,
       ),
     );
 
