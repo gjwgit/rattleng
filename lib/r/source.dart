@@ -244,7 +244,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     priors.isNotEmpty ? ', prior = c($priors)' : '',
   );
   code = code.replaceAll(
-      ' LOSS', lossMatrix.isNotEmpty ? ' loss = matrix(c($lossMatrix))' : '',);
+    ' LOSS',
+    lossMatrix.isNotEmpty ? ' loss = matrix(c($lossMatrix))' : '',
+  );
   code = code.replaceAll(' MAXDEPTH', ' maxdepth = ${maxDepth.toString()}');
   code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
   code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
