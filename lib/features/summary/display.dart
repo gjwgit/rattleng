@@ -199,6 +199,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     content = content.replaceAllMapped(pattern, (match) {
       String method = match.group(1) ?? '';
+
       return 'Calculated using method="$method"';
     });
 
