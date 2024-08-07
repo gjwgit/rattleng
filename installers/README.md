@@ -294,7 +294,7 @@ warning next time.
     + Click *New* and then add *C:\Program Files\R\R-4.4.1\bin*
     + Click *OK* a few times to close the windows.
 + **As Admin**, start a CMD terminal, run R, and install the required
-  R packages with the `install.packages`:
+  R packages with the `install.packages()` command:
   
 ```r
 install.packages(c("Hmisc", "VIM",
