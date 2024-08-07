@@ -350,23 +350,26 @@ library(pacman)
 If the package is not found then be sure to check that you installed
 the packages with R as the administrator.
 
-*Rattle R Initialisation Missing*
+*Unable to Load Dataset*
 
-If you do not see in the **Console** the R command like:
+This can occur on Windows (only) when the R initialisation is not
+being done. If you **do not* see in the **Console** the R command like:
 
 ```console
 > theme_rattle <- theme_economist
 ```
 
-then R has not initialised the main Rattle script. To remedy this,
-visit https://github.com/gjwgit/rattleng/blob/dev/assets/r/main.R and
-copy and paste the contents into the **Console**. This should be done
-as the very first thing on starting up RattleNG.
+then R has not initialised the main Rattle script. While we debug why
+this is happening, to remedy this, visit
+https://github.com/gjwgit/rattleng/blob/dev/assets/r/main.R and copy
+the entire contents of this file and paste it into the
+**Console**. This should be done as the very first thing on starting
+up RattleNG before you attempt to load any datasets.
 
 RattleNG should then be ready to communicate with R. Try loading the
 Demo dataset.
 
-This issue is being investigated.
+This issue is currently being investigated.
 
 *R Packages Not Found*
 
