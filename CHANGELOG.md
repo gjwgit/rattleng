@@ -8,6 +8,8 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Add icon for all platforms. [6.2.37 20240807 gjw]
++ Refactor number chooser widget [20240807 yyz]
 + fBasics to timeDate for kurtosis and skewness [6.2.36 20240806 gjw]
 + Add INTERVAL to RESCALE [6.2.35 20240806 yyx]
 + Update xterm and fix selected transparency. [6.2.34 20240805 gjw]

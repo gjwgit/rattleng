@@ -32,7 +32,10 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     mv rattle-dev-linux.zip rattleng-dev-linux.zip
     cp rattleng-dev-linux.zip rattleng-${version}-linux.zip
     chmod a+r rattleng*.zip
-    rsync -avzh rattleng-dev-linux.zip rattleng-${version}-linux.zip togaware.com:apps/access/
+    rsync -avzh rattleng-${version}-linux.zip togaware.com:apps/access/
+    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-linux.zip rattleng-dev-linux.zip"
+
+    echo ""
 
     # MacOS
     
@@ -40,7 +43,10 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     mv rattle-dev-macos.zip rattleng-dev-macos.zip
     cp rattleng-dev-macos.zip rattleng-${version}-macos.zip
     chmod a+r rattleng*.zip
-    rsync -avzh rattleng-dev-macos.zip rattleng-${version}-macos.zip togaware.com:apps/access/
+    rsync -avzh rattleng-${version}-macos.zip togaware.com:apps/access/
+    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-macos.zip rattleng-dev-macos.zip"
+
+    echo ""
 
     # Windows
     
@@ -48,7 +54,8 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     mv rattle-dev-windows.zip rattleng-dev-windows.zip
     cp rattleng-dev-windows.zip rattleng-${version}-windows.zip
     chmod a+r rattleng*.zip
-    rsync -avzh rattleng-dev-windows.zip rattleng-${version}-windows.zip togaware.com:apps/access/
+    rsync -avzh rattleng-${version}-windows.zip togaware.com:apps/access/
+    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-windows.zip rattleng-dev-windows.zip"
     
 else
     echo "Latest github actions has not completed. Exiting."
