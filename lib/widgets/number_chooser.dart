@@ -39,10 +39,43 @@ class NumberChooser extends ConsumerStatefulWidget {
 class NumberChooserState extends ConsumerState<NumberChooser> {
   final TextEditingController _valCtrl = TextEditingController();
   Timer? timer;
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _valCtrl.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  // update the provider and the interval in the gui
+  void _updateInterval() {
+    // try to parse the text, set to initial value if failed
+    int? v = int.tryParse(_valCtrl.text);
+    if (v == null) {
+      ref.read(intervalProvider.notifier).state = initInterval;
+    } else {
+      ref.read(intervalProvider.notifier).state = v;
+    }
+    // Update the text field to reflect the new value
+    // When the text is 100 and user types 100gsdfs, internally the provider didn't change. In the case, we had to manually change the text.
+    _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+    debugPrint(
+      'Interval updated to ${ref.read(intervalProvider.notifier).state}.',
+    );
+  }
+
+  void _onFocusChange() {
+    // triggered after losing focus
+    if (!_focusNode.hasFocus) {
+      _updateInterval();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _focusNode.addListener(_onFocusChange);
     _valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
   }
 
@@ -85,24 +118,11 @@ class NumberChooserState extends ConsumerState<NumberChooser> {
             width: 100,
             child: TextFormField(
               controller: _valCtrl,
+              focusNode: _focusNode,
               keyboardType: TextInputType.number,
-              onChanged: (value) {
-                // add small delay to update the provider
-                if (timer?.isActive ?? false) timer!.cancel();
-                timer = Timer(const Duration(milliseconds: 600), () {
-                  int? v = int.tryParse(value);
-                  if (v == null) {
-                    ref.read(intervalProvider.notifier).state = initInterval;
-                  } else {
-                    ref.read(intervalProvider.notifier).state = interval;
-                  }
-                  // This ensures the gui get updated
-                  _valCtrl.text =
-                      ref.read(intervalProvider.notifier).state.toString();
-                  debugPrint(
-                    'Interval updated to ${ref.read(intervalProvider.notifier).state}.',
-                  );
-                });
+              onEditingComplete: () {
+                // triggered after user clicks enter
+                _updateInterval();
               },
             ),
           ),
