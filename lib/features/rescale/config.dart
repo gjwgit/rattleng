@@ -25,17 +25,19 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/number_chooser.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
 /// monitor the selected variable.
@@ -82,6 +84,9 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   }
 
   Widget transformChooser() {
+    final TextEditingController valCtrl = TextEditingController();
+    valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+
     return Expanded(
       child: Wrap(
         spacing: 5.0,
@@ -127,8 +132,15 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 //     orientation: ButtonOrientation.vertical,
                 //   ),
                 // ),
-                // customised one
-                const NumberChooser(),
+
+                NumberField(
+                  controller: valCtrl,
+                  enabled: true,
+                  inputFormatter:
+                      FilteringTextInputFormatter.digitsOnly, // Integers only
+                  validator: (value) => validateInteger(value, min: 1),
+                  stateProvider: intervalProvider,
+                ),
               ],
             );
           }
