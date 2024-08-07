@@ -50,14 +50,17 @@ class RescaleConfig extends ConsumerStatefulWidget {
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
   // List choice of methods for rescaling.
 
-  List<String> methods = [
+  List<String> orderMethods = [
+    'Rank',
+    'Interval',
+  ];
+
+  List<String> normaliseMethods = [
     'Recenter',
     'Scale [0-1]',
     '-Median/MAD',
     'Natural Log',
     'Log 10',
-    'Rank',
-    'Interval',
   ];
 
   String selectedTransform = 'Recenter';
@@ -81,58 +84,40 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     );
   }
 
-  Widget transformChooser() {
+  Widget orderChooser() {
+    return Row(
+      children: [
+        Wrap(
+          spacing: 5.0,
+          children: orderMethods.map((transform) {
+            return ChoiceChip(
+              label: Text(transform),
+              disabledColor: Colors.grey,
+              selectedColor: Colors.lightBlue[200],
+              backgroundColor: Colors.lightBlue[50],
+              shadowColor: Colors.grey,
+              pressElevation: 8.0,
+              elevation: 2.0,
+              selected: selectedTransform == transform,
+              onSelected: (bool selected) {
+                setState(() {
+                  selectedTransform = selected ? transform : '';
+                });
+              },
+            );
+          }).toList(),
+        ),
+        configWidgetSpace,
+        const NumberChooser(),
+      ],
+    );
+  }
+
+  Widget normaliseChooser() {
     return Expanded(
       child: Wrap(
         spacing: 5.0,
-        children: methods.map((transform) {
-          if (transform == 'Interval') {
-            return Row(
-              children: [
-                ChoiceChip(
-                  label: Text(transform),
-                  disabledColor: Colors.grey,
-                  selectedColor: Colors.lightBlue[200],
-                  backgroundColor: Colors.lightBlue[50],
-                  shadowColor: Colors.grey,
-                  pressElevation: 8.0,
-                  elevation: 2.0,
-                  selected: selectedTransform == transform,
-                  onSelected: (bool selected) {
-                    setState(() {
-                      selectedTransform = selected ? transform : '';
-                    });
-                  },
-                ),
-                configWidgetSpace,
-                // CartStepper(
-                //   value: interval,
-                //   didChangeCount: (value) {
-                //     ref.read(intervalProvider.notifier).state = value;
-                //   },
-                // ),
-                // spinbox for interval
-                // problem 1 it doesn't reflect the interval value
-                // problem 2 it can't update the interval value
-                // const InputQty.int(
-                //   maxVal: 500,
-                //   initVal: nun.tryParse(interval,
-                //   minVal: 1,
-                //   steps: 1,
-                //   onQtyChanged: (value) {
-                //     ref.read(intervalProvider.notifier).state = Int(value);
-                //   },
-                //   decoration: QtyDecorationProps(
-                //     qtyStyle: QtyStyle.btnOnRight,
-                //     orientation: ButtonOrientation.vertical,
-                //   ),
-                // ),
-                // customised one
-                const NumberChooser(),
-              ],
-            );
-          }
-
+        children: normaliseMethods.map((transform) {
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,
@@ -222,9 +207,11 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
             configWidgetSpace,
             variableChooser(inputs, selected),
             configWidgetSpace,
-            transformChooser(),
+            normaliseChooser(),
           ],
         ),
+        configTopSpace,
+        orderChooser(),
       ],
     );
   }
