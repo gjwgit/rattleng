@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Tuesday 2024-07-30 11:21:39 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-08 09:18:36 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -244,7 +244,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     priors.isNotEmpty ? ', prior = c($priors)' : '',
   );
   code = code.replaceAll(
-      ' LOSS', lossMatrix.isNotEmpty ? ' loss = matrix(c($lossMatrix))' : '',);
+    ' LOSS',
+    lossMatrix.isNotEmpty ? ', loss = matrix(c($lossMatrix))' : '',
+  );
   code = code.replaceAll(' MAXDEPTH', ' maxdepth = ${maxDepth.toString()}');
   code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
   code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
