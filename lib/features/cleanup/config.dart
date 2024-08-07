@@ -28,13 +28,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/providers/delete_vars.dart';
+import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
 ///
@@ -58,6 +57,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
   ];
 
   String selectedCleanup = 'Delete Ignored';
+
   Widget cleanupChooser() {
     return Expanded(
       child: Wrap(
@@ -82,7 +82,27 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       ),
     );
   }
-    // BUILD button action.
+
+  Widget variableChooser(List<String> inputs, String selected) {
+    return DropdownMenu(
+      label: const Text('Variable'),
+      width: 200,
+      initialSelection: selected,
+      dropdownMenuEntries: inputs.map((s) {
+        return DropdownMenuEntry(value: s, label: s);
+      }).toList(),
+      // On selection as well as recording what was selected rebuild the
+      // visualisations.
+      onSelected: (String? value) {
+        ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
+        // We don't buildAction() here since the variable choice might
+        // be followed by a transform choice and we don;t want to shoot
+        // off building lots of new variables unnecesarily.
+      },
+    );
+  }
+
+  // BUILD button action.
 
   void buildAction() {
     // Run the R scripts.
@@ -108,6 +128,17 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
   @override
   Widget build(BuildContext context) {
+    // Retireve the list of inputs as the label and value of the dropdown menu.
+    // TODO yyx 20240807 what should we allow to be deleted?
+    List<String> inputs = getInputsAndIgnoreTransformed(ref);
+    // Retrieve the current selected variable and use that as the initial value
+    // for the dropdown menu. If there is no current value and we do have inputs
+    // then we choose the first input variable.
+
+    String selected = ref.watch(selectedProvider);
+    if (selected == 'NULL' && inputs.isNotEmpty) {
+      selected = inputs.first;
+    }
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -124,87 +155,15 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
             ActivityButton(
               onPressed: () {
+                ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
               },
               child: const Text('Cleanup the Dataset'),
             ),
             configWidgetSpace,
+            variableChooser(inputs, selected),
+            configWidgetSpace,
             cleanupChooser(),
-            // Row(
-            //   children: [
-            //     Checkbox(
-            //       value: ref.watch(deleteIgnored),
-            //       onChanged: (bool? v) => {
-            //         ref.read(deleteIgnored.notifier).state = v!,
-            //       },
-            //     ),
-            //     const DelayedTooltip(
-            //       message: '''
-
-            //       Delete the variables marked as IGNORE role.
-
-            //       ''',
-            //       child: Text('Delete Ignored'),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(width: 20),
-            // Row(
-            //   children: [
-            //     Checkbox(
-            //       value: ref.watch(deleteSelected),
-            //       onChanged: (bool? v) => {
-            //         ref.read(deleteSelected.notifier).state = v!,
-            //       },
-            //     ),
-            //     const DelayedTooltip(
-            //       message: '''
-
-            //       Delete the variable selected.
-
-            //       ''',
-            //       child: Text('Delete Selected'),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(width: 20),
-            // Row(
-            //   children: [
-            //     Checkbox(
-            //       value: ref.watch(deleteMissing),
-            //       onChanged: (bool? v) => {
-            //         ref.read(deleteMissing.notifier).state = v!,
-            //       },
-            //     ),
-            //     const DelayedTooltip(
-            //       message: '''
-
-            //       Delete variables that have any missing values.
-
-            //       ''',
-            //       child: Text('Delete Missing'),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(width: 20),
-            // Row(
-            //   children: [
-            //     Checkbox(
-            //       value: ref.watch(deleteObsWithMissing),
-            //       onChanged: (bool? v) => {
-            //         ref.read(deleteObsWithMissing.notifier).state = v!,
-            //       },
-            //     ),
-            //     const DelayedTooltip(
-            //       message: '''
-
-            //       Delete rows that have any missing values.
-
-            //       ''',
-            //       child: Text('Delete Obs with Missing'),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ],
