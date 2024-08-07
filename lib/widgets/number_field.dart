@@ -25,27 +25,33 @@
 
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class NumberField extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/providers/tree_algorithm.dart';
+
+class NumberField extends ConsumerStatefulWidget {
   final String label;
   final TextEditingController controller;
-  final TextStyle textStyle;
+  final StateProvider stateProvider;
   final String tooltip;
   final bool enabled;
   final String? Function(String?) validator;
   final TextInputFormatter inputFormatter;
   final int maxWidth;
-  final num interval; // Interval can be an int or double
+  final num interval;
   final int decimalPlaces;
 
   const NumberField({
     super.key,
-    required this.label,
+    this.label = '',
     required this.controller,
-    required this.textStyle,
-    required this.tooltip,
+    required this.stateProvider,
+    this.tooltip = '',
     required this.enabled,
     required this.validator,
     required this.inputFormatter,
@@ -54,53 +60,146 @@ class NumberField extends StatelessWidget {
     this.interval = 1, // Default interval is 1, can be set as double or int
   });
 
-  void _increment() {
-    // Parse the current value, increment by interval, and update the text field.
-    num currentValue = num.tryParse(controller.text) ?? 0;
-    currentValue += interval;
-    controller.text = currentValue.toStringAsFixed(decimalPlaces);
-  }
+  @override
+  NumberFieldState createState() => NumberFieldState();
+}
 
-  void _decrement() {
-    // Parse the current value, decrement by interval, and update the text field.
-    num currentValue = num.tryParse(controller.text) ?? 0;
-    currentValue -= interval;
-    controller.text = currentValue.toStringAsFixed(decimalPlaces);
+class NumberFieldState extends ConsumerState<NumberField> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+    widget.controller.text =
+        ref.read(widget.stateProvider.notifier).state.toString();
+  }
+
+  void increment() {
+    // Parse the current value, increment by interval, and update the text field.
+    num currentValue = num.tryParse(widget.controller.text) ?? 0;
+    currentValue += widget.interval;
+    widget.controller.text = currentValue.toStringAsFixed(widget.decimalPlaces);
+    updateField();
+  }
+
+  void decrement() {
+    // Parse the current value, decrement by interval, and update the text field.
+    num currentValue = num.tryParse(widget.controller.text) ?? 0;
+    if (currentValue > widget.interval) {
+      currentValue -= widget.interval;
+    }
+    widget.controller.text = currentValue.toStringAsFixed(widget.decimalPlaces);
+    updateField();
+  }
+
+  // Timer for continuous incrementing/decrementing.
+  Timer? timer;
+
+  void startIncrementing() {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      increment();
+    });
+  }
+
+  void stopIncrementing() {
+    timer?.cancel();
+  }
+
+  void startDecrementing() {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      decrement();
+    });
+  }
+
+  void stopDecrementing() {
+    timer?.cancel();
+  }
+
+  // update the provider and the interval in the gui.
+  void updateField() {
+    String updatedText = widget.controller.text;
+
+    num? v = num.tryParse(updatedText);
+    if (v == null) {
+      ref.read(widget.stateProvider.notifier).state = updatedText;
+    } else {
+      ref.read(widget.stateProvider.notifier).state = v;
+    }
+
+    debugPrint(
+      'Interval updated to ${ref.read(widget.stateProvider.notifier).state}.',
+    );
+  }
+
+  void _onFocusChange() {
+    // triggered after losing focus.
+    if (!_focusNode.hasFocus) {
+      updateField();
+    }
+  }
+
+  // Define a text style for normal fields.
+
+  TextStyle normalTextStyle = const TextStyle(fontSize: 14.0);
+
+  // Define a text style for disabled fields.
+
+  TextStyle disabledTextStyle = const TextStyle(
+    fontSize: 14.0,
+    color: Colors.grey, // Grey out the text
+  );
+
+  @override
   Widget build(BuildContext context) {
+    AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
+
     return Expanded(
       child: Tooltip(
-        message: tooltip,
+        message: widget.tooltip,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: textStyle),
+            widget.label.isEmpty
+                ? Container()
+                : Text(widget.label, style: normalTextStyle),
             SizedBox(
-              width: maxWidth * 30.0,
+              width: widget.maxWidth * 30.0,
               child: Stack(
                 children: [
                   TextFormField(
-                    controller: controller,
+                    controller: widget.controller,
+                    focusNode: _focusNode,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       contentPadding: const EdgeInsets.only(
                         right: 40,
                         left: 10,
                       ),
-                      errorText: validator(controller.text),
+                      errorText: widget.validator(widget.controller.text),
                       errorStyle: const TextStyle(
                         fontSize: 10,
                       ),
                     ),
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
-                    style: textStyle,
-                    enabled: enabled,
+                    onEditingComplete: () {
+                      // triggered after user clicks enter.
+                      updateField();
+                    },
+                    style: treeAlgorithm == AlgorithmType.traditional
+                        ? normalTextStyle
+                        : disabledTextStyle,
+                    enabled: widget.enabled,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                      inputFormatter,
+                      widget.inputFormatter,
                     ],
                   ),
                   // Positioned Arrow Buttons.
@@ -111,19 +210,25 @@ class NumberField extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_drop_up),
-                          padding: EdgeInsets.zero, // Remove default padding
-                          constraints:
-                              const BoxConstraints(), // Remove default constraints
-                          onPressed: enabled ? _increment : null,
+                        GestureDetector(
+                          onTap: widget.enabled ? increment : null,
+                          onLongPressStart: widget.enabled
+                              ? (details) => startIncrementing()
+                              : null,
+                          onLongPressEnd: widget.enabled
+                              ? (details) => stopIncrementing()
+                              : null,
+                          child: const Icon(Icons.arrow_drop_up),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_drop_down),
-                          padding: EdgeInsets.zero, // Remove default padding
-                          constraints:
-                              const BoxConstraints(), // Remove default constraints
-                          onPressed: enabled ? _decrement : null,
+                        GestureDetector(
+                          onTap: widget.enabled ? decrement : null,
+                          onLongPressStart: widget.enabled
+                              ? (details) => startDecrementing()
+                              : null,
+                          onLongPressEnd: widget.enabled
+                              ? (details) => stopDecrementing()
+                              : null,
+                          child: const Icon(Icons.arrow_drop_down),
                         ),
                       ],
                     ),
@@ -136,4 +241,15 @@ class NumberField extends StatelessWidget {
       ),
     );
   }
+}
+
+// Validation logic for integer fields.
+
+String? validateInteger(String? value, {required int min}) {
+  if (value == null || value.isEmpty) return 'Cannot be empty';
+  int? intValue = int.tryParse(value);
+  if (intValue == null || intValue < min) {
+    return 'Must >= $min';
+  }
+  return null;
 }
