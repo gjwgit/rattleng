@@ -113,6 +113,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         ),
         configWidgetSpace,
         NumberField(
+          label: 'Rescale interval',
           controller: valCtrl,
           enabled: true,
           inputFormatter:
