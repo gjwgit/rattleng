@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-04 07:44:01 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-08 13:44:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,8 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
@@ -67,15 +69,10 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
 
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
-
+        configTopSpace,
         Row(
           children: [
-            // Space to the left of the configs.
-
-            const SizedBox(width: 5),
+            configLeftSpace,
 
             // The BUILD button.
 
@@ -88,9 +85,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
               },
               child: const Text('Perform Statistical Tests'),
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            configWidgetSpace,
             DropdownMenu(
               label: const Text('Input'),
               initialSelection: selected,
@@ -105,9 +100,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                 // build();
               },
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            configWidgetSpace,
             DropdownMenu(
               label: const Text('Second'),
               initialSelection: selected2,
