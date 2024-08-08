@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Saturday 2024-08-03 05:54:31 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-09 05:25:54 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -115,10 +115,18 @@ class ImagePage extends StatelessWidget {
                       //                      ElevatedButton(
                       IconButton(
                         icon: const Icon(
-                          Icons.open_in_new,
+                          Icons.zoom_out_map,
                           color: Colors.blue,
                         ),
                         onPressed: () {
+                          // TODO 20240809 gjw MOVE INTO SEPARATE FUNCTION/CLASS.
+                          //
+                          // By moving into a separate function/class we reduce
+                          // the cognitive overload of viewing the
+                          // logic/structure of this outer widget. I want to be
+                          // able to see the stucture at a glance on one screen,
+                          // not get lost in the detail.
+                          //
                           showGeneralDialog(
                             context: context,
                             pageBuilder:
@@ -169,7 +177,16 @@ class ImagePage extends StatelessWidget {
                           );
                         },
                         tooltip: 'Press here to view the plot\n'
+                            'enlarged.',
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.open_in_new,
+                          color: Colors.blue,
+                        ),
+                        tooltip: 'TODO Press here to view the plot\n'
                             'in a separate window.',
+                        onPressed: () {},
                       ),
                       IconButton(
                         icon: const Icon(
@@ -184,7 +201,7 @@ class ImagePage extends StatelessWidget {
                           }
                         },
                         tooltip: 'Press here to save the plot\n'
-                            'into an SVG file locally.',
+                            'into an SVG file on local storage.',
                       ),
                       const SizedBox(width: 5),
                     ],
