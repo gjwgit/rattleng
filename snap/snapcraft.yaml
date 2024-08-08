@@ -5,7 +5,7 @@
 # It fails to run R is started from /snap/bin/rattle?
 
 name: rattle
-version: 6.2.39
+version: 6.2.40
 summary: Rattle Next Generation Data Science
 description: Rattle is the data scientists toolkit.
 
