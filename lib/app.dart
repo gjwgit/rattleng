@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-06-18 08:35:00 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-09 09:19:38 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -55,7 +55,7 @@ class RattleApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialise the R process.
 
-    rStart(context, ref);
+// 20240809 TRY DELAY THIS TO home.dart    rStart(context, ref);
 
     // EXPERIMENT with the color scheme.
 

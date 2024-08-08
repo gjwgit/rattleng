@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Saturday 2024-06-15 17:45:38 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-09 09:14:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -76,8 +76,8 @@ void rStart(BuildContext context, WidgetRef ref) async {
   String code = await DefaultAssetBundle.of(context).loadString(asset);
 
   // 20240615 gjw Previously the code used File() to access the asset file which
-  // worked fine in development byt failed on a deployment. Thus I moved to the
-  // async reading from the asset bunble above.
+  // worked fine in development but failed on a deployment. Thus I moved to the
+  // async reading from the asset bundle.
   //
   // String code = File('assets/r/main.R').readAsStringSync();
 
@@ -93,7 +93,7 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // UI state. For example, two widgets could listen to the same provider, but
   // incorrectly receive different states. We resolve that here by delaying the
   // modification by encapsulating it within a `Future(() {...})`.  This will
-  // perform your update after the widget tree is done building. 20231104 gjw
+  // perform the update after the widget tree is done building. 20231104 gjw
 
   Future(() {
     // Add the code to the script.
