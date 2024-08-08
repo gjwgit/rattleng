@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2024-08-04 08:42:33 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-08 10:19:05 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -87,6 +87,7 @@ rtests:
 snap:
 	flutter clean
 	snapcraft clean rattle
+	perl -pi -e 's|version: .*|version: $(VER)|' snap/snapcraft.yaml
 	snapcraft
 	scp rattle_$(VER)_amd64.snap togaware.com:apps/access/rattle_dev_amd64.snap
 
