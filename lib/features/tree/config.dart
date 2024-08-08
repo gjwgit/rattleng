@@ -57,14 +57,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   AlgorithmType _selectedAlgorithm = AlgorithmType.traditional;
 
   // Controllers for the input fields.
-  final TextEditingController _minSplitController =
-      TextEditingController(text: '20');
-  final TextEditingController _maxDepthController =
-      TextEditingController(text: '30');
-  final TextEditingController _minBucketController =
-      TextEditingController(text: '7');
-  final TextEditingController _complexityController =
-      TextEditingController(text: '0.0100');
+  final TextEditingController _minSplitController = TextEditingController();
+  final TextEditingController _maxDepthController = TextEditingController();
+  final TextEditingController _minBucketController = TextEditingController();
+  final TextEditingController _complexityController = TextEditingController();
   final TextEditingController _priorsController = TextEditingController();
   final TextEditingController _lossMatrixController = TextEditingController();
 
@@ -94,6 +90,20 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
       color: Colors.grey, // Grey out the text
     );
 
+    // Keep the value of text field.
+
+    _minSplitController.text =
+        ref.read(minSplitProvider.notifier).state.toString();
+    _maxDepthController.text =
+        ref.read(maxDepthProvider.notifier).state.toString();
+    _minBucketController.text =
+        ref.read(minBucketProvider.notifier).state.toString();
+    _complexityController.text =
+        ref.read(complexityProvider.notifier).state.toString();
+    _priorsController.text = ref.read(priorsProvider.notifier).state.toString();
+    _lossMatrixController.text =
+        ref.read(lossMatrixProvider.notifier).state.toString();
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -106,11 +116,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 onPressed: () {
                   // Perform manual validation.
                   String? minSplitError =
-                      _validateInteger(_minSplitController.text, min: 0);
+                      validateInteger(_minSplitController.text, min: 0);
                   String? maxDepthError =
-                      _validateInteger(_maxDepthController.text, min: 1);
+                      validateInteger(_maxDepthController.text, min: 1);
                   String? minBucketError =
-                      _validateInteger(_minBucketController.text, min: 1);
+                      validateInteger(_minBucketController.text, min: 1);
                   String? complexityError =
                       _validateComplexity(_complexityController.text);
                   String? priorsError = _validatePriors(_priorsController.text);
@@ -254,7 +264,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               NumberField(
                 label: 'Min Split:',
                 controller: _minSplitController,
-                textStyle: normalTextStyle,
+
                 tooltip: ''' This is the minimum number of observations
  that must exist in a dataset at any node in
  order for a split of that node to be attempted. 
@@ -262,13 +272,13 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 enabled: true,
                 inputFormatter:
                     FilteringTextInputFormatter.digitsOnly, // Integers only
-                validator: (value) => _validateInteger(value, min: 0),
+                validator: (value) => validateInteger(value, min: 0),
+                stateProvider: minSplitProvider,
               ),
               const SizedBox(width: 16),
               NumberField(
                 label: 'Max Depth:',
                 controller: _maxDepthController,
-                textStyle: normalTextStyle,
                 tooltip:
                     ''' This is the maximum depth of any node of the final tree. 
  The root node is considered to be depth 0. 
@@ -276,27 +286,25 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
  results on 32-bit machines. The default is 30.''',
                 enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                validator: (value) => _validateInteger(value, min: 1),
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: maxDepthProvider,
               ),
               const SizedBox(width: 16),
               NumberField(
                 label: 'Min Bucket:',
                 controller: _minBucketController,
-                textStyle: normalTextStyle,
                 tooltip: ''' This is the minimum number of observations 
  allowed in any leaf node of the decision tree. 
  The default value is one third of the Min Split.''',
                 enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                validator: (value) => _validateInteger(value, min: 1),
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: minBucketProvider,
               ),
               const SizedBox(width: 16),
               NumberField(
                 label: 'Complexity:',
                 controller: _complexityController,
-                textStyle: _selectedAlgorithm == AlgorithmType.conditional
-                    ? disabledTextStyle // Use disabled style if conditional
-                    : normalTextStyle, // Normal style otherwise
                 tooltip:
                     ''' The complexity parameter is used to control the size 
  of the decision tree and to select the optimal tree size.''',
@@ -305,6 +313,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
                 validator: (value) => _validateComplexity(value),
+                stateProvider: complexityProvider,
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),
@@ -345,16 +354,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
         ],
       ),
     );
-  }
-
-  // Validation logic for integer fields.
-  String? _validateInteger(String? value, {required int min}) {
-    if (value == null || value.isEmpty) return 'Cannot be empty';
-    int? intValue = int.tryParse(value);
-    if (intValue == null || intValue < min) {
-      return 'Must >= $min';
-    }
-    return null;
   }
 
   // Validation logic for complexity field.
@@ -437,50 +436,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 enabled: enabled, // Control enable state
                 inputFormatters: [
                   FilteringTextInputFormatter.singleLineFormatter,
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Helper method to create a number field.
-  Widget _buildNumberField({
-    required String label,
-    required TextEditingController controller,
-    required TextStyle textStyle,
-    required String tooltip,
-    required bool enabled,
-    required String? Function(String?) validator,
-    required TextInputFormatter inputFormatter,
-    required int maxWidth,
-  }) {
-    return Expanded(
-      child: Tooltip(
-        message: tooltip,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: textStyle),
-            SizedBox(
-              width: maxWidth * 15.0, // Set maximum width for the input field
-              child: TextFormField(
-                controller: controller,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  errorText: validator(controller.text),
-                  errorStyle: const TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-                style: textStyle,
-                enabled: enabled, // Control enable state
-                inputFormatters: [
-                  FilteringTextInputFormatter.singleLineFormatter,
-                  inputFormatter,
                 ],
               ),
             ),
