@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-08 12:12:29 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-08 12:45:43 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -86,7 +86,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     );
   }
 
-  // Refine the ChipChoice widget as used across the two rows for this config.
+  // Refine the ChipChoice widget.
 
   Widget myChoiceChip(transform) {
     return ChoiceChip(
@@ -106,23 +106,19 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     );
   }
 
-  Widget normaliseChooser() {
-    return Expanded(
-      child: Wrap(
-        spacing: 5.0,
-        children: normaliseMethods.map((transform) {
-          return myChoiceChip(transform);
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget orderChooser() {
+  Widget rescaleChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        Wrap(
+          spacing: 5.0,
+          children: normaliseMethods.map((transform) {
+            return myChoiceChip(transform);
+          }).toList(),
+        ),
+        configWidgetSpace,
         Wrap(
           spacing: 5.0,
           children: orderMethods.map((transform) {
@@ -207,16 +203,16 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
               },
-              child: const Text("Rescale Variable's Values"),
+              child: const Text('Rescale Variable Values'),
             ),
             configWidgetSpace,
             variableChooser(inputs, selected),
-            configWidgetSpace,
-            normaliseChooser(),
           ],
         ),
-        configTopSpace,
-        orderChooser(),
+//        configTopSpace,
+//        normaliseChooser(),
+//        configTopSpace,
+        rescaleChooser(),
       ],
     );
   }
