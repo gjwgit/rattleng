@@ -27,7 +27,7 @@ apps:
     - network
     - home
     - removable-media
-    - system-files
+#    - system-files
 #    slots:
 #      - dbus-rattle
 
@@ -36,16 +36,16 @@ parts:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
-    stage-packages:
-      - r-recommended
+#    stage-packages:
+#      - r-recommended
 
-plugs:
-  system-files:
-    interface: system-files
-    read:
-      - /usr/bin/R
-    write:
-      - /usr/lib/R  # Allows writing to the R path within the snap
+#plugs:
+#  system-files:
+#    interface: system-files
+    # read:
+    #   - /usr/bin/R
+    # write:
+    #   - /usr/lib/R  # Allows writing to the R path within the snap
       
 environment:
   LIBGL_ALWAYS_SOFTWARE: 1  # Ensures compatibility with different systems
