@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
+
 + Update configs for RESCALE and TREE [6.2.38 20240808 gjw]
 + Add icon for all platforms. [6.2.37 20240807 gjw]
 + Refactor number chooser widget [20240807 yyz]
