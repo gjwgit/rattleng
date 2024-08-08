@@ -330,15 +330,6 @@ For Windows it is likely the following will be required:
 
 **Trouble Shooting 20240805**
 
-*MSVCP140.dll was not found*
-
-You will need to install the Microsoft Visual C++ libraries for
-running the flutter app. See
-[answers.microsoft.com](https://answers.microsoft.com/en-us/windows/forum/all/error-message-for-msvcp140dll-and-vcruntime140dll/8c2c0803-08ac-4275-838e-b692077b5c9e). From
-there you can download and install one of
-[vc_redist.x64.exe](https://aka.ms/vs/16/release/vc_redist.x64.exe) or
-[vc_redist.x86.exe](https://aka.ms/vs/16/release/vc_redist.x86.exe).
-
 *Checking R Packages Available*
 
 With the admin install of the R packages, rattle should find the
@@ -355,7 +346,7 @@ the packages with R as the administrator.
 *Unable to Load Dataset*
 
 This can occur on Windows (only) when the R initialisation is not
-being done. If you **do not* see in the **Console** the R command like:
+being done. If you **do not** see in the **Console** the R command like:
 
 ```console
 > theme_rattle <- theme_economist
@@ -373,6 +364,11 @@ Demo dataset.
 
 This issue is currently being investigated.
 
+*the process exited with exit code*
+
+This will occur if R can not be found in the PATH. Be sure your PATH
+environment variable is properly set as described above.
+
 *R Packages Not Found*
 
 The R process within the flutter-based RattleNG app is not picking up
@@ -384,6 +380,15 @@ not have your local path
 have the system path (e.g., `C:/Program
 Files/R/R-4.4.1/library`). A workaround is to ensure your packages are
 installed by the Admin user.
+
+*MSVCP140.dll was not found*
+
+You will need to install the Microsoft Visual C++ libraries for
+running the flutter app. See
+[answers.microsoft.com](https://answers.microsoft.com/en-us/windows/forum/all/error-message-for-msvcp140dll-and-vcruntime140dll/8c2c0803-08ac-4275-838e-b692077b5c9e). From
+there you can download and install one of
+[vc_redist.x64.exe](https://aka.ms/vs/16/release/vc_redist.x64.exe) or
+[vc_redist.x86.exe](https://aka.ms/vs/16/release/vc_redist.x86.exe).
 
 ### Inno Install - UNDER DEVELOPMENT 
 
