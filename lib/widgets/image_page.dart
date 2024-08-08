@@ -39,7 +39,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/select_file.dart';
-import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/word_wrap.dart';
 
 class ImagePage extends StatelessWidget {
@@ -120,7 +119,54 @@ class ImagePage extends StatelessWidget {
                           color: Colors.blue,
                         ),
                         onPressed: () {
-                          showUnderConstruction(context);
+                          showGeneralDialog(
+                            context: context,
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return Center(
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.9,
+                                        padding: const EdgeInsets.all(16.0),
+                                        color: Colors.white,
+                                        child: InteractiveViewer(
+                                          maxScale: 5,
+                                          child: SvgPicture.memory(bytes),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 10,
+                                        right: 10,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Icon(
+                                            Icons.close,
+                                            color: Colors.grey,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            barrierDismissible: true,
+                            barrierLabel: MaterialLocalizations.of(context)
+                                .modalBarrierDismissLabel,
+                            transitionDuration:
+                                const Duration(milliseconds: 200),
+                          );
                         },
                         tooltip: 'Press here to view the plot\n'
                             'in a separate window.',
