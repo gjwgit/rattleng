@@ -8,6 +8,9 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Rearrange RESCALE interface [6.2.40 20240808 gjw]
++ Review and clean [6.2.39 20240808 zy]
++ Update configs for RESCALE and TREE [6.2.38 20240808 gjw]
 + Add icon for all platforms. [6.2.37 20240807 gjw]
 + Refactor number chooser widget [20240807 yyz]
 + fBasics to timeDate for kurtosis and skewness [6.2.36 20240806 gjw]
