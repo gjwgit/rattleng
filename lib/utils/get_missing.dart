@@ -37,7 +37,7 @@ List<String> getMissing(WidgetRef ref) {
   // Extract the matched strings
 
   List<String> variables = matches.map((match) => match.group(1)!).toList();
-  debugPrint('from get_missing Missing vars: ${variables}');
+  debugPrint('from get_missing Missing vars: $variables');
 
   return variables;
 }
