@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2024-08-09 09:53:55 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-09 16:45:52 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -58,8 +58,10 @@ class DatasetPopup extends ConsumerWidget {
     // is paused looking at the popup to load the dataset and we have time to
     // squeeze in and async run main.R before we get the `glimpse` missing
     // error.
+    //
+    // 20240809 gjw Revert for now until find the proper solution.
 
-    rStart(context, ref);
+    // rStart(context, ref);
 
     return AlertDialog(
       content: Column(
