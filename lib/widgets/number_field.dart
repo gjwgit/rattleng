@@ -193,7 +193,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
                       // triggered after user clicks enter.
                       updateField();
                     },
-                    style: treeAlgorithm == AlgorithmType.traditional
+                    style: treeAlgorithm == AlgorithmType.traditional ||
+                            widget.enabled
                         ? normalTextStyle
                         : disabledTextStyle,
                     enabled: widget.enabled,
