@@ -1,6 +1,6 @@
 /// Chip choice widget used across the app.
 //
-// Time-stamp: <Sunday 2024-07-21 21:01:29 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 06:35:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,6 +26,8 @@
 library;
 
 import 'package:flutter/material.dart';
+
+// TODO 20240810 gjw CONSIDER ADD EXPANDED WRAP HERE
 
 class CustomChoiceChip extends StatelessWidget {
   final String label;
