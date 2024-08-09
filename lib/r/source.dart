@@ -62,6 +62,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/get_inputs.dart';
+import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -150,11 +151,14 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String ignoredVarsString = toRVector(ignoredVars);
   code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
 
-  String missingVars = rExtract(stdout, '> missing');
-  RegExp exp = RegExp(r'"([^"]+)"');
+  // List<String> getMissingVars() {
+  //   String missingVars = rExtract(stdout, '> missing');
+  //   RegExp exp = RegExp(r'"([^"]+)"');
 
-  List<String> result =
-      exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
+  //   return exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
+  // }
+
+  List<String> result = getMissing(ref);
   debugPrint('Missing vars: ${result.toString()}');
   code = code.replaceAll('MISSING_VARS', toRVector(result));
 

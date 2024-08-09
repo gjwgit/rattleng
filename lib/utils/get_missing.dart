@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //import 'package:rattle/providers/roles.dart';
@@ -36,6 +37,7 @@ List<String> getMissing(WidgetRef ref) {
   // Extract the matched strings
 
   List<String> variables = matches.map((match) => match.group(1)!).toList();
+  debugPrint('from get_missing Missing vars: ${variables}');
 
   return variables;
 }
