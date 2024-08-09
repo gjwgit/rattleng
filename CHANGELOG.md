@@ -52,6 +52,7 @@ toward a 6.3 release.
 + Refactor dataset feature [6.2.3 20240715 gjw]
 + Initial R code and integration of exploration plots [6.2.2 20240715 gjw]
 + Add EXPORT to ImagePage() [6.2.1 20240712 gjw]
++ Fix Windows R console connectivity issue [20240809 Lutra-Fs]
 
 ## 6.2 Dataset Roles, Display Pages.
 
