@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
@@ -114,6 +115,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       case 'Delete Selected':
         rSource(context, ref, 'transform_clean_delete_selected');
       case 'Delete Missing':
+        // debugPrint('delete vars with missing data: ${}');
         rSource(context, ref, 'transform_clean_delete_vars_missing');
       case 'Delete Obs with Missing':
         rSource(context, ref, 'transform_clean_delete_obs_missing');

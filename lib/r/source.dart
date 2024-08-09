@@ -46,6 +46,7 @@ import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
@@ -57,6 +58,7 @@ import 'package:rattle/providers/wordcloud/minfreq.dart';
 import 'package:rattle/providers/wordcloud/punctuation.dart';
 import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/get_inputs.dart';
@@ -77,6 +79,7 @@ import 'package:rattle/utils/update_script.dart';
 void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
+  String stdout = ref.read(stdoutProvider);
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
@@ -133,14 +136,27 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('TEMPDIR', tempDir);
 
+  String toRVector(List<String> vars) {
+    //  c("location", "date", "min_temp", "sunshine")
+    // Build the string in R vector format
+    return 'c(${vars.map((v) => '"$v"').join(', ')})';
+  }
+
   ////////////////////////////////////////////////////////////////////////
   // CLEANUP
   ////////////////////////////////////////////////////////////////////////
+  // TODO yyx 20240809 move this computation to elsewhere if this function gets too slow.
   List<String> ignoredVars = getIgnored(ref);
-  //  c("location", "date", "min_temp", "sunshine")
-  // Build the string in R vector format
-  String ignoredVarsString = 'c(${ignoredVars.map((v) => '"$v"').join(', ')})';
+  String ignoredVarsString = toRVector(ignoredVars);
   code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
+
+  String missingVars = rExtract(stdout, '> missing');
+  RegExp exp = RegExp(r'"([^"]+)"');
+
+  List<String> result =
+      exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
+  debugPrint('Missing vars: ${result.toString()}');
+  code = code.replaceAll('MISSING_VARS', toRVector(result));
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD
