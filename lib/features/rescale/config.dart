@@ -37,7 +37,7 @@ import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/choice_chip.dart';
+import 'package:rattle/widgets/custom_choice_chip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
@@ -126,7 +126,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         NumberField(
           label: 'Interval',
           controller: valCtrl,
-          enabled: true,
           inputFormatter:
               FilteringTextInputFormatter.digitsOnly, // Integers only
           validator: (value) => validateInteger(value, min: 1),
