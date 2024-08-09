@@ -44,7 +44,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/choice_chip.dart';
+import 'package:rattle/widgets/custom_choice_chip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class TreeModelConfig extends ConsumerStatefulWidget {
@@ -279,7 +279,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
  that must exist in a dataset at any node in
  order for a split of that node to be attempted. 
  The default is 20.''',
-                enabled: true,
                 inputFormatter:
                     FilteringTextInputFormatter.digitsOnly, // Integers only
                 validator: (value) => validateInteger(value, min: 0),
@@ -294,7 +293,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
  The root node is considered to be depth 0. 
  Note that a depth beyond 30 will give nonsense
  results on 32-bit machines. The default is 30.''',
-                enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: maxDepthProvider,
@@ -306,7 +304,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 tooltip: ''' This is the minimum number of observations 
  allowed in any leaf node of the decision tree. 
  The default value is one third of the Min Split.''',
-                enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: minBucketProvider,

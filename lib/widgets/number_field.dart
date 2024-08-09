@@ -32,8 +32,6 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/tree_algorithm.dart';
-
 class NumberField extends ConsumerStatefulWidget {
   final String label;
   final TextEditingController controller;
@@ -48,13 +46,13 @@ class NumberField extends ConsumerStatefulWidget {
 
   const NumberField({
     super.key,
-    this.label = '',
     required this.controller,
     required this.stateProvider,
-    this.tooltip = '',
-    required this.enabled,
     required this.validator,
     required this.inputFormatter,
+    this.label = '',
+    this.tooltip = '',
+    this.enabled = true,
     this.maxWidth = 5,
     this.decimalPlaces = 0,
     this.interval = 1, // Default interval is 1, can be set as double or int
@@ -158,8 +156,6 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
   @override
   Widget build(BuildContext context) {
-    AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
-
     return Expanded(
       child: Tooltip(
         message: widget.tooltip,
@@ -168,7 +164,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
           children: [
             widget.label.isEmpty
                 ? Container()
-                : Text(widget.label, style: normalTextStyle),
+                : Text(widget.label,
+                    style:
+                        widget.enabled ? normalTextStyle : disabledTextStyle,),
             SizedBox(
               width: widget.maxWidth * 30.0,
               child: Stack(
@@ -193,10 +191,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
                       // triggered after user clicks enter.
                       updateField();
                     },
-                    style: treeAlgorithm == AlgorithmType.traditional ||
-                            widget.enabled
-                        ? normalTextStyle
-                        : disabledTextStyle,
+                    style: widget.enabled ? normalTextStyle : disabledTextStyle,
                     enabled: widget.enabled,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
