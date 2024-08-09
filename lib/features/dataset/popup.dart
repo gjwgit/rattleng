@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Saturday 2024-07-27 17:15:49 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-09 09:53:55 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -36,6 +36,7 @@ import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
+import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/set_status.dart';
 
 const double heightSpace = 20;
@@ -50,6 +51,16 @@ class DatasetPopup extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 20240809 gjw Delay the rStart() until we begin to load the dataset. This
+    // may solve the Windows zip install issue whereby main.R is not being
+    // loaded on startup yet the remainder of the R code does get loaded. Also,
+    // we load it here rather than in rLoadDataset because at this time the user
+    // is paused looking at the popup to load the dataset and we have time to
+    // squeeze in and async run main.R before we get the `glimpse` missing
+    // error.
+
+    rStart(context, ref);
+
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,

@@ -28,4 +28,3 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final minBucketProvider = StateProvider<int>((ref) => 7);
-

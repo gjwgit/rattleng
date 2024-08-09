@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-04 07:46:47 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-08 12:45:43 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,17 +25,19 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/number_chooser.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
 /// monitor the selected variable.
@@ -50,12 +52,15 @@ class RescaleConfig extends ConsumerStatefulWidget {
 class RescaleConfigState extends ConsumerState<RescaleConfig> {
   // List choice of methods for rescaling.
 
-  List<String> methods = [
+  List<String> normaliseMethods = [
     'Recenter',
     'Scale [0-1]',
     '-Median/MAD',
     'Natural Log',
     'Log 10',
+  ];
+
+  List<String> orderMethods = [
     'Rank',
     'Interval',
   ];
@@ -81,75 +86,56 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     );
   }
 
-  Widget transformChooser() {
-    return Expanded(
-      child: Wrap(
-        spacing: 5.0,
-        children: methods.map((transform) {
-          if (transform == 'Interval') {
-            return Row(
-              children: [
-                ChoiceChip(
-                  label: Text(transform),
-                  disabledColor: Colors.grey,
-                  selectedColor: Colors.lightBlue[200],
-                  backgroundColor: Colors.lightBlue[50],
-                  shadowColor: Colors.grey,
-                  pressElevation: 8.0,
-                  elevation: 2.0,
-                  selected: selectedTransform == transform,
-                  onSelected: (bool selected) {
-                    setState(() {
-                      selectedTransform = selected ? transform : '';
-                    });
-                  },
-                ),
-                configWidgetSpace,
-                // CartStepper(
-                //   value: interval,
-                //   didChangeCount: (value) {
-                //     ref.read(intervalProvider.notifier).state = value;
-                //   },
-                // ),
-                // spinbox for interval
-                // problem 1 it doesn't reflect the interval value
-                // problem 2 it can't update the interval value
-                // const InputQty.int(
-                //   maxVal: 500,
-                //   initVal: nun.tryParse(interval,
-                //   minVal: 1,
-                //   steps: 1,
-                //   onQtyChanged: (value) {
-                //     ref.read(intervalProvider.notifier).state = Int(value);
-                //   },
-                //   decoration: QtyDecorationProps(
-                //     qtyStyle: QtyStyle.btnOnRight,
-                //     orientation: ButtonOrientation.vertical,
-                //   ),
-                // ),
-                // customised one
-                const NumberChooser(),
-              ],
-            );
-          }
+  // Refine the ChipChoice widget.
 
-          return ChoiceChip(
-            label: Text(transform),
-            disabledColor: Colors.grey,
-            selectedColor: Colors.lightBlue[200],
-            backgroundColor: Colors.lightBlue[50],
-            shadowColor: Colors.grey,
-            pressElevation: 8.0,
-            elevation: 2.0,
-            selected: selectedTransform == transform,
-            onSelected: (bool selected) {
-              setState(() {
-                selectedTransform = selected ? transform : '';
-              });
-            },
-          );
-        }).toList(),
-      ),
+  Widget myChoiceChip(transform) {
+    return ChoiceChip(
+      label: Text(transform),
+      disabledColor: Colors.grey,
+      selectedColor: Colors.lightBlue[200],
+      backgroundColor: Colors.lightBlue[50],
+      shadowColor: Colors.grey,
+      pressElevation: 8.0,
+      elevation: 2.0,
+      selected: selectedTransform == transform,
+      onSelected: (bool selected) {
+        setState(() {
+          selectedTransform = selected ? transform : '';
+        });
+      },
+    );
+  }
+
+  Widget rescaleChooser() {
+    final TextEditingController valCtrl = TextEditingController();
+    valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Wrap(
+          spacing: 5.0,
+          children: normaliseMethods.map((transform) {
+            return myChoiceChip(transform);
+          }).toList(),
+        ),
+        configWidgetSpace,
+        Wrap(
+          spacing: 5.0,
+          children: orderMethods.map((transform) {
+            return myChoiceChip(transform);
+          }).toList(),
+        ),
+        configWidgetSpace,
+        NumberField(
+          label: 'Interval',
+          controller: valCtrl,
+          enabled: true,
+          inputFormatter:
+              FilteringTextInputFormatter.digitsOnly, // Integers only
+          validator: (value) => validateInteger(value, min: 1),
+          stateProvider: intervalProvider,
+        ),
+      ],
     );
   }
 
@@ -217,14 +203,16 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
               },
-              child: const Text("Rescale Variable's Values"),
+              child: const Text('Rescale Variable Values'),
             ),
             configWidgetSpace,
             variableChooser(inputs, selected),
-            configWidgetSpace,
-            transformChooser(),
           ],
         ),
+//        configTopSpace,
+//        normaliseChooser(),
+//        configTopSpace,
+        rescaleChooser(),
       ],
     );
   }
