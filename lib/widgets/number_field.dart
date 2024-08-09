@@ -164,7 +164,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
           children: [
             widget.label.isEmpty
                 ? Container()
-                : Text(widget.label, style: normalTextStyle),
+                : Text(widget.label,
+                    style:
+                        widget.enabled ? normalTextStyle : disabledTextStyle,),
             SizedBox(
               width: widget.maxWidth * 30.0,
               child: Stack(
