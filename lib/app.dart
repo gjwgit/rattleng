@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/home.dart';
+import 'package:rattle/r/start.dart';
 
 // Add a key to reference [RattleHome] to access its method.
 
