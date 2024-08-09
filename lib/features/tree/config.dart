@@ -65,9 +65,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   final TextEditingController _priorsController = TextEditingController();
   final TextEditingController _lossMatrixController = TextEditingController();
 
-  // Checkbox state.
-  bool _includeMissing = false;
-
   @override
   void dispose() {
     // Dispose the controllers to free up resources.
@@ -107,6 +104,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
     AlgorithmType selectedAlgorithm =
         ref.read(treeAlgorithmProvider.notifier).state;
+
+    // Checkbox state.
+    bool includeMissing = ref.read(treeIncludeMissingProvider.notifier).state;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -197,7 +197,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                         _priorsController.text;
 
                     ref.read(treeIncludeMissingProvider.notifier).state =
-                        _includeMissing;
+                        includeMissing;
                     ref.read(lossMatrixProvider.notifier).state =
                         _lossMatrixController.text;
 
@@ -249,10 +249,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 style: normalTextStyle,
               ),
               Checkbox(
-                value: _includeMissing,
+                value: includeMissing,
                 onChanged: (value) {
                   setState(() {
-                    _includeMissing = value!;
+                    includeMissing = value!;
+                    ref.read(treeIncludeMissingProvider.notifier).state = value;
                   });
                 },
               ),
