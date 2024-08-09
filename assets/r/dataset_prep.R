@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-09 20:31:12 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-08-10 09:27:27 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -56,59 +56,68 @@
 
 # Load or else install `pacman` to manage package requirements.
 
-if(!require(pacman)) install.packages("pacman")
+# 20240810 Attempt to debug the Windows issue with loading main.R on
+# startup. For now on Windows we initialise here since main.R is not
+# run on startup.
 
-pacman::p_load(Hmisc,
-               VIM,
-               corrplot,
-               descr,
-               fBasics,
-               ggthemes,
-               janitor,    # Cleanup: clean_names() remove_constant().
-               magrittr,   # Utilise %>% and %<>% pipeline operators.
-               mice,
-               randomForest,
-               rattle,     # Access the weather dataset and utilities.
-               readr,
-               reshape,
-               rpart,
-               tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-               tm,
-               verification,
-               wordcloud)
+if (NEEDS_INIT) {
 
-# A pre-defined value for the random seed ensures that results are
-# repeatable.
 
-set.seed(42)
+  if(!require(pacman)) install.packages("pacman")
 
-# A palette for rattle!
+  pacman::p_load(Hmisc,
+                 VIM,
+                 corrplot,
+                 descr,
+                 fBasics,
+                 ggthemes,
+                 janitor,    # Cleanup: clean_names() remove_constant().
+                 magrittr,   # Utilise %>% and %<>% pipeline operators.
+                 mice,
+                 randomForest,
+                 rattle,     # Access the weather dataset and utilities.
+                 readr,
+                 reshape,
+                 rpart,
+                 tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+                 tm,
+                 verification,
+                 wordcloud)
 
-rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
-                   "#0072B2", "#D55E00", "#CC79A7", "#000000")
+  # A pre-defined value for the random seed ensures that results are
+  # repeatable.
 
-# A ggplot2 theme for rattle.
+  set.seed(42)
 
-## theme_rattle <- function(base_size = 11, base_family = "") {
-##   theme_grey(base_size = base_size, base_family = base_family) +
-##     theme(
-##       # Customize text elements
-##       plot.title = element_text(color = "darkblue",
-##                                 face = "bold",
-##                                 size = base_size * 1.2),
-##       axis.title = element_text(color = "darkblue"),
-##       axis.text = element_text(color = "darkblue"),
-##       legend.title = element_text(color = "darkblue"),
-##       legend.text = element_text(color = "darkblue"),
-##       # Customize panel background
-##       panel.background = element_rect(fill = "white"),
-##       # Customize grid lines
-##       panel.grid.major = element_line(color = "lightgrey"),
-##       panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
-##     )
-## }
+  # A palette for rattle!
 
-theme_rattle <- theme_economist
+  rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
+                     "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+  # A ggplot2 theme for rattle.
+
+  ## theme_rattle <- function(base_size = 11, base_family = "") {
+  ##   theme_grey(base_size = base_size, base_family = base_family) +
+  ##     theme(
+  ##       # Customize text elements
+  ##       plot.title = element_text(color = "darkblue",
+  ##                                 face = "bold",
+  ##                                 size = base_size * 1.2),
+  ##       axis.title = element_text(color = "darkblue"),
+  ##       axis.text = element_text(color = "darkblue"),
+  ##       legend.title = element_text(color = "darkblue"),
+  ##       legend.text = element_text(color = "darkblue"),
+  ##       # Customize panel background
+  ##       panel.background = element_rect(fill = "white"),
+  ##       # Customize grid lines
+  ##       panel.grid.major = element_line(color = "lightgrey"),
+  ##       panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
+  ##     )
+  ## }
+
+  theme_rattle <- theme_economist
+
+}
 
 # Capture the original variable names for use in plots.
 

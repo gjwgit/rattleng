@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Thursday 2024-08-08 09:18:36 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-08-10 09:16:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,6 +30,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
@@ -131,6 +132,14 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // AS REQUIRED FOR THE CURRENT FEATURE.
 
   code = code.replaceAll('TEMPDIR', tempDir);
+
+  // NEEDS_INIT is true for Windows as main.R does not get run on startup on
+  // Windows.
+
+  String needsInit = 'FALSE';
+  if (Platform.isWindows) needsInit = 'TRUE';
+
+  code = code.replaceAll('NEEDS_INIT', needsInit);
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD
