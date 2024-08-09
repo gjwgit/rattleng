@@ -56,7 +56,6 @@ class TreeModelConfig extends ConsumerStatefulWidget {
 
 class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   // Enum for algorithm types.
-  AlgorithmType _selectedAlgorithm = AlgorithmType.traditional;
 
   // Controllers for the input fields.
   final TextEditingController _minSplitController = TextEditingController();
@@ -105,6 +104,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     _priorsController.text = ref.read(priorsProvider.notifier).state.toString();
     _lossMatrixController.text =
         ref.read(lossMatrixProvider.notifier).state.toString();
+
+    AlgorithmType selectedAlgorithm =
+        ref.read(treeAlgorithmProvider.notifier).state;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -200,11 +202,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                         _lossMatrixController.text;
 
                     ref.read(treeAlgorithmProvider.notifier).state =
-                        _selectedAlgorithm;
+                        selectedAlgorithm;
 
                     // Run the R scripts.
                     rSource(context, ref, 'model_template');
-                    if (_selectedAlgorithm == AlgorithmType.conditional) {
+                    if (selectedAlgorithm == AlgorithmType.conditional) {
                       rSource(context, ref, 'model_build_ctree');
                     } else {
                       rSource(context, ref, 'model_build_rpart');
@@ -227,11 +229,13 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 children: AlgorithmType.values.map((algorithmType) {
                   return CustomChoiceChip(
                     label: algorithmType.displayName,
-                    selectedTransform: _selectedAlgorithm.displayName,
+                    selectedTransform: selectedAlgorithm.displayName,
                     onSelected: (bool selected) {
                       setState(() {
                         if (selected) {
-                          _selectedAlgorithm = algorithmType;
+                          selectedAlgorithm = algorithmType;
+                          ref.read(treeAlgorithmProvider.notifier).state =
+                              algorithmType;
                         }
                       });
                     },
@@ -254,8 +258,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               ),
               const SizedBox(width: 16),
               // Model Builder Title.
-              const Text(
-                'Model Builder: rpart',
+              Text(
+                selectedAlgorithm == AlgorithmType.traditional
+                    ? 'Model Builder: rpart'
+                    : 'Model Builder: ctree',
                 style: normalTextStyle,
               ),
             ],
@@ -311,7 +317,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 tooltip:
                     ''' The complexity parameter is used to control the size 
  of the decision tree and to select the optimal tree size.''',
-                enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                enabled: selectedAlgorithm != AlgorithmType.conditional,
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
@@ -324,12 +330,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               _buildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
-                textStyle: _selectedAlgorithm == AlgorithmType.conditional
+                textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
                 tooltip: ''' Set the prior probabilities for each class. 
  E.g. for two classes: 0.5,0.5. Must add up to 1.''',
-                enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                enabled: selectedAlgorithm != AlgorithmType.conditional,
                 validator: (value) => _validatePriors(value),
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]+(,[0-9]+)*$'),
@@ -340,12 +346,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               _buildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,
-                textStyle: _selectedAlgorithm == AlgorithmType.conditional
+                textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
                 tooltip: ''' Weight the outcome classes differently. 
  E.g., 0,10,1,0 (TN, FP, FN, TP).''',
-                enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                enabled: selectedAlgorithm != AlgorithmType.conditional,
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]+(,[0-9]+)*$'),
                 ),
