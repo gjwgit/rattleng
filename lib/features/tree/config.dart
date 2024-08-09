@@ -1,6 +1,6 @@
 /// Widget to replicate a configuration UI for a tree model.
 //
-// Time-stamp: <Sunday 2024-06-09 06:10:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-09 16:10:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -267,7 +267,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               ),
             ],
           ),
-
+          configTopSpace,
           // Min Split, Max Depth, and Min Bucket.
           Row(
             children: [
