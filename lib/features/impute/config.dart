@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-08-10 06:41:06 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 06:43:46 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -78,7 +78,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     );
   }
 
-  // TODO 20240810 gjw USE CUSTOM CHOICE CHIP
+  // TODO 20240810 gjw CAN WE USE CUSTOM CHOICE CHIP
 
   Widget transformChooser() {
     return Expanded(
