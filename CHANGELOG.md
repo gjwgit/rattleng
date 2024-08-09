@@ -8,6 +8,8 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Move main.R into dataset_prep.R to fix Windows loading [6.2.43 20240809 gjw]
++ Fix Windows R console connectivity issue [6.2.41 20240809 Lutra-Fs]
 + Rearrange RESCALE interface [6.2.40 20240808 gjw]
 + Review and clean [6.2.39 20240808 zy]
 + Update configs for RESCALE and TREE [6.2.38 20240808 gjw]
@@ -52,7 +54,6 @@ toward a 6.3 release.
 + Refactor dataset feature [6.2.3 20240715 gjw]
 + Initial R code and integration of exploration plots [6.2.2 20240715 gjw]
 + Add EXPORT to ImagePage() [6.2.1 20240712 gjw]
-+ Fix Windows R console connectivity issue [20240809 Lutra-Fs]
 
 ## 6.2 Dataset Roles, Display Pages.
 
