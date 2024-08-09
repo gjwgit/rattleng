@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-08-09 16:41:30 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-09 19:45:20 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
