@@ -108,5 +108,11 @@ missing <- colnames(ds)[colSums(is.na(ds)) > 0]
 
 missing
 
+# Identify the number of rows with missing values.
+
+missing_rows <- sum(apply(ds, 1, anyNA))
+
+missing_rows
+
 glimpse(ds)
 summary(ds)
