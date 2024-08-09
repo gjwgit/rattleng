@@ -134,7 +134,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
-
+    // TODO yyx 20240807 after deletion it should show other variables not the deleted one. how to do it?
     String selected = ref.watch(selectedProvider);
     if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
