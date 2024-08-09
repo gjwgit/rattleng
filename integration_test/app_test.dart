@@ -1,22 +1,22 @@
-// /// Testing: Basic app startup test.
-// ///
-// /// Copyright (C) 2023, Software Innovation Institute, ANU.
-// ///
-// /// License: http://www.apache.org/licenses/LICENSE-2.0
-// ///
-// // Licensed under the Apache License, Version 2.0 (the "License");
-// // you may not use this file except in compliance with the License.
-// //
-// // Unless required by applicable law or agreed to in writing, software
-// // distributed under the License is distributed on an "AS IS" BASIS,
-// // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// // See the License for the specific language governing permissions and
-// // limitations under the License.
-// ///
-// /// Authors: Graham Williams
+/// Testing: Basic app startup test.
+///
+/// Copyright (C) 2023, Software Innovation Institute, ANU.
+///
+/// License: http://www.apache.org/licenses/LICENSE-2.0
+///
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///
+/// Authors: Graham Williams
 
-// // TODO 20231015 gjw MIGRATE ALL TESTS TO THE ONE APP INSTANCE RATHER THAN A
-// // COSTLY BUILD EACH INDIVIDUAL TEST!
+// TODO 20231015 gjw MIGRATE ALL TESTS TO THE ONE APP INSTANCE RATHER THAN A
+// COSTLY BUILD EACH INDIVIDUAL TEST!
 
 // import 'dart:io';
 
@@ -122,7 +122,6 @@
 
 //     debugPrint("TESTER: Expect the default demo dataset is identified.");
 
-//  ss
 //     final dsPathTextFinder = find.byKey(datasetPathKey);
 //     expect(dsPathTextFinder, findsOneWidget);
 //     final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
@@ -208,16 +207,8 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    // Verify that the counter starts at 0.
-    // expect(find.text('0'), findsOneWidget);
+    // A simple test first, will add more later.
+
     expect(find.text('1'), findsNothing);
-
-    // // Tap the '+' icon and trigger a frame.
-    // await tester.tap(find.byIcon(Icons.add));
-    // await tester.pumpAndSettle();
-
-    // // Verify that the counter has incremented.
-    // expect(find.text('0'), findsNothing);
-    // expect(find.text('1'), findsOneWidget);
   });
 }
