@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Move main.R conditional for Windows only [6.2.44 20240810 gjw] 
 + Move main.R into dataset_prep.R to fix Windows loading [6.2.43 20240809 gjw]
 + Fix Windows R console connectivity issue [6.2.41 20240809 Lutra-Fs]
 + Rearrange RESCALE interface [6.2.40 20240808 gjw]
