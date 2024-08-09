@@ -110,9 +110,9 @@ missing
 
 # Identify the number of rows with missing values.
 
-missing_rows <- sum(apply(ds, 1, anyNA))
+nmobs <- sum(apply(ds, 1, anyNA))
 
-missing_rows
+nmobs
 
 glimpse(ds)
 summary(ds)
