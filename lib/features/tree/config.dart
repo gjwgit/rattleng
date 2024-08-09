@@ -31,6 +31,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
@@ -43,6 +44,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class TreeModelConfig extends ConsumerStatefulWidget {
@@ -219,24 +221,25 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 'Algorithm:',
                 style: normalTextStyle,
               ),
-              ...AlgorithmType.values.map((algorithmType) {
-                return SizedBox(
-                  width: 200,
-                  child: RadioListTile<AlgorithmType>(
-                    title: Text(
-                      algorithmType.displayName,
-                      style: normalTextStyle,
-                    ),
-                    value: algorithmType,
-                    groupValue: _selectedAlgorithm,
-                    onChanged: (value) {
+              configLeftSpace,
+              Wrap(
+                spacing: 5.0,
+                children: AlgorithmType.values.map((algorithmType) {
+                  return CustomChoiceChip(
+                    label: algorithmType.displayName,
+                    selectedTransform: _selectedAlgorithm.displayName,
+                    onSelected: (bool selected) {
                       setState(() {
-                        _selectedAlgorithm = value!;
+                        if (selected) {
+                          _selectedAlgorithm = algorithmType;
+                        }
                       });
                     },
-                  ),
-                );
-              }),
+                  );
+                }).toList(),
+              ),
+              configLeftSpace,
+
               const Text(
                 'Include Missing',
                 style: normalTextStyle,
