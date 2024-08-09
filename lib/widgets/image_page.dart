@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Saturday 2024-08-03 05:54:31 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-09 05:29:34 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,7 +39,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/select_file.dart';
-import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/word_wrap.dart';
 
 class ImagePage extends StatelessWidget {
@@ -116,14 +115,78 @@ class ImagePage extends StatelessWidget {
                       //                      ElevatedButton(
                       IconButton(
                         icon: const Icon(
-                          Icons.open_in_new,
+                          Icons.zoom_out_map,
                           color: Colors.blue,
                         ),
                         onPressed: () {
-                          showUnderConstruction(context);
+                          // TODO 20240809 gjw for zy MOVE INTO SEPARATE FUNCTION/CLASS.
+                          //
+                          // By moving into a separate function/class we reduce
+                          // the cognitive overload of viewing the
+                          // logic/structure of this outer widget. I want to be
+                          // able to see the stucture at a glance on one screen,
+                          // not get lost in the detail.
+                          //
+                          showGeneralDialog(
+                            context: context,
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return Center(
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.9,
+                                        padding: const EdgeInsets.all(16.0),
+                                        color: Colors.white,
+                                        child: InteractiveViewer(
+                                          maxScale: 5,
+                                          child: SvgPicture.memory(bytes),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 10,
+                                        right: 10,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Icon(
+                                            Icons.close,
+                                            color: Colors.grey,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            barrierDismissible: true,
+                            barrierLabel: MaterialLocalizations.of(context)
+                                .modalBarrierDismissLabel,
+                            transitionDuration:
+                                const Duration(milliseconds: 200),
+                          );
                         },
                         tooltip: 'Press here to view the plot\n'
+                            'enlarged.',
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.open_in_new,
+                          color: Colors.blue,
+                        ),
+                        tooltip: 'TODO Press here to view the plot\n'
                             'in a separate window.',
+                        onPressed: () {},
                       ),
                       IconButton(
                         icon: const Icon(
@@ -138,7 +201,7 @@ class ImagePage extends StatelessWidget {
                           }
                         },
                         tooltip: 'Press here to save the plot\n'
-                            'into an SVG file locally.',
+                            'into an SVG file on local storage.',
                       ),
                       const SizedBox(width: 5),
                     ],
