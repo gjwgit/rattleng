@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Thursday 2024-08-08 13:44:28 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 06:39:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,6 +28,10 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
+
+/// Spacing between rows in a ChoiceChip.
+
+const choiceChipRowSpace = 10.0;
 
 /// Space above the beginning of the configs Row.
 

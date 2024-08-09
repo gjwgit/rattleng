@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-04 07:45:04 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 06:41:06 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -78,10 +78,13 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     );
   }
 
+  // TODO 20240810 gjw USE CUSTOM CHOICE CHIP
+
   Widget transformChooser() {
     return Expanded(
       child: Wrap(
         spacing: 5.0,
+        runSpacing: choiceChipRowSpace,
         children: methods.map((transform) {
           return ChoiceChip(
             label: Text(transform),
