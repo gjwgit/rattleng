@@ -124,3 +124,60 @@ void _showOptionPopup(BuildContext context, WidgetRef ref) {
     },
   );
 }
+
+
+void showAlertPopupForCleanup(
+  BuildContext context,
+  WidgetRef ref,
+  bool loadNewDataset,
+) {
+  // Show Alert Window, Reset after confirmation
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.warning, color: Colors.red),
+            SizedBox(width: 20),
+            Text('Warning'),
+          ],
+        ),
+        content: const Text(
+          'Are you sure?',
+        ),
+        actions: <Widget>[
+          // No button
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('No'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          // Yes button
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Yes'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              // RESET BEFORE SHOWOPTIONPOPUP BECAUSE THE OTHER WAY AROUND CASUES BUG:
+              // FIRST SET LOAD TO TRUE AND THEN RESET IT TO FALSE
+              // BUT THE DATASET ACTUALLY IS LOADED
+              // AS A CONSEQUENCE THE PREVIOUS RESULT WON'T BE RESET
+              // BECAUSE LOAD INDICATES NO DATASET HAS BEEN LOADED AND THE APP IS FRESH
+              reset(context, ref);
+              if (loadNewDataset) {
+                _showOptionPopup(context, ref);
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
