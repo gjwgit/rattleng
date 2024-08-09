@@ -28,7 +28,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
@@ -122,16 +121,16 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     switch (selectedCleanup) {
       case 'Delete Ignored':
         return Text(
-            'The following variables will be deleted: ${getIgnored(ref).toString()}.\nAre you sure?');
+            'The following variables will be deleted: ${getIgnored(ref).toString()}.\nAre you sure?',);
       case 'Delete Selected':
         return Text(
-            'The variable ${ref.read(selectedProvider)} will be deleted.\nAre you sure?');
+            'The variable ${ref.read(selectedProvider)} will be deleted.\nAre you sure?',);
       case 'Delete Missing':
         return Text(
-            'The following variables will be deleted: ${getMissing(ref)}.\nAre you sure?');
+            'The following variables will be deleted: ${getMissing(ref)}.\nAre you sure?',);
       case 'Delete Obs with Missing':
         return Text(
-            '${getObsMissing(ref)} rows will be deleted.\nAre you sure?');
+            '${getObsMissing(ref)} rows will be deleted.\nAre you sure?',);
       default:
         return const Text("This shouldn't happen in warningText");
     }

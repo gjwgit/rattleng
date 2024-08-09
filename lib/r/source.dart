@@ -151,14 +151,14 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String ignoredVarsString = toRVector(ignoredVars);
   code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
 
-  // List<String> getMissingVars() {
-  //   String missingVars = rExtract(stdout, '> missing');
-  //   RegExp exp = RegExp(r'"([^"]+)"');
+  List<String> getMissingVars() {
+    String missingVars = rExtract(stdout, '> missing');
+    RegExp exp = RegExp(r'"([^"]+)"');
 
-  //   return exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
-  // }
+    return exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
+  }
 
-  List<String> result = getMissing(ref);
+  List<String> result = getMissingVars();
   debugPrint('Missing vars: ${result.toString()}');
   code = code.replaceAll('MISSING_VARS', toRVector(result));
 
