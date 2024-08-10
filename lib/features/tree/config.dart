@@ -1,6 +1,6 @@
 /// Widget to replicate a configuration UI for a tree model.
 //
-// Time-stamp: <Sunday 2024-06-09 06:10:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-09 16:10:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
@@ -43,6 +44,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/custom_choice_chip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class TreeModelConfig extends ConsumerStatefulWidget {
@@ -54,7 +56,6 @@ class TreeModelConfig extends ConsumerStatefulWidget {
 
 class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   // Enum for algorithm types.
-  AlgorithmType _selectedAlgorithm = AlgorithmType.traditional;
 
   // Controllers for the input fields.
   final TextEditingController _minSplitController = TextEditingController();
@@ -63,9 +64,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   final TextEditingController _complexityController = TextEditingController();
   final TextEditingController _priorsController = TextEditingController();
   final TextEditingController _lossMatrixController = TextEditingController();
-
-  // Checkbox state.
-  bool _includeMissing = false;
 
   @override
   void dispose() {
@@ -103,6 +101,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     _priorsController.text = ref.read(priorsProvider.notifier).state.toString();
     _lossMatrixController.text =
         ref.read(lossMatrixProvider.notifier).state.toString();
+
+    AlgorithmType selectedAlgorithm =
+        ref.read(treeAlgorithmProvider.notifier).state;
+
+    // Checkbox state.
+    bool includeMissing = ref.read(treeIncludeMissingProvider.notifier).state;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -193,16 +197,16 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                         _priorsController.text;
 
                     ref.read(treeIncludeMissingProvider.notifier).state =
-                        _includeMissing;
+                        includeMissing;
                     ref.read(lossMatrixProvider.notifier).state =
                         _lossMatrixController.text;
 
                     ref.read(treeAlgorithmProvider.notifier).state =
-                        _selectedAlgorithm;
+                        selectedAlgorithm;
 
                     // Run the R scripts.
                     rSource(context, ref, 'model_template');
-                    if (_selectedAlgorithm == AlgorithmType.conditional) {
+                    if (selectedAlgorithm == AlgorithmType.conditional) {
                       rSource(context, ref, 'model_build_ctree');
                     } else {
                       rSource(context, ref, 'model_build_rpart');
@@ -219,45 +223,51 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 'Algorithm:',
                 style: normalTextStyle,
               ),
-              ...AlgorithmType.values.map((algorithmType) {
-                return SizedBox(
-                  width: 200,
-                  child: RadioListTile<AlgorithmType>(
-                    title: Text(
-                      algorithmType.displayName,
-                      style: normalTextStyle,
-                    ),
-                    value: algorithmType,
-                    groupValue: _selectedAlgorithm,
-                    onChanged: (value) {
+              configLeftSpace,
+              Wrap(
+                spacing: 5.0,
+                children: AlgorithmType.values.map((algorithmType) {
+                  return CustomChoiceChip(
+                    label: algorithmType.displayName,
+                    selectedTransform: selectedAlgorithm.displayName,
+                    onSelected: (bool selected) {
                       setState(() {
-                        _selectedAlgorithm = value!;
+                        if (selected) {
+                          selectedAlgorithm = algorithmType;
+                          ref.read(treeAlgorithmProvider.notifier).state =
+                              algorithmType;
+                        }
                       });
                     },
-                  ),
-                );
-              }),
+                  );
+                }).toList(),
+              ),
+              configLeftSpace,
+
               const Text(
                 'Include Missing',
                 style: normalTextStyle,
               ),
               Checkbox(
-                value: _includeMissing,
+                value: includeMissing,
                 onChanged: (value) {
                   setState(() {
-                    _includeMissing = value!;
+                    includeMissing = value!;
+                    ref.read(treeIncludeMissingProvider.notifier).state = value;
                   });
                 },
               ),
               const SizedBox(width: 16),
               // Model Builder Title.
-              const Text(
-                'Model Builder: rpart',
+              Text(
+                selectedAlgorithm == AlgorithmType.traditional
+                    ? 'Model Builder: rpart'
+                    : 'Model Builder: ctree',
                 style: normalTextStyle,
               ),
             ],
           ),
-
+          configTopSpace,
           // Min Split, Max Depth, and Min Bucket.
           Row(
             children: [
@@ -269,7 +279,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
  that must exist in a dataset at any node in
  order for a split of that node to be attempted. 
  The default is 20.''',
-                enabled: true,
                 inputFormatter:
                     FilteringTextInputFormatter.digitsOnly, // Integers only
                 validator: (value) => validateInteger(value, min: 0),
@@ -284,7 +293,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
  The root node is considered to be depth 0. 
  Note that a depth beyond 30 will give nonsense
  results on 32-bit machines. The default is 30.''',
-                enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: maxDepthProvider,
@@ -296,7 +304,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 tooltip: ''' This is the minimum number of observations 
  allowed in any leaf node of the decision tree. 
  The default value is one third of the Min Split.''',
-                enabled: true,
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: minBucketProvider,
@@ -308,7 +315,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 tooltip:
                     ''' The complexity parameter is used to control the size 
  of the decision tree and to select the optimal tree size.''',
-                enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                enabled: selectedAlgorithm != AlgorithmType.conditional,
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
@@ -321,12 +328,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               _buildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
-                textStyle: _selectedAlgorithm == AlgorithmType.conditional
+                textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
                 tooltip: ''' Set the prior probabilities for each class. 
  E.g. for two classes: 0.5,0.5. Must add up to 1.''',
-                enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                enabled: selectedAlgorithm != AlgorithmType.conditional,
                 validator: (value) => _validatePriors(value),
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]+(,[0-9]+)*$'),
@@ -337,12 +344,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               _buildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,
-                textStyle: _selectedAlgorithm == AlgorithmType.conditional
+                textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
                 tooltip: ''' Weight the outcome classes differently. 
  E.g., 0,10,1,0 (TN, FP, FN, TP).''',
-                enabled: _selectedAlgorithm != AlgorithmType.conditional,
+                enabled: selectedAlgorithm != AlgorithmType.conditional,
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]+(,[0-9]+)*$'),
                 ),

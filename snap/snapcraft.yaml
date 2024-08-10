@@ -1,8 +1,10 @@
 # 20240803
 #
 # It runs R if we run from /snap/rattle/current/rattle
-#
 # It fails to run R is started from /snap/bin/rattle?
+# See https://github.com/gjwgit/rattleng/issues/15
+#
+# For the linter errors see https://snapcraft.io/docs/linters-library
 
 name: rattle
 version: 6.2.40
