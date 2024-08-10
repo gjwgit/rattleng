@@ -30,6 +30,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -138,11 +139,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('TEMPDIR', tempDir);
 
-  String toRVector(List<String> vars) {
-    //  c("location", "date", "min_temp", "sunshine")
-    // Build the string in R vector format
-    return 'c(${vars.map((v) => '"$v"').join(', ')})';
-  }
+
 
   ////////////////////////////////////////////////////////////////////////
   // CLEANUP
@@ -160,7 +157,6 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   }
 
   List<String> result = getMissingVars();
-  debugPrint('Missing vars: ${result.toString()}');
   code = code.replaceAll('MISSING_VARS', toRVector(result));
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
   // Windows.
