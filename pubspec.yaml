@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.2.44+87
+version: 6.2.45+87
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
