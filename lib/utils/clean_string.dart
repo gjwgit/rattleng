@@ -1,6 +1,6 @@
 /// General cleanup of strings from the R console.
 //
-// Time-stamp: <Thursday 2024-06-13 11:26:32 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 17:48:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -46,6 +46,10 @@ String cleanString(String txt) {
   // sure where that has come from or when it sneaked in.
 
   txt = txt.replaceAll('[3m[90m', '');
+
+  // 20240810 Noticing these on Windows.
+
+  txt = txt.replaceAll(RegExp(r'\[\d{1,2}[CX]'), '');
 
   return txt;
 }
