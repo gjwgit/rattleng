@@ -9,7 +9,7 @@ List<String> getIgnored(WidgetRef ref) {
 
   Map<String, Role> roles = ref.read(rolesProvider);
 
-  // Extract the input variable from the rolesProvider.
+  // Extract the ignored variable from the rolesProvider.
 
   List<String> ignored = [];
   roles.forEach((key, value) {
