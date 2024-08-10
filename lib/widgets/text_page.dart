@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Thursday 2024-07-25 12:14:15 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 18:05:15 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -67,6 +67,12 @@ class TextPage extends StatelessWidget {
             SelectableText(
               content,
               style: monoTextStyle,
+            ),
+            Divider(
+              thickness: 15,
+              color: Color(0XFFBBDEFB),
+              indent: 0,
+              endIndent: 20,
             ),
           ],
         ),
