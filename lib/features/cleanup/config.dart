@@ -1,11 +1,11 @@
-/// Widget to configure the SVM tab: button.
+/// Widget to configure the CLEANUP feature.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-04 07:47:17 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-11 05:39:04 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
@@ -34,13 +35,10 @@ import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/get_obs_missing.dart';
-
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
-/// The SVM tab config currently consists of just an ACTIVITY button.
-///
 /// This is a StatefulWidget to pass the ref across to the rSource.
 
 class CleanupConfig extends ConsumerStatefulWidget {
@@ -66,6 +64,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     return Expanded(
       child: Wrap(
         spacing: 5.0,
+        runSpacing: choiceChipRowSpace,
         children: methods.map((cleanupMethod) {
           return ChoiceChip(
             label: Text(cleanupMethod),
@@ -190,7 +189,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
     }
-    
+
     return Column(
       children: [
         // Space above the beginning of the configs.
