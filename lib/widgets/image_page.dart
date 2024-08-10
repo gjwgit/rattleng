@@ -186,7 +186,11 @@ class ImagePage extends StatelessWidget {
                         ),
                         tooltip: 'TODO Press here to view the plot\n'
                             'in a separate window.',
-                        onPressed: () {},
+                        onPressed: () {
+                          Platform.isWindows
+                              ? Process.run('start', [path])
+                              : Process.run('open', [path]);
+                        },
                       ),
                       IconButton(
                         icon: const Icon(
