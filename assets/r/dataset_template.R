@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Graham Williams, Yixiang Yin
 
 # Run this after the variable `ds` (dataset) has been loaded and
 # prep'd or changed in some way, as after a TRANSFORM session.  This
@@ -107,6 +107,12 @@ catc
 missing <- colnames(ds)[colSums(is.na(ds)) > 0]
 
 missing
+
+# Identify the number of rows with missing values.
+
+nmobs <- sum(apply(ds, 1, anyNA))
+
+nmobs
 
 glimpse(ds)
 summary(ds)
