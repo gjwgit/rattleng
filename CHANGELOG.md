@@ -8,6 +8,8 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Fix Windows version display. [6.2.46 20240810 bz]
++ Add CLEANUP. [6.2.46 20240810 yyx]
 + Implement image popout [6.2.45 20240810 gjw]
 + Move main.R conditional for Windows only [6.2.44 20240810 gjw] 
 + Move main.R into dataset_prep.R to fix Windows loading [6.2.43 20240809 gjw]
