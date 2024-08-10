@@ -32,6 +32,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/get_obs_missing.dart';
