@@ -37,6 +37,7 @@ import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/get_obs_missing.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
@@ -86,26 +87,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       ),
     );
   }
-
-  Widget variableChooser(List<String> inputs, String selected) {
-    return DropdownMenu(
-      label: const Text('Variable'),
-      width: 200,
-      initialSelection: selected,
-      dropdownMenuEntries: inputs.map((s) {
-        return DropdownMenuEntry(value: s, label: s);
-      }).toList(),
-      // On selection as well as recording what was selected rebuild the
-      // visualisations.
-      onSelected: (String? value) {
-        ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        // We don't buildAction() here since the variable choice might
-        // be followed by a transform choice and we don;t want to shoot
-        // off building lots of new variables unnecesarily.
-      },
-    );
-  }
-
 
 
   Widget warningText() {
@@ -229,7 +210,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               child: const Text('Cleanup the Dataset'),
             ),
             configWidgetSpace,
-            variableChooser(inputs, selected),
+            variableChooser(inputs, selected, ref),
             configWidgetSpace,
             cleanupChooser(),
           ],
