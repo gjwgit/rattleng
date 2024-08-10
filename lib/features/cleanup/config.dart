@@ -105,7 +105,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     );
   }
 
-  String getObsMissing(WidgetRef ref) {
+  String? getObsMissing(WidgetRef ref) {
     String stdout = ref.read(stdoutProvider);
 
     String missing = rExtract(stdout, '> nmobs');
@@ -114,7 +114,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     // Extracting the matched number
     String? extractedNumber = regExp.firstMatch(missing)?.group(1);
 
-    return extractedNumber ?? '0';
+    return extractedNumber;
   }
 
   Widget warningText() {
