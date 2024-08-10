@@ -36,7 +36,6 @@ import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
-import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/set_status.dart';
 
 const double heightSpace = 20;
