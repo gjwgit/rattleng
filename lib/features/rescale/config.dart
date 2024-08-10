@@ -36,6 +36,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/custom_choice_chip.dart';
 import 'package:rattle/widgets/number_field.dart';
@@ -68,28 +69,10 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
   String selectedTransform = 'Recenter';
 
-  Widget variableChooser(List<String> inputs, String selected) {
-    return DropdownMenu(
-      label: const Text('Variable'),
-      width: 200,
-      initialSelection: selected,
-      dropdownMenuEntries: inputs.map((s) {
-        return DropdownMenuEntry(value: s, label: s);
-      }).toList(),
-      // On selection as well as recording what was selected rebuild the
-      // visualisations.
-      onSelected: (String? value) {
-        ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        // We don't buildAction() here since the variable choice might
-        // be followed by a transform choice and we don;t want to shoot
-        // off building lots of new variables unnecesarily.
-      },
-    );
-  }
-
   Widget rescaleChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+    
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -202,7 +185,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               child: const Text('Rescale Variable Values'),
             ),
             configWidgetSpace,
-            variableChooser(inputs, selected),
+            variableChooser(inputs, selected, ref),
           ],
         ),
 //        configTopSpace,

@@ -30,6 +30,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/utils/get_ignored.dart';
+import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -47,6 +49,7 @@ import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
@@ -60,6 +63,7 @@ import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -77,6 +81,7 @@ import 'package:rattle/utils/update_script.dart';
 void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
+  String stdout = ref.read(stdoutProvider);
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
@@ -133,6 +138,16 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('TEMPDIR', tempDir);
 
+  ////////////////////////////////////////////////////////////////////////
+  // CLEANUP
+  ////////////////////////////////////////////////////////////////////////
+  // TODO yyx 20240809 move this computation to elsewhere if this function gets too slow.
+  List<String> ignoredVars = getIgnored(ref);
+  String ignoredVarsString = toRVector(ignoredVars);
+  code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
+
+  List<String> result = getMissing(ref);
+  code = code.replaceAll('MISSING_VARS', toRVector(result));
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
   // Windows.
 

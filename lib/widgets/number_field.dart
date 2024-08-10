@@ -164,9 +164,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
           children: [
             widget.label.isEmpty
                 ? Container()
-                : Text(widget.label,
-                    style:
-                        widget.enabled ? normalTextStyle : disabledTextStyle,),
+                : Text(
+                    widget.label,
+                    style: widget.enabled ? normalTextStyle : disabledTextStyle,
+                  ),
             SizedBox(
               width: widget.maxWidth * 30.0,
               child: Stack(
@@ -247,5 +248,6 @@ String? validateInteger(String? value, {required int min}) {
   if (intValue == null || intValue < min) {
     return 'Must >= $min';
   }
+  
   return null;
 }
