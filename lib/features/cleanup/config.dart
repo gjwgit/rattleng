@@ -30,12 +30,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
@@ -121,16 +123,20 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     switch (selectedCleanup) {
       case 'Delete Ignored':
         return Text(
-            'The following variables will be deleted: ${getIgnored(ref).toString()}.\nAre you sure?',);
+          'The following variables will be deleted: ${getIgnored(ref).toString()}.\nAre you sure?',
+        );
       case 'Delete Selected':
         return Text(
-            'The variable ${ref.read(selectedProvider)} will be deleted.\nAre you sure?',);
+          'The variable ${ref.read(selectedProvider)} will be deleted.\nAre you sure?',
+        );
       case 'Delete Missing':
         return Text(
-            'The following variables will be deleted: ${getMissing(ref)}.\nAre you sure?',);
+          'The following variables will be deleted: ${getMissing(ref)}.\nAre you sure?',
+        );
       case 'Delete Obs with Missing':
         return Text(
-            '${getObsMissing(ref)} rows will be deleted.\nAre you sure?',);
+          '${getObsMissing(ref)} rows will be deleted.\nAre you sure?',
+        );
       default:
         return const Text("This shouldn't happen in warningText");
     }
@@ -180,26 +186,36 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
   }
 
   void deletionAction() {
-    {
-      switch (selectedCleanup) {
-        case 'Delete Ignored':
-          debugPrint('deleted ignored vars: ${getIgnored(ref).toString()}');
-          rSource(context, ref, 'transform_clean_delete_ignored');
-        case 'Delete Selected':
-          rSource(context, ref, 'transform_clean_delete_selected');
-        case 'Delete Missing':
-          // debugPrint('delete vars with missing data: ${}');
-          rSource(context, ref, 'transform_clean_delete_vars_missing');
-        case 'Delete Obs with Missing':
-          rSource(context, ref, 'transform_clean_delete_obs_missing');
-        default:
-          showUnderConstruction(context);
-      }
-      // Notice that rSource is asynchronous so this glimpse is oftwn happening
-      // before the above transformation.
-      //
-      // rSource(context, ref, 'glimpse');
+    List<String> varsToDelete = [];
+    switch (selectedCleanup) {
+      case 'Delete Ignored':
+        varsToDelete.addAll(getIgnored(ref));
+        rSource(context, ref, 'transform_clean_delete_ignored');
+      // two ways to update: read it from the stdout or update it with the information
+      // choose 2
+      case 'Delete Selected':
+        rSource(context, ref, 'transform_clean_delete_selected');
+        varsToDelete.add(ref.read(selectedProvider));
+      case 'Delete Missing':
+        rSource(context, ref, 'transform_clean_delete_vars_missing');
+        varsToDelete.addAll(getMissingVars(ref));
+      case 'Delete Obs with Missing':
+        rSource(context, ref, 'transform_clean_delete_obs_missing');
+      default:
+        showUnderConstruction(context);
     }
+    for (var v in varsToDelete) {
+      if (deleteVar(ref, v)) {
+        debugPrint('Deleted $v');
+      } else {
+        debugPrint('ERROR: attempt to delete $v but $v not in the flutter state');
+        
+      }
+    }
+    // Notice that rSource is asynchronous so this glimpse is oftwn happening
+    // before the above transformation.
+    //
+    // rSource(context, ref, 'glimpse');
   }
 
   @override
