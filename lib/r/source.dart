@@ -149,14 +149,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String ignoredVarsString = toRVector(ignoredVars);
   code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
 
-  List<String> getMissingVars() {
-    String missingVars = rExtract(stdout, '> missing');
-    RegExp exp = RegExp(r'"([^"]+)"');
-
-    return exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
-  }
-
-  List<String> result = getMissingVars();
+  List<String> result = getMissing(ref);
   code = code.replaceAll('MISSING_VARS', toRVector(result));
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
   // Windows.
