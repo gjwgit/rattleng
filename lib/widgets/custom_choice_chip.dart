@@ -1,6 +1,6 @@
-/// Constants used for spacing different widget contexts.
+/// Chip choice widget used across the app.
 //
-// Time-stamp: <Saturday 2024-08-10 06:39:08 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 06:35:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,26 +21,38 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Zheyuan Xu
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
-/// Spacing between rows in a ChoiceChip.
+// TODO 20240810 gjw CONSIDER ADD EXPANDED WRAP HERE
 
-const choiceChipRowSpace = 10.0;
+class CustomChoiceChip extends StatelessWidget {
+  final String label;
+  final String selectedTransform;
+  final ValueChanged<bool> onSelected;
 
-/// Space above the beginning of the configs Row.
+  const CustomChoiceChip({
+    super.key,
+    required this.label,
+    required this.selectedTransform,
+    required this.onSelected,
+  });
 
-const configTopSpace = SizedBox(height: 10);
-
-/// Space to the left of the configs within a Row.
-
-const configLeftSpace = SizedBox(width: 5);
-
-/// Space between widgets in a Row in the the config.
-
-const configWidgetSpace = SizedBox(width: 20.0);
+  @override
+  Widget build(BuildContext context) {
+    return ChoiceChip(
+      label: Text(label),
+      disabledColor: Colors.grey,
+      selectedColor: Colors.lightBlue[200],
+      backgroundColor: Colors.lightBlue[50],
+      shadowColor: Colors.grey,
+      pressElevation: 8.0,
+      elevation: 2.0,
+      selected: selectedTransform == label,
+      onSelected: onSelected,
+    );
+  }
+}
