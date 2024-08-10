@@ -37,7 +37,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/app.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
-import 'package:rattle/providers/delete_vars.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/script.dart';
@@ -93,12 +92,6 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.invalidate(stopwordProvider);
   ref.invalidate(maxWordProvider);
   ref.invalidate(minFreqProvider);
-
-  // Reset TRANSFORM/CLEANUP
-  ref.invalidate(deleteIgnored);
-  ref.invalidate(deleteSelected);
-  ref.invalidate(deleteMissing);
-  ref.invalidate(deleteObsWithMissing);
 
   // Reset the stdoutProvider, this resets the tree tab and the forest tab as
   // they depend on it
