@@ -27,8 +27,12 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/selected.dart';
+import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
@@ -45,6 +49,12 @@ class RecodeConfig extends ConsumerStatefulWidget {
 class RecodeConfigState extends ConsumerState<RecodeConfig> {
   @override
   Widget build(BuildContext context) {
+    List<String> inputs = getInputsAndIgnoreTransformed(ref);
+    String selected = ref.watch(selectedProvider);
+    if (selected == 'NULL' && inputs.isNotEmpty) {
+      selected = inputs.first;
+    }
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -65,6 +75,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               },
               child: const Text("Recode Variable's Values"),
             ),
+            configWidgetSpace,
+            variableChooser(inputs, selected, ref),
           ],
         ),
       ],
