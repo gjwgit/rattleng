@@ -108,7 +108,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
   String getObsMissing(WidgetRef ref) {
     String stdout = ref.read(stdoutProvider);
 
-    String missing = rExtract(stdout, '> missing_rows');
+    String missing = rExtract(stdout, '> nmobs');
     RegExp regExp = RegExp(r'\[\d+\]\s(\d+)');
 
     // Extracting the matched number
