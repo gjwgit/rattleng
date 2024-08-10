@@ -34,6 +34,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
+import 'package:rattle/utils/get_obs_missing.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -105,17 +106,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     );
   }
 
-  String? getObsMissing(WidgetRef ref) {
-    String stdout = ref.read(stdoutProvider);
 
-    String missing = rExtract(stdout, '> nmobs');
-    RegExp regExp = RegExp(r'\[\d+\]\s(\d+)');
-
-    // Extracting the matched number
-    String? extractedNumber = regExp.firstMatch(missing)?.group(1);
-
-    return extractedNumber;
-  }
 
   Widget warningText() {
     switch (selectedCleanup) {
