@@ -33,6 +33,11 @@ bool isTransformedVar(String name) {
   return false;
 }
 
+// TODO why don't we reset and update provider
+// This function should be run after the R state has changed.
+// It relies on the R to print its latest state with glimpse(ds).
+// This should be idempotent
+
 void updateVariablesProvider(WidgetRef ref) {
   // reset the rolesProvider and typesProvider
   // ref.read(rolesProvider.notifier).state = {};
@@ -58,4 +63,17 @@ void updateVariablesProvider(WidgetRef ref) {
           isNumeric(column.type) ? Type.numeric : Type.categoric;
     }
   }
+}
+
+// t -> delete succeed
+// f -> try to delete var which doesn't exist
+bool deleteVar(WidgetRef ref, String v) {
+  Role? r = ref.read(rolesProvider.notifier).state.remove(v);
+  Type? t = ref.read(typesProvider.notifier).state.remove(v);
+  if (r == null) {
+    return false;
+  } else if (t == null) {
+    return false;
+  }
+  return true;
 }

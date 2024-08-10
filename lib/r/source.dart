@@ -66,6 +66,13 @@ import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
+  List<String> getMissingVars(ref) {
+    String stdout = ref.read(stdoutProvider);
+    String missingVars = rExtract(stdout, '> missing');
+    RegExp exp = RegExp(r'"([^"]+)"');
+
+    return exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
+  }
 
 /// Run the R [script] and append to the [rattle] script.
 ///
@@ -81,7 +88,6 @@ import 'package:rattle/utils/update_script.dart';
 void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
-  String stdout = ref.read(stdoutProvider);
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
@@ -152,14 +158,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   String ignoredVarsString = toRVector(ignoredVars);
   code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
 
-  List<String> getMissingVars() {
-    String missingVars = rExtract(stdout, '> missing');
-    RegExp exp = RegExp(r'"([^"]+)"');
 
-    return exp.allMatches(missingVars).map((match) => match.group(1)!).toList();
-  }
 
-  List<String> result = getMissingVars();
+  List<String> result = getMissingVars(ref);
   debugPrint('Missing vars: ${result.toString()}');
   code = code.replaceAll('MISSING_VARS', toRVector(result));
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
