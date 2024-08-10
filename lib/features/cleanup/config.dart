@@ -170,7 +170,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               child: const Text('Yes'),
               onPressed: () {
                 Navigator.of(context).pop();
-                buildAction();
+                deletionAction();
               },
             ),
           ],
@@ -178,9 +178,8 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       },
     );
   }
-  // BUILD button action.
 
-  void buildAction() {
+  void deletionAction() {
     {
       switch (selectedCleanup) {
         case 'Delete Ignored':
