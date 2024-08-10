@@ -162,6 +162,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                         ],
                       ),
                     );
+                    
                     return;
                   }
                   // Require a target variable.
@@ -370,6 +371,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     if (doubleValue == null || doubleValue < 0.0000 || doubleValue > 1.0000) {
       return 'Must be between 0.0000 and 1.0000';
     }
+
     return null;
   }
 
@@ -404,7 +406,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
         }
       }
       // Check if the first and last elements are zero (for diagonal zeros).
-      if (parts[0].trim() != '0' || parts[3].trim() != '0') {
+      if (parts.first.trim() != '0' || parts[3].trim() != '0') {
         return 'Loss matrix must have zeros on diagonals (first and last elements)';
       }
     }
