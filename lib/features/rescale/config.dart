@@ -37,6 +37,7 @@ import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/custom_choice_chip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
@@ -86,26 +87,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     );
   }
 
-  // Refine the ChipChoice widget.
-
-  Widget myChoiceChip(transform) {
-    return ChoiceChip(
-      label: Text(transform),
-      disabledColor: Colors.grey,
-      selectedColor: Colors.lightBlue[200],
-      backgroundColor: Colors.lightBlue[50],
-      shadowColor: Colors.grey,
-      pressElevation: 8.0,
-      elevation: 2.0,
-      selected: selectedTransform == transform,
-      onSelected: (bool selected) {
-        setState(() {
-          selectedTransform = selected ? transform : '';
-        });
-      },
-    );
-  }
-
   Widget rescaleChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
@@ -115,21 +96,36 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         Wrap(
           spacing: 5.0,
           children: normaliseMethods.map((transform) {
-            return myChoiceChip(transform);
+            return CustomChoiceChip(
+              label: transform,
+              selectedTransform: selectedTransform,
+              onSelected: (bool selected) {
+                setState(() {
+                  selectedTransform = selected ? transform : '';
+                });
+              },
+            );
           }).toList(),
         ),
         configWidgetSpace,
         Wrap(
           spacing: 5.0,
           children: orderMethods.map((transform) {
-            return myChoiceChip(transform);
+            return CustomChoiceChip(
+              label: transform,
+              selectedTransform: selectedTransform,
+              onSelected: (bool selected) {
+                setState(() {
+                  selectedTransform = selected ? transform : '';
+                });
+              },
+            );
           }).toList(),
         ),
         configWidgetSpace,
         NumberField(
           label: 'Interval',
           controller: valCtrl,
-          enabled: true,
           inputFormatter:
               FilteringTextInputFormatter.digitsOnly, // Integers only
           validator: (value) => validateInteger(value, min: 1),

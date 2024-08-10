@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Friday 2024-08-09 05:29:34 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 15:02:42 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,6 +29,7 @@ library;
 
 import 'dart:io';
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/word_wrap.dart';
 
@@ -186,7 +188,27 @@ class ImagePage extends StatelessWidget {
                         ),
                         tooltip: 'TODO Press here to view the plot\n'
                             'in a separate window.',
-                        onPressed: () {},
+                        onPressed: () {
+                          // Generate a unique file name for the new file in the
+                          // temporary directory.
+
+                          String fileName =
+                              'plot_${Random().nextInt(10000)}.svg';
+                          File tempFile = File('$tempDir/$fileName');
+
+                          // Copy the original file to the temporary file.
+
+                          File originalFile = File(path);
+                          tempFile
+                              .writeAsBytesSync(originalFile.readAsBytesSync());
+
+                          // Pop out a window to display the plot separate
+                          // to the Rattle app.
+
+                          Platform.isWindows
+                              ? Process.run('start', [tempFile.path])
+                              : Process.run('open', [tempFile.path]);
+                        },
                       ),
                       IconButton(
                         icon: const Icon(
