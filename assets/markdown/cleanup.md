@@ -13,9 +13,9 @@ following options:
 
 + [Delete Ignored](https://survivor.togaware.com/datascience/drop-columns.html);
 
-+ Delete Vars with Missing;
++ **Delete Vars with Missing**;
 
-+ [Delete Obs with Missing](https://survivor.togaware.com/datascience/drop-obs-with-missing-values.html)
++ [Delete Obs with Missing](https://survivor.togaware.com/datascience/drop-obs-with-missing-values.html);
 
 + **Delete Variable**.
 
@@ -30,7 +30,7 @@ to a **csv** file from the **Console** tab with a command like:
 
 ```r
 ds %>%
-  dplyr::select(date, location, min_temp, max_temp, temp_9am, temp)3pm) %>%
+  dplyr::select(date, location, min_temp, max_temp, temp_9am, temp_3pm) %>%
   readr::write_csv('my_new_dataset.csv')
 ```
 
