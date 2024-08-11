@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Saturday 2024-08-10 18:05:15 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-12 05:59:45 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,6 +33,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/word_wrap.dart';
 
@@ -68,6 +69,7 @@ class TextPage extends StatelessWidget {
               content,
               style: monoTextStyle,
             ),
+            textPageBottomSpace,
             const Divider(
               thickness: 15,
               color: Color(0XFFBBDEFB),
