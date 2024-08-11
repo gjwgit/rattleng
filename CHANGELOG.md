@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Re-engineer and rewrite CLEANUP [6.2.47 20240811 gjw]
 + Fix Windows version display. [6.2.46 20240810 bz]
 + Add CLEANUP. [6.2.46 20240810 yyx]
 + Implement image popout [6.2.45 20240810 gjw]
