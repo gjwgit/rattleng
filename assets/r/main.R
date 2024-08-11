@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-12 08:59:35 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-08-12 09:19:10 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -84,6 +84,26 @@ options(width=110)
 # repeatable.
 
 set.seed(42)
+
+# A support function to move into rattle to provide the one line
+# summary of the dataset
+
+preview <- function(df) {
+  sapply(df, function(x) {
+    if (is.numeric(x)) {
+      paste0("min = ", min(x, na.rm = TRUE),
+             ", max = ", max(x, na.rm = TRUE),
+             ", mean = ", mean(x, na.rm = TRUE),
+             ", median = ", median(x, na.rm = TRUE),
+             ", variance = ", var(x, na.rm = TRUE),
+             ", unique = ", length(unique(x)))
+    } else if (is.factor(x) || is.character(x)) {
+      paste0("unique = ", length(unique(x)))
+    } else {
+      "No summary available for this type"
+    }
+  })
+}
 
 # A palette for rattle!
 
