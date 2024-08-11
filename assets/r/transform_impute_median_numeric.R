@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-03 14:18:46 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-08-11 19:31:34 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -29,8 +29,8 @@
 if (is.numeric(ds$SELECTED_VAR))
 {
   ds %<>%
-    mutate(IMN_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     median(wind_gust_dir, na.rm = TRUE),
+    mutate(IMD_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
+                                     median(SELECTED_VAR, na.rm = TRUE),
                                      SELECTED_VAR))
 }
 
