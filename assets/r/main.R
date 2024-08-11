@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-02 15:32:30 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-08-12 08:59:35 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -66,10 +66,19 @@ pacman::p_load(Hmisc,
                readr,
                reshape,
                rpart,
+               skimr,
                tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
                tm,
                verification,
                wordcloud)
+
+# Set the width wider than the default 80. Experimentally, on Linux,
+# MacOS, Windows, seems like 110 works, though it depends on font size
+# etc.
+
+# TODO 20240812 gjw TextPage NEEDS TO BE HORIZONTALLY SCROLLABLE.
+
+options(width=110)
 
 # A pre-defined value for the random seed ensures that results are
 # repeatable.
