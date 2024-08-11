@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-08-10 06:43:46 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-11 19:44:09 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,6 +24,8 @@
 
 library;
 
+// TODO 20240811 gjw RE-ENGINEER AS IN CLEANUP
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,6 +35,7 @@ import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_missing.dart';
+import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -60,7 +63,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   String selectedTransform = 'Zero/Missing';
 
-  // TODO 20240810 gjw CAN WE USE CUSTOM CHOICE CHIP
+  // TODO 20240810 gjw USE CHOICE CHIP TIP
 
   Widget transformChooser() {
     return Expanded(
@@ -114,29 +117,41 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   // BUILD button action.
 
-  void buildAction() {
+  void takeAction() {
     // Run the R scripts.
 
-    debugPrint('IMPUTE $selectedTransform');
+    if (selectedTransform == 'Constant' && ref.read(imputedProvider) == '') {
+      showOk(
+        context: context,
+        title: 'No Constant Value',
+        content: '''
 
-    switch (selectedTransform) {
-      case 'Zero/Missing':
-        rSource(context, ref, 'transform_impute_zero_missing');
-      case 'Mean':
-        rSource(context, ref, 'transform_impute_mean_numeric');
-      case 'Median':
-        rSource(context, ref, 'transform_impute_median_numeric');
-      case 'Mode':
-        rSource(context, ref, 'transform_impute_mode');
-      case 'Constant':
-        rSource(context, ref, 'transform_impute_constant');
-      default:
-        showUnderConstruction(context);
+            To impute missing data to a constant value for this variable you
+            need to specify the constant value. Please provide a Constant and
+            try again.
+
+            ''',
+      );
+    } else {
+      switch (selectedTransform) {
+        case 'Zero/Missing':
+          rSource(context, ref, 'transform_impute_zero_missing');
+        case 'Mean':
+          rSource(context, ref, 'transform_impute_mean_numeric');
+        case 'Median':
+          rSource(context, ref, 'transform_impute_median_numeric');
+        case 'Mode':
+          rSource(context, ref, 'transform_impute_mode');
+        case 'Constant':
+          rSource(context, ref, 'transform_impute_constant');
+        default:
+          showUnderConstruction(context);
+      }
+      // Notice that rSource is asynchronous so this glimpse is oftwn happening
+      // before the above transformation.
+      //
+      // rSource(context, ref, 'glimpse');
     }
-    // Notice that rSource is asynchronous so this glimpse is oftwn happening
-    // before the above transformation.
-    //
-    // rSource(context, ref, 'glimpse');
   }
 
   @override
@@ -181,7 +196,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 });
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(imputedProvider.notifier).state = constant;
-                buildAction();
+                print(constant);
+                takeAction();
               },
               child: const Text('Impute Missing Values'),
             ),
