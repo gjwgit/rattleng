@@ -68,7 +68,7 @@ class TextPage extends StatelessWidget {
               content,
               style: monoTextStyle,
             ),
-            Divider(
+            const Divider(
               thickness: 15,
               color: Color(0XFFBBDEFB),
               indent: 0,
