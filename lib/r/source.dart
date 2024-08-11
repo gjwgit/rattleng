@@ -49,7 +49,6 @@ import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
@@ -81,7 +80,6 @@ import 'package:rattle/utils/update_script.dart';
 void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
-  String stdout = ref.read(stdoutProvider);
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
