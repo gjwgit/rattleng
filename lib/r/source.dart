@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Saturday 2024-08-10 09:16:58 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-11 11:39:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -139,7 +139,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   ////////////////////////////////////////////////////////////////////////
   // CLEANUP
   ////////////////////////////////////////////////////////////////////////
-  // TODO yyx 20240809 move this computation to elsewhere if this function gets too slow.
+
+  // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
+
   List<String> ignoredVars = getIgnored(ref);
   String ignoredVarsString = toRVector(ignoredVars);
   code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
