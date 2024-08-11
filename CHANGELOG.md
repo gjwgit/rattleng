@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Bug fixes [6.2.48 20240811 gjw]
 + Re-engineer and rewrite CLEANUP [6.2.47 20240811 gjw]
 + Fix Windows version display. [6.2.46 20240810 bz]
 + Add CLEANUP. [6.2.46 20240810 yyx]
