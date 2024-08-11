@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Monday 2024-08-12 05:59:45 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-12 08:11:10 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -69,7 +69,11 @@ class TextPage extends StatelessWidget {
               content,
               style: monoTextStyle,
             ),
+            // 20240812 gjw Add a bottom spacer to leave a gap for the page
+            // navigation whenscrolling to the bottom of the page so that it can
+            // be visible in at least some part of any very busy pages.
             textPageBottomSpace,
+            // 20240812 gjw Add a divider to mark the end of the text page.
             const Divider(
               thickness: 15,
               color: Color(0XFFBBDEFB),
