@@ -27,8 +27,6 @@ library;
 
 import 'package:flutter/material.dart';
 
-// TODO 20240810 gjw CONSIDER ADD EXPANDED WRAP HERE
-
 class CustomChoiceChip<T> extends StatelessWidget {
   final List<T> options;
   final String Function(T) getLabel;
