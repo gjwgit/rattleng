@@ -76,34 +76,26 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Wrap(
-          spacing: 5.0,
-          children: normaliseMethods.map((transform) {
-            return CustomChoiceChip(
-              label: transform,
-              selectedTransform: selectedTransform,
-              onSelected: (bool selected) {
-                setState(() {
-                  selectedTransform = selected ? transform : '';
-                });
-              },
-            );
-          }).toList(),
+        CustomChoiceChip<String>(
+          options: normaliseMethods,
+          getLabel: (String method) => method,
+          selectedOption: selectedTransform,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
         ),
         configWidgetSpace,
-        Wrap(
-          spacing: 5.0,
-          children: orderMethods.map((transform) {
-            return CustomChoiceChip(
-              label: transform,
-              selectedTransform: selectedTransform,
-              onSelected: (bool selected) {
-                setState(() {
-                  selectedTransform = selected ? transform : '';
-                });
-              },
-            );
-          }).toList(),
+        CustomChoiceChip<String>(
+          options: orderMethods,
+          getLabel: (String method) => method,
+          selectedOption: selectedTransform,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
         ),
         configWidgetSpace,
         NumberField(

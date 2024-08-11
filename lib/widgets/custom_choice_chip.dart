@@ -29,30 +29,41 @@ import 'package:flutter/material.dart';
 
 // TODO 20240810 gjw CONSIDER ADD EXPANDED WRAP HERE
 
-class CustomChoiceChip extends StatelessWidget {
-  final String label;
-  final String selectedTransform;
-  final ValueChanged<bool> onSelected;
+class CustomChoiceChip<T> extends StatelessWidget {
+  final List<T> options;
+  final String Function(T) getLabel;
+  final T selectedOption;
+  final ValueChanged<T?> onSelected;
 
   const CustomChoiceChip({
     super.key,
-    required this.label,
-    required this.selectedTransform,
+    required this.options,
+    required this.getLabel,
+    required this.selectedOption,
     required this.onSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceChip(
-      label: Text(label),
-      disabledColor: Colors.grey,
-      selectedColor: Colors.lightBlue[200],
-      backgroundColor: Colors.lightBlue[50],
-      shadowColor: Colors.grey,
-      pressElevation: 8.0,
-      elevation: 2.0,
-      selected: selectedTransform == label,
-      onSelected: onSelected,
+    return Wrap(
+      spacing: 5.0,
+      runSpacing: 5.0,
+      children: options.map((option) {
+        final label = getLabel(option);
+        return ChoiceChip(
+          label: Text(label),
+          disabledColor: Colors.grey,
+          selectedColor: Colors.lightBlue[200],
+          backgroundColor: Colors.lightBlue[50],
+          shadowColor: Colors.grey,
+          pressElevation: 8.0,
+          elevation: 2.0,
+          selected: getLabel(selectedOption) == label,
+          onSelected: (bool selected) {
+            onSelected(selected ? option : null);
+          },
+        );
+      }).toList(),
     );
   }
 }
