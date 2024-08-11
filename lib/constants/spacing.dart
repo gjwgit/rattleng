@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Saturday 2024-08-10 06:39:08 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-12 06:00:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,3 +44,7 @@ const configLeftSpace = SizedBox(width: 5);
 /// Space between widgets in a Row in the the config.
 
 const configWidgetSpace = SizedBox(width: 20.0);
+
+/// Space before the bottom divider in the display pages.
+
+const textPageBottomSpace = SizedBox(height: 20.0);
