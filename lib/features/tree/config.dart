@@ -162,7 +162,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                         ],
                       ),
                     );
-                    
+
                     return;
                   }
                   // Require a target variable.

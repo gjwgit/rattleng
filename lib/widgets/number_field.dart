@@ -248,6 +248,6 @@ String? validateInteger(String? value, {required int min}) {
   if (intValue == null || intValue < min) {
     return 'Must >= $min';
   }
-  
+
   return null;
 }
