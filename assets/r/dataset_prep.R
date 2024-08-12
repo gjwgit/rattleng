@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-10 09:27:27 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-08-12 09:14:08 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -79,6 +79,7 @@ if (NEEDS_INIT) {
                  readr,
                  reshape,
                  rpart,
+                 skimr,
                  tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
                  tm,
                  verification,

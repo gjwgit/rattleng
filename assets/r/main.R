@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-02 15:32:30 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-08-12 09:19:10 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -66,15 +66,44 @@ pacman::p_load(Hmisc,
                readr,
                reshape,
                rpart,
+               skimr,
                tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
                tm,
                verification,
                wordcloud)
 
+# Set the width wider than the default 80. Experimentally, on Linux,
+# MacOS, Windows, seems like 110 works, though it depends on font size
+# etc.
+
+# TODO 20240812 gjw TextPage NEEDS TO BE HORIZONTALLY SCROLLABLE.
+
+options(width=110)
+
 # A pre-defined value for the random seed ensures that results are
 # repeatable.
 
 set.seed(42)
+
+# A support function to move into rattle to provide the one line
+# summary of the dataset
+
+preview <- function(df) {
+  sapply(df, function(x) {
+    if (is.numeric(x)) {
+      paste0("min = ", min(x, na.rm = TRUE),
+             ", max = ", max(x, na.rm = TRUE),
+             ", mean = ", mean(x, na.rm = TRUE),
+             ", median = ", median(x, na.rm = TRUE),
+             ", variance = ", var(x, na.rm = TRUE),
+             ", unique = ", length(unique(x)))
+    } else if (is.factor(x) || is.character(x)) {
+      paste0("unique = ", length(unique(x)))
+    } else {
+      "No summary available for this type"
+    }
+  })
+}
 
 # A palette for rattle!
 
