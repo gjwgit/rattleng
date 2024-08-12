@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Thursday 2024-08-08 09:18:36 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-11 11:39:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,6 +30,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/utils/get_ignored.dart';
+import 'package:rattle/utils/to_r_vector.dart';
+import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
@@ -59,6 +62,7 @@ import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -131,6 +135,26 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   // AS REQUIRED FOR THE CURRENT FEATURE.
 
   code = code.replaceAll('TEMPDIR', tempDir);
+
+  ////////////////////////////////////////////////////////////////////////
+  // CLEANUP
+  ////////////////////////////////////////////////////////////////////////
+
+  // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
+
+  List<String> ignoredVars = getIgnored(ref);
+  String ignoredVarsString = toRVector(ignoredVars);
+  code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
+
+  List<String> result = getMissing(ref);
+  code = code.replaceAll('MISSING_VARS', toRVector(result));
+  // NEEDS_INIT is true for Windows as main.R does not get run on startup on
+  // Windows.
+
+  String needsInit = 'FALSE';
+  if (Platform.isWindows) needsInit = 'TRUE';
+
+  code = code.replaceAll('NEEDS_INIT', needsInit);
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD

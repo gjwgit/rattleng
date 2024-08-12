@@ -37,7 +37,6 @@ import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/features/tests/panel.dart';
 import 'package:rattle/features/interactive/panel.dart';
-//TODO import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/explore.dart';
 
 final List<Map<String, dynamic>> explorePanels = [

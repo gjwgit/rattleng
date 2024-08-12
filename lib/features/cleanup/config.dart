@@ -1,11 +1,11 @@
-/// Widget to configure the SVM tab: button.
+/// Widget to configure the CLEANUP feature.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-04 07:47:17 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-11 19:37:56 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,11 +28,19 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/selected.dart';
+import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_ignored.dart';
+import 'package:rattle/utils/get_inputs.dart';
+import 'package:rattle/utils/get_missing.dart';
+import 'package:rattle/utils/get_obs_missing.dart';
+import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
-/// The SVM tab config currently consists of just an ACTIVITY button.
-///
 /// This is a StatefulWidget to pass the ref across to the rSource.
 
 class CleanupConfig extends ConsumerStatefulWidget {
@@ -43,14 +51,177 @@ class CleanupConfig extends ConsumerStatefulWidget {
 }
 
 class CleanupConfigState extends ConsumerState<CleanupConfig> {
+  // List choice of methods for cleanup and their tooltips.
+
+  Map<String, String> methods = {
+    'Ignored': '''
+      
+      Remove columns (variables) from the dataset that are marked as Ignore in
+      the Dataset tab's Role page. The variables to be removed will be
+      identified and you will have a chance to review them before comitting to
+      remove them.
+
+      ''',
+    'Vars with Missing': '''
+
+      Remove all columns (variables) that have any missing values. The variables
+      with missing values are indicated in the data summary. The variables to be
+      removed will be identified and you have a chance to review them before
+      committing to remove them.
+
+      ''',
+    'Obs with Missing': '''
+
+      Remove rows (observations) that have any missing values. That is, if there
+      are one or more missing values in a row, then remove that row from the
+      dataset.
+
+      ''',
+    'Variable': '''
+
+      Remove the selected variable. Be sure to select a variable first from the
+      Variable drop down menu. You can only remove one variable at a time. To
+      remove multiple variables, select to Ignore them first and then choose the
+      Delete Ignored option.
+
+      ''',
+  };
+
+  RegExp squares = RegExp(r'[\[\]]');
+
+  String warning(method) {
+    return switch (method) {
+      'Ignored' => '''
+
+        The following variables will be deleted:
+        ${getIgnored(ref).toString().replaceAll(squares, "")}.
+        Continue?
+
+          ''',
+      'Variable' => '''
+
+        The variable ${ref.read(selectedProvider)} will be deleted. Continue?
+
+        ''',
+      'Vars with Missing' => '''
+
+        The following ${getMissing(ref).length} variables will be deleted:
+        ${getMissing(ref).toString().replaceAll(squares, "")}.  Continue?
+
+        ''',
+      'Obs with Missing' => '''
+      
+        There are ${getObsMissing(ref)} rows with missing values that will be
+        deleted. Continue?
+
+        ''',
+      _ => '''
+
+        This shouldn't happen in warningText
+
+        '''
+    };
+  }
+
+  String dispatch(method) {
+    return switch (method) {
+      'Ignored' => 'transform_clean_delete_ignored',
+      'Variable' => 'transform_clean_delete_selected',
+      'Vars with Missing' => 'transform_clean_delete_vars_missing',
+      'Obs with Missing' => 'transform_clean_delete_obs_missing',
+      _ => ''
+    };
+  }
+
+  void takeAction(method) {
+    // Run the R scripts.  For different selected cleanup, the text will be
+    // different as well as the script to execute.
+
+    // For check special conditions:
+
+    // Delete Ignored but no variables Ignored.
+
+    if (method == 'Ignored' && getIgnored(ref).isEmpty) {
+      showOk(
+        context: context,
+        title: 'No Variables Selected to Ignore',
+        content: '''
+
+            To delete the Ignored variables you will first need to choose some
+            variables to Ignore from the **Dataset** tab's **Role** page.
+
+            ''',
+      );
+    } else
+
+    // All good.
+
+    {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Row(
+              children: [
+                Icon(Icons.warning, color: Colors.red),
+                SizedBox(width: 20),
+                Text('Warning'),
+              ],
+            ),
+            content: Text(wordWrap(warning(method))),
+            actions: <Widget>[
+              // No button
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              // Yes button
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Yes'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  rSource(context, ref, dispatch(method));
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // TODO yyx 20240809 the display not updated after cleanup
+    // Retireve the list of inputs as the label and value of the dropdown menu.
+    // TODO yyx 20240807 what should we allow to be deleted?
+
+    List<String> inputs = getInputsAndIgnoreTransformed(ref);
+
+    // Retrieve the current selected variable and use that as the initial value
+    // for the dropdown menu. If there is no current value and we do have inputs
+    // then we choose the first input variable.
+    // TODO yyx 20240807 after deletion it should show other variables not the deleted one. how to do it?
+
+    String selected = ref.watch(selectedProvider);
+
+    if (selected == 'NULL' && inputs.isNotEmpty) {
+      selected = inputs.first;
+    }
+
+    String method = methods.keys.toList().first;
+
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
-
+        configTopSpace,
         Row(
           children: [
             // Space to the left of the configs.
@@ -61,10 +232,24 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
             ActivityButton(
               onPressed: () {
-                showUnderConstruction(context);
+                ref.read(selectedProvider.notifier).state = selected;
+                takeAction(method);
               },
-              child: const Text('Cleanup the Dataset'),
+              child: const Text('Delete from Dataset'),
             ),
+
+            configWidgetSpace,
+
+            ChoiceChipTip(
+              choices: methods,
+              onSelectionChanged: (chosen) {
+                method = chosen;
+              },
+            ),
+
+            variableChooser(inputs, selected, ref),
+
+            configWidgetSpace,
           ],
         ),
       ],

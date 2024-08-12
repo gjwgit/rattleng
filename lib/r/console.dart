@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Tuesday 2024-08-06 13:27:37 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-09 20:09:22 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:xterm/xterm.dart';
 
@@ -98,6 +99,24 @@ class _RConsoleState extends ConsumerState<RConsole> {
           padding: const EdgeInsets.all(8.0),
           textStyle: const TerminalStyle(fontFamily: 'RobotoMono'),
           theme: blackOnWhite,
+          // 20240809 gjw Attempt to support copy to clipboard on secondary
+          // mouse button.
+          onSecondaryTapDown: (details, offset) async {
+            debugPrint('TapDown');
+            final selection = terminalController.selection;
+            if (selection != null) {
+              final text = terminal.buffer.getText(selection);
+              debugPrint('SELECTION: $text');
+              terminalController.clearSelection();
+              await Clipboard.setData(ClipboardData(text: text));
+            } else {
+              final data = await Clipboard.getData('text/plain');
+              final text = data?.text;
+              if (text != null) {
+                terminal.paste(text);
+              }
+            }
+          },
         ),
       ),
     );

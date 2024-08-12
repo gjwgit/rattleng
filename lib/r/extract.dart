@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-18 09:00:28 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 17:50:45 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,6 +23,8 @@
 /// Authors: Graham Williams
 
 library;
+
+import 'package:rattle/utils/clean_string.dart';
 
 // TODO 20230916 gjw ADD EXTRA PARAMETER AS THE PATTERN TO EXTRACT SINCE ALL
 // THREE SO FAR ARE BASICALLY THE SAME
@@ -67,5 +69,11 @@ String rExtract(String txt, String pat) {
 
   // Join the lines.
 
-  return result.join('\n');
+  String content = result.join('\n');
+
+  // Clean the result.
+
+  content = cleanString(content);
+
+  return content;
 }

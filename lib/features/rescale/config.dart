@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-08 12:45:43 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-11 19:53:08 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,7 +36,9 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/custom_choice_chip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
@@ -67,69 +69,38 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
   String selectedTransform = 'Recenter';
 
-  Widget variableChooser(List<String> inputs, String selected) {
-    return DropdownMenu(
-      label: const Text('Variable'),
-      width: 200,
-      initialSelection: selected,
-      dropdownMenuEntries: inputs.map((s) {
-        return DropdownMenuEntry(value: s, label: s);
-      }).toList(),
-      // On selection as well as recording what was selected rebuild the
-      // visualisations.
-      onSelected: (String? value) {
-        ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        // We don't buildAction() here since the variable choice might
-        // be followed by a transform choice and we don;t want to shoot
-        // off building lots of new variables unnecesarily.
-      },
-    );
-  }
-
-  // Refine the ChipChoice widget.
-
-  Widget myChoiceChip(transform) {
-    return ChoiceChip(
-      label: Text(transform),
-      disabledColor: Colors.grey,
-      selectedColor: Colors.lightBlue[200],
-      backgroundColor: Colors.lightBlue[50],
-      shadowColor: Colors.grey,
-      pressElevation: 8.0,
-      elevation: 2.0,
-      selected: selectedTransform == transform,
-      onSelected: (bool selected) {
-        setState(() {
-          selectedTransform = selected ? transform : '';
-        });
-      },
-    );
-  }
-
   Widget rescaleChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Wrap(
-          spacing: 5.0,
-          children: normaliseMethods.map((transform) {
-            return myChoiceChip(transform);
-          }).toList(),
+        CustomChoiceChip<String>(
+          options: normaliseMethods,
+          getLabel: (String method) => method,
+          selectedOption: selectedTransform,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
         ),
         configWidgetSpace,
-        Wrap(
-          spacing: 5.0,
-          children: orderMethods.map((transform) {
-            return myChoiceChip(transform);
-          }).toList(),
+        CustomChoiceChip<String>(
+          options: orderMethods,
+          getLabel: (String method) => method,
+          selectedOption: selectedTransform,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
         ),
         configWidgetSpace,
         NumberField(
           label: 'Interval',
           controller: valCtrl,
-          enabled: true,
           inputFormatter:
               FilteringTextInputFormatter.digitsOnly, // Integers only
           validator: (value) => validateInteger(value, min: 1),
@@ -171,17 +142,19 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
   @override
   Widget build(BuildContext context) {
-    // this ensures that the new var immedicately appear in the menu.
+    // This ensures that the new var immedicately appear in the menu.
+
     updateVariablesProvider(ref);
 
-    // Variables that were automatically ignored through a transform should still be listed in the TRANSFORM selected list because I might want to do some more transforms on it.
-    // Variables the user has marked as IGNORE should not be listed in the TRANSFORM tab.
+    // Variables that were automatically ignored through a transform should
+    // still be listed in the TRANSFORM selected list because I might want to do
+    // some more transforms on it.  Variables the user has marked as IGNORE
+    // should not be listed in the TRANSFORM tab.
 
-    // Retireve the list of inputs as the label and value of the dropdown menu.
+    // Retireve the list of (TODO numeric) inputs as the label and value of the
+    // dropdown menu.
 
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
-
-    // TODO 20240725 gjw ONLY WANT NUMC VAIABLES AVAILABLE FOR RESCALE
 
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
@@ -206,7 +179,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               child: const Text('Rescale Variable Values'),
             ),
             configWidgetSpace,
-            variableChooser(inputs, selected),
+            variableChooser(inputs, selected, ref),
           ],
         ),
 //        configTopSpace,
