@@ -1,14 +1,7 @@
-# The 'reshape' package provides the 'rescaler' function.
+# Use base::rank. Works with factors, presumably using their integer
+# value.
 
-
-# Rescale SELECTED_VAR.
-
-ds[["RRK_SELECTED_VAR"]] <- ds[["SELECTED_VAR"]]
-
-# Convert values to ranks.
-
-ds[["RRK_SELECTED_VAR"]] <-  reshape::rescaler(ds[["SELECTED_VAR"]], "rank")
+ds %<>% mutate(RRK_SELECTED_VAR = rank(SELECTED_VAR))
 
 glimpse(ds)
 summary(ds)
-
