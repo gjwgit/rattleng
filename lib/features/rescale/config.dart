@@ -38,7 +38,7 @@ import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/custom_choice_chip.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 /// This is a StatefulWidget to pass the ref across to the rSource as well as to
@@ -76,9 +76,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        CustomChoiceChip<String>(
+        ChoiceChipTip<String>(
           options: normaliseMethods,
-          getLabel: (String method) => method,
           selectedOption: selectedTransform,
           onSelected: (String? selected) {
             setState(() {
@@ -87,9 +86,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           },
         ),
         configWidgetSpace,
-        CustomChoiceChip<String>(
+        ChoiceChipTip<String>(
           options: orderMethods,
-          getLabel: (String method) => method,
           selectedOption: selectedTransform,
           onSelected: (String? selected) {
             setState(() {

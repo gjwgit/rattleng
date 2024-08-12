@@ -44,7 +44,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/custom_choice_chip.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class TreeModelConfig extends ConsumerStatefulWidget {
@@ -226,7 +226,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               ),
               configLeftSpace,
 
-              CustomChoiceChip<AlgorithmType>(
+              ChoiceChipTip<AlgorithmType>(
                 options: AlgorithmType.values,
                 getLabel: (AlgorithmType type) => type.displayName,
                 selectedOption: selectedAlgorithm,
