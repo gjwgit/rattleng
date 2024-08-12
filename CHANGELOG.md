@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Review and code cleanup [6.2.51 20240813 zy]
 + Extra string cleaning for Windows 10 [6.2.50 20240812 gjw]
 + Doc updates. Modernise R code. Trial await CONSOLE startup [6.2.49 20240812 gjw]
 + Bug fixes [6.2.48 20240811 gjw]
