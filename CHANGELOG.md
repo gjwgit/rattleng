@@ -8,6 +8,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Doc updates. Modernise R code. Trial await CONSOLE startup [6.2.49 20240812 gjw]
 + Bug fixes [6.2.48 20240811 gjw]
 + Re-engineer and rewrite CLEANUP [6.2.47 20240811 gjw]
 + Fix Windows version display. [6.2.46 20240810 bz]
