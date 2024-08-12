@@ -1,6 +1,6 @@
 /// General cleanup of strings from the R console.
 //
-// Time-stamp: <Saturday 2024-08-10 17:48:20 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-12 19:55:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,6 +32,14 @@ String cleanString(String txt) {
 
   txt = txt.replaceAll('', '');
   txt = txt.replaceAll('\r', '');
+
+  // 20240812 gjw These seem to be in glimpse() output making the data type
+  // italic. Noticed this on Anushka's Windows 10 desktop. But not on my Windows
+  // 11 desktop.
+
+  txt = txt.replaceAll('[3m[38;2;148;148;148m', '');
+  txt = txt.replaceAll('[23m[m', '');
+
   txt = txt.replaceAll('[3m[38;5;246m', '');
   txt = txt.replaceAll('[?2004l', '');
   txt = txt.replaceAll('[39m[23m', '');
