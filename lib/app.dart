@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-08-09 09:19:38 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-08-10 06:08:53 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -55,7 +55,15 @@ class RattleApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialise the R process.
 
-// 20240809 TRY DELAY THIS TO home.dart    rStart(context, ref);
+    // 20240809 On Windows this does not get run - that is main.R is not in the
+    // Console. Delaying until feature/dataset/popup.dart seems to work. Moving
+    // main.R into dataset_prep.R delays the setup too much.
+    //
+    // 20240810 Revert to this for now and try to solve the Windows issue. Is it
+    // because my Windows are too slow and this starts before the Console is
+    // running?
+
+    rStart(context, ref);
 
     // EXPERIMENT with the color scheme.
 

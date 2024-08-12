@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-03 14:36:59 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-08-12 09:14:08 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,6 +35,90 @@
 # @williams:2017:essentials Chapter 3
 #
 # https://survivor.togaware.com/datascience/data-template.html
+
+# 20240809 gjw Move main.R here to avoid the problem on Windows where
+# main.R is not getting run.
+
+# We begin most scripts by loading the required packages.  Here are
+# some initial packages to load and others will be identified as we
+# proceed through the script. When writing our own scripts we often
+# collect together the library commands at the beginning of the script
+# here.
+
+########################################################################
+# Load required packages or install if not already.
+########################################################################
+
+# Keep R from asking to select a CRAN site.
+
+# options(repos = c(CRAN = "https://cloud.r-project.org"))
+# options(install.packages.ask = FALSE)
+
+# Load or else install `pacman` to manage package requirements.
+
+# 20240810 Attempt to debug the Windows issue with loading main.R on
+# startup. For now on Windows we initialise here since main.R is not
+# run on startup.
+
+if (NEEDS_INIT) {
+
+
+  if(!require(pacman)) install.packages("pacman")
+
+  pacman::p_load(Hmisc,
+                 VIM,
+                 corrplot,
+                 descr,
+                 fBasics,
+                 ggthemes,
+                 janitor,    # Cleanup: clean_names() remove_constant().
+                 magrittr,   # Utilise %>% and %<>% pipeline operators.
+                 mice,
+                 randomForest,
+                 rattle,     # Access the weather dataset and utilities.
+                 readr,
+                 reshape,
+                 rpart,
+                 skimr,
+                 tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+                 tm,
+                 verification,
+                 wordcloud)
+
+  # A pre-defined value for the random seed ensures that results are
+  # repeatable.
+
+  set.seed(42)
+
+  # A palette for rattle!
+
+  rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
+                     "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+  # A ggplot2 theme for rattle.
+
+  ## theme_rattle <- function(base_size = 11, base_family = "") {
+  ##   theme_grey(base_size = base_size, base_family = base_family) +
+  ##     theme(
+  ##       # Customize text elements
+  ##       plot.title = element_text(color = "darkblue",
+  ##                                 face = "bold",
+  ##                                 size = base_size * 1.2),
+  ##       axis.title = element_text(color = "darkblue"),
+  ##       axis.text = element_text(color = "darkblue"),
+  ##       legend.title = element_text(color = "darkblue"),
+  ##       legend.text = element_text(color = "darkblue"),
+  ##       # Customize panel background
+  ##       panel.background = element_rect(fill = "white"),
+  ##       # Customize grid lines
+  ##       panel.grid.major = element_line(color = "lightgrey"),
+  ##       panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
+  ##     )
+  ## }
+
+  theme_rattle <- theme_economist
+
+}
 
 # Capture the original variable names for use in plots.
 

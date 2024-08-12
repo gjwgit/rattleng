@@ -1,6 +1,6 @@
 /// Strip comments from an R console log string.
 //
-// Time-stamp: <Sunday 2024-07-14 08:21:00 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 09:24:24 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors: Graham Williams
 
 library;
 
@@ -39,15 +39,19 @@ String rStripComments(String txt) {
       //
       // Ecdf(eds[eds$grp=="All",1], col="#E495A5", ...)
       //
-      // Uase a pattern with a negative lookbehind assertion (?<!\") which
+      // Use a pattern with a negative lookbehind assertion (?<!\") which
       // ensures that the # is not preceded by a ".
 
       result.add(lines[i].replaceAll(RegExp(r' *(?<!\")#.*'), ''));
     }
   }
 
+  // Remove empty lines on joining.
+
+  String compressed = result.where((line) => line.trim().isNotEmpty).join('\n');
+
   // Add newlines at the beginning and the end to ensure the commands are on
   // lines of their own.
 
-  return "\n${result.join('\n')}\n";
+  return '\n$compressed\n';
 }

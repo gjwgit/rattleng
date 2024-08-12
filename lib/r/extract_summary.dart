@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-07-31 05:52:13 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 17:51:29 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -26,6 +26,8 @@ library;
 
 import 'package:rattle/r/extract.dart';
 
+import 'package:rattle/utils/clean_string.dart';
+
 String rExtractSummary(String txt) {
   String content = rExtract(txt, 'summary(ds)');
 
@@ -45,7 +47,9 @@ String rExtractSummary(String txt) {
 
   content = content.replaceAll(RegExp(r'\n\s*\n\s*\n+'), '\n\n');
 
-  // Join the lines.
+  // Clean the result.
+
+  content = cleanString(content);
 
   return content;
 }

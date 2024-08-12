@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Thursday 2024-08-08 13:44:28 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-12 06:00:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,6 +29,10 @@ library;
 
 import 'package:flutter/material.dart';
 
+/// Spacing between rows in a ChoiceChip.
+
+const choiceChipRowSpace = 10.0;
+
 /// Space above the beginning of the configs Row.
 
 const configTopSpace = SizedBox(height: 10);
@@ -40,3 +44,7 @@ const configLeftSpace = SizedBox(width: 5);
 /// Space between widgets in a Row in the the config.
 
 const configWidgetSpace = SizedBox(width: 20.0);
+
+/// Space before the bottom divider in the display pages.
+
+const textPageBottomSpace = SizedBox(height: 20.0);

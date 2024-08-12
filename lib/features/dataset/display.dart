@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Saturday 2024-07-27 19:46:48 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 06:39:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -226,6 +227,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 flex: typeFlex,
                 child: Wrap(
                   spacing: 5.0,
+                  runSpacing: choiceChipRowSpace,
                   children: choices.map((choice) {
                     return ChoiceChip(
                       label: Text(choice.displayString),

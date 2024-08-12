@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2024-08-09 09:53:55 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-09 20:31:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -36,7 +36,6 @@ import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
-import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/set_status.dart';
 
 const double heightSpace = 20;
@@ -58,8 +57,12 @@ class DatasetPopup extends ConsumerWidget {
     // is paused looking at the popup to load the dataset and we have time to
     // squeeze in and async run main.R before we get the `glimpse` missing
     // error.
+    //
+    // 20240809 gjw Revert for now until find the proper solution.
+    //
+    // 20240809 gjw Moved main.R into dataset_prep.R see if that works.
 
-    rStart(context, ref);
+    // rStart(context, ref);
 
     return AlertDialog(
       content: Column(
