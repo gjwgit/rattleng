@@ -49,29 +49,26 @@ class ChoiceChipTip<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Wrap(
-        spacing: 5.0,
-        runSpacing: choiceChipRowSpace,
-        children: options.map((option) {
-          final label = getLabel(option);
-          
-          return ChoiceChip(
-            label: Text(label),
-            tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
-            disabledColor: Colors.grey,
-            selectedColor: Colors.lightBlue[200],
-            backgroundColor: Colors.lightBlue[50],
-            shadowColor: Colors.grey,
-            pressElevation: 8.0,
-            elevation: 2.0,
-            selected: selectedOption == option,
-            onSelected: (bool selected) {
-              onSelected(selected ? option : null);
-            },
-          );
-        }).toList(),
-      ),
+    return Wrap(
+      spacing: 5.0,
+      runSpacing: choiceChipRowSpace,
+      children: options.map((option) {
+        final label = getLabel(option);
+        return ChoiceChip(
+          label: Text(label),
+          tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
+          disabledColor: Colors.grey,
+          selectedColor: Colors.lightBlue[200],
+          backgroundColor: Colors.lightBlue[50],
+          shadowColor: Colors.grey,
+          pressElevation: 8.0,
+          elevation: 2.0,
+          selected: selectedOption == option,
+          onSelected: (bool selected) {
+            onSelected(selected ? option : null);
+          },
+        );
+      }).toList(),
     );
   }
 }
