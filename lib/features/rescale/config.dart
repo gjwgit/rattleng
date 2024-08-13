@@ -155,7 +155,9 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
     List<String> numericInputs = [];
-    Map<String, Type> types = ref.watch(typesProvider); // want to refresh the options if there is new variables added so use watch
+    Map<String, Type> types = ref.watch(
+      typesProvider,
+    ); // want to refresh the options if there is new variables added so use watch
     for (var i in inputs) {
       if (types[i] == Type.numeric) {
         numericInputs.add(i);
