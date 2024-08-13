@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-11 19:53:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-13 20:00:12 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -73,7 +73,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   Widget rescaleChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -189,9 +188,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
             variableChooser(numericInputs, selected, ref),
           ],
         ),
-//        configTopSpace,
-//        normaliseChooser(),
-//        configTopSpace,
         rescaleChooser(),
       ],
     );
