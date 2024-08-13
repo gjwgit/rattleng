@@ -55,6 +55,7 @@ class ChoiceChipTip<T> extends StatelessWidget {
         runSpacing: choiceChipRowSpace,
         children: options.map((option) {
           final label = getLabel(option);
+          
           return ChoiceChip(
             label: Text(label),
             tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
