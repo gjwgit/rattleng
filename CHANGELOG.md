@@ -8,6 +8,9 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Review and fine tune  [6.2.52 20240814 gjw]
++ Only num vars for rescale. Disable numeric imputes for categorics [6.2.52 20240814 yyx]
++ Merge choice chips. [6.2.52 20240814 zy]
 + Review and code cleanup [6.2.51 20240813 zy]
 + Extra string cleaning for Windows 10 [6.2.50 20240812 gjw]
 + Doc updates. Modernise R code. Trial await CONSOLE startup [6.2.49 20240812 gjw]
