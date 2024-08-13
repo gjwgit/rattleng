@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/running_script_warning.dart';
 
 /// The SUMMARY tab config currently consists of just a BUILD button.
 ///
@@ -61,6 +62,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
             ActivityButton(
               onPressed: () {
+                runningScriptWarning(context);
                 rSource(context, ref, 'explore_summary');
               },
               child: const Text('Generate Dataset Summary'),

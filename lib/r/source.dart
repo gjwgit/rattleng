@@ -77,7 +77,7 @@ import 'package:rattle/utils/update_script.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-void rSource(BuildContext context, WidgetRef ref, String script) async {
+Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
   bool checkbox = ref.read(checkboxProvider);
