@@ -20,18 +20,18 @@ The original data is not modified. Instead, a new variable is created
 with a prefix added to the variable's name that indicates the kind of
 transformation.
 
-+ [Recenter](https://survivor.togaware.com/datascience/recenter-data-in-rattle.html)
-  function is a common normalisation which subtracts the mean from
-  each observation and divides each observation by the
-  root-mean-square, resulting in values centered around 0 and
-  spreading across the negative to positive values, using
++ [Recenter](https://survivor.togaware.com/datascience/rescale-data-using-recenter-in-rattle.html)
+  is a common normalisation which subtracts the mean from each
+  observation and divides each observation by the root-mean-square,
+  resulting in values centered around 0 and spreading across the
+  negative to positive values, using
   [base::scale](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale).
 
 + **Scale [0,1]** function supports another common requirement to
   remap our data to the [0,1] range.
 
-+ **Rank** function will convert the values of a numeric variable into
-  a rank using
++ [Rank](https://survivor.togaware.com/datascience/rescale-data-using-rank.html)
+  will convert the values of a numeric variable into a rank using
   [base::rank()](https://www.rdocumentation.org/packages/base/topics/rank).
 
 + **Median/MAD** function is considered to be a robust version of the
@@ -40,7 +40,7 @@ transformation.
   deviation.
 
 See the [Data Science Survival
-Guide](https://survivor.togaware.com/datascience/re-scale-data-in-rattle.html)
+Guide](https://survivor.togaware.com/datascience/rescale-data-in-rattle.html)
 for more details.
 
 >

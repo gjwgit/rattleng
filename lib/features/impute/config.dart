@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-11 19:44:09 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-14 05:45:31 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -80,10 +80,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           bool disableNumericMethods = numericMethods.contains(transform) &&
               ref.read(typesProvider)[ref.read(selectedProvider)] ==
                   Type.categoric;
-          
+
           return ChoiceChip(
             label: Text(transform),
-            disabledColor: Colors.grey,
             selectedColor: Colors.lightBlue[200],
             backgroundColor:
                 disableNumericMethods ? Colors.grey[300] : Colors.lightBlue[50],
