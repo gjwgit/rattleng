@@ -71,9 +71,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   String selectedTransform = 'Recenter';
 
   Widget rescaleChooser() {
-    final TextEditingController valCtrl = TextEditingController();
-    valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -87,24 +84,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           },
         ),
         configWidgetSpace,
-        ChoiceChipTip<String>(
-          options: orderMethods,
-          selectedOption: selectedTransform,
-          onSelected: (String? selected) {
-            setState(() {
-              selectedTransform = selected ?? '';
-            });
-          },
-        ),
-        configWidgetSpace,
-        NumberField(
-          label: 'Interval',
-          controller: valCtrl,
-          inputFormatter:
-              FilteringTextInputFormatter.digitsOnly, // Integers only
-          validator: (value) => validateInteger(value, min: 1),
-          stateProvider: intervalProvider,
-        ),
       ],
     );
   }
@@ -172,6 +151,9 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
       selected = numericInputs.first;
     }
 
+    final TextEditingController valCtrl = TextEditingController();
+    valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
+
     return Column(
       children: [
         configTopSpace,
@@ -187,11 +169,29 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
             ),
             configWidgetSpace,
             variableChooser(numericInputs, selected, ref),
+            const Spacer(),
+            ChoiceChipTip<String>(
+              options: orderMethods,
+              selectedOption: selectedTransform,
+              onSelected: (String? selected) {
+                setState(() {
+                  selectedTransform = selected ?? '';
+                });
+              },
+            ),
+            NumberField(
+              label: 'Interval',
+              controller: valCtrl,
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: intervalProvider,
+            ),
           ],
         ),
 //        configTopSpace,
 //        normaliseChooser(),
-//        configTopSpace,
+        configTopSpace,
         rescaleChooser(),
       ],
     );
