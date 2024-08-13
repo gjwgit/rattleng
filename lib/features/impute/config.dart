@@ -27,7 +27,6 @@ library;
 // TODO 20240811 gjw RE-ENGINEER AS IN CLEANUP
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -81,6 +80,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           bool disableNumericMethods = numericMethods.contains(transform) &&
               ref.read(typesProvider)[ref.read(selectedProvider)] ==
                   Type.categoric;
+          
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,
