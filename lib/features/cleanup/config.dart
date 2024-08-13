@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/cleanup_method.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_ignored.dart';
@@ -206,6 +207,8 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
 
+    String method = ref.read(cleanUpMethodProvider.notifier).state;
+
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
@@ -216,8 +219,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
     }
-
-    String method = methods.keys.toList().first;
 
     return Column(
       children: [
@@ -240,12 +241,21 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
             configWidgetSpace,
 
-            ChoiceChipTip(
-              choices: methods,
-              onSelectionChanged: (chosen) {
-                method = chosen;
+            ChoiceChipTip<String>(
+              options: methods.keys.toList(),
+              selectedOption: method,
+              tooltips: methods,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    method = chosen;
+                    ref.read(cleanUpMethodProvider.notifier).state = chosen;
+                  }
+                });
               },
             ),
+
+            configWidgetSpace,
 
             variableChooser(inputs, selected, ref),
 
