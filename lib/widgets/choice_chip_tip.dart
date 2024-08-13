@@ -1,6 +1,6 @@
-/// An Expanded Wrap ChoiceChip used across the app.
+/// Chip choice widget used across the app.
 //
-// Time-stamp: <Sunday 2024-08-11 19:08:28 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-10 06:35:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,46 +21,31 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 
 library;
 
 import 'package:flutter/material.dart';
-
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/utils/word_wrap.dart';
 
-class ChoiceChipTip extends StatefulWidget {
-  final Map<String, String> choices;
-  final Function(String) onSelectionChanged;
+class ChoiceChipTip<T> extends StatelessWidget {
+  final List<T> options;
+  final String Function(T) getLabel;
+  final T selectedOption;
+  final ValueChanged<T?> onSelected;
+  final Map? tooltips;
 
   const ChoiceChipTip({
     super.key,
-    required this.choices,
-    required this.onSelectionChanged,
-  });
+    required this.options,
+    required this.selectedOption,
+    required this.onSelected,
+    this.tooltips,
+    String Function(T)? getLabel,
+  }) : getLabel = getLabel ?? _defaultGetLabel;
 
-  @override
-  ChoiceChipTipState createState() => ChoiceChipTipState();
-}
-
-class ChoiceChipTipState extends State<ChoiceChipTip> {
-  String? chosen;
-
-  @override
-  void initState() {
-    super.initState();
-    // Set the default selected choice to the first item in the list.
-
-    chosen =
-        widget.choices.isNotEmpty ? widget.choices.keys.toList().first : null;
-
-    // Notify the parent widget of the default selection.
-
-    if (chosen != null) {
-      widget.onSelectionChanged(chosen!);
-    }
-  }
+  static String _defaultGetLabel(option) => option.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -68,22 +53,20 @@ class ChoiceChipTipState extends State<ChoiceChipTip> {
       child: Wrap(
         spacing: 5.0,
         runSpacing: choiceChipRowSpace,
-        children: widget.choices.keys.toList().map((choice) {
+        children: options.map((option) {
+          final label = getLabel(option);
           return ChoiceChip(
-            label: Text(choice),
-            tooltip: wordWrap(widget.choices[choice] ?? ''),
+            label: Text(label),
+            tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
             disabledColor: Colors.grey,
             selectedColor: Colors.lightBlue[200],
             backgroundColor: Colors.lightBlue[50],
             shadowColor: Colors.grey,
             pressElevation: 8.0,
             elevation: 2.0,
-            selected: chosen == choice,
+            selected: selectedOption == option,
             onSelected: (bool selected) {
-              setState(() {
-                chosen = selected ? choice : '';
-              });
-              widget.onSelectionChanged(chosen!);
+              onSelected(selected ? option : null);
             },
           );
         }).toList(),
