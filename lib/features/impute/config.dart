@@ -27,12 +27,14 @@ library;
 // TODO 20240811 gjw RE-ENGINEER AS IN CLEANUP
 
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/show_ok.dart';
@@ -51,6 +53,11 @@ class ImputeConfig extends ConsumerStatefulWidget {
 }
 
 class ImputeConfigState extends ConsumerState<ImputeConfig> {
+  List<String> numericMethods = [
+    'Mean',
+    'Median',
+    'Mode',
+  ];
   // List choice of methods for imputation.
 
   List<String> methods = [
@@ -71,20 +78,26 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
         spacing: 5.0,
         runSpacing: choiceChipRowSpace,
         children: methods.map((transform) {
+          bool disableNumericMethods = numericMethods.contains(transform) &&
+              ref.read(typesProvider)[ref.read(selectedProvider)] ==
+                  Type.categoric;
           return ChoiceChip(
             label: Text(transform),
             disabledColor: Colors.grey,
             selectedColor: Colors.lightBlue[200],
-            backgroundColor: Colors.lightBlue[50],
+            backgroundColor:
+                disableNumericMethods ? Colors.grey[300] : Colors.lightBlue[50],
             shadowColor: Colors.grey,
             pressElevation: 8.0,
             elevation: 2.0,
             selected: selectedTransform == transform,
-            onSelected: (bool selected) {
-              setState(() {
-                selectedTransform = selected ? transform : '';
-              });
-            },
+            onSelected: disableNumericMethods
+                ? null
+                : (bool selected) {
+                    setState(() {
+                      selectedTransform = selected ? transform : '';
+                    });
+                  },
           );
         }).toList(),
       ),
