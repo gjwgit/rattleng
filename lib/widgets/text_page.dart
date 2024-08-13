@@ -26,9 +26,7 @@
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -65,15 +63,19 @@ class TextPage extends StatelessWidget {
                 launchUrl(url);
               },
             ),
-            SelectableText(
-              content,
-              style: monoTextStyle,
+            // Wrap SelectableText in SingleChildScrollView for horizontal scrolling
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SelectableText(
+                content,
+                style: monoTextStyle,
+                // Ensure that text does not wrap, allowing horizontal scroll
+                textAlign: TextAlign.left,
+              ),
             ),
-            // 20240812 gjw Add a bottom spacer to leave a gap for the page
-            // navigation whenscrolling to the bottom of the page so that it can
-            // be visible in at least some part of any very busy pages.
+            // Add a bottom spacer to leave a gap for the page navigation
             textPageBottomSpace,
-            // 20240812 gjw Add a divider to mark the end of the text page.
+            // Add a divider to mark the end of the text page
             const Divider(
               thickness: 15,
               color: Color(0XFFBBDEFB),
