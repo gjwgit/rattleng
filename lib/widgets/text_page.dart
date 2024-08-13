@@ -63,19 +63,23 @@ class TextPage extends StatelessWidget {
                 launchUrl(url);
               },
             ),
-            // Wrap SelectableText in SingleChildScrollView for horizontal scrolling
+            // Wrap SelectableText in SingleChildScrollView for horizontal scrolling.
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SelectableText(
                 content,
                 style: monoTextStyle,
-                // Ensure that text does not wrap, allowing horizontal scroll
+                // Ensure that text does not wrap, allowing horizontal scroll.
+
                 textAlign: TextAlign.left,
               ),
             ),
-            // Add a bottom spacer to leave a gap for the page navigation
+            // 20240812 gjw Add a bottom spacer to leave a gap for the page
+            // navigation whenscrolling to the bottom of the page so that it can
+            // be visible in at least some part of any very busy pages.
             textPageBottomSpace,
-            // Add a divider to mark the end of the text page
+            // 20240812 gjw Add a divider to mark the end of the text page.
             const Divider(
               thickness: 15,
               color: Color(0XFFBBDEFB),
