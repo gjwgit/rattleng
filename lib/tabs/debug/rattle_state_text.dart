@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Thursday 2024-08-01 08:23:06 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-15 09:54:16 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,6 +33,7 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
@@ -76,6 +77,7 @@ class RattleStateText extends ConsumerWidget {
 
     Map<String, Role> roles = ref.watch(rolesProvider);
     Map<String, Type> types = ref.watch(typesProvider);
+    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
 
     // We will print out the roles and types so format them.
 
@@ -97,6 +99,7 @@ class RattleStateText extends ConsumerWidget {
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
+            'META DATA:   $metaData\n'
             'ROLES:       $role\n'
             'TYPES:       $type\n'
             'TARGET:      ${getTarget(ref)}\n'
