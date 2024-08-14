@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-08-14 15:45:58 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-08-14 18:35:21 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -61,6 +61,7 @@ pacman::p_load(Hmisc,
                fBasics,
                ggthemes,
                janitor,    # Cleanup: clean_names() remove_constant().
+               jsonlite,
                magrittr,   # Utilise %>% and %<>% pipeline operators.
                mice,
                randomForest,
@@ -85,24 +86,45 @@ options(width=120)
 
 set.seed(42)
 
-# A support function to move into rattle to provide the one line
-# summary of the dataset
+# A support function to move into rattle to provide the dataset
+# summary as JSON used by RattleNG as the dataset summary from which
+# RattleNG gets all of it's meta data. Note the dependency on
+# jsonlite.
 
-preview <- function(df) {
-  sapply(df, function(x) {
+meta_data <- function(df) {
+  summary_list <- lapply(names(df), function(var_name) {
+    x <- df[[var_name]]
     if (is.numeric(x)) {
-      paste0("min = ", min(x, na.rm = TRUE),
-             ", max = ", max(x, na.rm = TRUE),
-             ", mean = ", mean(x, na.rm = TRUE),
-             ", median = ", median(x, na.rm = TRUE),
-             ", variance = ", var(x, na.rm = TRUE),
-             ", unique = ", length(unique(x)))
+      list(
+        datatype = "numeric",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
+        mean = mean(x, na.rm = TRUE),
+        median = median(x, na.rm = TRUE),
+        variance = var(x, na.rm = TRUE),
+        unique = length(unique(x))
+      )
     } else if (is.factor(x) || is.character(x)) {
-      paste0("unique = ", length(unique(x)))
+      list(
+        datatype = "categoric",
+        unique = length(unique(x))
+      )
     } else {
-      "No summary available for this type"
+      list(
+        datatype = "other",
+        message = "No summary available for this type"
+      )
     }
   })
+
+  # Name the list elements by the variable names
+
+  names(summary_list) <- names(df)
+  
+  # Convert the list to a JSON string.
+  
+  json_output <- jsonlite::toJSON(summary_list, pretty = TRUE)
+  return(json_output)
 }
 
 # A palette for rattle!

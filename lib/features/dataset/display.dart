@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Saturday 2024-08-10 06:39:48 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-14 16:45:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -143,7 +143,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         // then no TARGET will be identified by default.
 
         if (getTarget(ref) == 'NULL') {
-          ref.read(rolesProvider.notifier).state[vars.last.name] = Role.target;
+          if (ref.read(typesProvider)[vars.last.name] == Type.categoric) {
+            ref.read(rolesProvider.notifier).state[vars.last.name] =
+                Role.target;
+          }
+          // TODO 20240814 gjw LAST COLUMN NUMERIC THEN TARGET IS OTHER CATEGORIC
+          //
+          // Look for the firts factor with the least number of levels.
         }
 
         // Any variables that have a unique value for every row in the dataset
