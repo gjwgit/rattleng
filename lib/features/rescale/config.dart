@@ -73,7 +73,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
   Widget rescaleChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
-    
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
