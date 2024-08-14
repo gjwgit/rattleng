@@ -36,7 +36,7 @@ import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/custom_choice_chip.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
@@ -60,9 +60,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   ];
 
   List<String> categoricMethods = [
-    'Quantiles',
-    'KMeans',
-    'Equal Width',
+    'Indicator Variable',
+    'Join Categorics',
+    'As Categoric',
+    'As Numeric',
   ];
 
   Widget recodeChooser() {
@@ -70,19 +71,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Wrap(
-          spacing: 5.0,
-          children: numericMethods.map((transform) {
-            return CustomChoiceChip(
-              label: transform,
-              selectedTransform: selectedTransform,
-              onSelected: (bool selected) {
-                setState(() {
-                  selectedTransform = selected ? transform : '';
-                });
-              },
-            );
-          }).toList(),
+        ChoiceChipTip(
+          options: numericMethods,
+          selectedOption: selectedTransform,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
         ),
         configWidgetSpace,
         NumberField(
@@ -93,19 +89,16 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
         ),
         configWidgetSpace,
-        Wrap(
-          spacing: 5.0,
-          children: categoricMethods.map((transform) {
-            return CustomChoiceChip(
-              label: transform,
-              selectedTransform: selectedTransform,
-              onSelected: (bool selected) {
-                setState(() {
-                  selectedTransform = selected ? transform : '';
-                });
-              },
-            );
-          }).toList(),
+        Expanded(
+          child: ChoiceChipTip(
+            options: categoricMethods,
+            selectedOption: selectedTransform,
+            onSelected: (String? selected) {
+              setState(() {
+                selectedTransform = selected ?? '';
+              });
+            },
+          ),
         ),
       ],
     );
