@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Thursday 2024-08-01 20:36:24 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-14 19:37:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -41,6 +41,7 @@ import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/vars/roles.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -79,6 +80,7 @@ void reset(BuildContext context, WidgetRef ref) {
   ref.invalidate(rolesProvider);
   ref.invalidate(typesProvider);
   ref.invalidate(scriptProvider);
+  ref.invalidate(typesProvider);
 
   // MODEL TAB
 
