@@ -257,7 +257,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
             configWidgetSpace,
 
-            variableChooser(inputs, selected, ref),
+            variableChooser('Variable',inputs, selected, ref, selectedProvider),
 
             configWidgetSpace,
           ],
