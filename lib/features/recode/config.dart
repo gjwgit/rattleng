@@ -100,6 +100,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   Widget recodeChooser() {
     final TextEditingController valCtrl = TextEditingController();
+    valCtrl.text = ref.read(numberProvider.notifier).state.toString();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
