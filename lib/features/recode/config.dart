@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/selected.dart';
@@ -75,10 +76,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     switch (selectedTransform) {
       case 'Quantiles':
         rSource(context, ref, 'transform_recode_quantile');
-      case 'Scale [0-1]':
-        rSource(context, ref, 'transform_rescale_scale01_numeric');
-      case '-Median/MAD':
-        rSource(context, ref, 'transform_rescale_medmad_numeric');
+      case 'KMeans':
+        rSource(context, ref, 'transform_recode_kmeans');
+      case 'Equal Width':
+        rSource(context, ref, 'transform_recode_equal_width');
       case 'Natural Log':
         rSource(context, ref, 'transform_rescale_natlog_numeric');
       case 'Log 10':
@@ -160,6 +161,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             ActivityButton(
               onPressed: () {
                 // showUnderConstruction(context);
+                ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
               },
               child: const Text("Recode Variable's Values"),
