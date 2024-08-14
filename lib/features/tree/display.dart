@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
@@ -65,11 +65,9 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     // DEFAULT TREE TEXT
     ////////////////////////////////////////////////////////////////////////
 
-    if (treeAlgorithm == AlgorithmType.traditional) {
-      content = rExtractTree(stdout);
-    } else {
-      content = rExtract(stdout, 'print(model_ctree)');
-    }
+    treeAlgorithm == AlgorithmType.traditional
+        ? content = rExtractTree(stdout)
+        : content = rExtract(stdout, 'print(model_ctree)');
 
     if (content.isNotEmpty) {
       pages.add(
@@ -103,11 +101,9 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     String image = '';
 
-    if (treeAlgorithm == AlgorithmType.traditional) {
-      image = '$tempDir/model_tree_rpart.svg';
-    } else {
-      image = '$tempDir/model_tree_ctree.svg';
-    }
+    treeAlgorithm == AlgorithmType.traditional
+        ? image = '$tempDir/model_tree_rpart.svg'
+        : image = '$tempDir/model_tree_ctree.svg';
 
     pages.add(
       ImagePage(
