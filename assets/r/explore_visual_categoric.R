@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-28 05:58:39 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-08-13 08:51:44 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,7 +44,7 @@ if(!require(ggplot2)) install.packages("ggplot2")
 svg("TEMPDIR/explore_visual_bars.svg", width=10)
 
 ds %>%
-  ggplot(aes(x = wind_gust_dir, fill = rain_tomorrow)) +
+  ggplot(aes(x = SELECTED_VAR, fill = GROUP_BY_VAR)) +
   geom_bar(position = "dodge") +
   labs(title = "Distribution of SELECTED_VAR by GROUP_BY_VAR",
        sub = "TIMESTAMP",

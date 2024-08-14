@@ -31,7 +31,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/selected.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -49,9 +48,6 @@ class VisualDisplay extends ConsumerStatefulWidget {
 class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   @override
   Widget build(BuildContext context) {
-    // This is here to add the page when stdout changes / after image are built.
-    String stdout = ref.watch(stdoutProvider);
-
     List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
 
     // List<String> lines = [];

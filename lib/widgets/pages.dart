@@ -26,7 +26,6 @@
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -43,7 +42,6 @@ class Pages extends StatefulWidget {
 }
 
 class PagesState extends State<Pages> with TickerProviderStateMixin {
-  // in order to use the 'this' as vsync below
   late PageController _pageController;
   late TabController _tabController;
   int _currentPage = 0;
@@ -51,19 +49,21 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    // By default, show the result page after build.
-    // TODO yyx 20240627 not run after the second build.
-    // _pageController = PageController(initialPage: widget.children.length - 1);
-    // if (widget.children.length == 2) {
-    //   _currentPage = 1;
-    // }
     _pageController = PageController(initialPage: _currentPage);
     _tabController = TabController(length: widget.children.length, vsync: this);
-    debugPrint('PAGES: pageController: length: ${widget.children.length}');
+
+    // Listen to the page changes and update the TabController accordingly
+    _pageController.addListener(_syncTabControllerWithPageView);
   }
 
-  // We need to initialise the tab controller
-  // because the number of pages in it is not changed after the number of pages increase.
+  @override
+  void dispose() {
+    _pageController.removeListener(_syncTabControllerWithPageView);
+    _pageController.dispose();
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   void didUpdateWidget(covariant Pages oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -73,15 +73,20 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   }
 
   void _initialiseControllers() {
-    // _pageController = PageController(initialPage: 0);
     _tabController = TabController(length: widget.children.length, vsync: this);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-    _tabController.dispose();
+  void _syncTabControllerWithPageView() {
+    // Calculate the new page index
+    final newPageIndex = _pageController.page?.round() ?? _currentPage;
+
+    // Update only if the page index has changed
+    if (newPageIndex != _currentPage) {
+      setState(() {
+        _currentPage = newPageIndex;
+        _tabController.index = _currentPage;
+      });
+    }
   }
 
   @override
@@ -89,13 +94,13 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        // I didn't use expanded here because we assume expanded is used at each tab file.
         PageView(
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {
               _currentPage = index;
             });
+            _tabController.animateTo(index);
           },
           children: widget.children,
         ),

@@ -1,6 +1,6 @@
 /// Word wrap a string.
 //
-// Time-stamp: <Thursday 2024-07-25 14:29:47 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-11 14:55:36 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -73,9 +73,11 @@ String wordWrap(
       )
       .toList();
 
-  // Combine the paragraphs into one string with empty lines between them
+  // Combine the paragraphs into one string with empty lines between
+  // them. 20240811 gjw added trim() to remove any white space at the end of the
+  // string. Will this affect anythig else?
 
-  text = para.join('\n\n');
+  text = para.join('\n\n').trim();
 
   // text = result
   //     .replaceAllMapped(pattern, (match) => '${match.group(0)!}\n')
