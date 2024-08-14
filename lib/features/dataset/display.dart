@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Wednesday 2024-08-14 16:45:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-15 09:50:25 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -44,6 +44,7 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
+import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -106,6 +107,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
 
     if (path == weatherDemoFile || path.endsWith('.csv')) {
+      // A new dataset has been loaded so we update the information here.
+
+      updateMetaData(ref);
+
       Map<String, Role> currentRoles = ref.read(rolesProvider);
 
       // Extract variable information from the R console.
