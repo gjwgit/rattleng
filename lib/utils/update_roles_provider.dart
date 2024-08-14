@@ -49,7 +49,7 @@ void updateVariablesProvider(WidgetRef ref) {
         ref.read(rolesProvider.notifier).state[column.name.substring(4)] =
             Role.ignoreAfterTransformed;
       } else {
-        debugPrint('ERROR: uninitialised new variables: ${column.name}!');
+        debugPrint('ERROR: unidentified variables: ${column.name}!');
       }
     }
     // update types
