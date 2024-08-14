@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Sunday 2024-07-21 05:57:18 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-15 05:33:36 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+
 library;
 
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/update_meta_data.dart';
 
 /// Load the specified dataset using the appropriate R script.
 ///
@@ -94,6 +96,10 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
   // moving to the asset load with async it actually gets executed before the
   // `dataset_prep` and thus results in vars not being found at this time and
   // target becomes `found` as in `ds not found`.
+  //
+  // 20240814 gjw the asyn asset load is no longer required as the R scripts are
+  // loaded on startup so we should be able to do rExecute and get the result
+  // from rExtract now.
 
   // rExecute(ref, 'names(ds)');
 
