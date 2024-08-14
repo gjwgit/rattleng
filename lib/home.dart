@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2024-08-14 16:20:39 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-15 06:49:19 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -52,6 +52,7 @@ import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
+import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -262,7 +263,21 @@ Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
               color: Colors.blue,
             ),
             onPressed: () {
-              rExecute(ref, 'view(ds)\n');
+              String path = ref.read(pathProvider);
+              if (path.isEmpty) {
+                showOk(
+                  context: context,
+                  title: 'No Dataset Loaded',
+                  content: '''
+
+                Please choose a dataset to load from the **Dataset** tab. There is
+                not much we can do until we have loaded a dataset.
+
+                ''',
+                );
+              } else {
+                rExecute(ref, 'view(ds)\n');
+              }
             },
             tooltip: 'Press here to view the current dataset.',
           ),
