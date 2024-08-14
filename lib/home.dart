@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-08-10 22:05:36 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-08-14 16:20:39 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -177,7 +177,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
     _tabController.addListener(() {
       // Check if we are leaving the tab, not entering it.
 
-      debugPrint('LEAVING TAB ${_tabController.previousIndex}');
       if (!_tabController.indexIsChanging) {
         // Index 0 is the DATABASE tab.
         // Index 2 is the TRANSFORM tab.

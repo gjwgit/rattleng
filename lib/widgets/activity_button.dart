@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for RattleNG
 //
-// Time-stamp: <Sunday 2024-07-21 21:01:29 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-14 16:22:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -53,7 +53,7 @@ class ActivityButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint('ActivityButton build');
+    debugPrint('BUILDING:\t\tActivityButton');
 
     return ElevatedButton(
       onPressed: () {
