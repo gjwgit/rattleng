@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.2.45+87
+version: 6.2.53+90
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -15,7 +15,6 @@ environment:
 # `flutter pub outdated`
 
 dependencies:
-
   flutter:
     sdk: flutter
 
@@ -53,12 +52,15 @@ dependencies:
   url_launcher: ^6.3.0
   window_manager: ^0.3.5
   xterm: ^4.0.0
-  
-  
-dev_dependencies:
 
+dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
   flutter_test:
+    sdk: flutter
+
+  integration_test:
+    sdk: flutter
+  flutter_driver:
     sdk: flutter
 
   # integration_test:
@@ -99,7 +101,6 @@ dev_dependencies:
 # The following section is specific to Flutter.
 
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

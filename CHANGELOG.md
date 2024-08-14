@@ -8,6 +8,19 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Add horizontal paging to text pages [6.2.53 20240814 kev]
++ Bug fix anvigator dots not updating [6.2.53 20240814 kev]
++ Support console copy and paste [6.2.53 20240814 zy]
++ Review and fine tune  [6.2.52 20240814 gjw]
++ Only num vars for rescale. Disable numeric imputes for categorics [6.2.52 20240814 yyx]
++ Merge choice chips. [6.2.52 20240814 zy]
++ Review and code cleanup [6.2.51 20240813 zy]
++ Extra string cleaning for Windows 10 [6.2.50 20240812 gjw]
++ Doc updates. Modernise R code. Trial await CONSOLE startup [6.2.49 20240812 gjw]
++ Bug fixes [6.2.48 20240811 gjw]
++ Re-engineer and rewrite CLEANUP [6.2.47 20240811 gjw]
++ Fix Windows version display. [6.2.46 20240810 bz]
++ Add CLEANUP. [6.2.46 20240810 yyx]
 + Implement image popout [6.2.45 20240810 gjw]
 + Move main.R conditional for Windows only [6.2.44 20240810 gjw] 
 + Move main.R into dataset_prep.R to fix Windows loading [6.2.43 20240809 gjw]

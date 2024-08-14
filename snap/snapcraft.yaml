@@ -7,7 +7,7 @@
 # For the linter errors see https://snapcraft.io/docs/linters-library
 
 name: rattle
-version: 6.2.40
+version: 6.2.46
 summary: Rattle Next Generation Data Science
 description: Rattle is the data scientists toolkit.
 

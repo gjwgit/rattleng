@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Friday 2024-08-09 09:14:49 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-08-12 15:45:31 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/providers/pty.dart';
 //import 'package:rattle/providers/stdout.dart';
@@ -74,6 +75,8 @@ void rStart(BuildContext context, WidgetRef ref) async {
 
   const asset = 'assets/r/main.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);
+  PackageInfo info = await PackageInfo.fromPlatform();
+  code = code.replaceAll('VERSION', info.version);
 
   // 20240615 gjw Previously the code used File() to access the asset file which
   // worked fine in development but failed on a deployment. Thus I moved to the
@@ -95,7 +98,11 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // modification by encapsulating it within a `Future(() {...})`.  This will
   // perform the update after the widget tree is done building. 20231104 gjw
 
-  Future(() {
+  // 20240812 gjw Try using an await here so we wait for the console to
+  // startup. Seems to have a slight delay on Linux with a all black
+  // screen. Let's see what it does on Windows.
+
+  await Future(() {
     // Add the code to the script.
 
     updateScript(ref, code);

@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Saturday 2024-08-10 09:16:58 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-11 11:39:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,6 +30,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -49,7 +50,6 @@ import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
@@ -81,7 +81,6 @@ import 'package:rattle/utils/update_script.dart';
 void rSource(BuildContext context, WidgetRef ref, String script) async {
   // Initialise the state variables used here.
 
-  String stdout = ref.read(stdoutProvider);
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
@@ -123,13 +122,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Populate the VERSION.
 
-  // PackageInfo info = await PackageInfo.fromPlatform();
-  // code = code.replaceAll('VERSION', info.version);
-  //
-  // TODO 20231102 gjw THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE
-  // VERSION FOR NOW.
+  PackageInfo info = await PackageInfo.fromPlatform();
 
-  code = code.replaceAll('VERSION', '0.0.0');
+  code = code.replaceAll('VERSION', info.version);
 
   code = code.replaceAll('FILENAME', path);
 
@@ -141,7 +136,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   ////////////////////////////////////////////////////////////////////////
   // CLEANUP
   ////////////////////////////////////////////////////////////////////////
-  // TODO yyx 20240809 move this computation to elsewhere if this function gets too slow.
+
+  // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
+
   List<String> ignoredVars = getIgnored(ref);
   String ignoredVarsString = toRVector(ignoredVars);
   code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
