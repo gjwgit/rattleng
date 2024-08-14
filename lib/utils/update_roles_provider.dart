@@ -14,13 +14,19 @@ Set<String> transformPrefix = {
   'RLG',
   'R10',
   'RRK',
-  'RIN',
+  'RIN', // number at suffix
 // Impute
   'IZR',
   'IMN',
   'IMD',
   'IMO',
   'IMP',
+// Recode
+  'BK', // number at suffix
+  'BQ', // number at suffix
+  'BE', // number at suffix
+  'TJN',
+  'TIN',
 };
 
 bool isTransformedVar(String name) {
