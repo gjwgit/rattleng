@@ -51,6 +51,8 @@ class ImputeConfig extends ConsumerStatefulWidget {
 }
 
 class ImputeConfigState extends ConsumerState<ImputeConfig> {
+  String selected = 'NULL';
+
   // methods enable only for numeric variables
   List<String> numericMethods = [
     'Mean',
@@ -96,9 +98,14 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
         spacing: 5.0,
         runSpacing: choiceChipRowSpace,
         children: methods.map((transform) {
-          bool disableNumericMethods = numericMethods.contains(transform) &&
-              ref.read(typesProvider)[ref.read(selectedProvider)] ==
-                  Type.categoric;
+          bool disableNumericMethods;
+          if (selected != 'NULL') {
+            disableNumericMethods = numericMethods.contains(transform) &&
+                ref.read(typesProvider)[selected] == Type.categoric;
+          } else {
+            disableNumericMethods = false;
+            debugPrint('Error: selected is NULL!!!');
+          }
 
           return ChoiceChip(
             label: Text(transform),
@@ -200,9 +207,14 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
 
-    String selected = ref.watch(selectedProvider);
+    selected = ref.watch(selectedProvider);
     if (selected == 'NULL' && inputs.isNotEmpty) {
-      selected = inputs.first;
+      setState(() {
+        selected = inputs.first;
+        debugPrint('selected changed to $selected');
+      });
+
+      // ref.read(selectedProvider.notifier).state = selected;
     }
 
     // Retrieve the current imputation constant and use that as the initial

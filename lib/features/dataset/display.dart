@@ -117,7 +117,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
       if (currentRoles.isEmpty && vars.isNotEmpty) {
         // Default is INPUT unless the variable name begins with `risk_`.
-
+        debugPrint('changing typesProvider!!!');
         for (var column in vars) {
           ref.read(rolesProvider.notifier).state[column.name] = Role.input;
           ref.read(typesProvider.notifier).state[column.name] =
