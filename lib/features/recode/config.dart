@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
@@ -65,6 +66,36 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     'As Categoric',
     'As Numeric',
   ];
+
+  // BUILD button action.
+
+  void buildAction() {
+    // Run the R scripts.
+
+    switch (selectedTransform) {
+      case 'Quantiles':
+        rSource(context, ref, 'transform_recode_quantile');
+      case 'Scale [0-1]':
+        rSource(context, ref, 'transform_rescale_scale01_numeric');
+      case '-Median/MAD':
+        rSource(context, ref, 'transform_rescale_medmad_numeric');
+      case 'Natural Log':
+        rSource(context, ref, 'transform_rescale_natlog_numeric');
+      case 'Log 10':
+        rSource(context, ref, 'transform_rescale_log10_numeric');
+      case 'Rank':
+        rSource(context, ref, 'transform_rescale_rank');
+      case 'Interval':
+        // debugPrint('run interval');
+        rSource(context, ref, 'transform_rescale_interval');
+      default:
+        showUnderConstruction(context);
+    }
+    // Notice that rSource is asynchronous so this glimpse is oftwn happening
+    // before the above transformation.
+    //
+    // rSource(context, ref, 'glimpse');
+  }
 
   Widget recodeChooser() {
     final TextEditingController valCtrl = TextEditingController();
@@ -128,7 +159,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
             ActivityButton(
               onPressed: () {
-                showUnderConstruction(context);
+                // showUnderConstruction(context);
+                buildAction();
               },
               child: const Text("Recode Variable's Values"),
             ),

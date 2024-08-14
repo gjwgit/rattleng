@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -230,6 +231,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   });
 
   code = code.replaceAll('INTERVAL', interval.toString());
+  code = code.replaceAll('NUMBER', ref.read(numberProvider).toString());
   code = code.replaceAll('SELECTED_VAR', selected);
 
   code = code.replaceAll('SELECTED_2_VAR', selected2);
