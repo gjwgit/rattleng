@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-08-14 13:18:44 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-08-14 15:45:58 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -75,12 +75,10 @@ pacman::p_load(Hmisc,
                wordcloud)
 
 # Set the width wider than the default 80. Experimentally, on Linux,
-# MacOS, Windows, seems like 110 works, though it depends on font size
-# etc.
+# MacOS, Windows, seems like 120 works, though it depends on font size
+# etc. Also we now 20240814 have horizontal scrolling on the TextPage.
 
-# TODO 20240812 gjw TextPage NEEDS TO BE HORIZONTALLY SCROLLABLE.
-
-options(width=110)
+options(width=120)
 
 # A pre-defined value for the random seed ensures that results are
 # repeatable.
