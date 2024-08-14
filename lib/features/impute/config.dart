@@ -214,7 +214,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               child: const Text('Impute Missing Values'),
             ),
             configWidgetSpace,
-            variableChooser(inputs, selected, ref),
+            variableChooser('Variable',inputs, selected, ref, selectedProvider),
             configWidgetSpace,
             transformChooser(),
             configWidgetSpace,

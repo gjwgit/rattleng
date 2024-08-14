@@ -32,6 +32,7 @@ import 'package:provider/provider.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
@@ -83,7 +84,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       case 'Indicator Variable':
         rSource(context, ref, 'transform_recode_indicator_variable');
       case 'Join Categorics':
-        rSource(context, ref, 'transform_rescale_log10_numeric');
+        rSource(context, ref, 'transform_recode_join_categoric');
       case 'As Categoric':
         rSource(context, ref, 'transform_rescale_log10_numeric');
       case 'As Numeric':
@@ -143,6 +144,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     if (selected == 'NULL' && inputs.isNotEmpty) {
       selected = inputs.first;
     }
+    String selected2 = ref.watch(selected2Provider);
+    if (selected2 == 'NULL' && inputs.isNotEmpty) {
+      selected2 = inputs[1];
+    }
 
     return Column(
       children: [
@@ -162,12 +167,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               onPressed: () {
                 // showUnderConstruction(context);
                 ref.read(selectedProvider.notifier).state = selected;
+                ref.read(selected2Provider.notifier).state = selected2;
                 buildAction();
               },
               child: const Text("Recode Variable's Values"),
             ),
             configWidgetSpace,
-            variableChooser(inputs, selected, ref),
+            variableChooser('Variable', inputs, selected, ref, selectedProvider),
+            variableChooser('Second Variable', inputs, selected2, ref, selected2Provider),
           ],
         ),
         recodeChooser(),
