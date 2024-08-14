@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/summary_page_count.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_summary.dart';
 import 'package:rattle/widgets/pages.dart';
@@ -302,6 +303,11 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
         ),
       );
     }
+
+    // Schedule the state update after the widget has been built.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(summaryPageCountProvider.notifier).state = pages.length;
+    });
 
     ////////////////////////////////////////////////////////////////////////
 

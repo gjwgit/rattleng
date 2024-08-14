@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/summary_page_count.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
@@ -45,6 +46,13 @@ class SummaryConfig extends ConsumerStatefulWidget {
 class SummaryConfigState extends ConsumerState<SummaryConfig> {
   @override
   Widget build(BuildContext context) {
+    ref.listen<int>(summaryPageCountProvider, (previous, current) {
+      // Close the dialog if the page count reaches or exceeds 6.
+      if (current >= 6) {
+        Navigator.of(context).pop(); // Close the dialog.
+      }
+    });
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -61,6 +69,21 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
             ActivityButton(
               onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return const AlertDialog(
+                      content: Row(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(width: 20),
+                          Text('Running R script...'),
+                        ],
+                      ),
+                    );
+                  },
+                );
                 rSource(context, ref, 'explore_summary');
               },
               child: const Text('Generate Dataset Summary'),
