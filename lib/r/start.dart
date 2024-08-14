@@ -31,6 +31,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/providers/pty.dart';
 //import 'package:rattle/providers/stdout.dart';
@@ -74,6 +75,8 @@ void rStart(BuildContext context, WidgetRef ref) async {
 
   const asset = 'assets/r/main.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);
+  PackageInfo info = await PackageInfo.fromPlatform();
+  code = code.replaceAll('VERSION', info.version);
 
   // 20240615 gjw Previously the code used File() to access the asset file which
   // worked fine in development but failed on a deployment. Thus I moved to the

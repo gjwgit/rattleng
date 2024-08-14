@@ -30,6 +30,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -121,13 +122,9 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Populate the VERSION.
 
-  // PackageInfo info = await PackageInfo.fromPlatform();
-  // code = code.replaceAll('VERSION', info.version);
-  //
-  // TODO 20231102 gjw THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE
-  // VERSION FOR NOW.
+  PackageInfo info = await PackageInfo.fromPlatform();
 
-  code = code.replaceAll('VERSION', '0.0.0');
+  code = code.replaceAll('VERSION', info.version);
 
   code = code.replaceAll('FILENAME', path);
 
