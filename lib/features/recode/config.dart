@@ -37,6 +37,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
@@ -139,6 +140,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   @override
   Widget build(BuildContext context) {
+    // updateVariablesProvider(ref);
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
     String selected = ref.watch(selectedProvider);
     if (selected == 'NULL' && inputs.isNotEmpty) {
