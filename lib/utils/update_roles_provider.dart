@@ -1,11 +1,12 @@
-/// to update variables state in flutter based on its state in R
-///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
-///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
+/// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Thursday 2024-08-08 13:44:52 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-15 07:17:53 +1000 Graham Williams>
+//
+/// Copyright (C) 2024, Togaware Pty Ltd
+///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,12 +21,16 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Yixiang Yin, Graham Williams
 
 library;
 
+// Group imports by dart, flutter, packages, local. Then alphabetically.
+
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
