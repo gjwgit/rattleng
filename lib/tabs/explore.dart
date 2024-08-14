@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-07-31 08:38:31 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-14 16:23:16 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -106,7 +106,7 @@ class _ExploreTabsState extends ConsumerState<ExploreTabs>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('EXPLORE: Rebuild.');
+    debugPrint('REBUILDING\t\tExploreTab.');
 
     return Column(
       children: [
