@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-08-11 11:39:00 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-08-14 11:46:11 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -63,6 +63,7 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/get_missing.dart';
+import 'package:rattle/utils/script_assets.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -77,7 +78,11 @@ import 'package:rattle/utils/update_script.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-void rSource(BuildContext context, WidgetRef ref, String script) async {
+void rSource(BuildContext context, WidgetRef ref, String script) {
+  // A useful trace of an R script being run.
+
+  debugPrint("R SOURCE:\t\t'$script.R'");
+
   // Initialise the state variables used here.
 
   bool checkbox = ref.read(checkboxProvider);
@@ -109,10 +114,34 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // First obtain the text from the script.
 
-  debugPrint("R SOURCE:\t\t'$script.R'");
+  // TODO 20240814 gjw RE-DESIGN THE MANAGING OF THE R SCRIPTS AS ASSETS
+  //
+  // In Flutter, DefaultAssetBundle works with asynchronous assets and so it
+  // returns a Future. Loading large assets can take time, and thus the idea of
+  // asynchronous loading prevents blocking the UI.
+  //
+  // However I want to access and then run the R scripts synchronously. It seems
+  // the usual approach is to preload the assets and cache them.
+  //
+  //  I have an assets folder called assets/r and I want to load each of these
+  //  assets as strings at startup them, all files in the folder of the pattern
+  //  *.R. I then want to get the string corresponding to a particular asset by
+  //  reference to its filename sans the .R How to do that and how to know when
+  //  it has finished loading them all.
+  //
+  // Need to load all .R files from assets/r at the startup and store the
+  // contents in a map with the filenames (without the .R extension) as the
+  // keys, and then access these strings later. We will use a combination of
+  // asynchronous operations to load the files and then expose a synchronous
+  // method to retrieve the content.
+  //
+  //
+  //
+  // 4. Access the Preloaded Assets
+  //
 
-  String asset = 'assets/r/$script.R';
-  String code = await DefaultAssetBundle.of(context).loadString(asset);
+  String code = ScriptAssets.getAsset(script);
+
   // var code = File('assets/r/$script.R').readAsStringSync();
 
   // Process template variables.

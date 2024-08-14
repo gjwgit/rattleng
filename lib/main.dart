@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Friday 2024-08-02 12:53:59 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-08-14 11:50:35 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -34,8 +34,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
+import 'package:rattle/constants/script_files.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/is_desktop.dart';
+import 'package:rattle/utils/script_assets.dart';
 
 // Check if this is a production (--release) version.
 
@@ -92,6 +94,15 @@ void main() async {
       await windowManager.setAlwaysOnTop(false);
     });
   }
+
+  // Initialize the Asset Loader at Startup
+  //
+  // This loads all of the R scripts into memory at startup. Flutter can not
+  // list the assets at runtime so we load them here ready to run as required.
+  // Hopefully this is not too long and the scripts themselves are quite short.
+
+  // WidgetsFlutterBinding.ensureInitialized();
+  await ScriptAssets.preloadAssets(scriptFiles);
 
   // Initialise a global temporary directory where generated files, such as
   // charts, are saved and can be removed on exit from rattleng or on loading a
