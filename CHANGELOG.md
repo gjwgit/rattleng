@@ -6,10 +6,12 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.3.n series are heading
 toward a 6.3 release.
 
+## 6.4 FUTURE Using JSON to communicate meta data
+
 ## 6.3 FUTURE Wrangle tab implementation
 
 + Add horizontal paging to text pages [6.2.53 20240814 kev]
-+ Bug fix anvigator dots not updating [6.2.53 20240814 kev]
++ Bug fix navigator dots not updating [6.2.53 20240814 kev]
 + Support console copy and paste [6.2.53 20240814 zy]
 + Review and fine tune  [6.2.52 20240814 gjw]
 + Only num vars for rescale. Disable numeric imputes for categorics [6.2.52 20240814 yyx]
