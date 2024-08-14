@@ -80,15 +80,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         rSource(context, ref, 'transform_recode_kmeans');
       case 'Equal Width':
         rSource(context, ref, 'transform_recode_equal_width');
-      case 'Natural Log':
-        rSource(context, ref, 'transform_rescale_natlog_numeric');
-      case 'Log 10':
+      case 'Indicator Variable':
+        rSource(context, ref, 'transform_recode_indicator_variable');
+      case 'Join Categorics':
         rSource(context, ref, 'transform_rescale_log10_numeric');
-      case 'Rank':
+      case 'As Categoric':
+        rSource(context, ref, 'transform_rescale_log10_numeric');
+      case 'As Numeric':
         rSource(context, ref, 'transform_rescale_rank');
-      case 'Interval':
-        // debugPrint('run interval');
-        rSource(context, ref, 'transform_rescale_interval');
       default:
         showUnderConstruction(context);
     }
