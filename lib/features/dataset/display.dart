@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Thursday 2024-08-15 09:50:25 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-15 12:31:00 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -48,6 +48,7 @@ import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
+import 'package:rattle/providers/meta_data.dart';
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
@@ -69,6 +70,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget build(BuildContext context) {
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
+
+    // FIRST PAGE: Welcome Message
 
     List<Widget> pages = [showMarkdownFile(welcomeMsgFile, context)];
 
@@ -109,6 +112,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     if (path == weatherDemoFile || path.endsWith('.csv')) {
       // A new dataset has been loaded so we update the information here.
 
+      // 20240815 gjw Update the metaData provider here if needed.
+
       updateMetaData(ref);
 
       Map<String, Role> currentRoles = ref.read(rolesProvider);
@@ -122,7 +127,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
       if (currentRoles.isEmpty && vars.isNotEmpty) {
         // Default is INPUT unless the variable name begins with `risk_`.
-        debugPrint('changing typesProvider!!!');
+        debugPrint('DATASET DISPLAY => changing types provider.');
         for (var column in vars) {
           ref.read(rolesProvider.notifier).state[column.name] = Role.input;
           ref.read(typesProvider.notifier).state[column.name] =
