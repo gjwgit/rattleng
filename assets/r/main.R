@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-08-14 18:35:21 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-15 14:53:37 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -123,7 +123,7 @@ meta_data <- function(df) {
   
   # Convert the list to a JSON string.
   
-  json_output <- jsonlite::toJSON(summary_list, pretty = TRUE)
+  json_output <- jsonlite::toJSON(summary_list, pretty = TRUE, auto_unbox = TRUE)
   return(json_output)
 }
 
