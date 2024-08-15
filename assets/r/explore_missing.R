@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-15 20:19:53 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 05:47:58 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -63,7 +63,7 @@ VIM::aggr(ds,
      cex.axis = .6,
      gap      = 3,
      ylab     = c("Proportion of Values Missing", "Proportions of Combinations of Missing Values"),
-     sub      = paste("TIMESTAMP", user_name))
+     sub      = paste("TIMESTAMP", username))
 dev.off()
 
 ## NANIAR
@@ -71,7 +71,8 @@ dev.off()
 # Visualize a heatmap of missing values
 
 svg("TEMPDIR/explore_missing_naniar_vismiss.svg", width=16)
-naniar::vis_miss(ds)
+ds %>%
+  naniar::vis_miss()
 dev.off()
 
 # 20240815 gjw Visualize the proportion of missing values in each

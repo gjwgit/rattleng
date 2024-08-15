@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 14:58:29 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 05:41:49 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,11 +44,6 @@ library(rpart)        # ML: decision tree rpart().
 mtype <- "rpart"
 mdesc <- "Tree"
 
-user_name <- Sys.getenv("USER")  # On Linux/macOS
-if (user_name == "") {
-  user_name <- Sys.getenv("USERNAME")  # On Windows
-}
-
 # Determine what type of model to build, based on the number of values
 # of the target variable.
 
@@ -78,7 +73,7 @@ cat("\n")
 # We use the rpart.plot package.
 
 svg("TEMPDIR/model_tree_rpart.svg")
-fancyRpartPlot(model_rpart, main="Decision Tree weather.csv $ TARGET_VAR", sub=paste("TIMESTAMP", user_name))
+fancyRpartPlot(model_rpart, main="Decision Tree weather.csv $ TARGET_VAR", sub=paste("TIMESTAMP", username))
 dev.off()
 
 # List the rules from the tree using a Rattle support function.

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-15 20:23:51 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 05:39:56 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -106,6 +106,14 @@ preview <- function(df) {
     }
   })
 }
+
+# Username
+
+username <- Sys.getenv("USER")  # On Linux/macOS
+if (username == "") {
+  username <- Sys.getenv("USERNAME")  # On Windows
+}
+
 
 # A palette for rattle!
 

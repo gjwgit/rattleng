@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-01 11:40:55 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 05:41:06 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -38,12 +38,6 @@
 # BOX PLOT
 ########################################################################
 
-
-user_name <- Sys.getenv("USER")  # On Linux/macOS
-if (user_name == "") {
-  user_name <- Sys.getenv("USERNAME")  # On Windows
-}
-
 # Display box plot for the selected variable.
 
 svg("TEMPDIR/explore_visual_boxplot.svg", width=10)
@@ -55,7 +49,7 @@ ds %>%
   ggplot2::stat_summary(ggplot2::aes(x="All"), fun=mean, geom="point", shape=8) +
   ggplot2::geom_boxplot(ggplot2::aes(x=GROUP_BY_VAR, fill=GROUP_BY_VAR), notch=TRUE) +
   ggplot2::stat_summary(ggplot2::aes(x=GROUP_BY_VAR), fun=mean, geom="point", shape=8) +
-  ggplot2::xlab(paste("GROUP_BY_VAR\n\n", paste("TIMESTAMP", user_name), sep="")) +
+  ggplot2::xlab(paste("GROUP_BY_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::theme(legend.position="none") +
   theme_rattle()
@@ -74,7 +68,7 @@ ds %>%
   ggplot2::ggplot(ggplot2::aes(x=SELECTED_VAR)) +
   ggplot2::geom_density(lty=3) +
   ggplot2::geom_density(ggplot2::aes(fill=GROUP_BY_VAR, colour=GROUP_BY_VAR), alpha=0.55) +
-  ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", user_name), sep="")) +
+  ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::labs(fill="GROUP_BY_VAR", y="Density") +
   theme_rattle()
@@ -95,7 +89,7 @@ ds %>%
   ggplot2::stat_ecdf(aes(x = SELECTED_VAR), geom = "step", color = "black", size = 1) +
   # Group ECDFs
   ggplot2::stat_ecdf(aes(x = SELECTED_VAR, color = GROUP_BY_VAR), geom = "step") +
-  ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", user_name), sep="")) +
+  ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Empirical Cumulative Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::labs(fill="GROUP_BY_VAR", y=expression("ECDF - Proportion <= x")) +
   theme_rattle()
@@ -125,7 +119,7 @@ svg("TEMPDIR/explore_visual_benford.svg", width=10)
 
 tds %>% plotDigitFreq() +
   ggtitle("Digital Analysis of First Digit of SELECTED_VAR by GROUP_BY_VAR") +
-  ggplot2::xlab(paste("Digits\n\n", paste("TIMESTAMP", user_name), sep="")) +
+  ggplot2::xlab(paste("Digits\n\n", paste("TIMESTAMP", username), sep="")) +
   theme_rattle()
 
 dev.off()
