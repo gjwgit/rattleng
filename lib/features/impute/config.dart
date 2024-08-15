@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
@@ -38,7 +38,6 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
-import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// This is a StatefulWidget to pass the REF across to the rSource as well as to
@@ -52,10 +51,12 @@ class ImputeConfig extends ConsumerStatefulWidget {
 }
 
 class ImputeConfigState extends ConsumerState<ImputeConfig> {
+  String selected = 'NULL';
+
+  // methods enable only for numeric variables
   List<String> numericMethods = [
     'Mean',
     'Median',
-    'Mode',
   ];
   // List choice of methods for imputation.
 
@@ -69,6 +70,26 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   String selectedTransform = 'Zero/Missing';
 
+  Widget variableChooser(List<String> inputs, String selected, WidgetRef ref) {
+    return DropdownMenu(
+      label: const Text('Variable'),
+      width: 200,
+      initialSelection: selected,
+      dropdownMenuEntries: inputs.map((s) {
+        return DropdownMenuEntry(value: s, label: s);
+      }).toList(),
+      // On selection as well as recording what was selected rebuild the
+      // visualisations.
+      onSelected: (String? value) {
+        ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
+        selectedTransform = 'Zero/Missing';
+        // We don't buildAction() here since the variable choice might
+        // be followed by a transform choice and we don;t want to shoot
+        // off building lots of new variables unnecesarily.
+      },
+    );
+  }
+
   // TODO 20240810 gjw USE CHOICE CHIP TIP
 
   Widget transformChooser() {
@@ -77,9 +98,14 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
         spacing: 5.0,
         runSpacing: choiceChipRowSpace,
         children: methods.map((transform) {
-          bool disableNumericMethods = numericMethods.contains(transform) &&
-              ref.read(typesProvider)[ref.read(selectedProvider)] ==
-                  Type.categoric;
+          bool disableNumericMethods;
+          if (selected != 'NULL') {
+            disableNumericMethods = numericMethods.contains(transform) &&
+                ref.read(typesProvider)[selected] == Type.categoric;
+          } else {
+            disableNumericMethods = false;
+            debugPrint('Error: selected is NULL!!!');
+          }
 
           return ChoiceChip(
             label: Text(transform),
@@ -181,9 +207,14 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
 
-    String selected = ref.watch(selectedProvider);
+    selected = ref.watch(selectedProvider);
     if (selected == 'NULL' && inputs.isNotEmpty) {
-      selected = inputs.first;
+      setState(() {
+        selected = inputs.first;
+        debugPrint('selected changed to $selected');
+      });
+
+      // ref.read(selectedProvider.notifier).state = selected;
     }
 
     // Retrieve the current imputation constant and use that as the initial
@@ -208,7 +239,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 });
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(imputedProvider.notifier).state = constant;
-                print(constant);
+                debugPrint(constant);
                 takeAction();
               },
               child: const Text('Impute Missing Values'),
