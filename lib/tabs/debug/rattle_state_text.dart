@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Thursday 2024-08-15 09:54:16 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-15 12:20:57 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -87,6 +87,9 @@ class RattleStateText extends ConsumerWidget {
     String type = types.toString();
     type = type.replaceAll(',', '\n${" " * 13}');
 
+    String meta = metaData.toString();
+    meta = meta.replaceAll('},', '},\n${" " * 13}');
+
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
@@ -99,7 +102,7 @@ class RattleStateText extends ConsumerWidget {
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
-            'META DATA:   $metaData\n'
+            'META DATA:   $meta\n'
             'ROLES:       $role\n'
             'TYPES:       $type\n'
             'TARGET:      ${getTarget(ref)}\n'
