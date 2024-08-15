@@ -118,7 +118,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Process template variables.
 
-  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()} USER');
+  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
   // Populate the VERSION.
 

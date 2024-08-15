@@ -40,6 +40,12 @@
 
 # Correlations work for numeric variables only.
 
+user_name <- Sys.getenv("USER")  # On Linux/macOS
+if (user_name == "") {
+  user_name <- Sys.getenv("USERNAME")  # On Windows
+}
+
+
 cor <- cor(ds[numc], use="pairwise", method="pearson")
 
 # Order the correlations by their strength.
@@ -51,6 +57,7 @@ cor <- cor[ord, ord]
 
 print(round(cor,2))
 
+
 # Generate the chart.
 
 svg("TEMPDIR/explore_correlation.svg")
@@ -61,7 +68,7 @@ corrplot::corrplot(cor,
                    tl.srt = 45,
                    mar    = c(0,0,1,0))
 title(main = "Correlation weather.csv using Pearson",
-      sub  = "TIMESTAMP")
+      sub  = paste("TIMESTAMP", user_name))
 dev.off()
 
 ## GGCORRPLOT

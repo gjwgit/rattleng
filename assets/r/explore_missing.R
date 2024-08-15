@@ -48,6 +48,11 @@ dev.off()
 # VIM :: AGGREGATION
 ########################################################################bv
 
+user_name <- Sys.getenv("USER")  # On Linux/macOS
+if (user_name == "") {
+  user_name <- Sys.getenv("USERNAME")  # On Windows
+}
+
 svg("TEMPDIR/explore_missing_vim.svg", width=16)
 VIM::aggr(ds,
      numbers=TRUE,
@@ -58,7 +63,7 @@ VIM::aggr(ds,
      cex.axis = .6,
      gap      = 3,
      ylab     = c("Proportion of Values Missing", "Proportions of Combinations of Missing Values"),
-     sub      = "TIMESTAMP")
+     sub      = paste("TIMESTAMP", user_name))
 dev.off()
 
 ## NANIAR
