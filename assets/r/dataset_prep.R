@@ -180,6 +180,35 @@ unique_columns <- function(df) {
 
 unique_columns(ds)
 
+find_fewest_levels <- function(df) {
+  # Select only the categorical (factor) columns from the data frame
+  categoric_vars <- df[, sapply(df, is.factor), drop = FALSE]
+  
+  # Check if there are any categorical variables
+  if (ncol(categoric_vars) > 0) {
+    # Find the variable with the fewest levels
+    fewest_levels_var <- names(categoric_vars)[which.min(sapply(categoric_vars, nlevels))]
+    
+    # Find all variables that have the fewest levels
+    min_levels <- min(sapply(categoric_vars, nlevels))
+    fewest_levels_vars <- names(categoric_vars)[sapply(categoric_vars, nlevels) == min_levels]
+    
+    # Select the last variable in case of ties
+    fewest_levels_var <- fewest_levels_vars[length(fewest_levels_vars)]
+    
+    # Return the variable with the fewest levels
+    return(fewest_levels_var)
+  } else {
+    # If no categorical variables are found, return a message
+    return("")
+  }
+}
+
+
+# Find fewest levels
+
+find_fewest_levels(ds)
+
 
 # Index the original variable names by the new names.
 

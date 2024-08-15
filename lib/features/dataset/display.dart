@@ -149,6 +149,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
         if (getTarget(ref) == 'NULL') {
           ref.read(rolesProvider.notifier).state[vars.last.name] = Role.target;
+        } else {
+          ref.read(rolesProvider.notifier).state[getTarget(ref)] = Role.target;
         }
 
         // Any variables that have a unique value for every row in the dataset
