@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-08-14 15:45:58 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-15 20:23:51 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -59,10 +59,12 @@ pacman::p_load(Hmisc,
                corrplot,
                descr,
                fBasics,
+               ggcorrplot,
                ggthemes,
                janitor,    # Cleanup: clean_names() remove_constant().
                magrittr,   # Utilise %>% and %<>% pipeline operators.
                mice,
+               naniar,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,

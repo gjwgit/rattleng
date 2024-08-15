@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-08-06 13:40:21 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-15 19:03:36 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -56,6 +56,28 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     String content = '';
     List<String> lines = [];
+
+    ////////////////////////////////////////////////////////////////////////
+    // SKIMR
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'skim(ds)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Skim of the Dataset
+          
+          Generated using
+          [skimr::skim_tee(ds)](https://www.rdocumentation.org/packages/skimr/topics/skim/).
+
+          ''',
+          content: content,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
     // BASIC R SUMMARY
