@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-01 11:38:54 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-15 20:19:53 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -61,21 +61,24 @@ VIM::aggr(ds,
      sub      = "TIMESTAMP")
 dev.off()
 
-########################################################################
-# FUTURE - NANIAR :: 
-########################################################################
-##
-## install.packages("naniar")
-## library(naniar)
-##
-## # Visualize the proportion of missing values in each variable
-##
-## gg_miss_var(ds)
-##
-## # Visualize a heatmap of missing values
-##
-## vis_miss(ds)
-##
-## # Visualize missing data using an UpSet plot
-##
-## gg_miss_upset(ds)
+## NANIAR
+
+# Visualize a heatmap of missing values
+
+svg("TEMPDIR/explore_missing_naniar_vismiss.svg", width=16)
+naniar::vis_miss(ds)
+dev.off()
+
+# 20240815 gjw Visualize the proportion of missing values in each
+# variable. We could add a configuration here to display percentages
+# rather than counts. `show_pct=TRUE`
+
+svg("TEMPDIR/explore_missing_naniar_ggmissvar.svg", width=16)
+naniar::gg_miss_var(ds)
+dev.off()
+
+# Visualize missing data using an UpSet plot
+
+svg("TEMPDIR/explore_missing_naniar_ggmissupset.svg", width=16)
+naniar::gg_miss_upset(ds)
+dev.off()
