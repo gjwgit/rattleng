@@ -10,6 +10,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Update TARGET heuristics. Visual prefer numeric [6.2.56 20240815 zy]
 + Add to SUMMARY, MISSING, CORRELATION [6.2.55 20240815 gjw]
 + Bug fixes for IMPUTE and RESCALE options [6.2.54 20240815 yyx]
 + Add horizontal paging to text pages [6.2.53 20240814 kev]
