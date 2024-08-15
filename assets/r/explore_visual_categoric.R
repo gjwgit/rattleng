@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-08-13 08:51:44 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 05:41:28 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,12 +33,6 @@
 # @williams:2017:essentials
 # https://survivor.togaware.com/datascience/ for further details.
 
-user_name <- Sys.getenv("USER")  # On Linux/macOS
-if (user_name == "") {
-  user_name <- Sys.getenv("USERNAME")  # On Windows
-}
-
-
 # Load required packages from the local library into the R session.
 
 if(!require(ggplot2)) install.packages("ggplot2")
@@ -53,7 +47,7 @@ ds %>%
   ggplot(aes(x = SELECTED_VAR, fill = GROUP_BY_VAR)) +
   geom_bar(position = "dodge") +
   labs(title = "Distribution of SELECTED_VAR by GROUP_BY_VAR",
-       sub = paste("TIMESTAMP", user_name),
+       sub = paste("TIMESTAMP", username),
        x = "SELECTED_VAR",
        y = "Frequency",
        fill = "GROUP_BY_VAR") +
@@ -138,7 +132,7 @@ ord <- order(apply(tds, 1, sum), decreasing=TRUE)
 
 mosaicplot(tds[ord,],
            main  = "Mosaic of SELECTED_VAR (sample) by GROUP_BY_VAR",
-           sub   = paste("TIMESTAMP", user_name),
+           sub   = paste("TIMESTAMP", username),
            color = colorspace::rainbow_hcl(3)[-1],
            cex   = 0.7,
            xlab  = "SELECTED_VAR",

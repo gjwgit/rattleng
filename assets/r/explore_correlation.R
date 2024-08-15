@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-15 20:29:32 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 05:40:06 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -40,12 +40,6 @@
 
 # Correlations work for numeric variables only.
 
-user_name <- Sys.getenv("USER")  # On Linux/macOS
-if (user_name == "") {
-  user_name <- Sys.getenv("USERNAME")  # On Windows
-}
-
-
 cor <- cor(ds[numc], use="pairwise", method="pearson")
 
 # Order the correlations by their strength.
@@ -68,7 +62,7 @@ corrplot::corrplot(cor,
                    tl.srt = 45,
                    mar    = c(0,0,1,0))
 title(main = "Correlation weather.csv using Pearson",
-      sub  = paste("TIMESTAMP", user_name))
+      sub  = paste("TIMESTAMP", username))
 dev.off()
 
 ## GGCORRPLOT
