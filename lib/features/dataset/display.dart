@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Thursday 2024-08-15 12:31:00 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-15 15:04:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -26,6 +26,8 @@
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -112,15 +114,21 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     if (path == weatherDemoFile || path.endsWith('.csv')) {
       // A new dataset has been loaded so we update the information here.
 
-      // 20240815 gjw Update the metaData provider here if needed.
-
-      updateMetaData(ref);
-
       Map<String, Role> currentRoles = ref.read(rolesProvider);
 
       // Extract variable information from the R console.
 
       List<VariableInfo> vars = extractVariables(stdout);
+
+      // 20240815 gjw Update the metaData provider here if needed.
+
+      updateMetaData(ref);
+      Map<String, dynamic> meta = ref.read(metaDataProvider);
+      if (meta.isNotEmpty) {
+        debugPrint('META TARGET: ${vars.last.name}');
+        debugPrint('META TARGET: ${meta[vars.last.name]}');
+        debugPrint('META TARGET: ${meta[vars.last.name]["unique"]}');
+      }
 
       // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
       // IDENTS. Also record variable types.
@@ -146,16 +154,23 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           }
         }
 
-        // Treat the last variable as a TARGET by default. We will eventually
-        // implement Rattle heuristics to identify the TARGET if the final
-        // variable has more than 5 levels. If so we'll check if the first
-        // variable looks like a TARGET (another common practise) and if not
-        // then no TARGET will be identified by default.
+        // Treat the last variable as a TARGET by default, except if it has more
+        // than 5 levels. TODO If so we'll check if the first variable looks
+        // like a TARGET (another common practise) and if not then find the cat
+        // vartiable with least levels as TARGET.
 
         if (getTarget(ref) == 'NULL') {
-          if (ref.read(typesProvider)[vars.last.name] == Type.categoric) {
-            ref.read(rolesProvider.notifier).state[vars.last.name] =
-                Role.target;
+          // 20240815 gjw Note that because of the async nature meta is not yet
+          // avails which is problematic.
+          if (meta.isNotEmpty) {
+            if (ref.read(typesProvider)[vars.last.name] == Type.categoric &&
+                meta[vars.last.name]['unique'] < 5) {
+              ref.read(rolesProvider.notifier).state[vars.last.name] =
+                  Role.target;
+            } else {
+              debugPrint(
+                  'DATASET DISPLAY: Not set ${vars.last.name} as TARGET');
+            }
           }
           // TODO 20240814 gjw LAST COLUMN NUMERIC THEN TARGET IS OTHER CATEGORIC
           //
