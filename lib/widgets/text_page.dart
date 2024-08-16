@@ -49,7 +49,7 @@ class TextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Create a ScrollController for horizontal scrolling.
 
-    final ScrollController _horizontalScrollController = ScrollController();
+    final ScrollController horizontalScrollController = ScrollController();
 
     return Container(
       decoration: sunkenBoxDecoration,
@@ -70,13 +70,13 @@ class TextPage extends StatelessWidget {
             // Wrap SelectableText in a Scrollbar with SingleChildScrollView for horizontal scrolling.
 
             Scrollbar(
-              controller: _horizontalScrollController,
+              controller: horizontalScrollController,
               // Show the scrollbar always.
 
               thumbVisibility: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                controller: _horizontalScrollController,
+                controller: horizontalScrollController,
                 child: SelectableText(
                   content,
                   style: monoTextStyle,
