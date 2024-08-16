@@ -10,6 +10,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Bug fix - MISSING now works if TARGET is not specified [6.2.58 20240816 gjw]
 + Get username in R for plots [6.2.57 20240816 zy]
 + Update TARGET heuristics. Visual prefer numeric [6.2.56 20240815 zy]
 + Add to SUMMARY, MISSING, CORRELATION [6.2.55 20240815 gjw]
