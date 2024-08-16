@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-16 05:47:58 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 09:04:48 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,9 +34,9 @@
 #
 # https://survivor.togaware.com/datascience/
 
-########################################################################
-# MICE :: MD.PATTERNS
-########################################################################
+####################################
+## MICE :: MD.PATTERNS
+####################################
 
 # Generate a summary of the missing values in the dataset. 20240718
 
@@ -44,29 +44,31 @@ svg("TEMPDIR/explore_missing_mice.svg")
 mice::md.pattern(ds[vars], rotate.names=TRUE)
 dev.off()
 
-########################################################################bv
-# VIM :: AGGREGATION
-########################################################################bv
-
-user_name <- Sys.getenv("USER")  # On Linux/macOS
-if (user_name == "") {
-  user_name <- Sys.getenv("USERNAME")  # On Windows
-}
+####################################
+## VIM :: AGGREGATION
+####################################
 
 svg("TEMPDIR/explore_missing_vim.svg", width=16)
 VIM::aggr(ds,
-     numbers=TRUE,
-     combined=FALSE,
-     only.miss=TRUE,
-     sortVars=TRUE,
-     labels=names(ds),
-     cex.axis = .6,
-     gap      = 3,
-     ylab     = c("Proportion of Values Missing", "Proportions of Combinations of Missing Values"),
-     sub      = paste("TIMESTAMP", username))
+          bars  = TRUE,
+          numbers=TRUE,
+          prop=FALSE,
+          combined=FALSE,
+          varheight=FALSE,
+          only.miss=TRUE,
+          border='white',
+          sortVars=TRUE,
+          sortCombs=TRUE,
+          labels=names(ds),
+          cex.axis = .6,
+          gap      = 3,
+          ylabs     = c("Proportion of Values Missing",
+                        "Proportions of Combinations of Missing Values"))
 dev.off()
 
+####################################
 ## NANIAR
+####################################
 
 # Visualize a heatmap of missing values
 
