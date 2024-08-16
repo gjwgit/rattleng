@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 11:21:28 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-08-17 06:40:50 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,9 +28,19 @@
 
 # Transform "SELECTED_VAR" into "IMP_SELECTED_VAR" by imputing a value.
 
-ds %<>%
-  mutate(IMP_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                   IMPUTED_VALUE,
-                                   SELECTED_VAR))
+if (is.numeric(ds$SELECTED_VAR)) {
+  ds %<>%
+    mutate(IMP_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
+                                     IMPUTED_VALUE,
+                                     SELECTED_VAR))
+} else {
+  ds %<>%
+    mutate(IMP_SELECTED_VAR = as.character(SELECTED_VAR)) %>%
+    mutate(IMP_SELECTED_VAR = ifelse(is.na(IMP_SELECTED_VAR),
+                                     "IMPUTED_VALUE",
+                                     IMP_SELECTED_VAR)) %>%
+    mutate(IMP_SELECTED_VAR = as.factor(IMP_SELECTED_VAR))
+}
+
 glimpse(ds)
 summary(ds)
