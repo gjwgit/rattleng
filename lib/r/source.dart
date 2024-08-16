@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-08-11 11:39:00 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-16 10:03:13 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -216,7 +216,23 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     }
   });
 
+  // If target is NULL then we need to ensure expressions in the R code like
+  //
+  // target <- "TARGET_VAR"
+  //
+  // becomes
+  //
+  // target <- NULL
+  //
+  // rather then being "NULL" which then indicates a variable called NULL. So
+  // handle that special case and then replace any other TARGET_VAR replacement
+  // as usual.
+
+  if (target == 'NULL') {
+    code = code.replaceAll('"TARGET_VAR"', target);
+  }
   code = code.replaceAll('TARGET_VAR', target);
+
   //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
 
   // Extract the risk variable from the rolesProvider and use that for now as
