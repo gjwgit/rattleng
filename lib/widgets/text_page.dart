@@ -47,6 +47,10 @@ class TextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Create a ScrollController for horizontal scrolling.
+
+    final ScrollController _horizontalScrollController = ScrollController();
+
     return Container(
       decoration: sunkenBoxDecoration,
       width: double.infinity,
@@ -63,20 +67,25 @@ class TextPage extends StatelessWidget {
                 launchUrl(url);
               },
             ),
-            // Wrap SelectableText in SingleChildScrollView for horizontal scrolling.
+            // Wrap SelectableText in a Scrollbar with SingleChildScrollView for horizontal scrolling.
 
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SelectableText(
-                content,
-                style: monoTextStyle,
-                // Ensure that text does not wrap, allowing horizontal scroll.
+            Scrollbar(
+              controller: _horizontalScrollController,
+              // Show the scrollbar always.
 
-                textAlign: TextAlign.left,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                controller: _horizontalScrollController,
+                child: SelectableText(
+                  content,
+                  style: monoTextStyle,
+                  textAlign: TextAlign.left,
+                ),
               ),
             ),
             // 20240812 gjw Add a bottom spacer to leave a gap for the page
-            // navigation whenscrolling to the bottom of the page so that it can
+            // navigation when scrolling to the bottom of the page so that it can
             // be visible in at least some part of any very busy pages.
             textPageBottomSpace,
             // 20240812 gjw Add a divider to mark the end of the text page.
