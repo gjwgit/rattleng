@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-08-16 19:43:48 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-17 06:18:03 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -56,6 +56,79 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     String content = '';
     List<String> lines = [];
+
+    ////////////////////////////////////////////////////////////////////////
+    // BASIC R SUMMARY
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtractSummary(stdout);
+
+    // Add a blank line between each sub-table.
+
+    lines = content.split('\n');
+
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].startsWith('  ') && !lines[i].trimLeft().startsWith('NA')) {
+        lines[i] = '\n${lines[i]}';
+      }
+    }
+
+    content = lines.join('\n');
+
+    // Replace multiple empty lines with a single empty line.
+
+    content = content.replaceAll(RegExp(r'\n\s*\n\s*\n+'), '\n\n');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Summary of the Dataset
+
+          Generated using
+          [base::summary(ds)](https://www.rdocumentation.org/packages/base/topics/summary).
+
+          This is the most basic R command for summarising the dataset.
+
+          For **numeric data** the minimum, and maximum values are listed.
+          Between these we can see listed the first and third quartiles as well
+          as the median (the second quartile) and the mean.
+
+          For **categoric data** a frequency table is provided, showing the
+          frequency of the categoric values from the most frequent to the least
+          frequent.  Only the top few categoric values will be listed.
+
+          A count of **missing values** is shown for variables with
+          missing values.
+
+          ''',
+          content: content,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // SKIMR
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'skim(ds)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Skim of the Dataset
+
+          Generated using
+          [skimr::skim_tee(ds)](https://www.rdocumentation.org/packages/skimr/topics/skim/).
+
+          ''',
+          content: content,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
     // HMISC CONTENTS
