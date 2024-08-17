@@ -66,8 +66,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   List<String> categoricMethods = [
     'Indicator Variable',
     'Join Categorics',
-    'As Categoric',
-    'As Numeric',
+    // 'As Categoric',
+    // 'As Numeric',
   ];
 
   // BUILD button action.
@@ -86,10 +86,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         rSource(context, ref, 'transform_recode_indicator_variable');
       case 'Join Categorics':
         rSource(context, ref, 'transform_recode_join_categoric');
-      case 'As Categoric':
-        rSource(context, ref, 'transform_rescale_log10_numeric');
-      case 'As Numeric':
-        rSource(context, ref, 'transform_rescale_rank');
+      // case 'As Categoric':
+      //   rSource(context, ref, 'transform_rescale_log10_numeric');
+      // case 'As Numeric':
+      //   rSource(context, ref, 'transform_rescale_rank');
       default:
         showUnderConstruction(context);
     }
@@ -176,6 +176,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             ),
             configWidgetSpace,
             variableChooser('Variable', inputs, selected, ref, selectedProvider),
+            configWidgetSpace,
             variableChooser('Second Variable', inputs, selected2, ref, selected2Provider),
           ],
         ),
