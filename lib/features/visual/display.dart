@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-07-29 08:46:18 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-17 16:21:11 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -50,11 +51,16 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   Widget build(BuildContext context) {
     List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
 
-    // List<String> lines = [];
+    // 20240817 gjw We watch changes to stdout as a clue that we need to rebuild
+    // this widget.
+
+    ref.watch(stdoutProvider);
 
     String selected = ref.watch(selectedProvider.notifier).state;
 
-    if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
+    Type? stype = ref.read(typesProvider.notifier).state[selected];
+
+    if (stype == Type.numeric) {
       debugPrint('add pages for numeric');
       pages.add(
         ImagePage(
@@ -128,7 +134,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     //   ),
     // );
 
-    if (ref.read(typesProvider.notifier).state[selected] == Type.categoric) {
+    if (stype == Type.categoric) {
       debugPrint('add pages for categoric');
 
       pages.add(
