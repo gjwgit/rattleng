@@ -33,6 +33,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
@@ -102,12 +103,21 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   Widget recodeChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(numberProvider.notifier).state.toString();
+    bool isNumeric =
+        ref.read(typesProvider)[ref.read(selectedProvider)] == Type.numeric;
+    if (isNumeric) {
+      selectedTransform = numericMethods.first;
+    }
+    else {
+      selectedTransform = categoricMethods.first;
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         ChoiceChipTip(
           options: numericMethods,
-          selectedOption: selectedTransform,
+          selectedOption: isNumeric ? selectedTransform : '',
+          enabled: isNumeric,
           onSelected: (String? selected) {
             setState(() {
               selectedTransform = selected ?? '';
@@ -121,12 +131,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           stateProvider: numberProvider,
           validator: (value) => validateInteger(value, min: 1),
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
+          enabled: isNumeric,
         ),
         configWidgetSpace,
         Expanded(
           child: ChoiceChipTip(
+            enabled: !isNumeric,
             options: categoricMethods,
-            selectedOption: selectedTransform,
+            selectedOption: !isNumeric ? selectedTransform : '',
             onSelected: (String? selected) {
               setState(() {
                 selectedTransform = selected ?? '';
@@ -175,9 +187,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               child: const Text("Recode Variable's Values"),
             ),
             configWidgetSpace,
-            variableChooser('Variable', inputs, selected, ref, selectedProvider),
+            variableChooser(
+                'Variable', inputs, selected, ref, selectedProvider),
             configWidgetSpace,
-            variableChooser('Second Variable', inputs, selected2, ref, selected2Provider),
+            variableChooser(
+                'Second Variable', inputs, selected2, ref, selected2Provider),
           ],
         ),
         recodeChooser(),
