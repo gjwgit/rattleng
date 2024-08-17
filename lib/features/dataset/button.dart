@@ -42,11 +42,6 @@ class DatasetButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () async {
-        // WHEN USER CLICKS THE DATASET BUTTON
-        // FIRST SHOW THE WINDOW ASKING IF YOU REALLY WANT TO LOAD A NEW ONE AND THAT WILL CLEAR EVERYTHING IF A DATASET HAS BEEN LOADED
-        // THE POP UP WINDOW HAS YES OR NO BUTTION.
-        // IF YES, CLEAR EVERY STATE IN THE APP AND SHOW POPUP WINDOW
-        // IF NO, DISMISS THE POPUP WINDOW
         if (ref.read(datasetLoaded)) {
           showAlertPopup(context, ref, true);
         } else {
@@ -54,9 +49,13 @@ class DatasetButton extends ConsumerWidget {
         }
       },
       child: const DelayedTooltip(
-        message: 'Press here to have the option to load the data from a file, '
-            'including CSV files, or from an R package, or to load '
-            'the demo dataset, rattle::weather.',
+        message: '''
+
+        Press here to have the option to load the data from a file, including
+        CSV files, or from an R package, or to load the demo dataset,
+        rattle::weather.
+
+        ''',
         child: Text('Dataset'),
       ),
     );
@@ -68,7 +67,7 @@ void showAlertPopup(
   WidgetRef ref,
   bool loadNewDataset,
 ) {
-  // Show Alert Window, Reset after confirmation
+  // Show Alert Window and then reset the app after confirmation.
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -107,11 +106,11 @@ void showAlertPopup(
             child: const Text('Yes'),
             onPressed: () {
               Navigator.of(context).pop();
-              // RESET BEFORE SHOWOPTIONPOPUP BECAUSE THE OTHER WAY AROUND CASUES BUG:
-              // FIRST SET LOAD TO TRUE AND THEN RESET IT TO FALSE
-              // BUT THE DATASET ACTUALLY IS LOADED
-              // AS A CONSEQUENCE THE PREVIOUS RESULT WON'T BE RESET
-              // BECAUSE LOAD INDICATES NO DATASET HAS BEEN LOADED AND THE APP IS FRESH
+              // 20240817 gjw Note the reset before showOptionPopup because the
+              // other way around casues a bug? First set load to true and then
+              // reset it to false but the dataset actually is loaded as a
+              // consequence the previous result won't be reset because load
+              // indicates no dataset has been loaded and the app is fresh.
               reset(context, ref);
               if (loadNewDataset) {
                 _showOptionPopup(context, ref);
