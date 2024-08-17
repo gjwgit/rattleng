@@ -39,7 +39,6 @@ import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
-import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
@@ -56,6 +55,32 @@ class RecodeConfig extends ConsumerStatefulWidget {
 }
 
 class RecodeConfigState extends ConsumerState<RecodeConfig> {
+  Widget variableChooser(String label, List<String> inputs, String selected,
+      WidgetRef ref, StateProvider stateProvider,) {
+    return DropdownMenu(
+      // label: const Text('Variable'),
+      label: Text(label),
+      width: 200,
+      initialSelection: selected,
+      dropdownMenuEntries: inputs.map((s) {
+        return DropdownMenuEntry(value: s, label: s);
+      }).toList(),
+      // On selection as well as recording what was selected rebuild the
+      // visualisations.
+      onSelected: (String? value) {
+        // ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
+        ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
+        selectedTransform = ref.read(typesProvider)[value] == Type.numeric ? numericMethods.first : categoricMethods.first;
+        // We don't buildAction() here since the variable choice might
+        // be followed by a transform choice and we don;t want to shoot
+        // off building lots of new variables unnecesarily.
+      },
+    );
+  }
+
+  // the reason we use this instead of the provider is that the provider will only be updated after build.
+  // Before build, selected contains the most recent value.
+  String selected = 'NULL';
   String selectedTransform = 'Quantiles';
 
   List<String> numericMethods = [
@@ -103,20 +128,20 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   Widget recodeChooser() {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(numberProvider.notifier).state.toString();
-    bool isNumeric =
-        ref.read(typesProvider)[ref.read(selectedProvider)] == Type.numeric;
-    if (isNumeric) {
-      selectedTransform = numericMethods.first;
+    bool isNumeric;
+    if (selected != 'NULL') {
+      isNumeric = ref.read(typesProvider)[selected] == Type.numeric;
+    } else {
+      isNumeric = false;
+      debugPrint('Error: selected is NULL!!!');
     }
-    else {
-      selectedTransform = categoricMethods.first;
-    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         ChoiceChipTip(
           options: numericMethods,
-          selectedOption: isNumeric ? selectedTransform : '',
+          selectedOption: selectedTransform,
           enabled: isNumeric,
           onSelected: (String? selected) {
             setState(() {
@@ -154,9 +179,12 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   Widget build(BuildContext context) {
     // updateVariablesProvider(ref);
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
-    String selected = ref.watch(selectedProvider);
+    selected = ref.watch(selectedProvider);
     if (selected == 'NULL' && inputs.isNotEmpty) {
-      selected = inputs.first;
+      setState(() {
+        selected = inputs.first;
+        debugPrint('selected changed to $selected');
+      });
     }
     String selected2 = ref.watch(selected2Provider);
     if (selected2 == 'NULL' && inputs.isNotEmpty) {
