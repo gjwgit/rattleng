@@ -1,4 +1,4 @@
-/// A button to choose a dataset (from file or a package).
+/// A button to choose a dataset (from file/package/demo).
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
