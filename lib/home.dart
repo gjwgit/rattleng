@@ -279,7 +279,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                 rExecute(ref, 'view(ds)\n');
               }
             },
-            tooltip: 'Press here to view the current dataset.',
+            tooltip: 'Tap here to view the current dataset.',
           ),
 
           // RESET
@@ -297,7 +297,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                 reset(context, ref);
               }
             },
-            tooltip: 'Press here to clear the current project and\n'
+            tooltip: 'Tap here to clear the current project and\n'
                 'so start a new project with a new dataset.',
           ),
 
@@ -351,7 +351,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
               Icons.info,
               color: Colors.blue,
             ),
-            tooltip: 'Press here to view information about RattleNG and\n'
+            tooltip: 'Tap here to view information about RattleNG and\n'
                 'those who have contributed to the software.',
           ),
         ],
