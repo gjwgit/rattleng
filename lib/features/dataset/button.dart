@@ -51,8 +51,8 @@ class DatasetButton extends ConsumerWidget {
       child: const DelayedTooltip(
         message: '''
 
-        Press here to have the option to load the data from a file, including
-        CSV files, or from an R package, or to load the demo dataset,
+        Tap here to view a popup with the option to load data from a CSV or TXT
+        file, or from an R package's dataset, or to load the demo dataset from
         rattle::weather.
 
         ''',
