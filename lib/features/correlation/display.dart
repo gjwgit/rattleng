@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-01 20:57:17 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-15 20:31:21 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -106,6 +106,28 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
         path: '$tempDir/explore_correlation.svg',
       ),
     );
+
+    ////////////////////////////////////////////////////////////////////////
+    // GGCORRPLOT
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // 20240815 gjw This only displays a black box in the app? The display of it
+    // using the external viewer is just fine?
+
+    // pages.add(
+    //   ImagePage(
+    //     title: '''
+
+    //     # GGPlot Correlation
+
+    //     Generated using [ggcorrplot::ggcorrplot(ds)](https://www.rdocumentation.org/packages/ggcorrplot/topics/ggcorrplot)
+
+    //     ''',
+    //     path: '$tempDir/explore_correlation_ggcorrplot.svg',
+    //   ),
+    // );
+
+    ////////////////////////////////////////////////////////////////////////
 
     return Pages(
       children: pages,
