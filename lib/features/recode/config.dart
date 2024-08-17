@@ -55,8 +55,13 @@ class RecodeConfig extends ConsumerStatefulWidget {
 }
 
 class RecodeConfigState extends ConsumerState<RecodeConfig> {
-  Widget variableChooser(String label, List<String> inputs, String selected,
-      WidgetRef ref, StateProvider stateProvider,) {
+  Widget variableChooser(
+    String label,
+    List<String> inputs,
+    String selected,
+    WidgetRef ref,
+    StateProvider stateProvider,
+  ) {
     return DropdownMenu(
       // label: const Text('Variable'),
       label: Text(label),
@@ -70,7 +75,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       onSelected: (String? value) {
         // ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
         ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        selectedTransform = ref.read(typesProvider)[value] == Type.numeric ? numericMethods.first : categoricMethods.first;
+        // reset after selection
+        selectedTransform = ref.read(typesProvider)[value] == Type.numeric
+            ? numericMethods.first
+            : categoricMethods.first;
         // We don't buildAction() here since the variable choice might
         // be followed by a transform choice and we don;t want to shoot
         // off building lots of new variables unnecesarily.
@@ -183,9 +191,20 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     if (selected == 'NULL' && inputs.isNotEmpty) {
       setState(() {
         selected = inputs.first;
+        // initialise the chip selection
+        selectedTransform = ref.read(typesProvider)[selected] == Type.numeric
+            ? numericMethods.first
+            : categoricMethods.first;
         debugPrint('selected changed to $selected');
       });
     }
+    // This is to ensure if we come back later, the selection is not cleared
+    if (selected != 'NULL' && selectedTransform == '') {
+      selectedTransform = ref.read(typesProvider)[selected] == Type.numeric
+          ? numericMethods.first
+          : categoricMethods.first;
+    }
+
     String selected2 = ref.watch(selected2Provider);
     if (selected2 == 'NULL' && inputs.isNotEmpty) {
       selected2 = inputs[1];
