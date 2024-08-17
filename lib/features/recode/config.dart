@@ -81,7 +81,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   // the reason we use this instead of the provider is that the provider will only be updated after build.
   // Before build, selected contains the most recent value.
   String selected = 'NULL';
-  String selectedTransform = 'Quantiles';
+  String selectedTransform = '';
 
   List<String> numericMethods = [
     'Quantiles',
