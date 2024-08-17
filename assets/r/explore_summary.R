@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-08-06 10:25:06 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-15 19:20:36 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,23 +33,28 @@
 # @williams:2017:essentials
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
+# SkimR presents a nice summary of the dataset
 
-# Obtain a summary of the dataset.
-
-Hmisc::contents(ds)
+skim(ds)
 
 # Standard R summary of the dataset.
 
 summary(ds)
 
-# Generate a description of the dataset.
+# Obtain a summary of the dataset. 20240815 gjw Does not add any new
+# information.
 
-Hmisc::describe(ds)
+## Hmisc::contents(ds)
 
-# Generate a description of the numeric data.
+# Generate a description of the dataset. 20240815 gjw Does not add any
+# new information.
 
-lapply(ds[numc], fBasics::basicStats)
+## Hmisc::describe(ds)
+
+# Generate a description of the numeric data. 20240815 gjw Does not
+# add any new information.
+
+## lapply(ds[numc], fBasics::basicStats)
 
 # Summarise the kurtosis of the numeric data.
 
@@ -59,12 +64,14 @@ timeDate::kurtosis(ds[numc], na.rm=TRUE)
 
 timeDate::skewness(ds[numc], na.rm=TRUE)
 
-# Generate cross tabulations for categoric data.
+# Generate cross tabulations for categoric data. 20240815 gjw This is
+# too costly, and memory hungry, for a 20,000 observation dataset so
+# drop for now.
 
-for (i in catc) { 
-  cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target)) 
-  print(descr::CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS")) 
-  cat(paste(rep("=", 70), collapse=""), "
+## for (i in catc) { 
+##   cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target)) 
+##   print(descr::CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS")) 
+##   cat(paste(rep("=", 70), collapse=""), "
 
-") 
-}
+## ") 
+## }

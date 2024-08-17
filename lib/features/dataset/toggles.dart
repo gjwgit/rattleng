@@ -69,22 +69,23 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         DelayedTooltip(
           message: '''
 
-          Undertake data cleansing for a CSV dataset.  This will remove constant
-          columns and convert character columns to factors.  If you do not
-          require cleansing, turn this off.
+          Cleanse: A CSV dataset is cleaned up by removing constant columns and
+          converting character columns to factors (categoric).  If you do not
+          require this automated cleansing of the dataset, turn this off.
 
               ''',
           child: Icon(Icons.cleaning_services),
         ),
 
-        // NORMALISE
+        // UNIFY
 
         DelayedTooltip(
           message: '''
 
-          Variable/column names of a CSV dataset are normalised.  Names are
-          lowercased, separated by underscore.  If you do not requires
-          normalisation, turn this off.
+          Unify: Column (variable) names of a CSV dataset are unified by
+          converting them to lowercase and separating words by underscore.  If
+          you do not require this automated unifying of the variable names, turn
+          this off.
 
           ''',
           child: Icon(Icons.auto_fix_high_outlined),
@@ -97,10 +98,11 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         DelayedTooltip(
           message: '''
 
-          Partition a CSV dataset for modelling into 70/15/15.  Generally
-          paritioning is good for building predictive models and so best to turn
-          it on for that scenario. If you are exploring your data still then
-          keep the partitioning off.
+          Partitioning: A CSV dataset will be split into three smaller datasets,
+          with a 70/15/15 split by default, which is common for building
+          predictive models. For exploring up to reasonably large datasets (tens
+          of thousands of observations) you can turn partitioning off so all
+          data is included in the exploration.
 
           ''',
           child: Icon(Icons.horizontal_split),
