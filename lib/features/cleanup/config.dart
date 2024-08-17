@@ -37,6 +37,8 @@ import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/get_obs_missing.dart';
 import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -134,6 +136,31 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     };
   }
 
+  void deletionAction(String method) {
+    List<String> varsToDelete = [];
+    switch (method) {
+      case 'Ignored':
+        varsToDelete.addAll(getIgnored(ref));
+      // two ways to update: read it from the stdout or update it with the information
+      // choose 2
+      case 'Delete Selected':
+        // rSource(context, ref, 'transform_clean_delete_selected');
+        // varsToDelete.add(ref.read(selectedProvider));
+      case 'Delete Missing':
+        // rSource(context, ref, 'transform_clean_delete_vars_missing');
+        // varsToDelete.addAll(getMissingVars(ref));
+      case 'Delete Obs with Missing':
+        // rSource(context, ref, 'transform_clean_delete_obs_missing');
+      default:
+        showUnderConstruction(context);
+    }
+    for (var v in varsToDelete) {
+      if (deleteVar(ref, v)) {
+        debugPrint('Deleted $v from the flutter state');
+      }
+    }
+  }
+
   void takeAction(method) {
     // Run the R scripts.  For different selected cleanup, the text will be
     // different as well as the script to execute.
@@ -190,6 +217,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   rSource(context, ref, dispatch(method));
+                  deletionAction(method);
                 },
               ),
             ],
