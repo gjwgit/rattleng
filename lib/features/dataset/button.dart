@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/utils/reset.dart';
+import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends ConsumerWidget {
@@ -79,8 +80,15 @@ void showAlertPopup(
             Text('Warning'),
           ],
         ),
-        content: const Text(
-          'If you load a new dataset, it will reset the app.\nAre you sure?',
+        content: Text(
+          wordWrap('''
+
+            Please note that currently loading a new dataset is not fully
+            operational. If you load a new dataset it will reset the app but the
+            reset is not yet complete. It is best to exit the app and restart
+            it. Otherwise, are you sure you would like to reset?
+
+            '''),
         ),
         actions: <Widget>[
           TextButton(
