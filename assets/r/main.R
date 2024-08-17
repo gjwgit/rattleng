@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-08-14 15:45:58 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 09:21:31 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -41,11 +41,13 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-########################################################################
-# Load required packages or install if not already.
-########################################################################
+####################################
+# Load/Instal Required Packages
+####################################
 
-# Keep R from asking to select a CRAN site.
+# 20240816 gjw How to keep R from asking to select a CRAN site?
+# Sometimes I see the popup (perhaps on MacOS) and others it just
+# fails.
 
 # options(repos = c(CRAN = "https://cloud.r-project.org"))
 # options(install.packages.ask = FALSE)
@@ -59,10 +61,12 @@ pacman::p_load(Hmisc,
                corrplot,
                descr,
                fBasics,
+               ggcorrplot,
                ggthemes,
                janitor,    # Cleanup: clean_names() remove_constant().
                magrittr,   # Utilise %>% and %<>% pipeline operators.
                mice,
+               naniar,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,
@@ -88,7 +92,7 @@ set.seed(42)
 # A support function to move into rattle to provide the one line
 # summary of the dataset
 
-preview <- function(df) {
+meta_data <- function(df) {
   sapply(df, function(x) {
     if (is.numeric(x)) {
       paste0("min = ", min(x, na.rm = TRUE),
@@ -105,6 +109,14 @@ preview <- function(df) {
   })
 }
 
+# Username
+
+username <- Sys.getenv("USER")  # On Linux/MacOS
+if (username == "") {
+  username <- Sys.getenv("USERNAME")  # On Windows
+}
+
+
 # A palette for rattle!
 
 rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
@@ -112,23 +124,23 @@ rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 # A ggplot2 theme for rattle.
 
-## theme_rattle <- function(base_size = 11, base_family = "") {
-##   theme_grey(base_size = base_size, base_family = base_family) +
-##     theme(
-##       # Customize text elements
-##       plot.title = element_text(color = "darkblue",
-##                                 face = "bold",
-##                                 size = base_size * 1.2),
-##       axis.title = element_text(color = "darkblue"),
-##       axis.text = element_text(color = "darkblue"),
-##       legend.title = element_text(color = "darkblue"),
-##       legend.text = element_text(color = "darkblue"),
-##       # Customize panel background
-##       panel.background = element_rect(fill = "white"),
-##       # Customize grid lines
-##       panel.grid.major = element_line(color = "lightgrey"),
-##       panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
-##     )
-## }
+theme_rattle <- function(base_size = 11, base_family = "") {
+  theme_grey(base_size = base_size, base_family = base_family) +
+    theme(
+      # Customize text elements
+      plot.title = element_text(color = "darkblue",
+                                face = "bold",
+                                size = base_size * 1.2),
+      axis.title = element_text(color = "darkblue"),
+      axis.text = element_text(color = "darkblue"),
+      legend.title = element_text(color = "darkblue"),
+      legend.text = element_text(color = "darkblue"),
+      # Customize panel background
+      panel.background = element_rect(fill = "white"),
+      # Customize grid lines
+      panel.grid.major = element_line(color = "lightgrey"),
+      panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
+    )
+}
 
-theme_rattle <- theme_economist
+# theme_rattle <- theme_economist
