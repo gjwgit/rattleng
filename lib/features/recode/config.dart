@@ -28,7 +28,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/selected.dart';
@@ -38,7 +37,6 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
-import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
@@ -235,10 +233,20 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             ),
             configWidgetSpace,
             variableChooser(
-                'Variable', inputs, selected, ref, selectedProvider),
+              'Variable',
+              inputs,
+              selected,
+              ref,
+              selectedProvider,
+            ),
             configWidgetSpace,
             variableChooser(
-                'Second Variable', inputs, selected2, ref, selected2Provider),
+              'Second Variable',
+              inputs,
+              selected2,
+              ref,
+              selected2Provider,
+            ),
           ],
         ),
         recodeChooser(),

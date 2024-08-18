@@ -66,9 +66,11 @@ class ChoiceChipTip<T> extends StatelessWidget {
           pressElevation: 8.0,
           elevation: 2.0,
           selected: selectedOption == option,
-          onSelected: enabled ? (bool selected) {
-            onSelected(selected ? option : null);
-          } : null,
+          onSelected: enabled
+              ? (bool selected) {
+                  onSelected(selected ? option : null);
+                }
+              : null,
         );
       }).toList(),
     );

@@ -186,8 +186,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               child: const Text('Rescale Variable Values'),
             ),
             configWidgetSpace,
-            variableChooser('Variable', numericInputs, selected, ref, selectedProvider),
-
+            variableChooser(
+                'Variable', numericInputs, selected, ref, selectedProvider, ),
           ],
         ),
         rescaleChooser(),
