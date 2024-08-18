@@ -27,8 +27,13 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Widget variableChooser(String label, List<String> inputs, String selected,
-    WidgetRef ref, StateProvider stateProvider, ) {
+Widget variableChooser(
+  String label,
+  List<String> inputs,
+  String selected,
+  WidgetRef ref,
+  StateProvider stateProvider,
+) {
   return DropdownMenu(
     // label: const Text('Variable'),
     label: Text(label),
