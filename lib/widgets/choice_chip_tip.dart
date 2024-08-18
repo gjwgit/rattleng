@@ -1,6 +1,6 @@
 /// Chip choice widget used across the app.
 //
-// Time-stamp: <Saturday 2024-08-10 06:35:02 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-19 08:19:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -59,7 +59,6 @@ class ChoiceChipTip<T> extends StatelessWidget {
         return ChoiceChip(
           label: Text(label),
           tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
-          disabledColor: Colors.grey,
           selectedColor: Colors.lightBlue[200],
           backgroundColor: Colors.lightBlue[50],
           shadowColor: Colors.grey,
