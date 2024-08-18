@@ -1,11 +1,11 @@
-/// Widget to configure the SVM tab: button.
+/// Widget to configure the RECODE feature of the TRANSFORM tab.
 ///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-04 07:46:33 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-19 08:27:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,22 +28,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/selected.dart';
+// TODO 20240819 gjw RENAME SELECTED2 TO SECONDARY
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
-
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
-/// The SVM tab config currently consists of just an ACTIVITY button.
-///
-/// This is a StatefulWidget to pass the ref across to the rSource.
+// TODO 20240819 gjw REQUIRES A COMPREHENSIVE CLEANUP/STRUCTURE
+
+/// A StatefulWidget to pass the ref across to the rSource as well as to monitor
+/// the selected variable.
 
 class RecodeConfig extends ConsumerStatefulWidget {
   const RecodeConfig({super.key});
@@ -53,6 +55,8 @@ class RecodeConfig extends ConsumerStatefulWidget {
 }
 
 class RecodeConfigState extends ConsumerState<RecodeConfig> {
+  // TODO 20240819 gjw EACH WIDGET NEEDS A COMMENT
+
   Widget variableChooser(
     String label,
     List<String> inputs,
@@ -77,9 +81,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         selectedTransform = ref.read(typesProvider)[value] == Type.numeric
             ? numericMethods.first
             : categoricMethods.first;
-        // We don't buildAction() here since the variable choice might
-        // be followed by a transform choice and we don;t want to shoot
-        // off building lots of new variables unnecesarily.
       },
     );
   }
@@ -125,22 +126,22 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       default:
         showUnderConstruction(context);
     }
-    // Notice that rSource is asynchronous so this glimpse is oftwn happening
-    // before the above transformation.
-    //
-    // rSource(context, ref, 'glimpse');
   }
 
-  Widget recodeChooser() {
+  Widget recodeChooser(inputs, selected2) {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(numberProvider.notifier).state.toString();
-    bool isNumeric;
+
+    bool isNumeric = true;
+
+    // On startup with no dataset (so nothing selected) the default is to enable
+    // all the chips.
+
     if (selected != 'NULL') {
       isNumeric = ref.read(typesProvider)[selected] == Type.numeric;
-    } else {
-      isNumeric = false;
-      debugPrint('Error: selected is NULL!!!');
     }
+
+    // TODO 20240819 gjw WHERE ARE THE TOOLTIPS?
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -165,16 +166,24 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           enabled: isNumeric,
         ),
         configWidgetSpace,
+        ChoiceChipTip(
+          enabled: selected == 'NULL' || !isNumeric,
+          options: categoricMethods,
+          selectedOption: !isNumeric ? selectedTransform : '',
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
+        ),
+        configWidgetSpace,
         Expanded(
-          child: ChoiceChipTip(
-            enabled: !isNumeric,
-            options: categoricMethods,
-            selectedOption: !isNumeric ? selectedTransform : '',
-            onSelected: (String? selected) {
-              setState(() {
-                selectedTransform = selected ?? '';
-              });
-            },
+          child: variableChooser(
+            'Secondary',
+            inputs,
+            selected2,
+            ref,
+            selected2Provider,
           ),
         ),
       ],
@@ -210,26 +219,17 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
-
+        configTopSpace,
         Row(
           children: [
-            // Space to the left of the configs.
-
-            const SizedBox(width: 5),
-
-            // The BUILD button.
-
+            configTopSpace,
             ActivityButton(
               onPressed: () {
-                // showUnderConstruction(context);
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(selected2Provider.notifier).state = selected2;
                 buildAction();
               },
-              child: const Text("Recode Variable's Values"),
+              child: const Text('Recode Variable Values'),
             ),
             configWidgetSpace,
             variableChooser(
@@ -239,17 +239,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               ref,
               selectedProvider,
             ),
-            configWidgetSpace,
-            variableChooser(
-              'Second Variable',
-              inputs,
-              selected2,
-              ref,
-              selected2Provider,
-            ),
           ],
         ),
-        recodeChooser(),
+        recodeChooser(inputs, selected2),
       ],
     );
   }
