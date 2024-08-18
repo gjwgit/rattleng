@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
@@ -257,7 +257,13 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
             configWidgetSpace,
 
-            variableChooser(inputs, selected, ref),
+            variableChooser(
+              'Variable',
+              inputs,
+              selected,
+              ref,
+              selectedProvider,
+            ),
 
             configWidgetSpace,
           ],

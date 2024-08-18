@@ -35,13 +35,14 @@ class ChoiceChipTip<T> extends StatelessWidget {
   final T selectedOption;
   final ValueChanged<T?> onSelected;
   final Map? tooltips;
-
+  final bool enabled;
   const ChoiceChipTip({
     super.key,
     required this.options,
     required this.selectedOption,
     required this.onSelected,
     this.tooltips,
+    this.enabled = true,
     String Function(T)? getLabel,
   }) : getLabel = getLabel ?? _defaultGetLabel;
 
@@ -65,9 +66,11 @@ class ChoiceChipTip<T> extends StatelessWidget {
           pressElevation: 8.0,
           elevation: 2.0,
           selected: selectedOption == option,
-          onSelected: (bool selected) {
-            onSelected(selected ? option : null);
-          },
+          onSelected: enabled
+              ? (bool selected) {
+                  onSelected(selected ? option : null);
+                }
+              : null,
         );
       }).toList(),
     );
