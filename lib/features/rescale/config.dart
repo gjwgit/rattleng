@@ -187,7 +187,12 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
             ),
             configWidgetSpace,
             variableChooser(
-                'Variable', numericInputs, selected, ref, selectedProvider, ),
+              'Variable',
+              numericInputs,
+              selected,
+              ref,
+              selectedProvider,
+            ),
           ],
         ),
         rescaleChooser(),
