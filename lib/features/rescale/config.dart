@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-11 19:53:08 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-19 08:18:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,16 +32,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/custom_choice_chip.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
-/// This is a StatefulWidget to pass the ref across to the rSource as well as to
+/// This is a StatefulWidget to pass the ref across to the rSource
 /// monitor the selected variable.
 
 class RescaleConfig extends ConsumerStatefulWidget {
@@ -76,9 +77,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        CustomChoiceChip<String>(
+        ChoiceChipTip<String>(
           options: normaliseMethods,
-          getLabel: (String method) => method,
           selectedOption: selectedTransform,
           onSelected: (String? selected) {
             setState(() {
@@ -87,9 +87,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           },
         ),
         configWidgetSpace,
-        CustomChoiceChip<String>(
+        ChoiceChipTip<String>(
           options: orderMethods,
-          getLabel: (String method) => method,
           selectedOption: selectedTransform,
           onSelected: (String? selected) {
             setState(() {
@@ -151,18 +150,26 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     // some more transforms on it.  Variables the user has marked as IGNORE
     // should not be listed in the TRANSFORM tab.
 
-    // Retireve the list of (TODO numeric) inputs as the label and value of the
+    // Retireve the list of numeric inputs as the label and value of the
     // dropdown menu.
 
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
-
+    List<String> numericInputs = [];
+    Map<String, Type> types = ref.watch(
+      typesProvider,
+    ); // want to refresh the options if there is new variables added so use watch
+    for (var i in inputs) {
+      if (types[i] == Type.numeric) {
+        numericInputs.add(i);
+      }
+    }
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
 
     String selected = ref.watch(selectedProvider);
-    if (selected == 'NULL' && inputs.isNotEmpty) {
-      selected = inputs.first;
+    if (selected == 'NULL' && numericInputs.isNotEmpty) {
+      selected = numericInputs.first;
     }
 
     return Column(
@@ -179,12 +186,15 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               child: const Text('Rescale Variable Values'),
             ),
             configWidgetSpace,
-            variableChooser(inputs, selected, ref),
+            variableChooser(
+              'Variable',
+              numericInputs,
+              selected,
+              ref,
+              selectedProvider,
+            ),
           ],
         ),
-//        configTopSpace,
-//        normaliseChooser(),
-//        configTopSpace,
         rescaleChooser(),
       ],
     );

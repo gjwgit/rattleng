@@ -61,6 +61,22 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
     List<String> inputs = getInputs(ref);
 
+    Map typeState = ref.read(typesProvider.notifier).state;
+
+    // Sort the inputs list with numerical types first.
+    inputs.sort((a, b) {
+      final aType = typeState[a];
+      final bType = typeState[b];
+
+      if (aType == Type.numeric && bType != Type.numeric) {
+        return -1;
+      } else if (aType != Type.numeric && bType == Type.numeric) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.

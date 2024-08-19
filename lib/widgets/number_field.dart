@@ -156,85 +156,83 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Tooltip(
-        message: widget.tooltip,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            widget.label.isEmpty
-                ? Container()
-                : Text(
-                    widget.label,
-                    style: widget.enabled ? normalTextStyle : disabledTextStyle,
-                  ),
-            SizedBox(
-              width: widget.maxWidth * 30.0,
-              child: Stack(
-                children: [
-                  TextFormField(
-                    controller: widget.controller,
-                    focusNode: _focusNode,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.only(
-                        right: 40,
-                        left: 10,
-                      ),
-                      errorText: widget.validator(widget.controller.text),
-                      errorStyle: const TextStyle(
-                        fontSize: 10,
-                      ),
+    return Tooltip(
+      message: widget.tooltip,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          widget.label.isEmpty
+              ? Container()
+              : Text(
+                  widget.label,
+                  style: widget.enabled ? normalTextStyle : disabledTextStyle,
+                ),
+          SizedBox(
+            width: widget.maxWidth * 30.0,
+            child: Stack(
+              children: [
+                TextFormField(
+                  controller: widget.controller,
+                  focusNode: _focusNode,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.only(
+                      right: 40,
+                      left: 10,
                     ),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    onEditingComplete: () {
-                      // triggered after user clicks enter.
-                      updateField();
-                    },
-                    style: widget.enabled ? normalTextStyle : disabledTextStyle,
-                    enabled: widget.enabled,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                      widget.inputFormatter,
+                    errorText: widget.validator(widget.controller.text),
+                    errorStyle: const TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  onEditingComplete: () {
+                    // triggered after user clicks enter.
+                    updateField();
+                  },
+                  style: widget.enabled ? normalTextStyle : disabledTextStyle,
+                  enabled: widget.enabled,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                    widget.inputFormatter,
+                  ],
+                ),
+                // Positioned Arrow Buttons.
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: widget.enabled ? increment : null,
+                        onLongPressStart: widget.enabled
+                            ? (details) => startIncrementing()
+                            : null,
+                        onLongPressEnd: widget.enabled
+                            ? (details) => stopIncrementing()
+                            : null,
+                        child: const Icon(Icons.arrow_drop_up),
+                      ),
+                      GestureDetector(
+                        onTap: widget.enabled ? decrement : null,
+                        onLongPressStart: widget.enabled
+                            ? (details) => startDecrementing()
+                            : null,
+                        onLongPressEnd: widget.enabled
+                            ? (details) => stopDecrementing()
+                            : null,
+                        child: const Icon(Icons.arrow_drop_down),
+                      ),
                     ],
                   ),
-                  // Positioned Arrow Buttons.
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: widget.enabled ? increment : null,
-                          onLongPressStart: widget.enabled
-                              ? (details) => startIncrementing()
-                              : null,
-                          onLongPressEnd: widget.enabled
-                              ? (details) => stopIncrementing()
-                              : null,
-                          child: const Icon(Icons.arrow_drop_up),
-                        ),
-                        GestureDetector(
-                          onTap: widget.enabled ? decrement : null,
-                          onLongPressStart: widget.enabled
-                              ? (details) => startDecrementing()
-                              : null,
-                          onLongPressEnd: widget.enabled
-                              ? (details) => stopDecrementing()
-                              : null,
-                          child: const Icon(Icons.arrow_drop_down),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

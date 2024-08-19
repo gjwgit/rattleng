@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -27,17 +28,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetClearTextField extends ConsumerWidget {
   const DatasetClearTextField({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return IconButton(
-      icon: const Icon(Icons.clear),
-      onPressed: () {
-        ref.read(pathProvider.notifier).state = '';
-      },
+    return DelayedTooltip(
+      message: '''
+
+        Tap here to clear the path entry.
+
+        ''',
+      child: IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          ref.read(pathProvider.notifier).state = '';
+        },
+      ),
     );
   }
 }

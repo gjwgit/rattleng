@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-17 06:40:50 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-08-19 08:47:21 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,25 +22,8 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Graham Williams, Yixiang Yin
 
-# TODO 20240720 gjw combine into impute_constant
+# Bin the SELECTED_VAR into NUMBER bins using kmeans.
 
-# Transform "SELECTED_VAR" into "IMP_SELECTED_VAR" by imputing a value.
-
-if (is.numeric(ds$SELECTED_VAR)) {
-  ds %<>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     IMPUTED_VALUE,
-                                     SELECTED_VAR))
-} else {
-  ds %<>%
-    mutate(IMP_SELECTED_VAR = as.character(SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(IMP_SELECTED_VAR),
-                                     "IMPUTED_VALUE",
-                                     IMP_SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = as.factor(IMP_SELECTED_VAR))
-}
-
-glimpse(ds)
-summary(ds)
+ds[["BKM_SELECTED_VAR_NUMBER"]] <- binning(ds[["SELECTED_VAR"]], NUMBER, method="kmeans", ordered=FALSE)

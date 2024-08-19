@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-17 06:40:50 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-08-03 14:27:49 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,25 +22,13 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Graham Williams, Yixiang Yin
 
-# TODO 20240720 gjw combine into impute_constant
+# Remap variables. 
 
-# Transform "SELECTED_VAR" into "IMP_SELECTED_VAR" by imputing a value.
+# Turn two factors into one factor.
 
-if (is.numeric(ds$SELECTED_VAR)) {
-  ds %<>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     IMPUTED_VALUE,
-                                     SELECTED_VAR))
-} else {
-  ds %<>%
-    mutate(IMP_SELECTED_VAR = as.character(SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(IMP_SELECTED_VAR),
-                                     "IMPUTED_VALUE",
-                                     IMP_SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = as.factor(IMP_SELECTED_VAR))
-}
+ds[, "TJN_SELECTED_VAR_SELECTED_2_VAR"] <- interaction(paste(ds[["SELECTED_VAR"]], "_",ds[["SELECTED_2_VAR"]], sep=""))
+ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]][grepl("^NA_|_NA$", ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]])] <- NA
+ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]] <- as.factor(as.character(ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]]))
 
-glimpse(ds)
-summary(ds)

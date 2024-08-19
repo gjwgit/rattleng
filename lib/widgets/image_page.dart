@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Saturday 2024-08-10 15:02:42 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-18 09:00:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -124,7 +124,7 @@ class ImagePage extends StatelessWidget {
                         onPressed: () {
                           showImageDialog(context, bytes);
                         },
-                        tooltip: 'Press here to view the plot\n'
+                        tooltip: 'Tap here to view the plot\n'
                             'enlarged.',
                       ),
                       IconButton(
@@ -132,7 +132,7 @@ class ImagePage extends StatelessWidget {
                           Icons.open_in_new,
                           color: Colors.blue,
                         ),
-                        tooltip: 'TODO Press here to view the plot\n'
+                        tooltip: 'Tap here to view the plot\n'
                             'in a separate window.',
                         onPressed: () {
                           // Generate a unique file name for the new file in the
@@ -168,7 +168,7 @@ class ImagePage extends StatelessWidget {
                             await File(path).copy(pathToSave);
                           }
                         },
-                        tooltip: 'Press here to save the plot\n'
+                        tooltip: 'Tap here to save the plot\n'
                             'into an SVG file on local storage.',
                       ),
                       const SizedBox(width: 5),
