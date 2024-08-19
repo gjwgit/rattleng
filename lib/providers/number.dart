@@ -1,6 +1,6 @@
-/// A provider of the clean up method that to delete missing from dataset.
+/// A provider for number (transform/recode)
 ///
-/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-07-30 11:11:48 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -8,6 +8,7 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -21,10 +22,11 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Yixiang Yin
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final cleanUpMethodProvider =
-    StateProvider<String>((ref) => 'Vars with Missing');
+const initNumber = 4;
+final numberProvider = StateProvider<int>((ref) => initNumber);

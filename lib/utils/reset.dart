@@ -47,7 +47,6 @@ import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/terminal.dart';
-import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';

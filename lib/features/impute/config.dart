@@ -82,6 +82,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
       // visualisations.
       onSelected: (String? value) {
         ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
+        // Here is that subtle difference
         selectedTransform = 'Zero/Missing';
         // We don't buildAction() here since the variable choice might
         // be followed by a transform choice and we don;t want to shoot
@@ -245,6 +246,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               child: const Text('Impute Missing Values'),
             ),
             configWidgetSpace,
+            // use local one because of the subtle difference
             variableChooser(inputs, selected, ref),
             configWidgetSpace,
             transformChooser(),

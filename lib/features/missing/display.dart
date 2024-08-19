@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-15 20:09:21 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-16 11:10:58 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -81,7 +81,9 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
           # Patterns of Missing Data - Textual
 
-          Generated using
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/missing-values-in-rattle.html)
+          and
           [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
           ''',
