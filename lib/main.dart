@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Friday 2024-08-02 12:53:59 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-08-19 13:04:34 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -50,7 +50,9 @@ void main() async {
   // In production do not display [debguPrint] messages.
 
   if (isProduction) {
-    debugPrint = (String? message, {int? wrapWidth}) {};
+    debugPrint = (String? message, {int? wrapWidth}) {
+      null;
+    };
   }
 
   // Tune the window manager before runApp() to avoid a lag in the UI. For
