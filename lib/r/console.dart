@@ -50,7 +50,7 @@ class _RConsoleState extends ConsumerState<RConsole> {
   @override
   void initState() {
     super.initState();
-    // This seems to be needed to initiate the pseudo terminal.
+    // Initialize the pseudo terminal via the provider.
     ref.read(ptyProvider);
   }
 
@@ -87,38 +87,72 @@ class _RConsoleState extends ConsumerState<RConsole> {
 
   @override
   Widget build(BuildContext context) {
-    Terminal terminal = ref.watch(terminalProvider);
+    // Retrieve the Terminal instance from the provider.
+    final terminal = ref.watch(terminalProvider);
 
     return Scaffold(
       body: SafeArea(
-        child: TerminalView(
-          terminal,
-          controller: terminalController,
-          autofocus: true,
-          backgroundOpacity: 1.0,
-          padding: const EdgeInsets.all(8.0),
-          textStyle: const TerminalStyle(fontFamily: 'RobotoMono'),
-          theme: blackOnWhite,
-          // 20240809 gjw Attempt to support copy to clipboard on secondary
-          // mouse button.
-          onSecondaryTapDown: (details, offset) async {
-            debugPrint('TapDown');
-            final selection = terminalController.selection;
-            if (selection != null) {
+        child: GestureDetector(
+          onSecondaryTapDown: (details) {
+            _showContextMenu(details.globalPosition, terminal);
+          },
+          child: TerminalView(
+            terminal,
+            controller: terminalController,
+            autofocus: true,
+            backgroundOpacity: 1.0,
+            padding: const EdgeInsets.all(8.0),
+            textStyle: const TerminalStyle(fontFamily: 'RobotoMono'),
+            theme: blackOnWhite,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Displays a context menu at the specified [position].
+  ///
+  /// The menu provides options for copying selected text or pasting text from
+  /// the clipboard into the terminal.
+
+  void _showContextMenu(Offset position, Terminal terminal) async {
+    final selection = terminalController.selection;
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromRect(
+        position &
+            const Size(
+              40,
+              40,
+            ), // Smaller Rect, makes the menu appear near the tap.
+        Offset.zero & overlay.size,
+      ),
+      items: [
+        // If there is selected text, show the "Copy" option.
+        if (selection != null) ...[
+          PopupMenuItem(
+            child: const Text('Copy'),
+            onTap: () async {
               final text = terminal.buffer.getText(selection);
-              debugPrint('SELECTION: $text');
-              terminalController.clearSelection();
               await Clipboard.setData(ClipboardData(text: text));
-            } else {
-              final data = await Clipboard.getData('text/plain');
-              final text = data?.text;
-              if (text != null) {
-                terminal.paste(text);
-              }
+              terminalController.clearSelection();
+            },
+          ),
+        ],
+        // Always show the "Paste" option.
+        PopupMenuItem(
+          child: const Text('Paste'),
+          onTap: () async {
+            final data = await Clipboard.getData(Clipboard.kTextPlain);
+            if (data != null) {
+              terminal.paste(data.text!);
             }
           },
         ),
-      ),
+      ],
     );
   }
 }

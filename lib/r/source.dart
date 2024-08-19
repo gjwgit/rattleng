@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-08-11 11:39:00 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-08-16 10:03:13 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,6 +30,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -117,17 +119,13 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Process template variables.
 
-  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()} USER');
+  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
   // Populate the VERSION.
 
-  // PackageInfo info = await PackageInfo.fromPlatform();
-  // code = code.replaceAll('VERSION', info.version);
-  //
-  // TODO 20231102 gjw THIS FAILS FOR NOW AS REQUIRES A FUTURE SO FIX THE
-  // VERSION FOR NOW.
+  PackageInfo info = await PackageInfo.fromPlatform();
 
-  code = code.replaceAll('VERSION', '0.0.0');
+  code = code.replaceAll('VERSION', info.version);
 
   code = code.replaceAll('FILENAME', path);
 
@@ -219,7 +217,23 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     }
   });
 
+  // If target is NULL then we need to ensure expressions in the R code like
+  //
+  // target <- "TARGET_VAR"
+  //
+  // becomes
+  //
+  // target <- NULL
+  //
+  // rather then being "NULL" which then indicates a variable called NULL. So
+  // handle that special case and then replace any other TARGET_VAR replacement
+  // as usual.
+
+  if (target == 'NULL') {
+    code = code.replaceAll('"TARGET_VAR"', target);
+  }
   code = code.replaceAll('TARGET_VAR', target);
+
   //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
 
   // Extract the risk variable from the rolesProvider and use that for now as
@@ -233,6 +247,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   });
 
   code = code.replaceAll('INTERVAL', interval.toString());
+  code = code.replaceAll('NUMBER', ref.read(numberProvider).toString());
   code = code.replaceAll('SELECTED_VAR', selected);
 
   code = code.replaceAll('SELECTED_2_VAR', selected2);

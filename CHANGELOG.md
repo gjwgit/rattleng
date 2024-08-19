@@ -6,8 +6,26 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.3.n series are heading
 toward a 6.3 release.
 
+## 6.4 FUTURE Using JSON to communicate meta data
+
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Initial fixes to RECODE [6.2.63 20240819 gjw]
++ Implement RECODE [6.2.62 20240819 yyx]
++ Bug: VISUAL not updating with generated plots [6.2.61 20240817 gjw]
++ Bug: IMPUTE -> CONSTANT for factor fixed [6.2.60 20240817 gjw]
++ Horizontal scroll of text pages [6.2.59 20240817 kev]
++ Bug fix - MISSING now works if TARGET is not specified [6.2.58 20240816 gjw]
++ Get username in R for plots [6.2.57 20240816 zy]
++ Update TARGET heuristics. Visual prefer numeric [6.2.56 20240815 zy]
++ Add to SUMMARY, MISSING, CORRELATION [6.2.55 20240815 gjw]
++ Bug fixes for IMPUTE and RESCALE options [6.2.54 20240815 yyx]
++ Add horizontal paging to text pages [6.2.53 20240814 kev]
++ Bug fix navigator dots not updating [6.2.53 20240814 kev]
++ Support console copy and paste [6.2.53 20240814 zy]
++ Review and fine tune  [6.2.52 20240814 gjw]
++ Only num vars for rescale. Disable numeric imputes for categorics [6.2.52 20240814 yyx]
++ Merge choice chips. [6.2.52 20240814 zy]
 + Review and code cleanup [6.2.51 20240813 zy]
 + Extra string cleaning for Windows 10 [6.2.50 20240812 gjw]
 + Doc updates. Modernise R code. Trial await CONSOLE startup [6.2.49 20240812 gjw]

@@ -26,9 +26,7 @@
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -49,6 +47,10 @@ class TextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Create a ScrollController for horizontal scrolling.
+
+    final ScrollController horizontalScrollController = ScrollController();
+
     return Container(
       decoration: sunkenBoxDecoration,
       width: double.infinity,
@@ -65,12 +67,25 @@ class TextPage extends StatelessWidget {
                 launchUrl(url);
               },
             ),
-            SelectableText(
-              content,
-              style: monoTextStyle,
+            // Wrap SelectableText in a Scrollbar with SingleChildScrollView for horizontal scrolling.
+
+            Scrollbar(
+              controller: horizontalScrollController,
+              // Show the scrollbar always.
+
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                controller: horizontalScrollController,
+                child: SelectableText(
+                  content,
+                  style: monoTextStyle,
+                  textAlign: TextAlign.left,
+                ),
+              ),
             ),
             // 20240812 gjw Add a bottom spacer to leave a gap for the page
-            // navigation whenscrolling to the bottom of the page so that it can
+            // navigation when scrolling to the bottom of the page so that it can
             // be visible in at least some part of any very busy pages.
             textPageBottomSpace,
             // 20240812 gjw Add a divider to mark the end of the text page.
