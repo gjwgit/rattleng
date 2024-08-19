@@ -31,6 +31,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:file_picker/file_picker.dart';
+
 import 'package:rattle/providers/script.dart';
 
 class ScriptSaveButton extends ConsumerWidget {
@@ -47,54 +49,26 @@ class ScriptSaveButton extends ConsumerWidget {
   }
 
   // Function to display a dialog for the user to enter the file name.
-  void _showFileNameDialog(BuildContext context, WidgetRef ref) {
-    final TextEditingController controller =
-        TextEditingController(text: 'script.R');
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Save Script'),
-          content: TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-              hintText: 'Enter file name',
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                // Close the dialog without saving.
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                final String fileName = controller.text;
-                if (fileName.isNotEmpty) {
-                  // Validate the file name ends with .R.
-                  if (fileName.endsWith('.R')) {
-                    _saveScript(ref, fileName, context);
-                    Navigator.of(context).pop();
-                  } else {
-                    // Show an error message if the file name does not end with .R.
-                    _showErrorDialog(context, 'File name must end with .R');
-                  }
-                } else {
-                  // Show an error message if the file name is empty.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('File name cannot be empty')),
-                  );
-                }
-              },
-              child: const Text('Save'),
-            ),
-          ],
-        );
-      },
+  Future<void> _showFileNameDialog(BuildContext context, WidgetRef ref) async {
+    String? outputPath = await FilePicker.platform.saveFile(
+      dialogTitle: 'Choose a file to save',
+      fileName: 'script.R',
+      type: FileType.custom,
+      allowedExtensions: ['R'],
     );
+    if (context.mounted) {
+      if (outputPath != null) {
+        // User picked a file.
+        _saveScript(ref, outputPath, context);
+      } else {
+        // user canceled the file picker
+        _showErrorDialog(context, 'No file selected');
+      }
+    } else {
+      // The context is no longer mounted.
+      debugPrint('ERROR: Context is no longer mounted');
+    }
+    return;
   }
 
   // Function to display an error dialog.
