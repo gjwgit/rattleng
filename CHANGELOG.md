@@ -10,6 +10,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Native File Picker when saving script [20240819 Lutra-Fs]
 + Visible horizontal scrollbar [6.2.64 20240819 kev]
 + Initial fixes to RECODE [6.2.63 20240819 gjw]
 + Implement RECODE [6.2.62 20240819 yyx]
