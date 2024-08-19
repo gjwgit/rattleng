@@ -44,7 +44,7 @@ import 'package:rattle/tabs/explore.dart';
 ///
 /// 20230712 gjw
 
-const String envPAUSE = String.fromEnvironment("PAUSE", defaultValue: "0");
+const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
 
@@ -52,7 +52,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('Home page loads okay.', (WidgetTester tester) async {
-    debugPrint("TESTER: Start up the app");
+    debugPrint('TESTER: Start up the app');
 
     app.main();
 
@@ -68,12 +68,7 @@ void main() {
     expect(datasetButtonFinder, findsOneWidget);
     await tester.pump(pause);
 
-    debugPrint("TESTER: Confirm welcome message on home screen.");
-
-    // Confirm the introductory text is as expected from the welcome.md
-    // file. We find all the Markdown widgets (currently 20231008 there are 2)
-    // and get the first one, hopefully as the welcome widget? Instead of
-    // findNWidgets(2) we could use findAtLeastNWidgets(2).
+    debugPrint('TESTER: Confirm welcome message on home screen.');
 
     final welcomeMarkdownFinder = find.byType(Markdown);
     expect(welcomeMarkdownFinder, findsNWidgets(2));
@@ -83,16 +78,16 @@ void main() {
     String welcome = welcomeWidget.data;
     expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
 
-    debugPrint("Check the status bar has the expected contents.");
+    debugPrint('Check the status bar has the expected contents.');
 
     final statusBarFinder = find.byKey(statusBarKey);
     expect(statusBarFinder, findsOneWidget);
 
     ////////////////////////////////////////////////////////////////////////
-    // DATASET DEMO
+    // DATASET DEMO (By Kevin)
     ////////////////////////////////////////////////////////////////////////
 
-    debugPrint("TESTER: Tap the Dataset button.");
+    debugPrint('TESTER: Tap the Dataset button.');
 
     final datasetButton = find.byType(DatasetButton);
     expect(datasetButton, findsOneWidget);
@@ -102,114 +97,120 @@ void main() {
 
     await tester.pump(delay);
 
-    debugPrint("TESTER: Tap the Demo button.");
+    debugPrint('TESTER: Tap the Demo button.');
 
     final datasetPopup = find.byType(DatasetPopup);
     expect(datasetPopup, findsOneWidget);
-    final demoButton = find.text("Demo");
+    final demoButton = find.text('Demo');
     expect(demoButton, findsOneWidget);
     await tester.tap(demoButton);
     await tester.pumpAndSettle();
     await tester.pump(pause);
 
-    debugPrint("TESTER: Expect the default demo dataset is identified.");
+    debugPrint('TESTER: Expect the default demo dataset is identified.');
 
     final dsPathTextFinder = find.byKey(datasetPathKey);
     expect(dsPathTextFinder, findsOneWidget);
     final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
     String filename = dsPathText.controller?.text ?? '';
-    expect(filename, "rattle::weather");
+    expect(filename, 'rattle::weather');
 
-    debugPrint("TESTER: Expect the default demo dataset is loaded.");
-
-    // final datasetDisplayFinder = find.byKey(datasetGlimpseKey);
-
-    // expect(datasetDisplayFinder, findsOneWidget);
-
-    // final dataset =
-    //     datasetDisplayFinder.evaluate().last.widget as SelectableText;
-
-    // expect(dataset.data, contains("Rows: 366\n"));
-    // expect(dataset.data, contains("Columns: 24\n"));
-    // expect(dataset.data, contains("date            <date>"));
-    // expect(dataset.data, contains("rain_tomorrow   <fct>"));
+    debugPrint('TESTER: Expect the default demo dataset is loaded.');
 
     // Find the Explore tab by icon and tap on it.
 
     final exploreIconFinder = find.byIcon(Icons.insights);
     expect(exploreIconFinder, findsOneWidget);
 
-    // Tap the Explore tab
+    // Tap the Explore tab.
+
     await tester.tap(exploreIconFinder);
     await tester.pumpAndSettle();
 
-    // Verify if the ExploreTabs widget is shown
+    // Verify if the ExploreTabs widget is shown.
+
     expect(find.byType(ExploreTabs), findsOneWidget);
 
-    // Navigate to the Explore tab if needed (assuming Explore is the second tab in your navigation rail)
+    // Navigate to the Explore tab.
+
     final exploreTabFinder = find.text('Explore');
     await tester.tap(exploreTabFinder);
     await tester.pumpAndSettle();
 
-    // Find the Summary tab by its title
+    // Find the Summary tab by its title.
+
     final summaryTabFinder = find.text('Summary');
     expect(summaryTabFinder, findsOneWidget);
 
-    // Tap the Summary tab
+    // Tap the Summary tab.
+
     await tester.tap(summaryTabFinder);
     await tester.pumpAndSettle();
 
-    // Verify that the SummaryPanel is shown
+    // Verify that the SummaryPanel is shown.
+
     expect(find.byType(SummaryPanel), findsOneWidget);
 
-    // Find the button by its text
+    // Find the button by its text.
+
     final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
     expect(generateSummaryButtonFinder, findsOneWidget);
 
-    // Tap the button
+    // Tap the button.
+
     await tester.tap(generateSummaryButtonFinder);
     await tester.pumpAndSettle();
 
-    // Find the right arrow button in the PageIndicator
+    // Find the right arrow button in the PageIndicator.
+
     final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
     expect(rightArrowFinder, findsOneWidget);
 
-    // Tap the right arrow button to go to Summary of the Dataset page
+    // Tap the right arrow button to go to "Summary of the Dataset" page.
+
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
-    // Find the text containing "2007-11-01"
+    // Find the text containing "2007-11-01".
+
     final dateFinder = find.textContaining('2007-11-01');
     expect(dateFinder, findsOneWidget);
 
-    // Find the text containing "39.800"
+    // Find the text containing "39.800".
+
     final valueFinder = find.textContaining('39.800');
     expect(valueFinder, findsOneWidget);
 
-    // Tap the right arrow button to go to Skim of the Dataset page
+    // Tap the right arrow button to go to "Skim of the Dataset" page.
+
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
-    // Find the text containing "366" as the number of rows
+    // Find the text containing "366" as the number of rows.
+
     final rowsFinder = find.textContaining('366');
     expect(rowsFinder, findsOneWidget);
 
-    // Find the text containing "23" as the number of columns
+    // Find the text containing "23" as the number of columns.
+
     final columnsFinder = find.textContaining('23');
     expect(columnsFinder, findsOneWidget);
 
-    // Tap the right arrow button to go to "Kurtosis and Skewness" page
+    // Tap the right arrow button to go to "Kurtosis and Skewness" page.
+
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
-    // Find the text containing "-1.12569017" as the min_temp
+    // Find the text containing "-1.12569017" as the min_temp.
+
     final tempMinFinder = find.textContaining('-1.12569017');
     expect(tempMinFinder, findsOneWidget);
 
-    // Find the text containing "0.347510625" as the max_temp
+    // Find the text containing "0.347510625" as the max_temp.
+
     final tempMaxFinder = find.textContaining('0.347510625');
     expect(tempMaxFinder, findsOneWidget);
 
-    debugPrint("TESTER: Finished.");
+    debugPrint('TESTER: Finished.');
   });
 }
