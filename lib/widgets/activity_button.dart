@@ -1,6 +1,6 @@
-/// An ElevatedButton implementing Activity initiation for RattleNG
+/// An ElevatedButton implementing Activity initiation for Rattle.
 //
-// Time-stamp: <Wednesday 2024-08-14 16:22:20 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-19 13:15:22 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,20 +35,13 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/utils/show_ok.dart';
 
 class ActivityButton extends ConsumerWidget {
-  final VoidCallback? onPressed;
-  final Widget? child;
-
-  // TODO 20240614 gjw RESOLVE THIS WARNING
-  //
-  // lib/widgets/activity_button.dart:
-  //   ⚠ constructor ActivityButton has unnecessary nullable parameters
-  //     (this.onPressed, this.child)
-  //     at /rattleng/lib/widgets/activity_button.dart:40:3
+  final VoidCallback onPressed;
+  final Widget child;
 
   const ActivityButton({
     super.key,
-    this.onPressed,
-    this.child,
+    required this.onPressed,
+    required this.child,
   });
 
   @override
@@ -70,11 +63,11 @@ class ActivityButton extends ConsumerWidget {
 
             ''',
           );
-        } else if (onPressed != null) {
-          onPressed!();
+        } else {
+          onPressed();
         }
       },
-      child: child ?? const Text('Build'),
+      child: child,
     );
   }
 }
