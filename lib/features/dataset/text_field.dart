@@ -20,6 +20,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -59,9 +60,13 @@ class DatasetTextField extends ConsumerWidget {
       // Use [Expanded] to fill the remainder of the row.
 
       child: DelayedTooltip(
-        message: 'You can type the actual path to a file containing\n'
-            'your dataset, perhaps as a CSV file, or the name of a\n'
-            'package dataset, like rattle::wattle.',
+        message: '''
+
+        You can type the actual path to a file containing
+        your dataset, perhaps as a CSV file, or the name of a
+        package dataset, like rattle::wattle.
+
+        ''',
         child: TextField(
           // A [TextField] to contain the name of the selected dataset.
 
