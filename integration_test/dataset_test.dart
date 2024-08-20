@@ -1,6 +1,6 @@
 /// Testing: Basic app startup test.
 //
-// Time-stamp: <Tuesday 2024-08-20 06:28:48 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 15:46:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -105,11 +105,10 @@ void main() {
 
     final datasetButton = find.byType(DatasetButton);
     expect(datasetButton, findsOneWidget);
-    await tester.pump(pause);
     await tester.tap(datasetButton);
     await tester.pumpAndSettle();
 
-    await tester.pump(delay);
+    await tester.pump(pause);
 
     debugPrint('DATASET: Tap the Demo button.');
 

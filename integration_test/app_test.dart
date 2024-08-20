@@ -1,6 +1,6 @@
 /// Testing: Basic app startup test.
 //
-// Time-stamp: <Tuesday 2024-08-20 07:06:31 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 15:45:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -73,7 +73,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      // Leave time to see the first page.
+      // Leave time to see the result.
 
       await tester.pump(pause);
 
