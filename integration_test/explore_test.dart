@@ -1,6 +1,6 @@
 /// Testing: Test the EXPLORE tab.
 //
-// Time-stamp: <Tuesday 2024-08-20 06:30:37 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 15:51:06 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -122,6 +122,8 @@ void main() {
     await tester.tap(exploreTabFinder);
     await tester.pumpAndSettle();
 
+    await tester.pump(pause);
+
     // Find the Summary tab by its title.
 
     final summaryTabFinder = find.text('Summary');
@@ -136,6 +138,8 @@ void main() {
 
     expect(find.byType(SummaryPanel), findsOneWidget);
 
+    await tester.pump(pause);
+
     // Find the button by its text.
 
     final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
@@ -146,6 +150,8 @@ void main() {
     await tester.tap(generateSummaryButtonFinder);
     await tester.pumpAndSettle();
 
+    await tester.pump(pause);
+
     // Find the right arrow button in the PageIndicator.
 
     final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
@@ -155,6 +161,8 @@ void main() {
 
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
+
+    await tester.pump(pause);
 
     // Find the text containing "2007-11-01".
 
@@ -171,6 +179,8 @@ void main() {
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
+    await tester.pump(pause);
+
     // Find the text containing "366" as the number of rows.
 
     final rowsFinder = find.textContaining('366');
@@ -185,6 +195,8 @@ void main() {
 
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
+
+    await tester.pump(pause);
 
     // Find the text containing "-1.12569017" as the min_temp.
 
