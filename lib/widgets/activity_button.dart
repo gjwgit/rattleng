@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for Rattle.
 //
-// Time-stamp: <Monday 2024-08-19 13:15:22 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 16:50:04 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/show_ok.dart';
 
 class ActivityButton extends ConsumerWidget {
@@ -46,7 +47,7 @@ class ActivityButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint('BUILDING:\t\tActivityButton');
+    debugText('  BUILD', 'ActivityButton');
 
     return ElevatedButton(
       onPressed: () {

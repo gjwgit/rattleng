@@ -1,6 +1,6 @@
 /// Testing: Basic app startup test.
 //
-// Time-stamp: <Tuesday 2024-08-20 15:45:35 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 16:43:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -64,9 +64,8 @@ void main() {
 
   // TODO 20240820 gjw KEVIN/ZHEYUAN SPLIT INTO TWO GROUPS: WELCOME and DEMO
 
-  group('Test App Startup:', () {
-    testWidgets('Home page loads with welcome message.',
-        (WidgetTester tester) async {
+  group('App Startup:', () {
+    testWidgets('Home Page.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
