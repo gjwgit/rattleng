@@ -4,7 +4,7 @@
 
 /// R Scripts: Support for running an R command.
 ///
-/// Time-stamp: <Wednesday 2024-07-31 06:49:59 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-20 06:04:17 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -18,7 +18,6 @@
 // Foundation, either version 3 of the License, or (at your option) any later
 // version.
 //
-// ttt
 // This program is distributed in the hope that it will be useful, but WITHOUT
 // ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 // FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
