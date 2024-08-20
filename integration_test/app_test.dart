@@ -83,10 +83,6 @@ void main() {
     final statusBarFinder = find.byKey(statusBarKey);
     expect(statusBarFinder, findsOneWidget);
 
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET DEMO (By Kevin)
-    ////////////////////////////////////////////////////////////////////////
-
     debugPrint('TESTER: Tap the Dataset button.');
 
     final datasetButton = find.byType(DatasetButton);
@@ -116,6 +112,44 @@ void main() {
     expect(filename, 'rattle::weather');
 
     debugPrint('TESTER: Expect the default demo dataset is loaded.');
+
+    ////////////////////////////////////////////////////////////////////////
+    // DATASET tab(By Kevin)
+    ////////////////////////////////////////////////////////////////////////
+
+    // Find the right arrow button in the PageIndicator.
+
+    final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+    expect(rightArrowFinder, findsOneWidget);
+
+    // Tap the right arrow button to go to "Dataset Glimpse" page.
+
+    await tester.tap(rightArrowFinder);
+    await tester.pumpAndSettle();
+
+    // Find the text containing "366".
+
+    final glimpseRowFinder = find.textContaining('366');
+    expect(glimpseRowFinder, findsOneWidget);
+
+    // Find the text containing "2007-11-01".
+
+    final glimpseDateFinder = find.textContaining('2007-11-01');
+    expect(glimpseDateFinder, findsOneWidget);
+
+    // Tap the right arrow button to go to "ROLES" page.
+
+    await tester.tap(rightArrowFinder);
+    await tester.pumpAndSettle();
+
+    // Find the text containing "8.0".
+
+    final rolesTempFinder = find.textContaining('8.0');
+    expect(rolesTempFinder, findsOneWidget);
+
+    ////////////////////////////////////////////////////////////////////////
+    // DATASET DEMO Explore tab (By Kevin)
+    ////////////////////////////////////////////////////////////////////////
 
     // Find the Explore tab by icon and tap on it.
 
@@ -163,7 +197,6 @@ void main() {
 
     // Find the right arrow button in the PageIndicator.
 
-    final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
     expect(rightArrowFinder, findsOneWidget);
 
     // Tap the right arrow button to go to "Summary of the Dataset" page.
