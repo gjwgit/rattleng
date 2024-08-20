@@ -253,7 +253,8 @@ test:
 .PHONY: itest
 itest:
 	@echo "Pausing integration TEST:"
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=2 --device-id \
+	for t in integration_test/*_test.dart; \
+	do flutter test --dart-define=PAUSE=2 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	$$t; done
 	@echo $(SEPARATOR)
@@ -261,7 +262,8 @@ itest:
 .PHONY: qtest
 qtest:
 	@echo "Quick integration TEST:"
-	-for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=0 --device-id \
+	-for t in integration_test/*_test.dart; \
+	do flutter test --dart-define=PAUSE=0 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	$$t; done
 	@echo $(SEPARATOR)

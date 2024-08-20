@@ -1,6 +1,6 @@
 /// Testing: Test the EXPLORE tab.
 //
-// Time-stamp: <Tuesday 2024-08-20 15:51:06 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -32,16 +32,12 @@ library;
 // This will avoid a costly build each individual test? But then it is not so
 // well strctured.
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/constants/keys.dart';
 import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
@@ -65,149 +61,143 @@ const Duration delay = Duration(seconds: 1);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Home page loads okay.', (WidgetTester tester) async {
-    debugPrint('EXPLORE: Start up the app');
+  group('Explore Tab:', () {
+    testWidgets('Demo Dataset, Explore, Summary.', (WidgetTester tester) async {
+      app.main();
 
-    app.main();
+      // Trigger a frame. Finish animation and scheduled microtasks.
 
-    // Trigger a frame. Finish animation and scheduled microtasks.
+      await tester.pumpAndSettle();
 
-    await tester.pumpAndSettle();
+      // Leave time to see the first page.
 
-    // Leave time to see the first page.
+      await tester.pump(pause);
 
-    await tester.pump(pause);
+      final datasetButtonFinder = find.byType(DatasetButton);
+      expect(datasetButtonFinder, findsOneWidget);
+      await tester.pump(pause);
 
-    final datasetButtonFinder = find.byType(DatasetButton);
-    expect(datasetButtonFinder, findsOneWidget);
-    await tester.pump(pause);
+      final datasetButton = find.byType(DatasetButton);
+      expect(datasetButton, findsOneWidget);
+      await tester.pump(pause);
+      await tester.tap(datasetButton);
+      await tester.pumpAndSettle();
 
-    debugPrint('EXPLORE: Tap the Dataset button.');
+      await tester.pump(delay);
 
-    final datasetButton = find.byType(DatasetButton);
-    expect(datasetButton, findsOneWidget);
-    await tester.pump(pause);
-    await tester.tap(datasetButton);
-    await tester.pumpAndSettle();
+      final datasetPopup = find.byType(DatasetPopup);
+      expect(datasetPopup, findsOneWidget);
+      final demoButton = find.text('Demo');
+      expect(demoButton, findsOneWidget);
+      await tester.tap(demoButton);
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
 
-    await tester.pump(delay);
+      // Find the Explore tab by icon and tap on it.
 
-    debugPrint('EXPLORE: Tap the Demo button.');
+      final exploreIconFinder = find.byIcon(Icons.insights);
+      expect(exploreIconFinder, findsOneWidget);
 
-    final datasetPopup = find.byType(DatasetPopup);
-    expect(datasetPopup, findsOneWidget);
-    final demoButton = find.text('Demo');
-    expect(demoButton, findsOneWidget);
-    await tester.tap(demoButton);
-    await tester.pumpAndSettle();
-    await tester.pump(pause);
+      // Tap the Explore tab.
 
-    // Find the Explore tab by icon and tap on it.
+      await tester.tap(exploreIconFinder);
+      await tester.pumpAndSettle();
 
-    final exploreIconFinder = find.byIcon(Icons.insights);
-    expect(exploreIconFinder, findsOneWidget);
+      // Verify if the ExploreTabs widget is shown.
 
-    // Tap the Explore tab.
+      expect(find.byType(ExploreTabs), findsOneWidget);
 
-    await tester.tap(exploreIconFinder);
-    await tester.pumpAndSettle();
+      // Navigate to the Explore tab.
 
-    // Verify if the ExploreTabs widget is shown.
+      final exploreTabFinder = find.text('Explore');
+      await tester.tap(exploreTabFinder);
+      await tester.pumpAndSettle();
 
-    expect(find.byType(ExploreTabs), findsOneWidget);
+      await tester.pump(pause);
 
-    // Navigate to the Explore tab.
+      // Find the Summary tab by its title.
 
-    final exploreTabFinder = find.text('Explore');
-    await tester.tap(exploreTabFinder);
-    await tester.pumpAndSettle();
+      final summaryTabFinder = find.text('Summary');
+      expect(summaryTabFinder, findsOneWidget);
 
-    await tester.pump(pause);
+      // Tap the Summary tab.
 
-    // Find the Summary tab by its title.
+      await tester.tap(summaryTabFinder);
+      await tester.pumpAndSettle();
 
-    final summaryTabFinder = find.text('Summary');
-    expect(summaryTabFinder, findsOneWidget);
+      // Verify that the SummaryPanel is shown.
 
-    // Tap the Summary tab.
+      expect(find.byType(SummaryPanel), findsOneWidget);
 
-    await tester.tap(summaryTabFinder);
-    await tester.pumpAndSettle();
+      await tester.pump(pause);
 
-    // Verify that the SummaryPanel is shown.
+      // Find the button by its text.
 
-    expect(find.byType(SummaryPanel), findsOneWidget);
+      final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
+      expect(generateSummaryButtonFinder, findsOneWidget);
 
-    await tester.pump(pause);
+      // Tap the button.
 
-    // Find the button by its text.
+      await tester.tap(generateSummaryButtonFinder);
+      await tester.pumpAndSettle();
 
-    final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
-    expect(generateSummaryButtonFinder, findsOneWidget);
+      await tester.pump(pause);
 
-    // Tap the button.
+      // Find the right arrow button in the PageIndicator.
 
-    await tester.tap(generateSummaryButtonFinder);
-    await tester.pumpAndSettle();
+      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+      expect(rightArrowFinder, findsOneWidget);
 
-    await tester.pump(pause);
+      // Tap the right arrow button to go to "Summary of the Dataset" page.
 
-    // Find the right arrow button in the PageIndicator.
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
 
-    final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-    expect(rightArrowFinder, findsOneWidget);
+      await tester.pump(pause);
 
-    // Tap the right arrow button to go to "Summary of the Dataset" page.
+      // Find the text containing "2007-11-01".
 
-    await tester.tap(rightArrowFinder);
-    await tester.pumpAndSettle();
+      final dateFinder = find.textContaining('2007-11-01');
+      expect(dateFinder, findsOneWidget);
 
-    await tester.pump(pause);
+      // Find the text containing "39.800".
 
-    // Find the text containing "2007-11-01".
+      final valueFinder = find.textContaining('39.800');
+      expect(valueFinder, findsOneWidget);
 
-    final dateFinder = find.textContaining('2007-11-01');
-    expect(dateFinder, findsOneWidget);
+      // Tap the right arrow button to go to "Skim of the Dataset" page.
 
-    // Find the text containing "39.800".
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
 
-    final valueFinder = find.textContaining('39.800');
-    expect(valueFinder, findsOneWidget);
+      await tester.pump(pause);
 
-    // Tap the right arrow button to go to "Skim of the Dataset" page.
+      // Find the text containing "366" as the number of rows.
 
-    await tester.tap(rightArrowFinder);
-    await tester.pumpAndSettle();
+      final rowsFinder = find.textContaining('366');
+      expect(rowsFinder, findsOneWidget);
 
-    await tester.pump(pause);
+      // Find the text containing "23" as the number of columns.
 
-    // Find the text containing "366" as the number of rows.
+      final columnsFinder = find.textContaining('23');
+      expect(columnsFinder, findsOneWidget);
 
-    final rowsFinder = find.textContaining('366');
-    expect(rowsFinder, findsOneWidget);
+      // Tap the right arrow button to go to "Kurtosis and Skewness" page.
 
-    // Find the text containing "23" as the number of columns.
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
 
-    final columnsFinder = find.textContaining('23');
-    expect(columnsFinder, findsOneWidget);
+      await tester.pump(pause);
 
-    // Tap the right arrow button to go to "Kurtosis and Skewness" page.
+      // Find the text containing "-1.12569017" as the min_temp.
 
-    await tester.tap(rightArrowFinder);
-    await tester.pumpAndSettle();
+      final tempMinFinder = find.textContaining('-1.12569017');
+      expect(tempMinFinder, findsOneWidget);
 
-    await tester.pump(pause);
+      // Find the text containing "0.347510625" as the max_temp.
 
-    // Find the text containing "-1.12569017" as the min_temp.
-
-    final tempMinFinder = find.textContaining('-1.12569017');
-    expect(tempMinFinder, findsOneWidget);
-
-    // Find the text containing "0.347510625" as the max_temp.
-
-    final tempMaxFinder = find.textContaining('0.347510625');
-    expect(tempMaxFinder, findsOneWidget);
-
-    debugPrint('EXPLORE: Finished.');
+      final tempMaxFinder = find.textContaining('0.347510625');
+      expect(tempMaxFinder, findsOneWidget);
+    });
   });
 }

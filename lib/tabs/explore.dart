@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-08-14 16:23:16 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 16:50:37 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -38,6 +38,7 @@ import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/features/tests/panel.dart';
 import 'package:rattle/features/interactive/panel.dart';
 import 'package:rattle/providers/explore.dart';
+import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> explorePanels = [
   {
@@ -106,7 +107,7 @@ class _ExploreTabsState extends ConsumerState<ExploreTabs>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('REBUILDING\t\tExploreTab.');
+    debugText('  BUILD', 'ExploreTab');
 
     return Column(
       children: [
