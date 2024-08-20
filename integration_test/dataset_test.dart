@@ -1,6 +1,6 @@
-/// Testing: Basic app startup test.
+/// Basic DATASET test.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:44:19 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 20:07:06 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -26,11 +26,6 @@
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
-
-// TODO 20231015 gjw MIGRATE TESTS TO SINGLE ONE APP INSTANCE
-//
-// This will avoid a costly build each individual test? But then it is not so
-// well strctured.
 
 import 'dart:io';
 
@@ -107,6 +102,7 @@ void main() {
       expect(demoButton, findsOneWidget);
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
+
       await tester.pump(pause);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);

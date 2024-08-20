@@ -1,6 +1,6 @@
 /// Testing: Test the CLUSTER feature.
 //
-// Time-stamp: <Tuesday 2024-08-20 19:51:33 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 20:05:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -33,7 +33,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
