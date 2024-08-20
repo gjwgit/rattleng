@@ -246,14 +246,14 @@ test:
 	@echo $(SEPARATOR)
 
 %.itest:
-	flutter test --dart-define=PAUSE=5 --device-id \
+	flutter test --dart-define=PAUSE=2 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	integration_test/$*_test.dart
 
 .PHONY: itest
 itest:
 	@echo "Pausing integration TEST:"
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=5 --device-id \
+	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=2 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	$$t; done
 	@echo $(SEPARATOR)
