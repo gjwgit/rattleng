@@ -45,9 +45,8 @@ const Duration delay = Duration(seconds: 1);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Home page loads okay.', (WidgetTester tester) async {
-    debugPrint('TESTER: Start up the app');
-
+  testWidgets('Large Dataset, GLIMPSE and ROLES pages',
+      (WidgetTester tester) async {
     app.main();
 
     // Trigger a frame. Finish animation and scheduled microtasks.
@@ -62,8 +61,6 @@ void main() {
     expect(datasetButtonFinder, findsOneWidget);
     await tester.pump(pause);
 
-    debugPrint('TESTER: Tap the Dataset button.');
-
     final datasetButton = find.byType(DatasetButton);
     expect(datasetButton, findsOneWidget);
     await tester.pump(pause);
@@ -71,8 +68,6 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.pump(delay);
-
-    debugPrint('TESTER: Tap the Filename button.');
 
     final datasetPopup = find.byType(DatasetPopup);
     expect(datasetPopup, findsOneWidget);
@@ -82,8 +77,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(const Duration(seconds: 10));
     await tester.pumpAndSettle();
-
-    debugPrint('TESTER: Expect the default demo dataset is identified.');
 
     ////////////////////////////////////////////////////////////////////////
     // DATASET Large DATASET tab (GLIMPSE and ROLES pages) (By Kevin)
@@ -113,7 +106,5 @@ void main() {
 
     final rolesRecIDFinder = find.textContaining('rec-57600');
     expect(rolesRecIDFinder, findsOneWidget);
-
-    debugPrint('TESTER: Finished.');
   });
 }
