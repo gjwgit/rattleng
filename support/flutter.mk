@@ -268,6 +268,14 @@ qtest:
 	$$t; done
 	@echo $(SEPARATOR)
 
+.PHONY: atest
+atest:
+	@echo "Full integration TEST:"
+	flutter test --dart-define=PAUSE=0 --verbose --device-id \
+	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
+	integration_test
+	@echo $(SEPARATOR)
+
 %.qtest:
 	flutter test --dart-define=PAUSE=0 --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
