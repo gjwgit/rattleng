@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Tuesday 2024-08-20 06:08:13 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 16:15:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -117,7 +117,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
       if (currentRoles.isEmpty && vars.isNotEmpty) {
         // Default is INPUT unless the variable name begins with `risk_`.
-        debugPrint('changing typesProvider!!!');
+
         for (var column in vars) {
           ref.read(rolesProvider.notifier).state[column.name] = Role.input;
           ref.read(typesProvider.notifier).state[column.name] =

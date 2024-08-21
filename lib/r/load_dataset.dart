@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Thursday 2024-08-15 05:33:36 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-20 16:51:29 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/debug_text.dart';
 
 /// Load the specified dataset using the appropriate R script.
 ///
@@ -52,7 +53,7 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
   // PROCESSED (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT
   // AND IF SO DO SO OTHERWISE DO NOTHING.
 
-  debugPrint("R LOAD DATASET:\t'$path'");
+  debugText('R LOAD', path);
 
   if (path == '' || path == weatherDemoFile) {
     // The default, when we get here and no path has been specified yet, is to
@@ -105,5 +106,5 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
   // this shows the data
 
   rSource(context, ref, 'dataset_glimpse');
-  debugPrint('R LOAD DATASET:\tLoaded "$path";');
+  debugText('R LOADED', path);
 }
