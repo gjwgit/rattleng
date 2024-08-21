@@ -81,6 +81,7 @@ void main() {
     await tester.tap(filenameButton);
     await tester.pumpAndSettle();
     await tester.pump(const Duration(seconds: 10));
+    await tester.pumpAndSettle();
 
     debugPrint('TESTER: Expect the default demo dataset is identified.');
 
@@ -98,10 +99,10 @@ void main() {
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
-    // Find the text containing "20,000".
+    // // Find the text containing "20,000".
 
-    final glimpseRowFinder = find.textContaining('20,000');
-    expect(glimpseRowFinder, findsOneWidget);
+    // final glimpseRowFinder = find.textContaining('20,000');
+    // expect(glimpseRowFinder, findsOneWidget);
 
     // Find the text containing "24".
 

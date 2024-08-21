@@ -244,32 +244,41 @@ test:
 	@echo "Unit TEST:"
 	-flutter test test
 	@echo $(SEPARATOR)
-
 %.itest:
-	flutter test --dart-define=PAUSE=5 --device-id \
-	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
-	integration_test/$*_test.dart
+	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
+	if [ -z "$$device_id" ]; then \
+		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
+		exit 1; \
+	fi; \
+	flutter test --dart-define=PAUSE=5 --device-id $$device_id integration_test/$*_test.dart
 
 .PHONY: itest
 itest:
-	@echo "Pausing integration TEST:"
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=5 --device-id \
-	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
-	$$t; done
+	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
+	if [ -z "$$device_id" ]; then \
+		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
+		exit 1; \
+	fi; \
+	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=5 --device-id $$device_id $$t; done
 	@echo $(SEPARATOR)
 
 .PHONY: qtest
 qtest:
-	@echo "Quick integration TEST:"
-	-for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=0 --device-id \
-	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
-	$$t; done
+	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
+	if [ -z "$$device_id" ]; then \
+		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
+		exit 1; \
+	fi; \
+	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t; done
 	@echo $(SEPARATOR)
 
 %.qtest:
-	flutter test --dart-define=PAUSE=0 --device-id \
-	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
-	integration_test/$*_test.dart
+	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
+	if [ -z "$$device_id" ]; then \
+		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
+		exit 1; \
+	fi; \
+	flutter test --dart-define=PAUSE=0 --device-id $$device_id integration_test/$*_test.dart
 
 .PHONY: coverage
 coverage:

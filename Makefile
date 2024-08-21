@@ -102,8 +102,18 @@ rattle.zip:
 	zip -r rattle.zip rattle
 	rm -rf rattle
 
+OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+
 %.itest:
-	flutter test --device-id linux --dart-define=PAUSE=0 integration_test/$*_test.dart
+	@if [ "$(OS)" = "darwin" ]; then \
+		device_id="macos"; \
+	elif [ "$(OS)" = "linux" ]; then \
+		device_id="linux"; \
+	else \
+		echo "Unsupported OS: $(OS)"; \
+		exit 1; \
+	fi; \
+	flutter test --device-id $$device_id --dart-define=PAUSE=0 integration_test/$*_test.dart
 
 # Linux: Install locally.
 
