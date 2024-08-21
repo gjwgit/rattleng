@@ -65,8 +65,6 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('Home page loads okay.', (WidgetTester tester) async {
-    debugPrint('TESTER: Start up the app');
-
     app.main();
 
     // Trigger a frame. Finish animation and scheduled microtasks.
