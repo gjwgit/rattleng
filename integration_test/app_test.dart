@@ -244,10 +244,6 @@ void main() {
     final tempMaxFinder = find.textContaining('0.347510625');
     expect(tempMaxFinder, findsOneWidget);
 
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET Large DATASET tab (GLIMPSE and ROLES pages) (By Kevin)
-    ////////////////////////////////////////////////////////////////////////
-
     debugPrint('TESTER: Finished.');
   });
 }
