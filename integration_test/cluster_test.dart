@@ -1,6 +1,6 @@
-/// Testing: Test the EXPLORE tab.
+/// Testing: Test the CLUSTER feature.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 20:05:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,16 +21,11 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Kevin Wang
+/// Authors: Graham Williams
 
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
-
-// TODO 20231015 gjw MIGRATE TESTS TO SINGLE ONE APP INSTANCE
-//
-// This will avoid a costly build each individual test? But then it is not so
-// well strctured.
 
 import 'package:flutter/material.dart';
 
@@ -38,11 +33,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
-import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/tabs/model.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -61,8 +55,8 @@ const Duration delay = Duration(seconds: 1);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Demo Dataset, Explore, Summary.', (WidgetTester tester) async {
+  group('Cluster Feature:', () {
+    testWidgets('Demo Dataset, Model, Cluster.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -73,13 +67,11 @@ void main() {
 
       await tester.pump(pause);
 
-      final datasetButtonFinder = find.byType(DatasetButton);
-      expect(datasetButtonFinder, findsOneWidget);
-      await tester.pump(pause);
-
       final datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
+
       await tester.pump(pause);
+
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
 
@@ -87,58 +79,47 @@ void main() {
 
       final datasetPopup = find.byType(DatasetPopup);
       expect(datasetPopup, findsOneWidget);
+
       final demoButton = find.text('Demo');
       expect(demoButton, findsOneWidget);
+
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
+
       await tester.pump(pause);
 
-      // Find the Explore tab by icon and tap on it.
+      // Find the Model tab by icon and tap on it.
 
-      final exploreIconFinder = find.byIcon(Icons.insights);
-      expect(exploreIconFinder, findsOneWidget);
+      final modelIconFinder = find.byIcon(Icons.model_training);
+      expect(modelIconFinder, findsOneWidget);
 
-      // Tap the Explore tab.
+      // Tap the Model tab.
 
-      await tester.tap(exploreIconFinder);
-      await tester.pumpAndSettle();
-
-      // Verify if the ExploreTabs widget is shown.
-
-      expect(find.byType(ExploreTabs), findsOneWidget);
-
-      // Navigate to the Explore tab.
-
-      final exploreTabFinder = find.text('Explore');
-      await tester.tap(exploreTabFinder);
+      await tester.tap(modelIconFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
 
-      // Find the Summary tab by its title.
+      // Verify if the ModelTabs widget is shown.
 
-      final summaryTabFinder = find.text('Summary');
-      expect(summaryTabFinder, findsOneWidget);
+      expect(find.byType(ModelTabs), findsOneWidget);
 
-      // Tap the Summary tab.
+      // Navigate to the Cluster feature.
 
-      await tester.tap(summaryTabFinder);
+      final clusterTabFinder = find.text('Cluster');
+      await tester.tap(clusterTabFinder);
       await tester.pumpAndSettle();
-
-      // Verify that the SummaryPanel is shown.
-
-      expect(find.byType(SummaryPanel), findsOneWidget);
 
       await tester.pump(pause);
 
-      // Find the button by its text.
+      // Find the BUILD button by its text.
 
-      final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
-      expect(generateSummaryButtonFinder, findsOneWidget);
+      final buildButtonFinder = find.text('Build Clustering');
+      expect(buildButtonFinder, findsOneWidget);
 
       // Tap the button.
 
-      await tester.tap(generateSummaryButtonFinder);
+      await tester.tap(buildButtonFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
@@ -148,56 +129,17 @@ void main() {
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to "Summary of the Dataset" page.
+      // Tap the right arrow button to go to the first page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
 
-      // Find the text containing "2007-11-01".
+      // Find the text containing the number of default clusters.
 
-      final dateFinder = find.textContaining('2007-11-01');
+      final dateFinder = find.textContaining('with 10 clusters');
       expect(dateFinder, findsOneWidget);
-
-      // Find the text containing "39.800".
-
-      final valueFinder = find.textContaining('39.800');
-      expect(valueFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Skim of the Dataset" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "366" as the number of rows.
-
-      final rowsFinder = find.textContaining('366');
-      expect(rowsFinder, findsOneWidget);
-
-      // Find the text containing "23" as the number of columns.
-
-      final columnsFinder = find.textContaining('23');
-      expect(columnsFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Kurtosis and Skewness" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "-1.12569017" as the min_temp.
-
-      final tempMinFinder = find.textContaining('-1.12569017');
-      expect(tempMinFinder, findsOneWidget);
-
-      // Find the text containing "0.347510625" as the max_temp.
-
-      final tempMaxFinder = find.textContaining('0.347510625');
-      expect(tempMaxFinder, findsOneWidget);
     });
   });
 }

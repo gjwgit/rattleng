@@ -280,6 +280,14 @@ qtest:
 	fi; \
 	flutter test --dart-define=PAUSE=0 --device-id $$device_id integration_test/$*_test.dart
 
+.PHONY: atest
+atest:
+	@echo "Full integration TEST:"
+	flutter test --dart-define=PAUSE=0 --verbose --device-id \
+	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
+	integration_test
+	@echo $(SEPARATOR)
+
 .PHONY: coverage
 coverage:
 	@echo "COVERAGE"
