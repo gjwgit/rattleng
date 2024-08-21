@@ -1,6 +1,6 @@
 /// Testing: large dataset test(Confirm GLIMPSE and ROLES pages).
 //
-// Time-stamp: <Thursday 2024-08-22 08:18:13 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 08:37:32 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -57,6 +57,7 @@ import 'package:rattle/features/dataset/popup.dart';
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
+const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -120,7 +121,7 @@ void main() {
     // How do we ensure the R Code is executed before proceeding in Rattle
     // itself - deal with the async issue.
 
-    await tester.pump(const Duration(seconds: 10));
+    await tester.pump(hack);
 
 //     await tester.tap(filenameButton); // If the button opens the file picker
 //     await tester.pumpAndSettle();
