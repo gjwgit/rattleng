@@ -1,6 +1,6 @@
 /// Testing: large dataset test(Confirm GLIMPSE and ROLES pages).
 //
-// Time-stamp: <Thursday 2024-08-22 05:45:29 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 06:29:53 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -104,7 +104,7 @@ void main() {
 // Enter the file path programmatically.
     await tester.enterText(
       filePathField,
-      'integration_test/rattle_test_large.csv\r',
+      'integration_test/rattle_test_large.csv',
     );
 
     // Simulate pressing the Enter key
@@ -128,20 +128,22 @@ void main() {
 //     // DATASET Large DATASET tab (GLIMPSE and ROLES pages) (By Kevin)
 //     ////////////////////////////////////////////////////////////////////////
 
-    // // Find the right arrow button in the PageIndicator.
+    // Find the right arrow button in the PageIndicator.
 
-    // final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-    // expect(rightArrowFinder, findsOneWidget);
+    final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+    expect(rightArrowFinder, findsOneWidget);
 
-    // // Tap the right arrow button to go to "Dataset Glimpse" page.
+    // Tap the right arrow button to go to "Dataset Glimpse" page.
 
-    // await tester.tap(rightArrowFinder);
-    // await tester.pumpAndSettle();
+    await tester.tap(rightArrowFinder);
+    await tester.pumpAndSettle();
 
-    // // Find the text containing "24".
+    await tester.pump(pause);
 
-    // final glimpseColumnFinder = find.textContaining('24');
-    // expect(glimpseColumnFinder, findsOneWidget);
+    // Find the text containing "24".
+
+    final glimpseColumnFinder = find.textContaining('24');
+    expect(glimpseColumnFinder, findsOneWidget);
 
     // // Tap the right arrow button to go to "ROLES" page.
 
