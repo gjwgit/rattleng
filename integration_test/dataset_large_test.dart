@@ -1,4 +1,4 @@
-// / Testing: Basic app startup test.
+// / Testing: large dataset test(Confirm GLIMPSE and ROLES pages).
 // /
 // / Copyright (C) 2023, Software Innovation Institute, ANU.
 // /
@@ -98,11 +98,6 @@ void main() {
 
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
-
-    // // Find the text containing "20,000".
-
-    // final glimpseRowFinder = find.textContaining('20,000');
-    // expect(glimpseRowFinder, findsOneWidget);
 
     // Find the text containing "24".
 
