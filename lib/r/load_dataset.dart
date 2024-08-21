@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Tuesday 2024-08-20 16:51:29 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-08-22 05:37:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -54,6 +54,10 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
   // AND IF SO DO SO OTHERWISE DO NOTHING.
 
   debugText('R LOAD', path);
+
+  // Ensure there is no extraneous white space.
+
+  path = path.trim();
 
   if (path == '' || path == weatherDemoFile) {
     // The default, when we get here and no path has been specified yet, is to
