@@ -85,13 +85,36 @@ void main() {
 
     await tester.pump(delay);
 
+    // final datasetPopup = find.byType(DatasetPopup);
+    // expect(datasetPopup, findsOneWidget);
+    final filenameButton = find.text('Filename');
+    // expect(filenameButton, findsOneWidget);
+    // await tester.tap(filenameButton);
+    // await tester.pumpAndSettle();
+    // await tester.pump(const Duration(seconds: 10));
+    // await tester.pumpAndSettle();
+
     final datasetPopup = find.byType(DatasetPopup);
     expect(datasetPopup, findsOneWidget);
-    final filenameButton = find.text('Filename');
-    expect(filenameButton, findsOneWidget);
-    await tester.tap(filenameButton);
+
+// Locate the TextField where the file path is input.
+    final filePathField = find.byType(TextField);
+    expect(filePathField, findsOneWidget);
+
+// Enter the file path programmatically.
+    await tester.enterText(
+        filePathField, '/Users/kev/Desktop/rattle_test_large.csv');
+
+// Optionally pump the widget tree to reflect the changes.
     await tester.pumpAndSettle();
-    await tester.pump(const Duration(seconds: 10));
+
+    await tester.tap(filenameButton); // If the button opens the file picker
+    await tester.pumpAndSettle();
+
+// Now locate and interact with the TextField as above.
+
+    await tester.enterText(
+        filePathField, '/Users/kev/Desktop/rattle_test_large.csv');
     await tester.pumpAndSettle();
 
     ////////////////////////////////////////////////////////////////////////
