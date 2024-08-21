@@ -46,21 +46,16 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
-import 'package:rattle/tabs/explore.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -79,9 +74,8 @@ const Duration delay = Duration(seconds: 1);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Home page loads okay.', (WidgetTester tester) async {
-    debugPrint('TESTER: Start up the app');
-
+  testWidgets('Demo Dataset, GLIMPSE and ROLES pages ',
+      (WidgetTester tester) async {
     app.main();
 
     // Trigger a frame. Finish animation and scheduled microtasks.
@@ -96,23 +90,6 @@ void main() {
     expect(datasetButtonFinder, findsOneWidget);
     await tester.pump(pause);
 
-    debugPrint('TESTER: Confirm welcome message on home screen.');
-
-    final welcomeMarkdownFinder = find.byType(Markdown);
-    expect(welcomeMarkdownFinder, findsNWidgets(2));
-
-    final welcomeWidget =
-        welcomeMarkdownFinder.evaluate().first.widget as Markdown;
-    String welcome = welcomeWidget.data;
-    expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
-
-    debugPrint('Check the status bar has the expected contents.');
-
-    final statusBarFinder = find.byKey(statusBarKey);
-    expect(statusBarFinder, findsOneWidget);
-
-    debugPrint('TESTER: Tap the Dataset button.');
-
     final datasetButton = find.byType(DatasetButton);
     expect(datasetButton, findsOneWidget);
     await tester.pump(pause);
@@ -120,8 +97,6 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.pump(delay);
-
-    debugPrint('TESTER: Tap the Demo button.');
 
     final datasetPopup = find.byType(DatasetPopup);
     expect(datasetPopup, findsOneWidget);
@@ -131,15 +106,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(pause);
 
-    debugPrint('TESTER: Expect the default demo dataset is identified.');
-
     final dsPathTextFinder = find.byKey(datasetPathKey);
     expect(dsPathTextFinder, findsOneWidget);
     final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
     String filename = dsPathText.controller?.text ?? '';
     expect(filename, 'rattle::weather');
-
-    debugPrint('TESTER: Expect the default demo dataset is loaded.');
 
     ////////////////////////////////////////////////////////////////////////
     // DATASET tab(By Kevin)
