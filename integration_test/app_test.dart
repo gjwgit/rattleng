@@ -22,7 +22,6 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Kevin Wang
-
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
@@ -32,12 +31,17 @@ library;
 // This will avoid a costly build each individual test? But then it is not so
 // well strctured.
 
+// TODO 20231015 gjw MIGRATE ALL TESTS TO THE ONE APP INSTANCE RATHER THAN A
+// COSTLY BUILD EACH INDIVIDUAL TEST!
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
@@ -58,44 +62,32 @@ final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
 
 void main() {
-  // TODO 20240820 gjw IS THIS NEEDED?
-  //
-  // IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  // TODO 20240820 gjw KEVIN/ZHEYUAN SPLIT INTO TWO GROUPS: WELCOME and DEMO
+  testWidgets('Home page loads okay.', (WidgetTester tester) async {
+    app.main();
 
-  group('App Startup:', () {
-    testWidgets('Home Page.', (WidgetTester tester) async {
-      app.main();
+    // Trigger a frame. Finish animation and scheduled microtasks.
 
-      // Trigger a frame. Finish animation and scheduled microtasks.
+    await tester.pumpAndSettle();
 
-      await tester.pumpAndSettle();
+    // Leave time to see the first page.
 
-      // Leave time to see the result.
+    await tester.pump(pause);
 
-      await tester.pump(pause);
+    final datasetButtonFinder = find.byType(DatasetButton);
+    expect(datasetButtonFinder, findsOneWidget);
+    await tester.pump(pause);
 
-      // Confirm welcome message on home screen.
+    final welcomeMarkdownFinder = find.byType(Markdown);
+    expect(welcomeMarkdownFinder, findsNWidgets(2));
 
-      final welcomeMarkdownFinder = find.byType(Markdown);
-      expect(welcomeMarkdownFinder, findsNWidgets(2));
+    final welcomeWidget =
+        welcomeMarkdownFinder.evaluate().first.widget as Markdown;
+    String welcome = welcomeWidget.data;
+    expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
 
-      final welcomeWidget =
-          welcomeMarkdownFinder.evaluate().first.widget as Markdown;
-      String welcome = welcomeWidget.data;
-      expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
-
-      // Find the DATASET button to tap to load a dataset.
-
-      final datasetButtonFinder = find.byType(DatasetButton);
-      expect(datasetButtonFinder, findsOneWidget);
-      await tester.pump(pause);
-
-      // Check the status bar has the expected contents.
-
-      final statusBarFinder = find.byKey(statusBarKey);
-      expect(statusBarFinder, findsOneWidget);
-    });
+    final statusBarFinder = find.byKey(statusBarKey);
+    expect(statusBarFinder, findsOneWidget);
   });
 }
