@@ -1,6 +1,6 @@
 /// Testing: large dataset test(Confirm GLIMPSE and ROLES pages).
 //
-// Time-stamp: <Thursday 2024-08-22 06:29:53 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 08:37:32 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -55,6 +55,7 @@ import 'package:rattle/main.dart' as app;
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
+const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -92,9 +93,16 @@ void main() {
 
     await tester.pump(pause);
 
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET Large DATASET tab (GLIMPSE and ROLES pages)
-    ////////////////////////////////////////////////////////////////////////
+    // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
+    //
+    // How do we ensure the R Code is executed before proceeding in Rattle
+    // itself - deal with the async issue.
+
+    await tester.pump(hack);
+
+//     ////////////////////////////////////////////////////////////////////////
+//     // DATASET Large DATASET tab (GLIMPSE and ROLES pages) (By Kevin)
+//     ////////////////////////////////////////////////////////////////////////
 
     // Find the right arrow button in the PageIndicator.
 
