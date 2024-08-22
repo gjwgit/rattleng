@@ -1,4 +1,4 @@
-/// Basic APP test: Startup.
+/// STARTUP.
 //
 // Time-stamp: <Tuesday 2024-08-20 16:43:38 +1000 Graham Williams>
 //
