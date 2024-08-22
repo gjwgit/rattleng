@@ -1,6 +1,6 @@
-/// Testing: large dataset test(Confirm GLIMPSE and ROLES pages).
+/// Basice DATASET test: LARGE.
 //
-// Time-stamp: <Thursday 2024-08-22 11:06:33 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 11:16:05 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -22,35 +22,25 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Kevin Wang
+
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-// TODO 20231015 gjw MIGRATE TESTS TO SINGLE ONE APP INSTANCE
-//
-// This will avoid a costly build each individual test? But then it is not so
-// well strctured.
-
-// TODO 20231015 gjw MIGRATE ALL TESTS TO THE ONE APP INSTANCE RATHER THAN A
-// COSTLY BUILD EACH INDIVIDUAL TEST!
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-/// A duration to allow the tester to view/interact with the testing. 5s is
-/// good, 10s is useful for development and 0s for ongoing. This is not
-/// necessary but it is handy when running interactively for the user running
-/// the test to see the widgets for added assurance. The PAUSE environment
-/// variable can be used to override the default PAUSE here:
+/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
+/// with the testing. 5s is good, 10s is useful for development and 0s for
+/// ongoing. This is not necessary but it is handy when running interactively
+/// for the user running the test to see the widgets for added assurance. The
+/// PAUSE environment variable can be used to override the default PAUSE here:
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-///
-/// 20230712 gjw
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
