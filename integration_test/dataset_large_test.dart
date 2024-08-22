@@ -1,6 +1,6 @@
 /// Testing: large dataset test(Confirm GLIMPSE and ROLES pages).
 //
-// Time-stamp: <Thursday 2024-08-22 08:37:32 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 11:06:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -96,12 +96,12 @@ void main() {
     // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
     //
     // How do we ensure the R Code is executed before proceeding in Rattle
-    // itself - deal with the async issue.
+    // itself - we need to deal with the async issue in Rattle.
 
     await tester.pump(hack);
 
     ////////////////////////////////////////////////////////////////////////
-    // DATASET Large DATASET tab (GLIMPSE and ROLES pages)
+    // DATASET tab large dataset (GLIMPSE page)
     ////////////////////////////////////////////////////////////////////////
 
     // Find the right arrow button in the PageIndicator.
@@ -116,19 +116,30 @@ void main() {
 
     await tester.pump(pause);
 
-    // Find the text containing "24".
+    // Find the text containing "24" - the number of columns.
 
-    final glimpseColumnFinder = find.textContaining('24');
+    final glimpseColumnFinder = find.textContaining('Columns: 24');
     expect(glimpseColumnFinder, findsOneWidget);
 
-    // // Tap the right arrow button to go to "ROLES" page.
+    ////////////////////////////////////////////////////////////////////////
+    // DATASET tab large dataset (ROLES page)
+    ////////////////////////////////////////////////////////////////////////
+
+    // Tap the right arrow button to go to "ROLES" page.
 
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
     // Find the text containing "rec-57600".
 
-    final rolesRecIDFinder = find.textContaining('rec-57600');
+    final rolesRecIDFinder = find.textContaining('rec-57600, rec-73378,');
     expect(rolesRecIDFinder, findsOneWidget);
+
+    // TODO 20240822 gjw EXTRA DATASET LARGE TESTS
+    //
+    // Check which variables are INPUT, IGNORE, TARGET
+    //
+    // Maybe load the provider to make sure the variables are assigned to
+    // the expected ROLES.
   });
 }
