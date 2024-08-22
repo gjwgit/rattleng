@@ -37,11 +37,11 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/model.dart';
 
-/// 20230712 gjw A duration to allow the tester to view/interact with the testing. 5s is
-/// good, 10s is useful for development and 0s for ongoing. This is not
-/// necessary but it is handy when running interactively for the user running
-/// the test to see the widgets for added assurance. The PAUSE environment
-/// variable can be used to override the default PAUSE here:
+/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
+/// with the testing. 5s is good, 10s is useful for development and 0s for
+/// ongoing. This is not necessary but it is handy when running interactively
+/// for the user running the test to see the widgets for added assurance. The
+/// PAUSE environment variable can be used to override the default PAUSE here:
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
 
