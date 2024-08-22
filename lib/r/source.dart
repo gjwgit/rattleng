@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-08-11 11:39:00 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-20 16:51:42 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -63,6 +64,7 @@ import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
@@ -110,7 +112,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // First obtain the text from the script.
 
-  debugPrint("R SOURCE:\t\t'$script.R'");
+  debugText('R SOURCE', '$script.R');
 
   String asset = 'assets/r/$script.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);
@@ -118,7 +120,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Process template variables.
 
-  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()} USER');
+  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
   // Populate the VERSION.
 
@@ -216,7 +218,23 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
     }
   });
 
+  // If target is NULL then we need to ensure expressions in the R code like
+  //
+  // target <- "TARGET_VAR"
+  //
+  // becomes
+  //
+  // target <- NULL
+  //
+  // rather then being "NULL" which then indicates a variable called NULL. So
+  // handle that special case and then replace any other TARGET_VAR replacement
+  // as usual.
+
+  if (target == 'NULL') {
+    code = code.replaceAll('"TARGET_VAR"', target);
+  }
   code = code.replaceAll('TARGET_VAR', target);
+
   //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
 
   // Extract the risk variable from the rolesProvider and use that for now as
@@ -230,6 +248,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   });
 
   code = code.replaceAll('INTERVAL', interval.toString());
+  code = code.replaceAll('NUMBER', ref.read(numberProvider).toString());
   code = code.replaceAll('SELECTED_VAR', selected);
 
   code = code.replaceAll('SELECTED_2_VAR', selected2);

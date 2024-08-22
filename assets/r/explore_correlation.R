@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-01 11:33:49 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-08-16 05:40:06 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -51,6 +51,7 @@ cor <- cor[ord, ord]
 
 print(round(cor,2))
 
+
 # Generate the chart.
 
 svg("TEMPDIR/explore_correlation.svg")
@@ -61,5 +62,11 @@ corrplot::corrplot(cor,
                    tl.srt = 45,
                    mar    = c(0,0,1,0))
 title(main = "Correlation weather.csv using Pearson",
-      sub  = "TIMESTAMP")
+      sub  = paste("TIMESTAMP", username))
+dev.off()
+
+## GGCORRPLOT
+
+svg("TEMPDIR/explore_correlation_ggcorrplot.svg")
+ggcorrplot::ggcorrplot(cor, method='circle')
 dev.off()

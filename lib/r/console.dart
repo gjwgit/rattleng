@@ -125,7 +125,9 @@ class _RConsoleState extends ConsumerState<RConsole> {
       position: RelativeRect.fromRect(
         position &
             const Size(
-                40, 40,), // Smaller Rect, makes the menu appear near the tap.
+              40,
+              40,
+            ), // Smaller Rect, makes the menu appear near the tap.
         Offset.zero & overlay.size,
       ),
       items: [
