@@ -41,8 +41,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -74,41 +72,20 @@ void main() {
 
     await tester.pump(pause);
 
-    // final datasetButtonFinder = find.byType(DatasetButton);
-    // expect(datasetButtonFinder, findsOneWidget);
-    // await tester.pump(pause);
+    // Locate the TextField where the file path is input.
 
-    // final datasetButton = find.byType(DatasetButton);
-    // expect(datasetButton, findsOneWidget);
-    // await tester.pump(pause);
-    // await tester.tap(datasetButton);
-    // await tester.pumpAndSettle();
-
-    // await tester.pump(delay);
-
-    // // final datasetPopup = find.byType(DatasetPopup);
-    // // expect(datasetPopup, findsOneWidget);
-    // final filenameButton = find.text('Filename');
-    // // expect(filenameButton, findsOneWidget);
-    // // await tester.tap(filenameButton);
-    // // await tester.pumpAndSettle();
-    // // await tester.pump(const Duration(seconds: 10));
-    // // await tester.pumpAndSettle();
-
-    // final datasetPopup = find.byType(DatasetPopup);
-    // expect(datasetPopup, findsOneWidget);
-
-// Locate the TextField where the file path is input.
     final filePathField = find.byType(TextField);
     expect(filePathField, findsOneWidget);
 
-// Enter the file path programmatically.
+    // Enter the file path programmatically.
+
     await tester.enterText(
       filePathField,
       'integration_test/rattle_test_large.csv',
     );
 
-    // Simulate pressing the Enter key
+    // Simulate pressing the Enter key.
+
     await tester.testTextInput.receiveAction(TextInputAction.done);
 
     // Optionally pump the widget tree to reflect the changes.
@@ -123,18 +100,9 @@ void main() {
 
     await tester.pump(hack);
 
-//     await tester.tap(filenameButton); // If the button opens the file picker
-//     await tester.pumpAndSettle();
-
-// // Now locate and interact with the TextField as above.
-
-//     await tester.enterText(
-//         filePathField, '/Users/kev/Desktop/rattle_test_large.csv');
-//     await tester.pumpAndSettle();
-
-//     ////////////////////////////////////////////////////////////////////////
-//     // DATASET Large DATASET tab (GLIMPSE and ROLES pages) (By Kevin)
-//     ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    // DATASET Large DATASET tab (GLIMPSE and ROLES pages)
+    ////////////////////////////////////////////////////////////////////////
 
     // Find the right arrow button in the PageIndicator.
 
@@ -155,12 +123,12 @@ void main() {
 
     // // Tap the right arrow button to go to "ROLES" page.
 
-    // await tester.tap(rightArrowFinder);
-    // await tester.pumpAndSettle();
+    await tester.tap(rightArrowFinder);
+    await tester.pumpAndSettle();
 
-    // // Find the text containing "rec-57600".
+    // Find the text containing "rec-57600".
 
-    // final rolesRecIDFinder = find.textContaining('rec-57600');
-    // expect(rolesRecIDFinder, findsOneWidget);
+    final rolesRecIDFinder = find.textContaining('rec-57600');
+    expect(rolesRecIDFinder, findsOneWidget);
   });
 }
