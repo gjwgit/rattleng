@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2024-08-08 10:19:05 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-08-21 20:14:50 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -102,8 +102,7 @@ rattle.zip:
 	zip -r rattle.zip rattle
 	rm -rf rattle
 
-%.itest:
-	flutter test --device-id linux --dart-define=PAUSE=0 integration_test/$*_test.dart
+OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 
 # Linux: Install locally.
 

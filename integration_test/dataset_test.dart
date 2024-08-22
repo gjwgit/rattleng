@@ -1,6 +1,6 @@
-/// STARTUP.
+/// DEMO DATASET GLIMPSE PANEL.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:38 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 11:26:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -27,17 +27,15 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/dataset/popup.dart';
 
 /// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
 /// with the testing. 5s is good, 10s is useful for development and 0s for
@@ -50,11 +48,13 @@ import 'package:rattle/features/dataset/button.dart';
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
+const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('App Startup.', (WidgetTester tester) async {
+  testWidgets('Demo Dataset, GLIMPSE and ROLES pages.',
+      (WidgetTester tester) async {
     app.main();
 
     // Trigger a frame. Finish animation and scheduled microtasks.
@@ -69,15 +69,61 @@ void main() {
     expect(datasetButtonFinder, findsOneWidget);
     await tester.pump(pause);
 
-    final welcomeMarkdownFinder = find.byType(Markdown);
-    expect(welcomeMarkdownFinder, findsNWidgets(2));
+    final datasetButton = find.byType(DatasetButton);
+    expect(datasetButton, findsOneWidget);
+    await tester.pump(pause);
+    await tester.tap(datasetButton);
+    await tester.pumpAndSettle();
 
-    final welcomeWidget =
-        welcomeMarkdownFinder.evaluate().first.widget as Markdown;
-    String welcome = welcomeWidget.data;
-    expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
+    await tester.pump(delay);
 
-    final statusBarFinder = find.byKey(statusBarKey);
-    expect(statusBarFinder, findsOneWidget);
+    final datasetPopup = find.byType(DatasetPopup);
+    expect(datasetPopup, findsOneWidget);
+    final demoButton = find.text('Demo');
+    expect(demoButton, findsOneWidget);
+    await tester.tap(demoButton);
+    await tester.pumpAndSettle();
+
+    await tester.pump(pause);
+
+    final dsPathTextFinder = find.byKey(datasetPathKey);
+    expect(dsPathTextFinder, findsOneWidget);
+    final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+    String filename = dsPathText.controller?.text ?? '';
+    expect(filename, 'rattle::weather');
+
+    ////////////////////////////////////////////////////////////////////////
+    // DATASET tab large dataset (GLIMPSE page)
+    ////////////////////////////////////////////////////////////////////////
+
+    // Find the right arrow button in the PageIndicator.
+
+    final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+    expect(rightArrowFinder, findsOneWidget);
+
+    // Tap the right arrow button to go to "Dataset Glimpse" page.
+
+    await tester.tap(rightArrowFinder);
+    await tester.pumpAndSettle();
+
+    // Find the text containing "366".
+
+    final glimpseRowFinder = find.textContaining('366');
+    expect(glimpseRowFinder, findsOneWidget);
+
+    // Find the text containing "2007-11-01".
+
+    final glimpseDateFinder = find.textContaining('2007-11-01');
+    expect(glimpseDateFinder, findsOneWidget);
+
+    // Tap the right arrow button to go to "ROLES" page.
+
+    await tester.tap(rightArrowFinder);
+    await tester.pumpAndSettle();
+
+    // Find the text containing "8.0".
+
+    final rolesTempFinder = find.textContaining('8.0');
+    expect(rolesTempFinder, findsOneWidget);
   });
 }

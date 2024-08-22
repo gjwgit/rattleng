@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Monday 2024-08-12 15:45:31 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-20 16:51:53 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -34,9 +34,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rattle/providers/pty.dart';
-//import 'package:rattle/providers/stdout.dart';
-//import 'package:rattle/providers/terminal.dart';
 import 'package:rattle/r/strip_comments.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Start up the R process and set up the capture of stderr and stdout.
@@ -71,7 +70,7 @@ void rStart(BuildContext context, WidgetRef ref) async {
 
   // Read the main R startup code from the script file.
 
-  debugPrint("R START:\t\t'main.R'");
+  debugText('R START', 'main.R');
 
   const asset = 'assets/r/main.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);

@@ -47,47 +47,51 @@ class TextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Create a ScrollController for horizontal scrolling.
+    final ScrollController horizontalScrollController = ScrollController();
+
     return Container(
       decoration: sunkenBoxDecoration,
       width: double.infinity,
       padding: const EdgeInsets.only(left: 10),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MarkdownBody(
-              data: wordWrap(title),
-              selectable: true,
-              onTapLink: (text, href, title) {
-                final Uri url = Uri.parse(href ?? '');
-                launchUrl(url);
-              },
-            ),
-            // Wrap SelectableText in SingleChildScrollView for horizontal scrolling.
-
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SelectableText(
-                content,
-                style: monoTextStyle,
-                // Ensure that text does not wrap, allowing horizontal scroll.
-
-                textAlign: TextAlign.left,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MarkdownBody(
+            data: wordWrap(title),
+            selectable: true,
+            onTapLink: (text, href, title) {
+              final Uri url = Uri.parse(href ?? '');
+              launchUrl(url);
+            },
+          ),
+          Expanded(
+            child: Scrollbar(
+              controller: horizontalScrollController,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                controller: horizontalScrollController,
+                child: SelectableText(
+                  content,
+                  style: monoTextStyle,
+                  textAlign: TextAlign.left,
+                ),
               ),
             ),
-            // 20240812 gjw Add a bottom spacer to leave a gap for the page
-            // navigation whenscrolling to the bottom of the page so that it can
-            // be visible in at least some part of any very busy pages.
-            textPageBottomSpace,
-            // 20240812 gjw Add a divider to mark the end of the text page.
-            const Divider(
-              thickness: 15,
-              color: Color(0XFFBBDEFB),
-              indent: 0,
-              endIndent: 20,
-            ),
-          ],
-        ),
+          ),
+          // 20240812 gjw Add a bottom spacer to leave a gap for the page
+          // navigation when scrolling to the bottom of the page so that it can
+          // be visible in at least some part of any very busy pages.
+          textPageBottomSpace,
+          // 20240812 gjw Add a divider to mark the end of the text page.
+          const Divider(
+            thickness: 15,
+            color: Color(0XFFBBDEFB),
+            indent: 0,
+            endIndent: 20,
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,4 @@
-/// A provider for missing vars (vars with missing value)
+/// A provider for number (transform/recode)
 ///
 /// Time-stamp: <Tuesday 2024-07-30 11:11:48 +1000 Graham Williams>
 ///
@@ -28,4 +28,5 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final missingVars = StateProvider<List<String>>((ref) => []);
+const initNumber = 4;
+final numberProvider = StateProvider<int>((ref) => initNumber);

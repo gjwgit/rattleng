@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-07-25 14:34:39 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-16 11:10:58 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -81,7 +81,9 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
           # Patterns of Missing Data - Textual
 
-          Generated using
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/missing-values-in-rattle.html)
+          and
           [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
           ''',
@@ -151,6 +153,58 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
         ''',
         path: '$tempDir/explore_missing_vim.svg',
+      ),
+    );
+
+    ////////////////////////////////////////////////////////////////////////
+
+    pages.add(
+      ImagePage(
+        title: '''
+
+        # Visualisation of Observations with Missing Values
+
+        Generated using
+        [naniar::vis_miss(ds)](https://www.rdocumentation.org/packages/naniar).
+
+        ''',
+        path: '$tempDir/explore_missing_naniar_vismiss.svg',
+      ),
+    );
+
+    ////////////////////////////////////////////////////////////////////////
+    // NANIAR GG MISS VAR
+    ////////////////////////////////////////////////////////////////////////
+
+    pages.add(
+      ImagePage(
+        title: '''
+
+        # Comparison of Counts of Missing Values
+
+        Generated using
+        [naniar::gg_miss_var(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_var).
+
+        ''',
+        path: '$tempDir/explore_missing_naniar_ggmissvar.svg',
+      ),
+    );
+
+    ////////////////////////////////////////////////////////////////////////
+    // NANIAR GG MISS VAR
+    ////////////////////////////////////////////////////////////////////////
+
+    pages.add(
+      ImagePage(
+        title: '''
+
+        # Patterns of Missingness
+
+        Generated using
+        [naniar::gg_miss_upset(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_upset).
+
+        ''',
+        path: '$tempDir/explore_missing_naniar_ggmissupset.svg',
       ),
     );
 

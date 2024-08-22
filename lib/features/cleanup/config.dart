@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-11 19:37:56 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-08-17 06:51:09 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 
 library;
 
@@ -55,14 +55,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
   // List choice of methods for cleanup and their tooltips.
 
   Map<String, String> methods = {
-    'Ignored': '''
-      
-      Remove columns (variables) from the dataset that are marked as Ignore in
-      the Dataset tab's Role page. The variables to be removed will be
-      identified and you will have a chance to review them before comitting to
-      remove them.
-
-      ''',
     'Vars with Missing': '''
 
       Remove all columns (variables) that have any missing values. The variables
@@ -76,6 +68,14 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       Remove rows (observations) that have any missing values. That is, if there
       are one or more missing values in a row, then remove that row from the
       dataset.
+
+      ''',
+    'Ignored': '''
+
+      Remove columns (variables) from the dataset that are marked as Ignore in
+      the Dataset tab's Role page. The variables to be removed will be
+      identified and you will have a chance to review them before comitting to
+      remove them.
 
       ''',
     'Variable': '''
@@ -257,7 +257,13 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
             configWidgetSpace,
 
-            variableChooser(inputs, selected, ref),
+            variableChooser(
+              'Variable',
+              inputs,
+              selected,
+              ref,
+              selectedProvider,
+            ),
 
             configWidgetSpace,
           ],
