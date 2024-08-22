@@ -1,4 +1,4 @@
-/// Testing: Test the CLUSTER feature.
+/// CLUSTER feature.
 //
 // Time-stamp: <Tuesday 2024-08-20 20:05:55 +1000 Graham Williams>
 //
@@ -30,7 +30,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
@@ -38,15 +37,13 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/model.dart';
 
-/// A duration to allow the tester to view/interact with the testing. 5s is
+/// 20230712 gjw A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
 /// necessary but it is handy when running interactively for the user running
 /// the test to see the widgets for added assurance. The PAUSE environment
 /// variable can be used to override the default PAUSE here:
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-///
-/// 20230712 gjw
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));

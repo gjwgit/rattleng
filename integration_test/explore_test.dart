@@ -1,4 +1,4 @@
-/// Testing: Test the EXPLORE tab.
+/// EXPLORE tab: .
 //
 // Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
 //
@@ -27,15 +27,9 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-// TODO 20231015 gjw MIGRATE TESTS TO SINGLE ONE APP INSTANCE
-//
-// This will avoid a costly build each individual test? But then it is not so
-// well strctured.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/summary/panel.dart';
@@ -51,8 +45,6 @@ import 'package:rattle/tabs/explore.dart';
 /// variable can be used to override the default PAUSE here:
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-///
-/// 20230712 gjw
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
