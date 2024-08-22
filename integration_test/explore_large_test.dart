@@ -1,6 +1,6 @@
-/// Testing: Test the EXPLORE tab with large dataset.
+/// Summary feature with large dataset.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 14:34:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -155,6 +155,8 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
+
+      await tester.pump(hack);
 
       // Find the ssn containing "19994".
 
