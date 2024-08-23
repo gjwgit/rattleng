@@ -143,14 +143,13 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         varsToDelete.addAll(getIgnored(ref));
       // two ways to update: read it from the stdout glimpse or update it with the information
       // choose 2
-      case 'Delete Selected':
-        // rSource(context, ref, 'transform_clean_delete_selected');
-        // varsToDelete.add(ref.read(selectedProvider));
-      case 'Delete Missing':
-        // rSource(context, ref, 'transform_clean_delete_vars_missing');
-        // varsToDelete.addAll(getMissingVars(ref));
-      case 'Delete Obs with Missing':
-        // rSource(context, ref, 'transform_clean_delete_obs_missing');
+      case 'Variable':
+        varsToDelete.add(ref.read(selectedProvider));
+      case 'Vars with Missing':
+        varsToDelete.addAll(getMissing(ref));
+      case 'Obs with Missing':
+        // variables won't be deleted so return directly
+        return;
       default:
         showUnderConstruction(context);
     }
