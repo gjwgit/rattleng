@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-08-23 18:00:14 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-23 18:09:25 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -186,7 +186,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         content: '''
 
             To delete the Ignored variables you will first need to choose some
-            variables to Ignore from the **Dataset** tab's **Role** page.
+            variables to Ignore from the **Dataset** tab **Role** page.
 
             ''',
       );
