@@ -138,6 +138,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
   }
 
   void deletionAction(String method) {
+    // cleanup the state after deletion
     List<String> varsToDelete = [];
     switch (method) {
       case 'Ignored':
