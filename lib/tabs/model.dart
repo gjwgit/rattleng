@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-07-31 08:39:09 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-20 19:47:46 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -41,6 +41,7 @@ import 'package:rattle/features/linear/panel.dart';
 import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/model.dart';
+import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> modelPanels = [
   {
@@ -118,7 +119,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('MODEL: rebuild');
+    debugText('  BUILD', 'ModelTabs');
 
     return Column(
       children: [

@@ -1,6 +1,6 @@
 /// Chip choice widget used across the app.
 //
-// Time-stamp: <Saturday 2024-08-10 06:35:02 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-19 08:19:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,13 +35,14 @@ class ChoiceChipTip<T> extends StatelessWidget {
   final T selectedOption;
   final ValueChanged<T?> onSelected;
   final Map? tooltips;
-
+  final bool enabled;
   const ChoiceChipTip({
     super.key,
     required this.options,
     required this.selectedOption,
     required this.onSelected,
     this.tooltips,
+    this.enabled = true,
     String Function(T)? getLabel,
   }) : getLabel = getLabel ?? _defaultGetLabel;
 
@@ -58,16 +59,17 @@ class ChoiceChipTip<T> extends StatelessWidget {
         return ChoiceChip(
           label: Text(label),
           tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
-          disabledColor: Colors.grey,
           selectedColor: Colors.lightBlue[200],
           backgroundColor: Colors.lightBlue[50],
           shadowColor: Colors.grey,
           pressElevation: 8.0,
           elevation: 2.0,
           selected: selectedOption == option,
-          onSelected: (bool selected) {
-            onSelected(selected ? option : null);
-          },
+          onSelected: enabled
+              ? (bool selected) {
+                  onSelected(selected ? option : null);
+                }
+              : null,
         );
       }).toList(),
     );

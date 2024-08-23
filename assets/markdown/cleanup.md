@@ -11,11 +11,11 @@ that are not required.
 To undertake your dataset **Cleanup** you can choose from the
 following options: 
 
-+ [Delete Ignored](https://survivor.togaware.com/datascience/drop-columns.html);
-
 + **Delete Vars with Missing**;
 
 + [Delete Obs with Missing](https://survivor.togaware.com/datascience/drop-obs-with-missing-values.html);
+
++ [Delete Ignored](https://survivor.togaware.com/datascience/drop-columns.html);
 
 + **Delete Variable**.
 

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-08-13 20:00:12 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-19 08:18:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,7 +42,7 @@ import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
-/// This is a StatefulWidget to pass the ref across to the rSource as well as to
+/// This is a StatefulWidget to pass the ref across to the rSource
 /// monitor the selected variable.
 
 class RescaleConfig extends ConsumerStatefulWidget {
@@ -186,7 +186,13 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               child: const Text('Rescale Variable Values'),
             ),
             configWidgetSpace,
-            variableChooser(numericInputs, selected, ref),
+            variableChooser(
+              'Variable',
+              numericInputs,
+              selected,
+              ref,
+              selectedProvider,
+            ),
           ],
         ),
         rescaleChooser(),
