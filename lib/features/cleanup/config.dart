@@ -141,7 +141,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     switch (method) {
       case 'Ignored':
         varsToDelete.addAll(getIgnored(ref));
-      // two ways to update: read it from the stdout or update it with the information
+      // two ways to update: read it from the stdout glimpse or update it with the information
       // choose 2
       case 'Delete Selected':
         // rSource(context, ref, 'transform_clean_delete_selected');
@@ -214,9 +214,10 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   textStyle: Theme.of(context).textTheme.labelLarge,
                 ),
                 child: const Text('Yes'),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.of(context).pop();
-                  rSource(context, ref, dispatch(method));
+                  await rSource(context, ref, dispatch(method));
+                  // seem that deletion happens before rsource
                   deletionAction(method);
                 },
               ),

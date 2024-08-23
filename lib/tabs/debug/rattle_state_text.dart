@@ -46,6 +46,7 @@ import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/utils/count_lines.dart';
+import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/get_target.dart';
 
@@ -102,7 +103,7 @@ class RattleStateText extends ConsumerWidget {
             'TARGET:      ${getTarget(ref)}\n'
             'RISK:        ${getRisk(ref)} \n'
             'IDENTIFIERS: \$identifiers \n'
-            'IGNORE:      \$ignore\n'
+            'IGNORE:      ${getIgnored(ref)}\n'
             'SELECTED:    $selected\n'
             'SELECTED2:   $selected2\n'
             'GROUP BY:    $groupBy\n'
