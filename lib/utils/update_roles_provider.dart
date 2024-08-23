@@ -154,6 +154,6 @@ bool deleteVar(WidgetRef ref, String v) {
 
     return false;
   }
-  
+
   return true;
 }
