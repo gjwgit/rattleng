@@ -31,12 +31,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanup_method.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/get_obs_missing.dart';
 import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -134,6 +137,39 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     };
   }
 
+  void deletionAction(String method) {
+    // cleanup the state after deletion
+    List<String> varsToDelete = [];
+    switch (method) {
+      case 'Ignored':
+        varsToDelete.addAll(getIgnored(ref));
+      // two ways to update: read it from the stdout glimpse or update it with the information
+      // choose 2
+      case 'Variable':
+        String select = ref.read(selectedProvider);
+        String select2 = ref.read(selected2Provider);
+        varsToDelete.add(select);
+
+        // clear the state after the selected variable is deleted
+        ref.read(selectedProvider.notifier).state = 'NULL';
+        if (select == select2) {
+          ref.read(selected2Provider.notifier).state = 'NULL';
+        }
+      case 'Vars with Missing':
+        varsToDelete.addAll(getMissing(ref));
+      case 'Obs with Missing':
+        // variables won't be deleted so return directly
+        return;
+      default:
+        showUnderConstruction(context);
+    }
+    for (var v in varsToDelete) {
+      if (deleteVar(ref, v)) {
+        debugPrint('Deleted $v from the flutter state');
+      }
+    }
+  }
+
   void takeAction(method) {
     // Run the R scripts.  For different selected cleanup, the text will be
     // different as well as the script to execute.
@@ -187,9 +223,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   textStyle: Theme.of(context).textTheme.labelLarge,
                 ),
                 child: const Text('Yes'),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.of(context).pop();
-                  rSource(context, ref, dispatch(method));
+                  // has to use await here because if deletion happens before rsource, rsource won't delete anything in R.
+                  await rSource(context, ref, dispatch(method));
+                  
+                  deletionAction(method);
                 },
               ),
             ],
