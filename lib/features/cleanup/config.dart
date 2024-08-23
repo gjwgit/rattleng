@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanup_method.dart';
 import 'package:rattle/providers/selected.dart';
+import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_inputs.dart';
@@ -144,7 +145,15 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       // two ways to update: read it from the stdout glimpse or update it with the information
       // choose 2
       case 'Variable':
-        varsToDelete.add(ref.read(selectedProvider));
+        String select = ref.read(selectedProvider);
+        String select2 = ref.read(selected2Provider);
+        varsToDelete.add(select);
+
+        // clear the state after the selected variable is deleted
+        ref.read(selectedProvider.notifier).state = 'NULL';
+        if (select == select2) {
+          ref.read(selected2Provider.notifier).state = 'NULL';
+        }
       case 'Vars with Missing':
         varsToDelete.addAll(getMissing(ref));
       case 'Obs with Missing':
