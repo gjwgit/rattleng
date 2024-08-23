@@ -225,8 +225,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 child: const Text('Yes'),
                 onPressed: () async {
                   Navigator.of(context).pop();
+                  // has to use await here because if deletion happens before rsource, rsource won't delete anything in R.
                   await rSource(context, ref, dispatch(method));
-                  // seem that deletion happens before rsource
+                  
                   deletionAction(method);
                 },
               ),
