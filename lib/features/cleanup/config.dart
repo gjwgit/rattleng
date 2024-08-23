@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-08-17 06:51:09 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-23 18:00:14 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,6 +33,7 @@ import 'package:rattle/providers/cleanup_method.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_missing.dart';
@@ -165,7 +166,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     }
     for (var v in varsToDelete) {
       if (deleteVar(ref, v)) {
-        debugPrint('Deleted $v from the flutter state');
+        debugText('  DELETED', v);
       }
     }
   }
@@ -227,7 +228,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   Navigator.of(context).pop();
                   // has to use await here because if deletion happens before rsource, rsource won't delete anything in R.
                   await rSource(context, ref, dispatch(method));
-                  
+
                   deletionAction(method);
                 },
               ),

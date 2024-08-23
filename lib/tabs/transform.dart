@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-08-14 16:23:43 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-23 17:54:07 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -36,6 +36,7 @@ import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/features/recode/panel.dart';
 import 'package:rattle/features/cleanup/panel.dart';
 import 'package:rattle/providers/transform.dart';
+import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> transformPanels = [
   {
@@ -91,7 +92,7 @@ class _TransformTabsState extends ConsumerState<TransformTabs>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint('REBUILDING\t\tTransformTab.');
+    debugText('  BUILD', 'TransformTab');
 
     return Column(
       children: [

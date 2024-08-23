@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:15:20 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-08-23 17:49:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -44,6 +44,7 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -256,7 +257,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                             }
                             ref.read(rolesProvider.notifier).state[columnName] =
                                 choice;
-                            debugPrint('$columnName set to $choice');
+                            debugText('  $choice', columnName);
                           } else {
                             debugPrint('This should not happen');
                             // ref.read(rolesProvider.notifier).state[columnName] =
