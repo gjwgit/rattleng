@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 library;
 
 import 'package:flutter/material.dart';
@@ -46,6 +46,7 @@ import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/utils/count_lines.dart';
+import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/get_target.dart';
 
@@ -102,7 +103,7 @@ class RattleStateText extends ConsumerWidget {
             'TARGET:      ${getTarget(ref)}\n'
             'RISK:        ${getRisk(ref)} \n'
             'IDENTIFIERS: \$identifiers \n'
-            'IGNORE:      \$ignore\n'
+            'IGNORE:      ${getIgnored(ref)}\n'
             'SELECTED:    $selected\n'
             'SELECTED2:   $selected2\n'
             'GROUP BY:    $groupBy\n'

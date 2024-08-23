@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 library;
 
 import 'dart:io' show File;
@@ -68,6 +68,7 @@ class ScriptSaveButton extends ConsumerWidget {
       // The context is no longer mounted.
       debugPrint('ERROR: Context is no longer mounted');
     }
+
     return;
   }
 
