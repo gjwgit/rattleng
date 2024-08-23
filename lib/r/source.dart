@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Friday 2024-08-16 10:03:13 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-20 16:51:42 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -63,6 +64,7 @@ import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/update_script.dart';
@@ -110,7 +112,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // First obtain the text from the script.
 
-  debugPrint("R SOURCE:\t\t'$script.R'");
+  debugText('R SOURCE', '$script.R');
 
   String asset = 'assets/r/$script.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);
@@ -246,6 +248,7 @@ void rSource(BuildContext context, WidgetRef ref, String script) async {
   });
 
   code = code.replaceAll('INTERVAL', interval.toString());
+  code = code.replaceAll('NUMBER', ref.read(numberProvider).toString());
   code = code.replaceAll('SELECTED_VAR', selected);
 
   code = code.replaceAll('SELECTED_2_VAR', selected2);

@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-08-15 06:49:19 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-08-20 06:03:55 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -220,7 +220,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
 Author: Graham Williams
 
-Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
+Contributions: Tony Nolan, Mukund B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang
+Yin, Bo Zhang.
 
   ''';
 
@@ -279,7 +280,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                 rExecute(ref, 'view(ds)\n');
               }
             },
-            tooltip: 'Press here to view the current dataset.',
+            tooltip: 'Tap here to view the current dataset.',
           ),
 
           // RESET
@@ -297,7 +298,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                 reset(context, ref);
               }
             },
-            tooltip: 'Press here to clear the current project and\n'
+            tooltip: 'Tap here to clear the current project and\n'
                 'so start a new project with a new dataset.',
           ),
 
@@ -351,7 +352,7 @@ Contributions: Tony Nolan, Mukund B Srinivas, Zheyuan Xu, Yixiang Yin, Bo Zhang.
               Icons.info,
               color: Colors.blue,
             ),
-            tooltip: 'Press here to view information about RattleNG and\n'
+            tooltip: 'Tap here to view information about RattleNG and\n'
                 'those who have contributed to the software.',
           ),
         ],
