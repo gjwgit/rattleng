@@ -128,6 +128,12 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('VERSION', info.version);
 
+  // Fix the path to the dataset.
+  // ensure that the Windows path has been correctly converted to a Unix path
+  // for R.
+  if (Platform.isWindows) {
+    path = path.replaceAll(r'\', '/');
+  }
   code = code.replaceAll('FILENAME', path);
 
   // TODO 20240630 gjw EVENTUALLY SELECTIVELY REPLACE
