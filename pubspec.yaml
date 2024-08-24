@@ -18,6 +18,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  catppuccin_flutter: ^1.0.0
   file_picker: ^8.0.6
   flutter_gen: ^5.3.1
   flutter_markdown: ^0.7.1
