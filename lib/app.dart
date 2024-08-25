@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-08-24 12:09:06 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-25 07:10:02 +0800 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -90,6 +90,7 @@ class RattleApp extends ConsumerWidget {
         //
         colorScheme: ColorScheme.fromSeed(
           seedColor: flavor.mantle,
+          // seedColor: flavor.text,
         ),
         // primarySwatch: createMaterialColor(Colors.black),
 
