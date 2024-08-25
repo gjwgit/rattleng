@@ -151,7 +151,7 @@ class ImagePage extends StatelessWidget {
 
                           Platform.isWindows
                               ? Process.run('start', [tempFile.path],
-                                  runInShell: true)
+                                  runInShell: true,)
                               : Process.run('open', [tempFile.path]);
                         },
                       ),
