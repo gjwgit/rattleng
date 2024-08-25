@@ -1,6 +1,6 @@
 /// General cleanup of strings from the R console.
 //
-// Time-stamp: <Tuesday 2024-08-20 13:47:14 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-08-25 20:50:54 +0800 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

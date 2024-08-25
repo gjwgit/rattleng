@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-08-24 12:15:01 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-25 07:03:41 +0800 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -231,7 +231,7 @@ Yin, Bo Zhang.
     Flavor flavor = catppuccin.latte;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: flavor.mantle,
+//        backgroundColor: flavor.mantle,
 
         // The title aligned to the left.
 
