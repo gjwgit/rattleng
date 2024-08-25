@@ -25,18 +25,32 @@
 
 library;
 
+import 'package:flutter/material.dart';
+
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-
-String removeAnsiControlSequences(String input) {
+String parseAnsiControlSequences(String input) {
+  // match the RegExp(r'\x1B\[\d*C') first and extract the number of columns to move the cursor right
+  // then replace the match with the number of spaces
+  input = input.replaceAllMapped(RegExp(r'\x1B\[\d+C'), (match) {
+    if (match.group(0) != null) {
+      final int n =
+          int.parse(match.group(0)!.substring(2, match.group(0)!.length - 1));
+      return ' ' * n;
+    } else {
+      return '';
+    }
+  });
   // Regex to match ANSI escape codes.
-  final ansiEscape = RegExp(r'\x1B\[[0-?]*[ -/]*[@-~]');
-  return input.replaceAll(ansiEscape, '');
+  final ansiEscape = RegExp(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])');
+  input = input.replaceAll(ansiEscape, '');
+  return input;
 }
 
 String cleanString(String txt) {
   // On moving to pty I was getting lots of escapes.
-  
-  txt = removeAnsiControlSequences(txt);
+  // Parse useful control sequences, like <ESC>[X, <ESC>[C
+
+  txt = parseAnsiControlSequences(txt);
   return txt;
 }
