@@ -150,8 +150,11 @@ class ImagePage extends StatelessWidget {
                           // to the Rattle app.
 
                           Platform.isWindows
-                              ? Process.run('start', [tempFile.path],
-                                  runInShell: true,)
+                              ? Process.run(
+                                  'start',
+                                  [tempFile.path],
+                                  runInShell: true,
+                                )
                               : Process.run('open', [tempFile.path]);
                         },
                       ),
