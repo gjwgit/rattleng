@@ -90,3 +90,6 @@ dev.off()
 svg("TEMPDIR/explore_missing_naniar_ggmissupset.svg", width=16)
 naniar::gg_miss_upset(ds)
 dev.off()
+
+# Output a message when execution is complete
+print("Execution Completed")

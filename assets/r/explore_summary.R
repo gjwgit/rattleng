@@ -75,3 +75,6 @@ timeDate::skewness(ds[numc], na.rm=TRUE)
 
 ## ") 
 ## }
+
+# Output a message when execution is complete
+print("Execution Completed")

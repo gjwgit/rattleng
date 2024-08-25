@@ -323,4 +323,14 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = rStripComments(code);
 
   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+
+  // Optionally, show a SnackBar when the script starts executing.
+  if (code.contains('Execution Completed')) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Script execution completed.'),
+        duration: Duration(seconds: 1), // Set a short duration
+      ),
+    );
+  }
 }

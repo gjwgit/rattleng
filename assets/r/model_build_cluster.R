@@ -66,3 +66,6 @@ print(model_kmeans$centers)
 print(model_kmeans$withinss)
 
 cat("\n")
+
+# Output a message when execution is complete
+print("Execution Completed")

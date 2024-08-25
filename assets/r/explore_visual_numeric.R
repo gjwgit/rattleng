@@ -124,6 +124,9 @@ tds %>% plotDigitFreq() +
 
 dev.off()
 
+# Output a message when execution is complete
+print("Execution Completed")
+
 ########################################################################
 # PAIRS - REQUIRES TWO VARIABLES
 ########################################################################

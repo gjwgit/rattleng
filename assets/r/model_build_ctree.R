@@ -65,3 +65,6 @@ cat("\n")
 svg("TEMPDIR/model_tree_ctree.svg")
 plot(model_ctree, main = paste("Conditional Inference Tree", target))
 dev.off()
+
+# Output a message when execution is complete
+print("Execution Completed")

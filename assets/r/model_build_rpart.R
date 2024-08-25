@@ -79,3 +79,6 @@ dev.off()
 # List the rules from the tree using a Rattle support function.
 
 asRules(model_rpart)
+
+# Output a message when execution is complete
+print("Execution Completed")

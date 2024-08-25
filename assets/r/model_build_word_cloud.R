@@ -94,3 +94,6 @@ dev.off()
 # Show the top words
 
 d %>% filter(freq >= MINFREQ) %>% print(row.names=FALSE)
+
+# Output a message when execution is complete
+print("Execution Completed")

@@ -95,6 +95,9 @@ dev.off()
 
 printRandomForests(model_randomForest, 1)
 
+# Output a message when execution is complete
+print("Execution Completed")
+
 # Plot the OOB ROC curve.
 
 ## library(verification)

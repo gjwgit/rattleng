@@ -40,3 +40,6 @@ if (is.numeric(ds$SELECTED_VAR))
 
 glimpse(ds)
 summary(ds)
+
+# Output a message when execution is complete
+print("Execution Completed")

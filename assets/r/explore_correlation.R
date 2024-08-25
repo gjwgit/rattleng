@@ -70,3 +70,6 @@ dev.off()
 svg("TEMPDIR/explore_correlation_ggcorrplot.svg")
 ggcorrplot::ggcorrplot(cor, method='circle')
 dev.off()
+
+# Output a message when execution is complete
+print("Execution Completed")

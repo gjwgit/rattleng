@@ -139,3 +139,6 @@ mosaicplot(tds[ord,],
            ylab  = "GROUP_BY_VAR")
 
 dev.off()
+
+# Output a message when execution is complete
+print("Execution Completed")
