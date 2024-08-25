@@ -117,6 +117,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
           Row(
             children: [
               ActivityButton(
+                key: const Key('Build Decision Tree'),
                 onPressed: () {
                   // Perform manual validation.
                   String? minSplitError =
