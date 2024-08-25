@@ -25,8 +25,6 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 String parseAnsiControlSequences(String input) {
