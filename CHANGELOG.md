@@ -10,6 +10,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Ignore dart dode metrics for now - dep issues [6.2.68 20240826 gjw]
 + Bug fix for Windows popup display of SVG [6.2.67 20240825 lutra]
 + Bug fixes and tuning and testing updates [6.2.66 20240825 gjw]
 + Native File Picker when saving script [6.2.65 20240819 Lutra-Fs]
