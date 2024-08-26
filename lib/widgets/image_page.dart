@@ -145,15 +145,17 @@ class ImagePage extends StatelessWidget {
 
                           // Copy the original file to the temporary file.
 
-                          File originalFile = File(path);
-                          tempFile
-                              .writeAsBytesSync(originalFile.readAsBytesSync());
+                          File(path).copy(tempFile.path);
 
                           // Pop out a window to display the plot separate
                           // to the Rattle app.
 
                           Platform.isWindows
-                              ? Process.run('start', [tempFile.path])
+                              ? Process.run(
+                                  'start',
+                                  [tempFile.path],
+                                  runInShell: true,
+                                )
                               : Process.run('open', [tempFile.path]);
                         },
                       ),
