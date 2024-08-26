@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Friday 2024-08-23 17:49:01 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-26 14:24:35 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -156,7 +156,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ref.read(rolesProvider.notifier).state[id] = Role.ident;
         }
       }
-      // When a new row is added after transformation, initialise its role and update the role of the old variable
+
+      // When a new row is added after transformation, initialise its role and
+      // update the role of the old variable
+
       updateVariablesProvider(ref);
 
       var headline = Padding(
