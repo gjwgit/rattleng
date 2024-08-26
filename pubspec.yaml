@@ -1,10 +1,10 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.2.65+105
+version: 6.2.67+106
 
 environment:
-  sdk: ">=3.0.5 <4.0.0"
+  sdk: '>=3.0.5 <4.0.0'
 
 # Automatically upgrade package dependencies to the latest versions:
 #
@@ -51,11 +51,11 @@ dependencies:
   riverpod_annotation: ^2.2.1
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
-  window_manager: ^0.3.5
+  window_manager: ^0.4.2
   xterm: ^4.0.0
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: '^0.13.1'
   flutter_test:
     sdk: flutter
 
@@ -95,6 +95,9 @@ dev_dependencies:
   # DEPENDENCY CONFLICTS WITH dart_code_metrics.
 
   # riverpod_lint: ^2.3.2
+
+dependency_overrides:
+  collection: ^1.19.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -170,16 +173,16 @@ msix_config:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icons/icon.png"
+  image_path: 'assets/icons/icon.png'
   min_sdk_android: 21
   remove_alpha_ios: true
   web:
     generate: true
-    image_path: "assets/icons/icon.png"
+    image_path: 'assets/icons/icon.png'
   windows:
     generate: true
-    image_path: "assets/icons/icon.png"
+    image_path: 'assets/icons/icon.png'
     icon_size: 48
   macos:
     generate: true
-    image_path: "assets/icons/icon.png"
+    image_path: 'assets/icons/icon.png'
