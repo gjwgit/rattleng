@@ -1,6 +1,6 @@
-/// Model tree test for large dataset.
+/// Model tree test with large dataset.
 //
-// Time-stamp: <Tuesday 2024-08-20 20:05:55 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-26 08:48:08 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
@@ -41,15 +42,11 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Test Different decision trees of Large Dataset:', () {
-    testWidgets('Test Traditional Tree Model.', (WidgetTester tester) async {
+  group('Decision Trees for Large Dataset:', () {
+    testWidgets('Traditional.', (WidgetTester tester) async {
       app.main();
 
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
-      await tester.pump(pause);
 
       // Locate the TextField where the file path is input.
 
@@ -77,6 +74,25 @@ void main() {
 
       await tester.pump(hack);
 
+      // Find the right arrow button in the PageIndicator.
+
+      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+      expect(rightArrowFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Dataset Glimpse" page.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find the text containing the number of rows and columns.
+
+      final glimpseRowFinder = find.textContaining('Rows: 20,000');
+      expect(glimpseRowFinder, findsOneWidget);
+      final glimpseColumnFinder = find.textContaining('Columns: 24');
+      expect(glimpseColumnFinder, findsOneWidget);
+
       // Find the Model Page in the Side tab.
 
       final modelTabFinder = find.byIcon(Icons.model_training);
@@ -96,10 +112,12 @@ void main() {
       await tester.pump(pause);
 
       // Verify that the markdown content is loaded.
+
       final markdownContent = find.byKey(const Key('markdown_file'));
       expect(markdownContent, findsOneWidget);
 
       // Simulate the presence of a decision tree being built
+
       final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
 
       await tester.tap(decisionTreeButton);
@@ -109,10 +127,12 @@ void main() {
       await tester.pump(pause);
 
       // Optionally, you can test interactions with the TabPageSelector.
+
       final pageIndicator = find.byType(TabPageSelector);
       expect(pageIndicator, findsOneWidget);
 
       // Tap the right arrow to go to the second page.
+
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
       await tester.tap(rightArrowButton);
@@ -120,6 +140,8 @@ void main() {
 
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
+
+      await tester.pump(pause);
 
       // Tap the right arrow to go to the third page.
 
@@ -129,6 +151,8 @@ void main() {
       final thirdPageTitleFinder = find.text('Decision Tree as Rules');
       expect(thirdPageTitleFinder, findsOneWidget);
 
+      await tester.pump(pause);
+
       // Tap the right arrow to go to the forth page.
 
       await tester.tap(rightArrowButton);
@@ -136,11 +160,14 @@ void main() {
 
       final forthPageTitleFinder = find.text('Tree');
       expect(forthPageTitleFinder, findsOneWidget);
+
+      await tester.pump(pause);
     });
 
-    /// Currently decision tree does not work with conditional tree.
+    /// 20240826 zy Currently decision tree does not work with conditional tree.
     /// Only test switching between ChoiceChipTip.
-    testWidgets('Test Conditional Tree Model.', (WidgetTester tester) async {
+
+    testWidgets('Conditional.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -194,33 +221,41 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
+
       // Find the ChoiceChipTip widget for the traditional algorithm type.
+
       final traditionalChip = find.text(
         'Traditional',
       );
       final conditionalChip = find.text('Conditional');
 
       // Verify that both chips exist in the widget tree.
+
       expect(traditionalChip, findsOneWidget);
       expect(conditionalChip, findsOneWidget);
 
       // Tap the conditional chip to switch algorithms.
+
       await tester.tap(conditionalChip);
 
       await tester.pumpAndSettle();
 
-      // Optionally, verify any side effects (e.g., UI changes due to the selected algorithm).
-      // Example: Check for a label update
+      // Optionally, verify any side effects (e.g., UI changes due to the
+      // selected algorithm).  Example: Check for a label update
+
       final modelBuilderLabel = find.text('Model Builder: ctree');
       expect(modelBuilderLabel, findsOneWidget);
 
       // Now switch back to the traditional algorithm.
+
       await tester.tap(traditionalChip);
 
       // Wait for the widget to rebuild and settle.
+
       await tester.pumpAndSettle();
 
       // Optionally, verify UI updates for the traditional algorithm.
+
       final modelBuilderRpartLabel = find.text('Model Builder: rpart');
       expect(modelBuilderRpartLabel, findsOneWidget);
     });
