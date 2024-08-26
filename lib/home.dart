@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-08-20 06:03:55 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-08-26 07:05:01 +0800 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -227,8 +228,11 @@ Yin, Bo Zhang.
 
   @override
   Widget build(BuildContext context) {
+    Flavor flavor = catppuccin.latte;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: flavor.mantle,
+
         // The title aligned to the left.
 
         //title: const Text(appTitle),

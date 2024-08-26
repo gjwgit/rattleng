@@ -135,3 +135,25 @@ void updateVariablesProvider(WidgetRef ref) {
     }
   }
 }
+
+// t -> delete succeed
+// f -> try to delete var which doesn't exist
+bool deleteVar(WidgetRef ref, String v) {
+  Role? r = ref.read(rolesProvider.notifier).state.remove(v);
+  Type? t = ref.read(typesProvider.notifier).state.remove(v);
+  if (r == null) {
+    debugPrint(
+      'ERROR: attempt to delete $v from roles but $v is not found in the map.',
+    );
+
+    return false;
+  } else if (t == null) {
+    debugPrint(
+      'ERROR: attempt to delete $v from types but $v is not found in the map.',
+    );
+
+    return false;
+  }
+
+  return true;
+}
