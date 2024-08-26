@@ -33,17 +33,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/widgets/number_field.dart';
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
+const Duration delay = Duration(seconds: 5);
 const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Decision Trees for Large Dataset:', () {
-    testWidgets('Traditional.', (WidgetTester tester) async {
+    testWidgets('Default Traditional.', (WidgetTester tester) async {
       app.main();
 
       await tester.pumpAndSettle();
@@ -164,8 +165,131 @@ void main() {
       await tester.pump(pause);
     });
 
+    testWidgets('Update different Variables Traditional.',
+        (WidgetTester tester) async {
+      app.main();
+
+      await tester.pumpAndSettle();
+
+      // Locate the TextField where the file path is input.
+
+      final filePathField = find.byType(TextField);
+
+      // Enter the file path programmatically.
+
+      await tester.enterText(
+        filePathField,
+        'integration_test/rattle_test_large.csv',
+      );
+
+      // Simulate pressing the Enter key.
+
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
+      //
+      // How do we ensure the R Code is executed before proceeding in Rattle
+      // itself - we need to deal with the async issue in Rattle.
+
+      await tester.pump(hack);
+
+      // Find the Model Page in the Side tab.
+
+      final modelTabFinder = find.byIcon(Icons.model_training);
+      expect(modelTabFinder, findsOneWidget);
+
+      // Tap the model Tab button.
+
+      await tester.tap(modelTabFinder);
+      await tester.pumpAndSettle();
+
+      // Navigate to the Tree feature.
+
+      final treeTabFinder = find.text('Tree');
+      await tester.tap(treeTabFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find and tap the 'Include Missing' checkbox.
+      final Finder includeMissingCheckbox = find.byType(Checkbox);
+      await tester.tap(includeMissingCheckbox);
+      await tester.pumpAndSettle(); // Wait for UI to settle.
+
+      // Find the text fields by their keys and enter the new values.
+      await tester.enterText(find.byKey(const Key('minSplitField')), '21');
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byKey(const Key('maxDepthField')), '29');
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byKey(const Key('minBucketField')), '9');
+      await tester.pumpAndSettle();
+
+      await tester.enterText(
+        find.byKey(const Key('complexityField')),
+        '0.0110',
+      );
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byKey(const Key('priorsField')), '0.5,0.5');
+      await tester.pumpAndSettle();
+
+      await tester.enterText(
+        find.byKey(const Key('lossMatrixField')),
+        '0,10,1,0',
+      );
+      await tester.pumpAndSettle();
+
+      // Simulate the presence of a decision tree being built.
+
+      final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
+
+      await tester.tap(decisionTreeButton);
+
+      await tester.pumpAndSettle();
+
+      await tester.pump(delay);
+
+      // Tap the right arrow to go to the second page.
+
+      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
+      expect(rightArrowButton, findsOneWidget);
+      await tester.tap(rightArrowButton);
+      await tester.pumpAndSettle();
+
+      final secondPageTitleFinder = find.text('Decision Tree Model');
+      expect(secondPageTitleFinder, findsOneWidget);
+
+      await tester.pump(pause);
+
+      // Tap the right arrow to go to the third page.
+
+      await tester.tap(rightArrowButton);
+      await tester.pumpAndSettle();
+
+      final thirdPageTitleFinder = find.text('Decision Tree as Rules');
+      expect(thirdPageTitleFinder, findsOneWidget);
+
+      await tester.pump(pause);
+
+      // Tap the right arrow to go to the forth page.
+
+      await tester.tap(rightArrowButton);
+      await tester.pumpAndSettle();
+
+      final forthPageTitleFinder = find.text('Tree');
+      expect(forthPageTitleFinder, findsOneWidget);
+
+      await tester.pump(pause);
+    });
+
     /// 20240826 zy Currently decision tree does not work with conditional tree.
-    /// Only test switching between ChoiceChipTip.
+    /// Only test UI functions.
 
     testWidgets('Conditional.', (WidgetTester tester) async {
       app.main();
@@ -258,6 +382,31 @@ void main() {
 
       final modelBuilderRpartLabel = find.text('Model Builder: rpart');
       expect(modelBuilderRpartLabel, findsOneWidget);
+
+      // Tap the conditional chip to switch algorithms.
+
+      await tester.tap(conditionalChip);
+
+      await tester.pumpAndSettle();
+
+      // Verify the relevant fields are disabled when Conditional is selected.
+      final complexityField = find.byKey(const Key('complexityField'));
+      final priorsField = find.byKey(const Key('priorsField'));
+      final lossMatrixField = find.byKey(const Key('lossMatrixField'));
+
+      // Ensure that these fields are disabled (meaning that they are not accepting input).
+      expect(tester.widget<NumberField>(complexityField).enabled, isFalse);
+      expect(tester.widget<TextFormField>(priorsField).enabled, isFalse);
+      expect(tester.widget<TextFormField>(lossMatrixField).enabled, isFalse);
+
+      // Now switch back to the traditional algorithm.
+      await tester.tap(traditionalChip);
+      await tester.pumpAndSettle();
+
+      // Verify that the relevant fields are now enabled.
+      expect(tester.widget<NumberField>(complexityField).enabled, isTrue);
+      expect(tester.widget<TextFormField>(priorsField).enabled, isTrue);
+      expect(tester.widget<TextFormField>(lossMatrixField).enabled, isTrue);
     });
   });
 }
