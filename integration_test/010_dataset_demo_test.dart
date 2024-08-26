@@ -1,6 +1,6 @@
 /// DEMO DATASET GLIMPSE PANEL.
 //
-// Time-stamp: <Thursday 2024-08-22 11:26:43 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-26 14:16:53 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -91,10 +91,6 @@ void main() {
     final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
     String filename = dsPathText.controller?.text ?? '';
     expect(filename, 'rattle::weather');
-
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET tab large dataset (GLIMPSE page)
-    ////////////////////////////////////////////////////////////////////////
 
     // Find the right arrow button in the PageIndicator.
 
