@@ -1,6 +1,6 @@
-/// Testing: Test the EXPLORE tab with large dataset.
+/// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-22 14:34:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -27,15 +27,9 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-// TODO 20231015 gjw MIGRATE TESTS TO SINGLE ONE APP INSTANCE
-//
-// This will avoid a costly build each individual test? But then it is not so
-// well strctured.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/summary/panel.dart';
@@ -44,15 +38,13 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/widgets/image_page.dart';
 
-/// A duration to allow the tester to view/interact with the testing. 5s is
-/// good, 10s is useful for development and 0s for ongoing. This is not
-/// necessary but it is handy when running interactively for the user running
-/// the test to see the widgets for added assurance. The PAUSE environment
-/// variable can be used to override the default PAUSE here:
+/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
+/// with the testing. 5s is good, 10s is useful for development and 0s for
+/// ongoing. This is not necessary but it is handy when running interactively
+/// for the user running the test to see the widgets for added assurance. The
+/// PAUSE environment variable can be used to override the default PAUSE here:
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-///
-/// 20230712 gjw
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
@@ -157,6 +149,8 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
+
+      await tester.pump(hack);
 
       // Find the ssn containing "19994".
 
