@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Tuesday 2024-08-20 16:51:42 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-25 06:32:24 +0800 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -128,9 +128,9 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('VERSION', info.version);
 
-  // Fix the path to the dataset.
-  // ensure that the Windows path has been correctly converted to a Unix path
-  // for R.
+  // 20240825 lutra Fix the path to the dataset to ensure that the Windows path
+  // has been correctly converted to a Unix path for R.
+
   if (Platform.isWindows) {
     path = path.replaceAll(r'\', '/');
   }
