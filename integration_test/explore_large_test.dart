@@ -39,8 +39,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/summary/panel.dart';
+import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/widgets/image_page.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -199,6 +201,91 @@ void main() {
 
       final ageFinder = find.textContaining('0.099352734');
       expect(ageFinder, findsOneWidget);
+
+      ////////////////////////////////////////////////////////////////////////
+      // Visual page
+      ////////////////////////////////////////////////////////////////////////      ///
+      // Find the Summary tab by its title.
+
+      final visualTabFinder = find.text('Visual');
+      expect(visualTabFinder, findsOneWidget);
+
+      // Tap the Visual tab.
+
+      await tester.tap(visualTabFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the VisualPanel is shown.
+
+      expect(find.byType(VisualPanel), findsOneWidget);
+
+      await tester.pump(pause);
+      await tester.pump(hack); //ttttt
+
+      // Find the button by its text.
+
+      final generatePlotButtonFinder = find.text('Generate Plots');
+      expect(generatePlotButtonFinder, findsOneWidget);
+
+      // Tap the button.
+
+      await tester.tap(generatePlotButtonFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+      await tester.pump(hack); //ttttt
+
+      // Find the right arrow button in the PageIndicator.
+
+      expect(rightArrowFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Box Plot" page 2.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find the text containing "Box Plot".
+
+      final boxPlotFinder = find.textContaining('Box Plot');
+      expect(boxPlotFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Density Plot of Values" page 3.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find the text containing "Density Plot of Values".
+
+      final densityPlotFinder = find.textContaining('Density Plot of Values');
+      expect(densityPlotFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Cumulative Plot" page 4.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find the text containing "Cumulative Plot".
+
+      final cumulativePlotFinder = find.textContaining('Cumulative Plot');
+      expect(cumulativePlotFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Benford Plots" page 5.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find the text containing "Benford Plot".
+
+      final benfordPlotFinder = find.textContaining('Benford Plot');
+      expect(benfordPlotFinder, findsOneWidget);
     });
   });
 }
