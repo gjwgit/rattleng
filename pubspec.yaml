@@ -74,10 +74,10 @@ dev_dependencies:
   # a paid service. This fork maintains it's compatibility with the
   # latest flutter.
 
-  dart_code_metrics:
-    git:
-      url: https://github.com/anusii/dart-code-metrics.git
-      ref: dev
+  # dart_code_metrics:
+  #   git:
+  #     url: https://github.com/anusii/dart-code-metrics.git
+  #     ref: dev
 
   # The `flutter_lints` package contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the
