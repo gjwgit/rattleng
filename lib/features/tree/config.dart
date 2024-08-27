@@ -117,6 +117,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
           Row(
             children: [
               ActivityButton(
+                key: const Key('Build Decision Tree'),
                 onPressed: () {
                   // Perform manual validation.
                   String? minSplitError =
@@ -270,6 +271,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             children: [
               NumberField(
                 label: 'Min Split:',
+                key: const Key('minSplitField'),
                 controller: _minSplitController,
 
                 tooltip: ''' This is the minimum number of observations
@@ -284,6 +286,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               const SizedBox(width: 16),
               NumberField(
                 label: 'Max Depth:',
+                key: const Key('maxDepthField'),
                 controller: _maxDepthController,
                 tooltip:
                     ''' This is the maximum depth of any node of the final tree. 
@@ -297,6 +300,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               const SizedBox(width: 16),
               NumberField(
                 label: 'Min Bucket:',
+                key: const Key('minBucketField'),
                 controller: _minBucketController,
                 tooltip: ''' This is the minimum number of observations 
  allowed in any leaf node of the decision tree. 
@@ -308,6 +312,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               const SizedBox(width: 16),
               NumberField(
                 label: 'Complexity:',
+                key: const Key('complexityField'),
                 controller: _complexityController,
                 tooltip:
                     ''' The complexity parameter is used to control the size 
@@ -325,6 +330,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               _buildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
+                key: const Key('priorsField'),
                 textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
@@ -341,6 +347,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               _buildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,
+                key: const Key('lossMatrixField'),
                 textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
@@ -420,6 +427,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     required String? Function(String?) validator,
     required TextInputFormatter inputFormatter,
     required int maxWidth,
+    required Key key,
   }) {
     return Expanded(
       child: Tooltip(
@@ -431,6 +439,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             SizedBox(
               width: maxWidth * 15.0, // Set maximum width for the input field
               child: TextFormField(
+                key: key,
                 controller: controller,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
