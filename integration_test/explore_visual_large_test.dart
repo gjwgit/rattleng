@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Kevin Wang
+/// Authors: Kevin Wang
 
 library;
 
@@ -32,11 +32,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
-import 'package:rattle/widgets/image_page.dart';
 
 /// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
 /// with the testing. 5s is good, 10s is useful for development and 0s for
@@ -48,7 +46,7 @@ import 'package:rattle/widgets/image_page.dart';
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
+const Duration delay = Duration(seconds: 5);
 const Duration hack = Duration(seconds: 10);
 
 void main() {
@@ -86,7 +84,7 @@ void main() {
       // Optionally pump the widget tree to reflect the changes.
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -108,7 +106,7 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       ////////////////////////////////////////////////////////////////////////
       // Visual page
@@ -127,7 +125,7 @@ void main() {
       expect(find.byType(VisualPanel), findsOneWidget);
 
       await tester.pump(pause);
-      await tester.pump(hack); //ttttt
+      await tester.pump(delay);
 
       // Find the button by its text.
 
@@ -140,7 +138,6 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
-      await tester.pump(hack); //ttttt
 
       // Find the right arrow button in the PageIndicator.
 
@@ -169,7 +166,6 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
-      await tester.pump(hack); //ttttt
 
       // Find the text containing "Density Plot of Values".
 
@@ -182,7 +178,6 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
-      await tester.pump(hack); //ttttt
 
       // Find the text containing "Cumulative Plot".
 
