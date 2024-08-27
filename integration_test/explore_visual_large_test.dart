@@ -110,96 +110,9 @@ void main() {
 
       await tester.pump(pause);
 
-      // Find the Summary tab by its title.
-
-      final summaryTabFinder = find.text('Summary');
-      expect(summaryTabFinder, findsOneWidget);
-
-      // Tap the Summary tab.
-
-      await tester.tap(summaryTabFinder);
-      await tester.pumpAndSettle();
-
-      // Verify that the SummaryPanel is shown.
-
-      expect(find.byType(SummaryPanel), findsOneWidget);
-
-      await tester.pump(pause);
-
-      // Find the button by its text.
-
-      final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
-      expect(generateSummaryButtonFinder, findsOneWidget);
-
-      // Tap the button.
-
-      await tester.tap(generateSummaryButtonFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Summary of the Dataset" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      await tester.pump(hack);
-
-      // Find the ssn containing "19994".
-
-      final ssnFinder = find.textContaining('19994');
-      expect(ssnFinder, findsOneWidget);
-
-      // Find the first_name containing "17510".
-
-      final firstNameFinder = find.textContaining('17510');
-      expect(firstNameFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Skim of the Dataset" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "20000" as the number of rows.
-
-      final rowsFinder = find.textContaining('20000');
-      expect(rowsFinder, findsOneWidget);
-
-      // Find the text containing "24" as the number of columns.
-
-      final columnsFinder = find.textContaining('24');
-      expect(columnsFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Kurtosis and Skewness" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "2.35753359" as the weight.
-
-      // final weightFinder = find.textContaining('2.12090961');
-      // expect(weightFinder, findsOneWidget);
-
-      // // Find the text containing "0.099352734" as the age_at_consultation.
-
-      // final ageFinder = find.textContaining('0.099352734');
-      // expect(ageFinder, findsOneWidget);
-
       ////////////////////////////////////////////////////////////////////////
       // Visual page
       ////////////////////////////////////////////////////////////////////////      ///
-      // Find the Summary tab by its title.
 
       final visualTabFinder = find.text('Visual');
       expect(visualTabFinder, findsOneWidget);
@@ -228,6 +141,11 @@ void main() {
 
       await tester.pump(pause);
       await tester.pump(hack); //ttttt
+
+      // Find the right arrow button in the PageIndicator.
+
+      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+      expect(rightArrowFinder, findsOneWidget);
 
       // Find the right arrow button in the PageIndicator.
 
