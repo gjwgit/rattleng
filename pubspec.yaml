@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.2.67+106
+version: 6.2.68+106
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -74,10 +74,10 @@ dev_dependencies:
   # a paid service. This fork maintains it's compatibility with the
   # latest flutter.
 
-  dart_code_metrics:
-    git:
-      url: https://github.com/anusii/dart-code-metrics.git
-      ref: dev
+  # dart_code_metrics:
+  #   git:
+  #     url: https://github.com/anusii/dart-code-metrics.git
+  #     ref: dev
 
   # The `flutter_lints` package contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the
@@ -96,8 +96,8 @@ dev_dependencies:
 
   # riverpod_lint: ^2.3.2
 
-dependency_overrides:
-  collection: ^1.19.0
+# dependency_overrides:
+#   collection: ^1.19.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,6 +1,6 @@
-/// Basice DATASET test: LARGE.
+/// DEMO DATASET GLIMPSE PANEL.
 //
-// Time-stamp: <Thursday 2024-08-22 11:16:05 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-26 14:16:53 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -32,7 +32,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/dataset/popup.dart';
 
 /// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
 /// with the testing. 5s is good, 10s is useful for development and 0s for
@@ -50,7 +53,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Large Dataset, GLIMPSE and ROLES pages',
+  testWidgets('Demo Dataset, GLIMPSE and ROLES pages.',
       (WidgetTester tester) async {
     app.main();
 
@@ -62,37 +65,32 @@ void main() {
 
     await tester.pump(pause);
 
-    // Locate the TextField where the file path is input.
+    final datasetButtonFinder = find.byType(DatasetButton);
+    expect(datasetButtonFinder, findsOneWidget);
+    await tester.pump(pause);
 
-    final filePathField = find.byType(TextField);
-    expect(filePathField, findsOneWidget);
+    final datasetButton = find.byType(DatasetButton);
+    expect(datasetButton, findsOneWidget);
+    await tester.pump(pause);
+    await tester.tap(datasetButton);
+    await tester.pumpAndSettle();
 
-    // Enter the file path programmatically.
+    await tester.pump(delay);
 
-    await tester.enterText(
-      filePathField,
-      'integration_test/rattle_test_large.csv',
-    );
-
-    // Simulate pressing the Enter key.
-
-    await tester.testTextInput.receiveAction(TextInputAction.done);
-
-    // Optionally pump the widget tree to reflect the changes.
+    final datasetPopup = find.byType(DatasetPopup);
+    expect(datasetPopup, findsOneWidget);
+    final demoButton = find.text('Demo');
+    expect(demoButton, findsOneWidget);
+    await tester.tap(demoButton);
     await tester.pumpAndSettle();
 
     await tester.pump(pause);
 
-    // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-    //
-    // How do we ensure the R Code is executed before proceeding in Rattle
-    // itself - we need to deal with the async issue in Rattle.
-
-    await tester.pump(hack);
-
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET tab large dataset (GLIMPSE page)
-    ////////////////////////////////////////////////////////////////////////
+    final dsPathTextFinder = find.byKey(datasetPathKey);
+    expect(dsPathTextFinder, findsOneWidget);
+    final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+    String filename = dsPathText.controller?.text ?? '';
+    expect(filename, 'rattle::weather');
 
     // Find the right arrow button in the PageIndicator.
 
@@ -104,32 +102,24 @@ void main() {
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
-    await tester.pump(pause);
+    // Find the text containing "366".
 
-    // Find the text containing "24" - the number of columns.
+    final glimpseRowFinder = find.textContaining('366');
+    expect(glimpseRowFinder, findsOneWidget);
 
-    final glimpseColumnFinder = find.textContaining('Columns: 24');
-    expect(glimpseColumnFinder, findsOneWidget);
+    // Find the text containing "2007-11-01".
 
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET tab large dataset (ROLES page)
-    ////////////////////////////////////////////////////////////////////////
+    final glimpseDateFinder = find.textContaining('2007-11-01');
+    expect(glimpseDateFinder, findsOneWidget);
 
     // Tap the right arrow button to go to "ROLES" page.
 
     await tester.tap(rightArrowFinder);
     await tester.pumpAndSettle();
 
-    // Find the text containing "rec-57600".
+    // Find the text containing "8.0".
 
-    final rolesRecIDFinder = find.textContaining('rec-57600, rec-73378,');
-    expect(rolesRecIDFinder, findsOneWidget);
-
-    // TODO 20240822 gjw EXTRA DATASET LARGE TESTS
-    //
-    // Check which variables are INPUT, IGNORE, TARGET
-    //
-    // Maybe load the provider to make sure the variables are assigned to
-    // the expected ROLES.
+    final rolesTempFinder = find.textContaining('8.0');
+    expect(rolesTempFinder, findsOneWidget);
   });
 }
