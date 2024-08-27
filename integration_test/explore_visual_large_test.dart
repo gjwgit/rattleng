@@ -1,4 +1,4 @@
-/// LARGE EXPLORE SUMMARY.
+/// LARGE EXPLORE VISUAL.
 //
 // Time-stamp: <Thursday 2024-08-22 14:34:16 +1000 Graham Williams>
 //
@@ -28,8 +28,8 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/visual/panel.dart';
@@ -53,8 +53,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Summary.',
-        (WidgetTester tester) async {
+    testWidgets('Large Dataset, Explore, Visual.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -110,7 +109,7 @@ void main() {
 
       ////////////////////////////////////////////////////////////////////////
       // Visual page
-      ////////////////////////////////////////////////////////////////////////      ///
+      ////////////////////////////////////////////////////////////////////////
 
       final visualTabFinder = find.text('Visual');
       expect(visualTabFinder, findsOneWidget);
