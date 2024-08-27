@@ -33,7 +33,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/missing/panel.dart';
 
-import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
@@ -57,189 +56,98 @@ void main() {
   group('Explore Tab:', () {
     testWidgets('Demo Dataset, Explore, Missing.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
-      await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
-      await tester.pump(pause);
-
-      final datasetButtonFinder = find.byType(DatasetButton);
-      expect(datasetButtonFinder, findsOneWidget);
-      await tester.pump(pause);
-
-      final datasetButton = find.byType(DatasetButton);
-      expect(datasetButton, findsOneWidget);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // Find the Explore tab by icon and tap on it.
+      await _openDemoDataset(tester);
+      await _navigateToExploreTab(tester);
 
-      final exploreIconFinder = find.byIcon(Icons.insights);
-      expect(exploreIconFinder, findsOneWidget);
+      await _navigateToTab(tester, 'Missing', MissingPanel);
 
-      // Tap the Explore tab.
-
-      await tester.tap(exploreIconFinder);
-      await tester.pumpAndSettle();
-
-      // Verify if the ExploreTabs widget is shown.
-
-      expect(find.byType(ExploreTabs), findsOneWidget);
-
-      // Navigate to the Missing tab.
-
-      final exploreTabFinder = find.text('Explore');
-      await tester.tap(exploreTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the Missing tab by its title.
-
-      final missingTabFinder = find.text('Missing');
-      expect(missingTabFinder, findsOneWidget);
-
-      // Tap the Missing tab.
-
-      await tester.tap(missingTabFinder);
-      await tester.pumpAndSettle();
-
-      // Verify that the MissingPanel is shown.
-
-      expect(find.byType(MissingPanel), findsOneWidget);
-
-      await tester.pump(pause);
-
-      // Find the button by its text.
-
-      final generateSummaryButtonFinder = find.text('Perform Missing Analysis');
-      expect(generateSummaryButtonFinder, findsOneWidget);
-
-      // Tap the button.
-
-      await tester.tap(generateSummaryButtonFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-      await tester.pump(delay);
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Summary of the Dataset" page 1.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "Patterns of Missing Data".
-
-      final title1Finder = find.textContaining('Patterns of Missing Data');
-      expect(title1Finder, findsOneWidget);
-
-      // Find the text containing "47".
-
-      final valueFinder = find.textContaining('47');
-      expect(valueFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Patterns of Missing Values" page 2.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "Patterns of Missing Values".
-
-      final titlePage2Finder =
-          find.textContaining('Patterns of Missing Values');
-      expect(titlePage2Finder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Aggregation of Missing Values - Textual" page 3.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "Aggregation of Missing Values - Textual".
-
-      final titlePage3Finder =
-          find.textContaining('Aggregation of Missing Values - Textual');
-      expect(titlePage3Finder, findsOneWidget);
-
-      // Find the text containing "31" as the wind_dir_9am.
-
-      final windFinder = find.textContaining('31');
-      expect(windFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Aggregation of Missing Values - Visual" page 4.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "Aggregation of Missing Values - Visual".
-
-      final titlePage4Finder =
-          find.textContaining('Aggregation of Missing Values - Visual');
-      expect(titlePage4Finder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Visualisation of Observations with Missing Values" page 5.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "Visualisation of Observations with Missing Values".
-
-      final titlePage5Finder = find
-          .textContaining('Visualisation of Observations with Missing Values');
-      expect(titlePage5Finder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Comparison of Counts of Missing Values" page 6.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "Comparison of Counts of Missing Values".
-
-      final titlePage6Finder =
-          find.textContaining('Comparison of Counts of Missing Values');
-      expect(titlePage6Finder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Patterns of Missingness" page 7.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing "Patterns of Missingness".
-
-      final titlePage7Finder = find.textContaining('Patterns of Missingness');
-      expect(titlePage7Finder, findsOneWidget);
+      await _performMissingAnalysis(tester);
+      await _verifyPageContent(tester, 'Patterns of Missing Data', '47');
+      await _verifyPageContent(tester, 'Patterns of Missing Values');
+      await _verifyPageContent(
+          tester, 'Aggregation of Missing Values - Textual', '31');
+      await _verifyPageContent(
+          tester, 'Aggregation of Missing Values - Visual');
+      await _verifyPageContent(
+          tester, 'Visualisation of Observations with Missing Values');
+      await _verifyPageContent(
+          tester, 'Comparison of Counts of Missing Values');
+      await _verifyPageContent(tester, 'Patterns of Missingness');
     });
   });
+}
+
+Future<void> _openDemoDataset(WidgetTester tester) async {
+  final datasetButtonFinder = find.byType(DatasetButton);
+  expect(datasetButtonFinder, findsOneWidget);
+  await tester.pump(pause);
+
+  await tester.tap(datasetButtonFinder);
+  await tester.pumpAndSettle();
+
+  await tester.pump(delay);
+
+  final datasetPopup = find.byType(DatasetPopup);
+  expect(datasetPopup, findsOneWidget);
+  final demoButton = find.text('Demo');
+  expect(demoButton, findsOneWidget);
+  await tester.tap(demoButton);
+  await tester.pumpAndSettle();
+  await tester.pump(pause);
+}
+
+Future<void> _navigateToExploreTab(WidgetTester tester) async {
+  final exploreIconFinder = find.byIcon(Icons.insights);
+  expect(exploreIconFinder, findsOneWidget);
+
+  await tester.tap(exploreIconFinder);
+  await tester.pumpAndSettle();
+
+  expect(find.byType(ExploreTabs), findsOneWidget);
+}
+
+Future<void> _navigateToTab(
+    WidgetTester tester, String tabTitle, Type panelType) async {
+  final tabFinder = find.text(tabTitle);
+  expect(tabFinder, findsOneWidget);
+
+  await tester.tap(tabFinder);
+  await tester.pumpAndSettle();
+
+  await tester.pump(pause);
+
+  expect(find.byType(panelType), findsOneWidget);
+}
+
+Future<void> _performMissingAnalysis(WidgetTester tester) async {
+  final generateSummaryButtonFinder = find.text('Perform Missing Analysis');
+  expect(generateSummaryButtonFinder, findsOneWidget);
+
+  await tester.tap(generateSummaryButtonFinder);
+  await tester.pumpAndSettle();
+
+  await tester.pump(pause);
+  await tester.pump(delay);
+}
+
+Future<void> _verifyPageContent(WidgetTester tester, String title,
+    [String? value]) async {
+  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+  expect(rightArrowFinder, findsOneWidget);
+
+  await tester.tap(rightArrowFinder);
+  await tester.pumpAndSettle();
+
+  await tester.pump(pause);
+
+  final titleFinder = find.textContaining(title);
+  expect(titleFinder, findsOneWidget);
+
+  if (value != null) {
+    final valueFinder = find.textContaining(value);
+    expect(valueFinder, findsOneWidget);
+  }
 }
