@@ -28,16 +28,13 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:integration_test/integration_test.dart';
+
 import 'package:rattle/features/missing/panel.dart';
-
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
-
 import '600_explore_large_test.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
