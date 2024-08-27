@@ -48,7 +48,7 @@ import 'package:rattle/tabs/explore.dart';
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
+const Duration delay = Duration(seconds: 5);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -68,13 +68,22 @@ void main() {
       await _verifyPageContent(tester, 'Patterns of Missing Data', '47');
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
-          tester, 'Aggregation of Missing Values - Textual', '31');
+        tester,
+        'Aggregation of Missing Values - Textual',
+        '31',
+      );
       await _verifyPageContent(
-          tester, 'Aggregation of Missing Values - Visual');
+        tester,
+        'Aggregation of Missing Values - Visual',
+      );
       await _verifyPageContent(
-          tester, 'Visualisation of Observations with Missing Values');
+        tester,
+        'Visualisation of Observations with Missing Values',
+      );
       await _verifyPageContent(
-          tester, 'Comparison of Counts of Missing Values');
+        tester,
+        'Comparison of Counts of Missing Values',
+      );
       await _verifyPageContent(tester, 'Patterns of Missingness');
     });
   });
@@ -110,7 +119,10 @@ Future<void> _navigateToExploreTab(WidgetTester tester) async {
 }
 
 Future<void> _navigateToTab(
-    WidgetTester tester, String tabTitle, Type panelType) async {
+  WidgetTester tester,
+  String tabTitle,
+  Type panelType,
+) async {
   final tabFinder = find.text(tabTitle);
   expect(tabFinder, findsOneWidget);
 
@@ -133,8 +145,11 @@ Future<void> _performMissingAnalysis(WidgetTester tester) async {
   await tester.pump(delay);
 }
 
-Future<void> _verifyPageContent(WidgetTester tester, String title,
-    [String? value]) async {
+Future<void> _verifyPageContent(
+  WidgetTester tester,
+  String title, [
+  String? value,
+]) async {
   final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
   expect(rightArrowFinder, findsOneWidget);
 
