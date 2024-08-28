@@ -1,6 +1,6 @@
 /// A numerical text input field.
 //
-// Time-stamp: <Sunday 2024-07-21 21:01:29 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:14:54 +0800 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -130,10 +130,6 @@ class NumberFieldState extends ConsumerState<NumberField> {
     } else {
       ref.read(widget.stateProvider.notifier).state = v;
     }
-
-    debugPrint(
-      'Interval updated to ${ref.read(widget.stateProvider.notifier).state}.',
-    );
   }
 
   void _onFocusChange() {

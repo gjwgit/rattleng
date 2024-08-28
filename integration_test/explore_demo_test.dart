@@ -1,6 +1,6 @@
 /// Explore tab Demo dataset.
 //
-// Time-stamp: <Tuesday 2024-08-27 20:51:11 +0800 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:17:11 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -53,8 +53,8 @@ const Duration delay = Duration(seconds: 1);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore tab Demo dataset:', () {
-    testWidgets('Summary feature.', (WidgetTester tester) async {
+  group('Demo Explore:', () {
+    testWidgets('Summary.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
