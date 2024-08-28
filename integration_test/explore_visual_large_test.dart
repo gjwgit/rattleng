@@ -1,6 +1,6 @@
-/// LARGE EXPLORE VISUAL.
+/// Explore tab Visual feature Large dataset.
 //
-// Time-stamp: <Thursday 2024-08-22 14:34:16 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -52,8 +52,8 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Visual.', (WidgetTester tester) async {
+  group('Explore tab Large dataset:', () {
+    testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -158,6 +158,11 @@ void main() {
 
       final boxPlotFinder = find.textContaining('Box Plot');
       expect(boxPlotFinder, findsOneWidget);
+
+      // TODO 20240827 gjw SOME PLOT TEST IDEAS
+      //
+      // Can we read the generated SVG file properties to ensure the plot has
+      // just been generated and the size is abuotwhat we expect it to be.
 
       // Tap the right arrow button to go to "Density Plot of Values" page 3.
 
