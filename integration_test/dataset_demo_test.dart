@@ -1,6 +1,6 @@
 /// DEMO DATASET GLIMPSE PANEL.
 //
-// Time-stamp: <Wednesday 2024-08-28 08:47:11 +0800 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:15:56 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -53,7 +53,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Dataset Demo:', () {
+  group('Demo Dataset:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
 
