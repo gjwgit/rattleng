@@ -1,6 +1,6 @@
 /// EXPLORE tab: Missing Large Dataset Test.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 21:43:34 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
-import '600_explore_large_test.dart';
+import 'explore_large_test.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
