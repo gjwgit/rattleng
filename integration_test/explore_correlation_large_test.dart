@@ -1,4 +1,4 @@
-/// EXPLORE tab: Correlation Demo Dataset Test.
+/// EXPLORE tab: Correlation Large Dataset Test.
 //
 // Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
 //
@@ -28,15 +28,14 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/correlation/panel.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
+// import '600_explore_large_test.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -48,19 +47,19 @@ import 'package:rattle/tabs/explore.dart';
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 5);
+const Duration hack = Duration(seconds: 5);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Explore Tab:', () {
-    testWidgets('Demo Dataset, Explore, Correlation.',
+    testWidgets('Large Dataset, Explore, Correlation.',
         (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await _openDemoDataset(tester);
+      await _openLargeDataset(tester);
       await _navigateToExploreTab(tester);
 
       await _navigateToTab(tester, 'Correlation', CorrelationPanel);
@@ -69,32 +68,37 @@ void main() {
 
       // Verify the content of the page 1.
       await _verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
-      await _verifyTextContent(tester, '0.97');
-      await _verifyTextContent(tester, '0.14');
-      await _verifyTextContent(tester, '-0.36');
+      await _verifyTextContent(tester, '0.39');
+      await _verifyTextContent(tester, '0.01');
+      await _verifyTextContent(tester, '0.53');
 
       await _verifyPageContent(tester, 'Variable Correlation Plot');
     });
   });
 }
 
-Future<void> _openDemoDataset(WidgetTester tester) async {
-  final datasetButtonFinder = find.byType(DatasetButton);
-  expect(datasetButtonFinder, findsOneWidget);
-  await tester.pump(pause);
+Future<void> _openLargeDataset(WidgetTester tester) async {
+  // Locate the TextField where the file path is input.
 
-  await tester.tap(datasetButtonFinder);
+  final filePathField = find.byType(TextField);
+  expect(filePathField, findsOneWidget);
+
+  // Enter the file path programmatically.
+
+  await tester.enterText(
+    filePathField,
+    'integration_test/rattle_test_large.csv',
+  );
+
+  // Simulate pressing the Enter key.
+
+  await tester.testTextInput.receiveAction(TextInputAction.done);
+
+  // Optionally pump the widget tree to reflect the changes.
   await tester.pumpAndSettle();
 
-  await tester.pump(delay);
-
-  final datasetPopup = find.byType(DatasetPopup);
-  expect(datasetPopup, findsOneWidget);
-  final demoButton = find.text('Demo');
-  expect(demoButton, findsOneWidget);
-  await tester.tap(demoButton);
-  await tester.pumpAndSettle();
   await tester.pump(pause);
+  await tester.pump(hack);
 }
 
 Future<void> _navigateToExploreTab(WidgetTester tester) async {
@@ -124,14 +128,14 @@ Future<void> _navigateToTab(
 }
 
 Future<void> _performCorrelationAnalysis(WidgetTester tester) async {
-  final buttonFinder = find.text('Perform Correlation Analysis');
-  expect(buttonFinder, findsOneWidget);
+  final generateSummaryButtonFinder = find.text('Perform Correlation Analysis');
+  expect(generateSummaryButtonFinder, findsOneWidget);
 
-  await tester.tap(buttonFinder);
+  await tester.tap(generateSummaryButtonFinder);
   await tester.pumpAndSettle();
 
   await tester.pump(pause);
-  await tester.pump(delay);
+  await tester.pump(hack);
 }
 
 Future<void> _verifyPageContent(
