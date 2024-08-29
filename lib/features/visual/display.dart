@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-08-17 16:21:11 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:27:32 +0800 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,7 +61,6 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     Type? stype = ref.read(typesProvider.notifier).state[selected];
 
     if (stype == Type.numeric) {
-      debugPrint('add pages for numeric');
       pages.add(
         ImagePage(
           title: '''
@@ -135,8 +134,6 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     // );
 
     if (stype == Type.categoric) {
-      debugPrint('add pages for categoric');
-
       pages.add(
         ImagePage(
           title: '''
