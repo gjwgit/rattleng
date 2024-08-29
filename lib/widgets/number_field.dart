@@ -157,12 +157,6 @@ class NumberFieldState extends ConsumerState<NumberField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          widget.label.isEmpty
-              ? Container()
-              : Text(
-                  widget.label,
-                  style: widget.enabled ? normalTextStyle : disabledTextStyle,
-                ),
           SizedBox(
             width: widget.maxWidth * 30.0,
             child: Stack(
@@ -171,6 +165,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   controller: widget.controller,
                   focusNode: _focusNode,
                   decoration: InputDecoration(
+                    labelText: widget.label,
                     border: const OutlineInputBorder(),
                     contentPadding: const EdgeInsets.only(
                       right: 40,
