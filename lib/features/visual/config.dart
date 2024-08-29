@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-08 13:42:16 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:26:39 +0800 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -131,10 +131,8 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
         // Choose which visualisations to run depending on the
         // selected variable.
         if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
-          debugPrint('run numeric script');
           rSource(context, ref, 'explore_visual_numeric');
         } else {
-          debugPrint('run categoric script');
           rSource(context, ref, 'explore_visual_categoric');
         }
       }

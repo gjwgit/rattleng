@@ -1,6 +1,6 @@
-/// Basic DATASET test: LARGE.
+/// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Monday 2024-08-26 14:10:52 +0800 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:19:11 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -32,7 +32,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/tabs/explore.dart';
 
 /// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
 /// with the testing. 5s is good, 10s is useful for development and 0s for
@@ -50,9 +52,8 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Large Dataset:', () {
-    testWidgets('Glimpse and Roles pages Kev TODO check roles.',
-        (WidgetTester tester) async {
+  group('Large Explore:', () {
+    testWidgets('Summary.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -84,50 +85,113 @@ void main() {
 
       await tester.pump(pause);
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
+      // Find the Explore tab by icon and tap on it.
 
-      await tester.pump(hack);
+      final exploreIconFinder = find.byIcon(Icons.insights);
+      expect(exploreIconFinder, findsOneWidget);
+
+      // Tap the Explore tab.
+
+      await tester.tap(exploreIconFinder);
+      await tester.pumpAndSettle();
+
+      // Verify if the ExploreTabs widget is shown.
+
+      expect(find.byType(ExploreTabs), findsOneWidget);
+
+      // Navigate to the Explore tab.
+
+      final exploreTabFinder = find.text('Explore');
+      await tester.tap(exploreTabFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find the Summary tab by its title.
+
+      final summaryTabFinder = find.text('Summary');
+      expect(summaryTabFinder, findsOneWidget);
+
+      // Tap the Summary tab.
+
+      await tester.tap(summaryTabFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the SummaryPanel is shown.
+
+      expect(find.byType(SummaryPanel), findsOneWidget);
+
+      await tester.pump(pause);
+
+      // Find the button by its text.
+
+      final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
+      expect(generateSummaryButtonFinder, findsOneWidget);
+
+      // Tap the button.
+
+      await tester.tap(generateSummaryButtonFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
 
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
+      // Tap the right arrow button to go to "Summary of the Dataset" page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
 
-      // Find the text containing the number of rows and columns.
+      await tester.pump(hack);
 
-      final glimpseRowFinder = find.textContaining('Rows: 20,000');
-      expect(glimpseRowFinder, findsOneWidget);
-      final glimpseColumnFinder = find.textContaining('Columns: 24');
-      expect(glimpseColumnFinder, findsOneWidget);
+      // Find the ssn containing "19994".
 
-      // Tap the right arrow button to go to "ROLES" page.
+      final ssnFinder = find.textContaining('19994');
+      expect(ssnFinder, findsOneWidget);
+
+      // Find the first_name containing "17510".
+
+      final firstNameFinder = find.textContaining('17510');
+      expect(firstNameFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Skim of the Dataset" page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      // Find the text containing "rec-57600".
+      await tester.pump(pause);
 
-      final rolesRecIDFinder = find.textContaining('rec-57600, rec-73378,');
-      expect(rolesRecIDFinder, findsOneWidget);
+      // Find the text containing "20000" as the number of rows.
+
+      final rowsFinder = find.textContaining('20000');
+      expect(rowsFinder, findsOneWidget);
+
+      // Find the text containing "24" as the number of columns.
+
+      final columnsFinder = find.textContaining('24');
+      expect(columnsFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Kurtosis and Skewness" page.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
 
       await tester.pump(pause);
 
-      // TODO 20240822 gjw FOR kevin EXTRA DATASET LARGE TESTS
-      //
-      // Check which variables are INPUT, IGNORE, TARGET
-      //
-      // Maybe load the provider to make sure the variables are assigned to
-      // the expected ROLES.
+      // Find the text containing "2.35753359" as the weight.
+
+      final weightFinder = find.textContaining('2.12090961');
+      expect(weightFinder, findsOneWidget);
+
+      // Find the text containing "0.099352734" as the age_at_consultation.
+
+      final ageFinder = find.textContaining('0.099352734');
+      expect(ageFinder, findsOneWidget);
     });
   });
 }
