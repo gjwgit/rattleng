@@ -241,6 +241,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             ),
           ],
         ),
+        configTopSpace,
         recodeChooser(inputs, selected2),
       ],
     );
