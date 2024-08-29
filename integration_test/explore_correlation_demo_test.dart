@@ -37,6 +37,7 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
+import 'helper.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -45,6 +46,7 @@ import 'package:rattle/tabs/explore.dart';
 /// variable can be used to override the default PAUSE here:
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
+// explore_tab_test.dart
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
@@ -61,19 +63,19 @@ void main() {
       await tester.pump(pause);
 
       await _openDemoDataset(tester);
-      await _navigateToExploreTab(tester);
+      await navigateToExploreTab(tester);
 
-      await _navigateToTab(tester, 'Correlation', CorrelationPanel);
+      // Use the helper functions from helper.dart
+      await navigateToTab(tester, 'Correlation', CorrelationPanel);
 
-      await _performCorrelationAnalysis(tester);
+      await performCorrelationAnalysis(tester);
 
-      // Verify the content of the page 1.
-      await _verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
-      await _verifyTextContent(tester, '0.97');
-      await _verifyTextContent(tester, '0.14');
-      await _verifyTextContent(tester, '-0.36');
+      await verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
+      await verifyTextContent(tester, '0.97');
+      await verifyTextContent(tester, '0.14');
+      await verifyTextContent(tester, '-0.36');
 
-      await _verifyPageContent(tester, 'Variable Correlation Plot');
+      await verifyPageContent(tester, 'Variable Correlation Plot');
     });
   });
 }
@@ -95,73 +97,4 @@ Future<void> _openDemoDataset(WidgetTester tester) async {
   await tester.tap(demoButton);
   await tester.pumpAndSettle();
   await tester.pump(pause);
-}
-
-Future<void> _navigateToExploreTab(WidgetTester tester) async {
-  final exploreIconFinder = find.byIcon(Icons.insights);
-  expect(exploreIconFinder, findsOneWidget);
-
-  await tester.tap(exploreIconFinder);
-  await tester.pumpAndSettle();
-
-  expect(find.byType(ExploreTabs), findsOneWidget);
-}
-
-Future<void> _navigateToTab(
-  WidgetTester tester,
-  String tabTitle,
-  Type panelType,
-) async {
-  final tabFinder = find.text(tabTitle);
-  expect(tabFinder, findsOneWidget);
-
-  await tester.tap(tabFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-
-  expect(find.byType(panelType), findsOneWidget);
-}
-
-Future<void> _performCorrelationAnalysis(WidgetTester tester) async {
-  final buttonFinder = find.text('Perform Correlation Analysis');
-  expect(buttonFinder, findsOneWidget);
-
-  await tester.tap(buttonFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-  await tester.pump(delay);
-}
-
-Future<void> _verifyPageContent(
-  WidgetTester tester,
-  String title, [
-  String? value,
-]) async {
-  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-  expect(rightArrowFinder, findsOneWidget);
-
-  await tester.tap(rightArrowFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-
-  final titleFinder = find.textContaining(title);
-  expect(titleFinder, findsOneWidget);
-
-  if (value != null) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
-}
-
-Future<void> _verifyTextContent(
-  WidgetTester tester,
-  String? value,
-) async {
-  if (value != null) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
 }

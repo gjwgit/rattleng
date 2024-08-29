@@ -35,6 +35,8 @@ import 'package:rattle/features/correlation/panel.dart';
 
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
+
+import 'helper.dart';
 // import '600_explore_large_test.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
@@ -60,19 +62,20 @@ void main() {
       await tester.pump(pause);
 
       await _openLargeDataset(tester);
-      await _navigateToExploreTab(tester);
+      await navigateToExploreTab(tester);
 
-      await _navigateToTab(tester, 'Correlation', CorrelationPanel);
+      await navigateToTab(tester, 'Correlation', CorrelationPanel);
 
-      await _performCorrelationAnalysis(tester);
+      await performCorrelationAnalysis(tester);
 
       // Verify the content of the page 1.
-      await _verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
-      await _verifyTextContent(tester, '0.39');
-      await _verifyTextContent(tester, '0.01');
-      await _verifyTextContent(tester, '0.53');
 
-      await _verifyPageContent(tester, 'Variable Correlation Plot');
+      await verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
+      await verifyTextContent(tester, '0.39');
+      await verifyTextContent(tester, '0.01');
+      await verifyTextContent(tester, '0.53');
+
+      await verifyPageContent(tester, 'Variable Correlation Plot');
     });
   });
 }
@@ -95,77 +98,9 @@ Future<void> _openLargeDataset(WidgetTester tester) async {
   await tester.testTextInput.receiveAction(TextInputAction.done);
 
   // Optionally pump the widget tree to reflect the changes.
+
   await tester.pumpAndSettle();
 
   await tester.pump(pause);
   await tester.pump(hack);
-}
-
-Future<void> _navigateToExploreTab(WidgetTester tester) async {
-  final exploreIconFinder = find.byIcon(Icons.insights);
-  expect(exploreIconFinder, findsOneWidget);
-
-  await tester.tap(exploreIconFinder);
-  await tester.pumpAndSettle();
-
-  expect(find.byType(ExploreTabs), findsOneWidget);
-}
-
-Future<void> _navigateToTab(
-  WidgetTester tester,
-  String tabTitle,
-  Type panelType,
-) async {
-  final tabFinder = find.text(tabTitle);
-  expect(tabFinder, findsOneWidget);
-
-  await tester.tap(tabFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-
-  expect(find.byType(panelType), findsOneWidget);
-}
-
-Future<void> _performCorrelationAnalysis(WidgetTester tester) async {
-  final generateSummaryButtonFinder = find.text('Perform Correlation Analysis');
-  expect(generateSummaryButtonFinder, findsOneWidget);
-
-  await tester.tap(generateSummaryButtonFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-  await tester.pump(hack);
-}
-
-Future<void> _verifyPageContent(
-  WidgetTester tester,
-  String title, [
-  String? value,
-]) async {
-  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-  expect(rightArrowFinder, findsOneWidget);
-
-  await tester.tap(rightArrowFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-
-  final titleFinder = find.textContaining(title);
-  expect(titleFinder, findsOneWidget);
-
-  if (value != null) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
-}
-
-Future<void> _verifyTextContent(
-  WidgetTester tester,
-  String? value,
-) async {
-  if (value != null) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
 }
