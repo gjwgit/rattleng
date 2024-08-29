@@ -29,3 +29,6 @@ fBasics::locationTest(na.omit(ds$SELECTED_VAR), na.omit(ds$SELECTED_2_VAR))
 # varianceTest(na.omit(crs$dataset[, "Rainfall"]), na.omit(crs$dataset[, "MaxTemp"]))
 
 fBasics::varianceTest(na.omit(ds$SELECTED_VAR), na.omit(ds$SELECTED_2_VAR))
+
+# Output a message when execution is complete
+print("Execution Completed")
