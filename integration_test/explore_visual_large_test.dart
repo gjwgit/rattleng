@@ -1,6 +1,6 @@
-/// LARGE EXPLORE SUMMARY.
+/// Explore tab Visual feature Large dataset.
 //
-// Time-stamp: <Wednesday 2024-08-28 09:19:11 +0800 Graham Williams>
+// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,18 +21,18 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Kevin Wang
+/// Authors: Kevin Wang
 
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/summary/panel.dart';
+import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
 
@@ -46,14 +46,14 @@ import 'package:rattle/tabs/explore.dart';
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
+const Duration delay = Duration(seconds: 5);
 const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Large Explore:', () {
-    testWidgets('Summary.', (WidgetTester tester) async {
+  group('Explore tab Large dataset:', () {
+    testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -83,7 +83,7 @@ void main() {
       // Optionally pump the widget tree to reflect the changes.
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -105,32 +105,35 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(delay);
 
-      // Find the Summary tab by its title.
+      ////////////////////////////////////////////////////////////////////////
+      // Visual page
+      ////////////////////////////////////////////////////////////////////////
 
-      final summaryTabFinder = find.text('Summary');
-      expect(summaryTabFinder, findsOneWidget);
+      final visualTabFinder = find.text('Visual');
+      expect(visualTabFinder, findsOneWidget);
 
-      // Tap the Summary tab.
+      // Tap the Visual tab.
 
-      await tester.tap(summaryTabFinder);
+      await tester.tap(visualTabFinder);
       await tester.pumpAndSettle();
 
-      // Verify that the SummaryPanel is shown.
+      // Verify that the VisualPanel is shown.
 
-      expect(find.byType(SummaryPanel), findsOneWidget);
+      expect(find.byType(VisualPanel), findsOneWidget);
 
       await tester.pump(pause);
+      await tester.pump(delay);
 
       // Find the button by its text.
 
-      final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
-      expect(generateSummaryButtonFinder, findsOneWidget);
+      final generatePlotButtonFinder = find.text('Generate Plots');
+      expect(generatePlotButtonFinder, findsOneWidget);
 
       // Tap the button.
 
-      await tester.tap(generateSummaryButtonFinder);
+      await tester.tap(generatePlotButtonFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
@@ -140,58 +143,62 @@ void main() {
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to "Summary of the Dataset" page.
+      // Find the right arrow button in the PageIndicator.
+
+      expect(rightArrowFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Box Plot" page 2.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
 
-      await tester.pump(hack);
+      // Find the text containing "Box Plot".
 
-      // Find the ssn containing "19994".
+      final boxPlotFinder = find.textContaining('Box Plot');
+      expect(boxPlotFinder, findsOneWidget);
 
-      final ssnFinder = find.textContaining('19994');
-      expect(ssnFinder, findsOneWidget);
+      // TODO 20240827 gjw SOME PLOT TEST IDEAS
+      //
+      // Can we read the generated SVG file properties to ensure the plot has
+      // just been generated and the size is abuotwhat we expect it to be.
 
-      // Find the first_name containing "17510".
-
-      final firstNameFinder = find.textContaining('17510');
-      expect(firstNameFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Skim of the Dataset" page.
+      // Tap the right arrow button to go to "Density Plot of Values" page 3.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
 
-      // Find the text containing "20000" as the number of rows.
+      // Find the text containing "Density Plot of Values".
 
-      final rowsFinder = find.textContaining('20000');
-      expect(rowsFinder, findsOneWidget);
+      final densityPlotFinder = find.textContaining('Density Plot of Values');
+      expect(densityPlotFinder, findsOneWidget);
 
-      // Find the text containing "24" as the number of columns.
-
-      final columnsFinder = find.textContaining('24');
-      expect(columnsFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Kurtosis and Skewness" page.
+      // Tap the right arrow button to go to "Cumulative Plot" page 4.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
 
-      // Find the text containing "2.35753359" as the weight.
+      // Find the text containing "Cumulative Plot".
 
-      final weightFinder = find.textContaining('2.12090961');
-      expect(weightFinder, findsOneWidget);
+      final cumulativePlotFinder = find.textContaining('Cumulative Plot');
+      expect(cumulativePlotFinder, findsOneWidget);
 
-      // Find the text containing "0.099352734" as the age_at_consultation.
+      // Tap the right arrow button to go to "Benford Plots" page 5.
 
-      final ageFinder = find.textContaining('0.099352734');
-      expect(ageFinder, findsOneWidget);
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
+
+      // Find the text containing "Benford Plot".
+
+      final benfordPlotFinder = find.textContaining('Benford Plot');
+      expect(benfordPlotFinder, findsOneWidget);
     });
   });
 }

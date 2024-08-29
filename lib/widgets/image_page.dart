@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Sunday 2024-08-18 09:00:48 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-08-26 08:24:54 +0800 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,6 +40,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/word_wrap.dart';
@@ -68,7 +69,7 @@ class ImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Image Path is $path');
+    debugText('  IMAGE', path);
 
     // Clear the image cache
     imageCache.clear();
