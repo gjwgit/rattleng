@@ -43,7 +43,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Decision Trees for Large Dataset:', () {
+  group('Decision Trees for Demo Dataset:', () {
     testWidgets('Demo Dataset. Default Traditional.',
         (WidgetTester tester) async {
       app.main();
