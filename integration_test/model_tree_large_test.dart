@@ -1,6 +1,6 @@
 /// Model tree test with large dataset.
 //
-// Time-stamp: <Monday 2024-08-26 08:48:08 +0800 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:20:14 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -43,8 +43,8 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Decision Trees for Large Dataset:', () {
-    testWidgets('Default Traditional.', (WidgetTester tester) async {
+  group('Large Model Tree:', () {
+    testWidgets('Traditional.', (WidgetTester tester) async {
       app.main();
 
       await tester.pumpAndSettle();
@@ -165,8 +165,7 @@ void main() {
       await tester.pump(pause);
     });
 
-    testWidgets('Update different Variables Traditional.',
-        (WidgetTester tester) async {
+    testWidgets('Traditional Parameters.', (WidgetTester tester) async {
       app.main();
 
       await tester.pumpAndSettle();

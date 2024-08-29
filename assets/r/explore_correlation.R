@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-16 05:40:06 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-29 17:16:32 +0800 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -40,7 +40,7 @@
 
 # Correlations work for numeric variables only.
 
-cor <- cor(ds[numc], use="pairwise", method="pearson")
+cor <- cor(ds[setdiff(numc,ignore)], use="pairwise", method="pearson")
 
 # Order the correlations by their strength.
 
