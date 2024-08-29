@@ -1,6 +1,6 @@
-/// LARGE EXPLORE SUMMARY.
+/// Explore tab Demo dataset.
 //
-// Time-stamp: <Thursday 2024-08-22 14:34:16 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-28 09:17:11 +0800 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -34,27 +34,27 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
 
-/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
-/// with the testing. 5s is good, 10s is useful for development and 0s for
-/// ongoing. This is not necessary but it is handy when running interactively
-/// for the user running the test to see the widgets for added assurance. The
-/// PAUSE environment variable can be used to override the default PAUSE here:
+/// A duration to allow the tester to view/interact with the testing. 5s is
+/// good, 10s is useful for development and 0s for ongoing. This is not
+/// necessary but it is handy when running interactively for the user running
+/// the test to see the widgets for added assurance. The PAUSE environment
+/// variable can be used to override the default PAUSE here:
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
-const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Summary.',
-        (WidgetTester tester) async {
+  group('Demo Explore:', () {
+    testWidgets('Summary.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -65,25 +65,24 @@ void main() {
 
       await tester.pump(pause);
 
-      // Locate the TextField where the file path is input.
+      final datasetButtonFinder = find.byType(DatasetButton);
+      expect(datasetButtonFinder, findsOneWidget);
+      await tester.pump(pause);
 
-      final filePathField = find.byType(TextField);
-      expect(filePathField, findsOneWidget);
-
-      // Enter the file path programmatically.
-
-      await tester.enterText(
-        filePathField,
-        'integration_test/rattle_test_large.csv',
-      );
-
-      // Simulate pressing the Enter key.
-
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-
-      // Optionally pump the widget tree to reflect the changes.
+      final datasetButton = find.byType(DatasetButton);
+      expect(datasetButton, findsOneWidget);
+      await tester.pump(pause);
+      await tester.tap(datasetButton);
       await tester.pumpAndSettle();
 
+      await tester.pump(delay);
+
+      final datasetPopup = find.byType(DatasetPopup);
+      expect(datasetPopup, findsOneWidget);
+      final demoButton = find.text('Demo');
+      expect(demoButton, findsOneWidget);
+      await tester.tap(demoButton);
+      await tester.pumpAndSettle();
       await tester.pump(pause);
 
       // Find the Explore tab by icon and tap on it.
@@ -148,17 +147,15 @@ void main() {
 
       await tester.pump(pause);
 
-      await tester.pump(hack);
+      // Find the text containing "2007-11-01".
 
-      // Find the ssn containing "19994".
+      final dateFinder = find.textContaining('2007-11-01');
+      expect(dateFinder, findsOneWidget);
 
-      final ssnFinder = find.textContaining('19994');
-      expect(ssnFinder, findsOneWidget);
+      // Find the text containing "39.800".
 
-      // Find the first_name containing "17510".
-
-      final firstNameFinder = find.textContaining('17510');
-      expect(firstNameFinder, findsOneWidget);
+      final valueFinder = find.textContaining('39.800');
+      expect(valueFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "Skim of the Dataset" page.
 
@@ -167,14 +164,14 @@ void main() {
 
       await tester.pump(pause);
 
-      // Find the text containing "20000" as the number of rows.
+      // Find the text containing "366" as the number of rows.
 
-      final rowsFinder = find.textContaining('20000');
+      final rowsFinder = find.textContaining('366');
       expect(rowsFinder, findsOneWidget);
 
-      // Find the text containing "24" as the number of columns.
+      // Find the text containing "23" as the number of columns.
 
-      final columnsFinder = find.textContaining('24');
+      final columnsFinder = find.textContaining('23');
       expect(columnsFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "Kurtosis and Skewness" page.
@@ -184,15 +181,15 @@ void main() {
 
       await tester.pump(pause);
 
-      // Find the text containing "2.35753359" as the weight.
+      // Find the text containing "-1.12569017" as the min_temp.
 
-      final weightFinder = find.textContaining('2.12090961');
-      expect(weightFinder, findsOneWidget);
+      final tempMinFinder = find.textContaining('-1.12569017');
+      expect(tempMinFinder, findsOneWidget);
 
-      // Find the text containing "0.099352734" as the age_at_consultation.
+      // Find the text containing "0.347510625" as the max_temp.
 
-      final ageFinder = find.textContaining('0.099352734');
-      expect(ageFinder, findsOneWidget);
+      final tempMaxFinder = find.textContaining('0.347510625');
+      expect(tempMaxFinder, findsOneWidget);
     });
   });
 }
