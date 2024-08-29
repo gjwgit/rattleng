@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2023-10-16 09:15:33 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-08-29 17:11:38 +0800 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,7 +41,9 @@ library(readr)        # Read/write delimited data: read_csv().
 
 dsname <- "FILENAME" %>% basename() %>% sub(".csv$", "", .)
 
-ds <- read_csv("FILENAME")
+assign(dsname, read_csv("FILENAME"))
+
+ds <- get(dsname)
 
 vnames <- names(ds)
 
