@@ -12,12 +12,14 @@ const Duration delay = Duration(seconds: 1);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('cleanup ignored demo test:', () {
-    testWidgets('test', (tester) async {
+  group('Demo Dataset:', () {
+    testWidgets('cleanup tab ignore test', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
-      // Leave time to see the first page.
 
+      // Trigger a frame. Finish animation and scheduled microtasks.
+      await tester.pumpAndSettle();
+
+      // Leave time to see the first page.
       await tester.pump(pause);
 
       final datasetButtonFinder = find.byType(DatasetButton);
@@ -48,16 +50,27 @@ void main() {
       expect(filename, 'rattle::weather');
 
       // Find the right arrow button in the PageIndicator.
-
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to "variable role selection" page.
+      // Tap the right arrow button to go to the variable role selection.
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
+      // Find the "Ignore" buttons and click the first four.
+      final buttonFinder = find.text('Ignore');
+      expect(
+        buttonFinder,
+        findsWidgets,
+      ); // Check that multiple "Ignore" buttons exist
+
+      // Tap the first four "Ignore" buttons found
+      for (int i = 0; i < 4; i++) {
+        await tester.tap(buttonFinder.at(i));
+        await tester.pumpAndSettle();
+      }
     });
   });
 }
