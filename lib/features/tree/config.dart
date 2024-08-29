@@ -435,13 +435,13 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: textStyle),
             SizedBox(
               width: maxWidth * 15.0, // Set maximum width for the input field
               child: TextFormField(
                 key: key,
                 controller: controller,
                 decoration: InputDecoration(
+                  labelText: label,
                   border: const OutlineInputBorder(),
                   errorText: validator(controller.text),
                   errorStyle: const TextStyle(fontSize: 10),
