@@ -1,6 +1,6 @@
 /// A numerical text input field.
 //
-// Time-stamp: <Wednesday 2024-08-28 09:14:54 +0800 Graham Williams>
+// Time-stamp: <Thursday 2024-08-29 20:48:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -166,7 +166,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   focusNode: _focusNode,
                   decoration: InputDecoration(
                     labelText: widget.label,
-                    border: const OutlineInputBorder(),
+                    border: const UnderlineInputBorder(),
                     contentPadding: const EdgeInsets.only(
                       right: 40,
                       left: 10,

@@ -1,6 +1,6 @@
 /// Widget to replicate a configuration UI for a tree model.
 //
-// Time-stamp: <Friday 2024-08-09 16:10:16 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-08-29 20:45:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -442,7 +442,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: controller,
                 decoration: InputDecoration(
                   labelText: label,
-                  border: const OutlineInputBorder(),
+                  border: const UnderlineInputBorder(),
                   errorText: validator(controller.text),
                   errorStyle: const TextStyle(fontSize: 10),
                 ),
