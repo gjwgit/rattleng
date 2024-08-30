@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Monday 2024-08-26 08:48:08 +0800 Graham Williams>
+// Time-stamp: <Friday 2024-08-30 20:28:49 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -43,9 +43,8 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Decision Trees for Demo Dataset:', () {
-    testWidgets('Demo Dataset. Default Traditional.',
-        (WidgetTester tester) async {
+  group('Model Demo Tree:', () {
+    testWidgets('rpart.', (WidgetTester tester) async {
       app.main();
 
       await tester.pumpAndSettle();
@@ -62,6 +61,7 @@ void main() {
       final demoButton = find.text('Demo');
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
+
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
@@ -139,7 +139,7 @@ void main() {
       await tester.pump(pause);
     });
 
-    testWidgets('Demo Dataset. Update Different Variables Traditional.',
+    testWidgets('rpart with different parameter settings.',
         (WidgetTester tester) async {
       app.main();
 
@@ -157,6 +157,7 @@ void main() {
       final demoButton = find.text('Demo');
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
+
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
@@ -181,11 +182,13 @@ void main() {
       await tester.pump(pause);
 
       // Find and tap the 'Include Missing' checkbox.
+
       final Finder includeMissingCheckbox = find.byType(Checkbox);
       await tester.tap(includeMissingCheckbox);
       await tester.pumpAndSettle(); // Wait for UI to settle.
 
       // Find the text fields by their keys and enter the new values.
+
       await tester.enterText(find.byKey(const Key('minSplitField')), '21');
       await tester.pumpAndSettle();
 
@@ -230,6 +233,11 @@ void main() {
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
 
+      // TODO 20240830 gjw FOR ZHEYAUN WE NEED TO TEST THE RIGHT TREE BUILT
+      //
+      // This test simply checks the title exists. Is it really testing that the
+      // right tree has been built?
+
       await tester.pump(pause);
 
       // Tap the right arrow to go to the third page.
@@ -253,7 +261,7 @@ void main() {
       await tester.pump(pause);
     });
 
-    testWidgets('Demo Dataset. Conditional.', (WidgetTester tester) async {
+    testWidgets('ctree.', (WidgetTester tester) async {
       app.main();
 
       await tester.pumpAndSettle();
@@ -270,6 +278,7 @@ void main() {
       final demoButton = find.text('Demo');
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
+
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
