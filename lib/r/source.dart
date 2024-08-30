@@ -324,7 +324,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
 
-  // Optionally, show a SnackBar when the script starts executing.
+  // Optionally, show a SnackBar when the script finishes executing.
   if (code.contains('Execution Completed')) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
