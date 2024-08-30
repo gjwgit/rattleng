@@ -34,10 +34,12 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/correlation/panel.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/explore.dart';
 
 import 'helper.dart';
-// import '600_explore_large_test.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/press_button.dart';
+import 'utils/verify_page_content.dart';
+import 'utils/verify_text.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -66,7 +68,7 @@ void main() {
 
       await navigateToTab(tester, 'Correlation', CorrelationPanel);
 
-      await performCorrelationAnalysis(tester);
+      await pressButton(tester, 'Perform Correlation Analysis');
 
       // Verify the content of the page 1.
 

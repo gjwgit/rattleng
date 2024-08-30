@@ -27,8 +27,6 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/correlation/panel.dart';
@@ -36,8 +34,11 @@ import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
-import 'package:rattle/tabs/explore.dart';
 import 'helper.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/press_button.dart';
+import 'utils/verify_page_content.dart';
+import 'utils/verify_text.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -68,7 +69,7 @@ void main() {
       // Use the helper functions from helper.dart
       await navigateToTab(tester, 'Correlation', CorrelationPanel);
 
-      await performCorrelationAnalysis(tester);
+      await pressButton(tester, 'Perform Correlation Analysis');
 
       await verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
       await verifyTextContent(tester, '0.97');
