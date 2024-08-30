@@ -71,6 +71,59 @@ void main() {
         await tester.tap(buttonFinder.at(i));
         await tester.pumpAndSettle();
       }
+
+      // Navigate to the "Transform" tab.
+      final transformTabFinder = find.text('Transform');
+      expect(
+        transformTabFinder,
+        findsOneWidget,
+      ); // Ensure the "Transform" tab exists.
+      await tester.tap(transformTabFinder); // Tap the "Transform" tab.
+      await tester.pumpAndSettle(); // Wait for the UI to update.
+
+      // Navigate to the "Cleanup" sub-tab within the Transform tab.
+      final cleanupSubTabFinder = find.text('Cleanup');
+      expect(
+        cleanupSubTabFinder,
+        findsOneWidget,
+      ); // Ensure the "Cleanup" sub-tab exists.
+      await tester.tap(cleanupSubTabFinder); // Tap the "Cleanup" sub-tab.
+      await tester.pumpAndSettle(); // Wait for the UI to update.
+
+      // Step 3: Locate the "Ignore" chip. Adjust the Finder if needed.
+      final ignoreChipFinder =
+          find.text('Ignored'); // Adjusted finder: search by text
+      // Check if the Ignore text exists anywhere in the current widget tree.
+      expect(
+        ignoreChipFinder,
+        findsOneWidget,
+      ); // Ensure at least one "Ignore" widget exists.
+      await tester
+          .tap(ignoreChipFinder); // Tap on the single found "Ignore" chip.
+
+      await tester.tap(ignoreChipFinder); // Tap on the "Ignore" chip.
+      await tester
+          .pumpAndSettle(); // Wait for the UI to settle after the interaction.
+
+      // Step 4: Tap the "Delete from Dataset" button.
+      final deleteButtonFinder = find.text('Delete from Dataset');
+      expect(deleteButtonFinder,
+          findsOneWidget); // Ensure the "Delete from Dataset" button exists.
+      await tester
+          .tap(deleteButtonFinder); // Tap on the "Delete from Dataset" button.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+
+      // Step 5: Confirm the deletion by tapping the "Yes" button.
+      final yesButtonFinder = find.text('Yes');
+      expect(
+        yesButtonFinder,
+        findsOneWidget,
+      ); // Ensure the "Yes" button exists.
+      await tester.tap(
+        yesButtonFinder,
+      ); // Tap on the "Yes" button to confirm the deletion.
+      await tester
+          .pumpAndSettle(); // Wait for the UI to settle after the interaction.
     });
   });
 }
