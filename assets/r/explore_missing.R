@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-16 09:04:48 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-29 17:26:43 +0800 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,6 +34,10 @@
 #
 # https://survivor.togaware.com/datascience/
 
+# TODO 20240829 gjw TEMP FIX FOR IGNORE HANDLING
+
+tds <- ds[setdiff(vars,ignore)]
+
 ####################################
 ## MICE :: MD.PATTERNS
 ####################################
@@ -41,7 +45,7 @@
 # Generate a summary of the missing values in the dataset. 20240718
 
 svg("TEMPDIR/explore_missing_mice.svg")
-mice::md.pattern(ds[vars], rotate.names=TRUE)
+mice::md.pattern(tds, rotate.names=TRUE)
 dev.off()
 
 ####################################
@@ -49,7 +53,7 @@ dev.off()
 ####################################
 
 svg("TEMPDIR/explore_missing_vim.svg", width=16)
-VIM::aggr(ds,
+VIM::aggr(tds,
           bars  = TRUE,
           numbers=TRUE,
           prop=FALSE,
@@ -59,7 +63,7 @@ VIM::aggr(ds,
           border='white',
           sortVars=TRUE,
           sortCombs=TRUE,
-          labels=names(ds),
+          labels=names(tds),
           cex.axis = .6,
           gap      = 3,
           ylabs     = c("Proportion of Values Missing",
@@ -73,7 +77,7 @@ dev.off()
 # Visualize a heatmap of missing values
 
 svg("TEMPDIR/explore_missing_naniar_vismiss.svg", width=16)
-ds %>%
+tds %>%
   naniar::vis_miss()
 dev.off()
 
@@ -82,13 +86,13 @@ dev.off()
 # rather than counts. `show_pct=TRUE`
 
 svg("TEMPDIR/explore_missing_naniar_ggmissvar.svg", width=16)
-naniar::gg_miss_var(ds)
+naniar::gg_miss_var(tds)
 dev.off()
 
 # Visualize missing data using an UpSet plot
 
 svg("TEMPDIR/explore_missing_naniar_ggmissupset.svg", width=16)
-naniar::gg_miss_upset(ds)
+naniar::gg_miss_upset(tds)
 dev.off()
 
 # Output a message when execution is complete
