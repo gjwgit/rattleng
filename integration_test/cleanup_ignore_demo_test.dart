@@ -90,7 +90,7 @@ void main() {
       await tester.tap(cleanupSubTabFinder); // Tap the "Cleanup" sub-tab.
       await tester.pumpAndSettle(); // Wait for the UI to update.
 
-      // Step 3: Locate the "Ignore" chip. Adjust the Finder if needed.
+      // Locate the "Ignore" chip. Adjust the Finder if needed.
       final ignoreChipFinder =
           find.text('Ignored'); // Adjusted finder: search by text
       // Check if the Ignore text exists anywhere in the current widget tree.
@@ -105,15 +105,17 @@ void main() {
       await tester
           .pumpAndSettle(); // Wait for the UI to settle after the interaction.
 
-      // Step 4: Tap the "Delete from Dataset" button.
+      // Tap the "Delete from Dataset" button.
       final deleteButtonFinder = find.text('Delete from Dataset');
-      expect(deleteButtonFinder,
-          findsOneWidget); // Ensure the "Delete from Dataset" button exists.
+      expect(
+        deleteButtonFinder,
+        findsOneWidget,
+      ); // Ensure the "Delete from Dataset" button exists.
       await tester
           .tap(deleteButtonFinder); // Tap on the "Delete from Dataset" button.
       await tester.pumpAndSettle(); // Wait for the UI to settle.
 
-      // Step 5: Confirm the deletion by tapping the "Yes" button.
+      // Confirm the deletion by tapping the "Yes" button.
       final yesButtonFinder = find.text('Yes');
       expect(
         yesButtonFinder,
@@ -124,6 +126,57 @@ void main() {
       ); // Tap on the "Yes" button to confirm the deletion.
       await tester
           .pumpAndSettle(); // Wait for the UI to settle after the interaction.
+
+      // Go to the next page and confirm that the deleted variables are not listed.
+      await tester.tap(rightArrowFinder); // Tap to go to the next page.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+
+      // Check that deleted variables are not listed on the next page.
+      final deletedVariables = ['date', 'min_temp', 'max_temp', 'rainfall'];
+      for (String variable in deletedVariables) {
+        final deletedVariableFinder = find.text(variable);
+        expect(
+          deletedVariableFinder,
+          findsNothing,
+        ); // Ensure the deleted variable is not listed.
+      }
+
+      // Navigate to "EXPLORE" -> "VISUAL".
+      final exploreTabFinder = find.text('Explore');
+      expect(
+        exploreTabFinder,
+        findsOneWidget,
+      ); // Ensure the "Explore" tab exists.
+      await tester.tap(exploreTabFinder); // Tap on the "Explore" tab.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+
+      final visualSubTabFinder = find.text('Visual');
+      expect(visualSubTabFinder,
+          findsOneWidget); // Ensure the "Visual" sub-tab exists.
+      await tester.tap(visualSubTabFinder); // Tap on the "Visual" sub-tab.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+
+      // Check that 'evaporation' is the selected variable.
+      final evaporationSelectedFinder = find
+          .text('evaporation')
+          .hitTestable(); // Check 'evaporation' is selected.
+      expect(
+        evaporationSelectedFinder,
+        findsOneWidget,
+      ); // Ensure 'evaporation' is selected.
+
+      await tester.tap(evaporationSelectedFinder); // Tap on the dropdown menu.
+      await tester.pumpAndSettle(); // Wait for the dropdown options to appear.
+
+      // Check that deleted variables are not in the dropdown options.
+      for (String variable in deletedVariables) {
+        final dropdownOptionFinder =
+            find.text(variable); // Find each variable in the dropdown options.
+        expect(
+          dropdownOptionFinder,
+          findsNothing,
+        ); // Ensure the deleted variable is not listed in the dropdown options.
+      }
     });
   });
 }
