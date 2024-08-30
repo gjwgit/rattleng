@@ -1,6 +1,6 @@
 /// Model tree test with large dataset.
 //
-// Time-stamp: <Wednesday 2024-08-28 09:20:14 +0800 Graham Williams>
+// Time-stamp: <Friday 2024-08-30 10:54:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -43,7 +43,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Large Model Tree:', () {
+  group('Model Large Tree:', () {
     testWidgets('Traditional.', (WidgetTester tester) async {
       app.main();
 
