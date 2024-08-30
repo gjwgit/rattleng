@@ -36,8 +36,10 @@ void main() {
 
       final datasetPopup = find.byType(DatasetPopup);
       expect(datasetPopup, findsOneWidget);
+
       final demoButton = find.text('Demo');
       expect(demoButton, findsOneWidget);
+
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
 
@@ -151,8 +153,10 @@ void main() {
       await tester.pumpAndSettle(); // Wait for the UI to settle.
 
       final visualSubTabFinder = find.text('Visual');
-      expect(visualSubTabFinder,
-          findsOneWidget); // Ensure the "Visual" sub-tab exists.
+      expect(
+        visualSubTabFinder,
+        findsOneWidget,
+      ); // Ensure the "Visual" sub-tab exists.
       await tester.tap(visualSubTabFinder); // Tap on the "Visual" sub-tab.
       await tester.pumpAndSettle(); // Wait for the UI to settle.
 
@@ -177,6 +181,75 @@ void main() {
           findsNothing,
         ); // Ensure the deleted variable is not listed in the dropdown options.
       }
+
+      // Navigate to the "Dataset" tab.
+      final datasetTabFinder = find.text(
+        'Dataset',
+      ); // Assuming the tab can be identified by its text 'Dataset'.
+      expect(
+        datasetTabFinder,
+        findsOneWidget,
+      ); // Ensure the "Dataset" tab exists.
+      await tester.tap(datasetTabFinder); // Tap on the "Dataset" tab.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+      // Tap the right arrow button to go to the variable role selection.
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      // Find the "Ignore" buttons and click the first two.
+      final button2Finder = find.text('Ignore');
+      expect(
+        button2Finder,
+        findsWidgets,
+      ); // Check that multiple "Ignore" buttons exist
+
+      // Tap the first two "Ignore" buttons found
+      for (int i = 0; i < 2; i++) {
+        await tester.tap(button2Finder.at(i));
+        await tester.pumpAndSettle();
+      }
+
+      // Navigate to the "Transform" tab.
+      await tester.tap(transformTabFinder); // Tap the "Transform" tab.
+      await tester.pumpAndSettle(); // Wait for the UI to update.
+
+      // Navigate to the "Cleanup" sub-tab within the Transform tab.
+
+      await tester.tap(cleanupSubTabFinder); // Tap the "Cleanup" sub-tab.
+      await tester.pumpAndSettle(); // Wait for the UI to update.
+      // Tap on the single found "Ignore" chip.
+      await tester.tap(ignoreChipFinder);
+
+      await tester.tap(ignoreChipFinder); // Tap on the "Ignore" chip.
+      await tester
+          .pumpAndSettle(); // Wait for the UI to settle after the interaction.
+
+      // Tap the "Delete from Dataset" button.
+      await tester
+          .tap(deleteButtonFinder); // Tap on the "Delete from Dataset" button.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+
+      // Confirm the deletion by tapping the "Yes" button.
+      await tester.tap(
+        yesButtonFinder,
+      ); // Tap on the "Yes" button to confirm the deletion.
+      await tester
+          .pumpAndSettle(); // Wait for the UI to settle after the interaction.
+
+      // Navigate to "EXPLORE" -> "VISUAL".
+      await tester.tap(exploreTabFinder); // Tap on the "Explore" tab.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+      await tester.tap(visualSubTabFinder); // Tap on the "Visual" sub-tab.
+      await tester.pumpAndSettle(); // Wait for the UI to settle.
+
+      // Check that 'wind_gust_speed' is the selected variable.
+      final windGustSpeedFinder = find.text('wind_gust_speed').hitTestable();
+      expect(
+        windGustSpeedFinder,
+        findsOneWidget,
+      );
     });
   });
 }
