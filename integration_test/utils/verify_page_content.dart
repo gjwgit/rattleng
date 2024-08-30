@@ -1,4 +1,4 @@
-/// Helper functions for integration tests.
+/// Verify the content of a page.
 //
 // Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
 //
@@ -27,14 +27,22 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
-import 'package:rattle/tabs/explore.dart'; // Adjust imports as necessary
+Future<void> verifyPageContent(
+  WidgetTester tester,
+  String title, [
+  String? value,
+]) async {
+  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+  expect(rightArrowFinder, findsOneWidget);
 
-Future<void> navigateToExploreTab(WidgetTester tester) async {
-  final exploreIconFinder = find.byIcon(Icons.insights);
-  expect(exploreIconFinder, findsOneWidget);
-
-  await tester.tap(exploreIconFinder);
+  await tester.tap(rightArrowFinder);
   await tester.pumpAndSettle();
 
-  expect(find.byType(ExploreTabs), findsOneWidget);
+  final titleFinder = find.textContaining(title);
+  expect(titleFinder, findsOneWidget);
+
+  if (value != null) {
+    final valueFinder = find.textContaining(value);
+    expect(valueFinder, findsOneWidget);
+  }
 }

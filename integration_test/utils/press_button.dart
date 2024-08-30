@@ -1,4 +1,4 @@
-/// Helper functions for integration tests.
+///  Press a button with the given text.
 //
 // Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
 //
@@ -25,16 +25,14 @@
 library;
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
 
-import 'package:rattle/tabs/explore.dart'; // Adjust imports as necessary
+Future<void> pressButton(
+  WidgetTester tester,
+  String buttonText,
+) async {
+  final buttonFinder = find.text(buttonText);
+  expect(buttonFinder, findsOneWidget);
 
-Future<void> navigateToExploreTab(WidgetTester tester) async {
-  final exploreIconFinder = find.byIcon(Icons.insights);
-  expect(exploreIconFinder, findsOneWidget);
-
-  await tester.tap(exploreIconFinder);
+  await tester.tap(buttonFinder);
   await tester.pumpAndSettle();
-
-  expect(find.byType(ExploreTabs), findsOneWidget);
 }
