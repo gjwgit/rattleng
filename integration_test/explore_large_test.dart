@@ -73,7 +73,7 @@ void main() {
 
       await tester.enterText(
         filePathField,
-        'integration_test/rattle_test_large.csv',
+        'integration_test/rattle_test_20k.csv',
       );
 
       // Simulate pressing the Enter key.
