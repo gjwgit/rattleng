@@ -327,9 +327,9 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // Optionally, show a SnackBar when the script finishes executing.
   if (code.contains('Execution Completed')) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Script execution completed.'),
-        duration: Duration(seconds: 1), // Set a short duration
+      SnackBar(
+        content: Text('Execution of $script.R is completed.'),
+        duration: const Duration(seconds: 1), // Set a short duration
       ),
     );
   }
