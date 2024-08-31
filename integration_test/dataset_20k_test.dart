@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Wednesday 2024-08-28 08:46:54 +0800 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 08:25:37 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -50,7 +50,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Large Dataset:', () {
+  group('Dataset 20k:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
 
