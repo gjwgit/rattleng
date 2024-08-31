@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Wednesday 2024-08-28 09:19:11 +0800 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 08:26:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -52,7 +52,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Large Explore:', () {
+  group('Explore 20k:', () {
     testWidgets('Summary.', (WidgetTester tester) async {
       app.main();
 
