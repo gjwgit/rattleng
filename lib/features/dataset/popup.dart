@@ -110,6 +110,7 @@ class DatasetPopup extends ConsumerWidget {
                     ref.read(pathProvider.notifier).state = path;
                     if (context.mounted) rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
+                    pagesKey.currentState?.setPage(0);
                     datasetLoadedUpdate(ref);
                   }
 
