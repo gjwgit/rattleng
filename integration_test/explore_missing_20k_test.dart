@@ -1,6 +1,6 @@
 /// EXPLORE tab: Missing Large Dataset Test.
 //
-// Time-stamp: <Wednesday 2024-08-28 21:43:34 +0800 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 08:24:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
-import 'explore_large_test.dart';
+import 'explore_20k_test.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -99,7 +99,7 @@ Future<void> _openLargeDataset(WidgetTester tester) async {
 
   await tester.enterText(
     filePathField,
-    'integration_test/rattle_test_large.csv',
+    'integration_test/rattle_test_20k.csv',
   );
 
   // Simulate pressing the Enter key.
