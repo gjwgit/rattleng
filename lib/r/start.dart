@@ -1,6 +1,6 @@
 /// Initiate the R process and setup capture of its output.
 ///
-/// Time-stamp: <Tuesday 2024-08-20 16:51:53 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-01 10:55:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -70,8 +70,6 @@ void rStart(BuildContext context, WidgetRef ref) async {
 
   // Read the main R startup code from the script file.
 
-  debugText('R START', 'main.R');
-
   const asset = 'assets/r/main.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);
   PackageInfo info = await PackageInfo.fromPlatform();
@@ -109,6 +107,8 @@ void rStart(BuildContext context, WidgetRef ref) async {
     // Run the code without comments.
 
     code = rStripComments(code);
+
+    debugText('R START', 'main.R');
 
     ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
   });
