@@ -1,6 +1,6 @@
-/// Test the DATASET tab's GLIMPSE and ROLE features with a the demo dataset.
+/// Test the DATASET tab's GLIMPSE and ROLE features with the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 07:38:21 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 07:44:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -39,7 +39,7 @@ import 'package:rattle/features/dataset/popup.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Dataset Demo:', () {
+  group('Demo Dataset:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
 
