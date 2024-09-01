@@ -287,6 +287,14 @@ void main() {
 
       await tester.pump(pause);
 
+      // App may raise bugs in loading textPage. Thus, test does not target
+      // at content.
+
+      final summaryDecisionTreeFinder = find.byType(TextPage);
+      expect(summaryDecisionTreeFinder, findsOneWidget);
+
+      await tester.pump(pause);
+
       // Tap the right arrow to go to the third page.
 
       await tester.tap(rightArrowButton);
@@ -304,6 +312,11 @@ void main() {
 
       final forthPageTitleFinder = find.text('Tree');
       expect(forthPageTitleFinder, findsOneWidget);
+
+      final imageFinder = find.byType(ImagePage);
+
+      // Assert that the image is present.
+      expect(imageFinder, findsOneWidget);
 
       await tester.pump(pause);
     });
