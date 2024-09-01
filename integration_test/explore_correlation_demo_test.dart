@@ -32,10 +32,9 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/correlation/panel.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 import 'helper.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/oepn_demo.dart';
 import 'utils/press_button.dart';
 import 'utils/verify_page_content.dart';
 import 'utils/verify_text.dart';
@@ -63,39 +62,32 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await _openDemoDataset(tester);
+      // Open the demo dataset.
+
+      await openDemoDataset(tester);
+
+      // Navigate to the Explore tab.
+
       await navigateToExploreTab(tester);
 
-      // Use the helper functions from helper.dart
+      // Navigate to the Correlation tab.
+
       await navigateToTab(tester, 'Correlation', CorrelationPanel);
 
+      // Check the button is there and press it.
+
       await pressButton(tester, 'Perform Correlation Analysis');
+
+      // Verify the content of the page 1.
 
       await verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
       await verifyTextContent(tester, '0.97');
       await verifyTextContent(tester, '0.14');
       await verifyTextContent(tester, '-0.36');
 
+      // Verify the content of the page 2.
+
       await verifyPageContent(tester, 'Variable Correlation Plot');
     });
   });
-}
-
-Future<void> _openDemoDataset(WidgetTester tester) async {
-  final datasetButtonFinder = find.byType(DatasetButton);
-  expect(datasetButtonFinder, findsOneWidget);
-  await tester.pump(pause);
-
-  await tester.tap(datasetButtonFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(delay);
-
-  final datasetPopup = find.byType(DatasetPopup);
-  expect(datasetPopup, findsOneWidget);
-  final demoButton = find.text('Demo');
-  expect(demoButton, findsOneWidget);
-  await tester.tap(demoButton);
-  await tester.pumpAndSettle();
-  await tester.pump(pause);
 }
