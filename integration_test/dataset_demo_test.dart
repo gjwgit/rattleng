@@ -1,6 +1,6 @@
-/// Test the DATASET tab's GLIMPSE and ROLE features.
+/// Test the DATASET tab's GLIMPSE and ROLE features with a the demo dataset.
 //
-// Time-stamp: <Monday 2024-09-02 07:25:53 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 07:38:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
