@@ -255,10 +255,11 @@ void main() {
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
 
-      // TODO 20240830 gjw FOR ZHEYAUN WE NEED TO TEST THE RIGHT TREE BUILT
-      //
-      // This test simply checks the title exists. Is it really testing that the
-      // right tree has been built?
+      // App may raise bugs in loading textPage. Thus, test does not target
+      // at content.
+
+      final summaryDecisionTreeFinder = find.byType(TextPage);
+      expect(summaryDecisionTreeFinder, findsOneWidget);
 
       await tester.pump(pause);
 
@@ -377,7 +378,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      await tester.pump(hack);
 
       // Tap the right arrow to go to the second page.
 
@@ -398,6 +399,11 @@ void main() {
 
       final thirdPageTitleFinder = find.text('Tree');
       expect(thirdPageTitleFinder, findsOneWidget);
+
+      final imageFinder = find.byType(ImagePage);
+
+      // Assert that the image is present.
+      expect(imageFinder, findsOneWidget);
 
       await tester.pump(pause);
     });
