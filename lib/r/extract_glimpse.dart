@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-08-31 19:37:44 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 09:37:58 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,9 +28,9 @@ String rExtractGlimpse(String txt) {
   // If it appears that R has not yet finished loading the dataset then return
   // an appropriate message.
 
-  if (txt.contains("Error: object 'ds' not found")) {
-    return ('The dataset appears to still be loading. Please wait.');
-  }
+  // if (txt.contains("Error: object 'ds' not found")) {
+  //   return ('The dataset appears to still be loading. Please wait.');
+  // }
 
   // Split the string into lines.
 
