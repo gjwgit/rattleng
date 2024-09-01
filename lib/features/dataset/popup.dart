@@ -108,7 +108,7 @@ class DatasetPopup extends ConsumerWidget {
                   String path = await datasetSelectFile();
                   if (path.isNotEmpty) {
                     ref.read(pathProvider.notifier).state = path;
-                    if (context.mounted) rLoadDataset(context, ref);
+                    if (context.mounted) await rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
                     pagesKey.currentState?.setPage(0);
                     datasetLoadedUpdate(ref);
@@ -146,7 +146,7 @@ class DatasetPopup extends ConsumerWidget {
               // DEMO
 
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // TODO 20231101 gjw DEFINE setPath()
 
                   ref.read(pathProvider.notifier).state = weatherDemoFile;
@@ -154,7 +154,7 @@ class DatasetPopup extends ConsumerWidget {
                   // TODO 20240714 gjw HOW TO GET THE weather.csv FROM ASSETS
                   // ref.read(pathProvider.notifier).state =
                   //     'assets/data/weather.csv';
-                  rLoadDataset(context, ref);
+                  await rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
 
                   // Reset the Pages to page 0 when Demo is selected.
