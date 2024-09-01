@@ -27,7 +27,6 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:integration_test/integration_test.dart';
@@ -37,6 +36,7 @@ import 'package:rattle/main.dart' as app;
 
 import 'helper.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/open_large.dart';
 import 'utils/press_button.dart';
 import 'utils/verify_page_content.dart';
 import 'utils/verify_text.dart';
@@ -63,10 +63,16 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await _openLargeDataset(tester);
+      // Open the large dataset.
+
+      await openLargeDataset(tester);
+
       await navigateToExploreTab(tester);
+      // Navigate to the Correlation tab.
 
       await navigateToTab(tester, 'Correlation', CorrelationPanel);
+
+      // Check the button is there and press it.
 
       await pressButton(tester, 'Perform Correlation Analysis');
 
@@ -77,32 +83,9 @@ void main() {
       await verifyTextContent(tester, '0.01');
       await verifyTextContent(tester, '0.53');
 
+      // Verify the content of the page 2.
+
       await verifyPageContent(tester, 'Variable Correlation Plot');
     });
   });
-}
-
-Future<void> _openLargeDataset(WidgetTester tester) async {
-  // Locate the TextField where the file path is input.
-
-  final filePathField = find.byType(TextField);
-  expect(filePathField, findsOneWidget);
-
-  // Enter the file path programmatically.
-
-  await tester.enterText(
-    filePathField,
-    'integration_test/rattle_test_large.csv',
-  );
-
-  // Simulate pressing the Enter key.
-
-  await tester.testTextInput.receiveAction(TextInputAction.done);
-
-  // Optionally pump the widget tree to reflect the changes.
-
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-  await tester.pump(hack);
 }
