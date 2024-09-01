@@ -1,7 +1,7 @@
 /// Initiate the R process and setup capture of its output.
-///
-/// Time-stamp: <Tuesday 2024-08-20 16:51:53 +1000 Graham Williams>
-///
+//
+// Time-stamp: <Monday 2024-09-02 07:05:08 +1000 Graham Williams>
+//
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
