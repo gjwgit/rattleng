@@ -34,6 +34,8 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
@@ -99,7 +101,9 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      // Pause for a long time to wait for app gets stable.
+
+      await tester.pump(hack);
 
       // Optionally, you can test interactions with the TabPageSelector.
 
@@ -112,9 +116,16 @@ void main() {
       expect(rightArrowButton, findsOneWidget);
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
+
+      // App may raise bugs in loading textPage. Thus, test does not target
+      // at content.
+
+      final summaryDecisionTreeFinder = find.byType(TextPage);
+      expect(summaryDecisionTreeFinder, findsOneWidget);
 
       await tester.pump(pause);
 
@@ -126,6 +137,12 @@ void main() {
       final thirdPageTitleFinder = find.text('Decision Tree as Rules');
       expect(thirdPageTitleFinder, findsOneWidget);
 
+      // App may raise bugs in loading textPage. Thus, test does not target
+      // at content.
+
+      final ruleNumberFinder = find.byType(TextPage);
+      expect(ruleNumberFinder, findsOneWidget);
+
       await tester.pump(pause);
 
       // Tap the right arrow to go to the forth page.
@@ -135,6 +152,11 @@ void main() {
 
       final forthPageTitleFinder = find.text('Tree');
       expect(forthPageTitleFinder, findsOneWidget);
+
+      final imageFinder = find.byType(ImagePage);
+
+      // Assert that the image is present.
+      expect(imageFinder, findsOneWidget);
 
       await tester.pump(pause);
     });
