@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-08-16 11:10:58 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 15:03:25 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -60,7 +60,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     // TEXT PATTERN OF MISSING VALUES
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'md.pattern(ds');
+    content = rExtract(stdout, 'md.pattern(');
 
     // Add a blank line between each sub-table.
 
@@ -108,7 +108,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'aggr(ds');
+    content = rExtract(stdout, 'aggr(');
 
     // Remove the line beginning with + (a continuation)
 
