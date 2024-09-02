@@ -1,6 +1,6 @@
-/// EXPLORE tab: Missing Large Dataset Test.
+/// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Sunday 2024-09-01 08:24:39 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 13:51:12 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,29 +25,15 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
 import 'explore_large_test.dart';
-
-/// A duration to allow the tester to view/interact with the testing. 5s is
-/// good, 10s is useful for development and 0s for ongoing. This is not
-/// necessary but it is handy when running interactively for the user running
-/// the test to see the widgets for added assurance. The PAUSE environment
-/// variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 5);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
