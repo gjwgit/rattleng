@@ -1,6 +1,6 @@
 /// Open the large dataset.
 //
-// Time-stamp: <Monday 2024-09-02 20:13:40 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 08:59:54 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -53,6 +53,8 @@ Future<void> openLargeDataset(WidgetTester tester) async {
   await tester.pumpAndSettle();
 
   await tester.pump(pause);
+
+  // TODO 20240903 zy WE NEED TO ELIMINATE THE hack WAIT DUE TO async.
 
   await tester.pump(hack);
 }
