@@ -1,6 +1,6 @@
 /// Tester support function to open the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 09:39:06 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 18:53:31 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,9 +27,10 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rattle/constants/delays.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
+
+import 'delays.dart';
 
 Future<void> openDemoDataset(WidgetTester tester) async {
   final datasetButtonFinder = find.byType(DatasetButton);
@@ -38,13 +39,26 @@ Future<void> openDemoDataset(WidgetTester tester) async {
 
   await tester.tap(datasetButtonFinder);
   await tester.pumpAndSettle();
-
   await tester.pump(delay);
 
   final datasetPopup = find.byType(DatasetPopup);
   expect(datasetPopup, findsOneWidget);
+
+  // TODO 20240902 kev DETECT POPUP WARNING AND TAP YES
+  //
+  // If a dataset has already been loaded then a popup warning is
+  // displayed. Here we need to identify if the popup is required (perhaps by
+  // checking the appropriate provider and/or using the same test that triggers
+  // the popup) where we need to then tap YES if the popup exists.
+
+  // final resetDatasetButton = find.text('Yes');
+  // await tester.tap(resetDatasetButton);
+  // await tester.pumpAndSettle();
+  // await tester.pump(delay);
+
   final demoButton = find.text('Demo');
   expect(demoButton, findsOneWidget);
+
   await tester.tap(demoButton);
   await tester.pumpAndSettle();
   await tester.pump(pause);

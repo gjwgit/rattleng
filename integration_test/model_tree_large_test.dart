@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/constants/delays.dart';
+import 'utils/delays.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/number_field.dart';
@@ -58,7 +58,7 @@ void main() {
 
       await tester.enterText(
         filePathField,
-        'integration_test/rattle_test_20k.csv',
+        'integration_test/rattle_test_large.csv',
       );
 
       // Simulate pressing the Enter key.
@@ -204,7 +204,7 @@ void main() {
 
       await tester.enterText(
         filePathField,
-        'integration_test/rattle_test_20k.csv',
+        'integration_test/rattle_test_large.csv',
       );
 
       // Simulate pressing the Enter key.
@@ -356,7 +356,7 @@ void main() {
 
       await tester.enterText(
         filePathField,
-        'integration_test/rattle_test_20k.csv',
+        'integration_test/rattle_test_large.csv',
       );
 
       // Simulate pressing the Enter key.
