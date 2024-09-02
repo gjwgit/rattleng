@@ -1,6 +1,6 @@
 /// Test the DATASET RESET functionality.
 //
-// Time-stamp: <Monday 2024-09-02 13:05:19 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 13:09:51 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -52,17 +52,13 @@ void main() {
       // Tap the right arrow button to go to the second page.
 
       await tester.tap(rightArrowFinder);
-
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Tap the right arrow button to go to the third page.
 
       await tester.tap(rightArrowFinder);
-
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Reload Demo Dataset. Not using openDemoDataset() for now since it does
@@ -126,17 +122,13 @@ void main() {
       // Tap the right arrow button to go to the second page.
 
       await tester.tap(rightArrowFinder);
-
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Tap the right arrow button to go to the third page.
 
       await tester.tap(rightArrowFinder);
-
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Reload large dataset.
@@ -148,9 +140,7 @@ void main() {
 //      await tester.pump(hack);
 
       final resetDatasetButton = find.text('Yes');
-
       await tester.tap(resetDatasetButton);
-
       await tester.pumpAndSettle();
 
 //      await tester.pump(hack);
@@ -178,8 +168,8 @@ void main() {
       await tester.testTextInput.receiveAction(TextInputAction.done);
 
       // Optionally pump the widget tree to reflect the changes.
-      await tester.pumpAndSettle();
 
+      await tester.pumpAndSettle();
       await tester.pump(pause);
 
       // 20240901 gjw A hack to allow time for the dataset to be loaded before
@@ -205,7 +195,7 @@ void main() {
       final glimpseRowFinder = find.textContaining('Dataset Glimpse');
       expect(glimpseRowFinder, findsOneWidget);
 
-      // 20240901 gjw This is failing at present. See #378.
+      // TODO 20240901 zy This is failing at present. See #378.
 
       final datasetTextFinder = find.textContaining('Rows: 20,000');
       expect(datasetTextFinder, findsOneWidget);
