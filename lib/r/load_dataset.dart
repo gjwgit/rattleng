@@ -43,7 +43,7 @@ import 'package:rattle/utils/debug_text.dart';
 /// different in the case where the dataset variables have been normalised,
 /// which is the default.
 
-void rLoadDataset(BuildContext context, WidgetRef ref) {
+Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   // Get the path from the provider to identify either a filename or a R package
   // dataset.
 
@@ -63,11 +63,11 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
     // The default, when we get here and no path has been specified yet, is to
     // load the weather dataset as the demo dataset from R's rattle package.
 
-    rSource(context, ref, 'dataset_load_weather');
+    await rSource(context, ref, 'dataset_load_weather');
   } else if (path.endsWith('.csv')) {
-    rSource(context, ref, 'dataset_load_csv');
+    await rSource(context, ref, 'dataset_load_csv');
   } else if (path.endsWith('.txt')) {
-    rSource(context, ref, 'dataset_load_txt');
+    await rSource(context, ref, 'dataset_load_txt');
 
     return;
   } else {
@@ -94,7 +94,7 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
   //
   //  rattle.resetDataset();
 
-  rSource(context, ref, 'dataset_prep');
+  await rSource(context, ref, 'dataset_prep');
 
   // 20240615 gjw Move this `names(ds)` command into `dataset_prep` otherwise on
   // moving to the asset load with async it actually gets executed before the
@@ -109,6 +109,6 @@ void rLoadDataset(BuildContext context, WidgetRef ref) {
 
   // this shows the data
 
-  rSource(context, ref, 'dataset_glimpse');
+  await rSource(context, ref, 'dataset_glimpse');
   debugText('R LOADED', path);
 }
