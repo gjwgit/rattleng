@@ -1,8 +1,8 @@
-/// EXPLORE tab: Missing Demo Dataset Test.
+/// Test the EXPLORE tab's MISSING feature with the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 10:32:09 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,11 +21,9 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang
+/// Authors:  Kevin Wang, Graham Williams
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
 
@@ -33,33 +31,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/missing/panel.dart';
 
+import 'package:rattle/constants/delays.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
 
-/// A duration to allow the tester to view/interact with the testing. 5s is
-/// good, 10s is useful for development and 0s for ongoing. This is not
-/// necessary but it is handy when running interactively for the user running
-/// the test to see the widgets for added assurance. The PAUSE environment
-/// variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 5);
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Demo Dataset, Explore, Missing.', (WidgetTester tester) async {
+  group('Demo Explore Missing:', () {
+    testWidgets('basic.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await _openDemoDataset(tester);
+      await openDemoDataset(tester);
       await _navigateToExploreTab(tester);
 
       await _navigateToTab(tester, 'Missing', MissingPanel);
@@ -87,25 +74,6 @@ void main() {
       await _verifyPageContent(tester, 'Patterns of Missingness');
     });
   });
-}
-
-Future<void> _openDemoDataset(WidgetTester tester) async {
-  final datasetButtonFinder = find.byType(DatasetButton);
-  expect(datasetButtonFinder, findsOneWidget);
-  await tester.pump(pause);
-
-  await tester.tap(datasetButtonFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(delay);
-
-  final datasetPopup = find.byType(DatasetPopup);
-  expect(datasetPopup, findsOneWidget);
-  final demoButton = find.text('Demo');
-  expect(demoButton, findsOneWidget);
-  await tester.tap(demoButton);
-  await tester.pumpAndSettle();
-  await tester.pump(pause);
 }
 
 Future<void> _navigateToExploreTab(WidgetTester tester) async {
