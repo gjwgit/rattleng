@@ -1,6 +1,6 @@
 /// Helper functions for integration tests.
 //
-// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 20:36:11 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -22,12 +22,15 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
+
 library;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:rattle/tabs/explore.dart'; // Adjust imports as necessary
+
+// TODO 20240902 kev TO MOVE INTO UTILS AS navigateToTab()
 
 Future<void> navigateToExploreTab(WidgetTester tester) async {
   final exploreIconFinder = find.byIcon(Icons.insights);
