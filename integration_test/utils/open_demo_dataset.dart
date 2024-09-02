@@ -1,6 +1,6 @@
 /// Tester support function to open the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 12:46:01 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 18:53:31 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,9 +27,10 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rattle/constants/delays.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
+
+import 'delays.dart';
 
 Future<void> openDemoDataset(WidgetTester tester) async {
   final datasetButtonFinder = find.byType(DatasetButton);
