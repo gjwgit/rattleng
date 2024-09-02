@@ -1,6 +1,6 @@
-/// Test dataset reset including navigator.
+/// Test the DATASET RESET functionality.
 //
-// Time-stamp: <Sunday 2024-09-01 10:31:16 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 13:05:19 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,50 +25,27 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/features/dataset/popup.dart';
 
+import 'package:rattle/constants/delays.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 
-/// Add pauses.
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
-const Duration hack = Duration(seconds: 10);
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Navigator After Reset Bug:', () {
-    testWidgets('demo', (WidgetTester tester) async {
+  group('Dataset Reset:', () {
+    testWidgets('demo navigate.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
       await tester.pump(pause);
 
-      final datasetButtonFinder = find.byType(DatasetButton);
-
-      await tester.tap(datasetButtonFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
+      await openDemoDataset(tester);
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
@@ -88,20 +65,22 @@ void main() {
 
       await tester.pump(pause);
 
-      // Reload Demo Dataset.
+      // Reload Demo Dataset. Not using openDemoDataset() for now since it does
+      // not handle the popup warning where we need to tap YES.
+
+      final datasetButtonFinder = find.byType(DatasetButton);
       await tester.tap(datasetButtonFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(delay);
+
+      // Handle the reset popup warning.
 
       final resetDatasetButton = find.text('Yes');
-
       await tester.tap(resetDatasetButton);
-
       await tester.pumpAndSettle();
-
       await tester.pump(delay);
 
+      final demoButton = find.text('Demo');
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
       await tester.pump(delay);
@@ -134,31 +113,13 @@ void main() {
       expect(rolesTempFinder, findsOneWidget);
     });
 
-    testWidgets('demo then large', (WidgetTester tester) async {
+    testWidgets('ERROR EXPECTED demo then large navigate TO BE FIXED',
+        (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
-      await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
-      await tester.pump(pause);
-
-      final datasetButtonFinder = find.byType(DatasetButton);
-
-      await tester.tap(datasetButtonFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
       await tester.pumpAndSettle();
       await tester.pump(pause);
+
+      await openDemoDataset(tester);
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
