@@ -1,6 +1,6 @@
 /// Test the app startup.
 //
-// Time-stamp: <Monday 2024-09-02 07:19:34 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:09:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -33,10 +33,11 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'utils/delays.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
+
+import 'utils/delays.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

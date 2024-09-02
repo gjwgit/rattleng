@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Monday 2024-09-02 17:16:23 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:09:14 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -32,11 +32,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'utils/delays.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
+
+import 'utils/delays.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
