@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature LARGE dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 08:58:54 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:06:15 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -71,8 +71,8 @@ void main() {
       await tester.pump(delay);
 
       ////////////////////////////////////////////////////////////////////////
+
       // Visual page
-      ////////////////////////////////////////////////////////////////////////
 
       final visualTabFinder = find.text('Visual');
       expect(visualTabFinder, findsOneWidget);
@@ -114,7 +114,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Box Plot".
@@ -131,7 +130,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Density Plot of Values".
@@ -143,7 +141,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Cumulative Plot".
@@ -155,7 +152,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Benford Plot".
