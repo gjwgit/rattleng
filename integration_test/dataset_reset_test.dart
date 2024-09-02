@@ -1,6 +1,6 @@
 /// Test dataset reset including navigator.
 //
-// Time-stamp: <Sunday 2024-09-01 08:50:38 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 10:31:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -69,7 +69,6 @@ void main() {
       expect(demoButton, findsOneWidget);
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
@@ -111,6 +110,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+      await tester.pump(pause);
 
       // Find the text containing "366".
 
@@ -126,6 +126,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+      await tester.pump(pause);
 
       // Find the text containing "8.0".
 
@@ -220,9 +221,12 @@ void main() {
 
       await tester.pump(pause);
 
-      // A hack to allow time for the dataset to be loaded before progressing
-      // with the GUI. This is a rattle bug to be fixed - async of R scripts
-      // issue.
+      // 20240901 gjw A hack to allow time for the dataset to be loaded before
+      // progressing with the GUI. This is a rattle bug to be fixed - async of R
+      // scripts issue. But even with this the PAGEs do not get re-rendered -
+      // except by going to another feature and back again. Thus we get in the
+      // qtest a undefined ds. As long as we pause, we do get the Dataset
+      // Glimpse page.
 
       await tester.pump(hack);
 
@@ -240,7 +244,12 @@ void main() {
       final glimpseRowFinder = find.textContaining('Dataset Glimpse');
       expect(glimpseRowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to the third  page.
+      // 20240901 gjw This is failing at present. See #378.
+
+      final datasetTextFinder = find.textContaining('Rows: 20,000');
+      expect(datasetTextFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to the third page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();

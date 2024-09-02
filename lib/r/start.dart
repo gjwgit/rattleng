@@ -70,8 +70,6 @@ void rStart(BuildContext context, WidgetRef ref) async {
 
   // Read the main R startup code from the script file.
 
-  debugText('R START', 'main.R');
-
   const asset = 'assets/r/main.R';
   String code = await DefaultAssetBundle.of(context).loadString(asset);
   PackageInfo info = await PackageInfo.fromPlatform();
@@ -109,6 +107,8 @@ void rStart(BuildContext context, WidgetRef ref) async {
     // Run the code without comments.
 
     code = rStripComments(code);
+
+    debugText('R START', 'main.R');
 
     ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
   });
