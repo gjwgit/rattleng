@@ -50,7 +50,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Dataset 20k:', () {
+  group('Dataset large:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
 
@@ -71,7 +71,7 @@ void main() {
 
       await tester.enterText(
         filePathField,
-        'integration_test/rattle_test_20k.csv',
+        'integration_test/rattle_test_large.csv',
       );
 
       // Simulate pressing the Enter key.

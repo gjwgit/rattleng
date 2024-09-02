@@ -35,7 +35,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
-import 'explore_20k_test.dart';
+import 'explore_large_test.dart';
 
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
@@ -99,7 +99,7 @@ Future<void> _openLargeDataset(WidgetTester tester) async {
 
   await tester.enterText(
     filePathField,
-    'integration_test/rattle_test_20k.csv',
+    'integration_test/rattle_test_large.csv',
   );
 
   // Simulate pressing the Enter key.
