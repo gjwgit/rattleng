@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab CORRELATION feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 20:15:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:07:59 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,13 +31,14 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
-import 'helper.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_button.dart';
 import 'utils/verify_page_content.dart';
 import 'utils/verify_text.dart';
+
+import 'helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
