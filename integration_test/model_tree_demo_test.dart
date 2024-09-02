@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Friday 2024-08-30 20:28:49 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 17:16:23 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -32,15 +32,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'utils/delays.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 5);
-const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

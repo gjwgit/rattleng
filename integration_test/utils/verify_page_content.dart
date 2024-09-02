@@ -1,6 +1,6 @@
-/// Verify the content of a page.
+/// Move to and verify the content of the next page.
 //
-// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 18:50:45 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -22,10 +22,14 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
+
 library;
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_test/flutter_test.dart';
+
+import 'delays.dart';
 
 Future<void> verifyPageContent(
   WidgetTester tester,
@@ -37,6 +41,8 @@ Future<void> verifyPageContent(
 
   await tester.tap(rightArrowFinder);
   await tester.pumpAndSettle();
+
+  await tester.pump(pause);
 
   final titleFinder = find.textContaining(title);
   expect(titleFinder, findsOneWidget);

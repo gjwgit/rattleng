@@ -1,8 +1,8 @@
 /// EXPLORE tab: Correlation Large Dataset Test.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:07 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 20:19:03 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -25,65 +25,59 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/features/correlation/panel.dart';
 
+import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'helper.dart';
+import 'utils/delays.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_large.dart';
+import 'utils/open_large_dataset.dart';
 import 'utils/press_button.dart';
 import 'utils/verify_page_content.dart';
 import 'utils/verify_text.dart';
 
-/// A duration to allow the tester to view/interact with the testing. 5s is
-/// good, 10s is useful for development and 0s for ongoing. This is not
-/// necessary but it is handy when running interactively for the user running
-/// the test to see the widgets for added assurance. The PAUSE environment
-/// variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration hack = Duration(seconds: 5);
-
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Correlation.',
-        (WidgetTester tester) async {
+  group('Explore Large Correlation:', () {
+    testWidgets('build, page.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // Open the large dataset.
-
       await openLargeDataset(tester);
-
       await navigateToExploreTab(tester);
-      // Navigate to the Correlation tab.
-
       await navigateToTab(tester, 'Correlation', CorrelationPanel);
-
-      // Check the button is there and press it.
-
       await pressButton(tester, 'Perform Correlation Analysis');
 
       // Verify the content of the page 1.
 
-      await verifyPageContent(tester, 'Correlation - Numeric Data', '1.00');
-      await verifyTextContent(tester, '0.39');
-      await verifyTextContent(tester, '0.01');
-      await verifyTextContent(tester, '0.53');
+      await verifyPageContent(
+        tester,
+        'Correlation - Numeric Data',
+        'cholesterol_level                1.00           0.00           0.00  -0.01',
+      );
+      await verifyTextContent(
+        tester,
+        'smoking_status                   0.00           0.01           1.00   0.04  0.05',
+      );
+      await verifyTextContent(
+        tester,
+        'bmi                             -0.01           0.03           0.05   0.39  1.00',
+      );
+      await verifyTextContent(
+        tester,
+        'age_at_consultation              0.00           0.06           0.08   0.20  0.24',
+      );
 
       // Verify the content of the page 2.
+
+      // TODO 20240902 kev HOW TO CONFIRM THE IMAGE?
+      //
+      // Must be something we can do to confirm the image. Not sure what yet!
 
       await verifyPageContent(tester, 'Variable Correlation Plot');
     });
