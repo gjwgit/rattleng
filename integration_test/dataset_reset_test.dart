@@ -134,7 +134,7 @@ void main() {
       expect(rolesTempFinder, findsOneWidget);
     });
 
-    testWidgets('demo then 20k', (WidgetTester tester) async {
+    testWidgets('demo then large', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
@@ -209,7 +209,7 @@ void main() {
 
       await tester.enterText(
         filePathField,
-        'integration_test/rattle_test_20k.csv',
+        'integration_test/rattle_test_large.csv',
       );
 
       // Simulate pressing the Enter key.
