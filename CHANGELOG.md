@@ -10,6 +10,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation
 
++ Bug fix MISSING text summary. More testing. [6.2.70 20240902 gjw]
 + Handle IGNORE for MISSING and CORRELATION - hot fix [6.2.69 20240829 gjw]
 + Ignore dart dode metrics for now - dep issues [6.2.68 20240826 gjw]
 + Bug fix for Windows popup display of SVG [6.2.67 20240825 lutra]

@@ -1,6 +1,6 @@
-/// Test the DATASET tab's GLIMPSE and ROLE features with the DEMO dataset.
+/// Test the DATASET tab GLIMPSE and ROLE features with the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 07:44:07 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 17:15:34 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/constants/delays.dart';
+import 'utils/delays.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
@@ -42,13 +42,7 @@ void main() {
   group('Demo Dataset:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
       await tester.pump(pause);
 
       final datasetButtonFinder = find.byType(DatasetButton);
