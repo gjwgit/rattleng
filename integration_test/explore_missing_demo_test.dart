@@ -1,8 +1,8 @@
 /// Test the EXPLORE tab's MISSING feature with the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 09:27:41 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 10:32:09 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -41,7 +41,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Demo Explore Missing:', () {
-    testWidgets('Basic.', (WidgetTester tester) async {
+    testWidgets('basic.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
