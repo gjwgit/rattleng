@@ -1,8 +1,8 @@
-/// Model tree test with large dataset.
+/// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Friday 2024-08-30 10:54:41 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 10:50:25 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,35 +21,34 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:rattle/constants/delays.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 5);
-const Duration hack = Duration(seconds: 10);
-
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Model Large Tree:', () {
-    testWidgets('Traditional.', (WidgetTester tester) async {
+    testWidgets('raprt.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
+      await tester.pump(pause);
+
+      // TODO 20240902 zy USE utils/open_large_file_dataset.dart
+      //
+      // The following will be in openLargeFileDataset(). Model it on
+      // openDemoSateset().
 
       // Locate the TextField where the file path is input.
 
@@ -70,7 +69,7 @@ void main() {
 
       await tester.pump(pause);
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
+      // 20240822 TODO gjw DOES THIS NEED A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
@@ -127,7 +126,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      // Pause for a long time to wait for app gets stable.
+      // Pause for a long time to wait for app to get stable.
 
       await tester.pump(hack);
 
@@ -181,6 +180,7 @@ void main() {
       final imageFinder = find.byType(ImagePage);
 
       // Assert that the image is present.
+
       expect(imageFinder, findsOneWidget);
 
       await tester.pump(pause);
@@ -188,8 +188,13 @@ void main() {
 
     testWidgets('Traditional Parameters.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
+      await tester.pump(pause);
+
+      // TODO 20240902 zy USE utils/open_large_file_dataset.dart
+      //
+      // The following will be in openLargeFileDataset(). Model it on
+      // openDemoSateset().
 
       // Locate the TextField where the file path is input.
 
@@ -236,11 +241,13 @@ void main() {
       await tester.pump(pause);
 
       // Find and tap the 'Include Missing' checkbox.
+
       final Finder includeMissingCheckbox = find.byType(Checkbox);
       await tester.tap(includeMissingCheckbox);
-      await tester.pumpAndSettle(); // Wait for UI to settle.
+      await tester.pumpAndSettle();
 
       // Find the text fields by their keys and enter the new values.
+
       await tester.enterText(find.byKey(const Key('minSplitField')), '21');
       await tester.pumpAndSettle();
 
@@ -287,13 +294,19 @@ void main() {
 
       await tester.pump(pause);
 
+      // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
+
       // App may raise bugs in loading textPage. Thus, test does not target
       // at content.
 
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
+      // TODO 20240902 zy IS THIS pause NEEDED HERE?
+
       await tester.pump(pause);
+
+      // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
 
       // Tap the right arrow to go to the third page.
 
@@ -305,6 +318,8 @@ void main() {
 
       await tester.pump(pause);
 
+      // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
+
       // Tap the right arrow to go to the forth page.
 
       await tester.tap(rightArrowButton);
@@ -314,26 +329,24 @@ void main() {
       expect(forthPageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
       await tester.pump(pause);
     });
 
-    /// 20240826 zy Currently decision tree does not work with conditional tree.
-    /// Only test UI functions.
+    /// TODO 20240826 zy CONDITIONAL TREE NOT OPERATIOANL.
+    ///
+    /// Only testing UI functions.
 
     testWidgets('Conditional.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
       await tester.pump(pause);
+
+      // TODO 20240902 zy USE utils/open_large_file_dataset.dart
+      //
+      // The following will be in openLargeFileDataset(). Model it on
+      // openDemoSateset().
 
       // Locate the TextField where the file path is input.
 
@@ -423,20 +436,24 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the relevant fields are disabled when Conditional is selected.
+
       final complexityField = find.byKey(const Key('complexityField'));
       final priorsField = find.byKey(const Key('priorsField'));
       final lossMatrixField = find.byKey(const Key('lossMatrixField'));
 
       // Ensure that these fields are disabled (meaning that they are not accepting input).
+
       expect(tester.widget<NumberField>(complexityField).enabled, isFalse);
       expect(tester.widget<TextFormField>(priorsField).enabled, isFalse);
       expect(tester.widget<TextFormField>(lossMatrixField).enabled, isFalse);
 
       // Now switch back to the traditional algorithm.
+
       await tester.tap(traditionalChip);
       await tester.pumpAndSettle();
 
       // Verify that the relevant fields are now enabled.
+
       expect(tester.widget<NumberField>(complexityField).enabled, isTrue);
       expect(tester.widget<TextFormField>(priorsField).enabled, isTrue);
       expect(tester.widget<TextFormField>(lossMatrixField).enabled, isTrue);
