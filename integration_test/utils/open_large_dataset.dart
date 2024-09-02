@@ -1,6 +1,6 @@
-/// Open the demo dataset.
+/// Open the large dataset.
 //
-// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 20:13:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -22,31 +22,37 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
+
 library;
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 5);
+import 'delays.dart';
 
-Future<void> openDemoDataset(WidgetTester tester) async {
-  final datasetButtonFinder = find.byType(DatasetButton);
-  expect(datasetButtonFinder, findsOneWidget);
-  await tester.pump(pause);
+Future<void> openLargeDataset(WidgetTester tester) async {
+  // Locate the TextField where the file path is input.
 
-  await tester.tap(datasetButtonFinder);
+  final filePathField = find.byType(TextField);
+  expect(filePathField, findsOneWidget);
+
+  // Enter the file path programmatically.
+
+  await tester.enterText(
+    filePathField,
+    'integration_test/rattle_test_large.csv',
+  );
+
+  // Simulate pressing the Enter key.
+
+  await tester.testTextInput.receiveAction(TextInputAction.done);
+
+  // Optionally pump the widget tree to reflect the changes.
+
   await tester.pumpAndSettle();
 
-  await tester.pump(delay);
-
-  final datasetPopup = find.byType(DatasetPopup);
-  expect(datasetPopup, findsOneWidget);
-  final demoButton = find.text('Demo');
-  expect(demoButton, findsOneWidget);
-  await tester.tap(demoButton);
-  await tester.pumpAndSettle();
   await tester.pump(pause);
+
+  await tester.pump(hack);
 }
