@@ -307,10 +307,13 @@ void main() {
       await tester.tap(cleanupSubTabFinder);
       await tester.pumpAndSettle();
 
-      // Tap on the single found "Ignore" chip.
+      // Check the ignored chip is selected. Fail the test if not. If it is then simply tap the "Delete from Dataset" button.
 
-      await tester.tap(ignoreChipFinder);
-      await tester.pumpAndSettle();
+      final ignoreChip = find.widgetWithText(ChoiceChip, 'Ignored').evaluate().first.widget as ChoiceChip;
+      bool isSelected = ignoreChip.selected;
+      if (!isSelected) {
+        fail('The "Ignored" chip is not selected, failing the test.');
+      }
 
       // Tap the "Delete from Dataset" button.
 
