@@ -1,8 +1,8 @@
-/// Constants used for spacing different widget contexts.
+/// Move to and verify the content of the next page.
 //
-// Time-stamp: <Sunday 2024-09-01 10:45:05 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-02 18:50:45 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,32 +21,34 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Kevin Wang
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
-// TODO 20240901 gjw CONSIDER THE gap PACKAGE FOR SLIGHTLY SIMPLER GAPs.
+import 'package:flutter_test/flutter_test.dart';
 
-/// Spacing between rows in a ChoiceChip.
+import 'delays.dart';
 
-const choiceChipRowSpace = 10.0;
+Future<void> verifyPageContent(
+  WidgetTester tester,
+  String title, [
+  String? value,
+]) async {
+  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+  expect(rightArrowFinder, findsOneWidget);
 
-/// Space above the beginning of the configs Row.
+  await tester.tap(rightArrowFinder);
+  await tester.pumpAndSettle();
 
-const configTopSpace = SizedBox(height: 10);
+  await tester.pump(pause);
 
-/// Space to the left of the configs within a Row.
+  final titleFinder = find.textContaining(title);
+  expect(titleFinder, findsOneWidget);
 
-const configLeftSpace = SizedBox(width: 5);
-
-/// Space between widgets in a Row in the the config.
-
-const configWidgetSpace = SizedBox(width: 20.0); // Gap(20);
-
-/// Space before the bottom divider in the display pages.
-
-const textPageBottomSpace = SizedBox(height: 20.0); //Gap(20);
+  if (value != null) {
+    final valueFinder = find.textContaining(value);
+    expect(valueFinder, findsOneWidget);
+  }
+}
