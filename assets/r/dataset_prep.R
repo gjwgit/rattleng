@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-12 09:14:08 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-09-03 11:02:22 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -117,6 +117,11 @@ if (NEEDS_INIT) {
   ## }
 
   theme_rattle <- theme_economist
+
+  # Turn off fancy terminal escap sequences that are produced using the
+  # crayon package.
+
+  options(crayon.enabled = FALSE)
 
 }
 
