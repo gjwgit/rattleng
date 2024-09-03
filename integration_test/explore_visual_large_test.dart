@@ -33,6 +33,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/open_large_dataset.dart';
@@ -121,6 +122,11 @@ void main() {
       final boxPlotFinder = find.textContaining('Box Plot');
       expect(boxPlotFinder, findsOneWidget);
 
+      // Find the image.
+
+      final boxImageFinder = find.byType(ImagePage);
+      expect(boxImageFinder, findsOneWidget);
+
       // TODO 20240827 gjw SOME PLOT TEST IDEAS
       //
       // Can we read the generated SVG file properties to ensure the plot has
@@ -137,6 +143,11 @@ void main() {
       final densityPlotFinder = find.textContaining('Density Plot of Values');
       expect(densityPlotFinder, findsOneWidget);
 
+      // Find the image.
+
+      final densityImageFinder = find.byType(ImagePage);
+      expect(densityImageFinder, findsOneWidget);
+
       // Tap the right arrow button to go to "Cumulative Plot" page 4.
 
       await tester.tap(rightArrowFinder);
@@ -148,6 +159,11 @@ void main() {
       final cumulativePlotFinder = find.textContaining('Cumulative Plot');
       expect(cumulativePlotFinder, findsOneWidget);
 
+      // Find the image.
+
+      final cumulativeImageFinder = find.byType(ImagePage);
+      expect(cumulativeImageFinder, findsOneWidget);
+
       // Tap the right arrow button to go to "Benford Plots" page 5.
 
       await tester.tap(rightArrowFinder);
@@ -158,6 +174,11 @@ void main() {
 
       final benfordPlotFinder = find.textContaining('Benford Plot');
       expect(benfordPlotFinder, findsOneWidget);
+
+      // Find the image.
+
+      final imageFinder = find.byType(ImagePage);
+      expect(imageFinder, findsOneWidget);
     });
   });
 }
