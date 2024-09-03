@@ -13,6 +13,7 @@ NOTES.md
 TODO.md
 ARCHIVE
 
+installers/*.snap
 installers/*.tar.gz
 installers/*-linux.zip
 installers/*-macos.zip
