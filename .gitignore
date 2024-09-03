@@ -10,6 +10,8 @@ ignore
 script.R
 .Rhistory
 NOTES.md
+TODO.md
+ARCHIVE
 
 installers/*.tar.gz
 installers/*-linux.zip
