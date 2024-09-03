@@ -36,6 +36,8 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/main.dart' as app;
 
+import 'utils/check_popup.dart';
+
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
@@ -161,6 +163,12 @@ void main() {
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
+      // Check that the variables to be deleted are mentioned in the popup.
+
+      final deletedVariables = ['date', 'min_temp', 'max_temp', 'rainfall'];
+
+      checkInPopup(deletedVariables);
+
       // Confirm the deletion by tapping the "Yes" button.
 
       final yesButtonFinder = find.text('Yes');
@@ -186,7 +194,6 @@ void main() {
 
       // Check that deleted variables are not listed on the next page.
 
-      final deletedVariables = ['date', 'min_temp', 'max_temp', 'rainfall'];
       for (String variable in deletedVariables) {
         final deletedVariableFinder = find.text(variable);
 
@@ -309,7 +316,11 @@ void main() {
 
       // Check the ignored chip is selected. Fail the test if not. If it is then simply tap the "Delete from Dataset" button.
 
-      final ignoreChip = find.widgetWithText(ChoiceChip, 'Ignored').evaluate().first.widget as ChoiceChip;
+      final ignoreChip = find
+          .widgetWithText(ChoiceChip, 'Ignored')
+          .evaluate()
+          .first
+          .widget as ChoiceChip;
       bool isSelected = ignoreChip.selected;
       if (!isSelected) {
         fail('The "Ignored" chip is not selected, failing the test.');
@@ -319,6 +330,10 @@ void main() {
 
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
+
+      // Check that the variables to be deleted are mentioned in the popup.
+
+      checkInPopup(['evaporation', 'sunshine']);
 
       // Confirm the deletion by tapping the "Yes" button.
 
