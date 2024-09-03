@@ -1,6 +1,6 @@
 /// Test the DATASET RESET functionality.
 //
-// Time-stamp: <Monday 2024-09-02 13:09:51 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 10:46:15 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -109,8 +109,7 @@ void main() {
       expect(rolesTempFinder, findsOneWidget);
     });
 
-    testWidgets('ERROR EXPECTED demo then large navigate TO BE FIXED',
-        (WidgetTester tester) async {
+    testWidgets('demo then large navigate', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
