@@ -26,10 +26,12 @@
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
+
 // Flutter imports
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+
 // Local imports
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/features/dataset/button.dart';
@@ -41,6 +43,7 @@ import 'utils/check_popup.dart';
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 const Duration delay = Duration(seconds: 1);
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -48,11 +51,12 @@ void main() {
     testWidgets('cleanup tab ignore test', (WidgetTester tester) async {
       app.main();
 
+      debugPrint(envPAUSE);
       // Trigger a frame. Finish animation and scheduled microtasks.
 
       await tester.pumpAndSettle();
 
-      // Leave time to see the first page.
+      // Pause after screen change.
 
       await tester.pump(pause);
 
@@ -60,13 +64,24 @@ void main() {
 
       final datasetButtonFinder = find.byType(DatasetButton);
       expect(datasetButtonFinder, findsOneWidget);
+
+      // Pause after screen change.
+
       await tester.pump(pause);
 
       final datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
+
+      // Pause after screen change.
+
       await tester.pump(pause);
+
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       await tester.pump(delay);
 
@@ -78,6 +93,8 @@ void main() {
 
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
 
       await tester.pump(pause);
 
@@ -96,8 +113,17 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Find the "Ignore" buttons and click the first four.
 
@@ -113,6 +139,10 @@ void main() {
       for (int i = 0; i < 4; i++) {
         await tester.tap(buttonFinder.at(i));
         await tester.pumpAndSettle();
+
+        // Pause after screen change.
+
+        await tester.pump(pause);
       }
 
       // Navigate to the "Transform" tab.
@@ -125,6 +155,10 @@ void main() {
       await tester.tap(transformTabFinder);
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Navigate to the "Cleanup" sub-tab within the Transform tab.
 
       final cleanupSubTabFinder = find.text('Cleanup');
@@ -134,6 +168,10 @@ void main() {
       );
       await tester.tap(cleanupSubTabFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Locate the "Ignore" chip.
 
@@ -146,6 +184,10 @@ void main() {
 
       await tester.tap(ignoreChipFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Tap the "Delete from Dataset" button.
 
@@ -163,11 +205,19 @@ void main() {
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Check that the variables to be deleted are mentioned in the popup.
 
       final deletedVariables = ['date', 'min_temp', 'max_temp', 'rainfall'];
 
       checkInPopup(deletedVariables);
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Confirm the deletion by tapping the "Yes" button.
 
@@ -187,10 +237,18 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Go to the next page and confirm that the deleted variables are not listed.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Check that deleted variables are not listed on the next page.
 
@@ -221,6 +279,10 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       final visualSubTabFinder = find.text('Visual');
 
       // Ensure the "Visual" sub-tab exists.
@@ -234,6 +296,10 @@ void main() {
 
       await tester.tap(visualSubTabFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Check that 'evaporation' is the selected variable.
 
@@ -250,6 +316,10 @@ void main() {
 
       await tester.tap(evaporationSelectedFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Check that deleted variables are not in the dropdown options.
 
@@ -279,12 +349,25 @@ void main() {
       await tester.tap(datasetTabFinder);
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Tap the right arrow button twice to go to the variable role selection.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Find the "Ignore" buttons
 
@@ -302,6 +385,10 @@ void main() {
       for (int i = 0; i < 2; i++) {
         await tester.tap(button2Finder.at(i));
         await tester.pumpAndSettle();
+
+        // Pause after screen change.
+
+        await tester.pump(pause);
       }
 
       // Navigate to the "Transform" tab.
@@ -309,10 +396,18 @@ void main() {
       await tester.tap(transformTabFinder);
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Navigate to the "Cleanup" sub-tab within the Transform tab.
 
       await tester.tap(cleanupSubTabFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Check the ignored chip is selected. Fail the test if not. If it is then simply tap the "Delete from Dataset" button.
 
@@ -331,9 +426,17 @@ void main() {
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Check that the variables to be deleted are mentioned in the popup.
 
       checkInPopup(['evaporation', 'sunshine']);
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Confirm the deletion by tapping the "Yes" button.
 
@@ -342,6 +445,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Navigate to "EXPLORE" -> "VISUAL".
 
       // Tap on the "Explore" tab.
@@ -349,10 +456,18 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
+      // Pause after screen change.
+
+      await tester.pump(pause);
+
       // Tap on the "Visual" sub-tab.
 
       await tester.tap(visualSubTabFinder);
       await tester.pumpAndSettle();
+
+      // Pause after screen change.
+
+      await tester.pump(pause);
 
       // Check that 'wind_gust_speed' is the selected variable.
 
