@@ -29,13 +29,12 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
+import 'package:rattle/features/dataset/popup.dart';
+
 class Pages extends StatefulWidget {
   final List<Widget> children;
 
-  const Pages({
-    super.key,
-    required this.children,
-  });
+  Pages({required this.children}) : super(key: pagesKey);
 
   @override
   PagesState createState() => PagesState();
@@ -87,6 +86,15 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
         _tabController.index = _currentPage;
       });
     }
+  }
+
+  // This method sets the current page to the given index.
+  void setPage(int index) {
+    setState(() {
+      _currentPage = index;
+      _pageController.jumpToPage(index);
+      _tabController.index = index;
+    });
   }
 
   @override

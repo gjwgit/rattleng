@@ -1,8 +1,8 @@
-/// Constants used for spacing different widget contexts.
+/// Helper functions for integration tests.
 //
-// Time-stamp: <Sunday 2024-09-01 10:45:05 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:05:26 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,32 +21,23 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Kevin Wang
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
+import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
-// TODO 20240901 gjw CONSIDER THE gap PACKAGE FOR SLIGHTLY SIMPLER GAPs.
+import 'package:rattle/tabs/explore.dart';
 
-/// Spacing between rows in a ChoiceChip.
+// TODO 20240902 kev TO MOVE INTO UTILS AS navigateToTab()
 
-const choiceChipRowSpace = 10.0;
+Future<void> navigateToExploreTab(WidgetTester tester) async {
+  final exploreIconFinder = find.byIcon(Icons.insights);
+  expect(exploreIconFinder, findsOneWidget);
 
-/// Space above the beginning of the configs Row.
+  await tester.tap(exploreIconFinder);
+  await tester.pumpAndSettle();
 
-const configTopSpace = SizedBox(height: 10);
-
-/// Space to the left of the configs within a Row.
-
-const configLeftSpace = SizedBox(width: 5);
-
-/// Space between widgets in a Row in the the config.
-
-const configWidgetSpace = SizedBox(width: 20.0); // Gap(20);
-
-/// Space before the bottom divider in the display pages.
-
-const textPageBottomSpace = SizedBox(height: 20.0); //Gap(20);
+  expect(find.byType(ExploreTabs), findsOneWidget);
+}

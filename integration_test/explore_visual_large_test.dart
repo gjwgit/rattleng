@@ -1,6 +1,6 @@
-/// Explore tab Visual feature Large dataset.
+/// Test EXPLORE tab VISUAL feature LARGE dataset.
 //
-// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:06:15 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,29 +25,17 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
 
-/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
-/// with the testing. 5s is good, 10s is useful for development and 0s for
-/// ongoing. This is not necessary but it is handy when running interactively
-/// for the user running the test to see the widgets for added assurance. The
-/// PAUSE environment variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 5);
-const Duration hack = Duration(seconds: 10);
+import 'utils/delays.dart';
+import 'utils/open_large_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -55,35 +43,10 @@ void main() {
   group('Explore tab Large dataset:', () {
     testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
       await tester.pump(pause);
 
-      // Locate the TextField where the file path is input.
-
-      final filePathField = find.byType(TextField);
-      expect(filePathField, findsOneWidget);
-
-      // Enter the file path programmatically.
-
-      await tester.enterText(
-        filePathField,
-        'integration_test/rattle_test_large.csv',
-      );
-
-      // Simulate pressing the Enter key.
-
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-
-      // Optionally pump the widget tree to reflect the changes.
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
+      await openLargeDataset(tester);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -108,8 +71,8 @@ void main() {
       await tester.pump(delay);
 
       ////////////////////////////////////////////////////////////////////////
+
       // Visual page
-      ////////////////////////////////////////////////////////////////////////
 
       final visualTabFinder = find.text('Visual');
       expect(visualTabFinder, findsOneWidget);
@@ -151,7 +114,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Box Plot".
@@ -168,7 +130,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Density Plot of Values".
@@ -180,7 +141,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Cumulative Plot".
@@ -192,7 +152,6 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       // Find the text containing "Benford Plot".

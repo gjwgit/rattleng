@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Wednesday 2024-08-14 19:37:30 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 08:44:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -55,9 +55,10 @@ import 'package:rattle/providers/wordcloud/punctuation.dart';
 import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
+import 'package:rattle/utils/debug_text.dart';
 
 void reset(BuildContext context, WidgetRef ref) {
-  debugPrint('RESET');
+  debugText('  RESET');
 
   // Reset the app.
   //
