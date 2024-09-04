@@ -25,6 +25,7 @@
 
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -53,6 +54,50 @@ void main() {
       await openLargeDataset(tester);
       await navigateToExploreTab(tester);
       await navigateToTab(tester, 'Tests', TestsPanel);
+      // TODO seelct height and weight as the two variables
+      // Find the first DropdownMenu using a key or some identifier
+      final dropdown1 = find.byKey(
+        const Key(
+          'firstDropdownKey',
+        ),
+      ); // Use the appropriate key for the first DropdownMenu
+      final dropdown2 = find.byKey(
+        const Key(
+          'secondDropdownKey',
+        ),
+      ); // Use the appropriate key for the second DropdownMenu
+
+      // Tap the first DropdownMenu to open it
+      await tester.tap(dropdown1);
+      await tester.pumpAndSettle();
+
+      // Find the "height" option and select it
+      final heightOption =
+          find.text('height').last; // Adjust the finder as needed
+      await tester.tap(heightOption);
+      await tester.pumpAndSettle();
+
+      //111
+      await tester.pumpAndSettle();
+
+      await tester.pump(hack);
+
+      // Tap the second DropdownMenu to open it
+      await tester.tap(dropdown2);
+      await tester.pumpAndSettle();
+
+      // Find the "weight" option and select it
+      final weightOption =
+          find.text('weight').last; // Adjust the finder as needed
+      await tester.tap(weightOption);
+      await tester.pumpAndSettle();
+
+      // // Optionally, verify the selected values
+      // expect(find.text('height'), findsOneWidget);
+      // expect(find.text('weight'), findsOneWidget);
+
+      // Tap the Perform Statistical Tests button.
+
       await pressButton(tester, 'Perform Statistical Tests');
 
       // Verify the content of the page 1.
@@ -63,39 +108,37 @@ void main() {
       );
       await verifyTextContent(
         tester,
-        '    Degrees of Freedom: 364',
+        '    Degrees of Freedom: 19998',
       );
       await verifyTextContent(
         tester,
-        '    Correlation: 0.7525',
+        '    Correlation: 0.2631',
       );
       await verifyTextContent(
         tester,
-        '    Alternative Two-Sided: < 2.2e-16 ',
+        '    Two-Sided: 0.2501, 0.2759',
       );
 
       // Verify the content of the page 2.
 
-      await verifyPageContent(tester, '    D | Two Sided: 0.6667');
+      await verifyPageContent(tester, '    D | Two Sided: 0.89');
       await verifyTextContent(
         tester,
         '    Alternative       Two-Sided: < 2.2e-16 ',
       );
       await verifyTextContent(
         tester,
-        'W = 9407.5, p-value < 2.2e-16',
+        'W = 393376178, p-value < 2.2e-16',
       );
-      await verifyTextContent(
-        tester,
-        '[0m[1m3: [0m[1mIn ks.test.default(x = x, y = y, alternative = "greater") :[0m[1m',
-      );
+      await verifyTextContent(tester,
+          '[0m[1m3: [0m[1mIn ks.test.default(x = x, y = y, alternative = "greater") :[0m[1m');
 
       // Verify the content of the page 3.
 
       await verifyPageContent(tester, 'Wilcoxon Rank Sum Test');
       await verifyTextContent(
         tester,
-        'W = 9407.5, p-value < 2.2e-16',
+        'W = 393376178, p-value < 2.2e-16',
       );
 
       // Verify the content of the page 4.
@@ -103,15 +146,15 @@ void main() {
       await verifyPageContent(tester, 't-Test Two Sample Location Test');
       await verifyTextContent(
         tester,
-        '    x Observations: 366',
+        '    x Observations: 20000',
       );
       await verifyTextContent(
         tester,
-        '    Mean of y: 20.5503',
+        '    Mean of y: 72.7699',
       );
       await verifyTextContent(
         tester,
-        '      Greater: -14.0598, Inf',
+        '      Greater: 101.3294, Inf',
       );
     });
   });

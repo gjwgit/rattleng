@@ -87,6 +87,10 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
             ),
             configWidgetSpace,
             DropdownMenu(
+              key: const Key(
+                'firstDropdownKey',
+              ), // Adding a key for the first DropdownMenu
+
               label: const Text('Input'),
               initialSelection: selected,
               dropdownMenuEntries: inputs.map((s) {
@@ -102,6 +106,10 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
             ),
             configWidgetSpace,
             DropdownMenu(
+              key: const Key(
+                'secondDropdownKey',
+              ), // Adding a key for the second DropdownMenu
+
               label: const Text('Second'),
               initialSelection: selected2,
               dropdownMenuEntries: inputs.map((s) {
