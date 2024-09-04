@@ -1,6 +1,6 @@
-/// Cleanup ignore test on DEMO dataset.
+/// Test TRANSFORM tab CLEANUP feature IGNORE option on the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:43:38 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-04 12:05:12 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,81 +25,32 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
-// Flutter imports
 import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-// Local imports
 import 'package:rattle/constants/keys.dart';
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/main.dart' as app;
 
+import 'utils/delays.dart';
 import 'utils/check_popup.dart';
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Dataset:', () {
-    testWidgets('cleanup tab ignore test', (WidgetTester tester) async {
+  group('TRANSFORM CLEANUP IGNORE DEMO:', () {
+    testWidgets('cleanup', (WidgetTester tester) async {
       app.main();
-
-      debugPrint(envPAUSE);
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
       await tester.pump(pause);
 
-      // Load DEMO
-
-      final datasetButtonFinder = find.byType(DatasetButton);
-      expect(datasetButtonFinder, findsOneWidget);
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
-
-      final datasetButton = find.byType(DatasetButton);
-      expect(datasetButton, findsOneWidget);
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
-
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
-
-      await tester.pump(delay);
-
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      openDemoDataset(tester);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
+
       final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
       String filename = dsPathText.controller?.text ?? '';
       expect(filename, 'rattle::weather');
