@@ -55,12 +55,19 @@ class ImagePage extends StatelessWidget {
     required this.path,
   });
 
-  Future<Uint8List> _loadImageBytes() async {
+  Future<Uint8List?> _loadImageBytes() async {
     var imageFile = File(path);
 
-    // Wait until the file exists
-    while (!await imageFile.exists()) {
+    // Wait until the file exists, but limit the waiting period to avoid an infinite loop.
+    int retries = 5;
+    while (!await imageFile.exists() && retries > 0) {
       await Future.delayed(const Duration(seconds: 1));
+      retries--;
+    }
+
+    // If the file doesn't exist, return null.
+    if (!await imageFile.exists()) {
+      return null;
     }
 
     // Read file as bytes
@@ -75,13 +82,17 @@ class ImagePage extends StatelessWidget {
     imageCache.clear();
     imageCache.clearLiveImages();
 
-    return FutureBuilder<Uint8List>(
+    return FutureBuilder<Uint8List?>(
       future: _loadImageBytes(),
-      builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
         var bytes = snapshot.data;
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.hasData && bytes != null && bytes.isNotEmpty) {
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (bytes == null || bytes.isEmpty) {
+          return const Center(child: Text('Image not available'));
+        } else {
           return Container(
             decoration: sunkenBoxDecoration,
             width: double.infinity,
@@ -91,21 +102,8 @@ class ImagePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    // 20240726 gjw Ensure the Save button is aligned at the
-                    // top.
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 20240726 gjw Remove the Flexible for now. Perhaps avoid
-                      // long text in the Image Page for now. Save button was
-                      // not getting pushed all the way to the right after
-                      // adding Flexible.
-                      //
-                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdow
-                      // text overflowing to the elevarted Export
-                      // button.
-
-//                      Flexible(
-//                        child:
                       MarkdownBody(
                         data: wordWrap(title),
                         selectable: true,
@@ -114,9 +112,7 @@ class ImagePage extends StatelessWidget {
                           launchUrl(url);
                         },
                       ),
-                      //                      ),
                       const Spacer(),
-                      //                      ElevatedButton(
                       IconButton(
                         icon: const Icon(
                           Icons.zoom_out_map,
@@ -144,7 +140,6 @@ class ImagePage extends StatelessWidget {
                           File tempFile = File('$tempDir/$fileName');
 
                           // Copy the original file to the temporary file.
-
                           File(path).copy(tempFile.path);
 
                           // Pop out a window to display the plot separate
@@ -194,8 +189,6 @@ class ImagePage extends StatelessWidget {
               ),
             ),
           );
-        } else {
-          return const Center(child: CircularProgressIndicator());
         }
       },
     );

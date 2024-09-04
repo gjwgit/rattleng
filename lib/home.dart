@@ -294,12 +294,12 @@ Yin, Bo Zhang.
               Icons.autorenew,
               color: Colors.blue,
             ),
-            onPressed: () {
+            onPressed: () async {
               // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
               if (ref.read(datasetLoaded)) {
                 showAlertPopup(context, ref, false);
               } else {
-                reset(context, ref);
+                await reset(context, ref);
               }
             },
             tooltip: 'Tap here to clear the current project and\n'
