@@ -78,9 +78,9 @@ void main() {
       await tester.pumpAndSettle();
 
       //111
-      await tester.pumpAndSettle();
+      // await tester.pumpAndSettle();
 
-      await tester.pump(hack);
+      // await tester.pump(hack);
 
       // Tap the second DropdownMenu to open it
       await tester.tap(dropdown2);
