@@ -91,7 +91,16 @@ class ImagePage extends StatelessWidget {
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (bytes == null || bytes.isEmpty) {
-          return const Center(child: Text('Image not available'));
+          return const Center(
+            child: Text(
+              'Image not available',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.redAccent,
+              ),
+            ),
+          );
         } else {
           return Container(
             decoration: sunkenBoxDecoration,
