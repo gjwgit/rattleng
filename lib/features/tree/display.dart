@@ -105,14 +105,12 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
         ? image = '$tempDir/model_tree_rpart.svg'
         : image = '$tempDir/model_tree_ctree.svg';
 
-    if (content.isNotEmpty) {
-      pages.add(
-        ImagePage(
-          title: 'TREE',
-          path: image,
-        ),
-      );
-    }
+    pages.add(
+      ImagePage(
+        title: 'TREE',
+        path: image,
+      ),
+    );
 
     return Pages(children: pages);
   }
