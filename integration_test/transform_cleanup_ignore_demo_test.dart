@@ -1,6 +1,6 @@
 /// Test TRANSFORM tab CLEANUP feature IGNORE option on the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-09-04 12:05:12 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-04 12:08:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -46,7 +46,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      openDemoDataset(tester);
+      await openDemoDataset(tester);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
