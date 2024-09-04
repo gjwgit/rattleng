@@ -113,6 +113,14 @@ class ImagePage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // 20240726 gjw Remove the Flexible for now. Perhaps avoid
+                      // long text in the Image Page for now. Save button was
+                      // not getting pushed all the way to the right after
+                      // adding Flexible.
+                      //
+                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdow
+                      // text overflowing to the elevarted Export
+                      // button.
                       MarkdownBody(
                         data: wordWrap(title),
                         selectable: true,
