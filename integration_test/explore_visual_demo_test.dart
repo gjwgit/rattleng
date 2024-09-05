@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:06:15 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 08:49:42 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,18 +37,20 @@ import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/open_large_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore tab DEMO dataset:', () {
-    testWidgets('Visual feature.', (WidgetTester tester) async {
+  group('Explore tab Visual feature Demo dataset:', () {
+    testWidgets('load data, tap build, navigate pages.',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
       await openDemoDataset(tester);
+
+      // TODO 20240906 kev IMPLEMENT AND USE `await tapTab('Explore');`
 
       // Find the Explore tab by icon and tap on it.
 
@@ -73,6 +75,8 @@ void main() {
       await tester.pump(delay);
 
       ////////////////////////////////////////////////////////////////////////
+
+      // TODO 20240906 kev WHY NOT USE navigateToTab('Visual')?
 
       // Visual page
 
