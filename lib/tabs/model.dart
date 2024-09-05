@@ -107,14 +107,14 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
     // Get the path from the provider
     String currentPath = ref.read(pathProvider);
 
-    // Filter out the Word Cloud tab if the path is a CSV or weatherDemoFile
-    filteredModelPanels = modelPanels.where((panel) {
-      if (panel['title'] == 'Word Cloud' &&
-          (!currentPath.endsWith('.txt'))) {
-        return false;
-      }
-      return true;
-    }).toList();
+    // Filter tabs based on the file type in the path
+    if (currentPath.endsWith('.txt')) {
+      // Only show the Word Cloud tab for .txt files
+      filteredModelPanels = modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
+    } else {
+      // For other file types (including CSV), show all tabs except the Word Cloud tab
+      filteredModelPanels = modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
+    }
 
     // Initialize the TabController with the filtered panels
     _tabController = TabController(length: filteredModelPanels.length, vsync: this);
@@ -135,6 +135,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
   Widget build(BuildContext context) {
     super.build(context);
     debugText('  BUILD', 'ModelTabs');
+    debugPrint(ref.read(pathProvider));
 
     return Column(
       children: [
