@@ -41,6 +41,7 @@ import 'package:rattle/features/linear/panel.dart';
 import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/model.dart';
+import 'package:rattle/providers/path.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> modelPanels = [
@@ -94,19 +95,33 @@ class ModelTabs extends ConsumerStatefulWidget {
   @override
   ConsumerState<ModelTabs> createState() => _ModelTabsState();
 }
-
 class _ModelTabsState extends ConsumerState<ModelTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late List<Map<String, dynamic>> filteredModelPanels;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: modelPanels.length, vsync: this);
+
+    // Get the path from the provider
+    String currentPath = ref.read(pathProvider);
+
+    // Filter out the Word Cloud tab if the path is a CSV or weatherDemoFile
+    filteredModelPanels = modelPanels.where((panel) {
+      if (panel['title'] == 'Word Cloud' &&
+          (!currentPath.endsWith('.txt'))) {
+        return false;
+      }
+      return true;
+    }).toList();
+
+    // Initialize the TabController with the filtered panels
+    _tabController = TabController(length: filteredModelPanels.length, vsync: this);
 
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
-          modelPanels[_tabController.index]['title'];
+          filteredModelPanels[_tabController.index]['title'];
     });
   }
 
@@ -126,7 +141,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
         TabBar(
           unselectedLabelColor: Colors.grey,
           controller: _tabController,
-          tabs: modelPanels.map((tab) {
+          tabs: filteredModelPanels.map((tab) {
             return Tab(
               text: tab['title'],
             );
@@ -135,7 +150,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: modelPanels.map((tab) {
+            children: filteredModelPanels.map((tab) {
               return tab['widget'] as Widget;
             }).toList(),
           ),
