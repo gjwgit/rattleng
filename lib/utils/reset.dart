@@ -27,6 +27,8 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,6 +38,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // AND INTO app.dart?
 
 import 'package:rattle/app.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
@@ -57,8 +60,25 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/debug_text.dart';
 
-void reset(BuildContext context, WidgetRef ref) {
+Future<void> reset(BuildContext context, WidgetRef ref) async {
   debugText('  RESET');
+
+  // Clear all .svg files in the tempDir.
+  final tempDirectory = Directory(tempDir);
+  if (await tempDirectory.exists()) {
+    final svgFiles = tempDirectory
+        .listSync()
+        .where((file) => file is File && file.path.endsWith('.svg'));
+
+    for (var file in svgFiles) {
+      try {
+        await File(file.path).delete();
+        debugPrint('Deleted: ${file.path}');
+      } catch (e) {
+        debugPrint('Error deleting file ${file.path}: $e');
+      }
+    }
+  }
 
   // Reset the app.
   //
