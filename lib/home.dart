@@ -270,7 +270,7 @@ Yin, Bo Zhang.
             child: Text(
               'Version $_appVersion',
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
               ),
             ),
           ),
