@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-06 16:41:41 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-07 06:06:45 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -63,8 +63,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     String content = '';
 
     ////////////////////////////////////////////////////////////////////////
-    // DEFAULT TREE TEXT
-    ////////////////////////////////////////////////////////////////////////
+
+    // Default tree text.
 
     treeAlgorithm == AlgorithmType.traditional
         ? content = rExtractTree(stdout)
