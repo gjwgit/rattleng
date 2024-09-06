@@ -66,9 +66,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget space = const SizedBox(
     width: 10,
   );
-  Widget smallSpace = const SizedBox(
-    width: 3,
-  );
+
   int typeFlex = 4;
   int contentFlex = 3;
 
@@ -187,7 +185,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            // space,
+            space,
             Expanded(
               flex: typeFlex,
               child: const Text(
@@ -243,12 +241,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   ),
                 ),
               ),
-
               space,
               Expanded(
                 child: Text(dataType),
               ),
-              // space,
+              space,
               Expanded(
                 flex: typeFlex,
                 child: Wrap(
