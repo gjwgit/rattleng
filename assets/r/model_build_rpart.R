@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-16 05:41:49 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-09-06 20:11:26 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -51,11 +51,15 @@ method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
                  "anova", "class")
 method
 
+# Handle ignored variables.
+
+tds <- ds[tr, setdiff(vars, ignore)]
+
 # Train a decision tree model.
 
 model_rpart <- rpart(
   form,
-  data=ds[tr, vars],
+  data=tds,
   method=method,
   parms=list(split="information" PRIORS LOSS),
   control=rpart.control(usesurrogate=0,

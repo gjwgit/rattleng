@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:30:22 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-09-06 20:17:18 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -38,7 +38,7 @@
 
 library(stringi)      # The string concat operator %s+%.
 
-ignore <- c(risk, id)
+ignore <- c(risk, id, IGNORE_VARS)
 vars   <- setdiff(vars, ignore)
 inputs <- setdiff(vars, target)
 
