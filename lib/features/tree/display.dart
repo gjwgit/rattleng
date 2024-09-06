@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-14 20:34:36 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 16:41:41 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -34,6 +34,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_tree.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -80,8 +81,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
-    // CONVERT TO RULES
-    ////////////////////////////////////////////////////////////////////////
+
+    // Convert to rules.
 
     if (treeAlgorithm == AlgorithmType.traditional) {
       content = rExtract(stdout, 'asRules(model_rpart)');
@@ -105,12 +106,14 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
         ? image = '$tempDir/model_tree_rpart.svg'
         : image = '$tempDir/model_tree_ctree.svg';
 
-    pages.add(
-      ImagePage(
-        title: 'TREE',
-        path: image,
-      ),
-    );
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: 'TREE',
+          path: image,
+        ),
+      );
+    }
 
     return Pages(children: pages);
   }
