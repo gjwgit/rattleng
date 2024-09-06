@@ -27,13 +27,14 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_empty.dart';
+import 'package:rattle/r/extract.dart';
+import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -48,22 +49,45 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractEmpty(stdout);
+    String content = '';
 
-    return content == ''
-        ? showMarkdownFile(neuralIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
-              ),
-            ),
-          );
+    List<Widget> pages = [
+      showMarkdownFile(neuralIntroFile, context),
+    ];
+
+    content = rExtract(stdout, 'print(model_nn)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Neural Net Model\n\n'
+              'Built using `nnet()`.\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    content = rExtract(stdout, 'summary(model_nn)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Neural Net Model\n\n'
+              'Built using `nnet()`.\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    String image = '$tempDir/model_nn.svg';
+
+    pages.add(
+      ImagePage(
+        title: 'NNET',
+        path: image,
+      ),
+    );
+
+    return Pages(children: pages);
   }
 }

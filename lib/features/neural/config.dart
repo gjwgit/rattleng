@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The NEURAL tab config currently consists of just an ACTIVITY button.
@@ -60,8 +60,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              onPressed: () async {
+                // Run the R scripts.
+                await rSource(context, ref, 'model_template');
+                await rSource(context, ref, 'model_build_neural_net');
               },
               child: const Text('Build Neural Network'),
             ),
