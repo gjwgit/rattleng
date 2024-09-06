@@ -104,13 +104,13 @@ void showAlertPopup(
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             child: const Text('Yes'),
-            onPressed: () {
+            onPressed: () async {
               // 20240817 gjw Note the reset before showOptionPopup because the
               // other way around casues a bug? First set load to true and then
               // reset it to false but the dataset actually is loaded as a
               // consequence the previous result won't be reset because load
               // indicates no dataset has been loaded and the app is fresh.
-              reset(context, ref);
+              await reset(context, ref);
               Navigator.of(context).pop();
 
               if (loadNewDataset) {
