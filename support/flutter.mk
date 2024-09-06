@@ -280,6 +280,9 @@ qtest:
 	fi; \
 	flutter test --dart-define=PAUSE=0 --device-id $$device_id integration_test/$*_test.dart
 
+qtest.tmp:
+	make qtest > qtest.tmp
+
 .PHONY: atest
 atest:
 	@echo "Full integration TEST:"
