@@ -49,6 +49,10 @@ import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
+TextStyle defaultTextStyle = const TextStyle(
+  fontSize: 14,
+);
+
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
 class DatasetDisplay extends ConsumerStatefulWidget {
@@ -61,6 +65,9 @@ class DatasetDisplay extends ConsumerStatefulWidget {
 class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget space = const SizedBox(
     width: 10,
+  );
+  Widget smallSpace = const SizedBox(
+    width: 3,
   );
   int typeFlex = 4;
   int contentFlex = 3;
@@ -180,7 +187,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            space,
+            // space,
             Expanded(
               flex: typeFlex,
               child: const Text(
@@ -222,13 +229,26 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Text(columnName),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    columnName,
+                    style: defaultTextStyle,
+                    // Ensure the text stays on one line.
+
+                    maxLines: 1,
+                    // Adds ellipsis if text overflows.
+
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
+
               space,
               Expanded(
                 child: Text(dataType),
               ),
-              space,
+              // space,
               Expanded(
                 flex: typeFlex,
                 child: Wrap(
