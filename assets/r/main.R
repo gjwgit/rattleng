@@ -67,6 +67,7 @@ pacman::p_load(Hmisc,
                magrittr,   # Utilise %>% and %<>% pipeline operators.
                mice,
                naniar,
+               nnet,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,
