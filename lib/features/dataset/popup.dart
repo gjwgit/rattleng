@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2024-08-09 20:31:45 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-06 19:23:54 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -160,7 +160,7 @@ class DatasetPopup extends ConsumerWidget {
                   // Reset the Pages to page 0 when Demo is selected.
                   pagesKey.currentState?.setPage(0);
 
-                  Navigator.pop(context, 'Demo');
+                  if (context.mounted) Navigator.pop(context, 'Demo');
 
                   datasetLoadedUpdate(ref);
                 },
