@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Monday 2024-08-26 14:24:35 +0800 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 11:42:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -49,6 +49,10 @@ import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
+TextStyle defaultTextStyle = const TextStyle(
+  fontSize: 14,
+);
+
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
 class DatasetDisplay extends ConsumerStatefulWidget {
@@ -62,6 +66,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget space = const SizedBox(
     width: 10,
   );
+
   int typeFlex = 4;
   int contentFlex = 3;
 
@@ -168,32 +173,39 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Expanded(
-              child: Text(
-                'Variable',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: Center(
+                child: Text(
+                  'Variable',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             space,
             const Expanded(
-              child: Text(
-                'Type',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: Center(
+                child: Text(
+                  'Type',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-            space,
             Expanded(
               flex: typeFlex,
-              child: const Text(
-                'Role',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: const Center(
+                child: Text(
+                  'Role',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             space,
             Expanded(
               flex: contentFlex,
-              child: const Text(
-                'Content',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: const Center(
+                child: Text(
+                  'Content',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
@@ -205,7 +217,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
         // Truncate the content to fite the Role boses on one line.
 
-        int maxLength = 40;
+        int maxLength = 100;
         // Extract substring of the first maxLength characters
         String subStr = content.length > maxLength
             ? content.substring(0, maxLength)
@@ -222,13 +234,27 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Text(columnName),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    columnName,
+                    style: defaultTextStyle,
+                    // Ensure the text stays on one line.
+
+                    maxLines: 1,
+                    // Adds ellipsis if text overflows.
+
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
               space,
               Expanded(
-                child: Text(dataType),
+                child: Center(
+                  // Wrap with Center widget
+                  child: Text(dataType),
+                ),
               ),
-              space,
               Expanded(
                 flex: typeFlex,
                 child: Wrap(
@@ -272,7 +298,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   }).toList(),
                 ),
               ),
-              space,
               Expanded(
                 flex: contentFlex,
                 child: Text(
