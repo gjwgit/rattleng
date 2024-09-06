@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Monday 2024-08-26 14:24:35 +0800 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 11:42:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -217,7 +217,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
         // Truncate the content to fite the Role boses on one line.
 
-        int maxLength = 40;
+        int maxLength = 100;
         // Extract substring of the first maxLength characters
         String subStr = content.length > maxLength
             ? content.substring(0, maxLength)
