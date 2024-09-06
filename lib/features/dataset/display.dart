@@ -173,31 +173,39 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Expanded(
-              child: Text(
-                'Variable',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: Center(
+                child: Text(
+                  'Variable',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             space,
             const Expanded(
-              child: Text(
-                'Type',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: Center(
+                child: Text(
+                  'Type',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Expanded(
               flex: typeFlex,
-              child: const Text(
-                'Role',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: const Center(
+                child: Text(
+                  'Role',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             space,
             Expanded(
               flex: contentFlex,
-              child: const Text(
-                'Content',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: const Center(
+                child: Text(
+                  'Content',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
@@ -242,7 +250,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               ),
               space,
               Expanded(
-                child: Text(dataType),
+                child: Center(
+                  // Wrap with Center widget
+                  child: Text(dataType),
+                ),
               ),
               Expanded(
                 flex: typeFlex,
