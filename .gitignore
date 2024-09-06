@@ -12,6 +12,8 @@ script.R
 NOTES.md
 TODO.md
 ARCHIVE
+TMP*
+*.tmp
 
 installers/*.snap
 installers/*.tar.gz

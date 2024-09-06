@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:06:15 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 17:18:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,7 +37,6 @@ import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/open_large_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +48,8 @@ void main() {
       await tester.pump(pause);
 
       await openDemoDataset(tester);
+
+      await tester.pump(hack);
 
       // Find the Explore tab by icon and tap on it.
 

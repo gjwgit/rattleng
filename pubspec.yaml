@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.2.70+108
+version: 6.2.71+111
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -58,7 +58,6 @@ dev_dependencies:
   flutter_launcher_icons: '^0.13.1'
   flutter_test:
     sdk: flutter
-
   integration_test:
     sdk: flutter
   flutter_driver:
@@ -74,6 +73,8 @@ dev_dependencies:
   # a paid service. This fork maintains it's compatibility with the
   # latest flutter.
 
+  # TODO 20240906 yz DART CODE METRICS HAS DEPENDENCY ISSUES
+  
   # dart_code_metrics:
   #   git:
   #     url: https://github.com/anusii/dart-code-metrics.git
@@ -86,9 +87,7 @@ dev_dependencies:
   # deactivating specific lint rules and activating additional ones.
 
   flutter_lints: ^4.0.0
-
   msix: ^3.16.2
-
   riverpod_generator: ^2.3.5
 
   # TODO 20240604 gjw FOR NOW REMOVE riverpod_lint AS IT HAS
