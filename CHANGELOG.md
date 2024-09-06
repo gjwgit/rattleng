@@ -8,8 +8,9 @@ toward a 6.3 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
-## 6.3 FUTURE Wrangle tab implementation
+## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
 
++ Improve image page testing and avoid more dots. Bug fixes [6.2.71 20240907 gjw]
 + Bug fix MISSING text summary. More testing. [6.2.70 20240902 gjw]
 + Handle IGNORE for MISSING and CORRELATION - hot fix [6.2.69 20240829 gjw]
 + Ignore dart dode metrics for now - dep issues [6.2.68 20240826 gjw]
