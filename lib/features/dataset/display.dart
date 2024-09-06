@@ -185,7 +185,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            space,
             Expanded(
               flex: typeFlex,
               child: const Text(
@@ -245,7 +244,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               Expanded(
                 child: Text(dataType),
               ),
-              space,
               Expanded(
                 flex: typeFlex,
                 child: Wrap(
@@ -289,7 +287,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   }).toList(),
                 ),
               ),
-              space,
               Expanded(
                 flex: contentFlex,
                 child: Text(
