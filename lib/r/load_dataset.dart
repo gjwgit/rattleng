@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Thursday 2024-08-22 05:37:00 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-06 19:24:50 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -94,7 +94,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   //
   //  rattle.resetDataset();
 
-  await rSource(context, ref, 'dataset_prep');
+  if (context.mounted) await rSource(context, ref, 'dataset_prep');
 
   // 20240615 gjw Move this `names(ds)` command into `dataset_prep` otherwise on
   // moving to the asset load with async it actually gets executed before the
@@ -109,6 +109,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   // this shows the data
 
-  await rSource(context, ref, 'dataset_glimpse');
+  if (context.mounted) await rSource(context, ref, 'dataset_glimpse');
+
   debugText('R LOADED', path);
 }
