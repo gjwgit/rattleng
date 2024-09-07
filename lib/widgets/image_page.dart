@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Monday 2024-08-26 08:24:54 +0800 Graham Williams>
+// Time-stamp: <Saturday 2024-09-07 16:02:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,6 +44,7 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -131,61 +132,87 @@ class ImagePage extends StatelessWidget {
                         },
                       ),
                       const Spacer(),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.zoom_out_map,
-                          color: Colors.blue,
+                      DelayedTooltip(
+                        message: '''
+
+                        Enlarge: Tap here to view the plot enlarged to the
+                        maximimum size within the app.
+
+                        ''',
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.zoom_out_map,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            showImageDialog(context, bytes);
+                          },
                         ),
-                        onPressed: () {
-                          showImageDialog(context, bytes);
-                        },
-                        tooltip: 'Tap here to view the plot\n'
-                            'enlarged.',
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.open_in_new,
-                          color: Colors.blue,
+                      DelayedTooltip(
+                        message: '''
+
+                        Open: Tap here to open the plot in a separate window to
+                        the Rattle app itself. This allows you to retain a view
+                        of the plot while you navigate through other plots and
+                        analyses.
+
+                        ''',
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.open_in_new,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            // Generate a unique file name for the new file in the
+                            // temporary directory.
+
+                            String fileName =
+                                'plot_${Random().nextInt(10000)}.svg';
+                            File tempFile = File('$tempDir/$fileName');
+
+                            // Copy the original file to the temporary file.
+                            File(path).copy(tempFile.path);
+
+                            // Pop out a window to display the plot separate
+                            // to the Rattle app.
+
+                            Platform.isWindows
+                                ? Process.run(
+                                    'start',
+                                    [tempFile.path],
+                                    runInShell: true,
+                                  )
+                                : Process.run('open', [tempFile.path]);
+                          },
                         ),
-                        tooltip: 'Tap here to view the plot\n'
-                            'in a separate window.',
-                        onPressed: () {
-                          // Generate a unique file name for the new file in the
-                          // temporary directory.
-
-                          String fileName =
-                              'plot_${Random().nextInt(10000)}.svg';
-                          File tempFile = File('$tempDir/$fileName');
-
-                          // Copy the original file to the temporary file.
-                          File(path).copy(tempFile.path);
-
-                          // Pop out a window to display the plot separate
-                          // to the Rattle app.
-
-                          Platform.isWindows
-                              ? Process.run(
-                                  'start',
-                                  [tempFile.path],
-                                  runInShell: true,
-                                )
-                              : Process.run('open', [tempFile.path]);
-                        },
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.save,
-                          color: Colors.blue,
+                      DelayedTooltip(
+                        message: '''
+
+                        Save: Tap here to save the plot into an SVG file on your
+                        local storage. This will allow you to review the plot
+                        later, after you have finished with the app. You can
+                        convert the SVG to other formats like PDF or PNG with
+                        your operating system commands (e.g., the `convert`
+                        command from ImageMagick). You can also include the
+                        plots in your reports or keep them around for later
+                        reference.
+
+                        ''',
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.save,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () async {
+                            String? pathToSave = await selectFile();
+                            if (pathToSave != null) {
+                              // Copy generated image from /tmp to user's location.
+                              await File(path).copy(pathToSave);
+                            }
+                          },
                         ),
-                        onPressed: () async {
-                          String? pathToSave = await selectFile();
-                          if (pathToSave != null) {
-                            // Copy generated image from /tmp to user's location.
-                            await File(path).copy(pathToSave);
-                          }
-                        },
-                        tooltip: 'Tap here to save the plot\n'
-                            'into an SVG file on local storage.',
                       ),
                       const SizedBox(width: 5),
                     ],
