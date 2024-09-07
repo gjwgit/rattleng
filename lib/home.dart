@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-09-07 13:58:15 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-09-07 14:20:31 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -55,6 +55,7 @@ import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 // Define the [NavigationRail] tabs for the home page.
@@ -283,48 +284,63 @@ Yin, Bo Zhang.
 
           // RESET
 
-          IconButton(
-            icon: const Icon(
-              Icons.table_view,
-              color: Colors.blue,
-            ),
-            onPressed: () {
-              String path = ref.read(pathProvider);
-              if (path.isEmpty) {
-                showOk(
-                  context: context,
-                  title: 'No Dataset Loaded',
-                  content: '''
+          DelayedTooltip(
+            message: '''
+
+            Viewer: Tap here to open a separate window to view the current
+            dataset.  The default and quite simple data viewer in R will be
+            used. It is invoked as `view(ds)`.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.table_view,
+                color: Colors.blue,
+              ),
+              onPressed: () {
+                String path = ref.read(pathProvider);
+                if (path.isEmpty) {
+                  showOk(
+                    context: context,
+                    title: 'No Dataset Loaded',
+                    content: '''
 
                 Please choose a dataset to load from the **Dataset** tab. There is
                 not much we can do until we have loaded a dataset.
 
                 ''',
-                );
-              } else {
-                rExecute(ref, 'view(ds)\n');
-              }
-            },
-            tooltip: 'Tap here to view the current dataset.',
+                  );
+                } else {
+                  rExecute(ref, 'view(ds)\n');
+                }
+              },
+            ),
           ),
 
           // RESET
 
-          IconButton(
-            icon: const Icon(
-              Icons.autorenew,
-              color: Colors.blue,
+          DelayedTooltip(
+            message: '''
+
+            Reset: Tap here to clear the current project and so start a new
+            project with a new dataset. You will be prompted to confirm since
+            you will lose all of the current pages and analyses.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.autorenew,
+                color: Colors.blue,
+              ),
+              onPressed: () async {
+                // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
+                if (ref.read(datasetLoaded)) {
+                  showAlertPopup(context, ref, false);
+                } else {
+                  await reset(context, ref);
+                }
+              },
             ),
-            onPressed: () async {
-              // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
-              if (ref.read(datasetLoaded)) {
-                showAlertPopup(context, ref, false);
-              } else {
-                await reset(context, ref);
-              }
-            },
-            tooltip: 'Tap here to clear the current project and\n'
-                'so start a new project with a new dataset.',
           ),
 
           // 20240726 gjw Remove the global SAVE button for now in favour of the
@@ -347,38 +363,46 @@ Yin, Bo Zhang.
 
           // INFO - ABOUT
 
-          IconButton(
-            onPressed: () {
-              showAboutDialog(
-                context: context,
-                applicationIcon: Image.asset(
-                  'assets/icons/icon.png',
-                  width: 80,
-                  height: 80,
-                ),
-                applicationName:
-                    '${_appName[0].toUpperCase()}${_appName.substring(1)}',
-                applicationVersion: 'Version $_appVersion',
-                applicationLegalese: '© 2006-2024 Togaware Pty Ltd\n',
-                children: [
-                  MarkdownBody(
-                    data: about,
-                    selectable: true,
-                    softLineBreak: true,
-                    onTapLink: (text, href, about) {
-                      final Uri url = Uri.parse(href ?? '');
-                      launchUrl(url);
-                    },
+          DelayedTooltip(
+            message: '''
+
+            About: Tap here to view information about the Rattle project. This
+            include a list of those who have contributed to the latest version
+            of the software, Verison 6. It also includes the extensive list of
+            open-source packages that Rattle is built on and their licences.
+            
+            ''',
+            child: IconButton(
+              onPressed: () {
+                showAboutDialog(
+                  context: context,
+                  applicationIcon: Image.asset(
+                    'assets/icons/icon.png',
+                    width: 80,
+                    height: 80,
                   ),
-                ],
-              );
-            },
-            icon: const Icon(
-              Icons.info,
-              color: Colors.blue,
+                  applicationName:
+                      '${_appName[0].toUpperCase()}${_appName.substring(1)}',
+                  applicationVersion: 'Version $_appVersion',
+                  applicationLegalese: '© 2006-2024 Togaware Pty Ltd\n',
+                  children: [
+                    MarkdownBody(
+                      data: about,
+                      selectable: true,
+                      softLineBreak: true,
+                      onTapLink: (text, href, about) {
+                        final Uri url = Uri.parse(href ?? '');
+                        launchUrl(url);
+                      },
+                    ),
+                  ],
+                );
+              },
+              icon: const Icon(
+                Icons.info,
+                color: Colors.blue,
+              ),
             ),
-            tooltip: 'Tap here to view information about RattleNG and\n'
-                'those who have contributed to the software.',
           ),
         ],
       ),
