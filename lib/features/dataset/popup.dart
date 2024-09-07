@@ -37,7 +37,6 @@ import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
-import 'package:rattle/widgets/pages.dart';
 
 const double heightSpace = 20;
 const double widthSpace = 10;
@@ -45,9 +44,6 @@ const double widthSpace = 10;
 void datasetLoadedUpdate(WidgetRef ref) {
   ref.read(datasetLoaded.notifier).state = true;
 }
-
-// Global key to reference the PagesState.
-final GlobalKey<PagesState> pagesKey = GlobalKey<PagesState>();
 
 class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
@@ -110,7 +106,6 @@ class DatasetPopup extends ConsumerWidget {
                     ref.read(pathProvider.notifier).state = path;
                     if (context.mounted) await rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
-                    pagesKey.currentState?.setPage(0);
                     datasetLoadedUpdate(ref);
                   }
 
@@ -156,9 +151,6 @@ class DatasetPopup extends ConsumerWidget {
                   //     'assets/data/weather.csv';
                   await rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
-
-                  // Reset the Pages to page 0 when Demo is selected.
-                  pagesKey.currentState?.setPage(0);
 
                   if (context.mounted) Navigator.pop(context, 'Demo');
 
