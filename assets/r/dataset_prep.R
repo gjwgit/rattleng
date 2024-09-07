@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-09-03 11:02:22 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-09-07 15:01:19 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -97,26 +97,26 @@ if (NEEDS_INIT) {
 
   # A ggplot2 theme for rattle.
 
-  ## theme_rattle <- function(base_size = 11, base_family = "") {
-  ##   theme_grey(base_size = base_size, base_family = base_family) +
-  ##     theme(
-  ##       # Customize text elements
-  ##       plot.title = element_text(color = "darkblue",
-  ##                                 face = "bold",
-  ##                                 size = base_size * 1.2),
-  ##       axis.title = element_text(color = "darkblue"),
-  ##       axis.text = element_text(color = "darkblue"),
-  ##       legend.title = element_text(color = "darkblue"),
-  ##       legend.text = element_text(color = "darkblue"),
-  ##       # Customize panel background
-  ##       panel.background = element_rect(fill = "white"),
-  ##       # Customize grid lines
-  ##       panel.grid.major = element_line(color = "lightgrey"),
-  ##       panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
-  ##     )
-  ## }
+  theme_default_rattle <- function(base_size = 11, base_family = "") {
+  theme_grey(base_size = base_size, base_family = base_family) +
+    theme(
+      # Customize text elements
+      plot.title = element_text(color = "darkblue",
+                                face = "bold",
+                                size = base_size * 1.2),
+      axis.title = element_text(color = "darkblue"),
+      axis.text = element_text(color = "darkblue"),
+      legend.title = element_text(color = "darkblue"),
+      legend.text = element_text(color = "darkblue"),
+      # Customize panel background
+      panel.background = element_rect(fill = "white"),
+      # Customize grid lines
+      panel.grid.major = element_line(color = "lightgrey"),
+      panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
+    )
+}
 
-  theme_rattle <- theme_economist
+  theme_rattle <- theme_default_rattle
 
   # Turn off fancy terminal escap sequences that are produced using the
   # crayon package.
