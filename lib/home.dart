@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-09-07 14:20:31 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-08 07:36:55 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -55,6 +55,7 @@ import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -282,7 +283,7 @@ Yin, Bo Zhang.
           ),
           const SizedBox(width: 50),
 
-          // RESET
+          // Viewer.
 
           DelayedTooltip(
             message: '''
@@ -317,7 +318,7 @@ Yin, Bo Zhang.
             ),
           ),
 
-          // RESET
+          // Reset.
 
           DelayedTooltip(
             message: '''
@@ -361,7 +362,30 @@ Yin, Bo Zhang.
           //   tooltip: 'TODO: Save the current view to file.',
           // ),
 
-          // INFO - ABOUT
+          // Settings.
+
+          DelayedTooltip(
+            message: '''
+
+            Settings: Tap here to update your default settings. At present we
+            have just one setting: ggplot theme. The default theme is the simple
+            and clean Rattle theme but there are many themes to choose from. Your
+            settings will be saved for the future and you have the option to
+            reset to the Rattle defaults.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.blue,
+              ),
+              onPressed: () async {
+                showUnderConstruction(context);
+              },
+            ),
+          ),
+
+          // Info - about.
 
           DelayedTooltip(
             message: '''
