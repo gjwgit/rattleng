@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2024-08-26 07:05:01 +0800 Graham Williams>
+/// Time-stamp: <Saturday 2024-09-07 13:58:15 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -121,6 +121,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   var _appName = 'Unknown';
   var _appVersion = 'Unknown';
+  final String _changelogUrl =
+      'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
 
   // Helper function to cleanup any wordcloud leftover files.
 
@@ -257,7 +259,26 @@ Yin, Bo Zhang.
           // visiable at all times, particularly for a screenshot, so place it
           // on the title bar for now.
 
-          Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
+          GestureDetector(
+            onTap: () async {
+              final Uri url = Uri.parse(_changelogUrl);
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              } else {
+                debugPrint('Could not launch $_changelogUrl');
+              }
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                'Version $_appVersion',
+                style: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 10,
+                ),
+              ),
+            ),
+          ),
           const SizedBox(width: 50),
 
           // RESET
