@@ -269,7 +269,12 @@ qtest:
 		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
 		exit 1; \
 	fi; \
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t; done
+	for t in integration_test/*_test.dart; do \
+		echo "========================================"; \
+		echo $$t; \
+		echo "========================================"; \
+		flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t || exit 1; \
+	done
 	@echo $(SEPARATOR)
 
 %.qtest:
@@ -280,6 +285,7 @@ qtest:
 	fi; \
 	flutter test --dart-define=PAUSE=0 --device-id $$device_id integration_test/$*_test.dart
 
+.PHONY: qtest.tmp
 qtest.tmp:
 	make qtest > qtest.tmp
 
