@@ -10,13 +10,14 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
 
++ Add URL link to Version text [6.2.72 20240907 lutra]
 + Improve image page testing and avoid more dots. Bug fixes [6.2.71 20240907 gjw]
 + Bug fix MISSING text summary. More testing. [6.2.70 20240902 gjw]
 + Handle IGNORE for MISSING and CORRELATION - hot fix [6.2.69 20240829 gjw]
 + Ignore dart dode metrics for now - dep issues [6.2.68 20240826 gjw]
 + Bug fix for Windows popup display of SVG [6.2.67 20240825 lutra]
 + Bug fixes and tuning and testing updates [6.2.66 20240825 gjw]
-+ Native File Picker when saving script [6.2.65 20240819 Lutra-Fs]
++ Native File Picker when saving script [6.2.65 20240819 lutra]
 + Visible horizontal scrollbar [6.2.64 20240819 kev]
 + Initial fixes to RECODE [6.2.63 20240819 gjw]
 + Implement RECODE [6.2.62 20240819 yyx]
