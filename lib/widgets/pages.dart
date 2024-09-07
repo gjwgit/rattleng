@@ -29,12 +29,13 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:rattle/features/dataset/popup.dart';
-
 class Pages extends StatefulWidget {
   final List<Widget> children;
 
-  Pages({required this.children}) : super(key: pagesKey);
+  const Pages({
+    super.key,
+    required this.children,
+  });
 
   @override
   PagesState createState() => PagesState();
