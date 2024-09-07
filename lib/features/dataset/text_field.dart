@@ -82,8 +82,6 @@ class DatasetTextField extends ConsumerWidget {
             rLoadDataset(context, ref);
             setStatus(ref, statusChooseVariableRoles);
 
-            pagesKey.currentState?.setPage(0);
-
             datasetLoadedUpdate(ref);
           },
 

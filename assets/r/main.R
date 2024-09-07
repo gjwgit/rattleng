@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-09-03 11:02:31 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-09-07 14:29:38 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -130,7 +130,7 @@ rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 # A ggplot2 theme for rattle.
 
-theme_rattle <- function(base_size = 11, base_family = "") {
+theme_default_rattle <- function(base_size = 11, base_family = "") {
   theme_grey(base_size = base_size, base_family = base_family) +
     theme(
       # Customize text elements
@@ -150,3 +150,5 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 }
 
 # theme_rattle <- theme_economist
+
+theme_rattle <- theme_default_rattle
