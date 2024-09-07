@@ -49,6 +49,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    _currentPage = 0;
     _pageController = PageController(initialPage: _currentPage);
     _tabController = TabController(length: widget.children.length, vsync: this);
 
@@ -61,6 +62,8 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     _pageController.removeListener(_syncTabControllerWithPageView);
     _pageController.dispose();
     _tabController.dispose();
+    _currentPage = 0;
+
     super.dispose();
   }
 
@@ -73,6 +76,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   }
 
   void _initialiseControllers() {
+    _currentPage = 0;
     _tabController = TabController(length: widget.children.length, vsync: this);
   }
 
