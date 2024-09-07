@@ -98,7 +98,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         DelayedTooltip(
           message: '''
 
-          Partitioning: A CSV dataset will be split into three smaller datasets,
+          Partition: A CSV dataset will be split into three smaller datasets,
           with a 70/15/15 split by default, which is common for building
           predictive models. For exploring up to reasonably large datasets (tens
           of thousands of observations) you can turn partitioning off so all
