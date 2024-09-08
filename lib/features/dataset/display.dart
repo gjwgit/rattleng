@@ -230,82 +230,98 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
         return Padding(
           padding: const EdgeInsets.all(6.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    columnName,
-                    style: defaultTextStyle,
-                    // Ensure the text stays on one line.
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        columnName,
+                        style: defaultTextStyle,
+                        // Ensure the text stays on one line.
 
-                    maxLines: 1,
-                    // Adds ellipsis if text overflows.
+                        maxLines: 1,
+                        // Adds ellipsis if text overflows.
 
-                    overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              space,
-              Expanded(
-                child: Center(
-                  // Wrap with Center widget
-                  child: Text(dataType),
-                ),
-              ),
-              Expanded(
-                flex: typeFlex,
-                child: Wrap(
-                  spacing: 5.0,
-                  runSpacing: choiceChipRowSpace,
-                  children: choices.map((choice) {
-                    return ChoiceChip(
-                      label: Text(choice.displayString),
-                      disabledColor: Colors.grey,
-                      selectedColor: Colors.lightBlue[200],
-                      backgroundColor: Colors.lightBlue[50],
-                      shadowColor: Colors.grey,
-                      pressElevation: 8.0,
-                      elevation: 2.0,
-                      selected: remap(currentRoles[columnName]!, choice),
-                      onSelected: (bool selected) {
-                        setState(() {
-                          if (selected) {
-                            // only one variable is Target, Risk and Weight.
-                            if (choice == Role.target ||
-                                choice == Role.risk ||
-                                choice == Role.weight) {
-                              currentRoles.forEach((key, value) {
-                                if (value == choice) {
-                                  ref.read(rolesProvider.notifier).state[key] =
-                                      Role.input;
+                  space,
+                  Expanded(
+                    child: Center(
+                      // Wrap with Center widget
+                      child: Text(dataType),
+                    ),
+                  ),
+                  Expanded(
+                    flex: typeFlex,
+                    child: Wrap(
+                      spacing: 5.0,
+                      runSpacing: choiceChipRowSpace,
+                      children: choices.map((choice) {
+                        return ChoiceChip(
+                          label: Text(choice.displayString),
+                          disabledColor: Colors.grey,
+                          selectedColor: Colors.lightBlue[200],
+                          backgroundColor: Colors.lightBlue[50],
+                          shadowColor: Colors.grey,
+                          pressElevation: 8.0,
+                          elevation: 2.0,
+                          selected: remap(currentRoles[columnName]!, choice),
+                          onSelected: (bool selected) {
+                            setState(() {
+                              if (selected) {
+                                // only one variable is Target, Risk and Weight.
+                                if (choice == Role.target ||
+                                    choice == Role.risk ||
+                                    choice == Role.weight) {
+                                  currentRoles.forEach((key, value) {
+                                    if (value == choice) {
+                                      ref
+                                          .read(rolesProvider.notifier)
+                                          .state[key] = Role.input;
+                                    }
+                                  });
                                 }
-                              });
-                            }
-                            ref.read(rolesProvider.notifier).state[columnName] =
-                                choice;
-                            debugText('  $choice', columnName);
-                          } else {
-                            debugPrint('This should not happen');
-                            // ref.read(rolesProvider.notifier).state[columnName] =
-                            //     ;
-                          }
-                        });
-                      },
-                    );
-                  }).toList(),
-                ),
-              ),
-              Expanded(
-                flex: contentFlex,
-                child: Text(
-                  content,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
+                                ref
+                                    .read(rolesProvider.notifier)
+                                    .state[columnName] = choice;
+                                debugText('  $choice', columnName);
+                              } else {
+                                debugPrint('This should not happen');
+                                // ref.read(rolesProvider.notifier).state[columnName] =
+                                //     ;
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Expanded(
+                    flex: contentFlex,
+                    child: Text(
+                      content,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                  // Hard code the Spacer when the screen width is large.
+
+                  // Add a Spacer if the screen width is greater than 1159.0.
+
+                  if (constraints.maxWidth > 1159.0) const Spacer(),
+
+                  // Two spacers to make the layout more compact.
+                  // Add a Spacer if the screen width is greater than 1159.0.
+
+                  if (constraints.maxWidth > 1159.0) const Spacer(),
+                ],
+              );
+            },
           ),
         );
       }
