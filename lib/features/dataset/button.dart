@@ -111,10 +111,10 @@ void showAlertPopup(
               // consequence the previous result won't be reset because load
               // indicates no dataset has been loaded and the app is fresh.
               await reset(context, ref);
-              Navigator.of(context).pop();
+              if (context.mounted) Navigator.of(context).pop();
 
               if (loadNewDataset) {
-                _showOptionPopup(context, ref);
+                if (context.mounted) _showOptionPopup(context, ref);
               }
             },
           ),

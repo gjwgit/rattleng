@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-08-25 06:32:24 +0800 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-08 09:42:54 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -58,6 +58,7 @@ import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -120,6 +121,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   int interval = ref.read(intervalProvider);
 
+  String theme = ref.read(settingsGraphicThemeProvider);
+
   // First obtain the text from the script.
 
   debugText('R SOURCE', '$script.R');
@@ -150,6 +153,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // AS REQUIRED FOR THE CURRENT FEATURE.
 
   code = code.replaceAll('TEMPDIR', tempDir);
+
+  code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
   ////////////////////////////////////////////////////////////////////////
   // CLEANUP

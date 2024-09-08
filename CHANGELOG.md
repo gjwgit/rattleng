@@ -10,6 +10,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
 
++ Initial implementation of settings - set plot themes. [6.2.74 20240908 gjw]
 + Bug fix random forest variable importance display [6.2.73 20240907 gjw]
 + Add URL link to Version text [6.2.72 20240907 lutra]
 + Improve image page testing and avoid more dots. Bug fixes [6.2.71 20240907 gjw]

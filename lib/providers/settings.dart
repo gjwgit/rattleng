@@ -1,6 +1,6 @@
-/// Check for a numeric type (dbl or int).
+/// Settings provider.
 //
-// Time-stamp: <Sunday 2024-09-08 12:19:37 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-08 12:15:34 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,12 +21,27 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors: Graham Williams
 
 library;
 
-bool isNumeric(String type) {
-  // Assume type is not empty.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-  return type == 'dbl' || type == 'int';
+// Define a provider for managing settings.
+
+class SettingsNotifier extends StateNotifier<String> {
+  // Default value.
+
+  SettingsNotifier() : super('theme_rattle');
+
+  void setGraphicTheme(String newTheme) {
+    state = newTheme;
+  }
 }
+
+// The provider we will use in the app.
+
+final settingsGraphicThemeProvider =
+    StateNotifierProvider<SettingsNotifier, String>((ref) {
+  return SettingsNotifier();
+});
