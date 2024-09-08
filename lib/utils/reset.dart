@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Sunday 2024-09-01 08:44:43 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-08 12:06:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -125,7 +125,7 @@ Future<void> reset(BuildContext context, WidgetRef ref) async {
   // CONSOLE TAB
 
   ref.invalidate(terminalProvider);
-  rStart(context, ref);
+  if (context.mounted) rStart(context, ref);
 
   // TODO yyx 20240618 might need to reset sub-tabs to the first one.
   // RESET TAB INDEX (including sub-tabs)
