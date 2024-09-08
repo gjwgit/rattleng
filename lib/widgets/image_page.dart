@@ -206,7 +206,10 @@ class ImagePage extends StatelessWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            String? pathToSave = await selectFile();
+                            String fileName = path.split('/').last;
+                            String? pathToSave = await selectFile(
+                              defaultFileName: fileName,
+                            );
                             if (pathToSave != null) {
                               // Copy generated image from /tmp to user's location.
                               await File(path).copy(pathToSave);

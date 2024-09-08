@@ -29,7 +29,7 @@ library;
 
 import 'package:file_picker/file_picker.dart';
 
-Future<String?> selectFile() async {
+Future<String?> selectFile({String defaultFileName = 'image.svg'}) async {
   // Use the [FilePicker] to select a file asynchronously so as not to block the
   // main UI thread.
 
@@ -37,7 +37,7 @@ Future<String?> selectFile() async {
     dialogTitle: 'Save SVG image to a .svg file',
     // TODO 20240604 gjw THE DEFAULT FILE NAME, TILE, ETC DOES NOT APPEAR IN THE
     // DIALOG ON LINUX. COULD BE A PACKAGE BUG? SHOULD REPORT IF SO.
-    fileName: 'image.svg',
+    fileName: defaultFileName,
     type: FileType.custom,
     allowedExtensions: ['svg'],
   );
