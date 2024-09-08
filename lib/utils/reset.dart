@@ -1,6 +1,6 @@
 // Reset the app
 //
-// Time-stamp: <Sunday 2024-09-01 08:44:43 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-08 12:06:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,6 +27,8 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,6 +38,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // AND INTO app.dart?
 
 import 'package:rattle/app.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
@@ -57,8 +60,25 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/debug_text.dart';
 
-void reset(BuildContext context, WidgetRef ref) {
+Future<void> reset(BuildContext context, WidgetRef ref) async {
   debugText('  RESET');
+
+  // Clear all .svg files in the tempDir.
+  final tempDirectory = Directory(tempDir);
+  if (await tempDirectory.exists()) {
+    final svgFiles = tempDirectory
+        .listSync()
+        .where((file) => file is File && file.path.endsWith('.svg'));
+
+    for (var file in svgFiles) {
+      try {
+        await File(file.path).delete();
+        debugPrint('Deleted: ${file.path}');
+      } catch (e) {
+        debugPrint('Error deleting file ${file.path}: $e');
+      }
+    }
+  }
 
   // Reset the app.
   //
@@ -105,7 +125,7 @@ void reset(BuildContext context, WidgetRef ref) {
   // CONSOLE TAB
 
   ref.invalidate(terminalProvider);
-  rStart(context, ref);
+  if (context.mounted) rStart(context, ref);
 
   // TODO yyx 20240618 might need to reset sub-tabs to the first one.
   // RESET TAB INDEX (including sub-tabs)

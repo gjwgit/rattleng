@@ -1,6 +1,6 @@
-/// Check for a numeric type (dbl or int).
+/// Navigate to a page in the app.
 //
-// Time-stamp: <Sunday 2024-09-08 12:19:37 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:03:00 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,12 +21,21 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors: Zheyuan Xu
 
 library;
 
-bool isNumeric(String type) {
-  // Assume type is not empty.
+import 'package:flutter/material.dart';
 
-  return type == 'dbl' || type == 'int';
+import 'package:flutter_test/flutter_test.dart';
+
+Future<void> navigateToPage(
+    WidgetTester tester, IconData icon, Type pageType,) async {
+  final pageIconFinder = find.byIcon(icon);
+  expect(pageIconFinder, findsOneWidget);
+
+  await tester.tap(pageIconFinder);
+  await tester.pumpAndSettle();
+
+  expect(find.byType(pageType), findsOneWidget);
 }

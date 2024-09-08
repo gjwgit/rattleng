@@ -1,6 +1,6 @@
-/// Check for a numeric type (dbl or int).
+/// Check if the path to an image file exists.
 //
-// Time-stamp: <Sunday 2024-09-08 12:19:37 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-08 12:21:31 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,12 +21,12 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors: Graham Williams
 
 library;
 
-bool isNumeric(String type) {
-  // Assume type is not empty.
+import 'dart:io';
 
-  return type == 'dbl' || type == 'int';
+bool imageExists(String path) {
+  return FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound;
 }
