@@ -97,6 +97,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             // The BUILD button.
 
             ActivityButton(
+              key: const Key('Build Neural Network'),
               onPressed: () async {
                 // Perform manual validation.
                 String? hiddenNeuronsError =
@@ -162,6 +163,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               style: normalTextStyle,
             ),
             Checkbox(
+              key: const Key('NNET Trace'),
               value: nnetTrace,
               onChanged: (value) {
                 setState(() {
