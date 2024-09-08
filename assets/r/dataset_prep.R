@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-09-07 15:01:19 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-09-08 10:55:23 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -97,7 +97,7 @@ if (NEEDS_INIT) {
 
   # A ggplot2 theme for rattle.
 
-  theme_default_rattle <- function(base_size = 11, base_family = "") {
+  theme_rattle <- function(base_size = 11, base_family = "") {
   theme_grey(base_size = base_size, base_family = base_family) +
     theme(
       # Customize text elements
@@ -116,7 +116,7 @@ if (NEEDS_INIT) {
     )
 }
 
-  theme_rattle <- theme_default_rattle
+  theme_default <- theme_rattle
 
   # Turn off fancy terminal escap sequences that are produced using the
   # crayon package.

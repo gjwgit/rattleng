@@ -52,7 +52,7 @@ ds %>%
   ggplot2::xlab(paste("GROUP_BY_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::theme(legend.position="none") +
-  theme_rattle()
+  theme_default()
 
 dev.off()
 
@@ -71,7 +71,7 @@ ds %>%
   ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::labs(fill="GROUP_BY_VAR", y="Density") +
-  theme_rattle()
+  theme_default()
 
 dev.off()
 
@@ -92,7 +92,7 @@ ds %>%
   ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Empirical Cumulative Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::labs(fill="GROUP_BY_VAR", y=expression("ECDF - Proportion <= x")) +
-  theme_rattle()
+  theme_default()
 
 dev.off()
 
@@ -120,7 +120,7 @@ svg("TEMPDIR/explore_visual_benford.svg", width=10)
 tds %>% plotDigitFreq() +
   ggtitle("Digital Analysis of First Digit of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::xlab(paste("Digits\n\n", paste("TIMESTAMP", username), sep="")) +
-  theme_rattle()
+  theme_default()
 
 dev.off()
 
