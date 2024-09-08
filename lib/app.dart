@@ -28,6 +28,8 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
@@ -35,48 +37,123 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
+import 'package:rattle/constants/temp_dir.dart';
+import 'package:window_manager/window_manager.dart';
 
 // Add a key to reference [RattleHome] to access its method.
 
 final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
 
+Future<void> cleanUpTempDirs() async {
+  // remove the temporary directories created by Rattle
+  // open from temp directory
+  final rattleTempDir = Directory(tempDir);
+  if (rattleTempDir.existsSync()) {
+    await rattleTempDir.delete(recursive: true);
+    debugPrint('Deleted Rattle temp directory: $tempDir');
+  }
+
+  // final rTempDir = Directory(rTempDir);
+  // for (var dir in rTempDir) {
+  //   if (dir is Directory) {
+  //     await dir.delete(recursive: true);
+  //     debugPrint('Deleted R temp directory: ${dir.path}');
+  //   }
+  // }
+}
+
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
-/// The root widget covers the screen of the app. This widget is stateless as it
-/// does not need to manage any state itself. The state is managed through
-/// riverpod and so it is a [ConsumerWidget].
-
-class RattleApp extends ConsumerWidget {
+/// This widget manages the application's lifecycle and handles cleanup
+/// operations when the app is about to close. It uses [ConsumerStatefulWidget]
+/// to interact with Riverpod providers and [WindowListener] to handle
+/// window-related events, particularly for desktop platforms.
+class RattleApp extends ConsumerStatefulWidget {
   const RattleApp({super.key});
 
-  /// Build the root widget as a [MaterialApp] widget, setting up the app theme,
-  /// and populating the widget with the Rattle home page widget.
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Initialise the R process.
+  ConsumerState<RattleApp> createState() => _RattleAppState();
+}
 
-    // 20240809 On Windows this does not get run - that is main.R is not in the
-    // Console. Delaying until feature/dataset/popup.dart seems to work. Moving
-    // main.R into dataset_prep.R delays the setup too much.
-    //
-    // 20240810 Revert to this for now and try to solve the Windows issue. Is it
-    // because my Windows are too slow and this starts before the Console is
-    // running?
+class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
+  /// Initializes the state and sets up window management.
+  @override
+  void initState() {
+    super.initState();
+    windowManager.addListener(this);
+    _init();
+  }
 
+  /// Removes this object as a window listener when the widget is disposed.
+  @override
+  void dispose() {
+    windowManager.removeListener(this);
+    super.dispose();
+  }
+
+  /// Initializes window management settings.
+  void _init() async {
+    // Prevent the window from closing by default
+    await windowManager.setPreventClose(true);
+    setState(() {});
+  }
+
+  /// Handles the window close event.
+  ///
+  /// This method is called when the user attempts to close the window.
+  /// It shows a confirmation dialog and performs cleanup if the user confirms.
+  @override
+  void onWindowClose() async {
+    bool isPreventClose = await windowManager.isPreventClose();
+    if (isPreventClose && mounted) {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: const Text('Are you sure you want to close Rattle?'),
+            content: const Text('Any unsaved work will be lost.'),
+            actions: [
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Close'),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await cleanUpTempDirs();
+                  await windowManager.destroy();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  /// Builds the widget tree for the Rattle app.
+  ///
+  /// This method initializes the R process, sets up the app's theme,
+  /// and returns a [MaterialApp] widget that serves as the root of the app.
+  @override
+  Widget build(BuildContext context) {
+    // Initialize the R process
+    // 20240809 On Windows this does not get run due to the Console not being
+    // ready and not receiving the early input. Delaying until feature/dataset
+    // popup.dart seems to work.
     rStart(context, ref);
 
-    // EXPERIMENT with the color scheme.
-
+    // Set up the app's color scheme
     // final ColorScheme colorScheme = ColorScheme.fromSeed(
     //   brightness: MediaQuery.platformBrightnessOf(context),
     //   seedColor: Colors.indigo,
     // );
-
     Flavor flavor = catppuccin.latte;
 
     return MaterialApp(
-      //      theme: catppuccinTheme(catppuccin.latte),
       theme: ThemeData(
         // Material 3 is the current (2024) flutter default theme for colours
         // and Google fonts. We can stay with this as the default for now
@@ -86,8 +163,6 @@ class RattleApp extends ConsumerWidget {
         //
         // useMaterial3: false,
         //
-        // EXPERIMENTATION
-        //
         colorScheme: ColorScheme.fromSeed(
           seedColor: flavor.mantle,
           // seedColor: flavor.text,
@@ -95,7 +170,6 @@ class RattleApp extends ConsumerWidget {
         // primarySwatch: createMaterialColor(Colors.black),
 
         // The default font size seems rather small. So increase it here.
-
         // textTheme: Theme.of(context).textTheme.apply(
         //       fontSizeFactor: 1.1,
         //       fontSizeDelta: 2.0,
