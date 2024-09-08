@@ -41,6 +41,10 @@ import 'package:rattle/providers/hidden_neurons.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
+import 'package:rattle/providers/max_nwts.dart';
+import 'package:rattle/providers/nnet_maxit.dart';
+import 'package:rattle/providers/nnet_skip.dart';
+import 'package:rattle/providers/nnet_trace.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/min_split.dart';
@@ -104,8 +108,12 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
   int hiddenNeurons = ref.read(hiddenNeuronsProvider);
+  int nnetMaxNWts = ref.read(maxNWtsProvider);
+  int nnetMaxit = ref.read(maxitProvider);
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
+  bool nnetTrace = ref.read(nnetTraceProvider);
+  bool nnetSkip = ref.read(nnetSkipProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
@@ -300,11 +308,17 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
   code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
+  code = code.replaceAll('MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
     code = code.replaceAll('maxsurrogate=0', '');
   }
+
+  code =
+      code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
+  code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
 
   // TODO if (script == 'model_build_random_forest')) {
 
