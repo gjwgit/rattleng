@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-09-08 07:36:55 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-08 11:23:10 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -55,7 +55,7 @@ import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/show_settings_dialog.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -380,7 +380,8 @@ Yin, Bo Zhang.
                 color: Colors.blue,
               ),
               onPressed: () async {
-                showUnderConstruction(context);
+                showSettingsDialog(context);
+                // showUnderConstruction(context);
               },
             ),
           ),
