@@ -1,6 +1,6 @@
 /// Promote the user to pick a location to save the file
 //
-// Time-stamp: <Sunday 2024-09-08 13:37:56 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-08 13:47:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,7 +34,7 @@ Future<String?> selectFile({String defaultFileName = 'image.svg'}) async {
   // main UI thread.
 
   String? result = await FilePicker.platform.saveFile(
-    dialogTitle: 'Save SVG image to a .svg file',
+    dialogTitle: 'Provide a .svg filename to save SVG image to',
     // TODO 20240604 gjw DEFAULT FILE NAME, TILE, ETC DOES NOT APPEAR IN DIALOG.
     //
     // Seems to be a Linux or even Ubuntu/Gnome issue. However it works okay for
