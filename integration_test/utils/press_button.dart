@@ -41,15 +41,15 @@ Future<void> pressFirstButton(
   WidgetTester tester,
   String buttonText,
 ) async {
-  // Finds the first widget with the given text
+  // Finds the first widget with the given text.
+
   final buttonFinder = find.text(buttonText).first;
 
-  // Ensure that the button is found (uncomment if needed)
-  // expect(buttonFinder, findsOneWidget);
+  // Taps the first widget found.
 
-  // Taps the first widget found
   await tester.tap(buttonFinder);
 
-  // Wait for any animations or changes to complete
+  // Wait for any animations or changes to complete.
+
   await tester.pumpAndSettle();
 }
