@@ -31,6 +31,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/loss_matrix.dart';
@@ -80,7 +81,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   @override
   Widget build(BuildContext context) {
     // Define a smaller text style.
-    const TextStyle normalTextStyle = TextStyle(fontSize: 14.0);
 
     // Define a text style for disabled fields.
     const TextStyle disabledTextStyle = TextStyle(

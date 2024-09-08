@@ -45,7 +45,7 @@ model_nn <- nnet(
   form,
   data = ds[tr, vars],
   size = HIDDEN_NEURONS,        # Number of units in the hidden layer
-  skip=TRUE, MaxNWts=10000, trace=FALSE, maxit=100
+  skip=TRUE, MaxNWts=MAX_NWTS, trace=FALSE, maxit=MAXIT
 )
 
 # Generate a textual view of the Neural Network model
