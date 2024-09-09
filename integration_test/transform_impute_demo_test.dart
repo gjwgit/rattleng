@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-09 19:10:17 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-09 19:17:11 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/app.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/providers/stdout.dart';
 
@@ -71,7 +72,22 @@ void main() {
 
       // Use the container to read the provider value
       final stdout = container.read(stdoutProvider);
-      print(stdout);
+
+      String missing = rExtract(stdout, '> missing');
+
+      // Regular expression to match strings between quotes
+
+      RegExp regExp = RegExp(r'"(.*?)"');
+
+      // Find all matches
+
+      Iterable<RegExpMatch> matches = regExp.allMatches(missing);
+
+      // Extract the matched strings
+
+      List<String> variables = matches.map((match) => match.group(1)!).toList();
+
+      print(variables);
 
       print("=====================================");
 
