@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:07:59 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-09 19:10:17 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,8 +31,9 @@ import 'package:integration_test/integration_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/impute/panel.dart';
-import 'package:rattle/main.dart' as app;
+import 'package:rattle/app.dart';
 import 'package:rattle/utils/get_missing.dart';
+import 'package:rattle/providers/stdout.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
@@ -47,13 +48,19 @@ void main() {
 
   group('Transform DEMO:', () {
     testWidgets('build, page.', (WidgetTester tester) async {
-      // Initialize the app.
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(pause);
-
       // Create a ProviderContainer to access the ref.
       final container = ProviderContainer();
+
+      // Initialize the app.
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: RattleApp(),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
 
       // Open the demo dataset and navigate to the Transform tab.
       await openDemoDataset(tester);
@@ -61,6 +68,12 @@ void main() {
 
       // Navigate to the Impute page.
       await navigateToFeature(tester, 'Impute', ImputePanel);
+
+      // Use the container to read the provider value
+      final stdout = container.read(stdoutProvider);
+      print(stdout);
+
+      print("=====================================");
 
       // Step 1: Run get_missing to check sunshine is there.
       List<String> result = getMissing(
