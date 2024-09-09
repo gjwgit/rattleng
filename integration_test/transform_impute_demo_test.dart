@@ -47,26 +47,30 @@ void main() {
 
   group('Transform DEMO:', () {
     testWidgets('build, page.', (WidgetTester tester) async {
+      // Initialize the app.
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
+      // Create a ProviderContainer to access the ref.
+      final container = ProviderContainer();
+
+      // Open the demo dataset and navigate to the Transform tab.
       await openDemoDataset(tester);
       await navigateToTab(tester, 'Transform');
 
-      // Go to the Impute page.
-
+      // Navigate to the Impute page.
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      // Step 1 : run get_missing to check sunshine is there.
-
-      List<String> result = getMissing(ref);
+      // Step 1: Run get_missing to check sunshine is there.
+      List<String> result = getMissing(
+          container.read as WidgetRef); // Use container.read to pass the ref
       print(result.toString());
 
+      // Simulate pressing the first button to impute missing values.
       await pressFirstButton(tester, 'Impute Missing Values');
 
       // Verify the content of the page.
-
       await verifyPageContent(
         tester,
         'Dataset Summary',
@@ -74,7 +78,6 @@ void main() {
       );
 
       // Verify the IZR_sunshine parameter values.
-
       await verifyMultipleTextContent(
         tester,
         [
@@ -86,6 +89,9 @@ void main() {
           'Max.   :13.600',
         ],
       );
+
+      // Dispose of the ProviderContainer when done to prevent memory leaks.
+      container.dispose();
     });
   });
 }
