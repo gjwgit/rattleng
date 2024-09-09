@@ -25,40 +25,31 @@
 
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rattle/tabs/explore.dart';
-import 'package:rattle/tabs/transform.dart';
+import 'package:rattle/home.dart';
 
 Future<void> navigateToTab(
   WidgetTester tester,
   String tabTitle,
 ) async {
-  if (tabTitle == 'Explore') {
-    final exploreIconFinder = find.byIcon(Icons.insights);
-    expect(exploreIconFinder, findsOneWidget);
+  // Find the tab details from homeTabs list using the tabTitle.
 
-    await tester.tap(exploreIconFinder);
-    await tester.pumpAndSettle();
+  final tab = homeTabs.firstWhere(
+    (element) => element['title'] == tabTitle,
+    orElse: () => throw Exception('Unknown tab title: $tabTitle'),
+  );
 
-    expect(find.byType(ExploreTabs), findsOneWidget);
-  } else if (tabTitle == 'Transform') {
-    final transformIconFinder = find.byIcon(Icons.transform);
-    expect(transformIconFinder, findsOneWidget);
+  // Find the icon associated with the tab.
 
-    await tester.tap(transformIconFinder);
-    await tester.pumpAndSettle();
+  final iconFinder = find.byIcon(tab['icon']);
+  expect(iconFinder, findsOneWidget);
 
-    expect(find.byType(TransformTabs), findsOneWidget);
-  } else if (tabTitle == 'Model') {
-    final modelIconFinder = find.byIcon(Icons.model_training);
-    expect(modelIconFinder, findsOneWidget);
+  // Tap the icon to navigate.
 
-    await tester.tap(modelIconFinder);
-    await tester.pumpAndSettle();
+  await tester.tap(iconFinder);
+  await tester.pumpAndSettle();
 
-    expect(find.byType(TransformTabs), findsOneWidget);
-  } else {
-    throw Exception('Unknown tab title: $tabTitle');
-  }
+  // Check if the widget of the tab is visible.
+
+  expect(find.byType(tab['widget'].runtimeType), findsOneWidget);
 }
