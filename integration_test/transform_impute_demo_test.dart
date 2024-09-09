@@ -60,7 +60,8 @@ void main() {
 
       // Step 1 : run get_missing to check sunshine is there.
 
-      // print(getMissing(ref).toString());
+      List<String> result = getMissing(ref);
+      print(result.toString());
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
