@@ -28,10 +28,11 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/features/impute/panel.dart';
-import 'package:rattle/features/recode/panel.dart';
-import 'package:rattle/features/rescale/panel.dart';
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/utils/get_missing.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
@@ -40,7 +41,6 @@ import 'utils/open_demo_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_multiple_text.dart';
 import 'utils/verify_page_content.dart';
-import 'utils/verify_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +57,10 @@ void main() {
       // Go to the Impute page.
 
       await navigateToFeature(tester, 'Impute', ImputePanel);
+
+      // Step 1 : run get_missing to check sunshine is there.
+
+      // print(getMissing(ref).toString());
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
