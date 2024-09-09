@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 14:58:29 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-09-10 05:45:05 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,41 +22,38 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
-
-# Set CRAN mirror to Australia (Canberra) [https] (Mirror number 2)
-options(repos = c(CRAN = "https://cloud.r-project.org/"))
-
-# Check if NeuralNetTools is installed, if not, install it
-if (!requireNamespace("NeuralNetTools", quietly = TRUE)) {
-  install.packages("NeuralNetTools")
-}
+# Author: Zheyuan Xu, Graham Williams
 
 # Load necessary libraries
-library(nnet)       # Neural networks
+
+library(nnet)            # Neural networks
 library(NeuralNetTools)  # For neural network plotting
 
-# Define model type and description
+# Define model type and description.
+
 mtype <- "neuralnet"
 mdesc <- "Neural Network"
 
-# Train a Neural Network model using nnet
+# Train a Neural Network model using nnet.
+
 model_nn <- nnet(
   form,
   data = ds[tr, vars],
   size = HIDDEN_NEURONS,        # Number of units in the hidden layer
-  skip=TRUE, MaxNWts=MAX_NWTS, trace=FALSE, maxit=MAXIT
+  skip=TRUE,
+  MaxNWts=MAX_NWTS,
+  trace=FALSE,
+  maxit=MAXIT
 )
 
-# Generate a textual view of the Neural Network model
+# Generate a textual view of the Neural Network model.
+
 print(model_nn)
 summary(model_nn)
 cat("\n")
 
-# Plot the resulting Neural Network structure using NeuralNetTools
-plotnet(model_nn)
+# Plot and save to SVG the resulting Neural Network structure using NeuralNetTools.
 
-# If you need to save the plot to SVG
-svg("TEMPDIR/model_nn.svg")
+svg("TEMPDIR/model_nn_nnet.svg")
 plotnet(model_nn)
 dev.off()
