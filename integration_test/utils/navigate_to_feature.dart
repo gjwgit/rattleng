@@ -1,6 +1,6 @@
-/// Helper functions for integration tests.
+/// Navigate to a feature in the app.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:05:26 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-03 09:03:00 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -26,18 +26,17 @@
 library;
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
 
-import 'package:rattle/tabs/explore.dart';
+Future<void> navigateToFeature(
+  WidgetTester tester,
+  String tabTitle,
+  Type panelType,
+) async {
+  final tabFinder = find.text(tabTitle);
+  expect(tabFinder, findsOneWidget);
 
-// TODO 20240902 kev TO MOVE INTO UTILS AS navigateToTab()
-
-Future<void> navigateToExploreTab(WidgetTester tester) async {
-  final exploreIconFinder = find.byIcon(Icons.insights);
-  expect(exploreIconFinder, findsOneWidget);
-
-  await tester.tap(exploreIconFinder);
+  await tester.tap(tabFinder);
   await tester.pumpAndSettle();
 
-  expect(find.byType(ExploreTabs), findsOneWidget);
+  expect(find.byType(panelType), findsOneWidget);
 }

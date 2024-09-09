@@ -25,18 +25,40 @@
 
 library;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/tabs/transform.dart';
 
 Future<void> navigateToTab(
   WidgetTester tester,
   String tabTitle,
-  Type panelType,
 ) async {
-  final tabFinder = find.text(tabTitle);
-  expect(tabFinder, findsOneWidget);
+  if (tabTitle == 'Explore') {
+    final exploreIconFinder = find.byIcon(Icons.insights);
+    expect(exploreIconFinder, findsOneWidget);
 
-  await tester.tap(tabFinder);
-  await tester.pumpAndSettle();
+    await tester.tap(exploreIconFinder);
+    await tester.pumpAndSettle();
 
-  expect(find.byType(panelType), findsOneWidget);
+    expect(find.byType(ExploreTabs), findsOneWidget);
+  } else if (tabTitle == 'Transform') {
+    final transformIconFinder = find.byIcon(Icons.transform);
+    expect(transformIconFinder, findsOneWidget);
+
+    await tester.tap(transformIconFinder);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TransformTabs), findsOneWidget);
+  } else if (tabTitle == 'Model') {
+    final modelIconFinder = find.byIcon(Icons.model_training);
+    expect(modelIconFinder, findsOneWidget);
+
+    await tester.tap(modelIconFinder);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TransformTabs), findsOneWidget);
+  } else {
+    throw Exception('Unknown tab title: $tabTitle');
+  }
 }
