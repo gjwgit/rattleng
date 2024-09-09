@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/app.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -70,7 +71,10 @@ void main() {
       // Navigate to the Impute page.
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      // Use the container to read the provider value
+      // Step 1: Run get_missing to check sunshine is there.
+
+      // Use the container to read the provider value.
+
       final stdout = container.read(stdoutProvider);
 
       String missing = rExtract(stdout, '> missing');
@@ -89,15 +93,17 @@ void main() {
 
       print(variables);
 
-      print("=====================================");
+      // Check if the variable sunshine is in the list of missing variables.
 
-      // Step 1: Run get_missing to check sunshine is there.
-      List<String> result = getMissing(
-          container.read as WidgetRef); // Use container.read to pass the ref
-      print(result.toString());
+// Convert all elements in variables to lowercase and check if any match 'sunshine'
+      expect(variables.any((element) => element.toLowerCase() == 'sunshine'),
+          true);
 
-      // Simulate pressing the first button to impute missing values.
+      // Step 2:  Simulate pressing the first button to impute missing values.
+
       await pressFirstButton(tester, 'Impute Missing Values');
+
+      await tester.pump(hack);
 
       // Verify the content of the page.
       await verifyPageContent(
@@ -118,6 +124,55 @@ void main() {
           'Max.   :13.600',
         ],
       );
+
+      // Step 3: Run get_missing to check sunshine is not there anymore.
+
+      // Use the container to read the provider value.
+
+      final stdout2 = container.read(stdoutProvider);
+
+      String missing2 = rExtract(stdout2, '> missing');
+
+      // Find all matches
+
+      Iterable<RegExpMatch> matches2 = regExp.allMatches(missing2);
+
+      // Extract the matched strings
+
+      List<String> variables2 =
+          matches2.map((match) => match.group(1)!).toList();
+
+      print("variables2" + variables2.toString());
+
+      // Check if the variable sunshine is not in the list of missing variables.
+
+      // expect(variables2.contains('sunshine'), false);
+
+      // Step 4: Run get_vars to check if IZR_sunshine is  there.
+
+      // Use the container to read the provider value.
+
+      Map<String, Role> roles = container.read(rolesProvider);
+
+      // Extract the input variable from the rolesProvider.
+
+      List<String> vars = [];
+      roles.forEach((key, value) {
+        if (value == Role.input || value == Role.risk || value == Role.target) {
+          vars.add(key);
+        }
+      });
+
+      // Extract the matched strings
+
+      List<String> variables3 =
+          matches2.map((match) => match.group(1)!).toList();
+
+      print("vars" + vars.toString());
+
+      // Check if the variable sunshine is not in the list of missing variables.
+
+      expect(vars.contains('IZR_sunshine'), true);
 
       // Dispose of the ProviderContainer when done to prevent memory leaks.
       container.dispose();
