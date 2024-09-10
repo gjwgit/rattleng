@@ -200,6 +200,7 @@ void main() {
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
@@ -220,6 +221,7 @@ void main() {
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final forthPageTitleFinder = find.text('NNET');
       expect(forthPageTitleFinder, findsOneWidget);
@@ -393,6 +395,7 @@ void main() {
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
@@ -413,6 +416,7 @@ void main() {
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final forthPageTitleFinder = find.text('NNET');
       expect(forthPageTitleFinder, findsOneWidget);
