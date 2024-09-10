@@ -83,9 +83,9 @@ void main() {
         'rain_today',
       ];
 
-      // Find the scrollable ListView or SingleChildScrollView.
+      // Find the scrollable ListView.
 
-      final scrollableFinder = find.byType(Scrollable);
+      final scrollableFinder = find.byKey(const Key('roles listView'));
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
