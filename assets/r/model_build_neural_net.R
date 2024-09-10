@@ -53,9 +53,6 @@ print(model_nn)
 summary(model_nn)
 cat("\n")
 
-# Plot the resulting Neural Network structure using NeuralNetTools
-plotnet(model_nn)
-
 # If you need to save the plot to SVG
 svg("TEMPDIR/model_nn.svg")
 plotnet(model_nn)
