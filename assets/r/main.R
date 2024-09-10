@@ -68,6 +68,7 @@ pacman::p_load(Hmisc,
                mice,
                naniar,
                nnet,
+               NeuralNetTools,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,

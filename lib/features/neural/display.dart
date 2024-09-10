@@ -31,6 +31,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -81,12 +82,14 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
 
     String image = '$tempDir/model_nn.svg';
 
-    pages.add(
-      ImagePage(
-        title: 'NNET',
-        path: image,
-      ),
-    );
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: 'NNET',
+          path: image,
+        ),
+      );
+    }
 
     return Pages(children: pages);
   }

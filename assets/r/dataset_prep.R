@@ -75,6 +75,7 @@ if (NEEDS_INIT) {
                  magrittr,   # Utilise %>% and %<>% pipeline operators.
                  mice,
                  nnet,
+                 NeuralNetTools,
                  randomForest,
                  rattle,     # Access the weather dataset and utilities.
                  readr,

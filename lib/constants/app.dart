@@ -48,8 +48,7 @@ const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
 const String weatherDemoFile = 'rattle::weather';
 
-// proportion of window that display panel takes
-// const double displayRatio = 0.75;
+/// Text style for normal text.
 
 const TextStyle normalTextStyle = TextStyle(fontSize: 14.0);
 

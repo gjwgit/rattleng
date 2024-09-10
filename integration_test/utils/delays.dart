@@ -40,7 +40,7 @@ final Duration pause = Duration(seconds: int.parse(envPAUSE));
 
 /// The default dlay where a delay is always useful.
 
-const Duration delay = Duration(seconds: 1);
+const Duration delay = Duration(seconds: 2);
 
 /// 20240902 gjw There are currently times when we need to wait for the R Script
 /// to finish in the current architecture which needs to be fixed. For now we
