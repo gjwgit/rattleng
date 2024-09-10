@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 17:11:27 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 05:55:42 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -176,7 +176,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             configWidgetSpace,
 
             const Text(
-              'skip',
+              'Skip',
               style: normalTextStyle,
             ),
             Checkbox(

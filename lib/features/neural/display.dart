@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-14 14:24:34 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 05:47:51 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,6 +36,7 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
+import 'package:rattle/utils/image_exists.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -80,7 +81,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
       );
     }
 
-    String image = '$tempDir/model_nn.svg';
+    String image = '$tempDir/model_nn_nnet.svg';
 
     if (imageExists(image)) {
       pages.add(
