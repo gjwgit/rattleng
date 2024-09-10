@@ -1,6 +1,6 @@
 /// Navigate to a feature in the app.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:03:00 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 15:56:42 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -27,16 +27,20 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'delays.dart';
+
 Future<void> navigateToFeature(
   WidgetTester tester,
-  String tabTitle,
+  String feature,
   Type panelType,
 ) async {
-  final tabFinder = find.text(tabTitle);
+  final tabFinder = find.text(feature);
   expect(tabFinder, findsOneWidget);
 
   await tester.tap(tabFinder);
   await tester.pumpAndSettle();
 
   expect(find.byType(panelType), findsOneWidget);
+
+  await tester.pump(pause);
 }
