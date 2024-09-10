@@ -1,6 +1,6 @@
 /// Promote the user to pick a location to save the file
 //
-// Time-stamp: <Friday 2024-07-26 17:07:33 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-08 13:47:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,15 +29,19 @@ library;
 
 import 'package:file_picker/file_picker.dart';
 
-Future<String?> selectFile() async {
+Future<String?> selectFile({String defaultFileName = 'image.svg'}) async {
   // Use the [FilePicker] to select a file asynchronously so as not to block the
   // main UI thread.
 
   String? result = await FilePicker.platform.saveFile(
-    dialogTitle: 'Save SVG image to a .svg file',
-    // TODO 20240604 gjw THE DEFAULT FILE NAME, TILE, ETC DOES NOT APPEAR IN THE
-    // DIALOG ON LINUX. COULD BE A PACKAGE BUG? SHOULD REPORT IF SO.
-    fileName: 'image.svg',
+    dialogTitle: 'Provide a .svg filename to save SVG image to',
+    // TODO 20240604 gjw DEFAULT FILE NAME, TILE, ETC DOES NOT APPEAR IN DIALOG.
+    //
+    // Seems to be a Linux or even Ubuntu/Gnome issue. However it works okay for
+    // saving in the SCRIPT tab? Works for Lutra-Fs on Windows and Linux
+    // (zenity). 20240908 gjw
+
+    fileName: defaultFileName,
     type: FileType.custom,
     allowedExtensions: ['svg'],
   );
