@@ -32,7 +32,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -216,12 +215,13 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                    'options were - skip-layer connections  entropy fitting',) ==
+                  'options were - skip-layer connections  entropy fitting',
+                ) ==
                 true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
-      
+
       expect(optionsDescriptionFinder, findsOneWidget);
 
       await tester.pump(pause);
@@ -250,15 +250,8 @@ void main() {
 
       await tester.pump(pause);
 
-      final datasetButton = find.byType(DatasetButton);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
+      await openDemoDataset(tester);
 
-      await tester.pump(delay);
-
-      final demoButton = find.text('Demo');
-      await tester.tap(demoButton);
       await tester.pumpAndSettle();
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
@@ -267,6 +260,89 @@ void main() {
       // itself - we need to deal with the async issue in Rattle.
 
       await tester.pump(hack);
+
+      // Find the right arrow button in the PageIndicator.
+
+      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+
+      // Tap the right arrow button to go to Variable page.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+      await tester.pump(hack);
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+      await tester.pump(hack);
+
+      // List of specific variables that should have their role set to 'Ignore'.
+
+      final List<String> variablesToIgnore = [
+        'wind_gust_dir',
+        'wind_dir_9am',
+        'wind_dir_3pm',
+        'rain_today',
+      ];
+
+      // Find the scrollable ListView.
+
+      final scrollableFinder = find.byKey(const Key('roles listView'));
+
+      // Iterate over each variable in the list and find its corresponding row in the ListView.
+
+      for (final variable in variablesToIgnore) {
+        bool foundVariable = false;
+
+        // Scroll in steps and search for the variable until it's found.
+        while (!foundVariable) {
+          // Find the row where the variable name is displayed.
+          final variableFinder = find.text(variable);
+
+          if (tester.any(variableFinder)) {
+            foundVariable = true;
+
+            // Find the parent widget that contains the variable and its associated ChoiceChip.
+
+            final parentFinder = find.ancestor(
+              of: variableFinder,
+              matching: find.byType(
+                Row,
+              ),
+            );
+
+            // Select the first Row in the list.
+
+            final firstRowFinder = parentFinder.first;
+
+            // Tap the correct ChoiceChip to change the role to 'Ignore'.
+
+            final ignoreChipFinder = find.descendant(
+              of: firstRowFinder,
+              matching: find.text('Ignore'),
+            );
+
+            await tester.tap(ignoreChipFinder);
+
+            await tester.pumpAndSettle();
+
+            // Verify that the role is now set to 'Ignore'.
+            expect(ignoreChipFinder, findsOneWidget);
+          } else {
+            for (int i = 0;
+                i < scrollableFinder.evaluate().length && !foundVariable;
+                i++) {
+              final currentScrollableFinder = scrollableFinder.at(i);
+
+              // If the variable is not found, scroll down.
+              await tester.drag(
+                currentScrollableFinder,
+                const Offset(0, -300),
+              );
+              await tester.pumpAndSettle();
+            }
+          }
+        }
+      }
 
       final modelTabFinder = find.byIcon(Icons.model_training);
       expect(modelTabFinder, findsOneWidget);
