@@ -9,7 +9,7 @@ traditional application.
 
 The [Data Science Desktop Survival
 Guide](https://survivor.togaware.com/datascience) provides an
-introduction to science and a guide to using Rattle. It is freely
+introduction to data science and a guide to using Rattle. It is freely
 available from [Togaware](https://togaware.com).
 
 Rattle V6 is implemented using [Flutter](https://flutter.dev) for the
