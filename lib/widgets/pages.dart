@@ -107,15 +107,18 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentPage = index;
-            });
-            _tabController.animateTo(index);
-          },
-          children: widget.children,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 35.0),
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+              _tabController.animateTo(index);
+            },
+            children: widget.children,
+          ),
         ),
         PageIndicator(
           tabController: _tabController,

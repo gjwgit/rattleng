@@ -64,6 +64,5 @@ Future<void> openDemoDataset(WidgetTester tester) async {
 
   await tester.tap(demoButton);
   await tester.pumpAndSettle();
-
-  await tester.pump(pause);
+  await tester.pump(hack);
 }
