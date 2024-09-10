@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-08-02 08:58:43 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 05:57:38 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -49,7 +49,6 @@ const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 const String weatherDemoFile = 'rattle::weather';
 
 /// Text style for normal text.
-
 const TextStyle normalTextStyle = TextStyle(fontSize: 14.0);
 
 /// A mono font used for displaying R script and output.
