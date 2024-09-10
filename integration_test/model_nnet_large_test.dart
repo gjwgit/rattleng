@@ -38,7 +38,7 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/navigate_to_tab.dart';
+import 'utils/navigate_to_feature.dart';
 import 'utils/nnet_ignore_variable.dart';
 import 'utils/open_large_dataset.dart';
 
@@ -145,7 +145,7 @@ void main() {
 
       // Navigate to the Neural feature.
 
-      await navigateToTab(tester, 'Neural', NeuralPanel);
+      await navigateToFeature(tester, 'Neural', NeuralPanel);
 
       await tester.pumpAndSettle();
 
@@ -333,7 +333,7 @@ void main() {
 
       // Navigate to the Neural feature.
 
-      await navigateToTab(tester, 'Neural', NeuralPanel);
+      await navigateToFeature(tester, 'Neural', NeuralPanel);
 
       await tester.pumpAndSettle();
 
