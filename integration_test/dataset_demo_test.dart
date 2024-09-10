@@ -1,8 +1,8 @@
-/// Test the DATASET tab GLIMPSE and ROLE features with the DEMO dataset.
+/// Test and demonstrate the DATASET tab features with the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:38 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 17:00:10 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -32,10 +32,9 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 
 import 'utils/delays.dart';
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -46,26 +45,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      final datasetButtonFinder = find.byType(DatasetButton);
-      expect(datasetButtonFinder, findsOneWidget);
-      await tester.pump(pause);
-
-      final datasetButton = find.byType(DatasetButton);
-      expect(datasetButton, findsOneWidget);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await openDemoDataset(tester);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
@@ -83,6 +63,8 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
+      await tester.pump(pause);
+
       // Find the text containing "366".
 
       final glimpseRowFinder = find.textContaining('366');
@@ -97,6 +79,8 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+
+      await tester.pump(pause);
 
       // Find the text containing "8.0".
 
