@@ -32,13 +32,12 @@ import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
+import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_button.dart';
 import 'utils/verify_page_content.dart';
 import 'utils/verify_text.dart';
-
-import 'helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -50,8 +49,8 @@ void main() {
       await tester.pump(pause);
 
       await openDemoDataset(tester);
-      await navigateToExploreTab(tester);
-      await navigateToTab(tester, 'Correlation', CorrelationPanel);
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
 
       // Verify the content of the page 1.
