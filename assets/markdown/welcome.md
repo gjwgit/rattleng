@@ -19,8 +19,6 @@ original Rattle scripts. You are invited to report any issues you
 notice on [github](https://github.com/gjwgit/rattleng) where code
 contributions are also most welcome.
 
-> 
-
 ## Getting Started
 
 Tap the **Dataset** button to choose a data source.  The **Demo**
@@ -34,11 +32,10 @@ value) and **txt** (plain text) files. Support for **xlsx**, **arff**,
 After loading a dataset you can navigate to the **Roles**
 feature. Each variable has a role, with most as **Input** (or
 independent) variables by default. These are commonly used to predict
-a **Target** (dependent) variable. Any single valued variables are
-automatically identified as an **Ident** (identifier). Idents are
-ignored when modelling as are those with the role **Ignore**.
-
->
+a **Target** (dependent) variable. A variable with a unique value for
+each observation is automatically identified as **Ident**
+(identifier). Idents are ignored when modelling as are those with the
+role **Ignore**.
 
 ## Work Flow
 
@@ -51,8 +48,6 @@ script**. The results are *display*ed as pages that you can navigate.
 At any time visit the **Script** tab to see the **R** code that is
 automatically generated. You can export the script as a standalone R
 program.
-
-> 
 
 ## Resources
 
