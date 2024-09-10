@@ -173,39 +173,31 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Expanded(
-              child: Center(
-                child: Text(
-                  'Variable',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: Text(
+                'Variable',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             space,
             const Expanded(
-              child: Center(
-                child: Text(
-                  'Type',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: Text(
+                'Type',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             Expanded(
               flex: typeFlex,
-              child: const Center(
-                child: Text(
-                  'Role',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: const Text(
+                'Role',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             space,
             Expanded(
               flex: contentFlex,
-              child: const Center(
-                child: Text(
-                  'Content',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: const Text(
+                'Content',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -238,24 +230,23 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   Expanded(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
+                      alignment: Alignment
+                          .centerLeft, // Aligns the content to the left
                       child: Text(
                         columnName,
                         style: defaultTextStyle,
-                        // Ensure the text stays on one line.
-
-                        maxLines: 1,
-                        // Adds ellipsis if text overflows.
-
-                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1, // Ensure the text stays on one line
+                        overflow: TextOverflow
+                            .ellipsis, // Adds ellipsis if text overflows
+                        textAlign: TextAlign
+                            .left, // Aligns the text within the Text widget to the left
                       ),
                     ),
                   ),
+
                   space,
                   Expanded(
-                    child: Center(
-                      // Wrap with Center widget
-                      child: Text(dataType),
-                    ),
+                    child: Text(dataType),
                   ),
                   Expanded(
                     flex: typeFlex,
