@@ -74,6 +74,8 @@ if (NEEDS_INIT) {
                  janitor,    # Cleanup: clean_names() remove_constant().
                  magrittr,   # Utilise %>% and %<>% pipeline operators.
                  mice,
+                 nnet,
+                 NeuralNetTools,
                  randomForest,
                  rattle,     # Access the weather dataset and utilities.
                  readr,
