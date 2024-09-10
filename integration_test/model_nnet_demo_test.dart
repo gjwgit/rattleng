@@ -32,11 +32,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 
 void main() {
@@ -153,11 +155,9 @@ void main() {
 
       // Navigate to the Neural feature.
 
-      final neuralTabFinder = find.text('Neural');
-      await tester.tap(neuralTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Neural', NeuralPanel);
 
-      await tester.pump(pause);
+      await tester.pumpAndSettle();
 
       // Verify that the markdown content is loaded.
 
@@ -352,13 +352,11 @@ void main() {
       await tester.tap(modelTabFinder);
       await tester.pumpAndSettle();
 
-      // Navigate to the Tree feature.
+      // Navigate to the Neural feature.
 
-      final neuralTabFinder = find.text('Neural');
-      await tester.tap(neuralTabFinder);
+      await navigateToTab(tester, 'Neural', NeuralPanel);
+
       await tester.pumpAndSettle();
-
-      await tester.pump(pause);
 
       // Find and tap the 'Trace' checkbox.
 
