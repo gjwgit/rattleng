@@ -53,12 +53,12 @@ void main() {
 
       await openDemoDataset(tester);
 
+      await tester.pump(hack);
+
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
-
-      await tester.pump(hack);
 
       // Find the right arrow button in the PageIndicator.
 
@@ -190,11 +190,17 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      final secondPageTitleFinder = find.text('Neural Net Model');
-      expect(secondPageTitleFinder, findsOneWidget);
+      // Check if SelectableText contains the expected content.
 
-      // App may raise bugs in loading textPage. Thus, test does not target
-      // at content.
+      final modelDescriptionFinder = find.byWidgetPredicate(
+        (widget) =>
+            widget is SelectableText &&
+            widget.data?.contains('a 16-10-1 network with 197 weights') == true,
+      );
+
+      // Ensure the SelectableText widget with the expected content exists.
+
+      expect(modelDescriptionFinder, findsOneWidget);
 
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
@@ -206,14 +212,17 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
 
-      final thirdPageTitleFinder = find.text('Built using nnet().');
-      expect(thirdPageTitleFinder, findsOneWidget);
+      final optionsDescriptionFinder = find.byWidgetPredicate(
+        (widget) =>
+            widget is SelectableText &&
+            widget.data?.contains(
+                    'options were - skip-layer connections  entropy fitting',) ==
+                true,
+      );
 
-      // App may raise bugs in loading textPage. Thus, test does not target
-      // at content.
-
-      final ruleNumberFinder = find.byType(TextPage);
-      expect(ruleNumberFinder, findsOneWidget);
+      // Ensure the SelectableText widget with the expected content exists.
+      
+      expect(optionsDescriptionFinder, findsOneWidget);
 
       await tester.pump(pause);
 
