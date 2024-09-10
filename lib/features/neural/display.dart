@@ -61,7 +61,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Neural Net Model\n\n'
+          title: '# Neural Net Model - Summary of Parameters\n\n'
               'Built using `nnet()`.\n\n',
           content: '\n$content',
         ),
