@@ -36,7 +36,6 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
-import 'package:rattle/utils/image_exists.dart';
 
 /// The panel displays the instructions or the output.
 
