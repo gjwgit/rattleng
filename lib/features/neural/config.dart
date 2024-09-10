@@ -31,8 +31,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/providers/hidden_neurons.dart';
 import 'package:rattle/providers/max_nwts.dart';
+import 'package:rattle/providers/nnet_hidden_neurons.dart';
 import 'package:rattle/providers/nnet_maxit.dart';
 import 'package:rattle/providers/nnet_skip.dart';
 import 'package:rattle/providers/nnet_trace.dart';
