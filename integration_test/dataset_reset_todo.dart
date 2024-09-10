@@ -38,7 +38,7 @@ import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/navigate_to_tab.dart';
+import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/open_large_dataset.dart';
@@ -60,7 +60,7 @@ void main() {
         ModelTabs,
       );
 
-      await navigateToTab(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree', TreePanel);
 
       await pressButton(tester, 'Build Decision Tree');
 
@@ -112,7 +112,7 @@ void main() {
         ModelTabs,
       );
 
-      await navigateToTab(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree', TreePanel);
       // Find the TabPageSelector and check its page count.
       final tabPageSelectorFinder = find.byType(TabPageSelector);
       expect(tabPageSelectorFinder, findsOneWidget);
@@ -142,7 +142,7 @@ void main() {
       ModelTabs,
     );
 
-    await navigateToTab(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree', TreePanel);
 
     await pressButton(tester, 'Build Decision Tree');
 
@@ -195,7 +195,7 @@ void main() {
       ModelTabs,
     );
 
-    await navigateToTab(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree', TreePanel);
     // Find the TabPageSelector and check its page count.
     final tabPageSelectorFinder = find.byType(TabPageSelector);
     expect(tabPageSelectorFinder, findsOneWidget);
