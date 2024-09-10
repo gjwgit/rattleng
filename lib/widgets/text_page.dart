@@ -50,6 +50,9 @@ class TextPage extends StatelessWidget {
     // Create a ScrollController for horizontal scrolling.
     final ScrollController horizontalScrollController = ScrollController();
 
+    // Modify the content to format each line, capitalize it, and add word wrap.
+    String formattedContent = _formatContent(content);
+
     return Container(
       decoration: sunkenBoxDecoration,
       width: double.infinity,
@@ -73,7 +76,7 @@ class TextPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 controller: horizontalScrollController,
                 child: SelectableText(
-                  content,
+                  formattedContent,
                   style: monoTextStyle,
                   textAlign: TextAlign.left,
                 ),
@@ -94,5 +97,25 @@ class TextPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Utility function to capitalize each line, add line spacing, and indent lines.
+  String _formatContent(String content) {
+    final lines = content.split('\n');
+
+    final formattedLines = lines.asMap().entries.map((entry) {
+      int index = entry.key;
+      String line = entry.value.trim();
+
+      // Capitalize the first letter of each line.
+      if (line.isNotEmpty) {
+        line = '${line[0].toUpperCase()}${line.substring(1)}';
+      }
+
+      return index == 0 ? line : '    $line';
+    }).toList();
+
+    // Join the lines with line breaks
+    return formattedLines.join('\n');
   }
 }
