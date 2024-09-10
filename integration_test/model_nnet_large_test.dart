@@ -1,4 +1,4 @@
-/// Model NNET test with demo dataset.
+/// Model NNET test with large dataset.
 //
 // Time-stamp: <Tuesday 2024-09-03 09:09:14 +1000 Graham Williams>
 //
@@ -40,12 +40,12 @@ import 'package:rattle/widgets/text_page.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/nnet_ignore_variable.dart';
-import 'utils/open_demo_dataset.dart';
+import 'utils/open_large_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('NNET Model Demo Tree:', () {
+  group('NNET Model large Tree:', () {
     testWidgets('default test.', (WidgetTester tester) async {
       app.main();
 
@@ -53,9 +53,9 @@ void main() {
 
       await tester.pump(pause);
 
-      await openDemoDataset(tester);
+      await openLargeDataset(tester);
 
-      await tester.pump(hack);
+      await tester.pump(longHack);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -82,7 +82,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesToIgnore) {
+      for (final variable in largeVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
@@ -166,7 +166,7 @@ void main() {
 
       // Pause for a long time to wait for app gets stable.
 
-      await tester.pump(hack);
+      await tester.pump(longHack);
 
       // Optionally, you can test interactions with the TabPageSelector.
 
@@ -186,7 +186,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 16-10-1 network with 197 weights') == true,
+            widget.data?.contains('a 7-10-1 network with 98 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -242,7 +242,7 @@ void main() {
 
       await tester.pump(pause);
 
-      await openDemoDataset(tester);
+      await openLargeDataset(tester);
 
       await tester.pumpAndSettle();
 
@@ -273,7 +273,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesToIgnore) {
+      for (final variable in largeVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
@@ -343,8 +343,8 @@ void main() {
 
       // Find and tap the 'Trace' checkbox.
 
-      final Finder traceCheckbox = find.byKey(const Key('NNET Trace'));
-      await tester.tap(traceCheckbox);
+      final Finder traceCheckBox = find.byKey(const Key('NNET Trace'));
+      await tester.tap(traceCheckBox);
       await tester.pumpAndSettle(); // Wait for UI to settle.
 
       // Find the text fields by their keys and enter the new values.
@@ -365,7 +365,7 @@ void main() {
       await tester.tap(neuralNetworkButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      await tester.pump(longHack);
 
       // Tap the right arrow to go to the second page.
 
@@ -381,7 +381,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 16-11-1 network with 215 weights') == true,
+            widget.data?.contains('a 7-11-1 network with 107 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.

@@ -47,3 +47,5 @@ const Duration delay = Duration(seconds: 2);
 /// introduce a <hack> delay.
 
 const Duration hack = Duration(seconds: 10);
+
+const Duration longHack = Duration(seconds: 25);
