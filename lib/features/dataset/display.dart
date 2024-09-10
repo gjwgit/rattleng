@@ -312,6 +312,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
       pages.add(
         ListView.builder(
+          key: const Key('roles listView'),
           itemCount: vars.length + 1, // Add 1 for the extra header row
           itemBuilder: (context, index) {
             // both the header row and the regular row shares the same flex index
