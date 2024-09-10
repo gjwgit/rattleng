@@ -61,3 +61,7 @@ const monoSmallTextStyle = TextStyle(
   fontFamily: 'RobotoMono',
   fontSize: 12,
 );
+
+/// Links of R packages for reference.
+
+const nnetModelLink = 'https://cran.r-project.org/web/packages/nnet/index.html';

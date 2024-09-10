@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -62,7 +63,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
       pages.add(
         TextPage(
           title: '# Neural Net Model - Summary of Parameters\n\n'
-              'Built using `nnet()`.\n\n',
+              'Built using [`nnet():nnet()`]($nnetModelLink).\n\n',
           content: '\n$content',
         ),
       );
@@ -74,7 +75,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
       pages.add(
         TextPage(
           title: '# Neural Net Model\n\n'
-              'Built using `nnet()`.\n\n',
+              'Built using [`nnet():nnet()`]($nnetModelLink).\n\n',
           content: '\n$content',
         ),
       );
