@@ -1,6 +1,6 @@
 /// Variables to be set as IGNORE before building NNET model.
 //
-// Time-stamp: <Monday 2024-09-02 07:16:30 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 20:39:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,8 @@
 
 library;
 
-/// List of specific variables that should have their role set to 'Ignore'
-/// in demo dataset.
+/// List of specific variables that should have their role set to 'Ignore' in
+/// demo dataset. These are factors and don;t play well with nnet.
 
 final List<String> demoVariablesToIgnore = [
   'wind_gust_dir',
@@ -35,8 +35,8 @@ final List<String> demoVariablesToIgnore = [
   'rain_today',
 ];
 
-/// List of specific variables that should have their role set to 'Ignore'
-/// in large dataset.
+/// List of specific variables that should have their role set to 'Ignore' in
+/// large dataset. These are factors and don;t play well with nnet.
 
 final List<String> largeVariablesToIgnore = [
   'rec_id',
