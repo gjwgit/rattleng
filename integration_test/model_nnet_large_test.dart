@@ -120,18 +120,16 @@ void main() {
             // Verify that the role is now set to 'Ignore'.
             expect(ignoreChipFinder, findsOneWidget);
           } else {
-            for (int i = 0;
-                i < scrollableFinder.evaluate().length && !foundVariable;
-                i++) {
-              final currentScrollableFinder = scrollableFinder.at(i);
+            final currentScrollableFinder = scrollableFinder.first;
 
-              // If the variable is not found, scroll down.
-              await tester.drag(
-                currentScrollableFinder,
-                const Offset(0, -300),
-              );
-              await tester.pumpAndSettle();
-            }
+            // Fling (or swipe) down by a small amount.
+            await tester.fling(
+              currentScrollableFinder,
+              const Offset(0, -300), // Scroll down
+              1000,
+            );
+            await tester.pumpAndSettle();
+            await tester.pump(delay);
           }
         }
       }
@@ -311,18 +309,16 @@ void main() {
             // Verify that the role is now set to 'Ignore'.
             expect(ignoreChipFinder, findsOneWidget);
           } else {
-            for (int i = 0;
-                i < scrollableFinder.evaluate().length && !foundVariable;
-                i++) {
-              final currentScrollableFinder = scrollableFinder.at(i);
+            final currentScrollableFinder = scrollableFinder.first;
 
-              // If the variable is not found, scroll down.
-              await tester.drag(
-                currentScrollableFinder,
-                const Offset(0, -300),
-              );
-              await tester.pumpAndSettle();
-            }
+            // Fling (or swipe) down by a small amount.
+            await tester.fling(
+              currentScrollableFinder,
+              const Offset(0, -300), // Scroll down
+              1000,
+            );
+            await tester.pumpAndSettle();
+            await tester.pump(delay);
           }
         }
       }
