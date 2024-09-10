@@ -12,12 +12,12 @@ Guide](https://survivor.togaware.com/datascience) provides an
 introduction to data science and a guide to using Rattle. It is freely
 available from [Togaware](https://togaware.com).
 
-Rattle V6 is implemented using [Flutter](https://flutter.dev) for the
-front-end, retaining [R](https://r-project.org) for the back-end while
-updating many of the original Rattle scripts. You are invited to
-report any issues you notice on
-[github](https://github.com/gjwgit/rattleng) where code contributions
-are also most welcome.
+Rattle V6 (RattleNG) is implemented using
+[Flutter](https://flutter.dev) for the front-end, retaining
+[R](https://r-project.org) for the back-end while updating many of the
+original Rattle scripts. You are invited to report any issues you
+notice on [github](https://github.com/gjwgit/rattleng) where code
+contributions are also most welcome.
 
 > 
 
