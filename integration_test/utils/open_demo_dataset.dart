@@ -1,6 +1,6 @@
 /// Tester support function to open the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 18:53:31 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 15:59:58 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'delays.dart';
 Future<void> openDemoDataset(WidgetTester tester) async {
   final datasetButtonFinder = find.byType(DatasetButton);
   expect(datasetButtonFinder, findsOneWidget);
+
   await tester.pump(pause);
 
   await tester.tap(datasetButtonFinder);
@@ -43,6 +44,8 @@ Future<void> openDemoDataset(WidgetTester tester) async {
 
   final datasetPopup = find.byType(DatasetPopup);
   expect(datasetPopup, findsOneWidget);
+
+  await tester.pump(pause);
 
   // TODO 20240902 kev DETECT POPUP WARNING AND TAP YES
   //
