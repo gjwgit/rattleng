@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:14 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 20:39:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -48,12 +48,12 @@ void main() {
   group('NNET Model Demo Tree:', () {
     testWidgets('default test.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
       await openDemoDataset(tester);
+
+      // TODO 20240910 gjw CONSIDER REMOVING THIS HACK
 
       await tester.pump(hack);
 
