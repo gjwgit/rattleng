@@ -104,11 +104,6 @@ void main() {
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
-      //TODO kevin 2024-09-10 16:00:00 +1000 to find out why IZR_sunshine is not in the list of variables
-      // rSource(context, ref, 'dataset_template');
-
-      // rSource(context, ref, 'dataset_template');
-
       await tester.pump(hack);
 
       // Verify the content of the page.
@@ -131,6 +126,12 @@ void main() {
         ],
       );
 
+      // Step 2.5 Tips and Tricks:  Navigate to the Dataset page to fix the update bug.
+
+      await navigateToTab(tester, 'Dataset');
+
+      await tester.pump(pause);
+
       // Step 3: Run get_vars to check if IZR_sunshine is  there.
 
       // Use the container to read the provider value.
@@ -148,10 +149,8 @@ void main() {
 
       // Check if the variable sunshine is not in the list of missing variables.
 
-      //TODO go to Dataset tab and come back
-
-      //TODO kevin 2024-09-10 16:00:00 +1000 to find out why IZR_sunshine is not in the list of variables
-      expect(vars.contains('IZR_sunshine'), true); //failing for now
+      //TODO kevin 2024-09-10 16:00:00 +1000 to fix this later
+      expect(vars.contains('IZR_sunshine'), true);
 
       //Step 4: check if IZR_sunshine is  not there.
 
