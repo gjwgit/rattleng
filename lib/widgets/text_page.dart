@@ -38,9 +38,11 @@ import 'package:rattle/utils/word_wrap.dart';
 class TextPage extends StatelessWidget {
   final String title;
   final String content;
+  final bool formattedContent;
 
   const TextPage({
     super.key,
+    this.formattedContent = false,
     required this.title,
     required this.content,
   });
@@ -78,7 +80,7 @@ class TextPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 controller: horizontalScrollController,
                 child: SelectableText(
-                  title.contains(parameterSummary) ? formattedContent : content,
+                  this.formattedContent ? formattedContent : content,
                   style: monoTextStyle,
                   textAlign: TextAlign.left,
                 ),

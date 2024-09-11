@@ -65,6 +65,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
           title: '# Neural Net Model - Summary of Parameters\n\n'
               'Built using [`nnet():nnet()`]($nnetModelLink).\n\n',
           content: '\n$content',
+          formattedContent: true,
         ),
       );
     }

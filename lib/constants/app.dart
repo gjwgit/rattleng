@@ -32,10 +32,6 @@ import 'package:flutter/material.dart';
 
 const String appTitle = 'Rattle Next Generation Data Science';
 
-/// The Rattle parameter summary page title.
-
-const String parameterSummary = '# Neural Net Model - Summary of Parameters';
-
 /// Project assets folder path used in the APP.
 
 const String assetsPath = 'assets';
