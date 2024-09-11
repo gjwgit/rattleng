@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Monday 2024-08-12 08:11:10 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 05:35:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -100,6 +100,7 @@ class TextPage extends StatelessWidget {
   }
 
   // Utility function to capitalize each line, add line spacing, and indent lines.
+
   String _formatContent(String content) {
     final lines = content.split('\n');
 
@@ -108,6 +109,7 @@ class TextPage extends StatelessWidget {
       String line = entry.value.trim();
 
       // Capitalize the first letter of each line.
+
       if (line.isNotEmpty) {
         line = '${line[0].toUpperCase()}${line.substring(1)}';
       }
