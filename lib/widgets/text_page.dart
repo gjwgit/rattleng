@@ -105,8 +105,7 @@ class TextPage extends StatelessWidget {
     );
   }
 
-  // Utility function to capitalize each line, add line spacing, and indent
-  // lines.
+  // Utility function to capitalize each line, add line spacing, and indent lines.
 
   String _formatContent(String content) {
     final lines = content.split('\n');
