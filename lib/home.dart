@@ -36,8 +36,6 @@ import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/utils/get_missing.dart';
-import 'package:rattle/utils/get_vars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
