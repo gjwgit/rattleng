@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Wednesday 2024-09-11 15:54:44 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 16:15:14 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -215,15 +215,24 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       Widget dataline(columnName, dataType, content) {
         // Generate the row for a data line.
 
-        // Truncate the content to fite the Role boses on one line.
+        // Truncate the content to fit one line. The text could wrap over two
+        // lines and so show more of the data, but our point here is more to
+        // have a reminder of the data to assist in deciding on the ROLE of each
+        // variable, not any real insight into the data which we leave to the
+        // SUMMARY feature.
 
-        int maxLength = 100;
+        int maxLength = 40;
+
         // Extract substring of the first maxLength characters
+
         String subStr = content.length > maxLength
             ? content.substring(0, maxLength)
             : content;
+
         // Find the last comma in the substring
+
         int lastCommaIndex = subStr.lastIndexOf(',') + 1;
+
         content =
             lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr;
         content += ' ...';
