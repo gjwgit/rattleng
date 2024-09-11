@@ -28,13 +28,7 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:rattle/features/impute/panel.dart';
-import 'package:rattle/app.dart';
-import 'package:rattle/providers/vars/roles.dart';
-import 'package:rattle/r/extract.dart';
-import 'package:rattle/providers/stdout.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
@@ -43,76 +37,34 @@ import 'utils/open_large_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_multiple_text.dart';
 import 'utils/verify_page_content.dart';
+import 'utils/check_missing_variable.dart';
+import 'utils/check_variable_not_missing.dart';
+import 'utils/init_app.dart';
+import 'utils/verify_imputed_variable.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Transform LARGE:', () {
     testWidgets('build, page.', (WidgetTester tester) async {
-      // Create a ProviderContainer to access the ref.
-      final container = ProviderContainer();
+      final container = await initApp(tester);
 
-      // Initialize the app.
-      await tester.pumpWidget(
-        UncontrolledProviderScope(
-          container: container,
-          child: RattleApp(),
-        ),
-      );
-
-      await tester.pumpAndSettle();
       await tester.pump(pause);
-
-      // Open the demo dataset and navigate to the Transform tab.
       await openLargeDataset(tester);
       await navigateToTab(tester, 'Transform');
-
-      // Navigate to the Impute page.
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      // Step 1: Run get_missing to check middle_name is there.
-
-      // Use the container to read the provider value.
-
-      final stdout = container.read(stdoutProvider);
-
-      String missing = rExtract(stdout, '> missing');
-
-      // Regular expression to match strings between quotes
-
-      RegExp regExp = RegExp(r'"(.*?)"');
-
-      // Find all matches
-
-      Iterable<RegExpMatch> matches = regExp.allMatches(missing);
-
-      // Extract the matched strings
-
-      List<String> variables = matches.map((match) => match.group(1)!).toList();
-
-      // Check if the variable sunshine is in the list of missing variables.
-
-      // Convert all elements in variables to lowercase and check if any match 'middle_name'.
-
-      expect(
-        variables.any((element) => element.toLowerCase() == 'middle_name'),
-        true,
-      );
-
-      // Step 2:  Simulate pressing the first button to impute missing values.
+      await checkMissingVariable(container, 'middle_name');
 
       await pressFirstButton(tester, 'Impute Missing Values');
-
       await tester.pump(hack);
 
-      // Verify the content of the page.
       await verifyPageContent(
         tester,
         'Dataset Summary',
         'IZR_middle_name',
       );
 
-      // Verify the IZR_middle_name parameter values.
       await verifyMultipleTextContent(
         tester,
         [
@@ -125,54 +77,11 @@ void main() {
         ],
       );
 
-      // Step 2.5 Tips and Tricks:  Navigate to the Dataset page to fix the update bug.
-
       await navigateToTab(tester, 'Dataset');
-
       await tester.pump(pause);
 
-      // Step 3: Run get_vars to check if IZR_middle_name is  there.
-
-      // Use the container to read the provider value.
-
-      Map<String, Role> roles = container.read(rolesProvider);
-
-      // Extract the input variable from the rolesProvider.
-
-      List<String> vars = [];
-      roles.forEach((key, value) {
-        if (value == Role.input || value == Role.risk || value == Role.target) {
-          vars.add(key);
-        }
-      });
-
-      // Check if the variable sunshine is not in the list of missing variables.
-
-      //TODO kevin 2024-09-10 16:00:00 +1000 to fix this later
-      expect(vars.contains('IZR_middle_name'), true);
-
-      //Step 4: check if IZR_middle_name is  not there.
-
-      // Use the container to read the provider value.
-
-      final stdout2 = container.read(stdoutProvider);
-
-      String missing2 = rExtract(stdout2, '> missing');
-
-      // Find all matches
-
-      Iterable<RegExpMatch> matches2 = regExp.allMatches(missing2);
-
-      // Extract the matched strings
-
-      List<String> variables2 =
-          matches2.map((match) => match.group(1)!).toList();
-
-      // Check if the variable IZR_sunshine is not in the list of missing variables.
-
-      expect(variables2.contains('IZR_middle_name'), false);
-
-      // Dispose of the ProviderContainer when done to prevent memory leaks.
+      await verifyImputedVariable(container, 'IZR_middle_name');
+      await checkVariableNotMissing(container, 'IZR_middle_name');
 
       container.dispose();
     });
