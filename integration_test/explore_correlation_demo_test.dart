@@ -1,6 +1,6 @@
-/// Test the EXPLORE tab CORRELATION feature on the DEMO dataset.
+/// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:07:59 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 17:00:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang
+/// Authors:  Kevin Wang, Graham Williams
 
 library;
 
@@ -52,6 +52,8 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
+
+      await tester.pump(pause);
 
       // Verify the content of the page 1.
 

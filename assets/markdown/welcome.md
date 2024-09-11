@@ -12,14 +12,12 @@ Guide](https://survivor.togaware.com/datascience) provides an
 introduction to data science and a guide to using Rattle. It is freely
 available from [Togaware](https://togaware.com).
 
-Rattle V6 is implemented using [Flutter](https://flutter.dev) for the
-front-end, retaining [R](https://r-project.org) for the back-end while
-updating many of the original Rattle scripts. You are invited to
-report any issues you notice on
-[github](https://github.com/gjwgit/rattleng) where code contributions
-are also most welcome.
-
-> 
+Rattle V6 (RattleNG) is implemented using
+[Flutter](https://flutter.dev) for the front-end, retaining
+[R](https://r-project.org) for the back-end while updating many of the
+original Rattle scripts. You are invited to report any issues you
+notice on [github](https://github.com/gjwgit/rattleng) where code
+contributions are also most welcome.
 
 ## Getting Started
 
@@ -28,34 +26,35 @@ dataset consists of one year of observations from a weather station in
 Canberra.
 
 Alternatively, load your own data, including **csv** (comma separated
-value) and **txt** (plain text) files.
+value) and **txt** (plain text) files. Support for **xlsx**, **arff**,
+**rData**, **odbc**, **corpus**, and R package datasets is planned.
 
-Rattle's functionality is implemented through **R template scripts**
-which get run after you configure a feature and tap the build
-button. Scripts are completed and sent to **R** for execution with
-results presented in the display pages. At any time be sure to visit
-the **Script** tab to see the **R** code that is automatically
-generated for you from all of your activity. You can export the script
-as a standalone R program.
+After loading a dataset you can navigate to the **Roles**
+feature. Each variable has a role, with most as **Input** (or
+independent) variables by default. These are commonly used to predict
+a **Target** (dependent) variable. A variable with a unique value for
+each observation is automatically identified as **Ident**
+(identifier). Idents are ignored when modelling as are those with the
+role **Ignore**.
 
-In Rattle you will navigate through pages within each display using
-the arrows separated by dots. The dots represent available
-pages. After loading a dataset there will be three navigation dots to
-review your data and set variable roles.
+## Work Flow
 
-Each variable in a dataset has a **Role**. Most will be **Input** (or
-independent) variables used to predict a **Target** (dependent)
-variable. A single valued variable is automatically identified as an
-**Ident** (identifier). Idents are ignored when modelling as are those
-with the role **Ignore**.
+Rattle encourages a typical data scientist work flow through the left
+hand *tabs*. On choosing tab a collection of *features* will be
+available through the horizontal tabs. After you *configure* a feature
+the *build* button will configure and run an **R template
+script**. The results are *display*ed as pages that you can navigate.
 
-> 
+At any time visit the **Script** tab to see the **R** code that is
+automatically generated. You can export the script as a standalone R
+program.
 
 ## Resources
 
-Traditional Rattle is well covered in **Data Mining with Rattle and
-R** (https://bit.ly/rattle_data_mining). Rattle utilises R templates
-as introduced in **The Essentials of Data Science**
+Rattle V5 is well covered in **Data Mining with Rattle and R**
+(https://bit.ly/rattle_data_mining), as well as other online resources
+available through https://rattle.togaware.com. Rattle utilises R
+templates as introduced in **The Essentials of Data Science**
 (https://bit.ly/essentials_data_science).
 
 Rattle is licensed under the [GNU General Public License, Version
