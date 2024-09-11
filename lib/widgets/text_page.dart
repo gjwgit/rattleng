@@ -78,7 +78,7 @@ class TextPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 controller: horizontalScrollController,
                 child: SelectableText(
-                  formattedContent,
+                  title.contains(parameterSummary) ? formattedContent : content,
                   style: monoTextStyle,
                   textAlign: TextAlign.left,
                 ),
@@ -119,9 +119,7 @@ class TextPage extends StatelessWidget {
       // Net Model.
 
       if (line.isNotEmpty) {
-        if (title.contains('# Neural Net Model - Summary of Parameters')) {
-          line = '${line[0].toUpperCase()}${line.substring(1)}';
-        }
+        line = '${line[0].toUpperCase()}${line.substring(1)}';
       }
 
       return index == 0 ? line : '    $line';
