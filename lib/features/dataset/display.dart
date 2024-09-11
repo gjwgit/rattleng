@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Friday 2024-09-06 11:42:30 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 15:54:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -80,17 +80,23 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String content = '';
     String title = '';
 
-    if (path == weatherDemoFile || path.endsWith('.csv')) {
-      content = rExtractGlimpse(stdout);
-      title = '''
+    // 20240911 gjw Move the glimpse page to the SUMMARY feature.
 
-      # Dataset Glimpse
+    // if (path == weatherDemoFile || path.endsWith('.csv')) {
+    //   content = rExtractGlimpse(stdout);
+    //   title = '''
 
-      Generated using
-      [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
+    //   # Dataset Glimpse
 
-      ''';
-    } else {
+    //   Generated using
+    //   [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
+
+    //   ''';
+    // } else {
+
+    // Keep the TEXT page here for now.
+
+    if (path.endsWith('.txt')) {
       content = rExtract(stdout, '> cat(ds,');
       title = '''
 
@@ -100,16 +106,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
 
       ''';
+
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: title,
+            content: '\n$content',
+          ),
+        );
+      }
     }
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: title,
-          content: '\n$content',
-        ),
-      );
-    }
+    ////////////////////////////////////////////////////////////////////////
 
     if (path == weatherDemoFile || path.endsWith('.csv')) {
       Map<String, Role> currentRoles = ref.read(rolesProvider);
@@ -259,6 +267,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                           disabledColor: Colors.grey,
                           selectedColor: Colors.lightBlue[200],
                           backgroundColor: Colors.lightBlue[50],
+                          showCheckmark: false,
                           shadowColor: Colors.grey,
                           pressElevation: 8.0,
                           elevation: 2.0,
