@@ -1,6 +1,6 @@
-/// Basice DATASET test: LARGE.
+/// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Thursday 2024-08-22 11:16:05 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 16:21:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -50,86 +50,77 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Large Dataset, GLIMPSE and ROLES pages',
-      (WidgetTester tester) async {
-    app.main();
+  group('Dataset large:', () {
+    testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
 
-    // Trigger a frame. Finish animation and scheduled microtasks.
+      // Locate the TextField where the file path is input.
 
-    await tester.pumpAndSettle();
+      final filePathField = find.byType(TextField);
+      expect(filePathField, findsOneWidget);
 
-    // Leave time to see the first page.
+      // Enter the file path programmatically.
 
-    await tester.pump(pause);
+      await tester.enterText(
+        filePathField,
+        'integration_test/rattle_test_large.csv',
+      );
 
-    // Locate the TextField where the file path is input.
+      // Simulate pressing the Enter key.
 
-    final filePathField = find.byType(TextField);
-    expect(filePathField, findsOneWidget);
+      await tester.testTextInput.receiveAction(TextInputAction.done);
 
-    // Enter the file path programmatically.
+      // Optionally pump the widget tree to reflect the changes.
+      await tester.pumpAndSettle();
 
-    await tester.enterText(
-      filePathField,
-      'integration_test/rattle_test_large.csv',
-    );
+      await tester.pump(pause);
 
-    // Simulate pressing the Enter key.
+      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
+      //
+      // How do we ensure the R Code is executed before proceeding in Rattle
+      // itself - we need to deal with the async issue in Rattle.
 
-    await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pump(hack);
 
-    // Optionally pump the widget tree to reflect the changes.
-    await tester.pumpAndSettle();
+      // Find the right arrow button in the PageIndicator.
 
-    await tester.pump(pause);
+      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+      expect(rightArrowFinder, findsOneWidget);
 
-    // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-    //
-    // How do we ensure the R Code is executed before proceeding in Rattle
-    // itself - we need to deal with the async issue in Rattle.
+      // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
-    await tester.pump(hack);
+      // await tester.tap(rightArrowFinder);
+      // await tester.pumpAndSettle();
 
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET tab large dataset (GLIMPSE page)
-    ////////////////////////////////////////////////////////////////////////
+      // await tester.pump(pause);
 
-    // Find the right arrow button in the PageIndicator.
+      // // Find the text containing the number of rows and columns.
 
-    final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-    expect(rightArrowFinder, findsOneWidget);
+      // final glimpseRowFinder = find.textContaining('Rows: 20,000');
+      // expect(glimpseRowFinder, findsOneWidget);
+      // final glimpseColumnFinder = find.textContaining('Columns: 24');
+      // expect(glimpseColumnFinder, findsOneWidget);
 
-    // Tap the right arrow button to go to "Dataset Glimpse" page.
+      // Tap the right arrow button to go to "ROLES" page.
 
-    await tester.tap(rightArrowFinder);
-    await tester.pumpAndSettle();
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
 
-    await tester.pump(pause);
+      // Find the text containing "rec-57600".
 
-    // Find the text containing "24" - the number of columns.
+      final rolesRecIDFinder = find.textContaining('rec-57600, rec-73378,');
+      expect(rolesRecIDFinder, findsOneWidget);
 
-    final glimpseColumnFinder = find.textContaining('Columns: 24');
-    expect(glimpseColumnFinder, findsOneWidget);
+      await tester.pump(pause);
 
-    ////////////////////////////////////////////////////////////////////////
-    // DATASET tab large dataset (ROLES page)
-    ////////////////////////////////////////////////////////////////////////
-
-    // Tap the right arrow button to go to "ROLES" page.
-
-    await tester.tap(rightArrowFinder);
-    await tester.pumpAndSettle();
-
-    // Find the text containing "rec-57600".
-
-    final rolesRecIDFinder = find.textContaining('rec-57600, rec-73378,');
-    expect(rolesRecIDFinder, findsOneWidget);
-
-    // TODO 20240822 gjw EXTRA DATASET LARGE TESTS
-    //
-    // Check which variables are INPUT, IGNORE, TARGET
-    //
-    // Maybe load the provider to make sure the variables are assigned to
-    // the expected ROLES.
+      // TODO 20240822 gjw FOR kevin EXTRA DATASET LARGE TESTS
+      //
+      // Check which variables are INPUT, IGNORE, TARGET
+      //
+      // Maybe load the provider to make sure the variables are assigned to
+      // the expected ROLES.
+    });
   });
 }

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-15 20:31:21 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 16:43:07 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -53,6 +54,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     List<Widget> pages = [showMarkdownFile(correlationIntroFile, context)];
 
     String content = '';
+    String image = '';
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
@@ -91,9 +93,12 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    pages.add(
-      ImagePage(
-        title: '''
+    image = '$tempDir/explore_correlation.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
 
         # Variable Correlation Plot
         
@@ -103,9 +108,10 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
           [corrplot::corrplot(ds)](https://www.rdocumentation.org/packages/corrplot/topics/corrplot)
 
         ''',
-        path: '$tempDir/explore_correlation.svg',
-      ),
-    );
+          path: image,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
     // GGCORRPLOT

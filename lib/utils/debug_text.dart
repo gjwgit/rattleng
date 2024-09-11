@@ -1,6 +1,6 @@
 /// Support utility for printing debug messages.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:40:48 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 08:31:14 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,7 +29,15 @@ library;
 
 import 'package:flutter/material.dart';
 
-void debugText(String label, String detail, [int skip = 25]) {
+void debugText(String label, [String detail = '', int skip = 25]) {
+  // 20240823 gjw Preprocess the label for special circumstances.
+
+  label = label.replaceAll('Role.', '');
+
+  // 20240823 gjw Always upercase the label.
+
+  label = label.toUpperCase();
+
   // Calculate the number of spaces needed.
 
   int spacesCount = skip - label.length;

@@ -244,6 +244,11 @@ test:
 	@echo "Unit TEST:"
 	-flutter test test
 	@echo $(SEPARATOR)
+
+# For a specific interactive test we think of it as providing a
+# demonstration of the app functionality that we may actually use to
+# create a narrated video. A PAUSE of 5 or more is then useful.
+
 %.itest:
 	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
 	if [ -z "$$device_id" ]; then \
@@ -252,6 +257,9 @@ test:
 	fi; \
 	flutter test --dart-define=PAUSE=5 --device-id $$device_id integration_test/$*_test.dart
 
+# For a run over all tests interactively we PAUSE a little but not as
+# much as when running the individual tests.
+
 .PHONY: itest
 itest:
 	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
@@ -259,8 +267,11 @@ itest:
 		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
 		exit 1; \
 	fi; \
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=5 --device-id $$device_id $$t; done
+	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=2 --device-id $$device_id $$t; done
 	@echo $(SEPARATOR)
+
+# For the quick tests we do not PAUSE at all. The aim is to quickly
+# test all functionality.
 
 .PHONY: qtest
 qtest:
@@ -269,7 +280,12 @@ qtest:
 		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
 		exit 1; \
 	fi; \
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t; done
+	for t in integration_test/*_test.dart; do \
+		echo "========================================"; \
+		echo $$t; \
+		echo "========================================"; \
+		flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t || exit 1; \
+	done
 	@echo $(SEPARATOR)
 
 %.qtest:
@@ -279,6 +295,10 @@ qtest:
 		exit 1; \
 	fi; \
 	flutter test --dart-define=PAUSE=0 --device-id $$device_id integration_test/$*_test.dart
+
+.PHONY: qtest.tmp
+qtest.tmp:
+	make qtest > qtest.tmp
 
 .PHONY: atest
 atest:

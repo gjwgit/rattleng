@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2024-08-09 20:31:45 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-06 19:23:54 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -104,7 +104,7 @@ class DatasetPopup extends ConsumerWidget {
                   String path = await datasetSelectFile();
                   if (path.isNotEmpty) {
                     ref.read(pathProvider.notifier).state = path;
-                    if (context.mounted) rLoadDataset(context, ref);
+                    if (context.mounted) await rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
                     datasetLoadedUpdate(ref);
                   }
@@ -141,7 +141,7 @@ class DatasetPopup extends ConsumerWidget {
               // DEMO
 
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // TODO 20231101 gjw DEFINE setPath()
 
                   ref.read(pathProvider.notifier).state = weatherDemoFile;
@@ -149,9 +149,10 @@ class DatasetPopup extends ConsumerWidget {
                   // TODO 20240714 gjw HOW TO GET THE weather.csv FROM ASSETS
                   // ref.read(pathProvider.notifier).state =
                   //     'assets/data/weather.csv';
-                  rLoadDataset(context, ref);
+                  await rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
-                  Navigator.pop(context, 'Demo');
+
+                  if (context.mounted) Navigator.pop(context, 'Demo');
 
                   datasetLoadedUpdate(ref);
                 },

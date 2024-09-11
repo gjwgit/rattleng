@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-08-10 06:08:53 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-25 07:10:02 +0800 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,6 +30,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/home.dart';
@@ -72,7 +73,10 @@ class RattleApp extends ConsumerWidget {
     //   seedColor: Colors.indigo,
     // );
 
+    Flavor flavor = catppuccin.latte;
+
     return MaterialApp(
+      //      theme: catppuccinTheme(catppuccin.latte),
       theme: ThemeData(
         // Material 3 is the current (2024) flutter default theme for colours
         // and Google fonts. We can stay with this as the default for now
@@ -84,15 +88,18 @@ class RattleApp extends ConsumerWidget {
         //
         // EXPERIMENTATION
         //
-        // colorScheme: colorScheme,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: flavor.mantle,
+          // seedColor: flavor.text,
+        ),
         // primarySwatch: createMaterialColor(Colors.black),
 
         // The default font size seems rather small. So increase it here.
 
-        textTheme: Theme.of(context).textTheme.apply(
-              fontSizeFactor: 1.1,
-              fontSizeDelta: 2.0,
-            ),
+        // textTheme: Theme.of(context).textTheme.apply(
+        //       fontSizeFactor: 1.1,
+        //       fontSizeDelta: 2.0,
+        //     ),
       ),
       home: RattleHome(key: rattleHomeKey),
     );

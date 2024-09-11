@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Monday 2024-08-19 19:31:16 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-08 13:47:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Yixiang Yin
 library;
 
 import 'dart:io' show File;
@@ -51,7 +51,7 @@ class ScriptSaveButton extends ConsumerWidget {
   // Function to display a dialog for the user to enter the file name.
   Future<void> _showFileNameDialog(BuildContext context, WidgetRef ref) async {
     String? outputPath = await FilePicker.platform.saveFile(
-      dialogTitle: 'Choose a file to save',
+      dialogTitle: 'Provide a .R filename to save the R script to',
       fileName: 'script.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
@@ -68,6 +68,7 @@ class ScriptSaveButton extends ConsumerWidget {
       // The context is no longer mounted.
       debugPrint('ERROR: Context is no longer mounted');
     }
+
     return;
   }
 

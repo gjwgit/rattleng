@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-08-16 11:10:58 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 16:43:42 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -54,13 +55,14 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     List<Widget> pages = [showMarkdownFile(missingIntroFile, context)];
 
     String content = '';
+    String image = '';
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
-    // TEXT PATTERN OF MISSING VALUES
-    ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'md.pattern(ds');
+    // Text pattern of missing values.
+
+    content = rExtract(stdout, 'md.pattern(');
 
     // Add a blank line between each sub-table.
 
@@ -92,9 +94,14 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
       );
     }
 
-    pages.add(
-      ImagePage(
-        title: '''
+    ////////////////////////////////////////////////////////////////////////
+
+    image = '$tempDir/explore_missing_mice.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
 
         # Patterns of Missing Values - Visual
 
@@ -102,13 +109,14 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
         [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
         ''',
-        path: '$tempDir/explore_missing_mice.svg',
-      ),
-    );
+          path: image,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'aggr(ds');
+    content = rExtract(stdout, 'aggr(');
 
     // Remove the line beginning with + (a continuation)
 
@@ -142,25 +150,32 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    pages.add(
-      ImagePage(
-        title: '''
+    image = '$tempDir/explore_missing_vim.svg';
 
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+          
         # Aggregation of Missing Values - Visual
-
+          
         Generated using
         [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
-
+        
         ''',
-        path: '$tempDir/explore_missing_vim.svg',
-      ),
-    );
+          path: image,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
 
-    pages.add(
-      ImagePage(
-        title: '''
+    image = '$tempDir/explore_missing_naniar_vismiss.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
 
         # Visualisation of Observations with Missing Values
 
@@ -168,17 +183,21 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
         [naniar::vis_miss(ds)](https://www.rdocumentation.org/packages/naniar).
 
         ''',
-        path: '$tempDir/explore_missing_naniar_vismiss.svg',
-      ),
-    );
+          path: image,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
-    // NANIAR GG MISS VAR
-    ////////////////////////////////////////////////////////////////////////
 
-    pages.add(
-      ImagePage(
-        title: '''
+    // Naniar gg miss var
+
+    image = '$tempDir/explore_missing_naniar_ggmissvar.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
 
         # Comparison of Counts of Missing Values
 
@@ -186,17 +205,21 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
         [naniar::gg_miss_var(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_var).
 
         ''',
-        path: '$tempDir/explore_missing_naniar_ggmissvar.svg',
-      ),
-    );
+          path: image,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
-    // NANIAR GG MISS VAR
-    ////////////////////////////////////////////////////////////////////////
 
-    pages.add(
-      ImagePage(
-        title: '''
+    // Naniar gg miss var
+
+    image = '$tempDir/explore_missing_naniar_ggmissupset.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
 
         # Patterns of Missingness
 
@@ -204,9 +227,10 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
         [naniar::gg_miss_upset(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_upset).
 
         ''',
-        path: '$tempDir/explore_missing_naniar_ggmissupset.svg',
-      ),
-    );
+          path: image,
+        ),
+      );
+    }
 
     return Pages(
       children: pages,

@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Sunday 2024-08-18 09:00:48 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-07 16:02:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,9 +40,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -54,12 +56,19 @@ class ImagePage extends StatelessWidget {
     required this.path,
   });
 
-  Future<Uint8List> _loadImageBytes() async {
+  Future<Uint8List?> _loadImageBytes() async {
     var imageFile = File(path);
 
-    // Wait until the file exists
-    while (!await imageFile.exists()) {
+    // Wait until the file exists, but limit the waiting period to avoid an infinite loop.
+    int retries = 5;
+    while (!await imageFile.exists() && retries > 0) {
       await Future.delayed(const Duration(seconds: 1));
+      retries--;
+    }
+
+    // If the file doesn't exist, return null.
+    if (!await imageFile.exists()) {
+      return null;
     }
 
     // Read file as bytes
@@ -68,19 +77,32 @@ class ImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Image Path is $path');
+    debugText('  IMAGE', path);
 
     // Clear the image cache
     imageCache.clear();
     imageCache.clearLiveImages();
 
-    return FutureBuilder<Uint8List>(
+    return FutureBuilder<Uint8List?>(
       future: _loadImageBytes(),
-      builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
         var bytes = snapshot.data;
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.hasData && bytes != null && bytes.isNotEmpty) {
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (bytes == null || bytes.isEmpty) {
+          return const Center(
+            child: Text(
+              'Image not available',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.redAccent,
+              ),
+            ),
+          );
+        } else {
           return Container(
             decoration: sunkenBoxDecoration,
             width: double.infinity,
@@ -90,8 +112,7 @@ class ImagePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    // 20240726 gjw Ensure the Save button is aligned at the
-                    // top.
+                    // 20240726 gjw Ensure the Save button is aligned at the top.
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // 20240726 gjw Remove the Flexible for now. Perhaps avoid
@@ -102,9 +123,6 @@ class ImagePage extends StatelessWidget {
                       // 20240725 gjw Introduce the Flexible wrapper to avoid the markdow
                       // text overflowing to the elevarted Export
                       // button.
-
-//                      Flexible(
-//                        child:
                       MarkdownBody(
                         data: wordWrap(title),
                         selectable: true,
@@ -113,86 +131,130 @@ class ImagePage extends StatelessWidget {
                           launchUrl(url);
                         },
                       ),
-                      //                      ),
                       const Spacer(),
-                      //                      ElevatedButton(
-                      IconButton(
-                        icon: const Icon(
-                          Icons.zoom_out_map,
-                          color: Colors.blue,
+                      DelayedTooltip(
+                        message: '''
+
+                        Enlarge: Tap here to view the plot enlarged to the
+                        maximimum size within the app.
+
+                        ''',
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.zoom_out_map,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            showImageDialog(context, bytes);
+                          },
                         ),
-                        onPressed: () {
-                          showImageDialog(context, bytes);
-                        },
-                        tooltip: 'Tap here to view the plot\n'
-                            'enlarged.',
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.open_in_new,
-                          color: Colors.blue,
+                      DelayedTooltip(
+                        message: '''
+
+                        Open: Tap here to open the plot in a separate window to
+                        the Rattle app itself. This allows you to retain a view
+                        of the plot while you navigate through other plots and
+                        analyses.
+
+                        ''',
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.open_in_new,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            // Generate a unique file name for the new file in the
+                            // temporary directory.
+
+                            String fileName =
+                                'plot_${Random().nextInt(10000)}.svg';
+                            File tempFile = File('$tempDir/$fileName');
+
+                            // Copy the original file to the temporary file.
+                            File(path).copy(tempFile.path);
+
+                            // Pop out a window to display the plot separate
+                            // to the Rattle app.
+
+                            Platform.isWindows
+                                ? Process.run(
+                                    'start',
+                                    [tempFile.path],
+                                    runInShell: true,
+                                  )
+                                : Process.run('open', [tempFile.path]);
+                          },
                         ),
-                        tooltip: 'Tap here to view the plot\n'
-                            'in a separate window.',
-                        onPressed: () {
-                          // Generate a unique file name for the new file in the
-                          // temporary directory.
-
-                          String fileName =
-                              'plot_${Random().nextInt(10000)}.svg';
-                          File tempFile = File('$tempDir/$fileName');
-
-                          // Copy the original file to the temporary file.
-
-                          File originalFile = File(path);
-                          tempFile
-                              .writeAsBytesSync(originalFile.readAsBytesSync());
-
-                          // Pop out a window to display the plot separate
-                          // to the Rattle app.
-
-                          Platform.isWindows
-                              ? Process.run('start', [tempFile.path])
-                              : Process.run('open', [tempFile.path]);
-                        },
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.save,
-                          color: Colors.blue,
+                      DelayedTooltip(
+                        message: '''
+
+                        Save: Tap here to save the plot into an SVG file on your
+                        local storage. This will allow you to review the plot
+                        later, after you have finished with the app. You can
+                        convert the SVG to other formats like PDF or PNG with
+                        your operating system commands (e.g., the `convert`
+                        command from ImageMagick). You can also include the
+                        plots in your reports or keep them around for later
+                        reference.
+
+                        ''',
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.save,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () async {
+                            String fileName = path.split('/').last;
+                            String? pathToSave = await selectFile(
+                              defaultFileName: fileName,
+                            );
+                            if (pathToSave != null) {
+                              // Copy generated image from /tmp to user's location.
+                              await File(path).copy(pathToSave);
+                            }
+                          },
                         ),
-                        onPressed: () async {
-                          String? pathToSave = await selectFile();
-                          if (pathToSave != null) {
-                            // Copy generated image from /tmp to user's location.
-                            await File(path).copy(pathToSave);
-                          }
-                        },
-                        tooltip: 'Tap here to save the plot\n'
-                            'into an SVG file on local storage.',
                       ),
                       const SizedBox(width: 5),
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: InteractiveViewer(
-                          maxScale: 5,
-                          child: SvgPicture.memory(bytes),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      // The max available width from LayoutBuilder.
+                      final maxWidth = constraints.maxWidth;
+
+                      // Apply a bounded height to avoid infinite height error.
+                      final double maxHeight =
+                          MediaQuery.of(context).size.height * 0.8;
+
+                      return SizedBox(
+                        height: maxHeight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: InteractiveViewer(
+                                maxScale: 5,
+                                child: SvgPicture.memory(
+                                  bytes,
+                                  width: maxWidth,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ],
               ),
             ),
           );
-        } else {
-          return const Center(child: CircularProgressIndicator());
         }
       },
     );

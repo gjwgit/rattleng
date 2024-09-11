@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Thursday 2024-08-22 14:34:16 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-01 08:26:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -52,9 +52,8 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Summary.',
-        (WidgetTester tester) async {
+  group('Explore large:', () {
+    testWidgets('Summary.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.
