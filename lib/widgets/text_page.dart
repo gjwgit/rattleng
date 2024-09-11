@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Thursday 2024-09-12 05:56:21 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 08:35:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -116,17 +116,12 @@ class TextPage extends StatelessWidget {
       int index = entry.key;
       String line = entry.value.trim();
 
-      // Capitalize the first letter of each line only in Summary page of Neural
-      // Net Model.
-
       if (line.isNotEmpty) {
         line = '${line[0].toUpperCase()}${line.substring(1)}';
       }
 
       return index == 0 ? line : '    $line';
     }).toList();
-
-    // Join the lines with line breaks.
 
     return formattedLines.join('\n');
   }
