@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Sunday 2024-09-01 08:26:55 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 08:46:05 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -158,6 +158,13 @@ void main() {
 
       final firstNameFinder = find.textContaining('17510');
       expect(firstNameFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Dataset Glimpse" page.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
 
       // Tap the right arrow button to go to "Skim of the Dataset" page.
 
