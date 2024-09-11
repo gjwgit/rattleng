@@ -35,6 +35,7 @@ import 'package:rattle/app.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/source.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
@@ -103,6 +104,11 @@ void main() {
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
+      //TODO kevin 2024-09-10 16:00:00 +1000 to find out why IZR_sunshine is not in the list of variables
+      // rSource(context, ref, 'dataset_template');
+
+      // rSource(context, ref, 'dataset_template');
+
       await tester.pump(hack);
 
       // Verify the content of the page.
@@ -142,8 +148,10 @@ void main() {
 
       // Check if the variable sunshine is not in the list of missing variables.
 
+      //TODO go to Dataset tab and come back
+
       //TODO kevin 2024-09-10 16:00:00 +1000 to find out why IZR_sunshine is not in the list of variables
-      expect(vars.contains('IZR_sunshine'), false); //to change to true
+      expect(vars.contains('IZR_sunshine'), true); //failing for now
 
       //Step 4: check if IZR_sunshine is  not there.
 
