@@ -39,7 +39,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_demo_dataset.dart';
+import 'utils/open_large_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_multiple_text.dart';
 import 'utils/verify_page_content.dart';
@@ -47,7 +47,7 @@ import 'utils/verify_page_content.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Transform DEMO:', () {
+  group('Transform LARGE:', () {
     testWidgets('build, page.', (WidgetTester tester) async {
       // Create a ProviderContainer to access the ref.
       final container = ProviderContainer();
@@ -64,13 +64,13 @@ void main() {
       await tester.pump(pause);
 
       // Open the demo dataset and navigate to the Transform tab.
-      await openDemoDataset(tester);
+      await openLargeDataset(tester);
       await navigateToTab(tester, 'Transform');
 
       // Navigate to the Impute page.
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      // Step 1: Run get_missing to check sunshine is there.
+      // Step 1: Run get_missing to check middle_name is there.
 
       // Use the container to read the provider value.
 
@@ -92,10 +92,10 @@ void main() {
 
       // Check if the variable sunshine is in the list of missing variables.
 
-      // Convert all elements in variables to lowercase and check if any match 'sunshine'.
+      // Convert all elements in variables to lowercase and check if any match 'middle_name'.
 
       expect(
-        variables.any((element) => element.toLowerCase() == 'sunshine'),
+        variables.any((element) => element.toLowerCase() == 'middle_name'),
         true,
       );
 
@@ -109,19 +109,19 @@ void main() {
       await verifyPageContent(
         tester,
         'Dataset Summary',
-        'IZR_sunshine',
+        'IZR_middle_name',
       );
 
-      // Verify the IZR_sunshine parameter values.
+      // Verify the IZR_middle_name parameter values.
       await verifyMultipleTextContent(
         tester,
         [
-          'Min.   : 0.000',
-          '1st Qu.: 5.900',
-          'Median : 8.600',
-          'Mean   : 7.845',
-          '3rd Qu.:10.500',
-          'Max.   :13.600',
+          'Missing: 1987',
+          'lee    :  563',
+          'michael:  262',
+          'ann    :  253',
+          'wayne  :  239',
+          'edward :  237',
         ],
       );
 
@@ -131,7 +131,7 @@ void main() {
 
       await tester.pump(pause);
 
-      // Step 3: Run get_vars to check if IZR_sunshine is  there.
+      // Step 3: Run get_vars to check if IZR_middle_name is  there.
 
       // Use the container to read the provider value.
 
@@ -149,9 +149,9 @@ void main() {
       // Check if the variable sunshine is not in the list of missing variables.
 
       //TODO kevin 2024-09-10 16:00:00 +1000 to fix this later
-      expect(vars.contains('IZR_sunshine'), true);
+      expect(vars.contains('IZR_middle_name'), true);
 
-      //Step 4: check if IZR_sunshine is  not there.
+      //Step 4: check if IZR_middle_name is  not there.
 
       // Use the container to read the provider value.
 
@@ -170,7 +170,7 @@ void main() {
 
       // Check if the variable IZR_sunshine is not in the list of missing variables.
 
-      expect(variables2.contains('IZR_sunshine'), false);
+      expect(variables2.contains('IZR_middle_name'), false);
 
       // Dispose of the ProviderContainer when done to prevent memory leaks.
 
