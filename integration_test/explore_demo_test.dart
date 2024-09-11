@@ -1,6 +1,6 @@
 /// Explore tab Demo dataset.
 //
-// Time-stamp: <Wednesday 2024-08-28 09:17:11 +0800 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 08:44:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -156,6 +156,13 @@ void main() {
 
       final valueFinder = find.textContaining('39.800');
       expect(valueFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Dataset Glimpse" page.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
 
       // Tap the right arrow button to go to "Skim of the Dataset" page.
 
