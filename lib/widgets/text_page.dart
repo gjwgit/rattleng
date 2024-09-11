@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Thursday 2024-09-12 05:35:52 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 08:35:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,8 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter/material.dart';
+
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,10 +48,12 @@ class TextPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Create a ScrollController for horizontal scrolling.
+
     final ScrollController horizontalScrollController = ScrollController();
 
     // Modify the content to format each line, capitalize it, and add word wrap.
-    String formattedContent = _formatContent(content);
+
+    // String formattedContent = _formatContent(content);
 
     return Container(
       decoration: sunkenBoxDecoration,
@@ -76,18 +78,22 @@ class TextPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 controller: horizontalScrollController,
                 child: SelectableText(
-                  formattedContent,
+                  content,
                   style: monoTextStyle,
                   textAlign: TextAlign.left,
                 ),
               ),
             ),
           ),
+
           // 20240812 gjw Add a bottom spacer to leave a gap for the page
           // navigation when scrolling to the bottom of the page so that it can
           // be visible in at least some part of any very busy pages.
+
           textPageBottomSpace,
+
           // 20240812 gjw Add a divider to mark the end of the text page.
+
           const Divider(
             thickness: 15,
             color: Color(0XFFBBDEFB),
@@ -99,25 +105,25 @@ class TextPage extends StatelessWidget {
     );
   }
 
-  // Utility function to capitalize each line, add line spacing, and indent lines.
+//   // Utility function to capitalize each line, add line spacing, and indent lines.
 
-  String _formatContent(String content) {
-    final lines = content.split('\n');
+//   String _formatContent(String content) {
+//     final lines = content.split('\n');
 
-    final formattedLines = lines.asMap().entries.map((entry) {
-      int index = entry.key;
-      String line = entry.value.trim();
+//     final formattedLines = lines.asMap().entries.map((entry) {
+//       int index = entry.key;
+//       String line = entry.value.trim();
 
-      // Capitalize the first letter of each line.
+//       // Capitalize the first letter of each line.
 
-      if (line.isNotEmpty) {
-        line = '${line[0].toUpperCase()}${line.substring(1)}';
-      }
+//       if (line.isNotEmpty) {
+//         line = '${line[0].toUpperCase()}${line.substring(1)}';
+//       }
 
-      return index == 0 ? line : '    $line';
-    }).toList();
+//       return index == 0 ? line : '    $line';
+//     }).toList();
 
-    // Join the lines with line breaks
-    return formattedLines.join('\n');
-  }
+//     // Join the lines with line breaks
+//     return formattedLines.join('\n');
+//   }
 }
