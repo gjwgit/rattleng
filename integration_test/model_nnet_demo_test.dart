@@ -208,7 +208,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );
@@ -405,7 +405,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );

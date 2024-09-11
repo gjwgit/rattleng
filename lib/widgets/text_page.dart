@@ -107,9 +107,11 @@ class TextPage extends StatelessWidget {
       int index = entry.key;
       String line = entry.value.trim();
 
-      // Capitalize the first letter of each line.
+      // Capitalize the first letter of each line only in Summary page of Neural Net Model.
       if (line.isNotEmpty) {
-        line = '${line[0].toUpperCase()}${line.substring(1)}';
+        if (title.contains('# Neural Net Model - Summary of Parameters')) {
+          line = '${line[0].toUpperCase()}${line.substring(1)}';
+        }
       }
 
       return index == 0 ? line : '    $line';
