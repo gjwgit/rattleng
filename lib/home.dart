@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-08-22 16:18:09 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-09-11 16:49:23 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -54,6 +55,8 @@ import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/utils/show_settings_dialog.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 // Define the [NavigationRail] tabs for the home page.
@@ -120,6 +123,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   var _appName = 'Unknown';
   var _appVersion = 'Unknown';
+  final String _changelogUrl =
+      'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
 
   // Helper function to cleanup any wordcloud leftover files.
 
@@ -220,15 +225,18 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
 Author: Graham Williams
 
-Contributions: Tony Nolan, Mukund B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang
-Yin, Bo Zhang.
+Contributions: Bob Muenchen, Tony Nolan, Mukund B Srinivas, Kevin Wang, Zheyuan
+Xu, Yixiang Yin, Bo Zhang.
 
   ''';
 
   @override
   Widget build(BuildContext context) {
+    Flavor flavor = catppuccin.latte;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: flavor.mantle,
+
         // The title aligned to the left.
 
         //title: const Text(appTitle),
@@ -253,53 +261,87 @@ Yin, Bo Zhang.
           // visiable at all times, particularly for a screenshot, so place it
           // on the title bar for now.
 
-          Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
+          GestureDetector(
+            onTap: () async {
+              final Uri url = Uri.parse(_changelogUrl);
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              } else {
+                debugPrint('Could not launch $_changelogUrl');
+              }
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                'Version $_appVersion',
+                style: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 10,
+                ),
+              ),
+            ),
+          ),
           const SizedBox(width: 50),
 
-          // RESET
+          // Viewer.
 
-          IconButton(
-            icon: const Icon(
-              Icons.table_view,
-              color: Colors.blue,
-            ),
-            onPressed: () {
-              String path = ref.read(pathProvider);
-              if (path.isEmpty) {
-                showOk(
-                  context: context,
-                  title: 'No Dataset Loaded',
-                  content: '''
+          DelayedTooltip(
+            message: '''
+
+            Viewer: Tap here to open a separate window to view the current
+            dataset.  The default and quite simple data viewer in R will be
+            used. It is invoked as `view(ds)`.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.table_view,
+                color: Colors.blue,
+              ),
+              onPressed: () {
+                String path = ref.read(pathProvider);
+                if (path.isEmpty) {
+                  showOk(
+                    context: context,
+                    title: 'No Dataset Loaded',
+                    content: '''
 
                 Please choose a dataset to load from the **Dataset** tab. There is
                 not much we can do until we have loaded a dataset.
 
                 ''',
-                );
-              } else {
-                rExecute(ref, 'view(ds)\n');
-              }
-            },
-            tooltip: 'Tap here to view the current dataset.',
+                  );
+                } else {
+                  rExecute(ref, 'view(ds)\n');
+                }
+              },
+            ),
           ),
 
-          // RESET
+          // Reset.
 
-          IconButton(
-            icon: const Icon(
-              Icons.autorenew,
-              color: Colors.blue,
+          DelayedTooltip(
+            message: '''
+
+            Reset: Tap here to clear the current project and so start a new
+            project with a new dataset. You will be prompted to confirm since
+            you will lose all of the current pages and analyses.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.autorenew,
+                color: Colors.blue,
+              ),
+              onPressed: () async {
+                // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
+                if (ref.read(datasetLoaded)) {
+                  showAlertPopup(context, ref, false);
+                } else {
+                  await reset(context, ref);
+                }
+              },
             ),
-            onPressed: () {
-              // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
-              if (ref.read(datasetLoaded)) {
-                showAlertPopup(context, ref, false);
-              } else {
-                reset(context, ref);
-              }
-            },
-            tooltip: 'Tap here to clear the current project and\n'
-                'so start a new project with a new dataset.',
           ),
 
           // 20240726 gjw Remove the global SAVE button for now in favour of the
@@ -320,40 +362,72 @@ Yin, Bo Zhang.
           //   tooltip: 'TODO: Save the current view to file.',
           // ),
 
-          // INFO - ABOUT
+          // Settings.
 
-          IconButton(
-            onPressed: () {
-              showAboutDialog(
-                context: context,
-                applicationIcon: Image.asset(
-                  'assets/icons/icon.png',
-                  width: 80,
-                  height: 80,
-                ),
-                applicationName:
-                    '${_appName[0].toUpperCase()}${_appName.substring(1)}',
-                applicationVersion: 'Version $_appVersion',
-                applicationLegalese: '© 2006-2024 Togaware Pty Ltd\n',
-                children: [
-                  MarkdownBody(
-                    data: about,
-                    selectable: true,
-                    softLineBreak: true,
-                    onTapLink: (text, href, about) {
-                      final Uri url = Uri.parse(href ?? '');
-                      launchUrl(url);
-                    },
-                  ),
-                ],
-              );
-            },
-            icon: const Icon(
-              Icons.info,
-              color: Colors.blue,
+          DelayedTooltip(
+            message: '''
+
+            Settings: Tap here to update your default settings. At present we
+            have just one setting: ggplot theme. The default theme is the simple
+            and clean Rattle theme but there are many themes to choose from. Your
+            settings will be saved for the future and you have the option to
+            reset to the Rattle defaults.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.blue,
+              ),
+              onPressed: () async {
+                showSettingsDialog(context);
+                // showUnderConstruction(context);
+              },
             ),
-            tooltip: 'Tap here to view information about RattleNG and\n'
-                'those who have contributed to the software.',
+          ),
+
+          // Info - about.
+
+          DelayedTooltip(
+            message: '''
+
+            About: Tap here to view information about the Rattle project. This
+            include a list of those who have contributed to the latest version
+            of the software, Verison 6. It also includes the extensive list of
+            open-source packages that Rattle is built on and their licences.
+            
+            ''',
+            child: IconButton(
+              onPressed: () {
+                showAboutDialog(
+                  context: context,
+                  applicationIcon: Image.asset(
+                    'assets/icons/icon.png',
+                    width: 80,
+                    height: 80,
+                  ),
+                  applicationName:
+                      '${_appName[0].toUpperCase()}${_appName.substring(1)}',
+                  applicationVersion: 'Version $_appVersion',
+                  applicationLegalese: '© 2006-2024 Togaware Pty Ltd\n',
+                  children: [
+                    MarkdownBody(
+                      data: about,
+                      selectable: true,
+                      softLineBreak: true,
+                      onTapLink: (text, href, about) {
+                        final Uri url = Uri.parse(href ?? '');
+                        launchUrl(url);
+                      },
+                    ),
+                  ],
+                );
+              },
+              icon: const Icon(
+                Icons.info,
+                color: Colors.blue,
+              ),
+            ),
           ),
         ],
       ),

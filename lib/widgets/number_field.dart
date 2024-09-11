@@ -1,6 +1,6 @@
 /// A numerical text input field.
 //
-// Time-stamp: <Sunday 2024-07-21 21:01:29 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 05:40:11 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,6 +31,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class NumberField extends ConsumerStatefulWidget {
   final String label;
@@ -130,10 +132,6 @@ class NumberFieldState extends ConsumerState<NumberField> {
     } else {
       ref.read(widget.stateProvider.notifier).state = v;
     }
-
-    debugPrint(
-      'Interval updated to ${ref.read(widget.stateProvider.notifier).state}.',
-    );
   }
 
   void _onFocusChange() {
@@ -156,17 +154,11 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
+    return DelayedTooltip(
       message: widget.tooltip,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          widget.label.isEmpty
-              ? Container()
-              : Text(
-                  widget.label,
-                  style: widget.enabled ? normalTextStyle : disabledTextStyle,
-                ),
           SizedBox(
             width: widget.maxWidth * 30.0,
             child: Stack(
@@ -175,7 +167,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   controller: widget.controller,
                   focusNode: _focusNode,
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
+                    labelText: widget.label,
+                    border: const UnderlineInputBorder(),
                     contentPadding: const EdgeInsets.only(
                       right: 40,
                       left: 10,

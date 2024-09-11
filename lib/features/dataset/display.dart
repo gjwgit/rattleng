@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Thursday 2024-08-22 16:18:16 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 16:48:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -45,10 +45,15 @@ import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/update_meta_data.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 import 'package:rattle/providers/meta_data.dart';
+
+TextStyle defaultTextStyle = const TextStyle(
+  fontSize: 14,
+);
 
 /// The dataset panel displays the RattleNG welcome or a data summary.
 
@@ -63,6 +68,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget space = const SizedBox(
     width: 10,
   );
+
   int typeFlex = 4;
   int contentFlex = 3;
 
@@ -78,17 +84,23 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String content = '';
     String title = '';
 
-    if (path == weatherDemoFile || path.endsWith('.csv')) {
-      content = rExtractGlimpse(stdout);
-      title = '''
+    // 20240911 gjw Move the glimpse page to the SUMMARY feature.
 
-      # Dataset Glimpse
+    // if (path == weatherDemoFile || path.endsWith('.csv')) {
+    //   content = rExtractGlimpse(stdout);
+    //   title = '''
 
-      Generated using
-      [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
+    //   # Dataset Glimpse
 
-      ''';
-    } else {
+    //   Generated using
+    //   [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
+
+    //   ''';
+    // } else {
+
+    // Keep the TEXT page here for now.
+
+    if (path.endsWith('.txt')) {
       content = rExtract(stdout, '> cat(ds,');
       title = '''
 
@@ -98,16 +110,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
 
       ''';
+
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: title,
+            content: '\n$content',
+          ),
+        );
+      }
     }
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: title,
-          content: '\n$content',
-        ),
-      );
-    }
+    ////////////////////////////////////////////////////////////////////////
 
     if (path == weatherDemoFile || path.endsWith('.csv')) {
       // A new dataset has been loaded so we update the information here.
@@ -169,7 +183,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ref.read(rolesProvider.notifier).state[id] = Role.ident;
         }
       }
-      // When a new row is added after transformation, initialise its role and update the role of the old variable
+
+      // When a new row is added after transformation, initialise its role and
+      // update the role of the old variable
+
       updateVariablesProvider(ref);
 
       var headline = Padding(
@@ -190,7 +207,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            space,
             Expanded(
               flex: typeFlex,
               child: const Text(
@@ -213,90 +229,129 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       Widget dataline(columnName, dataType, content) {
         // Generate the row for a data line.
 
-        // Truncate the content to fite the Role boses on one line.
+        // Truncate the content to fit one line. The text could wrap over two
+        // lines and so show more of the data, but our point here is more to
+        // have a reminder of the data to assist in deciding on the ROLE of each
+        // variable, not any real insight into the data which we leave to the
+        // SUMMARY feature.
 
         int maxLength = 40;
+
         // Extract substring of the first maxLength characters
+
         String subStr = content.length > maxLength
             ? content.substring(0, maxLength)
             : content;
+
         // Find the last comma in the substring
+
         int lastCommaIndex = subStr.lastIndexOf(',') + 1;
+
         content =
             lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr;
         content += ' ...';
 
         return Padding(
           padding: const EdgeInsets.all(6.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(columnName),
-              ),
-              space,
-              Expanded(
-                child: Text(dataType),
-              ),
-              space,
-              Expanded(
-                flex: typeFlex,
-                child: Wrap(
-                  spacing: 5.0,
-                  runSpacing: choiceChipRowSpace,
-                  children: choices.map((choice) {
-                    return ChoiceChip(
-                      label: Text(choice.displayString),
-                      disabledColor: Colors.grey,
-                      selectedColor: Colors.lightBlue[200],
-                      backgroundColor: Colors.lightBlue[50],
-                      shadowColor: Colors.grey,
-                      pressElevation: 8.0,
-                      elevation: 2.0,
-                      selected: remap(currentRoles[columnName]!, choice),
-                      onSelected: (bool selected) {
-                        setState(() {
-                          if (selected) {
-                            // only one variable is Target, Risk and Weight.
-                            if (choice == Role.target ||
-                                choice == Role.risk ||
-                                choice == Role.weight) {
-                              currentRoles.forEach((key, value) {
-                                if (value == choice) {
-                                  ref.read(rolesProvider.notifier).state[key] =
-                                      Role.input;
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment
+                          .centerLeft, // Aligns the content to the left
+                      child: Text(
+                        columnName,
+                        style: defaultTextStyle,
+                        maxLines: 1, // Ensure the text stays on one line
+                        overflow: TextOverflow
+                            .ellipsis, // Adds ellipsis if text overflows
+                        textAlign: TextAlign
+                            .left, // Aligns the text within the Text widget to the left
+                      ),
+                    ),
+                  ),
+
+                  space,
+                  Expanded(
+                    child: Text(dataType),
+                  ),
+                  Expanded(
+                    flex: typeFlex,
+                    child: Wrap(
+                      spacing: 5.0,
+                      runSpacing: choiceChipRowSpace,
+                      children: choices.map((choice) {
+                        return ChoiceChip(
+                          label: Text(choice.displayString),
+                          disabledColor: Colors.grey,
+                          selectedColor: Colors.lightBlue[200],
+                          backgroundColor: Colors.lightBlue[50],
+                          showCheckmark: false,
+                          shadowColor: Colors.grey,
+                          pressElevation: 8.0,
+                          elevation: 2.0,
+                          selected: remap(currentRoles[columnName]!, choice),
+                          onSelected: (bool selected) {
+                            setState(() {
+                              if (selected) {
+                                // only one variable is Target, Risk and Weight.
+                                if (choice == Role.target ||
+                                    choice == Role.risk ||
+                                    choice == Role.weight) {
+                                  currentRoles.forEach((key, value) {
+                                    if (value == choice) {
+                                      ref
+                                          .read(rolesProvider.notifier)
+                                          .state[key] = Role.input;
+                                    }
+                                  });
                                 }
-                              });
-                            }
-                            ref.read(rolesProvider.notifier).state[columnName] =
-                                choice;
-                            debugPrint('$columnName set to $choice');
-                          } else {
-                            debugPrint('This should not happen');
-                            // ref.read(rolesProvider.notifier).state[columnName] =
-                            //     ;
-                          }
-                        });
-                      },
-                    );
-                  }).toList(),
-                ),
-              ),
-              space,
-              Expanded(
-                flex: contentFlex,
-                child: Text(
-                  content,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
+                                ref
+                                    .read(rolesProvider.notifier)
+                                    .state[columnName] = choice;
+                                debugText('  $choice', columnName);
+                              } else {
+                                debugPrint('This should not happen');
+                                // ref.read(rolesProvider.notifier).state[columnName] =
+                                //     ;
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Expanded(
+                    flex: contentFlex,
+                    child: Text(
+                      content,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                  // Hard code the Spacer when the screen width is large.
+
+                  // Add a Spacer if the screen width is greater than 1159.0.
+
+                  if (constraints.maxWidth > 1159.0) const Spacer(),
+
+                  // Two spacers to make the layout more compact.
+                  // Add a Spacer if the screen width is greater than 1159.0.
+
+                  if (constraints.maxWidth > 1159.0) const Spacer(),
+                ],
+              );
+            },
           ),
         );
       }
 
       pages.add(
         ListView.builder(
+          key: const Key('roles listView'),
           itemCount: vars.length + 1, // Add 1 for the extra header row
           itemBuilder: (context, index) {
             // both the header row and the regular row shares the same flex index

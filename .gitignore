@@ -10,7 +10,12 @@ ignore
 script.R
 .Rhistory
 NOTES.md
+TODO.md
+ARCHIVE
+TMP*
+*.tmp
 
+installers/*.snap
 installers/*.tar.gz
 installers/*-linux.zip
 installers/*-macos.zip

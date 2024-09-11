@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-03 14:37:53 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-08-29 17:15:48 +0800 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,6 +44,18 @@
 target <- "TARGET_VAR"
 risk   <- "RISK_VAR"
 id     <- c(ID_VARS)
+
+# Identify variables to ignore.
+
+ignore <- IGNORE_VARS
+
+# 20240829 gjw Ideally remove the ignored variables from ds for now as
+# a bug fix to support the CORRELATION feature for selected
+# variables. In future this dataset template will reload the dataset
+# into ds from `get(dsname)` each time it is run afresh. FOR NOW do
+# this for CORRELATION only.
+
+# ds <- ds[setdiff(names(ds), ignore)]
 
 # Record the number of observations.
 
