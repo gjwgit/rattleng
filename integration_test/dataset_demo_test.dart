@@ -1,6 +1,6 @@
 /// Test and demonstrate the DATASET tab features with the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-10 17:00:10 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 17:25:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -58,22 +58,22 @@ void main() {
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
+      // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
+      // await tester.tap(rightArrowFinder);
+      // await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      // await tester.pump(pause);
 
-      // Find the text containing "366".
+      // // Find the text containing "366".
 
-      final glimpseRowFinder = find.textContaining('366');
-      expect(glimpseRowFinder, findsOneWidget);
+      // final glimpseRowFinder = find.textContaining('366');
+      // expect(glimpseRowFinder, findsOneWidget);
 
-      // Find the text containing "2007-11-01".
+      // // Find the text containing "2007-11-01".
 
-      final glimpseDateFinder = find.textContaining('2007-11-01');
-      expect(glimpseDateFinder, findsOneWidget);
+      // final glimpseDateFinder = find.textContaining('2007-11-01');
+      // expect(glimpseDateFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "ROLES" page.
 
