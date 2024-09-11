@@ -285,42 +285,6 @@ Xu, Yixiang Yin, Bo Zhang.
           ),
           const SizedBox(width: 50),
 
-          //kev test
-          DelayedTooltip(
-            message: '''
-
-          get var
-
-            ''',
-            child: TextButton(
-              onPressed: () {
-                print(getVars(ref).toString());
-              },
-              child: const Text(
-                'Get Vars',
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-          ),
-
-          DelayedTooltip(
-            message: '''
-get missing
-
-            ''',
-            child: TextButton(
-              onPressed: () {
-                print(getMissing(ref).toString());
-              },
-              child: const Text(
-                'Get Missing',
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-          ),
-
-          // kev test end
-
           // Viewer.
 
           DelayedTooltip(
