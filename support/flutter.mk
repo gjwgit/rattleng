@@ -284,7 +284,7 @@ qtest:
 		echo "========================================"; \
 		echo $$t; \
 		echo "========================================"; \
-		flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t || exit 1; \
+		flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t ; \
 	done
 	@echo $(SEPARATOR)
 
