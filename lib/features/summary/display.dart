@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-08-17 06:18:03 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 14:05:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_summary.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -109,8 +110,29 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
-    // SKIMR
+
+    content = rExtractGlimpse(stdout);
+    String title = '''
+
+    # Dataset Glimpse
+
+    Generated using
+    [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
+
+      ''';
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: title,
+          content: '\n$content',
+        ),
+      );
+    }
+
     ////////////////////////////////////////////////////////////////////////
+
+    // Skimr
 
     content = rExtract(stdout, 'skim(ds)');
 
