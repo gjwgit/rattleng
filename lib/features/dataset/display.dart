@@ -282,6 +282,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                           selected: remap(currentRoles[columnName]!, choice),
                           onSelected: (bool selected) {
                             setState(() {
+                              // The variable selected can be false when a chip
+                              // is tapped when it is already selected.
+                              // In out case we need do nothing else.
+
                               if (selected) {
                                 // only one variable is Target, Risk and Weight.
                                 if (choice == Role.target ||
@@ -299,10 +303,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                                     .read(rolesProvider.notifier)
                                     .state[columnName] = choice;
                                 debugText('  $choice', columnName);
-                              } else {
-                                debugPrint('This should not happen');
-                                // ref.read(rolesProvider.notifier).state[columnName] =
-                                //     ;
                               }
                             });
                           },
