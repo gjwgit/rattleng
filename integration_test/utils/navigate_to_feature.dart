@@ -42,5 +42,5 @@ Future<void> navigateToFeature(
 
   expect(find.byType(panelType), findsOneWidget);
 
-  await tester.pump(pause);
+  await tester.pump(delay);
 }

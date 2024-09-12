@@ -53,7 +53,7 @@ void main() {
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
 
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Verify the content of the page 1.
 
