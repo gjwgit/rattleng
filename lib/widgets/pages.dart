@@ -104,11 +104,9 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 35.0),
+        Expanded(
           child: PageView(
             controller: _pageController,
             onPageChanged: (index) {
@@ -120,6 +118,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
             children: widget.children,
           ),
         ),
+        const SizedBox(height: 5),
         PageIndicator(
           tabController: _tabController,
           currentPageIndex: _currentPage,
