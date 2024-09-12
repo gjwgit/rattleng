@@ -1,6 +1,6 @@
-/// Dataset display with three pages: Overview, Glimpse, Roles.
+/// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-09-12 08:31:36 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 16:23:17 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -283,7 +283,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                           onSelected: (bool selected) {
                             setState(() {
                               if (selected) {
-                                // only one variable is Target, Risk and Weight.
+                                // Only one variable can be TARGET, RISK and
+                                // WEIGHT so any previous variable with that
+                                // role shold become INPUT.
                                 if (choice == Role.target ||
                                     choice == Role.risk ||
                                     choice == Role.weight) {
