@@ -54,6 +54,8 @@ void main() {
       await tester.pump(pause);
 
       await openDemoDataset(tester);
+      await tester.pump(hack);
+
       await navigateToPage(
         tester,
         Icons.model_training,
@@ -63,6 +65,7 @@ void main() {
       await navigateToFeature(tester, 'Tree', TreePanel);
 
       await pressButton(tester, 'Build Decision Tree');
+      await tester.pump(hack);
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
 
@@ -73,12 +76,13 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       // Tap the right arrow to go to the forth page.
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final imageFinder = find.byType(ImagePage);
 
@@ -96,15 +100,18 @@ void main() {
       final datasetButton = find.byType(DatasetButton);
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final resetDatasetButton = find.text('Yes');
       await tester.tap(resetDatasetButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       final cancelButton = find.text('Cancel');
 
       await tester.tap(cancelButton);
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
       await navigateToPage(
         tester,
@@ -136,6 +143,7 @@ void main() {
     await tester.pump(pause);
 
     await openLargeDataset(tester);
+
     await navigateToPage(
       tester,
       Icons.model_training,
@@ -145,6 +153,8 @@ void main() {
     await navigateToFeature(tester, 'Tree', TreePanel);
 
     await pressButton(tester, 'Build Decision Tree');
+
+    await tester.pump(hack);
 
     final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
 
@@ -179,15 +189,18 @@ void main() {
     final datasetButton = find.byType(DatasetButton);
     await tester.tap(datasetButton);
     await tester.pumpAndSettle();
+    await tester.pump(hack);
 
     final resetDatasetButton = find.text('Yes');
     await tester.tap(resetDatasetButton);
     await tester.pumpAndSettle();
+    await tester.pump(hack);
 
     final cancelButton = find.text('Cancel');
 
     await tester.tap(cancelButton);
     await tester.pumpAndSettle();
+    await tester.pump(hack);
 
     await navigateToPage(
       tester,

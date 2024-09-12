@@ -45,9 +45,10 @@ void main() {
     testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       await openLargeDataset(tester);
+      await tester.pump(longHack);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -58,6 +59,7 @@ void main() {
 
       await tester.tap(exploreIconFinder);
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Verify if the ExploreTabs widget is shown.
 
@@ -69,7 +71,7 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      await tester.pump(longHack);
 
       ////////////////////////////////////////////////////////////////////////
 
@@ -100,22 +102,18 @@ void main() {
       await tester.tap(generatePlotButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Find the right arrow button in the PageIndicator.
-
-      expect(rightArrowFinder, findsOneWidget);
-
       // Tap the right arrow button to go to "Box Plot" page 2.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Box Plot".
 
@@ -136,7 +134,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Density Plot of Values".
 
@@ -152,7 +150,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Cumulative Plot".
 
@@ -168,7 +166,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Benford Plot".
 
