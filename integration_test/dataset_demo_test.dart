@@ -43,9 +43,10 @@ void main() {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       await openDemoDataset(tester);
+      await tester.pump(hack);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
@@ -57,6 +58,7 @@ void main() {
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
+      await tester.pump(delay);
 
       // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
@@ -80,7 +82,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       // Find the text containing "8.0".
 
