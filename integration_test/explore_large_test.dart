@@ -135,6 +135,10 @@ void main() {
 
       await tester.pump(pause);
 
+      // Add a delay to allow the summary to be generated. This will fix the qtest failure.
+
+      await tester.pump(delay);
+
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
