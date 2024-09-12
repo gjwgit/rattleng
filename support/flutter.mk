@@ -282,7 +282,7 @@ qtest:
 	fi; \
 	for t in integration_test/*_test.dart; do \
 		echo "========================================"; \
-		echo $$t; \
+		echo $$t; echo $$t >&2; \
 		echo "========================================"; \
 		flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t ; \
 	done
