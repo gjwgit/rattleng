@@ -72,10 +72,6 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
       // Find the scrollable ListView.
 
       final scrollableFinder = find.byKey(const Key('roles listView'));
@@ -184,7 +180,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 7-10-1 network with 98 weights') == true,
+            widget.data?.contains('a 7-10-1 network with 98 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -206,7 +202,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );
@@ -258,10 +254,6 @@ void main() {
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
       // Tap the right arrow button to go to Variable page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
@@ -379,7 +371,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 7-11-1 network with 107 weights') == true,
+            widget.data?.contains('a 7-11-1 network with 107 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -401,7 +393,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );
