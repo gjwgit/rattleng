@@ -146,6 +146,8 @@ void main() {
 
     await pressButton(tester, 'Build Decision Tree');
 
+    await tester.pump(hack);
+
     final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
 
     await tester.tap(rightArrowButton);
