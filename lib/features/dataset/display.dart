@@ -1,6 +1,6 @@
 /// Dataset display with three pages: Overview, Glimpse, Roles.
 //
-// Time-stamp: <Wednesday 2024-09-11 16:48:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 20:51:58 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -38,7 +38,6 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract.dart';
-import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
