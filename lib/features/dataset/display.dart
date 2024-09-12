@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-09-12 16:23:17 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 16:47:47 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -24,8 +24,6 @@
 /// Authors: Graham Williams, Yixiang Yin
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
 
@@ -76,24 +74,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     List<Widget> pages = [showMarkdownFile(welcomeMsgFile, context)];
 
+    ////////////////////////////////////////////////////////////////////////
+
     String content = '';
     String title = '';
 
-    // 20240911 gjw Move the glimpse page to the SUMMARY feature.
-
-    // if (path == weatherDemoFile || path.endsWith('.csv')) {
-    //   content = rExtractGlimpse(stdout);
-    //   title = '''
-
-    //   # Dataset Glimpse
-
-    //   Generated using
-    //   [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
-
-    //   ''';
-    // } else {
-
-    // Keep the TEXT page here for now.
+    // For a TXT file we add a new page as a summary of that file - actually it
+    // shows the full contents.
 
     if (path.endsWith('.txt')) {
       content = rExtract(stdout, '> cat(ds,');
@@ -246,21 +233,23 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   Expanded(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      alignment: Alignment
-                          .centerLeft, // Aligns the content to the left
+                      // Aligns the content to the left
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         columnName,
                         style: defaultTextStyle,
-                        maxLines: 1, // Ensure the text stays on one line
-                        overflow: TextOverflow
-                            .ellipsis, // Adds ellipsis if text overflows
-                        textAlign: TextAlign
-                            .left, // Aligns the text within the Text widget to the left
+                        // Ensure the text stays on one line
+                        maxLines: 1,
+                        // Adds ellipsis if text overflows
+                        overflow: TextOverflow.ellipsis,
+                        // Aligns the text within the Text widget to the left
+                        textAlign: TextAlign.left,
                       ),
                     ),
                   ),
 
                   space,
+
                   Expanded(
                     child: Text(dataType),
                   ),
@@ -282,14 +271,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                           selected: remap(currentRoles[columnName]!, choice),
                           onSelected: (bool selected) {
                             setState(() {
-                              // The variable selected can be false when a chip
-                              // is tapped when it is already selected.
-                              // In out case we need do nothing else.
+                              // The parameter selected can be false when a chip
+                              // is tapped when it is already selected.  In our
+                              // case we need do nothing else. That could be
+                              // useful as a toggle button!
 
                               if (selected) {
                                 // Only one variable can be TARGET, RISK and
                                 // WEIGHT so any previous variable with that
                                 // role shold become INPUT.
+
                                 if (choice == Role.target ||
                                     choice == Role.risk ||
                                     choice == Role.weight) {
@@ -339,15 +330,23 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       pages.add(
         ListView.builder(
           key: const Key('roles listView'),
-          itemCount: vars.length + 1, // Add 1 for the extra header row
+
+          // Add 1 for the extra header row.
+
+          itemCount: vars.length + 1,
+
           itemBuilder: (context, index) {
-            // both the header row and the regular row shares the same flex index
+            // Both the header row and the regular row shares the same flex
+            // index.
+
             if (index == 0) {
-              // Render the extra header row
+              // Render the extra header row.
+
               return headline;
             } else {
-              // Regular data rows
-              final variableIndex = index - 1; // Adjust index for regular data
+              // Regular data rows.  Adjust the index for regular data.
+
+              final variableIndex = index - 1;
               String columnName = vars[variableIndex].name;
               String dataType = vars[variableIndex].type;
               String content = vars[variableIndex].details;
