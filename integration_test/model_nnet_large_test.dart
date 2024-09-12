@@ -72,10 +72,6 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
       // Find the scrollable ListView.
 
       final scrollableFinder = find.byKey(const Key('roles listView'));
@@ -130,6 +126,48 @@ void main() {
             );
             await tester.pumpAndSettle();
             await tester.pump(delay);
+
+            // Tab the previous variable to avoid missing tab it.
+            // Missing tab happens if Ignore button overlaps the rightArrow icon.
+
+            int index = largeVariablesToIgnore.indexOf(variable);
+            if (index > 0) {
+              String preVariable = largeVariablesToIgnore[index - 1];
+
+              // Find the row where the variable name is displayed.
+
+              final preVariableFinder = find.text(preVariable);
+
+              if (tester.any(preVariableFinder)) {
+                // Find the parent widget that contains the variable and its associated ChoiceChip.
+
+                final preParentFinder = find.ancestor(
+                  of: preVariableFinder,
+                  matching: find.byType(
+                    Row,
+                  ),
+                );
+
+                // Select the first Row in the list.
+
+                final firstRowFinder = preParentFinder.first;
+
+                // Tap the correct ChoiceChip to change the role to 'Ignore'.
+
+                final ignoreChipFinder = find.descendant(
+                  of: firstRowFinder,
+                  matching: find.text('Ignore'),
+                );
+
+                await tester.tap(ignoreChipFinder);
+
+                await tester.pumpAndSettle();
+
+                // Verify that the role is now set to 'Ignore'.
+
+                expect(ignoreChipFinder, findsOneWidget);
+              }
+            }
           }
         }
       }
@@ -184,7 +222,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 7-10-1 network with 98 weights') == true,
+            widget.data?.contains('a 7-10-1 network with 98 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -206,7 +244,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );
@@ -263,10 +301,6 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
       // Find the scrollable ListView.
 
       final scrollableFinder = find.byKey(const Key('roles listView'));
@@ -321,6 +355,48 @@ void main() {
             );
             await tester.pumpAndSettle();
             await tester.pump(delay);
+
+            // Tab the previous variable to avoid missing tab it.
+            // Missing tab happens if Ignore button overlaps the rightArrow icon.
+
+            int index = largeVariablesToIgnore.indexOf(variable);
+            if (index > 0) {
+              String preVariable = largeVariablesToIgnore[index - 1];
+
+              // Find the row where the variable name is displayed.
+
+              final preVariableFinder = find.text(preVariable);
+
+              if (tester.any(preVariableFinder)) {
+                // Find the parent widget that contains the variable and its associated ChoiceChip.
+
+                final preParentFinder = find.ancestor(
+                  of: preVariableFinder,
+                  matching: find.byType(
+                    Row,
+                  ),
+                );
+
+                // Select the first Row in the list.
+
+                final firstRowFinder = preParentFinder.first;
+
+                // Tap the correct ChoiceChip to change the role to 'Ignore'.
+
+                final ignoreChipFinder = find.descendant(
+                  of: firstRowFinder,
+                  matching: find.text('Ignore'),
+                );
+
+                await tester.tap(ignoreChipFinder);
+
+                await tester.pumpAndSettle();
+
+                // Verify that the role is now set to 'Ignore'.
+
+                expect(ignoreChipFinder, findsOneWidget);
+              }
+            }
           }
         }
       }
@@ -379,7 +455,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 7-11-1 network with 107 weights') == true,
+            widget.data?.contains('a 7-11-1 network with 107 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -401,7 +477,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );

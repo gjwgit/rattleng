@@ -56,5 +56,5 @@ Future<void> navigateToTab(
 
   expect(find.byType(tab['widget'].runtimeType), findsOneWidget);
 
-  await tester.pump(pause);
+  await tester.pump(delay);
 }
