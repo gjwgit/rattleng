@@ -113,7 +113,6 @@ class RattleHome extends ConsumerStatefulWidget {
 
 class RattleHomeState extends ConsumerState<RattleHome>
     with SingleTickerProviderStateMixin {
-
   // We use a [tabController] to manager what scripts are run on moving from the
   // DATASET feature. The [tabController] keeps track of the selected index for
   // the NavigationRail.
@@ -181,13 +180,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
     // Filter the tabs based on the file type.
 
     if (currentPath.endsWith('.txt')) {
-
       // For .txt files, exclude the Transform tab.
 
       filteredHomeTabs =
           homeTabs.where((tab) => tab['title'] != 'Transform').toList();
     } else {
-
       // For other file types including the no files, include all tabs.
 
       filteredHomeTabs = homeTabs;
@@ -215,7 +212,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
           // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
 
           if (path.isNotEmpty) {
-
             // On leaving the DATASET tab we run the data template if there is a
             // dataset loaded, as indicated by the path having a value.
             //

@@ -114,7 +114,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
       // Only show the Word Cloud tab for .txt files
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
-    } else if (currentPath.endsWith('.csv')  || currentPath == weatherDemoFile) {
+    } else if (currentPath.endsWith('.csv') || currentPath == weatherDemoFile) {
       // For csv files and demo, show all tabs except the Word Cloud tab
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
