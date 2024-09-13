@@ -29,6 +29,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/app.dart';
 
 import 'package:rattle/features/model/panel.dart';
 import 'package:rattle/features/cluster/panel.dart';
@@ -113,10 +114,12 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
       // Only show the Word Cloud tab for .txt files
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
-    } else {
+    } else if (currentPath.endsWith('.csv')  || currentPath == weatherDemoFile) {
       // For other file types (including CSV), show all tabs except the Word Cloud tab
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
+    } else {
+      filteredModelPanels = modelPanels;
     }
 
     // Initialize the TabController with the filtered panels
