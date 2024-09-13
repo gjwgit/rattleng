@@ -1,6 +1,6 @@
-/// Test the EXPLORE tab CORRELATION feature on the DEMO dataset.
+/// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:07:59 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 17:00:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang
+/// Authors:  Kevin Wang, Graham Williams
 
 library;
 
@@ -32,13 +32,12 @@ import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
+import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_button.dart';
 import 'utils/verify_page_content.dart';
 import 'utils/verify_text.dart';
-
-import 'helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -50,9 +49,11 @@ void main() {
       await tester.pump(pause);
 
       await openDemoDataset(tester);
-      await navigateToExploreTab(tester);
-      await navigateToTab(tester, 'Correlation', CorrelationPanel);
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
+
+      await tester.pump(longHack);
 
       // Verify the content of the page 1.
 

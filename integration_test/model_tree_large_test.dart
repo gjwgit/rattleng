@@ -30,11 +30,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'utils/delays.dart';
+import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/text_page.dart';
+
+import 'utils/delays.dart';
+import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/open_large_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -50,24 +55,7 @@ void main() {
       // The following will be in openLargeFileDataset(). Model it on
       // openDemoSateset().
 
-      // Locate the TextField where the file path is input.
-
-      final filePathField = find.byType(TextField);
-
-      // Enter the file path programmatically.
-
-      await tester.enterText(
-        filePathField,
-        'integration_test/rattle_test_large.csv',
-      );
-
-      // Simulate pressing the Enter key.
-
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await openLargeDataset(tester);
 
       // 20240822 TODO gjw DOES THIS NEED A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -76,42 +64,13 @@ void main() {
 
       await tester.pump(hack);
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // Find the text containing the number of rows and columns.
-
-      final glimpseRowFinder = find.textContaining('Rows: 20,000');
-      expect(glimpseRowFinder, findsOneWidget);
-      final glimpseColumnFinder = find.textContaining('Columns: 24');
-      expect(glimpseColumnFinder, findsOneWidget);
-
-      // Find the Model Page in the Side tab.
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
-      expect(modelTabFinder, findsOneWidget);
-
       // Tap the model Tab button.
 
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Tree feature.
 
-      final treeTabFinder = find.text('Tree');
-      await tester.tap(treeTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await navigateToFeature(tester, 'Tree', TreePanel);
 
       // Verify that the markdown content is loaded.
 
@@ -196,49 +155,15 @@ void main() {
       // The following will be in openLargeFileDataset(). Model it on
       // openDemoSateset().
 
-      // Locate the TextField where the file path is input.
-
-      final filePathField = find.byType(TextField);
-
-      // Enter the file path programmatically.
-
-      await tester.enterText(
-        filePathField,
-        'integration_test/rattle_test_large.csv',
-      );
-
-      // Simulate pressing the Enter key.
-
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
-      await tester.pump(hack);
-
-      // Find the Model Page in the Side tab.
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
-      expect(modelTabFinder, findsOneWidget);
+      await openLargeDataset(tester);
 
       // Tap the model Tab button.
 
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Tree feature.
 
-      final treeTabFinder = find.text('Tree');
-      await tester.tap(treeTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await navigateToFeature(tester, 'Tree', TreePanel);
 
       // Find and tap the 'Include Missing' checkbox.
 
@@ -280,7 +205,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      await tester.pump(longHack);
 
       // Tap the right arrow to go to the second page.
 
@@ -292,7 +217,7 @@ void main() {
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
 
@@ -304,7 +229,7 @@ void main() {
 
       // TODO 20240902 zy IS THIS pause NEEDED HERE?
 
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
 
@@ -312,11 +237,12 @@ void main() {
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       final thirdPageTitleFinder = find.text('Decision Tree as Rules');
       expect(thirdPageTitleFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
 
@@ -348,49 +274,15 @@ void main() {
       // The following will be in openLargeFileDataset(). Model it on
       // openDemoSateset().
 
-      // Locate the TextField where the file path is input.
-
-      final filePathField = find.byType(TextField);
-
-      // Enter the file path programmatically.
-
-      await tester.enterText(
-        filePathField,
-        'integration_test/rattle_test_large.csv',
-      );
-
-      // Simulate pressing the Enter key.
-
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-
-      // Optionally pump the widget tree to reflect the changes.
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
-      await tester.pump(hack);
-
-      // Find the Model Page in the Side tab.
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
+      await openLargeDataset(tester);
 
       // Tap the model Tab button.
 
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Tree feature.
 
-      final treeTabFinder = find.text('Tree');
-      await tester.tap(treeTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await navigateToFeature(tester, 'Tree', TreePanel);
 
       // Find the ChoiceChipTip widget for the traditional algorithm type.
 
@@ -409,6 +301,7 @@ void main() {
       await tester.tap(conditionalChip);
 
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Optionally, verify any side effects (e.g., UI changes due to the
       // selected algorithm).  Example: Check for a label update
@@ -423,6 +316,7 @@ void main() {
       // Wait for the widget to rebuild and settle.
 
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Optionally, verify UI updates for the traditional algorithm.
 
@@ -434,6 +328,7 @@ void main() {
       await tester.tap(conditionalChip);
 
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Verify the relevant fields are disabled when Conditional is selected.
 
@@ -451,12 +346,16 @@ void main() {
 
       await tester.tap(traditionalChip);
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Verify that the relevant fields are now enabled.
 
       expect(tester.widget<NumberField>(complexityField).enabled, isTrue);
       expect(tester.widget<TextFormField>(priorsField).enabled, isTrue);
       expect(tester.widget<TextFormField>(lossMatrixField).enabled, isTrue);
+
+      await tester.pumpAndSettle();
+      await tester.pump(pause);
     });
   });
 }

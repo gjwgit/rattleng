@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-08-25 06:32:24 +0800 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-08 09:42:54 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,9 +31,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/providers/number.dart';
-import 'package:rattle/utils/get_ignored.dart';
-import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -43,6 +40,12 @@ import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
+import 'package:rattle/providers/max_nwts.dart';
+import 'package:rattle/providers/nnet_hidden_neurons.dart';
+import 'package:rattle/providers/nnet_maxit.dart';
+import 'package:rattle/providers/nnet_skip.dart';
+import 'package:rattle/providers/nnet_trace.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/min_split.dart';
 import 'package:rattle/providers/interval.dart';
@@ -55,6 +58,7 @@ import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -65,8 +69,10 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
+import 'package:rattle/utils/to_r_vector.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [script] and append to the [rattle] script.
@@ -102,13 +108,20 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
+  int hiddenNeurons = ref.read(hiddenNeuronsProvider);
+  int nnetMaxNWts = ref.read(maxNWtsProvider);
+  int nnetMaxit = ref.read(maxitProvider);
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
+  bool nnetTrace = ref.read(nnetTraceProvider);
+  bool nnetSkip = ref.read(nnetSkipProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
 
   int interval = ref.read(intervalProvider);
+
+  String theme = ref.read(settingsGraphicThemeProvider);
 
   // First obtain the text from the script.
 
@@ -140,6 +153,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // AS REQUIRED FOR THE CURRENT FEATURE.
 
   code = code.replaceAll('TEMPDIR', tempDir);
+
+  code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
   ////////////////////////////////////////////////////////////////////////
   // CLEANUP
@@ -297,11 +312,18 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
   code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
+  code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
+  code = code.replaceAll('MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
     code = code.replaceAll('maxsurrogate=0', '');
   }
+
+  code =
+      code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
+  code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
 
   // TODO if (script == 'model_build_random_forest')) {
 

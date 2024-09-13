@@ -31,8 +31,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
-import 'helper.dart';
 import 'utils/delays.dart';
+import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_large_dataset.dart';
 import 'utils/press_button.dart';
@@ -49,8 +49,8 @@ void main() {
       await tester.pump(pause);
 
       await openLargeDataset(tester);
-      await navigateToExploreTab(tester);
-      await navigateToTab(tester, 'Correlation', CorrelationPanel);
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
 
       // Verify the content of the page 1.

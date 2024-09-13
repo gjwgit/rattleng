@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-09-03 11:02:31 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-09-08 10:52:14 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -67,6 +67,8 @@ pacman::p_load(Hmisc,
                magrittr,   # Utilise %>% and %<>% pipeline operators.
                mice,
                naniar,
+               nnet,
+               NeuralNetTools,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,
@@ -149,3 +151,5 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 }
 
 # theme_rattle <- theme_economist
+
+theme_default <- theme_rattle

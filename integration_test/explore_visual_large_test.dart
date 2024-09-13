@@ -2,7 +2,7 @@
 //
 // Time-stamp: <Tuesday 2024-09-03 09:06:15 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -33,6 +33,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
+import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/open_large_dataset.dart';
@@ -44,9 +45,10 @@ void main() {
     testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       await openLargeDataset(tester);
+      await tester.pump(longHack);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -57,6 +59,7 @@ void main() {
 
       await tester.tap(exploreIconFinder);
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Verify if the ExploreTabs widget is shown.
 
@@ -68,7 +71,7 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      await tester.pump(longHack);
 
       ////////////////////////////////////////////////////////////////////////
 
@@ -99,27 +102,28 @@ void main() {
       await tester.tap(generatePlotButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Find the right arrow button in the PageIndicator.
-
-      expect(rightArrowFinder, findsOneWidget);
-
       // Tap the right arrow button to go to "Box Plot" page 2.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Box Plot".
 
       final boxPlotFinder = find.textContaining('Box Plot');
       expect(boxPlotFinder, findsOneWidget);
+
+      // Find the image.
+
+      final boxImageFinder = find.byType(ImagePage);
+      expect(boxImageFinder, findsOneWidget);
 
       // TODO 20240827 gjw SOME PLOT TEST IDEAS
       //
@@ -130,34 +134,49 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Density Plot of Values".
 
       final densityPlotFinder = find.textContaining('Density Plot of Values');
       expect(densityPlotFinder, findsOneWidget);
 
+      // Find the image.
+
+      final densityImageFinder = find.byType(ImagePage);
+      expect(densityImageFinder, findsOneWidget);
+
       // Tap the right arrow button to go to "Cumulative Plot" page 4.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Cumulative Plot".
 
       final cumulativePlotFinder = find.textContaining('Cumulative Plot');
       expect(cumulativePlotFinder, findsOneWidget);
 
+      // Find the image.
+
+      final cumulativeImageFinder = find.byType(ImagePage);
+      expect(cumulativeImageFinder, findsOneWidget);
+
       // Tap the right arrow button to go to "Benford Plots" page 5.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(longHack);
 
       // Find the text containing "Benford Plot".
 
       final benfordPlotFinder = find.textContaining('Benford Plot');
       expect(benfordPlotFinder, findsOneWidget);
+
+      // Find the image.
+
+      final imageFinder = find.byType(ImagePage);
+      expect(imageFinder, findsOneWidget);
     });
   });
 }

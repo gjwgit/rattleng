@@ -1,6 +1,6 @@
 /// Navigate to a tab in the app.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:03:00 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 15:56:45 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -27,16 +27,34 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:rattle/home.dart';
+
+import 'delays.dart';
+
 Future<void> navigateToTab(
   WidgetTester tester,
   String tabTitle,
-  Type panelType,
 ) async {
-  final tabFinder = find.text(tabTitle);
-  expect(tabFinder, findsOneWidget);
+  // Find the tab details from homeTabs list using the tabTitle.
 
-  await tester.tap(tabFinder);
+  final tab = homeTabs.firstWhere(
+    (element) => element['title'] == tabTitle,
+    orElse: () => throw Exception('Unknown tab title: $tabTitle'),
+  );
+
+  // Find the icon associated with the tab.
+
+  final iconFinder = find.byIcon(tab['icon']);
+  expect(iconFinder, findsOneWidget);
+
+  // Tap the icon to navigate.
+
+  await tester.tap(iconFinder);
   await tester.pumpAndSettle();
 
-  expect(find.byType(panelType), findsOneWidget);
+  // Check if the widget of the tab is visible.
+
+  expect(find.byType(tab['widget'].runtimeType), findsOneWidget);
+
+  await tester.pump(delay);
 }

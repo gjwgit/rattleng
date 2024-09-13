@@ -29,12 +29,13 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:rattle/features/dataset/popup.dart';
-
 class Pages extends StatefulWidget {
   final List<Widget> children;
 
-  Pages({required this.children}) : super(key: pagesKey);
+  const Pages({
+    super.key,
+    required this.children,
+  });
 
   @override
   PagesState createState() => PagesState();
@@ -48,6 +49,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    _currentPage = 0;
     _pageController = PageController(initialPage: _currentPage);
     _tabController = TabController(length: widget.children.length, vsync: this);
 
@@ -60,6 +62,8 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     _pageController.removeListener(_syncTabControllerWithPageView);
     _pageController.dispose();
     _tabController.dispose();
+    _currentPage = 0;
+
     super.dispose();
   }
 
@@ -72,6 +76,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
   }
 
   void _initialiseControllers() {
+    _currentPage = 0;
     _tabController = TabController(length: widget.children.length, vsync: this);
   }
 
@@ -99,19 +104,21 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
       children: [
-        PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentPage = index;
-            });
-            _tabController.animateTo(index);
-          },
-          children: widget.children,
+        Expanded(
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+              _tabController.animateTo(index);
+            },
+            children: widget.children,
+          ),
         ),
+        const SizedBox(height: 5),
         PageIndicator(
           tabController: _tabController,
           currentPageIndex: _currentPage,
