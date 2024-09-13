@@ -188,7 +188,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
           homeTabs.where((tab) => tab['title'] != 'Transform').toList();
     } else {
 
-      // For other file types, include all tabs.
+      // For other file types including the no files, include all tabs.
 
       filteredHomeTabs = homeTabs;
     }
@@ -495,7 +495,7 @@ Xu, Yixiang Yin, Bo Zhang.
           ),
         ],
       ),
-      
+
       bottomNavigationBar: const StatusBar(),
     );
   }
