@@ -111,11 +111,13 @@ class RattleHome extends ConsumerStatefulWidget {
 
 class RattleHomeState extends ConsumerState<RattleHome>
     with SingleTickerProviderStateMixin {
+
   // We use a [tabController] to manager what scripts are run on moving from the
   // DATASET feature. The [tabController] keeps track of the selected index for
   // the NavigationRail.
 
   late TabController _tabController;
+  late List<Map<String, dynamic>> filteredHomeTabs;
 
   // We will populate the app name and version.
 
@@ -168,10 +170,30 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
     _loadAppInfo();
 
+    // Determine the path type to filter the tabs appropriately.
+
+    String currentPath = ref.read(pathProvider);
+
+    // Filter the tabs based on the file type.
+
+    if (currentPath.endsWith('.txt')) {
+
+      // For .txt files, exclude the Transform tab.
+
+      filteredHomeTabs =
+          homeTabs.where((tab) => tab['title'] != 'Transform').toList();
+    } else {
+
+      // For other file types, include all tabs.
+
+      filteredHomeTabs = homeTabs;
+    }
+
     // Create the [tabController] to manage what happens on leaving/entering
     // tabs.
 
-    _tabController = TabController(length: homeTabs.length, vsync: this);
+    _tabController =
+        TabController(length: filteredHomeTabs.length, vsync: this);
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab.
@@ -189,6 +211,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
           // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
 
           if (path.isNotEmpty) {
+
             // On leaving the DATASET tab we run the data template if there is a
             // dataset loaded, as indicated by the path having a value.
             //
@@ -378,7 +401,7 @@ Yin, Bo Zhang.
                   });
                 },
                 labelType: NavigationRailLabelType.all,
-                destinations: homeTabs.map((tab) {
+                destinations: filteredHomeTabs.map((tab) {
                   return NavigationRailDestination(
                     icon: Icon(tab['icon']),
                     label: Text(
@@ -398,11 +421,11 @@ Yin, Bo Zhang.
           ),
           const VerticalDivider(),
           Expanded(
-            child: homeTabs[_tabController.index]['widget'],
+            child: filteredHomeTabs[_tabController.index]['widget'],
           ),
         ],
       ),
-
+      
       bottomNavigationBar: const StatusBar(),
     );
   }

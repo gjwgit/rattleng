@@ -95,6 +95,7 @@ class ModelTabs extends ConsumerStatefulWidget {
   @override
   ConsumerState<ModelTabs> createState() => _ModelTabsState();
 }
+
 class _ModelTabsState extends ConsumerState<ModelTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
@@ -110,14 +111,17 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
     // Filter tabs based on the file type in the path
     if (currentPath.endsWith('.txt')) {
       // Only show the Word Cloud tab for .txt files
-      filteredModelPanels = modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
+      filteredModelPanels =
+          modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
     } else {
       // For other file types (including CSV), show all tabs except the Word Cloud tab
-      filteredModelPanels = modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
+      filteredModelPanels =
+          modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
     }
 
     // Initialize the TabController with the filtered panels
-    _tabController = TabController(length: filteredModelPanels.length, vsync: this);
+    _tabController =
+        TabController(length: filteredModelPanels.length, vsync: this);
 
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
