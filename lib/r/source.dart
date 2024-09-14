@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-09-08 09:42:54 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-15 07:42:59 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -344,5 +344,21 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = rStripComments(code);
 
+  // Add a completion marker.
+
+  code = '$code\nprint("Processing $script Completed")\n';
+
   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+
+  // Optionally, show a SnackBar when the script finishes executing.
+
+  if (code.contains('Processing $script Completed')) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Execution of $script.R is completed.'),
+        // Set a short duration
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 }
