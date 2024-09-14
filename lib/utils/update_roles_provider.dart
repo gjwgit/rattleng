@@ -137,7 +137,9 @@ void updateVariablesProvider(WidgetRef ref) {
           isNumeric(column.type) ? Type.numeric : Type.categoric;
     }
     for (var highVar in highVars) {
-      ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+      if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
+        ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+      }
     }
   }
 }
