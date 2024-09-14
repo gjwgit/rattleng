@@ -100,6 +100,28 @@ List<String> rExtractVars(String txt) {
   return result;
 }
 
+List<String> extractHighVariables(String txt) {
+  // Command used to locate the variable definitions in the text.
+
+  String cmd = '> large_factor_vars';
+
+  // Extract the variables string from the text based on the command.
+
+  String vars = rExtract(txt, cmd);
+
+  // Regular expression to find all variable names enclosed in double quotes.
+
+  RegExp regExp = RegExp(r'"(.*?)"');
+
+  // Find all matches of the regular expression in the vars string.
+
+  Iterable<Match> matches = regExp.allMatches(vars);
+
+  List<String> variableList = matches.map((match) => match.group(1)!).toList();
+
+  return variableList;
+}
+
 List<VariableInfo> extractVariables(String txt) {
   // extract the variable information from the latest glimpse(ds)
   String cmd = '> glimpse(ds)';
