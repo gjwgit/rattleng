@@ -27,11 +27,11 @@ Flutter Style Guide: https://survivor.togaware.com/gnulinux/flutter-style.html
   - [ ] Linux
   - [ ] MacOS
   - [ ] Windows
-- [ ] Added a reviewer
+- [ ] Added two reviewers
 
 ## Finalising
 
-Once PR discussion is complete and reviewer has approved:
+Once PR discussion is complete and reviewers have approved:
 
 - [ ] Merge dev into the branch
 - [ ] Resolve any conflicts

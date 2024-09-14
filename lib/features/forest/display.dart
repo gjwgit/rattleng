@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-07-14 20:42:10 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-07 15:42:26 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,6 +33,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_forest.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -98,12 +99,18 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       );
     }
 
-    pages.add(
-      ImagePage(
-        title: 'VAR IMPORTANCE',
-        path: '$tempDir/model_random_forest_varimp.svg',
-      ),
-    );
+    ////////////////////////////////////////////////////////////////////////
+
+    String image = '$tempDir/model_random_forest_varimp.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: 'VAR IMPORTANCE',
+          path: image,
+        ),
+      );
+    }
 
     return Pages(
       children: pages,

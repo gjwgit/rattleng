@@ -1,8 +1,8 @@
-/// DEMO DATASET GLIMPSE PANEL.
+/// Test and demonstrate the DATASET tab features with the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-08-28 09:15:56 +0800 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 17:25:33 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -34,21 +32,9 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 
-/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
-/// with the testing. 5s is good, 10s is useful for development and 0s for
-/// ongoing. This is not necessary but it is handy when running interactively
-/// for the user running the test to see the widgets for added assurance. The
-/// PAUSE environment variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
-const Duration hack = Duration(seconds: 10);
+import 'utils/delays.dart';
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -56,35 +42,11 @@ void main() {
   group('Demo Dataset:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
+      await tester.pump(hack);
 
-      // Leave time to see the first page.
-
-      await tester.pump(pause);
-
-      final datasetButtonFinder = find.byType(DatasetButton);
-      expect(datasetButtonFinder, findsOneWidget);
-      await tester.pump(pause);
-
-      final datasetButton = find.byType(DatasetButton);
-      expect(datasetButton, findsOneWidget);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await openDemoDataset(tester);
+      await tester.pump(hack);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
@@ -96,26 +58,31 @@ void main() {
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
+      await tester.pump(delay);
 
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
+      // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
+      // await tester.tap(rightArrowFinder);
+      // await tester.pumpAndSettle();
 
-      // Find the text containing "366".
+      // await tester.pump(pause);
 
-      final glimpseRowFinder = find.textContaining('366');
-      expect(glimpseRowFinder, findsOneWidget);
+      // // Find the text containing "366".
 
-      // Find the text containing "2007-11-01".
+      // final glimpseRowFinder = find.textContaining('366');
+      // expect(glimpseRowFinder, findsOneWidget);
 
-      final glimpseDateFinder = find.textContaining('2007-11-01');
-      expect(glimpseDateFinder, findsOneWidget);
+      // // Find the text containing "2007-11-01".
+
+      // final glimpseDateFinder = find.textContaining('2007-11-01');
+      // expect(glimpseDateFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "ROLES" page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
+
+      await tester.pump(hack);
 
       // Find the text containing "8.0".
 

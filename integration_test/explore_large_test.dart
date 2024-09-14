@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Wednesday 2024-08-28 09:19:11 +0800 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 08:54:31 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -52,7 +52,7 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Large Explore:', () {
+  group('Explore large:', () {
     testWidgets('Summary.', (WidgetTester tester) async {
       app.main();
 
@@ -135,6 +135,10 @@ void main() {
 
       await tester.pump(pause);
 
+      // Add a delay to allow the summary to be generated. This will fix the qtest failure.
+
+      await tester.pump(delay);
+
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
@@ -158,6 +162,13 @@ void main() {
 
       final firstNameFinder = find.textContaining('17510');
       expect(firstNameFinder, findsOneWidget);
+
+      // Tap the right arrow button to go to "Dataset Glimpse" page.
+
+      await tester.tap(rightArrowFinder);
+      await tester.pumpAndSettle();
+
+      await tester.pump(pause);
 
       // Tap the right arrow button to go to "Skim of the Dataset" page.
 

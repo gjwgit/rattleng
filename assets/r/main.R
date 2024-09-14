@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-16 09:21:31 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-09-08 10:52:14 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -67,6 +67,8 @@ pacman::p_load(Hmisc,
                magrittr,   # Utilise %>% and %<>% pipeline operators.
                mice,
                naniar,
+               nnet,
+               NeuralNetTools,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,
@@ -83,6 +85,11 @@ pacman::p_load(Hmisc,
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
 
 options(width=120)
+
+# Turn off fancy terminal escap sequences that are produced using the
+# crayon package.
+
+options(crayon.enabled = FALSE)
 
 # A pre-defined value for the random seed ensures that results are
 # repeatable.
@@ -144,3 +151,5 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 }
 
 # theme_rattle <- theme_economist
+
+theme_default <- theme_rattle

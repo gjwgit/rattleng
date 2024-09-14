@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-08-28 09:27:32 +0800 Graham Williams>
+// Time-stamp: <Saturday 2024-09-07 06:39:56 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,6 +33,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -60,10 +61,17 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
     Type? stype = ref.read(typesProvider.notifier).state[selected];
 
+    String image = '';
+
     if (stype == Type.numeric) {
-      pages.add(
-        ImagePage(
-          title: '''
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_boxplot.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Box Plot
 
@@ -72,13 +80,19 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           [ggplot2::geom_boxplot()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot).
 
               ''',
-          path: '$tempDir/explore_visual_boxplot.svg',
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
 
-      pages.add(
-        ImagePage(
-          title: '''
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_density.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Density Plot of Values
 
@@ -87,13 +101,19 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           [ggplot2::geom_density()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_density).
 
           ''',
-          path: '$tempDir/explore_visual_density.svg',
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
 
-      pages.add(
-        ImagePage(
-          title: '''
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_ecdf.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Cumulative Plot
 
@@ -102,13 +122,19 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           [ggplot2::stat_ecdf()](https://www.rdocumentation.org/packages/ggplot2/topics/stat_ecdf).
 
           ''',
-          path: '$tempDir/explore_visual_ecdf.svg',
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
 
-      pages.add(
-        ImagePage(
-          title: '''
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_benford.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Benford Plot
 
@@ -117,9 +143,10 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           [rattle::plotDigitFreq()](https://www.rdocumentation.org/packages/rattle).
 
           ''',
-          path: '$tempDir/explore_visual_benford.svg',
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
     }
 
     // If two variables selected then we can do a pairs plot.
@@ -134,9 +161,14 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     // );
 
     if (stype == Type.categoric) {
-      pages.add(
-        ImagePage(
-          title: '''
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_bars.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Bar Chart
 
@@ -145,13 +177,19 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           [gplots::barplot2()](https://www.rdocumentation.org/packages/gplots/topics/barplot2).
 
           ''',
-          path: '$tempDir/explore_visual_bars.svg',
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
 
-      pages.add(
-        ImagePage(
-          title: '''
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_dots.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Dot Plot
 
@@ -160,13 +198,19 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           [graphics::dotchart()](https://www.rdocumentation.org/packages/graphics/topics/dotchart).
 
           ''',
-          path: '$tempDir/explore_visual_dots.svg',
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
 
-      pages.add(
-        ImagePage(
-          title: '''
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_mosaic.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Mosaic Plot
 
@@ -175,9 +219,10 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           [graphics::mosaicplot()](https://www.rdocumentation.org/packages/graphics/topics/mosaicplot).
 
           ''',
-          path: '$tempDir/explore_visual_mosaic.svg',
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
     }
 
     return Pages(

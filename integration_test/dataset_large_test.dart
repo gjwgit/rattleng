@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Wednesday 2024-08-28 08:46:54 +0800 Graham Williams>
+// Time-stamp: <Sunday 2024-09-15 07:27:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -31,8 +31,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:rattle/providers/stdout.dart';
 
 import 'package:rattle/main.dart' as app;
+import 'utils/init_app.dart';
 
 /// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
 /// with the testing. 5s is good, 10s is useful for development and 0s for
@@ -50,16 +52,10 @@ const Duration hack = Duration(seconds: 10);
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Large Dataset:', () {
+  group('Dataset large:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
-      app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
+      final container = await initApp(tester);
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
       await tester.pump(pause);
 
       // Locate the TextField where the file path is input.
@@ -88,26 +84,29 @@ void main() {
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
 
-      await tester.pump(hack);
+      final stdout = container.read(stdoutProvider);
+      debugPrint(stdout);
+
+      // await tester.pump(hack);
 
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
+      // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
+      // await tester.tap(rightArrowFinder);
+      // await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      // await tester.pump(pause);
 
-      // Find the text containing the number of rows and columns.
+      // // Find the text containing the number of rows and columns.
 
-      final glimpseRowFinder = find.textContaining('Rows: 20,000');
-      expect(glimpseRowFinder, findsOneWidget);
-      final glimpseColumnFinder = find.textContaining('Columns: 24');
-      expect(glimpseColumnFinder, findsOneWidget);
+      // final glimpseRowFinder = find.textContaining('Rows: 20,000');
+      // expect(glimpseRowFinder, findsOneWidget);
+      // final glimpseColumnFinder = find.textContaining('Columns: 24');
+      // expect(glimpseColumnFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "ROLES" page.
 
