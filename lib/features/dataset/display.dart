@@ -156,7 +156,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ref.read(rolesProvider.notifier).state[id] = Role.ident;
         }
         for (var highVar in highVars) {
-          ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+          if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
+            ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+          }
         }
       }
 
