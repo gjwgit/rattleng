@@ -111,6 +111,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       // Extract variable information from the R console.
 
       List<VariableInfo> vars = extractVariables(stdout);
+      List<String> highVars = extractHighVariables(stdout);
 
       // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
       // IDENTS. Also record variable types.
@@ -153,6 +154,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
         for (var id in getUniqueColumns(ref)) {
           ref.read(rolesProvider.notifier).state[id] = Role.ident;
+        }
+        for (var highVar in highVars) {
+          ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
         }
       }
 

@@ -117,6 +117,8 @@ void updateVariablesProvider(WidgetRef ref) {
   // get the most recent vars information from glimpse and update the information in roles provider and types provider
   String stdout = ref.watch(stdoutProvider);
   List<VariableInfo> vars = extractVariables(stdout);
+  List<String> highVars = extractHighVariables(stdout);
+
   // When a new row is added after transformation, initialise its role and update the role of the old variable
   for (var column in vars) {
     // update roles
@@ -133,6 +135,9 @@ void updateVariablesProvider(WidgetRef ref) {
     if (!ref.read(typesProvider.notifier).state.containsKey(column.name)) {
       ref.read(typesProvider.notifier).state[column.name] =
           isNumeric(column.type) ? Type.numeric : Type.categoric;
+    }
+    for (var highVar in highVars) {
+      ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
     }
   }
 }

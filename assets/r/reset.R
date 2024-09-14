@@ -40,3 +40,26 @@ names(ds)
 
 glimpse(ds)
 summary(ds)
+
+# Check if a variable is a factor (including ordered factors) and has more than 10 levels.
+
+is_large_factor <- function(x) {
+  is.factor(x) || is.ordered(x) && length(levels(x)) > 10
+}
+
+# Filter the variables in the dataset that are factors or ordered factors with more than 10 levels.
+
+large_factors <- sapply(ds, function(x) {
+  if (is.factor(x) || is.ordered(x)) {
+    return(length(levels(x)) > 10)
+  }
+  return(FALSE)
+})
+
+# Get the names of those variables.
+
+large_factor_vars <- names(large_factors)[large_factors]
+
+# Print the variable names.
+
+large_factor_vars
