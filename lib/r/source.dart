@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-09-15 20:40:46 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-15 20:41:39 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -376,7 +376,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
           backgroundColor: const Color(0xFFBBDEFB),
           elevation: 5,
           behavior: SnackBarBehavior.floating,
-          shape: StadiumBorder(),
+          shape: const StadiumBorder(),
           width: 600,
           // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
           // Set a short duration
