@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-09-15 10:50:12 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-15 19:58:20 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -354,13 +354,28 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // Optionally, show a SnackBar when the script finishes executing.
 
   if (code.contains('Processing $script Completed')) {
-    setStatus(ref, 'Completed $script.R');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Execution of $script.R is completed.'),
-        // Set a short duration
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    setStatus(ref,
+        'The R script **$script.R** has been run. See **Console** for details and **Script** for the R code.');
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              const Icon(Icons.thumb_up, color: Colors.blue),
+              const SizedBox(width: 20),
+              Expanded(
+                child: Text(
+                  'Execution of $script.R is completed.',
+                  style: const TextStyle(color: Colors.blue),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: const Color(0xFFBBDEFB),
+          // Set a short duration
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 }
