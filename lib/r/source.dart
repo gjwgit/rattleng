@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-09-15 07:42:59 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-15 10:50:12 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -73,6 +73,7 @@ import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/to_r_vector.dart';
+import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [script] and append to the [rattle] script.
@@ -353,6 +354,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // Optionally, show a SnackBar when the script finishes executing.
 
   if (code.contains('Processing $script Completed')) {
+    setStatus(ref, 'Completed $script.R');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Execution of $script.R is completed.'),
