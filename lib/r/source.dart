@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-09-15 19:58:20 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-15 20:40:46 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -354,15 +354,17 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // Optionally, show a SnackBar when the script finishes executing.
 
   if (code.contains('Processing $script Completed')) {
-    setStatus(ref,
-        'The R script **$script.R** has been run. See **Console** for details and **Script** for the R code.');
+    setStatus(
+        ref,
+        'The R script **$script.R** has run. '
+        'See **Console** for details and **Script** for the R code.');
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
             children: [
               const Icon(Icons.thumb_up, color: Colors.blue),
-              const SizedBox(width: 20),
+              const SizedBox(width: 40),
               Expanded(
                 child: Text(
                   'Execution of $script.R is completed.',
@@ -372,8 +374,19 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
             ],
           ),
           backgroundColor: const Color(0xFFBBDEFB),
+          elevation: 5,
+          behavior: SnackBarBehavior.floating,
+          shape: StadiumBorder(),
+          width: 600,
+          // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
           // Set a short duration
           duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: 'Okay',
+            disabledTextColor: Colors.white,
+            textColor: Colors.blue,
+            onPressed: () {},
+          ),
         ),
       );
     }
