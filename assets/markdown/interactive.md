@@ -1,12 +1,18 @@
 # Interactive Data Exploration
 
-GGobi is an independent applications which provide highly dynamic and
-interactive graphic data visualisation for exploratory data analysis.
+Rattle V5 and earlier have utilised [GGobi](http://ggobi.org/) as an
+independent application which provides highly dynamic and interactive
+graphic data visualisations for exploratory data analysis. GGobi is
+written in C.  Specialist tools include tours, scatterplots, barcharts
+and parallel coordinates plots. Points can be identified and linked
+with brushing across multiple plots.
 
-GGobi is written in C.
+GGobi is a stable product and development of it has not seen any
+activity since about 2010. Nonetheless, it remains a great tool to
+interactively visualise your data.
 
-Specialist tools include tours, scatterplots, barcharts and parallel
-coordinates plots.
+This interactive feature will simply pass the current dataset on to
+GGobi for you to separately explore your data.
 
-Points can be identified and linked with brushing across multiple
-plots.
+In the meantime you can install GGobi following the instructions from
+the [Download GGobi](http://ggobi.org/downloads/index.html) site.
