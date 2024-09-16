@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Sunday 2024-09-15 07:27:01 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-16 08:57:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -87,7 +87,7 @@ void main() {
       final stdout = container.read(stdoutProvider);
       debugPrint(stdout);
 
-      // await tester.pump(hack);
+      await tester.pump(hack);
 
       // Find the right arrow button in the PageIndicator.
 
