@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Thursday 2024-09-12 08:54:31 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-16 14:58:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -153,14 +153,14 @@ void main() {
 
       await tester.pump(hack);
 
-      // Find the ssn containing "19994".
+      // Find some expected strings.
 
-      final ssnFinder = find.textContaining('19994');
+      final ssnFinder = find.textContaining('Length:20000');
       expect(ssnFinder, findsOneWidget);
 
-      // Find the first_name containing "17510".
+      // Find the gender containing count of females".
 
-      final firstNameFinder = find.textContaining('17510');
+      final firstNameFinder = find.textContaining('f:12435');
       expect(firstNameFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "Dataset Glimpse" page.
@@ -169,6 +169,11 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(pause);
+
+      // Find the text containing "20,000" as the number of rows.
+
+      var rowsFinder = find.textContaining('20,000');
+      expect(rowsFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "Skim of the Dataset" page.
 
@@ -179,7 +184,7 @@ void main() {
 
       // Find the text containing "20000" as the number of rows.
 
-      final rowsFinder = find.textContaining('20000');
+      rowsFinder = find.textContaining('20000');
       expect(rowsFinder, findsOneWidget);
 
       // Find the text containing "24" as the number of columns.
