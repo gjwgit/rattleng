@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/data.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/normalise.dart';
@@ -63,15 +64,17 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           }
         });
       },
-      children: const <Widget>[
+      children: <Widget>[
         // CLEANSE
 
         DelayedTooltip(
           message: '''
 
-          Cleanse: A CSV dataset is cleaned up by removing constant columns and
-          converting character columns to factors (categoric).  If you do not
-          require this automated cleansing of the dataset, turn this off.
+          Cleanse is currently ${cleanse ? "" : "not "}enabled: When enabled a
+          dataset will be cleansed by removing any columns with a single
+          constant value and converting character columns with $charToFactor or
+          fewer unique values to factors (categoric).  If you do not require
+          this automated cleansing of the dataset, disable this option.
 
               ''',
           child: Icon(Icons.cleaning_services),
@@ -82,10 +85,11 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         DelayedTooltip(
           message: '''
 
-          Unify: Column (variable) names of a CSV dataset are unified by
-          converting them to lowercase and separating words by underscore.  If
-          you do not require this automated unifying of the variable names, turn
-          this off.
+          Unify is currently ${normalise ? "" : "not "}enabled: When enabled the
+          names of columns (variables) of the dataset are unified by converting
+          them to lowercase and separating words by underscore.  If you do not
+          require this automated unifying of the variable names, disable this
+          option.
 
           ''',
           child: Icon(Icons.auto_fix_high_outlined),
@@ -98,11 +102,17 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         DelayedTooltip(
           message: '''
 
-          Partition: A CSV dataset will be split into three smaller datasets,
-          with a 70/15/15 split by default, which is common for building
-          predictive models. For exploring up to reasonably large datasets (tens
-          of thousands of observations) you can turn partitioning off so all
-          data is included in the exploration.
+          Partition is currently ${partition ? "" : "not "}enabled: When
+          enabled, for the purposes of predictive modelling, a dataset will be
+          randomly split into three smaller datasets. The three-way split is
+          commonly 70/15/15 percent. Respectively, this creates a training
+          dataset (to build the model), a tuning dataset (to assist in tuning
+          the model during build), and a testing dataset (as a hold-out dataset
+          for an unbiased estimate of the expected performance of the
+          model). For exploring up to reasonably large datasets (tens of
+          thousands of observations) you can turn partitioning off so all data
+          is included in the exploration. For larger datasets the partitioning
+          is also useful to explore a random subset of the full dataset.
 
           ''',
           child: Icon(Icons.horizontal_split),
