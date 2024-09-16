@@ -60,6 +60,9 @@ class DatasetDisplay extends ConsumerStatefulWidget {
 }
 
 class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
+  // Define a global key for the Pages widget
+  final GlobalKey<PagesState> pagesKey = GlobalKey<PagesState>();
+
   Widget space = const SizedBox(
     width: 10,
   );
@@ -358,6 +361,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       );
     }
 
-    return Pages(children: pages);
+    return Pages(key: pagesKey, children: pages);
   }
 }
