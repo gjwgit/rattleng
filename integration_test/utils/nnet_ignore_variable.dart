@@ -32,7 +32,6 @@ final List<String> demoVariablesToIgnore = [
   'wind_gust_dir',
   'wind_dir_9am',
   'wind_dir_3pm',
-  'rain_today',
 ];
 
 /// List of specific variables that should have their role set to 'Ignore' in
@@ -49,10 +48,8 @@ final List<String> largeVariablesToIgnore = [
   'street_address',
   'suburb',
   'postcode',
-  'state',
   'phone',
   'email',
-  'marital_status',
   'clinical_notes',
   'consultation_timestamp',
 ];

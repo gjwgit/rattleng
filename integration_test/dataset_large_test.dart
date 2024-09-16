@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Wednesday 2024-09-11 16:21:08 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-16 14:52:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -94,7 +94,7 @@ void main() {
       // await tester.tap(rightArrowFinder);
       // await tester.pumpAndSettle();
 
-      // await tester.pump(pause);
+      await tester.pump(hack);
 
       // // Find the text containing the number of rows and columns.
 
@@ -110,7 +110,7 @@ void main() {
 
       // Find the text containing "rec-57600".
 
-      final rolesRecIDFinder = find.textContaining('rec-57600, rec-73378,');
+      final rolesRecIDFinder = find.textContaining('"rec-57600", "rec-73378",');
       expect(rolesRecIDFinder, findsOneWidget);
 
       await tester.pump(pause);
