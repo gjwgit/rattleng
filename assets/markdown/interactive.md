@@ -15,4 +15,14 @@ This interactive feature will simply pass the current dataset on to
 GGobi for you to separately explore your data.
 
 In the meantime you can install GGobi following the instructions from
-the [Download GGobi](http://ggobi.org/downloads/index.html) site.
+the [Download GGobi](http://ggobi.org/downloads/index.html) site. The
+older [rggobi](https://cran.r-project.org/package=rggobi) package for
+R was archived in 2020. 
+
+The Debian/Ubuntu version is still available and can be installed as:
+
+```
+sudo apt install ggobi
+```
+
+> 
