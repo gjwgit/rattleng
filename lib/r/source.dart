@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-09-15 07:42:59 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-09-16 09:22:26 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+
 library;
 
 import 'dart:convert';
@@ -73,6 +74,7 @@ import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/to_r_vector.dart';
+import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [script] and append to the [rattle] script.
@@ -131,7 +133,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   String code = await DefaultAssetBundle.of(context).loadString(asset);
   // var code = File('assets/r/$script.R').readAsStringSync();
 
-  // Process template variables.
+  ////////////////////////////////////////////////////////////////////////
+  // Process global template variables.
 
   code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
@@ -156,9 +159,12 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
+  // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
+
+  code = code.replaceAll('MAXFACTOR', '20');
+
   ////////////////////////////////////////////////////////////////////////
-  // CLEANUP
-  ////////////////////////////////////////////////////////////////////////
+  // Cleanup
 
   // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
 
@@ -353,12 +359,41 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // Optionally, show a SnackBar when the script finishes executing.
 
   if (code.contains('Processing $script Completed')) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Execution of $script.R is completed.'),
-        // Set a short duration
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    setStatus(
+        ref,
+        'The R script **$script.R** has run. '
+        'See **Console** for details and **Script** for the R code.');
+    // if (context.mounted) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Row(
+    //         children: [
+    //           const Icon(Icons.thumb_up, color: Colors.blue),
+    //           const SizedBox(width: 40),
+    //           Expanded(
+    //             child: Text(
+    //               'Execution of $script.R is completed.',
+    //               style: const TextStyle(color: Colors.blue),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //       backgroundColor: const Color(0xFFBBDEFB),
+    //       elevation: 5,
+    //       behavior: SnackBarBehavior.floating,
+    //       shape: const StadiumBorder(),
+    //       width: 600,
+    //       // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
+    //       // Set a short duration
+    //       duration: const Duration(seconds: 1),
+    //       action: SnackBarAction(
+    //         label: 'Okay',
+    //         disabledTextColor: Colors.white,
+    //         textColor: Colors.blue,
+    //         onPressed: () {},
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 }
