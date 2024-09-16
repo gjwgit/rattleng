@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Monday 2024-09-16 08:57:40 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 16:21:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -31,10 +31,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/providers/stdout.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'utils/init_app.dart';
 
 /// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
 /// with the testing. 5s is good, 10s is useful for development and 0s for
@@ -54,7 +52,7 @@ void main() {
 
   group('Dataset large:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
-      final container = await initApp(tester);
+      app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
@@ -83,9 +81,6 @@ void main() {
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
-
-      final stdout = container.read(stdoutProvider);
-      debugPrint(stdout);
 
       await tester.pump(hack);
 
