@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-29 17:15:48 +0800 Graham Williams>
+# Time-stamp: <Monday 2024-09-16 08:53:19 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -126,5 +126,7 @@ nmobs <- sum(apply(ds, 1, anyNA))
 
 nmobs
 
+# 20240916 gjw This is required for building the ROLES table but will
+# eventually be replaced by the meta data.
+
 glimpse(ds)
-summary(ds)
