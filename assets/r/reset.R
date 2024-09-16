@@ -50,8 +50,17 @@ is_large_factor <- function(x) {
 # Filter the variables in the dataset that are factors or ordered factors with more than 10 levels.
 
 large_factors <- sapply(ds, function(x) {
+  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  
   if (is.factor(x) || is.ordered(x)) {
-    return(length(levels(x)) > 10)
+    num_levels <- length(levels(x))
+  } else if (is.character(x)) {
+    num_levels <- length(unique(x))
+  } else {
+    num_levels <- NA  # For non-categorical variables
+  }
+  if (is_categorical) {
+    return(num_levels > 10)
   }
   return(FALSE)
 })
