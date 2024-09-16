@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-09-08 10:55:23 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-09-16 08:53:26 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -136,7 +136,7 @@ vnames <- names(ds)
 # normalise the variable names on loading the data. It is set on by
 # default.
 
-if (NORMALISE_NAMES) ds %<>% clean_names(numerals="right")
+if (NORMALISE_NAMES) ds %<>% janitor::clean_names(numerals="right")
 
 # Cleanse the dataset of constant value columns and convert char to
 # factor.
@@ -144,7 +144,9 @@ if (NORMALISE_NAMES) ds %<>% clean_names(numerals="right")
 if (CLEANSE_DATASET) {
   # Map character columns to be factors.
   
-  ds %<>% mutate_if(sapply(ds, is.character), as.factor)
+  ds %<>% mutate(across(where(is.character),
+                        ~ if (n_distinct(.) <= MAXFACTOR)
+                          as.factor(.) else .))
 
   # Remove any constant columns,
 
@@ -224,6 +226,9 @@ names(vnames) <- names(ds)
 # Display the list of vars.
 
 names(ds)
+
+# 20240916 gjw This is required for building the ROLES table but will
+# eventually be replaced by the meta data.
 
 glimpse(ds)
 summary(ds)
