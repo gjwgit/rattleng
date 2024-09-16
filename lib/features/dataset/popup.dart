@@ -37,6 +37,7 @@ import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
+import 'package:rattle/widgets/pages.dart';
 
 const double heightSpace = 20;
 const double widthSpace = 10;
@@ -142,19 +143,21 @@ class DatasetPopup extends ConsumerWidget {
 
               ElevatedButton(
                 onPressed: () async {
-                  // TODO 20231101 gjw DEFINE setPath()
-
+                  // Load the dataset as before
                   ref.read(pathProvider.notifier).state = weatherDemoFile;
-
-                  // TODO 20240714 gjw HOW TO GET THE weather.csv FROM ASSETS
-                  // ref.read(pathProvider.notifier).state =
-                  //     'assets/data/weather.csv';
                   await rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
 
                   if (context.mounted) Navigator.pop(context, 'Demo');
 
                   datasetLoadedUpdate(ref);
+
+                  await Future.delayed(const Duration(seconds: 6));
+
+                  print("test 1");
+
+                  // Use the pagesKey to navigate to the second page
+                  pagesKey.currentState?.setPage(1);
                 },
                 child: const Text('Demo'),
               ),
