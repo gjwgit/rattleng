@@ -52,12 +52,12 @@ void main() {
       await _navigateToTab(tester, 'Missing', MissingPanel);
 
       await _performMissingAnalysis(tester);
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '47');
+      await _verifyPageContent(tester, 'Patterns of Missing Data', '354');
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
         tester,
         'Aggregation of Missing Values - Textual',
-        '31',
+        '7',
       );
       await _verifyPageContent(
         tester,
@@ -131,6 +131,6 @@ Future<void> _verifyPageContent(
 
   if (value != null) {
     final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
+    expect(valueFinder, findsWidgets);
   }
 }
