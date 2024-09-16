@@ -49,6 +49,18 @@ At any time visit the **Script** tab to see the **R** code that is
 automatically generated. You can export the script as a standalone R
 program.
 
+## Options
+
+The toggles within the top left of the configuration panel support
+cleansing, unifying, and partitioning. A dataset is cleansed by
+removing columns that have a single constant value, and by converting
+character columns with only a limited number of values into factors. A
+dataset is unified by converting column names to a [standard
+format](https://survivor.togaware.com/datascience/normalise-variable-names.html),
+and partitioning will split a dataset into [training, tuning, and
+testing](https://survivor.togaware.com/datascience/train-tune-and-test-datasets.html)
+datasets.
+
 ## Resources
 
 Rattle V5 is well covered in **Data Mining with Rattle and R**
