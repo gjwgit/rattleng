@@ -282,9 +282,10 @@ qtest:
 	fi; \
 	for t in integration_test/*_test.dart; do \
 		echo "========================================"; \
-		echo $$t; echo $$t >&2; \
+		echo $$t; /bin/echo -n $$t >&2; \
 		echo "========================================"; \
 		flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t ; \
+		if [ "$$?" -eq 0 ]; then /bin/echo ' YES' >&2; else /bin/echo ' NO *****' >&2; fi; \
 	done
 	@echo $(SEPARATOR)
 
