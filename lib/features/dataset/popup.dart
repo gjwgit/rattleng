@@ -34,6 +34,7 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/page_index.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
@@ -156,8 +157,12 @@ class DatasetPopup extends ConsumerWidget {
 
                   print("test 1");
 
-                  // Use the pagesKey to navigate to the second page
-                  // pagesKey.currentState?.setPage(1);
+                  // Check if the widget is still mounted before updating the provider's state
+                  if (context.mounted) {
+                    ref.read(pageIndexProvider.notifier).state = 1;
+                  }
+
+                  // to navigate to the second page
                 },
                 child: const Text('Demo'),
               ),
