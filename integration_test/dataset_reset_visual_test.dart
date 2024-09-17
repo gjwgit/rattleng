@@ -207,6 +207,7 @@ void main() {
       Icons.model_training,
       ModelTabs,
     );
+    await tester.pump(hack);
 
     await navigateToFeature(tester, 'Tree', TreePanel);
     // Find the TabPageSelector and check its page count.
