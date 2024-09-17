@@ -113,7 +113,7 @@ void main() {
 
       // Allow time for the UI to settle after the tab change.
 
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       // Step 3: Verify that the imputed variable 'IZR_middle_name' is present in the dataset.
 
