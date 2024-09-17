@@ -132,13 +132,8 @@ nmobs
 glimpse(ds)
 summary(ds)
 
-# Check if a variable is a factor (including ordered factors) and has more than 10 levels.
 
-is_large_factor <- function(x) {
-  is.factor(x) || is.ordered(x) && length(levels(x)) > 10
-}
-
-# Filter the variables in the dataset that are factors or ordered factors with more than 10 levels.
+# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
 
 large_factors <- sapply(ds, function(x) {
   is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
@@ -151,7 +146,7 @@ large_factors <- sapply(ds, function(x) {
     num_levels <- NA  # For non-categorical variables
   }
   if (is_categorical) {
-    return(num_levels > 10)
+    return(num_levels > MAXFACTOR)
   }
   return(FALSE)
 })

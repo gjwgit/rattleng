@@ -121,7 +121,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 17-10-1 network with 208 weights') == true,
+            widget.data?.contains('a 62-10-1 network with 703 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -254,7 +254,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 17-11-1 network with 227 weights') == true,
+            widget.data?.contains('a 62-11-1 network with 767 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
