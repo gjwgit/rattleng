@@ -152,12 +152,9 @@ class DatasetPopup extends ConsumerWidget {
 
                   datasetLoadedUpdate(ref);
 
-                  await Future.delayed(const Duration(seconds: 6));
-
                   print("test 1");
 
-                  // Use the pagesKey to navigate to the second page
-                  // pagesKey.currentState?.setPage(1);
+                  // navigate to the second page
                 },
                 child: const Text('Demo'),
               ),
