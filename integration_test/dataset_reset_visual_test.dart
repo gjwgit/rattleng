@@ -207,9 +207,6 @@ void main() {
     await tester.pump(hack);
 
     await navigateToFeature(tester, 'Tree', TreePanel);
-    // Find the TabPageSelector and check its page count.
-    final tabPageSelectorFinder = find.byType(TabPageSelector);
-    // expect(tabPageSelectorFinder, findsOneWidget);
 
     // Assuming the TabPageSelector's page count is based on a PageController
     final pageControllerFinder = find.byWidgetPredicate(

@@ -445,18 +445,6 @@ void main() {
 
       await tester.pump(delay);
 
-      // Check if SelectableText contains the expected content.
-
-      final modelDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains('a 17-11-1 network with 227 weights') == true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      // expect(modelDescriptionFinder, findsOneWidget); //TODO kevin
-
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
@@ -467,19 +455,6 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
-
-      final optionsDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains(
-                  'options were - skip-layer connections  entropy fitting',
-                ) ==
-                true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      // expect(optionsDescriptionFinder, findsOneWidget);
 
       await tester.pump(pause);
 
