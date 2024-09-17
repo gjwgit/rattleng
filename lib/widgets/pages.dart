@@ -28,12 +28,8 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-// pages_widget.dart
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/page_index.dart';
 
-class Pages extends ConsumerStatefulWidget {
+class Pages extends StatefulWidget {
   final List<Widget> children;
 
   const Pages({
@@ -45,14 +41,16 @@ class Pages extends ConsumerStatefulWidget {
   PagesState createState() => PagesState();
 }
 
-class PagesState extends ConsumerState<Pages> with TickerProviderStateMixin {
+class PagesState extends State<Pages> with TickerProviderStateMixin {
   late PageController _pageController;
   late TabController _tabController;
+  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _currentPage = 0;
+    _pageController = PageController(initialPage: _currentPage);
     _tabController = TabController(length: widget.children.length, vsync: this);
 
     // Listen to the page changes and update the TabController accordingly
@@ -64,6 +62,8 @@ class PagesState extends ConsumerState<Pages> with TickerProviderStateMixin {
     _pageController.removeListener(_syncTabControllerWithPageView);
     _pageController.dispose();
     _tabController.dispose();
+    _currentPage = 0;
+
     super.dispose();
   }
 
@@ -76,41 +76,43 @@ class PagesState extends ConsumerState<Pages> with TickerProviderStateMixin {
   }
 
   void _initialiseControllers() {
+    _currentPage = 0;
     _tabController = TabController(length: widget.children.length, vsync: this);
   }
 
   void _syncTabControllerWithPageView() {
-    // Correcting the way we access the state from pageIndexProvider
-    final newPageIndex =
-        _pageController.page?.round() ?? ref.read(pageIndexProvider);
+    // Calculate the new page index
+    final newPageIndex = _pageController.page?.round() ?? _currentPage;
 
     // Update only if the page index has changed
-    if (newPageIndex != ref.read(pageIndexProvider)) {
-      ref.read(pageIndexProvider.notifier).state = newPageIndex!;
-      _tabController.index = newPageIndex;
+    if (newPageIndex != _currentPage) {
+      setState(() {
+        _currentPage = newPageIndex;
+        _tabController.index = _currentPage;
+      });
     }
+  }
+
+  // This method sets the current page to the given index.
+  void setPage(int index) {
+    setState(() {
+      _currentPage = index;
+      _pageController.jumpToPage(index);
+      _tabController.index = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final pageIndex = ref.watch(pageIndexProvider);
-
-    // Update page controller and tab controller whenever page index changes
-    if (_pageController.hasClients &&
-        pageIndex != _pageController.page?.round()) {
-      _pageController.jumpToPage(pageIndex);
-    }
-    if (_tabController.index != pageIndex) {
-      _tabController.index = pageIndex;
-    }
-
     return Column(
       children: [
         Expanded(
           child: PageView(
             controller: _pageController,
             onPageChanged: (index) {
-              ref.read(pageIndexProvider.notifier).state = index;
+              setState(() {
+                _currentPage = index;
+              });
               _tabController.animateTo(index);
             },
             children: widget.children,
@@ -119,20 +121,22 @@ class PagesState extends ConsumerState<Pages> with TickerProviderStateMixin {
         const SizedBox(height: 5),
         CustomPageIndicator(
           tabController: _tabController,
-          currentPageIndex: pageIndex,
-          onUpdateCurrentPageIndex: (index) {
-            ref.read(pageIndexProvider.notifier).state = index;
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
-          },
+          currentPageIndex: _currentPage,
+          onUpdateCurrentPageIndex: _updateCurrentPageIndex,
           isOnDesktopAndWeb: _isOnDesktopAndWeb,
           pageController: _pageController,
           numOfPages: widget.children.length,
         ),
       ],
+    );
+  }
+
+  void _updateCurrentPageIndex(int index) {
+    _tabController.index = index;
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 
