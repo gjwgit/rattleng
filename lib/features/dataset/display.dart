@@ -36,6 +36,7 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
@@ -111,7 +112,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       // Extract variable information from the R console.
 
       List<VariableInfo> vars = extractVariables(stdout);
-      List<String> highVars = extractHighVariables(stdout);
+      List<String> highVars = extractLargeFactors(stdout);
 
       // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
       // IDENTS. Also record variable types.

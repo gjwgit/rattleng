@@ -35,6 +35,7 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/is_numeric.dart';
 
@@ -117,7 +118,7 @@ void updateVariablesProvider(WidgetRef ref) {
   // get the most recent vars information from glimpse and update the information in roles provider and types provider
   String stdout = ref.watch(stdoutProvider);
   List<VariableInfo> vars = extractVariables(stdout);
-  List<String> highVars = extractHighVariables(stdout);
+  List<String> highVars = extractLargeFactors(stdout);
 
   // When a new row is added after transformation, initialise its role and update the role of the old variable
   for (var column in vars) {
