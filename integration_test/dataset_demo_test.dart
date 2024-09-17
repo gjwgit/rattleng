@@ -1,6 +1,6 @@
 /// Test and demonstrate the DATASET tab features with the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-09-11 17:25:33 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-18 09:01:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -52,7 +52,7 @@ void main() {
       expect(dsPathTextFinder, findsOneWidget);
       final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
       String filename = dsPathText.controller?.text ?? '';
-      expect(filename, 'rattle::weather');
+      expect(filename.contains('weather.csv'), isTrue);
 
       // Find the right arrow button in the PageIndicator.
 
