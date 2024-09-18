@@ -156,7 +156,7 @@ theme_default <- theme_rattle
 
 # Check if a variable is a factor (including ordered factors) and has more than 20 levels.
 
-is_large_factor <- function(x, MAXFACTOR = 20) {
+is_large_factor <- function(x, maxfactor = 20) {
   is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
   
   if (is.factor(x) || is.ordered(x)) {
@@ -168,7 +168,7 @@ is_large_factor <- function(x, MAXFACTOR = 20) {
   }
   
   if (is_categorical) {
-    return(num_levels > MAXFACTOR)
+    return(num_levels > maxfactor)
   }
   return(FALSE)
 }
