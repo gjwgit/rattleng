@@ -37,19 +37,27 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/check_popup.dart';
+import 'utils/next_page.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/open_large_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('TRANSFORM CLEANUP IGNORE DEMO:', () {
-    testWidgets('cleanup', (WidgetTester tester) async {
+  group('Sherlock Dataset:', () {
+    testWidgets('Wordcloud', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await openDatasetByPath(tester, 'assets/data/diabetes.txt');
+      await openDatasetByPath(tester, 'integration_test/sherlock.txt');
+
+
+      await goToNextPage(tester);
+
+      // TODO: BUG
+      final textFinder = find.text('The Project Gutenberg eBook of The Adventures of Sherlock Holmes');
+      expect(textFinder, findsOneWidget);
 
     });
   });
