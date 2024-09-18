@@ -132,7 +132,7 @@ jobs:
           architecture: x64
           flutter-version: '3.24.1'
 
-      - name: Install project dependencies
+      - name: Install Project Dependencies
         run: flutter pub get
 
       - name: Enable Windows Build
