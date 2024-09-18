@@ -31,7 +31,7 @@ variables in the dataset having missing values.
 The aggregation analysis (second pair of pages) simply reports on the
 proportion of values missing (rather than the count).
 
-For the **Visual** presentation the left-hand plot shots these
+For the **Visual** presentation the left-hand plot shows these
 proportions for each variable.
 
 The right-hand plot of the **Visual** presentation records combination
