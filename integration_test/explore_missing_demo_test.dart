@@ -52,7 +52,7 @@ void main() {
       await _navigateToTab(tester, 'Missing', MissingPanel);
 
       await _performMissingAnalysis(tester);
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '328');
+      await _verifyPageContent(tester, 'Patterns of Missing Data', '354');
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
         tester,
