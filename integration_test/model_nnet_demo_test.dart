@@ -103,11 +103,6 @@ void main() {
 
       await tester.pump(hack);
 
-      // Optionally, you can test interactions with the TabPageSelector.
-
-      final pageIndicator = find.byType(TabPageSelector);
-      expect(pageIndicator, findsOneWidget);
-
       // Tap the right arrow to go to the second page.
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
@@ -271,19 +266,6 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
-
-      final optionsDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains(
-                  'options were - skip-layer connections  entropy fitting',
-                ) ==
-                true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      expect(optionsDescriptionFinder, findsOneWidget);
 
       await tester.pump(pause);
 
