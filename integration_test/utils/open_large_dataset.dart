@@ -58,3 +58,31 @@ Future<void> openLargeDataset(WidgetTester tester) async {
 
   await tester.pump(hack);
 }
+
+Future<void> openDatasetByPath(WidgetTester tester, String path) async {
+  // Locate the TextField where the file path is input.
+
+  final filePathField = find.byType(TextField);
+  expect(filePathField, findsOneWidget);
+
+  // Enter the file path programmatically.
+
+  await tester.enterText(
+    filePathField,
+    path,
+  );
+
+  // Simulate pressing the Enter key.
+
+  await tester.testTextInput.receiveAction(TextInputAction.done);
+
+  // Optionally pump the widget tree to reflect the changes.
+
+  await tester.pumpAndSettle();
+
+  await tester.pump(pause);
+
+  // TODO 20240903 zy WE NEED TO ELIMINATE THE hack WAIT DUE TO async.
+
+  await tester.pump(hack);
+}
