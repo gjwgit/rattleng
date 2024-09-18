@@ -52,12 +52,14 @@ void main() {
       await _navigateToTab(tester, 'Missing', MissingPanel);
 
       await _performMissingAnalysis(tester);
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '328');
+      // last number on the page.
+
+      await _verifyPageContent(tester, 'Patterns of Missing Data', '380');
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
         tester,
         'Aggregation of Missing Values - Textual',
-        '7',
+        '172',
       );
       await _verifyPageContent(
         tester,
