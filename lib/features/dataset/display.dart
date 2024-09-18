@@ -170,6 +170,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: Text(
                 'Variable',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             space,
@@ -177,6 +178,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: Text(
                 'Type',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             Expanded(
@@ -184,6 +186,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: const Text(
                 'Role',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             space,
@@ -192,6 +195,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: const Text(
                 'Content',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
           ],
@@ -311,15 +315,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                     ),
                   ),
                   // Hard code the Spacer when the screen width is large.
-
-                  // Add a Spacer if the screen width is greater than 1159.0.
-
-                  if (constraints.maxWidth > 1159.0) const Spacer(),
-
-                  // Two spacers to make the layout more compact.
-                  // Add a Spacer if the screen width is greater than 1159.0.
-
-                  if (constraints.maxWidth > 1159.0) const Spacer(),
                 ],
               );
             },
