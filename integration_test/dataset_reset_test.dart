@@ -35,6 +35,7 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/open_demo_dataset.dart';
+import 'utils/verify_multiple_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -103,10 +104,20 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // Find the text containing "8.0".
+      await verifyMultipleTextContent(
+        tester,
+        [
+          // Verify date in the Content Column.
+          '2023-07-01',
+          '2023-07-02',
 
-      final rolesTempFinder = find.textContaining('8.0');
-      expect(rolesTempFinder, findsOneWidget);
+          // Verify min_temp in the Content Column.
+          '4.6',
+
+          // Verify max_temp in the Content Column.
+          '13.9',
+        ],
+      );
     });
 
     testWidgets('demo then large navigate', (WidgetTester tester) async {
