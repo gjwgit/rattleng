@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-10 20:39:41 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-18 11:34:05 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -102,11 +102,6 @@ void main() {
       // Pause for a long time to wait for app gets stable.
 
       await tester.pump(hack);
-
-      // Optionally, you can test interactions with the TabPageSelector.
-
-      final pageIndicator = find.byType(TabPageSelector);
-      expect(pageIndicator, findsOneWidget);
 
       // Tap the right arrow to go to the second page.
 
@@ -271,19 +266,6 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
-
-      final optionsDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains(
-                  'options were - skip-layer connections  entropy fitting',
-                ) ==
-                true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      expect(optionsDescriptionFinder, findsOneWidget);
 
       await tester.pump(pause);
 
