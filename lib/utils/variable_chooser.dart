@@ -32,24 +32,27 @@ Widget variableChooser(
   List<String> inputs,
   String selected,
   WidgetRef ref,
-  StateProvider stateProvider,
-) {
+  StateProvider stateProvider, {
+  required bool
+      enabled, // Add this parameter to control if the dropdown is enabled
+  Function(String?)?
+      onChanged, // Add a callback for onChanged to handle custom logic
+}) {
   return DropdownMenu(
-    // label: const Text('Variable'),
     label: Text(label),
     width: 200,
     initialSelection: selected,
     dropdownMenuEntries: inputs.map((s) {
       return DropdownMenuEntry(value: s, label: s);
     }).toList(),
-    // On selection as well as recording what was selected rebuild the
-    // visualisations.
+    enabled: enabled, // Use the enabled parameter to control the dropdown state
     onSelected: (String? value) {
-      // ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
-      ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
-      // We don't buildAction() here since the variable choice might
-      // be followed by a transform choice and we don;t want to shoot
-      // off building lots of new variables unnecesarily.
+      if (enabled) {
+        ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
+        if (onChanged != null) {
+          onChanged(value); // Call the custom callback if provided
+        }
+      }
     },
   );
 }
