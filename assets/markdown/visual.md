@@ -2,7 +2,7 @@
 
 Visual data analysis presents datasets through visual representations
 that include graphs, charts, plots and even animations. Typically they
-provide an understandong of how the values of a variable are
+provide an understanding of how the values of a variable are
 distributed&mdash; the **distribution** of the data. You will identify
 patterns in the data that in themselves can provide insights, and even
 actionable understandings, from the data.
