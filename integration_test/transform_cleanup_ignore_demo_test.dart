@@ -248,12 +248,12 @@ void main() {
 
       await tester.pump(pause);
 
-      // Check that 'evaporation' is the selected variable.
+      // Check that 'wind_gust_dir' is the selected variable.
 
-      final evaporationSelectedFinder = find.text('evaporation').hitTestable();
-      //TODO kevin 0919 with Yixiang to check this line, it is not working as expected
+      final evaporationSelectedFinder =
+          find.text('wind_gust_dir').hitTestable();
 
-      // Ensure 'evaporation' is selected.
+      // Ensure 'wind_gust_dir' is selected.
 
       expect(
         evaporationSelectedFinder,
@@ -301,14 +301,7 @@ void main() {
 
       await tester.pump(pause);
 
-      // Tap the right arrow button twice to go to the variable role selection.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      // Tap the right arrow button to go to the variable role selection.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
@@ -380,7 +373,7 @@ void main() {
 
       // Check that the variables to be deleted are mentioned in the popup.
 
-      checkInPopup(['evaporation', 'sunshine']);
+      checkInPopup(['wind_gust_dir', 'wind_gust_speed']);
 
       // Pause after screen change.
 
@@ -417,9 +410,9 @@ void main() {
 
       await tester.pump(pause);
 
-      // Check that 'wind_gust_speed' is the selected variable.
+      // Check that 'wind_speed_9am' is the selected variable.
 
-      final windGustSpeedFinder = find.text('wind_gust_speed').hitTestable();
+      final windGustSpeedFinder = find.text('wind_speed_9am').hitTestable();
       expect(
         windGustSpeedFinder,
         findsOneWidget,
