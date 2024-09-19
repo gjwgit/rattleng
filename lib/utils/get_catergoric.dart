@@ -27,17 +27,27 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/vars/types.dart';
 
-List<String> getCategoric(WidgetRef ref) {
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/r/extract_large_factors.dart';
+
+List<String> getCategoric(
+  WidgetRef ref,
+  bool removeIgnore,
+) {
   // The typesProvider lists the types for the different variables which we
   // need to know for parsing the R scripts.
 
   Map<String, Type> roles = ref.read(typesProvider);
 
+  String stdout = ref.watch(stdoutProvider);
+
+  List<String> highVars = extractLargeFactors(stdout);
+
   List<String> rtn = [];
   roles.forEach((key, value) {
-    if (value == Type.categoric) {
+    if (value == Type.categoric && (!removeIgnore || !highVars.contains(key))) {
       rtn.add(key);
     }
   });
