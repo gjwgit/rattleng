@@ -25,10 +25,16 @@
 
 library;
 
-/// List of specific variables that should have their role set to 'Ignore' in
-/// demo dataset. These are factors and don;t play well with nnet.
+/// List of specific variables that should have their role automatically
+/// set to 'Ignore' in demo dataset. These are factors and don;t play well
+/// with nnet.
 
-final List<String> demoVariablesToIgnore = [
+final List<String> demoVariablesToIgnore = [];
+
+/// List of specific variables that should have their role manually set to
+/// 'Ignore'. These are factors and don;t play well with nnet.
+
+final List<String> demoVariablesManuallyIgnore = [
   'wind_gust_dir',
   'wind_dir_9am',
   'wind_dir_3pm',
