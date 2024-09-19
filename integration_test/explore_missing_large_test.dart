@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Monday 2024-09-02 13:51:12 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:44:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -36,7 +36,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +48,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
       await navigateToTab(tester, 'Explore');
 
       await navigateToFeature(tester, 'Missing', MissingPanel);

@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature LARGE dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:06:15 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:12:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,7 +36,7 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +47,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
       await tester.pump(longHack);
 
       // Find the Explore tab by icon and tap on it.

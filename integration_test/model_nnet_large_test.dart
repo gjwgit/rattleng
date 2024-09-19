@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:14 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:23:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,7 +40,7 @@ import 'package:rattle/widgets/text_page.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/nnet_ignore_variable.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +53,7 @@ void main() {
 
       await tester.pump(pause);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       await tester.pump(longHack);
 
@@ -280,7 +280,7 @@ void main() {
 
       await tester.pump(pause);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       await tester.pumpAndSettle();
 

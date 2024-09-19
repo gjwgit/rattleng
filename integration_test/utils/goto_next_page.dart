@@ -1,6 +1,6 @@
-///  Check if a variable is not missing in the output.
+/// Move to the next page.
 //
-// Time-stamp: <Tuesday 2024-09-10 15:56:42 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:29:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,22 +21,28 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Graham Williams
+
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract.dart';
 
-Future<void> checkVariableNotMissing(
-    ProviderContainer container, String variable,) async {
-  final stdout = container.read(stdoutProvider);
-  String missing = rExtract(stdout, '> missing');
+import 'delays.dart';
 
-  RegExp regExp = RegExp(r'"(.*?)"');
-  Iterable<RegExpMatch> matches = regExp.allMatches(missing);
-  List<String> variables = matches.map((match) => match.group(1)!).toList();
+Future<void> gotoNextPage(WidgetTester tester) async {
+  // Find the right arrow button in the PageIndicator.
 
-  expect(variables.contains(variable), false);
+  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+  expect(rightArrowFinder, findsOneWidget);
+
+  // Tap the right arrow button twice to go to the last page for variable role selection.
+
+  await tester.tap(rightArrowFinder);
+  await tester.pumpAndSettle();
+
+  // Pause after screen change.
+
+  await tester.pump(pause);
 }
