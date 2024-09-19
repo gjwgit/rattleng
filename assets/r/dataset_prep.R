@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-09-19 17:21:25 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-09-19 18:35:32 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -75,8 +75,10 @@ if (NEEDS_INIT) {
                  janitor,    # Cleanup: clean_names() remove_constant().
                  magrittr,   # Utilise %>% and %<>% pipeline operators.
                  mice,
+                 naniar,
                  nnet,
                  NeuralNetTools,
+                 party,
                  randomForest,
                  rattle,     # Access the weather dataset and utilities.
                  readr,
