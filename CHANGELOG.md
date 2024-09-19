@@ -10,6 +10,7 @@ toward a 6.3 release.
 
 ## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
 
++ INSTALL update windows build using Inno. Bug fixes for Windows [6.2.78 20240919 gjw]
 + NAVIGATION activate dots. Tuning and bug fixes [6.2.77 20240919 kev,gjw,zy]
 + NAVIGATION: Update to a non overlapping page navigator [6.2.76 20240913 zy]
 + DATASET: update welcome; move GLIMPSE to SUMMARY [6.2.75 20240911 gjw]
