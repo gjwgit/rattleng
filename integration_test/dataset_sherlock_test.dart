@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Friday 2024-09-20 07:47:06 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:21:24 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Yixiang Yin, Graham Williams
 
 library;
 
@@ -31,8 +31,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/next_page.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/goto_next_page.dart';
+import 'utils/open_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -45,13 +45,11 @@ void main() {
 
       await openDatasetByPath(tester, 'integration_test/sherlock.txt');
 
-      await goToNextPage(tester);
+      await gotoNextPage(tester);
 
       await tester.pump(pause);
 
-      final textFinder = find.text(
-        'Gutenberg',
-      );
+      final textFinder = find.textContaining('Gutenberg');
       expect(textFinder, findsOneWidget);
     });
   });

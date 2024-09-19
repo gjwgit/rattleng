@@ -1,6 +1,6 @@
 /// Move to and verify the content of the next page.
 //
-// Time-stamp: <Monday 2024-09-02 18:50:45 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:03:46 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,28 +21,20 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 
-import 'delays.dart';
+import 'goto_next_page.dart';
 
-Future<void> verifyPageContent(
+Future<void> verifyNextPage(
   WidgetTester tester,
   String title, [
   String? value,
 ]) async {
-  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-  expect(rightArrowFinder, findsOneWidget);
-
-  await tester.tap(rightArrowFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
+  gotoNextPage(tester);
 
   final titleFinder = find.textContaining(title);
   expect(titleFinder, findsOneWidget);
