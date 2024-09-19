@@ -41,7 +41,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     gh run download ${bumpId} --name rattle-windows-inno
     mv rattle-0.0.0.exe rattleng-${version}-windows-inno.exe
-    cp rattleng-{$version}-windows-inno.exe rattleng-dev-windows-inno.exe
+    cp rattleng-${version}-windows-inno.exe rattleng-dev-windows-inno.exe
     chmod a+r rattleng*-inno.exe
     rsync -avzh rattleng-${version}-windows-inno.exe togaware.com:apps/access/
     ssh togaware.com "cd apps/access; cp -f rattleng-${version}-windows-inno.exe rattleng-dev-windows-inno.exe"
