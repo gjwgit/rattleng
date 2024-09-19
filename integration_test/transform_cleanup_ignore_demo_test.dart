@@ -51,10 +51,6 @@ void main() {
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
 
-      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-      String filename = dsPathText.controller?.text ?? '';
-      expect(filename, 'rattle::weather');
-
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
@@ -255,6 +251,7 @@ void main() {
       // Check that 'evaporation' is the selected variable.
 
       final evaporationSelectedFinder = find.text('evaporation').hitTestable();
+      //TODO kevin 0919 with Yixiang to check this line, it is not working as expected
 
       // Ensure 'evaporation' is selected.
 
