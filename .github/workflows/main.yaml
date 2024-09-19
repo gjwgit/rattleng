@@ -118,7 +118,7 @@ jobs:
 
   build-windows-inno:
     name: Build the Inno Setup Installer Self Extracting Exe
-    if: contains(github.event.head_commit.message, 'test inno')
+    if: contains(github.event.head_commit.message, 'bump version')
     runs-on: windows-latest
 
     steps:
@@ -158,6 +158,8 @@ jobs:
           name: rattle-windows-inno
           path: D:\a\rattleng\rattleng\installers\installers\rattle-${{ env.APP_VERSION }}.exe
 
+########################################################################
+
   build-windows-zip:
     if: contains(github.event.head_commit.message, 'bump version')
     runs-on: windows-latest
@@ -195,6 +197,8 @@ jobs:
         with:
           name: rattle-windows-zip
           path: build/windows/x64/runner/Release/rattle-${{github.ref_name}}-windows.zip
+
+########################################################################
 
   build-macos-zip:
     if: contains(github.event.head_commit.message, 'bump version')
