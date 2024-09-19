@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-09-08 10:52:14 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-09-19 18:35:40 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -69,6 +69,7 @@ pacman::p_load(Hmisc,
                naniar,
                nnet,
                NeuralNetTools,
+               party,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,
