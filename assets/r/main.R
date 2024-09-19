@@ -153,3 +153,22 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 # theme_rattle <- theme_economist
 
 theme_default <- theme_rattle
+
+# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
+
+is_large_factor <- function(x, maxfactor = 20) {
+  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  
+  if (is.factor(x) || is.ordered(x)) {
+    num_levels <- length(levels(x))
+  } else if (is.character(x)) {
+    num_levels <- length(unique(x))
+  } else {
+    num_levels <- NA  # For non-categorical variables
+  }
+  
+  if (is_categorical) {
+    return(num_levels > maxfactor)
+  }
+  return(FALSE)
+}

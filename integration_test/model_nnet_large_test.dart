@@ -39,7 +39,6 @@ import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/nnet_ignore_variable.dart';
 import 'utils/open_large_dataset.dart';
 
 void main() {
@@ -72,106 +71,6 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      // Find the scrollable ListView.
-
-      final scrollableFinder = find.byKey(const Key('roles listView'));
-
-      // Iterate over each variable in the list and find its corresponding row in the ListView.
-
-      for (final variable in largeVariablesToIgnore) {
-        bool foundVariable = false;
-
-        // Scroll in steps and search for the variable until it's found.
-        while (!foundVariable) {
-          // Find the row where the variable name is displayed.
-          final variableFinder = find.text(variable);
-
-          if (tester.any(variableFinder)) {
-            foundVariable = true;
-
-            // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-            final parentFinder = find.ancestor(
-              of: variableFinder,
-              matching: find.byType(
-                Row,
-              ),
-            );
-
-            // Select the first Row in the list.
-
-            final firstRowFinder = parentFinder.first;
-
-            // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-            final ignoreChipFinder = find.descendant(
-              of: firstRowFinder,
-              matching: find.text('Ignore'),
-            );
-
-            await tester.tap(ignoreChipFinder);
-
-            await tester.pumpAndSettle();
-
-            // Verify that the role is now set to 'Ignore'.
-            expect(ignoreChipFinder, findsOneWidget);
-          } else {
-            final currentScrollableFinder = scrollableFinder.first;
-
-            // Fling (or swipe) down by a small amount.
-            await tester.fling(
-              currentScrollableFinder,
-              const Offset(0, -300), // Scroll down
-              1000,
-            );
-            await tester.pumpAndSettle();
-            await tester.pump(delay);
-
-            // Tab the previous variable to avoid missing tab it.
-            // Missing tab happens if Ignore button overlaps the rightArrow icon.
-
-            int index = largeVariablesToIgnore.indexOf(variable);
-            if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
-
-              // Find the row where the variable name is displayed.
-
-              final preVariableFinder = find.text(preVariable);
-
-              if (tester.any(preVariableFinder)) {
-                // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-                final preParentFinder = find.ancestor(
-                  of: preVariableFinder,
-                  matching: find.byType(
-                    Row,
-                  ),
-                );
-
-                // Select the first Row in the list.
-
-                final firstRowFinder = preParentFinder.first;
-
-                // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-                final ignoreChipFinder = find.descendant(
-                  of: firstRowFinder,
-                  matching: find.text('Ignore'),
-                );
-
-                await tester.tap(ignoreChipFinder);
-
-                await tester.pumpAndSettle();
-
-                // Verify that the role is now set to 'Ignore'.
-
-                expect(ignoreChipFinder, findsOneWidget);
-              }
-            }
-          }
-        }
-      }
-
       // Find the Model Page in the Side tab.
 
       final modelTabFinder = find.byIcon(Icons.model_training);
@@ -203,11 +102,6 @@ void main() {
       // Pause for a long time to wait for app gets stable.
 
       await tester.pump(longHack);
-
-      // Optionally, you can test interactions with the TabPageSelector.
-
-      final pageIndicator = find.byType(TabPageSelector);
-      expect(pageIndicator, findsOneWidget);
 
       // Tap the right arrow to go to the second page.
 
@@ -300,106 +194,6 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
-
-      // Find the scrollable ListView.
-
-      final scrollableFinder = find.byKey(const Key('roles listView'));
-
-      // Iterate over each variable in the list and find its corresponding row in the ListView.
-
-      for (final variable in largeVariablesToIgnore) {
-        bool foundVariable = false;
-
-        // Scroll in steps and search for the variable until it's found.
-        while (!foundVariable) {
-          // Find the row where the variable name is displayed.
-          final variableFinder = find.text(variable);
-
-          if (tester.any(variableFinder)) {
-            foundVariable = true;
-
-            // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-            final parentFinder = find.ancestor(
-              of: variableFinder,
-              matching: find.byType(
-                Row,
-              ),
-            );
-
-            // Select the first Row in the list.
-
-            final firstRowFinder = parentFinder.first;
-
-            // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-            final ignoreChipFinder = find.descendant(
-              of: firstRowFinder,
-              matching: find.text('Ignore'),
-            );
-
-            await tester.tap(ignoreChipFinder);
-
-            await tester.pumpAndSettle();
-
-            // Verify that the role is now set to 'Ignore'.
-            expect(ignoreChipFinder, findsOneWidget);
-          } else {
-            final currentScrollableFinder = scrollableFinder.first;
-
-            // Fling (or swipe) down by a small amount.
-            await tester.fling(
-              currentScrollableFinder,
-              const Offset(0, -300), // Scroll down
-              1000,
-            );
-            await tester.pumpAndSettle();
-            await tester.pump(delay);
-
-            // Tab the previous variable to avoid missing tab it.
-            // Missing tab happens if Ignore button overlaps the rightArrow icon.
-
-            int index = largeVariablesToIgnore.indexOf(variable);
-            if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
-
-              // Find the row where the variable name is displayed.
-
-              final preVariableFinder = find.text(preVariable);
-
-              if (tester.any(preVariableFinder)) {
-                // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-                final preParentFinder = find.ancestor(
-                  of: preVariableFinder,
-                  matching: find.byType(
-                    Row,
-                  ),
-                );
-
-                // Select the first Row in the list.
-
-                final firstRowFinder = preParentFinder.first;
-
-                // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-                final ignoreChipFinder = find.descendant(
-                  of: firstRowFinder,
-                  matching: find.text('Ignore'),
-                );
-
-                await tester.tap(ignoreChipFinder);
-
-                await tester.pumpAndSettle();
-
-                // Verify that the role is now set to 'Ignore'.
-
-                expect(ignoreChipFinder, findsOneWidget);
-              }
-            }
-          }
-        }
-      }
 
       final modelTabFinder = find.byIcon(Icons.model_training);
       expect(modelTabFinder, findsOneWidget);

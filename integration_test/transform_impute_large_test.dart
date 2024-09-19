@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-09 19:17:11 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-18 05:30:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -111,9 +111,11 @@ void main() {
 
       await navigateToTab(tester, 'Dataset');
 
+      await tester.pump(pause);
+
       // Allow time for the UI to settle after the tab change.
 
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       // Step 3: Verify that the imputed variable 'IZR_middle_name' is present in the dataset.
 

@@ -57,6 +57,8 @@ void main() {
 
       await tester.pump(hack);
 
+      await tester.pump(pause);
+
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
@@ -72,18 +74,22 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
+      await tester.pump(pause);
+
       // Find the scrollable ListView.
 
       final scrollableFinder = find.byKey(const Key('roles listView'));
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesToIgnore) {
+      for (final variable in demoVariablesManuallyIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
+
         while (!foundVariable) {
           // Find the row where the variable name is displayed.
+
           final variableFinder = find.text(variable);
 
           if (tester.any(variableFinder)) {
@@ -114,11 +120,13 @@ void main() {
             await tester.pumpAndSettle();
 
             // Verify that the role is now set to 'Ignore'.
+
             expect(ignoreChipFinder, findsOneWidget);
           } else {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
+
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
@@ -200,6 +208,8 @@ void main() {
 
       await tester.pumpAndSettle();
 
+      await tester.pump(pause);
+
       // Pause for a long time to wait for app gets stable.
 
       await tester.pump(hack);
@@ -211,6 +221,8 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
+
+      await tester.pump(pause);
 
       // Check if SelectableText contains the expected content.
 
@@ -235,6 +247,8 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
+      await tester.pump(pause);
+
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
@@ -255,6 +269,8 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
+
+      await tester.pump(pause);
 
       final forthPageTitleFinder = find.text('NNET');
       expect(forthPageTitleFinder, findsOneWidget);
@@ -295,6 +311,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
+      await tester.pump(pause);
 
       // Find the scrollable ListView.
 
@@ -302,12 +319,14 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesToIgnore) {
+      for (final variable in demoVariablesManuallyIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
+
         while (!foundVariable) {
           // Find the row where the variable name is displayed.
+
           final variableFinder = find.text(variable);
 
           if (tester.any(variableFinder)) {
@@ -338,11 +357,13 @@ void main() {
             await tester.pumpAndSettle();
 
             // Verify that the role is now set to 'Ignore'.
+
             expect(ignoreChipFinder, findsOneWidget);
           } else {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
+            
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
@@ -435,6 +456,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(delay);
+      await tester.pump(pause);
 
       // Tap the right arrow to go to the second page.
 
@@ -444,6 +466,19 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(delay);
+      await tester.pump(pause);
+
+      // Check if SelectableText contains the expected content.
+
+      final modelDescriptionFinder = find.byWidgetPredicate(
+        (widget) =>
+            widget is SelectableText &&
+            widget.data?.contains('a 17-11-1 network with 227 weights') == true,
+      );
+
+      // Ensure the SelectableText widget with the expected content exists.
+
+      expect(modelDescriptionFinder, findsOneWidget);
 
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
@@ -463,6 +498,7 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
+      await tester.pump(pause);
 
       final forthPageTitleFinder = find.text('NNET');
       expect(forthPageTitleFinder, findsOneWidget);

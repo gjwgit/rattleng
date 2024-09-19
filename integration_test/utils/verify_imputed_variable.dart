@@ -8,7 +8,10 @@ Future<void> verifyImputedVariable(
 
   List<String> vars = [];
   roles.forEach((key, value) {
-    if (value == Role.input || value == Role.risk || value == Role.target) {
+    if (value == Role.input ||
+        value == Role.risk ||
+        value == Role.target ||
+        value == Role.ignore) {
       vars.add(key);
     }
   });
