@@ -60,7 +60,6 @@ jobs:
   # is GLIBC2.30.
   
   build-linux-zip:
-    name: Build a Zip Archive
     if: contains(github.event.head_commit.message, 'bump version')
     runs-on: ubuntu-20.04
 
@@ -100,19 +99,18 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: rattle-v${{ github.ref_name }}-linux.zip
+          filename: rattle-${{ github.ref_name }}-linux.zip
           directory: build/linux/x64/release/bundle
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: rattle-linux-zip
-          path: build/linux/x64/release/bundle/rattle-v${{ github.ref_name }}-linux.zip
+          path: build/linux/x64/release/bundle/rattle-${{ github.ref_name }}-linux.zip
 
 ########################################################################
 
   build-windows-inno:
-    name: Build the Inno Setup Installer Self Extracting Exe
     if: contains(github.event.head_commit.message, 'bump version')
     runs-on: windows-latest
 
@@ -151,7 +149,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rattle-windows-inno
-          path: D:\a\rattleng\rattleng\installers\installers\rattle-${{ env.APP_VERSION }}.exe
+          path: D:\a\rattleng\rattleng\installers\installers\rattle-0.0.0.exe
 
 ########################################################################
 
