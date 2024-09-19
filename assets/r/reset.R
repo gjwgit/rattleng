@@ -44,21 +44,7 @@ summary(ds)
 
 # Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
 
-large_factors <- sapply(ds, function(x) {
-  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
-  
-  if (is.factor(x) || is.ordered(x)) {
-    num_levels <- length(levels(x))
-  } else if (is.character(x)) {
-    num_levels <- length(unique(x))
-  } else {
-    num_levels <- NA  # For non-categorical variables
-  }
-  if (is_categorical) {
-    return(num_levels > MAXFACTOR)
-  }
-  return(FALSE)
-})
+large_factors <- sapply(ds, is_large_factor)
 
 # Get the names of those variables.
 

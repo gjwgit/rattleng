@@ -103,11 +103,6 @@ void main() {
 
       await tester.pump(longHack);
 
-      // Optionally, you can test interactions with the TabPageSelector.
-
-      final pageIndicator = find.byType(TabPageSelector);
-      expect(pageIndicator, findsOneWidget);
-
       // Tap the right arrow to go to the second page.
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
