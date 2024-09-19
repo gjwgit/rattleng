@@ -143,7 +143,7 @@ jobs:
 
       - name: Get Version from pubspec.yaml
         run: |
-          $version = (Get-Content pubspec.yaml | Select-String 'version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim() })
+          $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
           echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Compile .ISS to .EXE Installer
@@ -156,7 +156,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rattle-windows-inno
-          path: D:\a\rattleng\rattleng\installers\installers\rattle-v${{ env.APP_VERSION }}.exe
+          path: D:\a\rattleng\rattleng\installers\installers\rattle-${{ env.APP_VERSION }}.exe
 
   build-windows-zip:
     if: contains(github.event.head_commit.message, 'bump version')
