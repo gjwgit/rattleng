@@ -149,14 +149,14 @@ jobs:
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: installers/windows-inno-setup-git.iss
+          path: installers/rattleng-windows.iss
           options: /O+
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: rattle-windows-inno
-          path: installers/rattle-v${{ env.APP_VERSION }}.exe
+          path: D:\a\rattleng\rattleng\installers\installers\rattle-v${{ env.APP_VERSION }}.exe
 
   build-windows-zip:
     if: contains(github.event.head_commit.message, 'bump version')
