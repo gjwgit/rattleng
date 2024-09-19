@@ -27,7 +27,7 @@ LicenseFile=D:\a\rattleng\rattleng\LICENSE
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=installers
 OutputBaseFilename=rattleng-v{#MyAppVersion}
-SetupIconFile==D:\a\rattleng\rattleng\windows\runner\resources\app_icon.ico
+SetupIconFile=D:\a\rattleng\rattleng\windows\runner\resources\app_icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
