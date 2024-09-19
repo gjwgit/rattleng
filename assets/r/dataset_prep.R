@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-09-16 08:53:26 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-09-19 17:21:25 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -70,6 +70,7 @@ if (NEEDS_INIT) {
                  corrplot,
                  descr,
                  fBasics,
+                 ggcorrplot,
                  ggthemes,
                  janitor,    # Cleanup: clean_names() remove_constant().
                  magrittr,   # Utilise %>% and %<>% pipeline operators.
@@ -87,13 +88,32 @@ if (NEEDS_INIT) {
                  verification,
                  wordcloud)
 
-  # A pre-defined value for the random seed ensures that results are
-  # repeatable.
-
+  options(width=120)
+  options(crayon.enabled = FALSE)
   set.seed(42)
 
-  # A palette for rattle!
+  meta_data <- function(df) {
+    sapply(df, function(x) {
+      if (is.numeric(x)) {
+        paste0("min = ", min(x, na.rm = TRUE),
+               ", max = ", max(x, na.rm = TRUE),
+               ", mean = ", mean(x, na.rm = TRUE),
+               ", median = ", median(x, na.rm = TRUE),
+               ", variance = ", var(x, na.rm = TRUE),
+               ", unique = ", length(unique(x)))
+      } else if (is.factor(x) || is.character(x)) {
+        paste0("unique = ", length(unique(x)))
+      } else {
+        "No summary available for this type"
+      }
+    })
+  }
 
+  username <- Sys.getenv("USER")  # On Linux/MacOS
+  if (username == "") {
+    username <- Sys.getenv("USERNAME")  # On Windows
+  }
+  
   rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
                      "#0072B2", "#D55E00", "#CC79A7", "#000000")
 
@@ -116,14 +136,26 @@ if (NEEDS_INIT) {
       panel.grid.major = element_line(color = "lightgrey"),
       panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
     )
-}
+  }
 
   theme_default <- theme_rattle
 
-  # Turn off fancy terminal escap sequences that are produced using the
-  # crayon package.
-
-  options(crayon.enabled = FALSE)
+  is_large_factor <- function(x, maxfactor = 20) {
+    is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  
+    if (is.factor(x) || is.ordered(x)) {
+      num_levels <- length(levels(x))
+    } else if (is.character(x)) {
+      num_levels <- length(unique(x))
+    } else {
+      num_levels <- NA  # For non-categorical variables
+    }
+    
+    if (is_categorical) {
+      return(num_levels > maxfactor)
+    }
+    return(FALSE)
+  }
 
 }
 
