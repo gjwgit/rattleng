@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-10 20:39:41 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 11:26:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,8 +39,16 @@ import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/nnet_ignore_variable.dart';
 import 'utils/open_demo_dataset.dart';
+
+/// List of specific variables that should have their role set to 'Ignore' in
+/// demo dataset. These are factors/chars and don't play well with nnet.
+
+final List<String> demoVariablesToIgnore = [
+  'wind_gust_dir',
+  'wind_dir_9am',
+  'wind_dir_3pm',
+];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -130,9 +138,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
@@ -354,9 +362,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
