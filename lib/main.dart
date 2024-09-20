@@ -113,6 +113,6 @@ void main() async {
       child: MaterialApp(
         home: RattleApp(),
       )
-    ),
+    )
   );
 }
