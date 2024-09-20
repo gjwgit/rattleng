@@ -30,7 +30,6 @@ import 'dart:typed_data';
 
 import 'package:path/path.dart' as p;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rattle/constants/temp_dir.dart';
