@@ -110,7 +110,9 @@ void main() async {
 
   runApp(
     const ProviderScope(
-      child: RattleApp(),
+      child: MaterialApp(
+        home: RattleApp(),
+      )
     ),
   );
 }
