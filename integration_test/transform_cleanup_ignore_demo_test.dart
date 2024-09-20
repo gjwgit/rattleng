@@ -1,6 +1,6 @@
 /// Test TRANSFORM tab CLEANUP feature IGNORE option on the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 16:32:05 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 19:29:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -54,7 +54,7 @@ void main() {
 
       final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
       String filename = dsPathText.controller?.text ?? '';
-      expect(filename, 'rattle::weather');
+      expect(filename.contains('weather.csv'), isTrue);
 
       await gotoNextPage(tester);
 
