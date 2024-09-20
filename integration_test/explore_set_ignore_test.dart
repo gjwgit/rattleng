@@ -1,6 +1,6 @@
 /// Test the set of high level variables to ignore.
 //
-// Time-stamp: <Tuesday 2024-09-10 20:39:41 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 13:30:51 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,9 +35,30 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/nnet_ignore_variable.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
+
+/// List of specific variables that should have their role automatically set to
+/// 'Ignore' in the DEMO and the LARGE datasets.
+
+final List<String> demoVariablesToIgnore = [];
+
+final List<String> largeVariablesToIgnore = [
+  'rec_id',
+  'ssn',
+  'first_name',
+  'middle_name',
+  'last_name',
+  'birth_date',
+  'medicare_number',
+  'street_address',
+  'suburb',
+  'postcode',
+  'phone',
+  'email',
+  'clinical_notes',
+  'consultation_timestamp',
+];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -154,7 +175,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // TODO 20240910 gjw CONSIDER REMOVING THIS HACK
 
