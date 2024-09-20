@@ -129,7 +129,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
                 windowManager.setPreventClose(false),
                 windowManager.close(),
               }
-            ),
+            )
           ],
         );
       },
@@ -156,6 +156,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
     Flavor flavor = catppuccin.latte;
 
     return MaterialApp(
+      //      theme: catppuccinTheme(catppuccin.latte),
       theme: ThemeData(
         // Material 3 is the current (2024) flutter default theme for colours
         // and Google fonts. We can stay with this as the default for now
