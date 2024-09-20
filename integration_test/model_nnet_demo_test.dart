@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Friday 2024-09-20 16:31:24 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 19:22:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -237,7 +237,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 17-10-1 network with 208 weights') == true,
+            widget.data?.contains('a 15-10-1 network with 186 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -481,7 +481,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 17-11-1 network with 227 weights') == true,
+            widget.data?.contains('a 15-11-1 network with 203 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
