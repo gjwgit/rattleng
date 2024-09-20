@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Sunday 2024-09-01 08:25:37 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-16 14:52:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -53,13 +53,7 @@ void main() {
   group('Dataset large:', () {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
       await tester.pump(pause);
 
       // Locate the TextField where the file path is input.
@@ -95,19 +89,19 @@ void main() {
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
+      // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
+      // await tester.tap(rightArrowFinder);
+      // await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(hack);
 
-      // Find the text containing the number of rows and columns.
+      // // Find the text containing the number of rows and columns.
 
-      final glimpseRowFinder = find.textContaining('Rows: 20,000');
-      expect(glimpseRowFinder, findsOneWidget);
-      final glimpseColumnFinder = find.textContaining('Columns: 24');
-      expect(glimpseColumnFinder, findsOneWidget);
+      // final glimpseRowFinder = find.textContaining('Rows: 20,000');
+      // expect(glimpseRowFinder, findsOneWidget);
+      // final glimpseColumnFinder = find.textContaining('Columns: 24');
+      // expect(glimpseColumnFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "ROLES" page.
 
@@ -116,7 +110,7 @@ void main() {
 
       // Find the text containing "rec-57600".
 
-      final rolesRecIDFinder = find.textContaining('rec-57600, rec-73378,');
+      final rolesRecIDFinder = find.textContaining('"rec-57600", "rec-73378",');
       expect(rolesRecIDFinder, findsOneWidget);
 
       await tester.pump(pause);

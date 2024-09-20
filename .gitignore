@@ -15,6 +15,7 @@ ARCHIVE
 TMP*
 *.tmp
 
+installers/*.exe
 installers/*.snap
 installers/*.tar.gz
 installers/*-linux.zip

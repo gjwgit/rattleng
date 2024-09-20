@@ -34,6 +34,7 @@ an issue if you need to do this manually on your platform.
 
 ```r
 library(Hmisc)
+library(NeuralNetTools)
 library(VIM)
 library(corrplot)
 library(descr)
@@ -42,7 +43,10 @@ library(ggthemes)
 library(janitor)
 library(magrittr)
 library(mice)
+library(naniar)
+library(nnet)
 library(pacman)
+library(party)
 library(randomForest)
 library(rattle)
 library(readr)

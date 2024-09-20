@@ -1,8 +1,8 @@
-/// Open the large dataset.
+///  Check if a variable is not missing in the output.
 //
-// Time-stamp: <Tuesday 2024-09-03 08:59:54 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-10 15:56:42 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -22,39 +22,21 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
-
 library;
 
-import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
 
-import 'delays.dart';
+Future<void> checkVariableNotMissing(
+    ProviderContainer container, String variable,) async {
+  final stdout = container.read(stdoutProvider);
+  String missing = rExtract(stdout, '> missing');
 
-Future<void> openLargeDataset(WidgetTester tester) async {
-  // Locate the TextField where the file path is input.
+  RegExp regExp = RegExp(r'"(.*?)"');
+  Iterable<RegExpMatch> matches = regExp.allMatches(missing);
+  List<String> variables = matches.map((match) => match.group(1)!).toList();
 
-  final filePathField = find.byType(TextField);
-  expect(filePathField, findsOneWidget);
-
-  // Enter the file path programmatically.
-
-  await tester.enterText(
-    filePathField,
-    'integration_test/rattle_test_large.csv',
-  );
-
-  // Simulate pressing the Enter key.
-
-  await tester.testTextInput.receiveAction(TextInputAction.done);
-
-  // Optionally pump the widget tree to reflect the changes.
-
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-
-  // TODO 20240903 zy WE NEED TO ELIMINATE THE hack WAIT DUE TO async.
-
-  await tester.pump(hack);
+  expect(variables.contains(variable), false);
 }

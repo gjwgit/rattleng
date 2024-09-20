@@ -1,6 +1,6 @@
 /// Chip choice widget used across the app.
 //
-// Time-stamp: <Monday 2024-08-19 08:19:07 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 08:31:49 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,8 +26,9 @@
 library;
 
 import 'package:flutter/material.dart';
+
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class ChoiceChipTip<T> extends StatelessWidget {
   final List<T> options;
@@ -56,20 +57,24 @@ class ChoiceChipTip<T> extends StatelessWidget {
       children: options.map((option) {
         final label = getLabel(option);
 
-        return ChoiceChip(
-          label: Text(label),
-          tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
-          selectedColor: Colors.lightBlue[200],
-          backgroundColor: Colors.lightBlue[50],
-          shadowColor: Colors.grey,
-          pressElevation: 8.0,
-          elevation: 2.0,
-          selected: selectedOption == option,
-          onSelected: enabled
-              ? (bool selected) {
-                  onSelected(selected ? option : null);
-                }
-              : null,
+        return DelayedTooltip(
+          message: tooltips == null ? '' : tooltips![option] ?? '',
+          child: ChoiceChip(
+            label: Text(label),
+            showCheckmark: false,
+            //tooltip: tooltips == null ? '' : wordWrap(tooltips![option] ?? ''),
+            selectedColor: Colors.lightBlue[200],
+            backgroundColor: Colors.lightBlue[50],
+            shadowColor: Colors.grey,
+            pressElevation: 8.0,
+            elevation: 2.0,
+            selected: selectedOption == option,
+            onSelected: enabled
+                ? (bool selected) {
+                    onSelected(selected ? option : null);
+                  }
+                : null,
+          ),
         );
       }).toList(),
     );

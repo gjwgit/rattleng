@@ -1,6 +1,6 @@
 /// Helper widget to build the common image based pages.
 //
-// Time-stamp: <Saturday 2024-09-07 16:02:30 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-19 18:40:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -155,7 +155,8 @@ class ImagePage extends StatelessWidget {
                         Open: Tap here to open the plot in a separate window to
                         the Rattle app itself. This allows you to retain a view
                         of the plot while you navigate through other plots and
-                        analyses.
+                        analyses. If you choose the external app to be Inkscape,
+                        for example, then you can edit the details of the plot.
 
                         ''',
                         child: IconButton(
@@ -206,7 +207,10 @@ class ImagePage extends StatelessWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            String? pathToSave = await selectFile();
+                            String fileName = path.split('/').last;
+                            String? pathToSave = await selectFile(
+                              defaultFileName: fileName,
+                            );
                             if (pathToSave != null) {
                               // Copy generated image from /tmp to user's location.
                               await File(path).copy(pathToSave);

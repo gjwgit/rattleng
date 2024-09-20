@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-09-08 09:42:54 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-09-16 09:22:26 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
+
 library;
 
 import 'dart:convert';
@@ -31,9 +32,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/providers/number.dart';
-import 'package:rattle/utils/get_ignored.dart';
-import 'package:rattle/utils/to_r_vector.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -43,6 +41,12 @@ import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
+import 'package:rattle/providers/max_nwts.dart';
+import 'package:rattle/providers/nnet_hidden_neurons.dart';
+import 'package:rattle/providers/nnet_maxit.dart';
+import 'package:rattle/providers/nnet_skip.dart';
+import 'package:rattle/providers/nnet_trace.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/min_split.dart';
 import 'package:rattle/providers/interval.dart';
@@ -66,8 +70,11 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/timestamp.dart';
+import 'package:rattle/utils/to_r_vector.dart';
+import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [script] and append to the [rattle] script.
@@ -103,8 +110,13 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
+  int hiddenNeurons = ref.read(hiddenNeuronsProvider);
+  int nnetMaxNWts = ref.read(maxNWtsProvider);
+  int nnetMaxit = ref.read(maxitProvider);
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
+  bool nnetTrace = ref.read(nnetTraceProvider);
+  bool nnetSkip = ref.read(nnetSkipProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
@@ -121,7 +133,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   String code = await DefaultAssetBundle.of(context).loadString(asset);
   // var code = File('assets/r/$script.R').readAsStringSync();
 
-  // Process template variables.
+  ////////////////////////////////////////////////////////////////////////
+  // Process global template variables.
 
   code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
@@ -146,9 +159,12 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
+  // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
+
+  code = code.replaceAll('MAXFACTOR', '20');
+
   ////////////////////////////////////////////////////////////////////////
-  // CLEANUP
-  ////////////////////////////////////////////////////////////////////////
+  // Cleanup
 
   // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
 
@@ -302,11 +318,18 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
   code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
+  code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
+  code = code.replaceAll('MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
     code = code.replaceAll('maxsurrogate=0', '');
   }
+
+  code =
+      code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
+  code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
 
   // TODO if (script == 'model_build_random_forest')) {
 
@@ -327,5 +350,50 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = rStripComments(code);
 
+  // Add a completion marker.
+
+  code = '$code\nprint("Processing $script Completed")\n';
+
   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+
+  // Optionally, show a SnackBar when the script finishes executing.
+
+  if (code.contains('Processing $script Completed')) {
+    setStatus(
+        ref,
+        'The R script **$script.R** has run. '
+        'See **Console** for details and **Script** for the R code.');
+    // if (context.mounted) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Row(
+    //         children: [
+    //           const Icon(Icons.thumb_up, color: Colors.blue),
+    //           const SizedBox(width: 40),
+    //           Expanded(
+    //             child: Text(
+    //               'Execution of $script.R is completed.',
+    //               style: const TextStyle(color: Colors.blue),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //       backgroundColor: const Color(0xFFBBDEFB),
+    //       elevation: 5,
+    //       behavior: SnackBarBehavior.floating,
+    //       shape: const StadiumBorder(),
+    //       width: 600,
+    //       // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
+    //       // Set a short duration
+    //       duration: const Duration(seconds: 1),
+    //       action: SnackBarAction(
+    //         label: 'Okay',
+    //         disabledTextColor: Colors.white,
+    //         textColor: Colors.blue,
+    //         onPressed: () {},
+    //       ),
+    //     ),
+    //   );
+    // }
+  }
 }

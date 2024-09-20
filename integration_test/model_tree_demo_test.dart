@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:14 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 12:20:46 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -32,12 +32,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/dataset/button.dart';
+import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -50,16 +53,7 @@ void main() {
 
       await tester.pump(pause);
 
-      final datasetButton = find.byType(DatasetButton);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final demoButton = find.text('Demo');
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
+      await openDemoDataset(tester);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -68,22 +62,13 @@ void main() {
 
       await tester.pump(hack);
 
-      // Find the Model Page in the Side tab.
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
-
       // Tap the model Tab button.
 
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Tree feature.
 
-      final treeTabFinder = find.text('Tree');
-      await tester.tap(treeTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await navigateToFeature(tester, 'Tree', TreePanel);
 
       // Verify that the markdown content is loaded.
 
@@ -101,11 +86,6 @@ void main() {
       // Pause for a long time to wait for app gets stable.
 
       await tester.pump(hack);
-
-      // Optionally, you can test interactions with the TabPageSelector.
-
-      final pageIndicator = find.byType(TabPageSelector);
-      expect(pageIndicator, findsOneWidget);
 
       // Tap the right arrow to go to the second page.
 
@@ -166,16 +146,7 @@ void main() {
 
       await tester.pump(pause);
 
-      final datasetButton = find.byType(DatasetButton);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final demoButton = find.text('Demo');
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
+      await openDemoDataset(tester);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -184,21 +155,13 @@ void main() {
 
       await tester.pump(hack);
 
-      final modelTabFinder = find.byIcon(Icons.model_training);
-      expect(modelTabFinder, findsOneWidget);
-
       // Tap the model Tab button.
 
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Tree feature.
 
-      final treeTabFinder = find.text('Tree');
-      await tester.tap(treeTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await navigateToFeature(tester, 'Tree', TreePanel);
 
       // Find and tap the 'Include Missing' checkbox.
 
@@ -288,16 +251,7 @@ void main() {
 
       await tester.pump(pause);
 
-      final datasetButton = find.byType(DatasetButton);
-      await tester.pump(pause);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final demoButton = find.text('Demo');
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
+      await openDemoDataset(tester);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -306,22 +260,13 @@ void main() {
 
       await tester.pump(hack);
 
-      // Find the Model Page in the Side tab.
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
-
       // Tap the model Tab button.
 
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Tree feature.
 
-      final treeTabFinder = find.text('Tree');
-      await tester.tap(treeTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(pause);
+      await navigateToFeature(tester, 'Tree', TreePanel);
 
       // Find the ChoiceChipTip widget for the traditional algorithm type.
 

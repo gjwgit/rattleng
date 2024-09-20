@@ -18,6 +18,7 @@ Flutter Style Guide: https://survivor.togaware.com/gnulinux/flutter-style.html
 - [ ] No duplicated content
 - [ ] No lint check errors related to your changes (`make prep` or `flutter analyze lib`)
 - [ ] Pre-exisiting lint errors noted: [HERE]
+- [ ] No integrated test errors
 - [ ] Tested on at least one device
   - [ ] Android Phone
   - [ ] Android Emulator
@@ -27,11 +28,11 @@ Flutter Style Guide: https://survivor.togaware.com/gnulinux/flutter-style.html
   - [ ] Linux
   - [ ] MacOS
   - [ ] Windows
-- [ ] Added a reviewer
+- [ ] Added two reviewers
 
 ## Finalising
 
-Once PR discussion is complete and reviewer has approved:
+Once PR discussion is complete and reviewers have approved:
 
 - [ ] Merge dev into the branch
 - [ ] Resolve any conflicts
