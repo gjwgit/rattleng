@@ -30,7 +30,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 
 Future<void> checkVariableNotMissing(
-    ProviderContainer container, String variable) async {
+    ProviderContainer container, String variable,) async {
   final stdout = container.read(stdoutProvider);
   String missing = rExtract(stdout, '> missing');
 
