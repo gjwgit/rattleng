@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-10 20:39:41 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 13:59:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,8 +39,16 @@ import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/nnet_ignore_variable.dart';
 import 'utils/open_demo_dataset.dart';
+
+/// List of specific variables that should have their role set to 'Ignore' in
+/// demo dataset. These are factors/chars and don't play well with nnet.
+
+final List<String> demoVariablesToIgnore = [
+  'wind_gust_dir',
+  'wind_dir_9am',
+  'wind_dir_3pm',
+];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -82,7 +90,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesManuallyIgnore) {
+      for (final variable in demoVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
@@ -319,7 +327,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesManuallyIgnore) {
+      for (final variable in demoVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.

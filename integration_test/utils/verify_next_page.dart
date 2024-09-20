@@ -1,6 +1,6 @@
-/// Open the large dataset.
+/// Move to and verify the content of the next page.
 //
-// Time-stamp: <Tuesday 2024-09-03 08:59:54 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 09:47:13 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,40 +21,26 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 
-import 'delays.dart';
+import 'goto_next_page.dart';
 
-Future<void> openLargeDataset(WidgetTester tester) async {
-  // Locate the TextField where the file path is input.
+Future<void> verifyNextPage(
+  WidgetTester tester,
+  String title, [
+  String? value,
+]) async {
+  await gotoNextPage(tester);
 
-  final filePathField = find.byType(TextField);
-  expect(filePathField, findsOneWidget);
+  final titleFinder = find.textContaining(title);
+  expect(titleFinder, findsOneWidget);
 
-  // Enter the file path programmatically.
-
-  await tester.enterText(
-    filePathField,
-    'integration_test/rattle_test_large.csv',
-  );
-
-  // Simulate pressing the Enter key.
-
-  await tester.testTextInput.receiveAction(TextInputAction.done);
-
-  // Optionally pump the widget tree to reflect the changes.
-
-  await tester.pumpAndSettle();
-
-  await tester.pump(pause);
-
-  // TODO 20240903 zy WE NEED TO ELIMINATE THE hack WAIT DUE TO async.
-
-  await tester.pump(hack);
+  if (value != null) {
+    final valueFinder = find.textContaining(value);
+    expect(valueFinder, findsOneWidget);
+  }
 }
