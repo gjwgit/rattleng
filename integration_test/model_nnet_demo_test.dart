@@ -138,9 +138,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesManuallyIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesManuallyIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
@@ -363,7 +363,7 @@ void main() {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
-            
+
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
@@ -375,9 +375,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesManuallyIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesManuallyIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
