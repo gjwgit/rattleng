@@ -128,8 +128,8 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
                 cleanUpTempDirs(),
                 windowManager.setPreventClose(false),
                 windowManager.close(),
-              }
-            )
+              },
+            ),
           ],
         );
       },
