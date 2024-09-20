@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Friday 2024-09-20 11:26:52 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 13:59:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -90,7 +90,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesManuallyIgnore) {
+      for (final variable in demoVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
@@ -327,7 +327,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesManuallyIgnore) {
+      for (final variable in demoVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
@@ -371,7 +371,7 @@ void main() {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
-            
+
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
