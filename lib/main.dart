@@ -112,7 +112,7 @@ void main() async {
     const ProviderScope(
       child: MaterialApp(
         home: RattleApp(),
-      )
-    )
+      ),
+    ),
   );
 }
