@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-09-10 05:55:42 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 20:22:10 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -149,8 +149,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                       int.parse(_maxitController.text);
 
                   // Run the R scripts.
+
                   await rSource(context, ref, 'model_template');
-                  await rSource(context, ref, 'model_build_neural_net');
+                  if (context.mounted) {
+                    await rSource(context, ref, 'model_build_neural_net');
+                  }
                 }
               },
               child: const Text('Build Neural Network'),
