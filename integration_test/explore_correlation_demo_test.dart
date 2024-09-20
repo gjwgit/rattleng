@@ -1,6 +1,6 @@
 /// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-10 17:00:01 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 16:30:57 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,8 +37,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_button.dart';
 import 'utils/verify_multiple_text.dart';
-import 'utils/verify_page_content.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_next_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -56,9 +55,9 @@ void main() {
 
       await tester.pump(hack);
 
-      // Verify the content of the page 1.
+      // Verify the content of the next page.
 
-      await verifyPageContent(
+      await verifyNextPage(
         tester,
         'Correlation - Numeric Data',
         'pressure_9am            1.00',
@@ -81,9 +80,9 @@ void main() {
         ],
       );
 
-      // Verify the content of the page 2.
+      // Verify the content of the next page.
 
-      await verifyPageContent(tester, 'Variable Correlation Plot');
+      await verifyNextPage(tester, 'Variable Correlation Plot');
       await tester.pump(pause);
     });
   });

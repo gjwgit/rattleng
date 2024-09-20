@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:14 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 12:35:58 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -38,38 +36,158 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
+
+/// List of specific variables that should have their role set to 'Ignore' in
+/// large dataset. These are factors and don't play well with nnet.
+
+final List<String> largeVariablesToIgnore = [
+  'rec_id',
+  'ssn',
+  'first_name',
+  'middle_name',
+  'last_name',
+  'birth_date',
+  'medicare_number',
+  'street_address',
+  'suburb',
+  'postcode',
+  'phone',
+  'email',
+  'clinical_notes',
+  'consultation_timestamp',
+];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('NNET Model large Tree:', () {
+  group('Model LARGE dataset NNET feature:', () {
     testWidgets('default test.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
-
       await tester.pump(pause);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       await tester.pump(longHack);
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
+      // Tap the right arrow button to go to ROLES page.
 
-      // Find the right arrow button in the PageIndicator.
+      await gotoNextPage(tester);
 
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
-      // Tap the right arrow button to go to Variable page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
       await tester.pump(hack);
+
+      // Find the scrollable ListView.
+
+      final scrollableFinder = find.byKey(const Key('roles listView'));
+
+      // Iterate over each variable in the list and find its corresponding row
+      // in the ListView.
+
+      for (final variable in largeVariablesToIgnore) {
+        bool foundVariable = false;
+
+        // Scroll in steps and search for the variable until it's found.
+
+        while (!foundVariable) {
+          // Find the row where the variable name is displayed.
+
+          final variableFinder = find.text(variable);
+
+          if (tester.any(variableFinder)) {
+            foundVariable = true;
+
+            // Find the parent widget that contains the variable and its
+            // associated ChoiceChip.
+
+            final parentFinder = find.ancestor(
+              of: variableFinder,
+              matching: find.byType(
+                Row,
+              ),
+            );
+
+            // Select the first Row in the list.
+
+            final firstRowFinder = parentFinder.first;
+
+            // Tap the correct ChoiceChip to change the role to 'Ignore'.
+
+            final ignoreChipFinder = find.descendant(
+              of: firstRowFinder,
+              matching: find.text('Ignore'),
+            );
+
+            await tester.tap(ignoreChipFinder);
+
+            await tester.pumpAndSettle();
+
+            // Verify that the role is now set to 'Ignore'.
+
+            expect(ignoreChipFinder, findsOneWidget);
+          } else {
+            final currentScrollableFinder = scrollableFinder.first;
+
+            // Fling (or swipe) down by a small amount. 20240920 Zheyuan had a
+            // fling of -300 but for Graham that was not far enough to expose
+            // the last two variables and so Graham increased it to -400 to
+            // avoid a Warning.
+
+            await tester.fling(
+              currentScrollableFinder,
+              // Scroll down.
+              const Offset(0, -400),
+              1000,
+            );
+            await tester.pumpAndSettle();
+            await tester.pump(delay);
+
+            // Tab the previous variable to avoid missing tab it.
+            // Missing tab happens if Ignore button overlaps the rightArrow icon.
+
+            int index = largeVariablesToIgnore.indexOf(variable);
+            if (index > 0) {
+              String preVariable = largeVariablesToIgnore[index - 1];
+
+              // Find the row where the variable name is displayed.
+
+              final preVariableFinder = find.text(preVariable);
+
+              if (tester.any(preVariableFinder)) {
+                // Find the parent widget that contains the variable and its associated ChoiceChip.
+
+                final preParentFinder = find.ancestor(
+                  of: preVariableFinder,
+                  matching: find.byType(
+                    Row,
+                  ),
+                );
+
+                // Select the first Row in the list.
+
+                final firstRowFinder = preParentFinder.first;
+
+                // Tap the correct ChoiceChip to change the role to 'Ignore'.
+
+                final ignoreChipFinder = find.descendant(
+                  of: firstRowFinder,
+                  matching: find.text('Ignore'),
+                );
+
+                await tester.tap(ignoreChipFinder);
+
+                await tester.pumpAndSettle();
+
+                // Verify that the role is now set to 'Ignore'.
+
+                expect(ignoreChipFinder, findsOneWidget);
+              }
+            }
+          }
+        }
+      }
 
       // Find the Model Page in the Side tab.
 
@@ -94,9 +212,7 @@ void main() {
       // Simulate the presence of a neural network being built.
 
       final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
-
       await tester.tap(neuralNetworkButton);
-
       await tester.pumpAndSettle();
 
       // Pause for a long time to wait for app gets stable.
@@ -105,10 +221,8 @@ void main() {
 
       // Tap the right arrow to go to the second page.
 
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
+
       await tester.pump(hack);
 
       // Check if SelectableText contains the expected content.
@@ -130,8 +244,8 @@ void main() {
 
       // Tap the right arrow to go to the third page.
 
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
+
       await tester.pump(hack);
 
       final optionsDescriptionFinder = find.byWidgetPredicate(
@@ -151,8 +265,8 @@ void main() {
 
       // Tap the right arrow to go to the forth page.
 
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
+
       await tester.pump(hack);
 
       final forthPageTitleFinder = find.text('NNET');
@@ -174,7 +288,7 @@ void main() {
 
       await tester.pump(pause);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       await tester.pumpAndSettle();
 
@@ -185,15 +299,113 @@ void main() {
 
       await tester.pump(longHack);
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
       // Tap the right arrow button to go to Variable page.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
+
       await tester.pump(hack);
+
+      // Find the scrollable ListView.
+
+      final scrollableFinder = find.byKey(const Key('roles listView'));
+
+      // Iterate over each variable in the list and find its corresponding row in the ListView.
+
+      for (final variable in largeVariablesToIgnore) {
+        bool foundVariable = false;
+
+        // Scroll in steps and search for the variable until it's found.
+        while (!foundVariable) {
+          // Find the row where the variable name is displayed.
+          final variableFinder = find.text(variable);
+
+          if (tester.any(variableFinder)) {
+            foundVariable = true;
+
+            // Find the parent widget that contains the variable and its associated ChoiceChip.
+
+            final parentFinder = find.ancestor(
+              of: variableFinder,
+              matching: find.byType(
+                Row,
+              ),
+            );
+
+            // Select the first Row in the list.
+
+            final firstRowFinder = parentFinder.first;
+
+            // Tap the correct ChoiceChip to change the role to 'Ignore'.
+
+            final ignoreChipFinder = find.descendant(
+              of: firstRowFinder,
+              matching: find.text('Ignore'),
+            );
+
+            await tester.tap(ignoreChipFinder);
+
+            await tester.pumpAndSettle();
+
+            // Verify that the role is now set to 'Ignore'.
+            expect(ignoreChipFinder, findsOneWidget);
+          } else {
+            final currentScrollableFinder = scrollableFinder.first;
+
+            // Fling (or swipe) down by a small amount.
+
+            await tester.fling(
+              currentScrollableFinder,
+              // Scroll down
+              const Offset(0, -400),
+              1000,
+            );
+            await tester.pumpAndSettle();
+            await tester.pump(delay);
+
+            // Tab the previous variable to avoid missing tab it.
+            // Missing tab happens if Ignore button overlaps the rightArrow icon.
+
+            int index = largeVariablesToIgnore.indexOf(variable);
+            if (index > 0) {
+              String preVariable = largeVariablesToIgnore[index - 1];
+
+              // Find the row where the variable name is displayed.
+
+              final preVariableFinder = find.text(preVariable);
+
+              if (tester.any(preVariableFinder)) {
+                // Find the parent widget that contains the variable and its associated ChoiceChip.
+
+                final preParentFinder = find.ancestor(
+                  of: preVariableFinder,
+                  matching: find.byType(
+                    Row,
+                  ),
+                );
+
+                // Select the first Row in the list.
+
+                final firstRowFinder = preParentFinder.first;
+
+                // Tap the correct ChoiceChip to change the role to 'Ignore'.
+
+                final ignoreChipFinder = find.descendant(
+                  of: firstRowFinder,
+                  matching: find.text('Ignore'),
+                );
+
+                await tester.tap(ignoreChipFinder);
+
+                await tester.pumpAndSettle();
+
+                // Verify that the role is now set to 'Ignore'.
+
+                expect(ignoreChipFinder, findsOneWidget);
+              }
+            }
+          }
+        }
+      }
 
       final modelTabFinder = find.byIcon(Icons.model_training);
       expect(modelTabFinder, findsOneWidget);
@@ -237,10 +449,7 @@ void main() {
 
       // Tap the right arrow to go to the second page.
 
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
 
       await tester.pump(delay);
 
@@ -263,8 +472,8 @@ void main() {
 
       // Tap the right arrow to go to the third page.
 
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
+
       await tester.pump(hack);
 
       final optionsDescriptionFinder = find.byWidgetPredicate(
@@ -284,8 +493,8 @@ void main() {
 
       // Tap the right arrow to go to the forth page.
 
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
+
       await tester.pump(hack);
 
       final forthPageTitleFinder = find.text('NNET');
