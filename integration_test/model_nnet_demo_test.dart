@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Wednesday 2024-09-18 11:34:05 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 16:31:24 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,8 +39,16 @@ import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/nnet_ignore_variable.dart';
 import 'utils/open_demo_dataset.dart';
+
+/// List of specific variables that should have their role set to 'Ignore' in
+/// demo dataset. These are factors/chars and don't play well with nnet.
+
+final List<String> demoVariablesToIgnore = [
+  'wind_gust_dir',
+  'wind_dir_9am',
+  'wind_dir_3pm',
+];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -82,7 +90,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesManuallyIgnore) {
+      for (final variable in demoVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
@@ -138,9 +146,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
@@ -319,7 +327,7 @@ void main() {
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
-      for (final variable in demoVariablesManuallyIgnore) {
+      for (final variable in demoVariablesToIgnore) {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
@@ -363,7 +371,7 @@ void main() {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
-            
+
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
@@ -375,9 +383,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 

@@ -1,6 +1,6 @@
 /// Test TRANSFORM tab CLEANUP feature IGNORE option on the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-09-04 12:08:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 16:32:05 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/check_popup.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/open_demo_dataset.dart';
 
 void main() {
@@ -51,26 +52,11 @@ void main() {
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);
 
-      // Find the right arrow button in the PageIndicator.
+      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+      String filename = dsPathText.controller?.text ?? '';
+      expect(filename, 'rattle::weather');
 
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button twice to go to the last page for variable role selection.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      await gotoNextPage(tester);
 
       // Find the "Ignore" buttons and click the first four.
 
@@ -188,14 +174,10 @@ void main() {
 
       await tester.pump(pause);
 
-      // Go to the next page and confirm that the deleted variables are not listed.
+      // Go to the next page and confirm that the deleted variables are not
+      // listed.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      await gotoNextPage(tester);
 
       // Check that deleted variables are not listed on the next page.
 
@@ -301,14 +283,9 @@ void main() {
 
       await tester.pump(pause);
 
-      // Tap the right arrow button to go to the variable role selection.
+      // Tap the right arrow button twice to go to the variable role selection.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      await gotoNextPage(tester);
 
       // Find the "Ignore" buttons
 

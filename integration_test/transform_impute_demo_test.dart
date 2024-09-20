@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-09 19:17:11 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:02:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,7 +40,7 @@ import 'utils/open_demo_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_multiple_text.dart';
-import 'utils/verify_page_content.dart';
+import 'utils/verify_next_page.dart';
 
 void main() {
   // Initialize the integration test bindings to enable the use of integration test features.
@@ -87,7 +87,7 @@ void main() {
 
       // Verify that the page content includes the expected dataset summary with 'IZR_rainfall'.
 
-      await verifyPageContent(
+      await verifyNextPage(
         tester,
         'Dataset Summary',
         'IZR_rainfall',
