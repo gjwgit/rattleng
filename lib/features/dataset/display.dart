@@ -1,6 +1,6 @@
-/// Dataset display with three pages: Overview, Glimpse, Roles.
+/// Dataset display with pages.
 //
-// Time-stamp: <Friday 2024-09-06 11:42:30 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-12 16:47:47 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,7 +36,7 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract.dart';
-import 'package:rattle/r/extract_glimpse.dart';
+import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
@@ -77,20 +75,15 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     List<Widget> pages = [showMarkdownFile(welcomeMsgFile, context)];
 
+    ////////////////////////////////////////////////////////////////////////
+
     String content = '';
     String title = '';
 
-    if (path == weatherDemoFile || path.endsWith('.csv')) {
-      content = rExtractGlimpse(stdout);
-      title = '''
+    // For a TXT file we add a new page as a summary of that file - actually it
+    // shows the full contents.
 
-      # Dataset Glimpse
-
-      Generated using
-      [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
-
-      ''';
-    } else {
+    if (path.endsWith('.txt')) {
       content = rExtract(stdout, '> cat(ds,');
       title = '''
 
@@ -100,16 +93,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
 
       ''';
+
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: title,
+            content: '\n$content',
+          ),
+        );
+      }
     }
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: title,
-          content: '\n$content',
-        ),
-      );
-    }
+    ////////////////////////////////////////////////////////////////////////
 
     if (path == weatherDemoFile || path.endsWith('.csv')) {
       Map<String, Role> currentRoles = ref.read(rolesProvider);
@@ -117,6 +112,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       // Extract variable information from the R console.
 
       List<VariableInfo> vars = extractVariables(stdout);
+      List<String> highVars = extractLargeFactors(stdout);
 
       // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
       // IDENTS. Also record variable types.
@@ -160,6 +156,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         for (var id in getUniqueColumns(ref)) {
           ref.read(rolesProvider.notifier).state[id] = Role.ident;
         }
+        for (var highVar in highVars) {
+          if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
+            ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+          }
+        }
       }
 
       // When a new row is added after transformation, initialise its role and
@@ -173,39 +174,35 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Expanded(
-              child: Center(
-                child: Text(
-                  'Variable',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: Text(
+                'Variable',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             space,
             const Expanded(
-              child: Center(
-                child: Text(
-                  'Type',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: Text(
+                'Type',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             Expanded(
               flex: typeFlex,
-              child: const Center(
-                child: Text(
-                  'Role',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: const Text(
+                'Role',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             space,
             Expanded(
               flex: contentFlex,
-              child: const Center(
-                child: Text(
-                  'Content',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: const Text(
+                'Content',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
           ],
@@ -215,112 +212,143 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       Widget dataline(columnName, dataType, content) {
         // Generate the row for a data line.
 
-        // Truncate the content to fite the Role boses on one line.
+        // Truncate the content to fit one line. The text could wrap over two
+        // lines and so show more of the data, but our point here is more to
+        // have a reminder of the data to assist in deciding on the ROLE of each
+        // variable, not any real insight into the data which we leave to the
+        // SUMMARY feature.
 
-        int maxLength = 100;
+        int maxLength = 40;
+
         // Extract substring of the first maxLength characters
+
         String subStr = content.length > maxLength
             ? content.substring(0, maxLength)
             : content;
+
         // Find the last comma in the substring
+
         int lastCommaIndex = subStr.lastIndexOf(',') + 1;
+
         content =
             lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr;
         content += ' ...';
 
         return Padding(
           padding: const EdgeInsets.all(6.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    columnName,
-                    style: defaultTextStyle,
-                    // Ensure the text stays on one line.
-
-                    maxLines: 1,
-                    // Adds ellipsis if text overflows.
-
-                    overflow: TextOverflow.ellipsis,
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      // Aligns the content to the left
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        columnName,
+                        style: defaultTextStyle,
+                        // Ensure the text stays on one line
+                        maxLines: 1,
+                        // Adds ellipsis if text overflows
+                        overflow: TextOverflow.ellipsis,
+                        // Aligns the text within the Text widget to the left
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              space,
-              Expanded(
-                child: Center(
-                  // Wrap with Center widget
-                  child: Text(dataType),
-                ),
-              ),
-              Expanded(
-                flex: typeFlex,
-                child: Wrap(
-                  spacing: 5.0,
-                  runSpacing: choiceChipRowSpace,
-                  children: choices.map((choice) {
-                    return ChoiceChip(
-                      label: Text(choice.displayString),
-                      disabledColor: Colors.grey,
-                      selectedColor: Colors.lightBlue[200],
-                      backgroundColor: Colors.lightBlue[50],
-                      shadowColor: Colors.grey,
-                      pressElevation: 8.0,
-                      elevation: 2.0,
-                      selected: remap(currentRoles[columnName]!, choice),
-                      onSelected: (bool selected) {
-                        setState(() {
-                          if (selected) {
-                            // only one variable is Target, Risk and Weight.
-                            if (choice == Role.target ||
-                                choice == Role.risk ||
-                                choice == Role.weight) {
-                              currentRoles.forEach((key, value) {
-                                if (value == choice) {
-                                  ref.read(rolesProvider.notifier).state[key] =
-                                      Role.input;
+
+                  space,
+
+                  Expanded(
+                    child: Text(dataType),
+                  ),
+                  Expanded(
+                    flex: typeFlex,
+                    child: Wrap(
+                      spacing: 5.0,
+                      runSpacing: choiceChipRowSpace,
+                      children: choices.map((choice) {
+                        return ChoiceChip(
+                          label: Text(choice.displayString),
+                          disabledColor: Colors.grey,
+                          selectedColor: Colors.lightBlue[200],
+                          backgroundColor: Colors.lightBlue[50],
+                          showCheckmark: false,
+                          shadowColor: Colors.grey,
+                          pressElevation: 8.0,
+                          elevation: 2.0,
+                          selected: remap(currentRoles[columnName]!, choice),
+                          onSelected: (bool selected) {
+                            setState(() {
+                              // The parameter selected can be false when a chip
+                              // is tapped when it is already selected.  In our
+                              // case we need do nothing else. That could be
+                              // useful as a toggle button!
+
+                              if (selected) {
+                                // Only one variable can be TARGET, RISK and
+                                // WEIGHT so any previous variable with that
+                                // role shold become INPUT.
+
+                                if (choice == Role.target ||
+                                    choice == Role.risk ||
+                                    choice == Role.weight) {
+                                  currentRoles.forEach((key, value) {
+                                    if (value == choice) {
+                                      ref
+                                          .read(rolesProvider.notifier)
+                                          .state[key] = Role.input;
+                                    }
+                                  });
                                 }
-                              });
-                            }
-                            ref.read(rolesProvider.notifier).state[columnName] =
-                                choice;
-                            debugText('  $choice', columnName);
-                          } else {
-                            debugPrint('This should not happen');
-                            // ref.read(rolesProvider.notifier).state[columnName] =
-                            //     ;
-                          }
-                        });
-                      },
-                    );
-                  }).toList(),
-                ),
-              ),
-              Expanded(
-                flex: contentFlex,
-                child: Text(
-                  content,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
+                                ref
+                                    .read(rolesProvider.notifier)
+                                    .state[columnName] = choice;
+                                debugText('  $choice', columnName);
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Expanded(
+                    flex: contentFlex,
+                    child: Text(
+                      content,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                  // Hard code the Spacer when the screen width is large.
+                ],
+              );
+            },
           ),
         );
       }
 
       pages.add(
         ListView.builder(
-          itemCount: vars.length + 1, // Add 1 for the extra header row
+          key: const Key('roles listView'),
+
+          // Add 1 for the extra header row.
+
+          itemCount: vars.length + 1,
+
           itemBuilder: (context, index) {
-            // both the header row and the regular row shares the same flex index
+            // Both the header row and the regular row shares the same flex
+            // index.
+
             if (index == 0) {
-              // Render the extra header row
+              // Render the extra header row.
+
               return headline;
             } else {
-              // Regular data rows
-              final variableIndex = index - 1; // Adjust index for regular data
+              // Regular data rows.  Adjust the index for regular data.
+
+              final variableIndex = index - 1;
               String columnName = vars[variableIndex].name;
               String dataType = vars[variableIndex].type;
               String content = vars[variableIndex].details;

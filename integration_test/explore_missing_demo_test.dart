@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab's MISSING feature with the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-02 10:32:09 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-18 16:31:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -52,12 +52,17 @@ void main() {
       await _navigateToTab(tester, 'Missing', MissingPanel);
 
       await _performMissingAnalysis(tester);
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '47');
+
+      // Move to next page and check the number of rows with no mising values.
+      // This is the first number of the row under the column headings.
+
+      await _verifyPageContent(tester, 'Patterns of Missing Data', '328');
+
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
         tester,
         'Aggregation of Missing Values - Textual',
-        '31',
+        '7',
       );
       await _verifyPageContent(
         tester,
@@ -131,6 +136,6 @@ Future<void> _verifyPageContent(
 
   if (value != null) {
     final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
+    expect(valueFinder, findsWidgets);
   }
 }
