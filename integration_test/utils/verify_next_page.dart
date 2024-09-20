@@ -1,6 +1,6 @@
 /// Move to and verify the content of the next page.
 //
-// Time-stamp: <Friday 2024-09-20 08:03:46 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 09:47:13 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -34,7 +34,7 @@ Future<void> verifyNextPage(
   String title, [
   String? value,
 ]) async {
-  gotoNextPage(tester);
+  await gotoNextPage(tester);
 
   final titleFinder = find.textContaining(title);
   expect(titleFinder, findsOneWidget);
