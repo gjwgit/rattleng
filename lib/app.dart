@@ -105,39 +105,41 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
   @override
   void onWindowClose() async {
     bool isPreventClose = await windowManager.isPreventClose();
-    if (isPreventClose && mounted) {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            title: const Text('Are you sure you want to close Rattle?'),
-            content: const Text('Any unsaved work will be lost.'),
-            actions: [
-              TextButton(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text('Close'),
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                  await cleanUpTempDirs();
-                  await windowManager.destroy();
-                },
-              ),
-            ],
-          );
-        },
-      );
+    if (isPreventClose) {
+      _showCloseConfirmationDialog();
     }
+  }
+
+  void _showCloseConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure you want to close Rattle?'),
+          content: const Text('Any unsaved work will be lost.'),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () => {
+                cleanUpTempDirs(),
+                windowManager.setPreventClose(false),
+                windowManager.close(),
+              }
+            ),
+          ],
+        );
+      },
+    );
   }
 
   /// Builds the widget tree for the Rattle app.
   ///
   /// This method initializes the R process, sets up the app's theme,
-  /// and returns a [MaterialApp] widget that serves as the root of the app.
+  /// and returns a [MaterialApp] widget that serves as the home of the app.
   @override
   Widget build(BuildContext context) {
     // Initialize the R process
