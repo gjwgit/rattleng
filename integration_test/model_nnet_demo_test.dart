@@ -363,7 +363,7 @@ void main() {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
-            
+
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
