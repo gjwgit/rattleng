@@ -1,6 +1,6 @@
 /// <DESCRIPTION>
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 15:40:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,7 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/stdout.dart';
@@ -43,11 +42,12 @@ List<String> getCategoric(
 
   String stdout = ref.watch(stdoutProvider);
 
-  List<String> highVars = extractLargeFactors(stdout);
+  List<String> largeFactors = extractLargeFactors(stdout);
 
   List<String> rtn = [];
   roles.forEach((key, value) {
-    if (value == Type.categoric && (!removeIgnore || !highVars.contains(key))) {
+    if (value == Type.categoric &&
+        (!removeIgnore || !largeFactors.contains(key))) {
       rtn.add(key);
     }
   });
