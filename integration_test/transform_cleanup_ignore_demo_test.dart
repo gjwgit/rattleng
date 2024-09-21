@@ -1,6 +1,6 @@
 /// Test TRANSFORM tab CLEANUP feature IGNORE option on the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-09-04 12:08:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 19:29:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/check_popup.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/open_demo_dataset.dart';
 
 void main() {
@@ -53,28 +54,9 @@ void main() {
 
       final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
       String filename = dsPathText.controller?.text ?? '';
-      expect(filename, 'rattle::weather');
+      expect(filename.contains('weather.csv'), isTrue);
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button twice to go to the last page for variable role selection.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      await gotoNextPage(tester);
 
       // Find the "Ignore" buttons and click the first four.
 
@@ -192,14 +174,10 @@ void main() {
 
       await tester.pump(pause);
 
-      // Go to the next page and confirm that the deleted variables are not listed.
+      // Go to the next page and confirm that the deleted variables are not
+      // listed.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      await gotoNextPage(tester);
 
       // Check that deleted variables are not listed on the next page.
 
@@ -252,11 +230,12 @@ void main() {
 
       await tester.pump(pause);
 
-      // Check that 'evaporation' is the selected variable.
+      // Check that 'wind_gust_dir' is the selected variable.
 
-      final evaporationSelectedFinder = find.text('evaporation').hitTestable();
+      final evaporationSelectedFinder =
+          find.text('wind_gust_dir').hitTestable();
 
-      // Ensure 'evaporation' is selected.
+      // Ensure 'wind_gust_dir' is selected.
 
       expect(
         evaporationSelectedFinder,
@@ -306,19 +285,7 @@ void main() {
 
       // Tap the right arrow button twice to go to the variable role selection.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(pause);
+      await gotoNextPage(tester);
 
       // Find the "Ignore" buttons
 
@@ -383,7 +350,7 @@ void main() {
 
       // Check that the variables to be deleted are mentioned in the popup.
 
-      checkInPopup(['evaporation', 'sunshine']);
+      checkInPopup(['wind_gust_dir', 'wind_gust_speed']);
 
       // Pause after screen change.
 
@@ -420,9 +387,9 @@ void main() {
 
       await tester.pump(pause);
 
-      // Check that 'wind_gust_speed' is the selected variable.
+      // Check that 'wind_speed_9am' is the selected variable.
 
-      final windGustSpeedFinder = find.text('wind_gust_speed').hitTestable();
+      final windGustSpeedFinder = find.text('wind_speed_9am').hitTestable();
       expect(
         windGustSpeedFinder,
         findsOneWidget,

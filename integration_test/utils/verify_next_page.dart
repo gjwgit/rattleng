@@ -1,8 +1,8 @@
-///  Check if a variable is not missing in the output.
+/// Move to and verify the content of the next page.
 //
-// Time-stamp: <Tuesday 2024-09-10 15:56:42 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 09:47:13 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,22 +21,26 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
+
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract.dart';
 
-Future<void> checkVariableNotMissing(
-    ProviderContainer container, String variable,) async {
-  final stdout = container.read(stdoutProvider);
-  String missing = rExtract(stdout, '> missing');
+import 'goto_next_page.dart';
 
-  RegExp regExp = RegExp(r'"(.*?)"');
-  Iterable<RegExpMatch> matches = regExp.allMatches(missing);
-  List<String> variables = matches.map((match) => match.group(1)!).toList();
+Future<void> verifyNextPage(
+  WidgetTester tester,
+  String title, [
+  String? value,
+]) async {
+  await gotoNextPage(tester);
 
-  expect(variables.contains(variable), false);
+  final titleFinder = find.textContaining(title);
+  expect(titleFinder, findsOneWidget);
+
+  if (value != null) {
+    final valueFinder = find.textContaining(value);
+    expect(valueFinder, findsOneWidget);
+  }
 }

@@ -52,17 +52,14 @@ void main() {
       await _navigateToTab(tester, 'Missing', MissingPanel);
 
       await _performMissingAnalysis(tester);
+      // last number on the page.
 
-      // Move to next page and check the number of rows with no mising values.
-      // This is the first number of the row under the column headings.
-
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '328');
-
+      await _verifyPageContent(tester, 'Patterns of Missing Data', '380');
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
         tester,
         'Aggregation of Missing Values - Textual',
-        '7',
+        '172',
       );
       await _verifyPageContent(
         tester,
