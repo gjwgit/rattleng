@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2024-08-20 19:47:46 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 06:48:05 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -59,6 +59,14 @@ final List<Map<String, dynamic>> modelPanels = [
     'widget': const AssociationPanel(),
   },
   {
+    'title': 'Linear',
+    'widget': const LinearPanel(),
+  },
+  {
+    'title': 'Neural',
+    'widget': const NeuralPanel(),
+  },
+  {
     'title': 'Tree',
     'widget': const TreePanel(),
   },
@@ -77,14 +85,6 @@ final List<Map<String, dynamic>> modelPanels = [
   {
     'title': 'SVM',
     'widget': const SvmPanel(),
-  },
-  {
-    'title': 'Linear',
-    'widget': const LinearPanel(),
-  },
-  {
-    'title': 'Neural',
-    'widget': const NeuralPanel(),
   },
 ];
 
