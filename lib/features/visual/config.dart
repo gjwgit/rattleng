@@ -89,7 +89,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // Retrieve the categoric variables that will be used to group the
     // visualisations by. Be sure to also include the Target,
 
-    List<String> cats = getCategoric(ref, true);
+    List<String> cats = getCategoric(
+      ref,
+    );
 
     String groupBy = ref.watch(groupByProvider);
 

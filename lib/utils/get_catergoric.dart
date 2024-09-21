@@ -28,12 +28,12 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract_large_factors.dart';
 
 List<String> getCategoric(
   WidgetRef ref,
-  bool removeIgnore,
 ) {
   // The typesProvider lists the types for the different variables which we
   // need to know for parsing the R scripts.
@@ -46,9 +46,12 @@ List<String> getCategoric(
 
   List<String> rtn = [];
   roles.forEach((key, value) {
-    if (value == Type.categoric &&
-        (!removeIgnore || !largeFactors.contains(key))) {
-      rtn.add(key);
+    if (value == Type.categoric && (!largeFactors.contains(key))) {
+      // Omit variables which are set as ignore.
+
+      if (ref.read(rolesProvider.notifier).state[key] != Role.ignore) {
+        rtn.add(key);
+      }
     }
   });
 
