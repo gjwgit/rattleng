@@ -50,6 +50,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Leave time to see the first page.
+
     await tester.pump(const Duration(seconds: 1));
     //await tester.pump(pause);
 
