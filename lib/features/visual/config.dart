@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-08-28 09:26:39 +0800 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 21:00:00 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -89,9 +89,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // Retrieve the categoric variables that will be used to group the
     // visualisations by. Be sure to also include the Target,
 
-    List<String> cats = getCategoric(
-      ref,
-    );
+    List<String> cats = getCategoric(ref);
 
     String groupBy = ref.watch(groupByProvider);
 
