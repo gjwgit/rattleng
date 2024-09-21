@@ -108,16 +108,33 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     List<String> highVars = extractLargeFactors(stdout);
 
     _initializeRoles(vars, highVars, currentRoles);
+
+    // When a new row is added after transformation, initialise its role and
+    // update the role of the old variable
+
     updateVariablesProvider(ref);
 
     pages.add(
       ListView.builder(
+
         key: const Key('roles listView'),
+
+        // Add 1 for the extra header row.
+
         itemCount: vars.length + 1,
+
         itemBuilder: (context, index) {
+
+          // Both the header row and the regular row shares the same flex
+          // index.
+
           if (index == 0) {
             return _buildHeadline();
           } else {
+
+            // Regular data rows. We subtract 1 from the index to get the
+            // correct variable since the first row is the header row.
+
             return _buildDataLine(vars[index - 1], currentRoles);
           }
         },
@@ -125,7 +142,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     );
   }
 
-  // Initialize roles for variables
+  // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
+  // IDENTS. Also record variable types.
 
   void _initializeRoles(List<VariableInfo> vars, List<String> highVars,
       Map<String, Role> currentRoles,) {
@@ -143,7 +161,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   void _setInitialRole(VariableInfo column, WidgetRef ref) {
     String name = column.name.toLowerCase();
+
+    // Default is INPUT unless a prefix is found
+
     Role role = Role.input;
+    
     if (name.startsWith('risk_')) role = Role.risk;
     if (name.startsWith('ignore_')) role = Role.ignore;
     if (name.startsWith('target_')) role = Role.target;
@@ -153,7 +175,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         isNumeric(column.type) ? Type.numeric : Type.categoric;
   }
 
-  // Set target role
+  // Treat the last variable as a TARGET by default. We will eventually
+  // implement Rattle heuristics to identify the TARGET if the final
+  // variable has more than 5 levels. If so we'll check if the first
+  // variable looks like a TARGET (another common practise) and if not
+  // then no TARGET will be identified by default.
 
   void _setTargetRole(List<VariableInfo> vars, WidgetRef ref) {
     String target = getTarget(ref);
@@ -164,7 +190,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
-  // Set identifier role
+  // Any variables that have a unique value for every row in the dataset
+  // is considered to be an IDENTifier.
 
   void _setIdentRole(WidgetRef ref) {
     for (var id in getUniqueColumns(ref)) {
@@ -217,6 +244,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   // Build data line for each variable
   Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
+
+    // Truncate the content to fit one line. The text could wrap over two
+    // lines and so show more of the data, but our point here is more to
+    // have a reminder of the data to assist in deciding on the ROLE of each
+    // variable, not any real insight into the data which we leave to the
+    // SUMMARY feature.
+
     String content = _truncateContent(variable.details);
 
     return Padding(
@@ -281,10 +315,22 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   }
 
   // Handle role selection
+
   void _handleRoleSelection(bool selected, Role choice, String columnName,
       Map<String, Role> currentRoles,) {
+
+    // The parameter selected can be false when a chip
+    // is tapped when it is already selected.  In our
+    // case we need do nothing else. That could be
+    // useful as a toggle button!
+    
     setState(() {
       if (selected) {
+
+        // Only one variable can be TARGET, RISK and
+        // WEIGHT so any previous variable with that
+        // role shold become INPUT.
+
         if (choice == Role.target ||
             choice == Role.risk ||
             choice == Role.weight) {
