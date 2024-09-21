@@ -1,6 +1,6 @@
 /// Test TRANSFORM tab CLEANUP feature IGNORE option on the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 08:19:53 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 19:29:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -54,7 +54,7 @@ void main() {
 
       final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
       String filename = dsPathText.controller?.text ?? '';
-      expect(filename, 'rattle::weather');
+      expect(filename.contains('weather.csv'), isTrue);
 
       await gotoNextPage(tester);
 
@@ -230,11 +230,12 @@ void main() {
 
       await tester.pump(pause);
 
-      // Check that 'evaporation' is the selected variable.
+      // Check that 'wind_gust_dir' is the selected variable.
 
-      final evaporationSelectedFinder = find.text('evaporation').hitTestable();
+      final evaporationSelectedFinder =
+          find.text('wind_gust_dir').hitTestable();
 
-      // Ensure 'evaporation' is selected.
+      // Ensure 'wind_gust_dir' is selected.
 
       expect(
         evaporationSelectedFinder,
@@ -349,7 +350,7 @@ void main() {
 
       // Check that the variables to be deleted are mentioned in the popup.
 
-      checkInPopup(['evaporation', 'sunshine']);
+      checkInPopup(['wind_gust_dir', 'wind_gust_speed']);
 
       // Pause after screen change.
 
@@ -386,9 +387,9 @@ void main() {
 
       await tester.pump(pause);
 
-      // Check that 'wind_gust_speed' is the selected variable.
+      // Check that 'wind_speed_9am' is the selected variable.
 
-      final windGustSpeedFinder = find.text('wind_gust_speed').hitTestable();
+      final windGustSpeedFinder = find.text('wind_speed_9am').hitTestable();
       expect(
         windGustSpeedFinder,
         findsOneWidget,

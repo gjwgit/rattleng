@@ -1,6 +1,6 @@
 /// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 08:00:38 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 16:30:57 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,8 +36,8 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_button.dart';
+import 'utils/verify_multiple_text.dart';
 import 'utils/verify_next_page.dart';
-import 'utils/verify_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -62,17 +62,22 @@ void main() {
         'Correlation - Numeric Data',
         'pressure_9am            1.00',
       );
-      await verifyTextContent(
+
+      await verifyMultipleTextContent(
         tester,
-        'wind_speed_3pm         -0.36        -0.34        -0.27           1.00',
-      );
-      await verifyTextContent(
-        tester,
-        'rainfall               -0.33        -0.25         0.15           0.06',
-      );
-      await verifyTextContent(
-        tester,
-        'wind_gust_speed        -0.54        -0.53        -0.35           0.69',
+        [
+          // Verify risk_mm in the row.
+
+          'risk_mm                -0.20        -0.22         0.06',
+
+          // Verify pressure_9am in the row.
+
+          'pressure_9am            1.00         0.97         0.25',
+
+          // Verify humidity_9am in the row.
+
+          'humidity_9am            0.25         0.23         1.00',
+        ],
       );
 
       // Verify the content of the next page.
