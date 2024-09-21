@@ -49,10 +49,11 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    // Leave time to see the first page.
+    // Leave time to see the first page. It cannot be 0, the default value.
+    // Because the first page is not ready so we cannot find any widget.
 
-    await tester.pump(const Duration(seconds: 1));
-    //await tester.pump(pause);
+    await tester.pump(delay);
+    // await tester.pump(pause);
 
     final datasetButtonFinder = find.byType(DatasetButton);
     expect(datasetButtonFinder, findsOneWidget);
