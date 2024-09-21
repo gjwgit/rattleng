@@ -39,7 +39,8 @@ const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 
 /// The default dlay where a delay is always useful.
-
+/// 20240921 Lutra: Not sure why it is 2 here, all other implementations use 1.
+/// But I removed all the other implementations repeatedly.
 const Duration delay = Duration(seconds: 2);
 
 /// 20240902 gjw There are currently times when we need to wait for the R Script
