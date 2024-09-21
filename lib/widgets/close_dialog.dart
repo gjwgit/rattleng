@@ -123,9 +123,11 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
   String _cleanScript(String script) {
     return script
         .split('\n')
-        .where((line) =>
-            !line.trim().startsWith('svg') &&
-            !line.trim().startsWith('dev.off'),)
+        .where(
+          (line) =>
+              !line.trim().startsWith('svg') &&
+              !line.trim().startsWith('dev.off'),
+        )
         .join('\n');
   }
 }
