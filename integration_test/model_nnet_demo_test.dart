@@ -146,9 +146,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = demoVariablesManuallyIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = demoVariablesManuallyIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
@@ -383,9 +383,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = demoVariablesManuallyIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = demoVariablesManuallyIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
