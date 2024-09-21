@@ -28,8 +28,6 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
@@ -37,30 +35,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
-import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/widgets/close_dialog.dart';
+
 import 'package:window_manager/window_manager.dart';
 
 // Add a key to reference [RattleHome] to access its method.
 
 final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
-
-Future<void> cleanUpTempDirs() async {
-  // remove the temporary directories created by Rattle
-  // open from temp directory
-  final rattleTempDir = Directory(tempDir);
-  if (rattleTempDir.existsSync()) {
-    await rattleTempDir.delete(recursive: true);
-    debugPrint('Deleted Rattle temp directory: $tempDir');
-  }
-
-  // final rTempDir = Directory(rTempDir);
-  // for (var dir in rTempDir) {
-  //   if (dir is Directory) {
-  //     await dir.delete(recursive: true);
-  //     debugPrint('Deleted R temp directory: ${dir.path}');
-  //   }
-  // }
-}
 
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
@@ -77,7 +58,7 @@ class RattleApp extends ConsumerStatefulWidget {
 }
 
 class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
-
+  
   /// Initializes the state and sets up window management.
 
   @override
@@ -98,7 +79,9 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
   /// Initializes window management settings.
 
   void _init() async {
+
     // Prevent the window from closing by default
+
     await windowManager.setPreventClose(true);
     setState(() {});
   }
@@ -120,24 +103,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Are you sure you want to close Rattle?'),
-          content: const Text('Any unsaved work will be lost.'),
-          actions: [
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-            TextButton(
-              child: const Text('Close'),
-              onPressed: () => {
-                cleanUpTempDirs(),
-                windowManager.setPreventClose(false),
-                windowManager.close(),
-              },
-            ),
-          ],
-        );
+        return const CloseDialog();
       },
     );
   }
@@ -149,11 +115,12 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
+
     // Initialize the R process
     // 20240809 On Windows this does not get run due to the Console not being
     // ready and not receiving the early input. Delaying until feature/dataset
     // popup.dart seems to work.
-    
+
     rStart(context, ref);
 
     // Set up the app's color scheme
@@ -161,15 +128,15 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
     //   brightness: MediaQuery.platformBrightnessOf(context),
     //   seedColor: Colors.indigo,
     // );
-    
+
     Flavor flavor = catppuccin.latte;
 
     return MaterialApp(
-      
+
       //      theme: catppuccinTheme(catppuccin.latte),
-      
+
       theme: ThemeData(
-        
+
         // Material 3 is the current (2024) flutter default theme for colours
         // and Google fonts. We can stay with this as the default for now
         // while we experiment with options.
@@ -177,19 +144,21 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
         // We could turn the new material theme off to get the older look.
         //
         // useMaterial3: false,
-        
+
         colorScheme: ColorScheme.fromSeed(
           seedColor: flavor.mantle,
-          // seedColor: flavor.text,
-        ),
-        // primarySwatch: createMaterialColor(Colors.black),
 
+          // seedColor: flavor.text,
+
+        ),
+
+        // primarySwatch: createMaterialColor(Colors.black),
         // The default font size seems rather small. So increase it here.
-        
         // textTheme: Theme.of(context).textTheme.apply(
         //       fontSizeFactor: 1.1,
         //       fontSizeDelta: 2.0,
         //     ),
+
       ),
       home: RattleHome(key: rattleHomeKey),
     );
