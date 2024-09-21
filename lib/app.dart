@@ -68,6 +68,7 @@ Future<void> cleanUpTempDirs() async {
 /// operations when the app is about to close. It uses [ConsumerStatefulWidget]
 /// to interact with Riverpod providers and [WindowListener] to handle
 /// window-related events, particularly for desktop platforms.
+
 class RattleApp extends ConsumerStatefulWidget {
   const RattleApp({super.key});
 
@@ -76,7 +77,9 @@ class RattleApp extends ConsumerStatefulWidget {
 }
 
 class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
+
   /// Initializes the state and sets up window management.
+
   @override
   void initState() {
     super.initState();
@@ -85,6 +88,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
   }
 
   /// Removes this object as a window listener when the widget is disposed.
+
   @override
   void dispose() {
     windowManager.removeListener(this);
@@ -92,6 +96,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
   }
 
   /// Initializes window management settings.
+
   void _init() async {
     // Prevent the window from closing by default
     await windowManager.setPreventClose(true);
@@ -102,6 +107,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
   ///
   /// This method is called when the user attempts to close the window.
   /// It shows a confirmation dialog and performs cleanup if the user confirms.
+
   @override
   void onWindowClose() async {
     bool isPreventClose = await windowManager.isPreventClose();
@@ -140,12 +146,14 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
   ///
   /// This method initializes the R process, sets up the app's theme,
   /// and returns a [MaterialApp] widget that serves as the home of the app.
+
   @override
   Widget build(BuildContext context) {
     // Initialize the R process
     // 20240809 On Windows this does not get run due to the Console not being
     // ready and not receiving the early input. Delaying until feature/dataset
     // popup.dart seems to work.
+    
     rStart(context, ref);
 
     // Set up the app's color scheme
@@ -153,11 +161,15 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
     //   brightness: MediaQuery.platformBrightnessOf(context),
     //   seedColor: Colors.indigo,
     // );
+    
     Flavor flavor = catppuccin.latte;
 
     return MaterialApp(
+      
       //      theme: catppuccinTheme(catppuccin.latte),
+      
       theme: ThemeData(
+        
         // Material 3 is the current (2024) flutter default theme for colours
         // and Google fonts. We can stay with this as the default for now
         // while we experiment with options.
@@ -165,7 +177,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
         // We could turn the new material theme off to get the older look.
         //
         // useMaterial3: false,
-        //
+        
         colorScheme: ColorScheme.fromSeed(
           seedColor: flavor.mantle,
           // seedColor: flavor.text,
@@ -173,6 +185,7 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
         // primarySwatch: createMaterialColor(Colors.black),
 
         // The default font size seems rather small. So increase it here.
+        
         // textTheme: Theme.of(context).textTheme.apply(
         //       fontSizeFactor: 1.1,
         //       fontSizeDelta: 2.0,
