@@ -1,6 +1,6 @@
 /// <DESCRIPTION>
 //
-// Time-stamp: <Saturday 2024-09-21 15:40:38 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 21:05:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,11 +32,12 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract_large_factors.dart';
 
-List<String> getCategoric(
-  WidgetRef ref,
-) {
-  // The typesProvider lists the types for the different variables which we
-  // need to know for parsing the R scripts.
+/// Return a list of categoric variables that are not ignored and do not have
+/// too many levels.
+
+List<String> getCategoric(WidgetRef ref) {
+  // The typesProvider lists the types for the different variables which we need
+  // to know for parsing the R scripts.
 
   Map<String, Type> roles = ref.read(typesProvider);
 
@@ -44,16 +45,15 @@ List<String> getCategoric(
 
   List<String> largeFactors = extractLargeFactors(stdout);
 
-  List<String> rtn = [];
-  roles.forEach((key, value) {
-    if (value == Type.categoric && (!largeFactors.contains(key))) {
-      // Omit variables which are set as ignore.
+  List<String> result = [];
 
-      if (ref.read(rolesProvider.notifier).state[key] != Role.ignore) {
-        rtn.add(key);
-      }
+  roles.forEach((key, value) {
+    if (value == Type.categoric &&
+        !largeFactors.contains(key) &&
+        ref.read(rolesProvider.notifier).state[key] != Role.ignore) {
+      result.add(key);
     }
   });
 
-  return rtn;
+  return result;
 }
