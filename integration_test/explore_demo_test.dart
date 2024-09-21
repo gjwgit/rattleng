@@ -38,6 +38,8 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
 
+import 'utils/verify_multiple_text.dart';
+
 /// A duration to allow the tester to view/interact with the testing. 5s is
 /// good, 10s is useful for development and 0s for ongoing. This is not
 /// necessary but it is handy when running interactively for the user running
@@ -147,15 +149,19 @@ void main() {
 
       await tester.pump(pause);
 
-      // Find the text containing "2007-11-01".
+      await verifyMultipleTextContent(
+        tester,
+        [
+          // Verify date in the Content Column.
+          '2023-07-01',
 
-      final dateFinder = find.textContaining('2007-11-01');
-      expect(dateFinder, findsOneWidget);
+          // Verify min_temp as second parameter.
+          '-6.200',
 
-      // Find the text containing "39.800".
-
-      final valueFinder = find.textContaining('39.800');
-      expect(valueFinder, findsOneWidget);
+          // Verify max_temp as third parameter.
+          '8.40',
+        ],
+      );
 
       // Tap the right arrow button to go to "Dataset Glimpse" page.
 
@@ -171,14 +177,14 @@ void main() {
 
       await tester.pump(pause);
 
-      // Find the text containing "366" as the number of rows.
+      // Find the text containing "365" as the number of rows.
 
-      final rowsFinder = find.textContaining('366');
+      final rowsFinder = find.textContaining('365');
       expect(rowsFinder, findsOneWidget);
 
-      // Find the text containing "23" as the number of columns.
+      // Find the text containing "21" as the number of columns.
 
-      final columnsFinder = find.textContaining('23');
+      final columnsFinder = find.textContaining('21');
       expect(columnsFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "Kurtosis and Skewness" page.
@@ -188,14 +194,14 @@ void main() {
 
       await tester.pump(pause);
 
-      // Find the text containing "-1.12569017" as the min_temp.
+      // Find the text containing the min_temp.
 
-      final tempMinFinder = find.textContaining('-1.12569017');
+      final tempMinFinder = find.textContaining('-1.0832020');
       expect(tempMinFinder, findsOneWidget);
 
-      // Find the text containing "0.347510625" as the max_temp.
+      // Find the text containing "-1.0649102" as the max_temp.
 
-      final tempMaxFinder = find.textContaining('0.347510625');
+      final tempMaxFinder = find.textContaining('-1.0649102');
       expect(tempMaxFinder, findsOneWidget);
     });
   });

@@ -1,6 +1,6 @@
 /// Test and demonstrate the DATASET tab features with the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-09-11 17:25:33 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-18 09:01:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/open_demo_dataset.dart';
+import 'utils/verify_multiple_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,7 @@ void main() {
       expect(dsPathTextFinder, findsOneWidget);
       final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
       String filename = dsPathText.controller?.text ?? '';
-      expect(filename, 'rattle::weather');
+      expect(filename.contains('weather.csv'), isTrue);
 
       // Find the right arrow button in the PageIndicator.
 
@@ -84,10 +85,20 @@ void main() {
 
       await tester.pump(hack);
 
-      // Find the text containing "8.0".
+      await verifyMultipleTextContent(
+        tester,
+        [
+          // Verify date in the Content Column.
+          '2023-07-01',
+          '2023-07-02',
 
-      final rolesTempFinder = find.textContaining('8.0');
-      expect(rolesTempFinder, findsOneWidget);
+          // Verify min_temp in the Content Column.
+          '4.6',
+
+          // Verify max_temp in the Content Column.
+          '13.9',
+        ],
+      );
     });
   });
 }
