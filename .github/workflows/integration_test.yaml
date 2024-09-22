@@ -4,7 +4,16 @@ name: Integration Test
 # macOS takes an excessive amount of time, making it impractical for
 # use under the free tier. It took approximately 8 minutes to run the
 # first integration test on macOS. The workflow structure itself (as
-# implemented in PR #453) appears to be correct. The primary concern
+# implemented in PR #453) appears to be correct.
+#
+# For the Linux server the first test results in the message:
+#
+# integration_test/app_test.dartError waiting for a debug connection:
+# The log reader stopped unexpectedly, or never started.
+
+# For linux on own desktop the first test takes 15s
+#
+#The primary concern
 # is the execution time, which is too long to be practical, given
 # github free plan of 2000 minutes per month.
 #
@@ -28,7 +37,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest] #, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
     - name: Checkout code
