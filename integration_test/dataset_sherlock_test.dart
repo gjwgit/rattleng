@@ -30,7 +30,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
@@ -49,31 +48,26 @@ void main() {
 
       await gotoNextPage(tester);
 
-      // first line of the file
+      // Check first line of the file
+
       final textFinder = find.textContaining(
           '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}');
       expect(textFinder, findsOneWidget);
 
-
       await tester.pump(pause);
 
-      // if this passes, it means we are in the same page as before.
+      // If this passes, it means we are in the same page as before.
+
       final textFinder2 = find.textContaining(
           '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}');
       expect(textFinder2, findsOneWidget);
 
-      // Navigate to the Model tab
+      // Navigate to the Predictive tab
+
       final modelTabFinder = find.text('Predictive');
       expect(modelTabFinder, findsOneWidget);
       await tester.tap(modelTabFinder);
       await tester.pumpAndSettle();
-
-      // // Navigate to the Word Cloud subtab
-      // final wordCloudSubTabFinder = find.text(
-      //     'Word Cloud',);
-      // expect(wordCloudSubTabFinder, findsOneWidget);
-      // await tester.tap(wordCloudSubTabFinder);
-      // await tester.pumpAndSettle();
 
       // Find and tap the 'Display Word Cloud' button
 
@@ -88,32 +82,23 @@ void main() {
       await gotoNextPage(tester);
       await gotoNextPage(tester);
 
-      // Confirm the first entry in the frequency table
-      // The empty space are tabs
+      // Confirm these entries are in the frequency table
+
       final freqFinder = find.textContaining('the   64');
       expect(freqFinder, findsOneWidget);
-      // Perform scrolling in case the text is not visible initially
-      // await tester.drag(
-      //     find.byType(TextPage), const Offset(0, -300),); // Scroll down
-      // await tester.pumpAndSettle();
+
       final freqFinder2 = find.textContaining('little    7');
       expect(freqFinder2, findsOneWidget);
+
+      // Confirm these entries are not in the frequency table
 
       final freqFinder5 = find.textContaining('littl   7');
       expect(freqFinder5, findsNothing);
 
-      // Find the checkbox with the label 'Stem'
+      // Find the second checkbox (which should be the 'Stem' checkbox)
 
-// Find the second checkbox (which should be the 'Stem' checkbox)
       final stemCheckboxFinder = find.byType(Checkbox).at(1);
       expect(stemCheckboxFinder, findsOneWidget);
-
-      // final stemLabelFinder = find.text('Stem');
-      // final stemCheckboxFinder = find.descendant(
-      //   of: stemLabelFinder,
-      //   matching: find.byType(Checkbox),
-      // );
-      // expect(stemCheckboxFinder, findsOneWidget);
 
       // Tap the checkbox to check it
 
@@ -126,102 +111,121 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
+      // Confirm this entry is not in the frequency table
+
       final freqFinder3 = find.textContaining('little   7');
       expect(freqFinder3, findsNothing);
-      // await tester.drag(
-      //   find.byType(TextPage),
-      //   const Offset(0, -300),
-      // ); // Scroll down
       await tester.pumpAndSettle();
       await tester.pump(pause);
+
+      // Confirm this entry is in the frequency table
+
       final freqFinder4 = find.textContaining('littl    7');
       expect(freqFinder4, findsOneWidget);
 
       // Confirm the word cloud contains the text "again?"
+
       final againTextFinder = find.textContaining('again?');
       expect(againTextFinder, findsOneWidget);
 
-      // Find the third checkbox (assuming it controls a feature like stemming)
+      // Find the third checkbox (remove punctuation)
+      
       final thirdCheckboxFinder =
-          find.byType(Checkbox).at(2); // Index 2 for third checkbox
+          find.byType(Checkbox).at(2); 
       expect(thirdCheckboxFinder, findsOneWidget);
 
       // Tap the third checkbox to check it
+
       await tester.tap(thirdCheckboxFinder);
       await tester.pumpAndSettle();
 
       // Tap the 'Display Word Cloud' button again after checking the checkbox
+
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // Confirm that "again?" is no longer present in the word cloud after checkbox is checked
+      // Confirm that "again?" is no longer present in the word cloud
+
       expect(againTextFinder, findsNothing);
 
-      // Confirm the word cloud contains the text "the"
+      // Confirm this entry is in the frequency table
+
       final theTextFinder = find.textContaining('the   64');
       expect(theTextFinder, findsOneWidget);
 
-      // Find the fourth checkbox (index 3 for fourth checkbox)
+      // Find the fourth checkbox (for remove stopwords)
+
       final fourthCheckboxFinder = find.byType(Checkbox).at(3);
       expect(fourthCheckboxFinder, findsOneWidget);
+
       // Tap the fourth checkbox to check it
+
       await tester.tap(fourthCheckboxFinder);
       await tester.pumpAndSettle();
 
       // Tap the 'Display Word Cloud' button again after checking the checkbox
+      
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // Confirm that "the" is no longer present in the word cloud after checkbox is checked
+      // Confirm that 'the   64' is no longer present in the word cloud after checkbox is checked
+
       expect(theTextFinder, findsNothing);
 
       // Find the TextField using its label 'Max Words'
+
       final textFieldFinder = find.widgetWithText(TextField, 'Max Words');
       expect(textFieldFinder, findsOneWidget);
 
       // Enter '1' in the TextField
+
       await tester.enterText(textFieldFinder, '1');
       await tester.pumpAndSettle();
+
+      // Tap the 'Display Word Cloud' button
 
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify that "the   64" is not present in the word cloud
-      expect(theTextFinder, findsNothing);
+      // Verify that this is not present in the word cloud
+
+      expect(freqFinder4, findsNothing);
 
       // Verify that "upon   9" is present in the word cloud
+
       final uponTextFinder = find.textContaining('upon    9');
       expect(uponTextFinder, findsOneWidget);
 
       // Clear the TextField by entering an empty string
+
       final textFieldWidget = tester.widget<TextField>(textFieldFinder);
       textFieldWidget.controller
-          ?.clear(); // Explicitly clear the TextEditingController
+          ?.clear(); 
       await tester.pumpAndSettle();
       expect(textFieldWidget.controller?.text, isEmpty);
-      
-      // await tester.enterText(textFieldFinder, '');
-      // await tester.pumpAndSettle();
-      // await tester.tap(displayWordCloudButtonFinder);
-      // await tester.pumpAndSettle();
 
       // Find the TextField using its label 'Min Freq'
+
       final minFreqFinder = find.widgetWithText(TextField, 'Min Freq');
       expect(minFreqFinder, findsOneWidget);
 
-      // Enter '1' in the TextField
+      // Enter '2' for Min Freq
+
       await tester.enterText(minFreqFinder, '2');
       await tester.pumpAndSettle();
+
+      // Tap the 'Display Word Cloud' button
 
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
+      // Confirm that 1 is not in the frequency table
+      
       final oneFinder = find.text('1');
       expect(oneFinder, findsNothing);
-
     });
   });
 }
