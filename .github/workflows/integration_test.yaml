@@ -1,5 +1,18 @@
 name: Integration Test
 
+# The current GitHub Actions workflow for running integration tests on
+# macOS takes an excessive amount of time, making it impractical for
+# use under the free tier. It took approximately 8 minutes to run the
+# first integration test on macOS. The workflow structure itself (as
+# implemented in PR #453) appears to be correct. The primary concern
+# is the execution time, which is too long to be practical, given
+# github free plan of 2000 minutes and  500MB per month.
+#
+# For now we can include the script but not run it except if the
+# commit message includes 'run tests'. Also, perhaps just Linux as a
+# basic test given the time taken. Encourage developers to run the
+# tests themselves prior to a PR.
+
 on:
   push:
     branches:
@@ -11,10 +24,11 @@ on:
 
 jobs:
   qtest:
+    if: contains(github.event.head_commit.message, 'run qtests')
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest] #, macos-latest, windows-latest]
 
     steps:
     - name: Checkout code
