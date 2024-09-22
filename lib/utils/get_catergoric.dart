@@ -41,6 +41,9 @@ List<String> getCategoric(WidgetRef ref) {
 
   Map<String, Type> roles = ref.read(typesProvider);
 
+
+  // Watching stdout to get variables that are Ignored.
+
   String stdout = ref.watch(stdoutProvider);
 
   List<String> largeFactors = extractLargeFactors(stdout);
