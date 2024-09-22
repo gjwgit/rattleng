@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  qtest:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
