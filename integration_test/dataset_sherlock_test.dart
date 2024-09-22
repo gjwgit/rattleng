@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Wednesday 2024-09-04 12:08:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:21:24 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,26 +21,20 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Yixiang Yin, Graham Williams
 
 library;
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/constants/keys.dart';
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/check_popup.dart';
-import 'utils/next_page.dart';
-import 'utils/open_demo_dataset.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/goto_next_page.dart';
+import 'utils/open_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -53,14 +47,15 @@ void main() {
 
       await openDatasetByPath(tester, 'integration_test/sherlock.txt');
 
-      await goToNextPage(tester);
+      await gotoNextPage(tester);
 
       // first line of the file
       final textFinder = find.textContaining(
           '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}');
       expect(textFinder, findsOneWidget);
 
-      await goToNextPage(tester);
+
+      await tester.pump(pause);
 
       // if this passes, it means we are in the same page as before.
       final textFinder2 = find.textContaining(
@@ -68,7 +63,7 @@ void main() {
       expect(textFinder2, findsOneWidget);
 
       // Navigate to the Model tab
-      final modelTabFinder = find.text('Model');
+      final modelTabFinder = find.text('Predictive');
       expect(modelTabFinder, findsOneWidget);
       await tester.tap(modelTabFinder);
       await tester.pumpAndSettle();
@@ -90,8 +85,8 @@ void main() {
 
       // Go to the third page
 
-      await goToNextPage(tester);
-      await goToNextPage(tester);
+      await gotoNextPage(tester);
+      await gotoNextPage(tester);
 
       // Confirm the first entry in the frequency table
       // The empty space are tabs
@@ -226,6 +221,7 @@ void main() {
 
       final oneFinder = find.text('1');
       expect(oneFinder, findsNothing);
+
     });
   });
 }

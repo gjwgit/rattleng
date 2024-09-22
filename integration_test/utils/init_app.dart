@@ -33,7 +33,7 @@ Future<ProviderContainer> initApp(WidgetTester tester) async {
   await tester.pumpWidget(
     UncontrolledProviderScope(
       container: container,
-      child: RattleApp(),
+      child: const RattleApp(),
     ),
   );
   await tester.pumpAndSettle();

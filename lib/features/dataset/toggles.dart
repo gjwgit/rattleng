@@ -77,7 +77,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           this automated cleansing of the dataset, disable this option.
 
               ''',
-          child: Icon(Icons.cleaning_services),
+          child: const Icon(Icons.cleaning_services),
         ),
 
         // UNIFY
@@ -92,7 +92,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           option.
 
           ''',
-          child: Icon(Icons.auto_fix_high_outlined),
+          child: const Icon(Icons.auto_fix_high_outlined),
           // child: Icon(Icons.art_track),
           // child: Icon(Icons.ac_unit),
         ),
@@ -115,7 +115,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           is also useful to explore a random subset of the full dataset.
 
           ''',
-          child: Icon(Icons.horizontal_split),
+          child: const Icon(Icons.horizontal_split),
           // child: Icon(Icons.assessment_outlined),
         ),
       ],

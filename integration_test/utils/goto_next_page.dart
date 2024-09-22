@@ -1,8 +1,8 @@
-/// Move to and verify the content of the next page.
+/// Move to the next page.
 //
-// Time-stamp: <Monday 2024-09-02 18:50:45 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 12:35:20 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Graham Williams
 
 library;
 
@@ -31,24 +31,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
 
-Future<void> verifyPageContent(
-  WidgetTester tester,
-  String title, [
-  String? value,
-]) async {
+Future<void> gotoNextPage(WidgetTester tester) async {
+  // Find the right arrow button in the PageIndicator.
+
   final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
   expect(rightArrowFinder, findsOneWidget);
+
+  // Tap the right arrow button twice to go to the last page for variable role selection.
 
   await tester.tap(rightArrowFinder);
   await tester.pumpAndSettle();
 
+  // Pause after screen change.
+
   await tester.pump(pause);
-
-  final titleFinder = find.textContaining(title);
-  expect(titleFinder, findsOneWidget);
-
-  if (value != null) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
 }

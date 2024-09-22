@@ -1,6 +1,6 @@
 /// Navigate to a page in the app.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:03:00 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:30:09 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,13 +29,22 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'delays.dart';
+
 Future<void> navigateToPage(
-    WidgetTester tester, IconData icon, Type pageType,) async {
+  WidgetTester tester,
+  IconData icon,
+  Type pageType,
+) async {
   final pageIconFinder = find.byIcon(icon);
   expect(pageIconFinder, findsOneWidget);
 
   await tester.tap(pageIconFinder);
   await tester.pumpAndSettle();
+
+  // Pause after screen change.
+
+  await tester.pump(pause);
 
   expect(find.byType(pageType), findsOneWidget);
 }
