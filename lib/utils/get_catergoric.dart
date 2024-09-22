@@ -44,7 +44,7 @@ List<String> getCategoric(WidgetRef ref) {
 
   // Watching stdout to get variables that are Ignored.
 
-  String stdout = ref.watch(stdoutProvider);
+  String stdout = ref.read(stdoutProvider);
 
   List<String> largeFactors = extractLargeFactors(stdout);
 
