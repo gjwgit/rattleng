@@ -230,7 +230,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 20-10-1 network with 241 weights') == true,
+            widget.data?.contains('A 20-10-1 network with 241 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -242,17 +242,11 @@ void main() {
 
       await tester.pump(pause);
 
-      // Tap the right arrow to go to the third page.
-
-      await gotoNextPage(tester);
-
-      await tester.pump(hack);
-
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'options were - skip-layer connections  entropy fitting',
+                  'Options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );
@@ -269,7 +263,7 @@ void main() {
 
       await tester.pump(hack);
 
-      final forthPageTitleFinder = find.text('NNET');
+      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
       expect(forthPageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
@@ -458,7 +452,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 20-11-1 network with 263 weights') == true,
+            widget.data?.contains('A 20-11-1 network with 263 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -470,17 +464,11 @@ void main() {
 
       await tester.pump(pause);
 
-      // Tap the right arrow to go to the third page.
-
-      await gotoNextPage(tester);
-
-      await tester.pump(hack);
-
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'options were - skip-layer connections  entropy fitting',
+                  'Options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );
@@ -497,7 +485,7 @@ void main() {
 
       await tester.pump(hack);
 
-      final forthPageTitleFinder = find.text('NNET');
+      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
       expect(forthPageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
