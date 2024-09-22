@@ -6,7 +6,7 @@ name: Integration Test
 # first integration test on macOS. The workflow structure itself (as
 # implemented in PR #453) appears to be correct. The primary concern
 # is the execution time, which is too long to be practical, given
-# github free plan of 2000 minutes and  500MB per month.
+# github free plan of 2000 minutes per month.
 #
 # For now we can include the script but not run it except if the
 # commit message includes 'run tests'. Also, perhaps just Linux as a
