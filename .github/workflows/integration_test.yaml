@@ -24,7 +24,7 @@ on:
 
 jobs:
   qtest:
-    if: contains(github.event.head_commit.message, 'run qtests')
+    if: contains(github.event.head_commit.message, 'run qtest')
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
