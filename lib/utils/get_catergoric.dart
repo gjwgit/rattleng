@@ -1,6 +1,6 @@
 /// <DESCRIPTION>
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-22 16:00:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,22 +25,37 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/r/extract_large_factors.dart';
+
+/// Return a list of categoric variables that are not ignored and do not have
+/// too many levels.
 
 List<String> getCategoric(WidgetRef ref) {
-  // The typesProvider lists the types for the different variables which we
-  // need to know for parsing the R scripts.
+  // The typesProvider lists the types for the different variables which we need
+  // to know for parsing the R scripts.
 
   Map<String, Type> roles = ref.read(typesProvider);
 
-  List<String> rtn = [];
+  // Watching stdout to get variables that are Ignored.
+
+  String stdout = ref.read(stdoutProvider);
+
+  List<String> largeFactors = extractLargeFactors(stdout);
+
+  List<String> result = [];
+
   roles.forEach((key, value) {
-    if (value == Type.categoric) {
-      rtn.add(key);
+    if (value == Type.categoric &&
+        !largeFactors.contains(key) &&
+        ref.read(rolesProvider.notifier).state[key] != Role.ignore) {
+      result.add(key);
     }
   });
 
-  return rtn;
+  return result;
 }
