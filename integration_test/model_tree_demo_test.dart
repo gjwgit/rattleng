@@ -64,7 +64,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
@@ -157,7 +157,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
@@ -262,7 +262,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
