@@ -1,6 +1,6 @@
 /// EXPLORE tab: Correlation Large Dataset Test.
 //
-// Time-stamp: <Monday 2024-09-02 20:19:03 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:11:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,9 +34,9 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
 import 'utils/press_button.dart';
-import 'utils/verify_page_content.dart';
+import 'utils/verify_next_page.dart';
 import 'utils/verify_text.dart';
 
 void main() {
@@ -48,14 +48,14 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
 
       // Verify the content of the page 1.
 
-      await verifyPageContent(
+      await verifyNextPage(
         tester,
         'Correlation - Numeric Data',
         'cholesterol_level                1.00           0.00           0.00  -0.01',
@@ -79,7 +79,7 @@ void main() {
       //
       // Must be something we can do to confirm the image. Not sure what yet!
 
-      await verifyPageContent(tester, 'Variable Correlation Plot');
+      await verifyNextPage(tester, 'Variable Correlation Plot');
     });
   });
 }

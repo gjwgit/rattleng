@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Monday 2024-09-02 10:50:25 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:25:10 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,7 +39,7 @@ import 'package:rattle/widgets/text_page.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -50,12 +50,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // TODO 20240902 zy USE utils/open_large_file_dataset.dart
-      //
-      // The following will be in openLargeFileDataset(). Model it on
-      // openDemoSateset().
-
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // 20240822 TODO gjw DOES THIS NEED A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -66,7 +61,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
@@ -145,16 +140,11 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // TODO 20240902 zy USE utils/open_large_file_dataset.dart
-      //
-      // The following will be in openLargeFileDataset(). Model it on
-      // openDemoSateset().
-
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
@@ -264,16 +254,11 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(pause);
 
-      // TODO 20240902 zy USE utils/open_large_file_dataset.dart
-      //
-      // The following will be in openLargeFileDataset(). Model it on
-      // openDemoSateset().
-
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 

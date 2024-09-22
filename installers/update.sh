@@ -27,8 +27,8 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     # rsync -avzh rattleng-dev-ubuntu.zip rattleng-${version}-ubuntu.zip togaware.com:apps/access/
 
     # Linux Ubuntu 20.04 20240801 moved from 22.04
-    
-    gh run download ${bumpId} --name rattle-linux
+
+    gh run download ${bumpId} --name rattle-linux-zip
     mv rattle-dev-linux.zip rattleng-dev-linux.zip
     cp rattleng-dev-linux.zip rattleng-${version}-linux.zip
     chmod a+r rattleng*.zip
@@ -37,26 +37,37 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     echo ""
 
-    # MacOS
-    
-    gh run download ${bumpId} --name rattle-macos
-    mv rattle-dev-macos.zip rattleng-dev-macos.zip
-    cp rattleng-dev-macos.zip rattleng-${version}-macos.zip
-    chmod a+r rattleng*.zip
-    rsync -avzh rattleng-${version}-macos.zip togaware.com:apps/access/
-    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-macos.zip rattleng-dev-macos.zip"
+    # Windows Inno
+
+    gh run download ${bumpId} --name rattle-windows-inno
+    mv rattle-0.0.0.exe rattleng-${version}-windows-inno.exe
+    cp rattleng-${version}-windows-inno.exe rattleng-dev-windows-inno.exe
+    chmod a+r rattleng*-inno.exe
+    rsync -avzh rattleng-${version}-windows-inno.exe togaware.com:apps/access/
+    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-windows-inno.exe rattleng-dev-windows-inno.exe"
 
     echo ""
 
-    # Windows
-    
-    gh run download ${bumpId} --name rattle-windows
+    # Windows Zip
+
+    gh run download ${bumpId} --name rattle-windows-zip
     mv rattle-dev-windows.zip rattleng-dev-windows.zip
     cp rattleng-dev-windows.zip rattleng-${version}-windows.zip
     chmod a+r rattleng*.zip
     rsync -avzh rattleng-${version}-windows.zip togaware.com:apps/access/
     ssh togaware.com "cd apps/access; cp -f rattleng-${version}-windows.zip rattleng-dev-windows.zip"
     
+    echo ""
+
+    # MacOS
+
+    gh run download ${bumpId} --name rattle-macos-zip
+    mv rattle-dev-macos.zip rattleng-dev-macos.zip
+    cp rattleng-dev-macos.zip rattleng-${version}-macos.zip
+    chmod a+r rattleng*.zip
+    rsync -avzh rattleng-${version}-macos.zip togaware.com:apps/access/
+    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-macos.zip rattleng-dev-macos.zip"
+
 else
     echo "Latest github actions has not completed. Exiting."
     exit 1
