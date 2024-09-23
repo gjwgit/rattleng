@@ -101,7 +101,6 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // screen. Let's see what it does on Windows.
 
   await Future(() async {
-    
     // Create a Completer to ensure pty is ready before writing to it.
     Completer<void> ptyReadyCompleter = Completer<void>();
 

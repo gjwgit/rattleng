@@ -195,7 +195,6 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('MINFREQ', minFreq);
   code = code.replaceAll('MAXWORD', maxWord);
 
-
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
 
