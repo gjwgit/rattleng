@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final maxWordProvider = StateProvider<String>((ref) => '');
+final maxWordProvider = StateProvider<String>((ref) => 'Inf');
