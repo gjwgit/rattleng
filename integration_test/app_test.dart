@@ -1,6 +1,6 @@
 /// Test the app startup.
 //
-// Time-stamp: <Monday 2024-09-23 12:22:43 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-23 17:11:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -49,15 +49,16 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    // Leave time to see the first page. Note that using a [pause] won't be
-    // appropraite since the intent of the [pause] is for it to be user tunable,
-    // with 0s for a quick test, and 5s for a more interactive monitoring of the
-    // testing. A [pause] of 0s is not enough for the first page to be rendered.
+    // Leave time to see the first page during an interactive test. We use a
+    // [pause] which for qtest is 0s and for itest is 5s. Lutra-fs notes that 0
+    // problematic on their testing (hence qtest failing). Perhaps then try with
+    // itest.
 
-    await tester.pump(delay);
+    await tester.pump(pause);
 
     final datasetButtonFinder = find.byType(DatasetButton);
     expect(datasetButtonFinder, findsOneWidget);
+
     await tester.pump(pause);
 
     final welcomeMarkdownFinder = find.byType(Markdown);
