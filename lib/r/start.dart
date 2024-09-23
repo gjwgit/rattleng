@@ -26,6 +26,7 @@
 
 library;
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -99,7 +100,19 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // startup. Seems to have a slight delay on Linux with a all black
   // screen. Let's see what it does on Windows.
 
-  await Future(() {
+  await Future(() async {
+    
+    // Create a Completer to ensure pty is ready before writing to it.
+    Completer<void> ptyReadyCompleter = Completer<void>();
+
+    // Mark the pty as ready after it has been initialized.
+    ref.read(ptyProvider).exitCode.then((_) {
+      ptyReadyCompleter.complete();
+    });
+
+    // extra delay
+    const duration = Duration(seconds: 1);
+    await Future.delayed(duration);
     // Add the code to the script.
 
     updateScript(ref, code);
