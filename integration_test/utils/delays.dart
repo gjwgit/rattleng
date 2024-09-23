@@ -1,6 +1,6 @@
 /// Constant delays as used for testing.
 //
-// Time-stamp: <Monday 2024-09-02 07:16:30 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-09-22 06:10:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,29 +25,41 @@
 
 library;
 
-/// We use a <pause> duration to allow the tester to view/interact with the
-/// testing interactively. 2s ig good for a quicker interactive, 5s is good to
-/// review each screen, 10s is useful for development. Set as 0s for no pause. This
-/// is not necessary but it is handy when running interactively for the user
-/// running the test to see the widgets for added assurance. The PAUSE
-/// environment variable can be used to override the default PAUSE here:
+/// We use a <pause> duration to optionally allow the tester to view the testing
+/// interactively. A 2s delay is good for a quicker interactive, 5s is good to
+/// review each screen, 10s is useful for development, thoug ha little slow. Set
+/// as 0s for no pause as we do in the qtests. The pause should not be required
+/// for the test to succeed and is handy only when running interactively. The
+/// PAUSE environment variable can be used to override the default PAUSE
+/// conveniently. If a test works when PAUSE is non-zero but fails when it is
 ///
 /// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
 ///
+/// If a test works when <pause> is non-zero but fails when it is zero then you
+/// probably need to use a <delay> or a <hack> rather than a <pause>.
 
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 
-/// The default dlay where a delay is always useful.
+/// The default <delay> can be used where a delay is always useful.
 /// 20240921 Lutra: Not sure why it is 2 here, all other implementations use 1.
 /// But I removed all the other implementations repeatedly.
 
 const Duration delay = Duration(seconds: 2);
 
 /// 20240902 gjw There are currently times when we need to wait for the R Script
-/// to finish in the current architecture which needs to be fixed. For now we
-/// introduce a <hack> delay.
+/// to finish in the current architecture which needs to be fixed,
+/// eventually. For now we introduce a <hack> delay. By naming the delay as a
+/// <hack> we are marking it as a delay that we want to com back and fix some
+/// time.
 
 const Duration hack = Duration(seconds: 10);
+
+/// TODO 20240922 zy DO WE NEED longHack?
+///
+/// 20240922 Rather than introducing a <longHack> @Zheyuan, unless there is a
+/// good reason that you explain here, please just use multiple <hack>
+/// delays. Also, please comment when you add things like this to avoid others
+/// having to waste their time.
 
 const Duration longHack = Duration(seconds: 25);

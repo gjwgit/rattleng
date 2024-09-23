@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.0+124
+version: 6.3.1+124
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -74,7 +74,7 @@ dev_dependencies:
   # latest flutter.
 
   # TODO 20240906 yz DART CODE METRICS HAS DEPENDENCY ISSUES
-  
+
   # dart_code_metrics:
   #   git:
   #     url: https://github.com/anusii/dart-code-metrics.git
@@ -95,8 +95,8 @@ dev_dependencies:
 
   # riverpod_lint: ^2.3.2
 
-# dependency_overrides:
-#   collection: ^1.19.0
+dependency_overrides:
+  collection: ^1.19.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
