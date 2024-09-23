@@ -8,6 +8,9 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Update NEURAL. [6.3.1 20240923 gjw]
++ Remove unused Android/iOS/Web support. [6.3.1 20240923 lutra]
+
 ## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
 
 + DATASET updated weather.csv to 2023-2024 [6.3.0 20240921 gjw]
