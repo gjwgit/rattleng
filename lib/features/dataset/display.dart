@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -70,6 +71,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    // Watch the PageController provider
+    final pageController = ref.watch(pageControllerProvider);
+
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
 
@@ -360,6 +364,15 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       );
     }
 
-    return Pages(children: pages);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dataset Display'),
+      ),
+      body: PageView(
+        controller: ref.watch(
+            pageControllerProvider), // Attach the PageController from the provider
+        children: pages,
+      ),
+    );
   }
 }

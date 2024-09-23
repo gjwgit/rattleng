@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
@@ -140,20 +141,12 @@ class DatasetPopup extends ConsumerWidget {
               const SizedBox(width: widthSpace),
 
               // DEMO
-
               ElevatedButton(
                 onPressed: () async {
                   String dest =
                       await copyAssetToTempDir(asset: 'data/weather.csv');
                   ref.read(pathProvider.notifier).state = dest;
 
-                  // TODO 20231101 gjw DEFINE setPath()
-
-//                  ref.read(pathProvider.notifier).state = weatherDemoFile;
-
-                  // TODO 20240714 gjw HOW TO GET THE weather.csv FROM ASSETS
-                  // ref.read(pathProvider.notifier).state =
-                  //     'assets/data/weather.csv';
                   if (context.mounted) await rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
 
@@ -163,7 +156,12 @@ class DatasetPopup extends ConsumerWidget {
 
                   print("test 1");
 
-                  // navigate to the second page
+                  // Access the PageController via Riverpod and move to the second page
+                  ref.read(pageControllerProvider).animateToPage(
+                        1, // Index of the second page
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                 },
                 child: const Text('Demo'),
               ),
