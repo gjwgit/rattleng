@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Monday 2024-08-19 13:04:34 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-09-23 11:52:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
@@ -30,6 +31,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -104,13 +106,54 @@ void main() async {
   final rattleDir = await Directory.systemTemp.createTemp('rattle');
   tempDir = rattleDir.path.replaceAll(r'\', '/');
 
+  // Set up the app's color scheme
+  // final ColorScheme colorScheme = ColorScheme.fromSeed(
+  //   brightness: MediaQuery.platformBrightnessOf(context),
+  //   seedColor: Colors.indigo,
+  // );
+
+  Flavor flavor = catppuccin.latte;
+
   // The runApp() function takes the given Widget and makes it the root of the
   // widget tree. Here we wrap the app within RiverPod's ProviderScope() to
-  // support state management.
+  // support state management. We also sets up the app's theme through it being
+  // a [MaterialApp] and returns the [MaterialApp] widget that serves as the
+  // root of the app.
 
   runApp(
-    const ProviderScope(
-      child: RattleApp(),
+    ProviderScope(
+      // 20240923 gjw [MaterialApp] was moved here from app.dart on implementing
+      // the close dialog, since it needs a MaterialLocalizations to be in the
+      // parentage which MaterialApp ensures, and it makes sense for it to be
+      // the root.
+
+      child: MaterialApp(
+        //      theme: catppuccinTheme(catppuccin.latte),
+
+        theme: ThemeData(
+          // Material 3 is the current (2024) flutter default theme for colours
+          // and Google fonts. We can stay with this as the default for now
+          // while we experiment with options.
+          //
+          // We could turn the new material theme off to get the older look.
+          //
+          // useMaterial3: false,
+
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: flavor.mantle,
+
+            // seedColor: flavor.text,
+          ),
+
+          // primarySwatch: createMaterialColor(Colors.black),
+          // The default font size seems rather small. So increase it here.
+          // textTheme: Theme.of(context).textTheme.apply(
+          //       fontSizeFactor: 1.1,
+          //       fontSizeDelta: 2.0,
+          //     ),
+        ),
+        home: const RattleApp(),
+      ),
     ),
   );
 }

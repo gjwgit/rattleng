@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-08-25 07:10:02 +0800 Graham Williams>
+/// Time-stamp: <Monday 2024-09-23 11:49:06 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,11 +30,13 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/home.dart';
 import 'package:rattle/r/start.dart';
+import 'package:rattle/widgets/close_dialog.dart';
+
+import 'package:window_manager/window_manager.dart';
 
 // Add a key to reference [RattleHome] to access its method.
 
@@ -42,66 +44,81 @@ final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
 
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
-/// The root widget covers the screen of the app. This widget is stateless as it
-/// does not need to manage any state itself. The state is managed through
-/// riverpod and so it is a [ConsumerWidget].
+/// This widget manages the application's lifecycle and handles cleanup
+/// operations when the app is about to close. It uses [ConsumerStatefulWidget]
+/// to interact with Riverpod providers and [WindowListener] to handle
+/// window-related events, particularly for desktop platforms.
 
-class RattleApp extends ConsumerWidget {
+class RattleApp extends ConsumerStatefulWidget {
   const RattleApp({super.key});
 
-  /// Build the root widget as a [MaterialApp] widget, setting up the app theme,
-  /// and populating the widget with the Rattle home page widget.
+  @override
+  ConsumerState<RattleApp> createState() => _RattleAppState();
+}
+
+class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
+  /// Initializes the state and sets up window management.
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Initialise the R process.
+  void initState() {
+    super.initState();
+    windowManager.addListener(this);
+    _init();
+  }
 
-    // 20240809 On Windows this does not get run - that is main.R is not in the
-    // Console. Delaying until feature/dataset/popup.dart seems to work. Moving
-    // main.R into dataset_prep.R delays the setup too much.
-    //
-    // 20240810 Revert to this for now and try to solve the Windows issue. Is it
-    // because my Windows are too slow and this starts before the Console is
-    // running?
+  /// Removes this object as a window listener when the widget is disposed.
+
+  @override
+  void dispose() {
+    windowManager.removeListener(this);
+    super.dispose();
+  }
+
+  /// Initializes window management settings.
+
+  void _init() async {
+    // Prevent the window from closing by default
+
+    await windowManager.setPreventClose(true);
+    setState(() {});
+  }
+
+  /// Handles the window close event.
+  ///
+  /// This method is called when the user attempts to close the window.
+  /// It shows a confirmation dialog and performs cleanup if the user confirms.
+
+  @override
+  void onWindowClose() async {
+    bool isPreventClose = await windowManager.isPreventClose();
+    if (isPreventClose) {
+      _showCloseConfirmationDialog();
+    }
+  }
+
+  void _showCloseConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const CloseDialog();
+      },
+    );
+  }
+
+  /// Builds the widget tree for the Rattle app.
+  ///
+  /// This method initializes the R process.
+
+  @override
+  Widget build(BuildContext context) {
+    // Initialize the R process
+
+    // 20240809 On Windows this does not get run due to the Console not being
+    // ready and not receiving the early input. Delaying until feature/dataset
+    // popup.dart seems to work.
 
     rStart(context, ref);
 
-    // EXPERIMENT with the color scheme.
-
-    // final ColorScheme colorScheme = ColorScheme.fromSeed(
-    //   brightness: MediaQuery.platformBrightnessOf(context),
-    //   seedColor: Colors.indigo,
-    // );
-
-    Flavor flavor = catppuccin.latte;
-
-    return MaterialApp(
-      //      theme: catppuccinTheme(catppuccin.latte),
-      theme: ThemeData(
-        // Material 3 is the current (2024) flutter default theme for colours
-        // and Google fonts. We can stay with this as the default for now
-        // while we experiment with options.
-        //
-        // We could turn the new material theme off to get the older look.
-        //
-        // useMaterial3: false,
-        //
-        // EXPERIMENTATION
-        //
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: flavor.mantle,
-          // seedColor: flavor.text,
-        ),
-        // primarySwatch: createMaterialColor(Colors.black),
-
-        // The default font size seems rather small. So increase it here.
-
-        // textTheme: Theme.of(context).textTheme.apply(
-        //       fontSizeFactor: 1.1,
-        //       fontSizeDelta: 2.0,
-        //     ),
-      ),
-      home: RattleHome(key: rattleHomeKey),
-    );
+    return RattleHome(key: rattleHomeKey);
   }
 }
