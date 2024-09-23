@@ -80,13 +80,6 @@ void main() {
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
-      // Tap the right arrow button to go to Variable page.
-
-      await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
@@ -186,13 +179,6 @@ void main() {
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
-      // Tap the right arrow button to go to Variable page.
-
-      await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
@@ -261,6 +247,7 @@ void main() {
 
             // Fling (or swipe) down by a small amount.
 
+            //TODO kevin fix this failed test
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
