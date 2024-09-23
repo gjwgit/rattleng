@@ -1,6 +1,6 @@
 /// Test the app startup.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:29 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-23 17:16:22 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -49,12 +49,16 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    // Leave time to see the first page.
+    // Leave time to see the first page during an interactive test. We use a
+    // [pause] which for qtest is 0s and for itest is 5s. Lutra-fs notes that 0
+    // problematic on their testing (hence qtest failing). Perhaps then try with
+    // itest.
 
     await tester.pump(pause);
 
     final datasetButtonFinder = find.byType(DatasetButton);
     expect(datasetButtonFinder, findsOneWidget);
+
     await tester.pump(pause);
 
     final welcomeMarkdownFinder = find.byType(Markdown);

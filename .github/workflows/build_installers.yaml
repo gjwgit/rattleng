@@ -186,7 +186,7 @@ jobs:
         with:
           files: build/windows/x64/runner/Release/rattle-${{github.ref_name}}-windows.zip
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rattle-windows-zip
           path: build/windows/x64/runner/Release/rattle-${{github.ref_name}}-windows.zip
@@ -227,7 +227,7 @@ jobs:
         with:
           files: build/macos/Build/Products/Release/rattle-${{github.ref_name}}-macos.zip
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rattle-macos-zip
           path: build/macos/Build/Products/Release/rattle-${{github.ref_name}}-macos.zip
