@@ -361,16 +361,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Dataset Display'),
-      ),
-      body: PageView(
-        // Attach the PageController from the provider.
-
-        controller: ref.watch(pageControllerProvider),
-        children: pages,
-      ),
+    return PageView(
+      // Attach the PageController from the provider.
+      controller: ref.watch(pageControllerProvider),
+      children: pages,
     );
   }
 }
