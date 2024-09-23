@@ -1,6 +1,6 @@
 /// Constant delays as used for testing.
 //
-// Time-stamp: <Sunday 2024-09-22 06:10:41 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-23 12:20:12 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -41,9 +41,9 @@ library;
 const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
 final Duration pause = Duration(seconds: int.parse(envPAUSE));
 
-/// The default <delay> can be used where a delay is always useful.
-/// 20240921 Lutra: Not sure why it is 2 here, all other implementations use 1.
-/// But I removed all the other implementations repeatedly.
+/// The default <delay> can be used where a delay is always useful. We use a
+/// default here of 2s though we have previously tried 1s, seems 2s is more
+/// likely to be enough.
 
 const Duration delay = Duration(seconds: 2);
 
