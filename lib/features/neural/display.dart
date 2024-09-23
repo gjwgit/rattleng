@@ -149,7 +149,7 @@ $weights
         ImagePage(
           title: '''
 
-          # Neurat Net Model - Visual
+          # Neural Net Model - Visual
 
           Visit
           [NeuralNetTools::plotnet()](https://www.rdocumentation.org/packages/NeuralNetTools/topics/plotnet).
