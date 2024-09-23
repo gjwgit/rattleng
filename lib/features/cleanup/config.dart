@@ -232,8 +232,16 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO yyx 20240809 the display not updated after cleanup
+    // Retireve the list of inputs as the label and value of the dropdown menu.
+    // TODO yyx 20240807 what should we allow to be deleted?
+
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
     String method = ref.read(cleanUpMethodProvider.notifier).state;
+    // Retrieve the current selected variable and use that as the initial value
+    // for the dropdown menu. If there is no current value and we do have inputs
+    // then we choose the first input variable.
+    // TODO yyx 20240807 after deletion it should show other variables not the deleted one. how to do it?
     String selected = ref.watch(selectedProvider);
 
     if (selected == 'NULL' && inputs.isNotEmpty) {
@@ -242,10 +250,14 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
     return Column(
       children: [
+        // Space to the left of the configs.
+
         configTopSpace,
         Row(
           children: [
             const SizedBox(width: 5),
+            // The BUILD button.
+
             ActivityButton(
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
