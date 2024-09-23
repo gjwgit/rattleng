@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2024-09-11 05:54:39 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-09-21 11:41:11 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -78,14 +78,14 @@ final List<Map<String, dynamic>> homeTabs = [
     'widget': const TransformTabs(),
   },
   {
-    'title': 'Model',
+    'title': 'Predictive',
     'icon': Icons.model_training,
     'widget': const ModelTabs(),
   },
   {
-    'title': 'Evaluate',
+    'title': 'Generative',
     'icon': Icons.leaderboard,
-    'widget': const Center(child: Text('COMING SOON: EVALUATE')),
+    'widget': const Center(child: Text('COMING SOON: GENERATIVE')),
   },
   {
     'title': 'Console',

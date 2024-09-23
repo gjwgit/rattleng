@@ -1,6 +1,6 @@
 /// A widget to handle multiple pages for the display widget.
 //
-// Time-stamp: <Wednesday 2024-07-31 08:37:29 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 18:40:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,7 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -119,7 +118,7 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
           ),
         ),
         const SizedBox(height: 5),
-        PageIndicator(
+        CustomPageIndicator(
           tabController: _tabController,
           currentPageIndex: _currentPage,
           onUpdateCurrentPageIndex: _updateCurrentPageIndex,
@@ -166,8 +165,8 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
 /// In this sample, we use a TabPageSelector to navigate between pages,
 /// in order to build natural behavior similar to other desktop applications.
 
-class PageIndicator extends StatelessWidget {
-  const PageIndicator({
+class CustomPageIndicator extends StatelessWidget {
+  const CustomPageIndicator({
     super.key,
     required this.tabController,
     required this.pageController,
@@ -189,6 +188,7 @@ class PageIndicator extends StatelessWidget {
     if (!isOnDesktopAndWeb) {
       return const SizedBox.shrink();
     }
+
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
@@ -209,10 +209,35 @@ class PageIndicator extends StatelessWidget {
               size: 32.0,
             ),
           ),
-          TabPageSelector(
-            controller: tabController,
-            color: colorScheme.surface,
-            selectedColor: colorScheme.primary,
+          Row(
+            children: List<Widget>.generate(numOfPages, (index) {
+              return GestureDetector(
+                onTap: () {
+                  onUpdateCurrentPageIndex(index);
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                  width: 12.0,
+                  height: 12.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: currentPageIndex == index
+                        ? colorScheme.primary
+                        // Inside color for unselected dots.
+
+                        : Colors.white,
+                    border: Border.all(
+                      color: currentPageIndex == index
+                          ? Colors.transparent
+                          // Black border for unselected dots.
+
+                          : Colors.black,
+                      width: 1.5,
+                    ),
+                  ),
+                ),
+              );
+            }),
           ),
           IconButton(
             splashRadius: 16.0,

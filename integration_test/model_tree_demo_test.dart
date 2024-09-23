@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:14 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 12:20:46 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -64,7 +64,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
@@ -86,11 +86,6 @@ void main() {
       // Pause for a long time to wait for app gets stable.
 
       await tester.pump(hack);
-
-      // Optionally, you can test interactions with the TabPageSelector.
-
-      final pageIndicator = find.byType(TabPageSelector);
-      expect(pageIndicator, findsOneWidget);
 
       // Tap the right arrow to go to the second page.
 
@@ -162,7 +157,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
@@ -267,7 +262,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+      await navigateToTab(tester, 'Predictive');
 
       // Navigate to the Tree feature.
 
