@@ -33,10 +33,13 @@ Widget variableChooser(
   String selected,
   WidgetRef ref,
   StateProvider stateProvider, {
-  required bool
-      enabled, // Add this parameter to control if the dropdown is enabled
+  // Add this parameter to control if the dropdown is enabled.
+
+  required bool enabled,
   Function(String?)?
-      onChanged, // Add a callback for onChanged to handle custom logic
+      // Add a callback for onChanged to handle custom logic.
+
+      onChanged,
 }) {
   return DropdownMenu(
     label: Text(label),
@@ -45,14 +48,25 @@ Widget variableChooser(
     dropdownMenuEntries: inputs.map((s) {
       return DropdownMenuEntry(value: s, label: s);
     }).toList(),
-    enabled: enabled, // Use the enabled parameter to control the dropdown state
+    // Use the enabled parameter to control the dropdown state.
+
+    enabled: enabled,
     onSelected: (String? value) {
       if (enabled) {
         ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
         if (onChanged != null) {
-          onChanged(value); // Call the custom callback if provided
+          // Call the custom callback if provided.
+
+          onChanged(value);
         }
       }
     },
+    // Add a custom style for when it's disabled.
+
+    textStyle: TextStyle(
+      // Set grey when disabled.
+
+      color: enabled ? Colors.black : Colors.grey,
+    ),
   );
 }
