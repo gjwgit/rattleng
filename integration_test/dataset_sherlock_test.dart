@@ -35,6 +35,8 @@ import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/open_dataset_by_path.dart';
 
+const Duration delay = Duration(seconds: 5);
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -75,7 +77,7 @@ void main() {
       expect(displayWordCloudButtonFinder, findsOneWidget);
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       // Go to the third page
 
@@ -109,7 +111,7 @@ void main() {
 
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       // Confirm this entry is not in the frequency table
 
@@ -143,7 +145,7 @@ void main() {
 
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       // Confirm that "again?" is no longer present in the word cloud
 
@@ -168,7 +170,7 @@ void main() {
       
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       // Confirm that 'the   64' is no longer present in the word cloud after checkbox is checked
 
@@ -188,6 +190,7 @@ void main() {
 
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
+      await tester.pump(delay);
 
       // Verify that this is not present in the word cloud
 
@@ -220,7 +223,7 @@ void main() {
 
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(delay);
 
       // Confirm that 1 is not in the frequency table
       
