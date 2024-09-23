@@ -156,6 +156,9 @@ class DatasetPopup extends ConsumerWidget {
 
                   print("test 1");
 
+                  // how to await 3 seconds here?
+                  // await Future.delayed(Duration(seconds: 3));
+
                   // Access the PageController via Riverpod and move to the second page
                   ref.read(pageControllerProvider).animateToPage(
                         1, // Index of the second page
