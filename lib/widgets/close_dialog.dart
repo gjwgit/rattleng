@@ -1,6 +1,6 @@
 /// A dialog to prompte user on closing app with SAVE and CANCEL options
 ///
-/// Time-stamp: <Monday 2024-09-23 12:13:38 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-09-23 13:08:05 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -39,6 +39,8 @@ import 'package:rattle/providers/script.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/word_wrap.dart';
 
+const double widthSpace = 10;
+
 class CloseDialog extends ConsumerStatefulWidget {
   const CloseDialog({super.key});
 
@@ -55,7 +57,17 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(_title),
+      title: Row(
+        children: [
+          const Icon(
+            Icons.close,
+            size: 24,
+            color: Colors.blue,
+          ),
+          const SizedBox(width: widthSpace),
+          Text(_title),
+        ],
+      ),
       content: Text(_content),
       actions: <Widget>[
         TextButton(
