@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-09 19:17:11 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 12:34:18 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang
+/// Authors:  Kevin Wang, Graham Williams
 
 library;
 
@@ -33,10 +33,10 @@ import 'package:rattle/features/impute/panel.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_large_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_multiple_text.dart';
-import 'utils/verify_page_content.dart';
+import 'utils/verify_next_page.dart';
 import 'utils/check_missing_variable.dart';
 import 'utils/check_variable_not_missing.dart';
 import 'utils/init_app.dart';
@@ -63,7 +63,7 @@ void main() {
 
       // Open the large dataset in the app.
 
-      await openLargeDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // Navigate to the 'Transform' tab in the app.
 
@@ -87,7 +87,7 @@ void main() {
 
       // Verify that the page content includes the expected dataset summary with 'IZR_middle_name'.
 
-      await verifyPageContent(
+      await verifyNextPage(
         tester,
         'Dataset Summary',
         'IZR_middle_name',
@@ -111,9 +111,11 @@ void main() {
 
       await navigateToTab(tester, 'Dataset');
 
+      await tester.pump(pause);
+
       // Allow time for the UI to settle after the tab change.
 
-      await tester.pump(pause);
+      await tester.pump(hack);
 
       // Step 3: Verify that the imputed variable 'IZR_middle_name' is present in the dataset.
 

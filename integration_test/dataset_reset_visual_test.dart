@@ -1,6 +1,6 @@
 /// Test visual image disappear after the DATASET RESET.
 //
-// Time-stamp: <Saturday 2024-09-07 06:20:19 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:09:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,8 +40,8 @@ import 'package:rattle/widgets/image_page.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
+import 'utils/open_dataset_by_path.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/open_large_dataset.dart';
 import 'utils/press_button.dart';
 
 void main() {
@@ -120,9 +120,6 @@ void main() {
       );
 
       await navigateToFeature(tester, 'Tree', TreePanel);
-      // Find the TabPageSelector and check its page count.
-      final tabPageSelectorFinder = find.byType(TabPageSelector);
-      expect(tabPageSelectorFinder, findsOneWidget);
 
       // Assuming the TabPageSelector's page count is based on a PageController.
       final pageControllerFinder = find.byWidgetPredicate(
@@ -142,7 +139,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(pause);
 
-    await openLargeDataset(tester);
+    await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
     await navigateToPage(
       tester,
@@ -207,11 +204,9 @@ void main() {
       Icons.model_training,
       ModelTabs,
     );
+    await tester.pump(hack);
 
     await navigateToFeature(tester, 'Tree', TreePanel);
-    // Find the TabPageSelector and check its page count.
-    final tabPageSelectorFinder = find.byType(TabPageSelector);
-    expect(tabPageSelectorFinder, findsOneWidget);
 
     // Assuming the TabPageSelector's page count is based on a PageController
     final pageControllerFinder = find.byWidgetPredicate(

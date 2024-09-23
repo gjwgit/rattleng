@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-09-10 05:47:51 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 10:14:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,12 +27,12 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
+import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
@@ -57,40 +57,110 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
       showMarkdownFile(neuralIntroFile, context),
     ];
 
+    ////////////////////////////////////////////////////////////////////////
+
     content = rExtract(stdout, 'print(model_nn)');
 
     if (content.isNotEmpty) {
+      // Capitalise each line and for the Input: line, wordwrap and comma
+      // separate the column names.
+
+      List<String> lines = content.split('\n');
+
+      lines = lines.map((line) {
+        if (line.isEmpty) return line;
+
+        // Comma separate the variable names.
+
+        if (line.startsWith('inputs: ')) {
+          String tail = line.substring(8);
+          tail = tail.replaceAll(r' ', ', ');
+          line = 'inputs: $tail';
+        }
+
+        // Capitalise the first letter of the line.
+
+        String result = line[0].toUpperCase();
+        result += line.substring(1).trim();
+        result += '.';
+
+        // Special case for the first line where the space after the 'A' seems
+        // to have got lost.
+
+        if (result.startsWith('A')) {
+          result = 'A ${result.substring(1)}';
+        }
+
+        return wordWrap(result);
+      }).toList();
+
+      content = lines.join('\n\n');
+
+      String weights = rExtract(stdout, 'summary(model_nn)');
+
+      // Remove the repeated first two lines.
+
+      lines = weights.split('\n');
+      if (lines.length > 2) {
+        lines = lines.sublist(2);
+      } else {
+        lines = [];
+      }
+
+      // If the line starts with ' +b' then insert an empty line.
+
+      List<String> newLines = [];
+      for (String line in lines) {
+        if (line.startsWith(RegExp(' +b'))) newLines.add('');
+        newLines.add(line);
+      }
+
+      weights = newLines.join('\n');
+
+      content = '''$content
+
+$weights
+
+    ''';
+
       pages.add(
         TextPage(
-          title: '# Neural Net Model - Summary of Parameters\n\n'
-              'Built using [`nnet():nnet()`]($nnetModelLink).\n\n',
+          title: '''
+
+          # Neural Net Model - Summary and Weights
+
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/neural-networks.html). Built
+          using
+          [nnet::nnet()](https://www.rdocumentation.org/packages/nnet/topics/nnet).
+
+            ''',
           content: '\n$content',
         ),
       );
     }
 
-    content = rExtract(stdout, 'summary(model_nn)');
-
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '# Neural Net Model\n\n'
-              'Built using [`nnet():nnet()`]($nnetModelLink).\n\n',
-          content: '\n$content',
-        ),
-      );
-    }
+    ////////////////////////////////////////////////////////////////////////
 
     String image = '$tempDir/model_nn_nnet.svg';
 
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: 'NNET',
+          title: '''
+
+          # Neural Net Model - Visual
+
+          Visit
+          [NeuralNetTools::plotnet()](https://www.rdocumentation.org/packages/NeuralNetTools/topics/plotnet).
+
+          ''',
           path: image,
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     return Pages(children: pages);
   }
