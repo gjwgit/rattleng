@@ -1,6 +1,6 @@
 /// Test the app startup.
 //
-// Time-stamp: <Tuesday 2024-09-03 09:09:29 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-23 12:22:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -49,9 +49,12 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    // Leave time to see the first page.
+    // Leave time to see the first page. Note that using a [pause] won't be
+    // appropraite since the intent of the [pause] is for it to be user tunable,
+    // with 0s for a quick test, and 5s for a more interactive monitoring of the
+    // testing. A [pause] of 0s is not enough for the first page to be rendered.
 
-    await tester.pump(pause);
+    await tester.pump(delay);
 
     final datasetButtonFinder = find.byType(DatasetButton);
     expect(datasetButtonFinder, findsOneWidget);

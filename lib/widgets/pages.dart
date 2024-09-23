@@ -1,6 +1,6 @@
 /// A widget to handle multiple pages for the display widget.
 //
-// Time-stamp: <Wednesday 2024-07-31 08:37:29 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 18:40:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,7 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
