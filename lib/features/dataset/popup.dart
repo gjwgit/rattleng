@@ -116,6 +116,16 @@ class DatasetPopup extends ConsumerWidget {
 
                   if (!context.mounted) return;
                   Navigator.pop(context, 'Filename');
+
+                  // Access the PageController via Riverpod and move to the second page.
+
+                  ref.read(pageControllerProvider).animateToPage(
+                        // Index of the second page.
+
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                 },
                 child: const Text('Filename'),
               ),
@@ -154,14 +164,12 @@ class DatasetPopup extends ConsumerWidget {
 
                   datasetLoadedUpdate(ref);
 
-                  print("test 1");
+                  // Access the PageController via Riverpod and move to the second page.
 
-                  // how to await 3 seconds here?
-                  // await Future.delayed(Duration(seconds: 3));
-
-                  // Access the PageController via Riverpod and move to the second page
                   ref.read(pageControllerProvider).animateToPage(
-                        1, // Index of the second page
+                        // Index of the second page.
+
+                        1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
                       );
