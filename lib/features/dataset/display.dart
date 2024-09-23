@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-09-12 16:47:47 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-09-23 14:51:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -61,8 +61,7 @@ class DatasetDisplay extends ConsumerStatefulWidget {
 }
 
 class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
-
-  // Constants for layout
+  // Constants for layout.
 
   final Widget space = const SizedBox(width: 10);
 
@@ -71,7 +70,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   @override
   Widget build(BuildContext context) {
-
     final String path = ref.watch(pathProvider);
     final String stdout = ref.watch(stdoutProvider);
 
@@ -88,19 +86,25 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     return Pages(children: pages);
   }
 
-  // Add a page for text file content
-  
+  // Add a page for text file content.
+
   void _addTextFilePage(String stdout, List<Widget> pages) {
     String content = rExtract(stdout, '> cat(ds,');
-    String title =
-        '# Text Content\n\nGenerated using [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).';
+    String title = '''
+
+        # Text Content
+
+        Generated using
+        [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
+
+        ''';
 
     if (content.isNotEmpty) {
       pages.add(TextPage(title: title, content: '\n$content'));
     }
   }
 
-  // Add a page for dataset summary
+  // Add a page for dataset summary.
 
   void _addDatasetPage(String stdout, List<Widget> pages) {
     Map<String, Role> currentRoles = ref.read(rolesProvider);
@@ -116,7 +120,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     pages.add(
       ListView.builder(
-
         key: const Key('roles listView'),
 
         // Add 1 for the extra header row.
@@ -124,14 +127,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         itemCount: vars.length + 1,
 
         itemBuilder: (context, index) {
-
           // Both the header row and the regular row shares the same flex
           // index.
 
           if (index == 0) {
             return _buildHeadline();
           } else {
-
             // Regular data rows. We subtract 1 from the index to get the
             // correct variable since the first row is the header row.
 
@@ -145,8 +146,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
   // IDENTS. Also record variable types.
 
-  void _initializeRoles(List<VariableInfo> vars, List<String> highVars,
-      Map<String, Role> currentRoles,) {
+  void _initializeRoles(
+    List<VariableInfo> vars,
+    List<String> highVars,
+    Map<String, Role> currentRoles,
+  ) {
     if (currentRoles.isEmpty && vars.isNotEmpty) {
       for (var column in vars) {
         _setInitialRole(column, ref);
@@ -157,15 +161,15 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
-  // Set initial role for a variable
+  // Set initial role for a variable.
 
   void _setInitialRole(VariableInfo column, WidgetRef ref) {
     String name = column.name.toLowerCase();
 
-    // Default is INPUT unless a prefix is found
+    // Default is INPUT unless a prefix is found.
 
     Role role = Role.input;
-    
+
     if (name.startsWith('risk_')) role = Role.risk;
     if (name.startsWith('ignore_')) role = Role.ignore;
     if (name.startsWith('target_')) role = Role.target;
@@ -199,7 +203,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
-  // Set ignore role for high cardinality variables
+  // Set ignore role for high cardinality variables.
 
   void _setIgnoreRoleForHighVars(List<String> highVars, WidgetRef ref) {
     for (var highVar in highVars) {
@@ -209,8 +213,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
-  // Build headline for the dataset summary
-  
+  // Build headline for the dataset summary.
+
   Widget _buildHeadline() {
     return Padding(
       padding: const EdgeInsets.all(6.0),
@@ -218,33 +222,45 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Expanded(
-              child: Text('Variable',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,),),
+            child: Text(
+              'Variable',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+          ),
           space,
           const Expanded(
-              child: Text('Type',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,),),
+            child: Text(
+              'Type',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+          ),
           Expanded(
-              flex: typeFlex,
-              child: const Text('Role',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,),),
+            flex: typeFlex,
+            child: const Text(
+              'Role',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+          ),
           space,
           Expanded(
-              flex: contentFlex,
-              child: const Text('Content',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,),),
+            flex: contentFlex,
+            child: const Text(
+              'Content',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // Build data line for each variable
-  Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
+  // Build data line for each variable.
 
+  Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
     // Truncate the content to fit one line. The text could wrap over two
     // lines and so show more of the data, but our point here is more to
     // have a reminder of the data to assist in deciding on the ROLE of each
@@ -264,11 +280,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               space,
               Expanded(child: Text(variable.type)),
               Expanded(
-                  flex: typeFlex,
-                  child: _buildRoleChips(variable.name, currentRoles),),
+                flex: typeFlex,
+                child: _buildRoleChips(variable.name, currentRoles),
+              ),
               Expanded(
-                  flex: contentFlex,
-                  child: Text(content, style: const TextStyle(fontSize: 14)),),
+                flex: contentFlex,
+                child: Text(content, style: const TextStyle(fontSize: 14)),
+              ),
             ],
           );
         },
@@ -276,7 +294,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     );
   }
 
-  // Build fitted text for variable name
+  // Build fitted text for variable name.
+
   Widget _buildFittedText(String text) {
     return FittedBox(
       fit: BoxFit.scaleDown,
@@ -291,7 +310,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     );
   }
 
-  // Build role choice chips
+  // Build role choice chips.
+
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
     return Wrap(
       spacing: 5.0,
@@ -314,19 +334,21 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     );
   }
 
-  // Handle role selection
+  // Handle role selection.
 
-  void _handleRoleSelection(bool selected, Role choice, String columnName,
-      Map<String, Role> currentRoles,) {
-
+  void _handleRoleSelection(
+    bool selected,
+    Role choice,
+    String columnName,
+    Map<String, Role> currentRoles,
+  ) {
     // The parameter selected can be false when a chip
     // is tapped when it is already selected.  In our
     // case we need do nothing else. That could be
     // useful as a toggle button!
-    
+
     setState(() {
       if (selected) {
-
         // Only one variable can be TARGET, RISK and
         // WEIGHT so any previous variable with that
         // role shold become INPUT.
@@ -346,14 +368,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     });
   }
 
-  // Truncate content for display
+  // Truncate content for display.
+
   String _truncateContent(String content) {
     int maxLength = 40;
     String subStr =
         content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
-    return '${lastCommaIndex > 0
-            ? content.substring(0, lastCommaIndex)
-            : subStr} ...';
+    return '${lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr} ...';
   }
 }
