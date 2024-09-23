@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-10 20:39:41 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 19:22:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,8 +39,16 @@ import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/nnet_ignore_variable.dart';
 import 'utils/open_demo_dataset.dart';
+
+/// List of specific variables that should have their role set to 'Ignore' in
+/// demo dataset. These are factors/chars and don't play well with nnet.
+
+final List<String> demoVariablesToIgnore = [
+  'wind_gust_dir',
+  'wind_dir_9am',
+  'wind_dir_3pm',
+];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +65,8 @@ void main() {
 
       await tester.pump(hack);
 
+      await tester.pump(pause);
+
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
@@ -72,6 +82,8 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
+      await tester.pump(pause);
+
       // Find the scrollable ListView.
 
       final scrollableFinder = find.byKey(const Key('roles listView'));
@@ -82,8 +94,10 @@ void main() {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
+
         while (!foundVariable) {
           // Find the row where the variable name is displayed.
+
           final variableFinder = find.text(variable);
 
           if (tester.any(variableFinder)) {
@@ -114,11 +128,13 @@ void main() {
             await tester.pumpAndSettle();
 
             // Verify that the role is now set to 'Ignore'.
+
             expect(ignoreChipFinder, findsOneWidget);
           } else {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
+
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
@@ -130,9 +146,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
@@ -200,6 +216,8 @@ void main() {
 
       await tester.pumpAndSettle();
 
+      await tester.pump(pause);
+
       // Pause for a long time to wait for app gets stable.
 
       await tester.pump(hack);
@@ -212,12 +230,14 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
+      await tester.pump(pause);
+
       // Check if SelectableText contains the expected content.
 
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('a 17-10-1 network with 208 weights') == true,
+            widget.data?.contains('A 15-10-1 network with 186 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -227,19 +247,11 @@ void main() {
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(pause);
-
-      // Tap the right arrow to go to the third page.
-
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'options were - skip-layer connections  entropy fitting',
+                  'Options were - skip-layer connections  entropy fitting',
                 ) ==
                 true,
       );
@@ -256,7 +268,9 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      final forthPageTitleFinder = find.text('NNET');
+      await tester.pump(pause);
+
+      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
       expect(forthPageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
@@ -295,6 +309,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
+      await tester.pump(pause);
 
       // Find the scrollable ListView.
 
@@ -306,8 +321,10 @@ void main() {
         bool foundVariable = false;
 
         // Scroll in steps and search for the variable until it's found.
+
         while (!foundVariable) {
           // Find the row where the variable name is displayed.
+
           final variableFinder = find.text(variable);
 
           if (tester.any(variableFinder)) {
@@ -338,11 +355,13 @@ void main() {
             await tester.pumpAndSettle();
 
             // Verify that the role is now set to 'Ignore'.
+
             expect(ignoreChipFinder, findsOneWidget);
           } else {
             final currentScrollableFinder = scrollableFinder.first;
 
             // Fling (or swipe) down by a small amount.
+
             await tester.fling(
               currentScrollableFinder,
               const Offset(0, -300), // Scroll down
@@ -354,9 +373,9 @@ void main() {
             // Tab the previous variable to avoid missing tab it.
             // Missing tab happens if Ignore button overlaps the rightArrow icon.
 
-            int index = largeVariablesToIgnore.indexOf(variable);
+            int index = demoVariablesToIgnore.indexOf(variable);
             if (index > 0) {
-              String preVariable = largeVariablesToIgnore[index - 1];
+              String preVariable = demoVariablesToIgnore[index - 1];
 
               // Find the row where the variable name is displayed.
 
@@ -435,6 +454,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(delay);
+      await tester.pump(pause);
 
       // Tap the right arrow to go to the second page.
 
@@ -444,17 +464,22 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(delay);
+      await tester.pump(pause);
+
+      // Check if SelectableText contains the expected content.
+
+      final modelDescriptionFinder = find.byWidgetPredicate(
+        (widget) =>
+            widget is SelectableText &&
+            widget.data?.contains('A 15-11-1 network with 203 weights') == true,
+      );
+
+      // Ensure the SelectableText widget with the expected content exists.
+
+      expect(modelDescriptionFinder, findsOneWidget);
 
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
-
-      await tester.pump(pause);
-
-      // Tap the right arrow to go to the third page.
-
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
 
       await tester.pump(pause);
 
@@ -463,8 +488,9 @@ void main() {
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
+      await tester.pump(pause);
 
-      final forthPageTitleFinder = find.text('NNET');
+      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
       expect(forthPageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);

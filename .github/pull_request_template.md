@@ -18,12 +18,8 @@ Flutter Style Guide: https://survivor.togaware.com/gnulinux/flutter-style.html
 - [ ] No duplicated content
 - [ ] No lint check errors related to your changes (`make prep` or `flutter analyze lib`)
 - [ ] Pre-exisiting lint errors noted: [HERE]
-- [ ] Tested on at least one device
-  - [ ] Android Phone
-  - [ ] Android Emulator
-  - [ ] Chrome on Android
-  - [ ] Chrome
-  - [ ] iOS
+- [ ] Integration test `make qtest.tmp` screenshot included in issue
+- [ ] Tested on device:
   - [ ] Linux
   - [ ] MacOS
   - [ ] Windows

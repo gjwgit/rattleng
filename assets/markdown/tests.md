@@ -6,7 +6,7 @@ distributions of values of two variables at a time.
 
 The Statistics chapter of the [Data Science Desktop Survival
 Guide](https://survivor.togaware.com/datascience/statistics.html)
-provides an overview of the different Statistical tests supported by
+provides an overview of the different statistical tests supported by
 Rattle.
 
 **Two-sample tests** compare the distribution of the values of two
@@ -30,7 +30,7 @@ different distributions.
 Tests for the *location of the average* include the two-sample
 **t-Test**, a parametric test used to compare the means of two
 independent groups to see if there is a statistically significant
-difference between them, and the bob-parametric **Wilcoxon Rank-Sum**
+difference between them, and the non-parametric **Wilcoxon Rank-Sum**
 test of the hypothesis that the medians are different.
 
 Tests on *variation in the data* include the **f-Test**, a parametric

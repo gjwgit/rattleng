@@ -1,8 +1,8 @@
-/// Navigate to a page in the app.
+/// Open the a dataset from its path
 //
-// Time-stamp: <Friday 2024-09-20 08:30:09 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:07:17 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
@@ -31,20 +31,30 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
 
-Future<void> navigateToPage(
-  WidgetTester tester,
-  IconData icon,
-  Type pageType,
-) async {
-  final pageIconFinder = find.byIcon(icon);
-  expect(pageIconFinder, findsOneWidget);
+Future<void> openDatasetByPath(WidgetTester tester, String path) async {
+  // Locate the TextField where the file path is input.
 
-  await tester.tap(pageIconFinder);
+  final filePathField = find.byType(TextField);
+  expect(filePathField, findsOneWidget);
+
+  // Enter the file path programmatically.
+
+  await tester.enterText(
+    filePathField,
+    path,
+  );
+
+  // Simulate pressing the Enter key.
+
+  await tester.testTextInput.receiveAction(TextInputAction.done);
+
+  // Optionally pump the widget tree to reflect the changes.
+
   await tester.pumpAndSettle();
-
-  // Pause after screen change.
 
   await tester.pump(pause);
 
-  expect(find.byType(pageType), findsOneWidget);
+  // TODO 20240903 zy WE NEED TO ELIMINATE THE hack WAIT DUE TO async.
+
+  await tester.pump(hack);
 }
