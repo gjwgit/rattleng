@@ -36,6 +36,7 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
@@ -111,6 +112,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       // Extract variable information from the R console.
 
       List<VariableInfo> vars = extractVariables(stdout);
+      List<String> highVars = extractLargeFactors(stdout);
 
       // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
       // IDENTS. Also record variable types.
@@ -154,6 +156,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         for (var id in getUniqueColumns(ref)) {
           ref.read(rolesProvider.notifier).state[id] = Role.ident;
         }
+        for (var highVar in highVars) {
+          if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
+            ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+          }
+        }
       }
 
       // When a new row is added after transformation, initialise its role and
@@ -170,6 +177,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: Text(
                 'Variable',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             space,
@@ -177,6 +185,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: Text(
                 'Type',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             Expanded(
@@ -184,6 +193,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: const Text(
                 'Role',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
             space,
@@ -192,6 +202,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               child: const Text(
                 'Content',
                 style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
             ),
           ],
@@ -311,15 +322,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                     ),
                   ),
                   // Hard code the Spacer when the screen width is large.
-
-                  // Add a Spacer if the screen width is greater than 1159.0.
-
-                  if (constraints.maxWidth > 1159.0) const Spacer(),
-
-                  // Two spacers to make the layout more compact.
-                  // Add a Spacer if the screen width is greater than 1159.0.
-
-                  if (constraints.maxWidth > 1159.0) const Spacer(),
                 ],
               );
             },
