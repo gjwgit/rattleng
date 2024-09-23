@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll data science.
 ///
-/// Time-stamp: <Monday 2024-09-23 11:48:50 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-09-23 11:52:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -122,6 +122,11 @@ void main() async {
 
   runApp(
     ProviderScope(
+      // 20240923 gjw [MaterialApp] was moved here from app.dart on implementing
+      // the close dialog, since it needs a MaterialLocalizations to be in the
+      // parentage which MaterialApp ensures, and it makes sense for it to be
+      // the root.
+
       child: MaterialApp(
         //      theme: catppuccinTheme(catppuccin.latte),
 
