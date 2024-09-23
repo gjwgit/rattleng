@@ -103,7 +103,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   String imputed = ref.read(imputedProvider);
   String language = ref.read(languageProvider);
   String maxWord = ref.read(maxWordProvider);
-  String minFreq = ref.read(minFreqProvider);
+  String minFreq = ref.read(minFreqProvider).toString();
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
@@ -192,13 +192,9 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
   code = code.replaceAll('LANGUAGE', language);
 
-  (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
-      ? code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString())
-      : code = code.replaceAll('MINFREQ', '1');
+  code = code.replaceAll('MINFREQ', minFreq);
+  code = code.replaceAll('MAXWORD', maxWord);
 
-  (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
-      ? code = code.replaceAll('MAXWORD', num.parse(maxWord).toInt().toString())
-      : code = code.replaceAll('MAXWORD', 'Inf');
 
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
