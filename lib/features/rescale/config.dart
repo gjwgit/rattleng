@@ -192,8 +192,9 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selected,
               ref,
               selectedProvider,
-              enabled: numericInputs
-                  .isNotEmpty, // Enable only if there are numeric inputs
+              // Enable only if there are numeric inputs.
+
+              enabled: numericInputs.isNotEmpty,
               onChanged: (value) {
                 if (value != null) {
                   ref.read(selectedProvider.notifier).state = value;
