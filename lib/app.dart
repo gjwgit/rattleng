@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-08-25 07:10:02 +0800 Graham Williams>
+/// Time-stamp: <Monday 2024-09-23 11:49:06 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,7 +30,6 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/home.dart';
@@ -58,7 +57,6 @@ class RattleApp extends ConsumerStatefulWidget {
 }
 
 class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
-  
   /// Initializes the state and sets up window management.
 
   @override
@@ -79,7 +77,6 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
   /// Initializes window management settings.
 
   void _init() async {
-
     // Prevent the window from closing by default
 
     await windowManager.setPreventClose(true);
@@ -110,57 +107,18 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
 
   /// Builds the widget tree for the Rattle app.
   ///
-  /// This method initializes the R process, sets up the app's theme,
-  /// and returns a [MaterialApp] widget that serves as the home of the app.
+  /// This method initializes the R process.
 
   @override
   Widget build(BuildContext context) {
-
     // Initialize the R process
+
     // 20240809 On Windows this does not get run due to the Console not being
     // ready and not receiving the early input. Delaying until feature/dataset
     // popup.dart seems to work.
 
     rStart(context, ref);
 
-    // Set up the app's color scheme
-    // final ColorScheme colorScheme = ColorScheme.fromSeed(
-    //   brightness: MediaQuery.platformBrightnessOf(context),
-    //   seedColor: Colors.indigo,
-    // );
-
-    Flavor flavor = catppuccin.latte;
-
-    return MaterialApp(
-
-      //      theme: catppuccinTheme(catppuccin.latte),
-
-      theme: ThemeData(
-
-        // Material 3 is the current (2024) flutter default theme for colours
-        // and Google fonts. We can stay with this as the default for now
-        // while we experiment with options.
-        //
-        // We could turn the new material theme off to get the older look.
-        //
-        // useMaterial3: false,
-
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: flavor.mantle,
-
-          // seedColor: flavor.text,
-
-        ),
-
-        // primarySwatch: createMaterialColor(Colors.black),
-        // The default font size seems rather small. So increase it here.
-        // textTheme: Theme.of(context).textTheme.apply(
-        //       fontSizeFactor: 1.1,
-        //       fontSizeDelta: 2.0,
-        //     ),
-
-      ),
-      home: RattleHome(key: rattleHomeKey),
-    );
+    return RattleHome(key: rattleHomeKey);
   }
 }
