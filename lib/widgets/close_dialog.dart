@@ -1,6 +1,6 @@
-/// The dialog that will be prompted when the user tries to close the app.
+/// A dialog to prompte user on closing app with SAVE and CANCEL options
 ///
-/// Time-stamp: <Leave as BLANK for now>
+/// Time-stamp: <Monday 2024-09-23 12:13:38 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -22,22 +22,22 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Bo Zhang(Lutra-Fs)
+/// Authors: Bo Zhang (Lutra-Fs), Graham Williams
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/script.dart';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:window_manager/window_manager.dart';
+import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/utils/word_wrap.dart';
 
 class CloseDialog extends ConsumerStatefulWidget {
   const CloseDialog({super.key});
@@ -48,8 +48,9 @@ class CloseDialog extends ConsumerStatefulWidget {
 
 class _CloseDialogState extends ConsumerState<CloseDialog> {
   String _title = 'Close Rattle?';
-  String _content =
-      'Are you sure you want to close Rattle? All unsaved changes will be lost. You could save the script before closing. Note that the Save button will not close the app after saving.';
+  String _content = wordWrap('Are you sure you want to close Rattle? '
+      'Unsaved changes will be lost. '
+      'You can save the script now before closing.');
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +62,15 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
+        // Conditionally display the Save button
+        if (_title != 'Script saved')
+          TextButton(
+            onPressed: () => _showFileNameDialog(context),
+            child: const Text('Save'),
+          ),
         TextButton(
           onPressed: _closeApp,
           child: const Text('Close'),
-        ),
-        TextButton(
-          onPressed: () => _showFileNameDialog(context),
-          child: const Text('Save'),
         ),
       ],
     );
@@ -95,14 +98,14 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
     } else {
       setState(() {
         _title = 'Error';
-        _content =
-            'No file selected, you could either close the app or save the script again.';
+        _content = wordWrap('No file selected. '
+            'You can still close the app or try saving the script again.');
       });
     }
   }
 
   void _saveScript(String fileName) {
-    debugPrint("SAVE BUTTON EXPORT: '$fileName'");
+    debugText('  SAVE ON CLOSE', fileName);
 
     String script = ref.read(scriptProvider);
     script = _cleanScript(script);
@@ -115,8 +118,8 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
 
     setState(() {
       _title = 'Script saved';
-      _content =
-          'The script has been saved to $fileName. You can now close the app.';
+      _content = wordWrap('The script has been saved to the following R file '
+          '$fileName.\nYou can now close the app.');
     });
   }
 
@@ -136,6 +139,6 @@ Future<void> cleanUpTempDirs() async {
   final rattleTempDir = Directory(tempDir);
   if (await rattleTempDir.exists()) {
     await rattleTempDir.delete(recursive: true);
-    debugPrint('Deleted Rattle temp directory: $tempDir');
+    debugText('  DELETED', tempDir);
   }
 }
