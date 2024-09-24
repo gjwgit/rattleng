@@ -52,12 +52,12 @@ void main() {
 
       // Leave time to see the first page.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
@@ -73,7 +73,7 @@ void main() {
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Model tab by icon and tap on it.
 
@@ -85,7 +85,7 @@ void main() {
       await tester.tap(modelIconFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Verify if the ModelTabs widget is shown.
 
@@ -97,7 +97,7 @@ void main() {
       await tester.tap(clusterTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the BUILD button by its text.
 
@@ -109,7 +109,7 @@ void main() {
       await tester.tap(buildButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the right arrow button in the PageIndicator.
 
@@ -121,7 +121,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing the number of default clusters.
 
