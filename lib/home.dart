@@ -65,42 +65,34 @@ final List<Map<String, dynamic>> homeTabs = [
   {
     'title': 'Dataset',
     'icon': Icons.input,
-    'widget': const DatasetPanel(),
   },
   {
     'title': 'Explore',
     'icon': Icons.insights,
-    'widget': const ExploreTabs(),
   },
   {
     'title': 'Transform',
     'icon': Icons.transform,
-    'widget': const TransformTabs(),
   },
   {
     'title': 'Predict',
     'icon': Icons.model_training,
-    'widget': const ModelTabs(),
   },
   {
     'title': 'Generate',
     'icon': Icons.leaderboard,
-    'widget': const Center(child: Text('COMING SOON: GENERATIVE')),
   },
   {
     'title': 'Console',
     'icon': Icons.terminal,
-    'widget': const RConsole(),
   },
   {
     'title': 'Script',
     'icon': Icons.code,
-    'widget': const ScriptTab(),
   },
   {
     'title': 'Debug',
     'icon': Icons.work,
-    'widget': const DebugTab(),
   },
 ];
 
@@ -160,6 +152,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
     });
   }
 
+  late List<Widget> _tabWidgets;
+
   @override
   void initState() {
     super.initState();
@@ -176,6 +170,19 @@ class RattleHomeState extends ConsumerState<RattleHome>
     // tabs.
 
     _tabController = TabController(length: homeTabs.length, vsync: this);
+
+    // Initialize the tab widgets once in order to use IndexedStack later.
+
+    _tabWidgets = [
+      const DatasetPanel(),
+      const ExploreTabs(),
+      const TransformTabs(),
+      const ModelTabs(),
+      const Center(child: Text('COMING SOON: GENERATIVE')),
+      const RConsole(),
+      const ScriptTab(),
+      const DebugTab(),
+    ];
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab.
@@ -468,7 +475,10 @@ Xu, Yixiang Yin, Bo Zhang.
           ),
           const VerticalDivider(),
           Expanded(
-            child: homeTabs[_tabController.index]['widget'],
+            child: IndexedStack(
+              index: _tabController.index,
+              children: _tabWidgets,
+            ),
           ),
         ],
       ),
