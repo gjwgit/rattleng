@@ -46,7 +46,7 @@ void main() {
         (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
       await navigateToTab(tester, 'Explore');
@@ -85,7 +85,7 @@ Future<void> _performMissingAnalysis(WidgetTester tester) async {
   await tester.tap(generateSummaryButtonFinder);
   await tester.pumpAndSettle();
 
-  await tester.pump(pause);
+  await tester.pump(interact);
   await tester.pump(hack);
 }
 

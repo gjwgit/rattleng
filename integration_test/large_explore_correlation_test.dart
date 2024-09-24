@@ -46,7 +46,7 @@ void main() {
     testWidgets('build, page.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
       await navigateToTab(tester, 'Explore');

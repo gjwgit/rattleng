@@ -59,7 +59,7 @@ void main() {
 
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Open the large dataset in the app.
 
@@ -113,7 +113,7 @@ void main() {
 
       await navigateToTab(tester, 'Dataset');
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Allow time for the UI to settle after the tab change.
 
