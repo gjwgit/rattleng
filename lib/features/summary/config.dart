@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -62,6 +63,14 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             ActivityButton(
               onPressed: () {
                 rSource(context, ref, 'explore_summary');
+                //TODO kevin navigate
+                ref.read(pageControllerProvider).animateToPage(
+                      // Index of the second page.
+
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Generate Dataset Summary'),
             ),
