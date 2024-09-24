@@ -44,6 +44,7 @@ import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -71,6 +72,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    final pageController = ref
+        .watch(pageControllerProvider); // Get the PageController from Riverpod
+
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
 
@@ -361,10 +365,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       );
     }
 
-    return PageView(
-      // Attach the PageController from the provider.
-      controller: ref.watch(pageControllerProvider),
-      children: pages,
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
     );
   }
 }
