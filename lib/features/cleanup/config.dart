@@ -1,11 +1,11 @@
-/// Widget to configure the CLEANUP feature.
+/// Widget to configure the CLEANUP feature of the TRANSFORM tab.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-08-23 18:09:25 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 12:38:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Kevin Wang
 
 library;
 
@@ -232,16 +232,22 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO yyx 20240809 the display not updated after cleanup
+    // TODO 20240809 yyx THE DISPLAY NOT UPDATED AFTER CLEANUP
+
     // Retireve the list of inputs as the label and value of the dropdown menu.
-    // TODO yyx 20240807 what should we allow to be deleted?
+
+    // TODO 20240807 yyx WHAT SHOULD WE ALLOW TO BE DELETED?
 
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
+
     String method = ref.read(cleanUpMethodProvider.notifier).state;
+
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
     // then we choose the first input variable.
-    // TODO yyx 20240807 after deletion it should show other variables not the deleted one. how to do it?
+
+    // TODO 20240807 yyx AFTER DELETION SHOW OTHER VARIABLES NOT DELETED ONE?
+
     String selected = ref.watch(selectedProvider);
 
     if (selected == 'NULL' && inputs.isNotEmpty) {
@@ -250,12 +256,11 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
     return Column(
       children: [
-        // Space to the left of the configs.
-
         configTopSpace,
         Row(
           children: [
-            const SizedBox(width: 5),
+            configLeftSpace,
+
             // The BUILD button.
 
             ActivityButton(
@@ -265,7 +270,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
               child: const Text('Delete from Dataset'),
             ),
+
             configWidgetSpace,
+
             ChoiceChipTip<String>(
               options: methods.keys.toList(),
               selectedOption: method,
@@ -279,17 +286,19 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 });
               },
             ),
+
             configWidgetSpace,
 
-            // Use the variableChooser with enabled parameter
+            // Use the variableChooser with enabled parameter.
+
             variableChooser(
               'Variable',
               inputs,
               selected,
               ref,
               selectedProvider,
-              enabled:
-                  method == 'Variable', // Enable only when method is 'Variable'
+              // Enable only when method is 'Variable'.
+              enabled: method == 'Variable',
               onChanged: (value) {
                 if (value != null && method != 'Variable') {
                   setState(() {

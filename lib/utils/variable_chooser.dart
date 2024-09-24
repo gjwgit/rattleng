@@ -1,11 +1,11 @@
-/// Dropdown Widget to select a variable
+/// Dropdown widget to select a variable.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-08-04 07:46:33 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 12:44:41 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Kevin Wang
 
 library;
 
@@ -34,12 +34,9 @@ Widget variableChooser(
   WidgetRef ref,
   StateProvider stateProvider, {
   // Add this parameter to control if the dropdown is enabled.
-
   required bool enabled,
-  Function(String?)?
-      // Add a callback for onChanged to handle custom logic.
-
-      onChanged,
+  // Add a callback for onChanged to handle custom logic.
+  Function(String?)? onChanged,
 }) {
   return DropdownMenu(
     label: Text(label),
@@ -48,6 +45,7 @@ Widget variableChooser(
     dropdownMenuEntries: inputs.map((s) {
       return DropdownMenuEntry(value: s, label: s);
     }).toList(),
+
     // Use the enabled parameter to control the dropdown state.
 
     enabled: enabled,
@@ -61,6 +59,7 @@ Widget variableChooser(
         }
       }
     },
+
     // Add a custom style for when it's disabled.
 
     textStyle: TextStyle(
