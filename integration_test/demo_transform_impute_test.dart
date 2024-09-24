@@ -49,7 +49,7 @@ void main() {
 
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -101,7 +101,7 @@ void main() {
 
       // Allow time for the UI to settle after navigating to the 'Dataset' tab.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Step 3: Verify that the imputed variable 'IZR_rainfall' is present in the dataset.
 

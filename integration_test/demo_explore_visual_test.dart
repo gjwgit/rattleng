@@ -45,7 +45,7 @@ void main() {
     testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -89,7 +89,7 @@ void main() {
 
       expect(find.byType(VisualPanel), findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
       await tester.pump(delay);
 
       // Find the button by its text.
@@ -102,7 +102,7 @@ void main() {
       await tester.tap(generatePlotButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the right arrow button in the PageIndicator.
 
@@ -117,7 +117,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "Box Plot".
 
@@ -138,7 +138,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "Density Plot of Values".
 
@@ -154,7 +154,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "Cumulative Plot".
 
@@ -170,7 +170,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "Benford Plot".
 

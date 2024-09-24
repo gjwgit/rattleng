@@ -44,7 +44,7 @@ void main() {
     testWidgets('basic.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
       await _navigateToExploreTab(tester);
@@ -99,7 +99,7 @@ Future<void> _navigateToTab(
   await tester.tap(tabFinder);
   await tester.pumpAndSettle();
 
-  await tester.pump(pause);
+  await tester.pump(interact);
 
   expect(find.byType(panelType), findsOneWidget);
 }
@@ -111,7 +111,7 @@ Future<void> _performMissingAnalysis(WidgetTester tester) async {
   await tester.tap(generateSummaryButtonFinder);
   await tester.pumpAndSettle();
 
-  await tester.pump(pause);
+  await tester.pump(interact);
   await tester.pump(delay);
 }
 
@@ -126,7 +126,7 @@ Future<void> _verifyPageContent(
   await tester.tap(rightArrowFinder);
   await tester.pumpAndSettle();
 
-  await tester.pump(pause);
+  await tester.pump(interact);
 
   final titleFinder = find.textContaining(title);
   expect(titleFinder, findsOneWidget);
