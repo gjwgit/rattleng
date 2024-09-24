@@ -1,6 +1,6 @@
 /// Test the set of high level variables to ignore.
 //
-// Time-stamp: <Friday 2024-09-20 13:30:51 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 13:23:59 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -41,8 +41,6 @@ import 'utils/open_dataset_by_path.dart';
 /// List of specific variables that should have their role automatically set to
 /// 'Ignore' in the DEMO and the LARGE datasets.
 
-final List<String> demoVariablesToIgnore = [];
-
 final List<String> largeVariablesToIgnore = [
   'rec_id',
   'ssn',
@@ -64,116 +62,10 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Set Variables to Ignore Test:', () {
-    testWidgets('Test demo dataset.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(pause);
-
-      await openDemoDataset(tester);
-
-      // TODO 20240910 gjw CONSIDER REMOVING THIS HACK
-
-      await tester.pump(hack);
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
-      // Tap the right arrow button to go to Variable page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
-      // Find the scrollable ListView.
-
-      final scrollableFinder = find.byKey(const Key('roles listView'));
-
-      // Iterate over each variable in the list and find its corresponding row in the ListView.
-
-      for (final variable in demoVariablesToIgnore) {
-        bool foundVariable = false;
-
-        // Scroll in steps and search for the variable until it's found.
-
-        while (!foundVariable) {
-          // Find the row where the variable name is displayed.
-
-          final variableFinder = find.text(variable);
-
-          if (tester.any(variableFinder)) {
-            foundVariable = true;
-
-            // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-            final parentFinder = find.ancestor(
-              of: variableFinder,
-              matching: find.byType(
-                Row,
-              ),
-            );
-
-            // Select the first Row in the list.
-
-            final firstRowFinder = parentFinder.first;
-
-            // Find the 'Ignore' ChoiceChip within this row.
-
-            final ignoreChipFinder = find.descendant(
-              of: firstRowFinder,
-              matching: find.byWidgetPredicate(
-                (widget) =>
-                    widget is ChoiceChip &&
-                    widget.label is Text &&
-                    (widget.label as Text).data == 'Ignore',
-              ),
-            );
-
-            // Verify that the role is now set to 'Ignore'.
-
-            expect(ignoreChipFinder, findsOneWidget);
-
-            // Get the ChoiceChip widget.
-
-            final ChoiceChip ignoreChipWidget =
-                tester.widget<ChoiceChip>(ignoreChipFinder);
-
-            // Check if the 'Ignore' ChoiceChip is selected.
-
-            expect(
-              ignoreChipWidget.selected,
-              isTrue,
-              reason: 'Variable $variable should be set to Ignore',
-            );
-          } else {
-            final currentScrollableFinder = scrollableFinder.first;
-
-            // Fling (or swipe) down by a small amount.
-
-            await tester.fling(
-              currentScrollableFinder,
-              const Offset(0, -300), // Scroll down
-              1000,
-            );
-            await tester.pumpAndSettle();
-            await tester.pump(delay);
-          }
-        }
-      }
-
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-    });
-
     testWidgets('Test large dataset.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 

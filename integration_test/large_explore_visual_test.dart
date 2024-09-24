@@ -89,7 +89,7 @@ void main() {
 
       expect(find.byType(VisualPanel), findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
       await tester.pump(delay);
 
       // Find the button by its text.
