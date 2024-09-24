@@ -51,7 +51,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -104,7 +104,7 @@ void main() {
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the third page.
 
@@ -120,7 +120,7 @@ void main() {
       final ruleNumberFinder = find.byType(TextPage);
       expect(ruleNumberFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the forth page.
 
@@ -135,7 +135,7 @@ void main() {
       // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
 
     testWidgets('rpart with different parameter settings.',
@@ -144,7 +144,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -221,7 +221,7 @@ void main() {
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the third page.
 
@@ -231,7 +231,7 @@ void main() {
       final thirdPageTitleFinder = find.text('Decision Tree as Rules');
       expect(thirdPageTitleFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the forth page.
 
@@ -241,7 +241,7 @@ void main() {
       final forthPageTitleFinder = find.text('Tree');
       expect(forthPageTitleFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
 
     testWidgets('ctree.', (WidgetTester tester) async {
@@ -249,7 +249,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -310,7 +310,7 @@ void main() {
       await tester.tap(conditionalChip);
 
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Simulate the presence of a decision tree being built.
 
@@ -332,7 +332,7 @@ void main() {
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the third page.
 
@@ -347,7 +347,7 @@ void main() {
       // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
   });
 }

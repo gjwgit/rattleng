@@ -44,7 +44,7 @@ void main() {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Locate the TextField where the file path is input.
 
@@ -65,7 +65,7 @@ void main() {
       // Optionally pump the widget tree to reflect the changes.
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -103,7 +103,7 @@ void main() {
       final rolesRecIDFinder = find.textContaining('"rec-57600", "rec-73378",');
       expect(rolesRecIDFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // TODO 20240822 gjw FOR kevin EXTRA DATASET LARGE TESTS
       //
