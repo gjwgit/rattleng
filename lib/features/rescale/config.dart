@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-08-19 08:18:02 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 12:41:12 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Kevin Wang
 
 library;
 
@@ -193,7 +193,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               ref,
               selectedProvider,
               // Enable only if there are numeric inputs.
-
               enabled: numericInputs.isNotEmpty,
               onChanged: (value) {
                 if (value != null) {
