@@ -1,6 +1,6 @@
-/// Shake, rattle, and roll data science.
+/// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Monday 2024-09-23 11:52:49 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-09-24 09:47:55 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -38,16 +36,11 @@ import 'package:window_manager/window_manager.dart';
 import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/is_desktop.dart';
-
-// Check if this is a production (--release) version.
-
-const bool isProduction = bool.fromEnvironment('dart.vm.product');
+import 'package:rattle/utils/is_production.dart';
 
 void main() async {
-  // The `main` entry point into any dart app.
-  //
-  // This is required to be [async] since we use [await] below to initalise the
-  // window manager.
+  // The `main` entry point into any dart app.  This is required to be [async]
+  // since we use [await] below to initalise the window manager.
 
   // In production do not display [debguPrint] messages.
 

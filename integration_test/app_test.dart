@@ -1,6 +1,6 @@
-/// Test the app startup.
+/// Testing the app startup.
 //
-// Time-stamp: <Monday 2024-09-23 17:16:22 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 09:51:34 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -24,8 +24,6 @@
 /// Authors: Graham Williams, Kevin Wang
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'dart:io';
 
