@@ -1,6 +1,6 @@
 /// Navigate to a page in the app.
 //
-// Time-stamp: <Friday 2024-09-20 08:30:09 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 13:38:25 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,7 +44,7 @@ Future<void> navigateToPage(
 
   // Pause after screen change.
 
-  await tester.pump(pause);
+  await tester.pump(interact);
 
   expect(find.byType(pageType), findsOneWidget);
 }

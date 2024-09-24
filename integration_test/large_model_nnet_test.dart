@@ -67,7 +67,7 @@ void main() {
     testWidgets('default test.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
@@ -240,7 +240,7 @@ void main() {
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
@@ -255,7 +255,7 @@ void main() {
 
       expect(optionsDescriptionFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the forth page.
 
@@ -271,7 +271,7 @@ void main() {
       // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
 
     testWidgets('nnet model with different parameter settings.',
@@ -280,7 +280,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
@@ -462,7 +462,7 @@ void main() {
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final optionsDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
@@ -477,7 +477,7 @@ void main() {
 
       expect(optionsDescriptionFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the forth page.
 
@@ -493,7 +493,7 @@ void main() {
       // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
   });
 }
