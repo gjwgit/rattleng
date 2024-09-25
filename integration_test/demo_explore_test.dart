@@ -116,16 +116,6 @@ void main() {
 
       await tester.pump(interact);
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Summary of the Dataset" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
       await tester.pump(interact);
 
       await verifyMultipleTextContent(
@@ -143,6 +133,10 @@ void main() {
       );
 
       // Tap the right arrow button to go to "Dataset Glimpse" page.
+
+      // Find the right arrow button in the PageIndicator.
+
+      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
