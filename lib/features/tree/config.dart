@@ -1,13 +1,12 @@
-/// Widget to replicate a configuration UI for a tree model.
+/// Configuration for tree models.
 //
-// Time-stamp: <Thursday 2024-09-26 06:48:38 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 08:22:48 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
+///
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Sunday 2024-07-21 17:08:42 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -33,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
@@ -56,9 +56,8 @@ class TreeModelConfig extends ConsumerStatefulWidget {
 }
 
 class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
-  // Enum for algorithm types.
-
   // Controllers for the input fields.
+
   final TextEditingController _minSplitController = TextEditingController();
   final TextEditingController _maxDepthController = TextEditingController();
   final TextEditingController _minBucketController = TextEditingController();
@@ -69,6 +68,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   @override
   void dispose() {
     // Dispose the controllers to free up resources.
+
     _minSplitController.dispose();
     _maxDepthController.dispose();
     _minBucketController.dispose();
@@ -80,14 +80,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
   @override
   Widget build(BuildContext context) {
-    // Define a smaller text style.
-
-    // Define a text style for disabled fields.
-    const TextStyle disabledTextStyle = TextStyle(
-      fontSize: 14.0,
-      color: Colors.grey, // Grey out the text
-    );
-
     // Keep the value of text field.
 
     _minSplitController.text =
@@ -214,19 +206,15 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                       rSource(context, ref, 'model_build_rpart');
                     }
                   }
-                  // TODO yyx 20240627 How should I restore this effect in the new Widget Pages?
-                  // it failed to work only when the user first clicks build on the panel because the pages are not yet updated.
+                  // TODO 20240627  yyx HOW RESTORE THIS EFFECT IN THE NEW WIDGET PAGES?
+                  //
+                  // it failed to work only when the user first clicks build on
+                  // the panel because the pages are not yet updated.
                   // treePagesKey.currentState?.goToResultPage();
                 },
                 child: const Text('Build Decision Tree'),
               ),
               configWidgetSpace,
-              const Text(
-                'Algorithm:',
-                style: normalTextStyle,
-              ),
-              configLeftSpace,
-
               ChoiceChipTip<AlgorithmType>(
                 options: AlgorithmType.values,
                 getLabel: (AlgorithmType type) => type.displayName,
@@ -240,8 +228,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   });
                 },
               ),
-              configLeftSpace,
-
+              configWidgetSpace,
               const Text(
                 'Include Missing',
                 style: normalTextStyle,
@@ -255,17 +242,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   });
                 },
               ),
-              configWidgetSpace,
-              // Model Builder Title.
-              Text(
-                selectedAlgorithm == AlgorithmType.traditional
-                    ? 'Model Builder: rpart'
-                    : 'Model Builder: ctree',
-                style: normalTextStyle,
-              ),
             ],
           ),
-          configTopSpace,
+          configRowSpace,
           // Min Split, Max Depth, and Min Bucket.
           Row(
             children: [
@@ -273,11 +252,13 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 label: 'Min Split:',
                 key: const Key('minSplitField'),
                 controller: _minSplitController,
+                tooltip: '''
 
-                tooltip: ''' This is the minimum number of observations
- that must exist in a dataset at any node in
- order for a split of that node to be attempted. 
- The default is 20.''',
+                The minimum number of observations that must exist in a dataset
+                at any node in order for a split of that node to be attempted.
+                The default is 20.
+
+                ''',
                 inputFormatter:
                     FilteringTextInputFormatter.digitsOnly, // Integers only
                 validator: (value) => validateInteger(value, min: 0),
@@ -288,11 +269,13 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 label: 'Max Depth:',
                 key: const Key('maxDepthField'),
                 controller: _maxDepthController,
-                tooltip:
-                    ''' This is the maximum depth of any node of the final tree. 
- The root node is considered to be depth 0. 
- Note that a depth beyond 30 will give nonsense
- results on 32-bit machines. The default is 30.''',
+                tooltip: '''
+
+                The maximum depth of any node of the final tree.  The root node
+                is considered to be depth 0.  Note that a depth beyond 30 will
+                give nonsense results on 32-bit machines. The default is 30.
+
+                ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: maxDepthProvider,
@@ -302,9 +285,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 label: 'Min Bucket:',
                 key: const Key('minBucketField'),
                 controller: _minBucketController,
-                tooltip: ''' This is the minimum number of observations 
- allowed in any leaf node of the decision tree. 
- The default value is one third of the Min Split.''',
+                tooltip: '''
+
+                The minimum number of observations allowed in any leaf node of
+                the decision tree.  The default value is one third of Min Split.
+
+                ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: minBucketProvider,
@@ -314,9 +300,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 label: 'Complexity:',
                 key: const Key('complexityField'),
                 controller: _complexityController,
-                tooltip:
-                    ''' The complexity parameter is used to control the size 
- of the decision tree and to select the optimal tree size.''',
+                tooltip: '''
+
+                The complexity parameter is used to control the size of the
+                decision tree and to select the optimal tree size.
+
+                ''',
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
@@ -334,8 +323,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
-                tooltip: ''' Set the prior probabilities for each class. 
- E.g. for two classes: 0.5,0.5. Must add up to 1.''',
+                tooltip: '''
+
+                Set the prior probabilities for each class.  E.g. for two
+                classes: 0.5,0.5. Must add up to 1.
+
+                ''',
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
                 validator: (value) => _validatePriors(value),
                 inputFormatter: FilteringTextInputFormatter.allow(
@@ -351,8 +344,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 textStyle: selectedAlgorithm == AlgorithmType.conditional
                     ? disabledTextStyle
                     : normalTextStyle,
-                tooltip: ''' Weight the outcome classes differently. 
- E.g., 0,10,1,0 (TN, FP, FN, TP).''',
+                tooltip: '''
+
+                Weight the outcome classes differently.  E.g., 0,10,1,0 (TN, FP,
+                FN, TP).
+
+                ''',
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]+(,[0-9]+)*$'),
@@ -368,6 +365,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   }
 
   // Validation logic for complexity field.
+
   String? _validateComplexity(String? value) {
     if (value == null || value.isEmpty) return 'Cannot be empty';
     double? doubleValue = double.tryParse(value);
@@ -379,6 +377,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   }
 
   // Validation logic for priors field.
+
   String? _validatePriors(String? value) {
     if (value != null && value.isNotEmpty) {
       List<String> parts = value.split(',');
@@ -396,6 +395,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
   }
 
   // Validation logic for loss matrix field.
+
   String? _validateLossMatrix(String? value) {
     if (value != null && value.isNotEmpty) {
       List<String> parts = value.split(',');
@@ -417,7 +417,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     return null;
   }
 
-  // Helper method to create a text field.
+  // Create a text field.
+
   Widget _buildTextField({
     required String label,
     required TextEditingController controller,
@@ -436,7 +437,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: maxWidth * 15.0, // Set maximum width for the input field
+              // Set maximum width for the input field.
+              width: maxWidth * 15.0,
               child: TextFormField(
                 key: key,
                 controller: controller,
@@ -447,7 +449,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   errorStyle: const TextStyle(fontSize: 10),
                 ),
                 style: textStyle,
-                enabled: enabled, // Control enable state
+                // Control enable state.
+                enabled: enabled,
                 inputFormatters: [
                   FilteringTextInputFormatter.singleLineFormatter,
                 ],
