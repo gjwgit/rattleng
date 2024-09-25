@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Sunday 2024-09-01 10:45:05 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 08:47:37 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,6 +39,15 @@ const choiceChipRowSpace = 10.0;
 
 const configTopSpace = SizedBox(height: 10);
 
+/// Space below the last row of configs often to ensure the underline of numeric
+/// paramaters is not lost.
+
+const configBotSpace = SizedBox(height: 5);
+
+/// Space between the config Rows.
+
+const configRowSpace = SizedBox(height: 20);
+
 /// Space to the left of the configs within a Row.
 
 const configLeftSpace = SizedBox(width: 5);
@@ -46,6 +55,10 @@ const configLeftSpace = SizedBox(width: 5);
 /// Space between widgets in a Row in the the config.
 
 const configWidgetSpace = SizedBox(width: 20.0); // Gap(20);
+
+/// Space between a label and the field.
+
+const configLabelSpace = SizedBox(width: 5);
 
 /// Space before the bottom divider in the display pages.
 
