@@ -222,6 +222,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   await rSource(context, ref, dispatch(method));
 
                   deletionAction(method);
+                  ref.read(pageControllerProvider).animateToPage(
+                        // Index of the second page.
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                 },
               ),
             ],
@@ -267,12 +273,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 takeAction(method);
-                ref.read(pageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
               },
               child: const Text('Delete from Dataset'),
             ),
