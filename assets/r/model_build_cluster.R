@@ -34,6 +34,10 @@
 # https://survivor.togaware.com/datascience/cluster-analysis.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+# Reset the random number seed to obtain the same results each time.
+
+set.seed(CLUSTER_SEED)
+
 # Load required packages from the local library into the R session.
 
 # The 'reshape' package provides the 'rescaler' function.
@@ -45,7 +49,7 @@ mdesc <- "Cluster"
 
 # Generate a kmeans cluster of size 10.
 
-model_kmeans <- kmeans(sapply(na.omit(ds[tr, numc]), rescaler, "range"), 10)
+model_kmeans <- kmeans(sapply(na.omit(ds[tr, numc]), rescaler, "range"), centers = CLUSTER_NUM, nstart = CLUSTER_RUN)
 
 # Report on the cluster characteristics. 
 

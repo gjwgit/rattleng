@@ -51,7 +51,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     List<Widget> pages = [showMarkdownFile(clusterIntroFile, context)];
 
-    String content = rExtractCluster(stdout);
+    String content = rExtractCluster(stdout, ref);
 
     if (content.isNotEmpty) {
       pages.add(

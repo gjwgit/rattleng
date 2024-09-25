@@ -24,16 +24,24 @@
 
 library;
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
-String _basicTemplate(String log) {
+String _basicTemplate(
+  String log,
+  WidgetRef ref,
+) {
   // Here we build up the basic information from the output of the cluster.
 
   // First some strings to put into the output.
 
+  int clusterNum = ref.read(clusterNumberProvider.notifier).state;
+
   const String hd = 'Summary of the KMeans Cluster Analysis';
-  const String md = "(built using 'kmeans' with 10 clusters):";
+  String md = "(built using 'kmeans' with ${clusterNum.toString()} clusters):";
 
   // No extract the output from particular commands.
 
@@ -61,10 +69,13 @@ String _basicTemplate(String log) {
   return result;
 }
 
-String rExtractCluster(String log) {
+String rExtractCluster(
+  String log,
+  WidgetRef ref,
+) {
   // Extract from the R log those lines of output from the cluster.
 
-  String extract = _basicTemplate(log);
+  String extract = _basicTemplate(log, ref);
 
   // Now clean up the output for an annotated presentation of the output.
 
