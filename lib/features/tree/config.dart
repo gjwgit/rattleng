@@ -1,6 +1,6 @@
 /// Widget to replicate a configuration UI for a tree model.
 //
-// Time-stamp: <Thursday 2024-08-29 20:45:20 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 06:48:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -220,7 +220,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 },
                 child: const Text('Build Decision Tree'),
               ),
-              const SizedBox(width: 16),
+              configWidgetSpace,
               const Text(
                 'Algorithm:',
                 style: normalTextStyle,
@@ -255,7 +255,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   });
                 },
               ),
-              const SizedBox(width: 16),
+              configWidgetSpace,
               // Model Builder Title.
               Text(
                 selectedAlgorithm == AlgorithmType.traditional
@@ -283,7 +283,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 0),
                 stateProvider: minSplitProvider,
               ),
-              const SizedBox(width: 16),
+              configWidgetSpace,
               NumberField(
                 label: 'Max Depth:',
                 key: const Key('maxDepthField'),
@@ -297,7 +297,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: maxDepthProvider,
               ),
-              const SizedBox(width: 16),
+              configWidgetSpace,
               NumberField(
                 label: 'Min Bucket:',
                 key: const Key('minBucketField'),
@@ -309,7 +309,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: minBucketProvider,
               ),
-              const SizedBox(width: 16),
+              configWidgetSpace,
               NumberField(
                 label: 'Complexity:',
                 key: const Key('complexityField'),
@@ -326,7 +326,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),
-              const SizedBox(width: 16),
+              configWidgetSpace,
               _buildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
@@ -343,7 +343,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ),
                 maxWidth: 10,
               ),
-              const SizedBox(width: 16),
+              configWidgetSpace,
               _buildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,
