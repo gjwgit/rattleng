@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -62,6 +63,14 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             ActivityButton(
               onPressed: () {
                 rSource(context, ref, 'explore_correlation');
+                // wait for 3 seconds before moving to the next page.
+                Future.delayed(const Duration(seconds: 3));
+                ref.read(pageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Perform Correlation Analysis'),
             ),

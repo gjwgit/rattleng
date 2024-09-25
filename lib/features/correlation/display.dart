@@ -30,8 +30,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -50,6 +52,9 @@ class CorrelationDisplay extends ConsumerStatefulWidget {
 class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
   @override
   Widget build(BuildContext context) {
+    final pageController = ref
+        .watch(pageControllerProvider); // Get the PageController from Riverpod
+
     String stdout = ref.watch(stdoutProvider);
     List<Widget> pages = [showMarkdownFile(correlationIntroFile, context)];
 
@@ -135,8 +140,9 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return Pages(
-      children: pages,
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
     );
   }
 }
