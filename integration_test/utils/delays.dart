@@ -1,6 +1,6 @@
 /// Constant delays as used for testing.
 //
-// Time-stamp: <Sunday 2024-09-22 06:10:41 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 13:16:24 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,23 +25,26 @@
 
 library;
 
-/// We use a <pause> duration to optionally allow the tester to view the testing
+/// We use an [interact] duration to optionally allow the tester to view the testing
 /// interactively. A 2s delay is good for a quicker interactive, 5s is good to
 /// review each screen, 10s is useful for development, thoug ha little slow. Set
-/// as 0s for no pause as we do in the qtests. The pause should not be required
+/// as 0s for no interact as we do in the qtests. The interact should not be required
 /// for the test to succeed and is handy only when running interactively. The
-/// PAUSE environment variable can be used to override the default PAUSE
-/// conveniently. If a test works when PAUSE is non-zero but fails when it is
+/// INTERACT environment variable can be used to override the default INTERACT
+/// conveniently. If a test works when INTERACT is non-zero but fails when it is
 ///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
+/// flutter test --device-id linux --dart-define=INTERACT=0 integration_test/app_test.dart
 ///
-/// If a test works when <pause> is non-zero but fails when it is zero then you
-/// probably need to use a <delay> or a <hack> rather than a <pause>.
+/// If a test works when [interact] is non-zero but fails when it is zero then you
+/// probably need to use a <delay> or a <hack> rather than a [interact].
 
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
+const String envINTERACT =
+    String.fromEnvironment('INTERACT', defaultValue: '0');
+final Duration interact = Duration(seconds: int.parse(envINTERACT));
 
-/// The default <delay> can be used where a short delay is always useful.
+/// The default <delay> can be used where a delay is always useful. We use a
+/// default here of 2s though we have previously tried 1s, seems 2s is more
+/// likely to be enough.
 
 const Duration delay = Duration(seconds: 2);
 
