@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Thursday 2024-09-26 08:22:48 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 09:04:31 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -111,7 +111,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               ActivityButton(
                 key: const Key('Build Decision Tree'),
                 onPressed: () {
+                  // TODO 20240926 gjw SPLIT THIS INTO OWN LOCAL FUNCTION
+
                   // Perform manual validation.
+
                   String? minSplitError =
                       validateInteger(_minSplitController.text, min: 0);
                   String? maxDepthError =
@@ -125,6 +128,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                       _validateLossMatrix(_lossMatrixController.text);
 
                   // Collect all errors.
+
                   List<String> errors = [
                     if (minSplitError != null) 'Min Split: $minSplitError',
                     if (maxDepthError != null) 'Max Depth: $maxDepthError',
@@ -136,14 +140,17 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   ];
 
                   // Check if there are any errors.
+
                   if (errors.isNotEmpty) {
                     // Show a warning dialog if validation fails.
+
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text('Validation Error'),
                         content: Text(
-                          'Please ensure all input fields are valid before building the decision tree:\n\n${errors.join('\n')}',
+                          'Please ensure all input fields are valid before building '
+                          'the decision tree:\n\n${errors.join('\n')}',
                         ),
                         actions: [
                           TextButton(
