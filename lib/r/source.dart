@@ -36,6 +36,9 @@ import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/cluster_number.dart';
+import 'package:rattle/providers/cluster_run.dart';
+import 'package:rattle/providers/cluster_seed.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
@@ -113,6 +116,10 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   int hiddenNeurons = ref.read(hiddenNeuronsProvider);
   int nnetMaxNWts = ref.read(maxNWtsProvider);
   int nnetMaxit = ref.read(maxitProvider);
+  int clusterSeed = ref.read(clusterSeedProvider);
+  int clusterNum = ref.read(clusterNumberProvider);
+  int clusterRun = ref.read(clusterRunProvider);
+
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(nnetTraceProvider);
@@ -320,6 +327,9 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
   code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
+  code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
+  code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 
   if (includingMissing) {
