@@ -8,6 +8,12 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Ensure pty started before send R code particularly for WINDOWS [6.3.2 20240923 lutra]
++ Refactor DATASET display [6.3.2 20240923 lutra]
++ On QUIT check for confirmation [6.3.2 20240923 lutra]
++ Update NEURAL. [6.3.1 20240923 gjw]
++ Remove unused Android/iOS/Web support. [6.3.1 20240923 lutra]
+
 ## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
 
 + DATASET updated weather.csv to 2023-2024 [6.3.0 20240921 gjw]

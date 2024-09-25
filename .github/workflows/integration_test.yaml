@@ -1,0 +1,80 @@
+name: Integration Test
+
+# The current GitHub Actions workflow for running integration tests
+# take an excessive amount of time, making it impractical for use
+# under the free tier. The workflow structure itself (as
+# implemented in PR #453) appears to be correct.  The primary concern
+# is the execution time, which is too long to be practical, given
+# github free plan of 2000 minutes per month.
+#
+# For now we can include the script but not run it except if the
+# commit message includes 'run tests'. Also, perhaps just Linux as a
+# basic test given the time taken. Encourage developers to run the
+# tests themselves prior to a PR.
+#
+# LINUX
+#
+# For the Linux server the first test results in the following ERROR
+# message and does not proceeds
+#
+# integration_test/app_test.dartError waiting for a debug connection:
+# The log reader stopped unexpectedly, or never started.
+#
+# MACOS
+#
+# It took approximately 8 minutes to run the first integration test on
+# macOS! On own desktop Linux it is 15s. The tests seem to be
+# generally succeeding though.
+#
+# WINDOWS
+#
+# For Windows the tests are mostly failing.
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  qtest:
+    if: contains(github.event.head_commit.message, 'run qtest')
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        architecture: x64
+        flutter-version: 3.24.1
+  
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v2
+
+    - name: Install dependencies on Linux
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y ninja-build libgtk-3-dev
+        sudo apt-get install -y clang cmake
+    
+    - name: Install X11 dependencies on MacOS
+      if: runner.os == 'macOS'
+      run: |
+        brew install --cask xquartz
+
+    - name: Install Flutter dependencies
+      run: flutter pub get
+    
+    - name: Run tests
+      run: make qtest

@@ -1,6 +1,6 @@
-/// Move to the next page.
+/// Is this a production build?
 //
-// Time-stamp: <Tuesday 2024-09-24 13:38:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 09:46:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,24 +25,8 @@
 
 library;
 
-import 'package:flutter/material.dart';
+/// Check if this is a production (--release) build of the software.
 
-import 'package:flutter_test/flutter_test.dart';
-
-import 'delays.dart';
-
-Future<void> gotoNextPage(WidgetTester tester) async {
-  // Find the right arrow button in the PageIndicator.
-
-  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-  expect(rightArrowFinder, findsOneWidget);
-
-  // Tap the right arrow button twice to go to the last page for variable role selection.
-
-  await tester.tap(rightArrowFinder);
-  await tester.pumpAndSettle();
-
-  // Pause after screen change.
-
-  await tester.pump(interact);
+bool get isProduction {
+  return const bool.fromEnvironment('dart.vm.product');
 }

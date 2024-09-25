@@ -1,6 +1,6 @@
 /// <DESCRIPTION>
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 13:22:49 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -24,5 +24,3 @@
 /// Authors: <AUTHORS>
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
