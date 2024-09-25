@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Wednesday 2024-09-25 15:56:39 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-25 16:02:18 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -56,7 +56,7 @@ void main() {
           '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}');
       expect(textFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // If this passes, it means we are in the same page as before.
 
@@ -118,7 +118,7 @@ void main() {
       final freqFinder3 = find.textContaining('little   7');
       expect(freqFinder3, findsNothing);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Confirm this entry is in the frequency table
 
@@ -131,9 +131,8 @@ void main() {
       expect(againTextFinder, findsOneWidget);
 
       // Find the third checkbox (remove punctuation)
-      
-      final thirdCheckboxFinder =
-          find.byType(Checkbox).at(2); 
+
+      final thirdCheckboxFinder = find.byType(Checkbox).at(2);
       expect(thirdCheckboxFinder, findsOneWidget);
 
       // Tap the third checkbox to check it
@@ -167,7 +166,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap the 'Display Word Cloud' button again after checking the checkbox
-      
+
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
       await tester.pump(delay);
@@ -204,8 +203,7 @@ void main() {
       // Clear the TextField by entering an empty string
 
       final textFieldWidget = tester.widget<TextField>(textFieldFinder);
-      textFieldWidget.controller
-          ?.clear(); 
+      textFieldWidget.controller?.clear();
       await tester.pumpAndSettle();
       expect(textFieldWidget.controller?.text, isEmpty);
 
@@ -226,7 +224,7 @@ void main() {
       await tester.pump(delay);
 
       // Confirm that 1 is not in the frequency table
-      
+
       final oneFinder = find.text('1');
       expect(oneFinder, findsNothing);
     });
