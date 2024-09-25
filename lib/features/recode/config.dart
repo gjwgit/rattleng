@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/number.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 // TODO 20240819 gjw RENAME SELECTED2 TO SECONDARY
 import 'package:rattle/providers/selected2.dart';
@@ -228,6 +229,12 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(selected2Provider.notifier).state = selected2;
                 buildAction();
+                ref.read(pageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Recode Variable Values'),
             ),
