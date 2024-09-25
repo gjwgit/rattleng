@@ -34,18 +34,8 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
-/// with the testing. 5s is good, 10s is useful for development and 0s for
-/// ongoing. This is not necessary but it is handy when running interactively
-/// for the user running the test to see the widgets for added assurance. The
-/// PAUSE environment variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
+import 'utils/delays.dart';
 
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
-const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +44,7 @@ void main() {
     testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Locate the TextField where the file path is input.
 
@@ -75,7 +65,7 @@ void main() {
       // Optionally pump the widget tree to reflect the changes.
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -104,7 +94,7 @@ void main() {
           '"rec-57600", "rec-73378",'); //TODO kevin fix this failed test
       expect(rolesRecIDFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // TODO 20240822 gjw FOR kevin EXTRA DATASET LARGE TESTS
       //

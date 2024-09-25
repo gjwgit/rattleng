@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Thursday 2024-09-12 08:35:02 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 08:33:53 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,8 +30,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/word_wrap.dart';
 

@@ -41,13 +41,13 @@ void main() {
     testWidgets('Wordcloud', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/sherlock.txt');
 
       // await gotoNextPage(tester);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final textFinder =
           find.textContaining('Gutenberg'); //TODO kevin to fix this failed test

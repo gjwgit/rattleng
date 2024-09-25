@@ -36,18 +36,8 @@ import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
 
-/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
-/// with the testing. 5s is good, 10s is useful for development and 0s for
-/// ongoing. This is not necessary but it is handy when running interactively
-/// for the user running the test to see the widgets for added assurance. The
-/// PAUSE environment variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
+import 'utils/delays.dart';
 
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
-const Duration hack = Duration(seconds: 10);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +52,7 @@ void main() {
 
       // Leave time to see the first page.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Locate the TextField where the file path is input.
 
@@ -83,7 +73,7 @@ void main() {
       // Optionally pump the widget tree to reflect the changes.
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -105,7 +95,7 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Summary tab by its title.
 
@@ -121,7 +111,7 @@ void main() {
 
       expect(find.byType(SummaryPanel), findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the button by its text.
 
@@ -133,7 +123,7 @@ void main() {
       await tester.tap(generateSummaryButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Add a delay to allow the summary to be generated. This will fix the qtest failure.
 
@@ -149,7 +139,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await tester.pump(hack);
 
@@ -168,7 +158,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "20,000" as the number of rows.
 
@@ -180,7 +170,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "20000" as the number of rows.
 
@@ -197,7 +187,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "2.35753359" as the weight.
 

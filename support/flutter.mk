@@ -247,7 +247,7 @@ test:
 
 # For a specific interactive test we think of it as providing a
 # demonstration of the app functionality that we may actually use to
-# create a narrated video. A PAUSE of 5 or more is then useful.
+# create a narrated video. A INTERACT of 5 or more is then useful.
 
 %.itest:
 	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
@@ -255,9 +255,9 @@ test:
 		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
 		exit 1; \
 	fi; \
-	flutter test --dart-define=PAUSE=5 --device-id $$device_id integration_test/$*_test.dart
+	flutter test --dart-define=INTERACT=5 --device-id $$device_id integration_test/$*_test.dart
 
-# For a run over all tests interactively we PAUSE a little but not as
+# For a run over all tests interactively we INTERACT a little but not as
 # much as when running the individual tests.
 
 .PHONY: itest
@@ -267,10 +267,10 @@ itest:
 		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
 		exit 1; \
 	fi; \
-	for t in integration_test/*_test.dart; do flutter test --dart-define=PAUSE=2 --device-id $$device_id $$t; done
+	for t in integration_test/*_test.dart; do flutter test --dart-define=INTERACT=2 --device-id $$device_id $$t; done
 	@echo $(SEPARATOR)
 
-# For the quick tests we do not PAUSE at all. The aim is to quickly
+# For the quick tests we do not INTERACT at all. The aim is to quickly
 # test all functionality.
 
 .PHONY: qtest
@@ -306,7 +306,7 @@ qtest.tmp:
 .PHONY: atest
 atest:
 	@echo "Full integration TEST:"
-	flutter test --dart-define=PAUSE=0 --verbose --device-id \
+	flutter test --dart-define=INTERACT=0 --verbose --device-id \
 	$(shell flutter devices | grep desktop | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|') \
 	integration_test
 	@echo $(SEPARATOR)

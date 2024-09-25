@@ -45,7 +45,7 @@ void main() {
     testWidgets('cleanup', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -75,7 +75,7 @@ void main() {
 
         // Pause after screen change.
 
-        await tester.pump(pause);
+        await tester.pump(interact);
       }
 
       // Navigate to the "Transform" tab.
@@ -90,7 +90,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Navigate to the "Cleanup" sub-tab within the Transform tab.
 
@@ -104,7 +104,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Locate the "Ignore" chip.
 
@@ -120,7 +120,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the "Delete from Dataset" button.
 
@@ -140,7 +140,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check that the variables to be deleted are mentioned in the popup.
 
@@ -150,7 +150,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Confirm the deletion by tapping the "Yes" button.
 
@@ -172,7 +172,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Go to the next page and confirm that the deleted variables are not
       // listed.
@@ -210,7 +210,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final visualSubTabFinder = find.text('Visual');
 
@@ -228,7 +228,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check that 'wind_gust_dir' is the selected variable.
 
@@ -249,7 +249,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check that deleted variables are not in the dropdown options.
 
@@ -281,7 +281,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow button twice to go to the variable role selection.
 
@@ -306,7 +306,7 @@ void main() {
 
         // Pause after screen change.
 
-        await tester.pump(pause);
+        await tester.pump(interact);
       }
 
       // Navigate to the "Transform" tab.
@@ -316,7 +316,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Navigate to the "Cleanup" sub-tab within the Transform tab.
 
@@ -325,7 +325,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check the ignored chip is selected. Fail the test if not. If it is then simply tap the "Delete from Dataset" button.
 
@@ -346,7 +346,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check that the variables to be deleted are mentioned in the popup.
 
@@ -354,7 +354,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Confirm the deletion by tapping the "Yes" button.
 
@@ -365,7 +365,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Navigate to "EXPLORE" -> "VISUAL".
 
@@ -376,7 +376,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap on the "Visual" sub-tab.
 
@@ -385,7 +385,7 @@ void main() {
 
       // Pause after screen change.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check that 'wind_speed_9am' is the selected variable.
 
