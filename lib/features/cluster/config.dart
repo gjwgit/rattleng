@@ -1,6 +1,6 @@
 /// Widget to configure the CLUSTER tab: button.
 ///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -28,8 +28,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/features/cluster/cluster_setting.dart';
+import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
 /// The CLUSTER tab config currently consists of just a BUILD button.
 ///
@@ -43,8 +48,34 @@ class ClusterConfig extends ConsumerStatefulWidget {
 }
 
 class ClusterConfigState extends ConsumerState<ClusterConfig> {
+  Map<String, String> clusterTypes = {
+    'KMeans': '''
+
+      Generate clusters using a kmeans algorithm.
+
+      ''',
+    'Ewkm': '''
+
+      Generate clusters using a kmeans algorithm 
+      with subspaces selected by entropy weighting.
+
+      ''',
+    'Hierarchical': '''
+
+      Build an agglomerative hierarchical cluster.
+
+      ''',
+    'BiCluster': '''
+
+      Cluster by identifying suitable subsets of 
+      both the variables and the observations.
+
+      ''',
+  };
   @override
   Widget build(BuildContext context) {
+    String type = ref.read(clusterTypeProvider.notifier).state;
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -66,8 +97,32 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               },
               child: const Text('Build Clustering'),
             ),
+
+            configWidgetSpace,
+
+            const Text(
+              'Type:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetSpace,
+            
+            ChoiceChipTip<String>(
+              options: clusterTypes.keys.toList(),
+              selectedOption: type,
+              tooltips: clusterTypes,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    type = chosen;
+                    ref.read(clusterTypeProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
+        const ClusterSetting(),
       ],
     );
   }
