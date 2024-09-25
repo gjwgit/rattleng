@@ -37,17 +37,7 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/model.dart';
 
-/// 20230712 gjw We use a PAUSE duration to allow the tester to view/interact
-/// with the testing. 5s is good, 10s is useful for development and 0s for
-/// ongoing. This is not necessary but it is handy when running interactively
-/// for the user running the test to see the widgets for added assurance. The
-/// PAUSE environment variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
+import 'utils/delays.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -62,12 +52,12 @@ void main() {
 
       // Leave time to see the first page.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
@@ -83,7 +73,7 @@ void main() {
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Model tab by icon and tap on it.
 
@@ -95,7 +85,7 @@ void main() {
       await tester.tap(modelIconFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Verify if the ModelTabs widget is shown.
 
@@ -107,7 +97,7 @@ void main() {
       await tester.tap(clusterTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the BUILD button by its text.
 
@@ -119,7 +109,7 @@ void main() {
       await tester.tap(buildButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the right arrow button in the PageIndicator.
 
@@ -131,7 +121,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing the number of default clusters.
 

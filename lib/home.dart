@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-09-21 11:41:11 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 08:36:03 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -39,6 +39,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
@@ -65,42 +66,34 @@ final List<Map<String, dynamic>> homeTabs = [
   {
     'title': 'Dataset',
     'icon': Icons.input,
-    'widget': const DatasetPanel(),
   },
   {
     'title': 'Explore',
     'icon': Icons.insights,
-    'widget': const ExploreTabs(),
   },
   {
     'title': 'Transform',
     'icon': Icons.transform,
-    'widget': const TransformTabs(),
   },
   {
-    'title': 'Predictive',
+    'title': 'Predict',
     'icon': Icons.model_training,
-    'widget': const ModelTabs(),
   },
   {
-    'title': 'Generative',
+    'title': 'Generate',
     'icon': Icons.leaderboard,
-    'widget': const Center(child: Text('COMING SOON: GENERATIVE')),
   },
   {
     'title': 'Console',
     'icon': Icons.terminal,
-    'widget': const RConsole(),
   },
   {
     'title': 'Script',
     'icon': Icons.code,
-    'widget': const ScriptTab(),
   },
   {
     'title': 'Debug',
     'icon': Icons.work,
-    'widget': const DebugTab(),
   },
 ];
 
@@ -160,6 +153,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
     });
   }
 
+  late List<Widget> _tabWidgets;
+
   @override
   void initState() {
     super.initState();
@@ -176,6 +171,19 @@ class RattleHomeState extends ConsumerState<RattleHome>
     // tabs.
 
     _tabController = TabController(length: homeTabs.length, vsync: this);
+
+    // Initialize the tab widgets once in order to use IndexedStack later.
+
+    _tabWidgets = [
+      const DatasetPanel(),
+      const ExploreTabs(),
+      const TransformTabs(),
+      const ModelTabs(),
+      const Center(child: Text('COMING SOON: GENERATIVE')),
+      const RConsole(),
+      const ScriptTab(),
+      const DebugTab(),
+    ];
 
     // Add a listener to the TabController to perform an action when we leave
     // the tab.
@@ -248,7 +256,7 @@ Xu, Yixiang Yin, Bo Zhang.
               width: 40,
               height: 40,
             ),
-            const SizedBox(width: 20),
+            configWidgetSpace,
             const Text(appTitle),
           ],
         ),
@@ -468,7 +476,10 @@ Xu, Yixiang Yin, Bo Zhang.
           ),
           const VerticalDivider(),
           Expanded(
-            child: homeTabs[_tabController.index]['widget'],
+            child: IndexedStack(
+              index: _tabController.index,
+              children: _tabWidgets,
+            ),
           ),
         ],
       ),

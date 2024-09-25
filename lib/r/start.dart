@@ -1,6 +1,6 @@
-/// Initiate the R process and setup capture of its output.
+/// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Monday 2024-09-02 07:05:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 08:04:10 +1000 Graham Williams>
 //
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -38,7 +38,7 @@ import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/update_script.dart';
 
-/// Start up the R process and set up the capture of stderr and stdout.
+/// Start up the R sub-process and set up the capture of stderr and stdout.
 
 void rStart(BuildContext context, WidgetRef ref) async {
   // Start up an R process from the command line.
@@ -99,12 +99,12 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // startup. Seems to have a slight delay on Linux with a all black
   // screen. Let's see what it does on Windows.
 
-  await Future(() {
-    // Add the code to the script.
+  await Future(() async {
+    // Add the code to the SCRIPT tab.
 
     updateScript(ref, code);
 
-    // Run the code without comments.
+    // Strip the code of comments.
 
     code = rStripComments(code);
 

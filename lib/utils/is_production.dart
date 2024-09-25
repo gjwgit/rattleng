@@ -1,13 +1,12 @@
-/// A provider for the MaxNWts for MODEL NNET.
-///
-/// Time-stamp: <Thursday 2024-09-26 06:35:21 +1000 Graham Williams>
-///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Is this a production build?
+//
+// Time-stamp: <Tuesday 2024-09-24 09:46:43 +1000 Graham Williams>
+//
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,10 +21,12 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu, Graham Williams
+/// Authors: Graham Williams
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+/// Check if this is a production (--release) build of the software.
 
-final maxNWtsProvider = StateProvider<int>((ref) => 1000);
+bool get isProduction {
+  return const bool.fromEnvironment('dart.vm.product');
+}

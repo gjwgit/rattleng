@@ -48,7 +48,7 @@ void main() {
     testWidgets('raprt.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
@@ -61,7 +61,7 @@ void main() {
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Predictive');
+      await navigateToTab(tester, 'Predict');
 
       // Navigate to the Tree feature.
 
@@ -100,7 +100,7 @@ void main() {
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the third page.
 
@@ -116,7 +116,7 @@ void main() {
       final decisionTreeRulesFinder = find.byType(TextPage);
       expect(decisionTreeRulesFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the forth page.
 
@@ -132,19 +132,19 @@ void main() {
 
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
 
     testWidgets('Traditional Parameters.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Predictive');
+      await navigateToTab(tester, 'Predict');
 
       // Navigate to the Tree feature.
 
@@ -242,7 +242,7 @@ void main() {
       final imageFinder = find.byType(ImagePage);
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
 
     /// TODO 20240826 zy CONDITIONAL TREE NOT OPERATIOANL.
@@ -252,13 +252,13 @@ void main() {
     testWidgets('Conditional.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Predictive');
+      await navigateToTab(tester, 'Predict');
 
       // Navigate to the Tree feature.
 
@@ -335,7 +335,7 @@ void main() {
       expect(tester.widget<TextFormField>(lossMatrixField).enabled, isTrue);
 
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
   });
 }

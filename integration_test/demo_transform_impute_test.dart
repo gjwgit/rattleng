@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 12:34:18 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 19:37:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang, Graham Williams
+/// Authors:  Kevin Wang
 
 library;
 
@@ -29,41 +29,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/impute/panel.dart';
+import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/open_demo_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_multiple_text.dart';
 import 'utils/verify_next_page.dart';
-import 'utils/check_missing_variable.dart';
-import 'utils/check_variable_not_missing.dart';
-import 'utils/init_app.dart';
-import 'utils/verify_imputed_variable.dart';
 
 void main() {
-  // Ensure that the integration test bindings are initialized before running tests.
-
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  // Define a group of tests related to the Transform tab on a large dataset.
-
-  group('Transform LARGE:', () {
-    // Define a test case within the group that builds the page and runs checks.
-
+  group('Transform DEMO:', () {
     testWidgets('build, page.', (WidgetTester tester) async {
-      // Initialize the app and get the ProviderContainer for state management.
+      // Remove the container usage to what we are typically doing now with
+      // tester. But need to update the various tests.
 
-      final container = await initApp(tester);
+      app.main();
+      await tester.pumpAndSettle();
+      await tester.pump(interact);
 
-      // Allow time for the UI to settle after initialization.
-
-      await tester.pump(pause);
-
-      // Open the large dataset in the app.
-
-      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
+      await openDemoDataset(tester);
 
       // Navigate to the 'Transform' tab in the app.
 
@@ -73,37 +61,37 @@ void main() {
 
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      // Step 1: Check if the variable 'middle_name' has missing values.
+      // Step 1: Check if the variable 'rainfall' has missing values.
 
-      await checkMissingVariable(container, 'middle_name');
+      // await checkMissingVariable(container, 'rainfall');
 
       // Step 2: Simulate pressing the button to impute missing values.
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
-      // Allow the UI to settle after the action.
+      // Allow the UI to settle after the imputation action.
 
       await tester.pump(hack);
 
-      // Verify that the page content includes the expected dataset summary with 'IZR_middle_name'.
+      // Verify that the page content includes the expected dataset summary with 'IZR_rainfall'.
 
       await verifyNextPage(
         tester,
         'Dataset Summary',
-        'IZR_middle_name',
+        'IZR_rainfall',
       );
 
-      // Verify specific imputed values for 'IZR_middle_name'.
+      // Verify specific statistical values for the imputed 'IZR_rainfall' variable.
 
       await verifyMultipleTextContent(
         tester,
         [
-          'Missing: 1987', // Number of missing values imputed.
-          'lee    :  563', // Frequency of 'lee' in the imputed data.
-          'michael:  262', // Frequency of 'michael' in the imputed data.
-          'ann    :  253', // Frequency of 'ann' in the imputed data.
-          'wayne  :  239', // Frequency of 'wayne' in the imputed data.
-          'edward :  237', // Frequency of 'edward' in the imputed data.
+          'Min.   : 0.000', // Minimum value of 'IZR_rainfall'.
+          '1st Qu.: 0.000', // First quartile value of 'IZR_rainfall'.
+          'Median : 0.000', // Median value of 'IZR_rainfall'.
+          'Mean   : 1.815', // Mean value of 'IZR_rainfall'.
+          '3rd Qu.: 0.200', // Third quartile value of 'IZR_rainfall'.
+          'Max.   :44.800', // Maximum value of 'IZR_rainfall'.
         ],
       );
 
@@ -111,23 +99,20 @@ void main() {
 
       await navigateToTab(tester, 'Dataset');
 
-      await tester.pump(pause);
+      // Allow time for the UI to settle after navigating to the 'Dataset' tab.
 
-      // Allow time for the UI to settle after the tab change.
+      await tester.pump(interact);
 
-      await tester.pump(hack);
+      // Step 3: Verify that the imputed variable 'IZR_rainfall' is present in the dataset.
 
-      // Step 3: Verify that the imputed variable 'IZR_middle_name' is present in the dataset.
+      // await verifyImputedVariable(container, 'IZR_rainfall');
 
-      await verifyImputedVariable(container, 'IZR_middle_name');
+      // Step 4: Check that the imputed variable 'IZR_rainfall' is no longer listed as missing.
 
-      // Step 4: Check that the imputed variable 'IZR_middle_name' is no longer listed as missing.
-
-      await checkVariableNotMissing(container, 'IZR_middle_name');
+      // await checkVariableNotMissing(container, 'IZR_rainfall');
 
       // Dispose of the ProviderContainer to clean up resources and prevent memory leaks.
-
-      container.dispose();
+      // container.dispose();
     });
   });
 }

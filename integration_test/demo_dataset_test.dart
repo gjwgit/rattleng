@@ -60,7 +60,7 @@ void main() {
       // await tester.tap(rightArrowFinder);
       // await tester.pumpAndSettle();
 
-      // await tester.pump(pause);
+      // await tester.pump(interact);
 
       // // Find the text containing "366".
 

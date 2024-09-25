@@ -52,9 +52,5 @@ Future<void> navigateToTab(
   await tester.tap(iconFinder);
   await tester.pumpAndSettle();
 
-  // Check if the widget of the tab is visible.
-
-  expect(find.byType(tab['widget'].runtimeType), findsOneWidget);
-
   await tester.pump(delay);
 }

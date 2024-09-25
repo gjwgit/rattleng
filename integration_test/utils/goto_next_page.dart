@@ -1,6 +1,6 @@
 /// Move to the next page.
 //
-// Time-stamp: <Friday 2024-09-20 12:35:20 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 13:38:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,5 +44,5 @@ Future<void> gotoNextPage(WidgetTester tester) async {
 
   // Pause after screen change.
 
-  await tester.pump(pause);
+  await tester.pump(interact);
 }

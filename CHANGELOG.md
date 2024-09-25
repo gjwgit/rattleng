@@ -8,6 +8,11 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Review and rename test scripts [6.3.3 20240925 gjw]
++ SCRIPT remembers location [6.3.3 20240925 zy]
++ Ensure pty started before send R code particularly for WINDOWS [6.3.2 20240923 lutra]
++ Refactor DATASET display [6.3.2 20240923 lutra]
++ On QUIT check for confirmation [6.3.2 20240923 lutra]
 + Update NEURAL. [6.3.1 20240923 gjw]
 + Remove unused Android/iOS/Web support. [6.3.1 20240923 lutra]
 

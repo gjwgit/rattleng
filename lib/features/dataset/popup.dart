@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2024-09-18 08:38:34 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-09-24 14:34:20 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -37,6 +37,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
+import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
@@ -140,7 +141,7 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   // TODO 20231018 gjw datasetSelectPackage();
                   Navigator.pop(context, 'Package');
-
+                  showUnderConstruction(context);
                   datasetLoadedUpdate(ref);
                 },
                 child: const Text('Package'),

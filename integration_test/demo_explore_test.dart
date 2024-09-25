@@ -1,6 +1,6 @@
 /// Explore tab Demo dataset.
 //
-// Time-stamp: <Thursday 2024-09-12 08:44:38 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 13:13:00 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -38,19 +38,8 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
 
+import 'utils/delays.dart';
 import 'utils/verify_multiple_text.dart';
-
-/// A duration to allow the tester to view/interact with the testing. 5s is
-/// good, 10s is useful for development and 0s for ongoing. This is not
-/// necessary but it is handy when running interactively for the user running
-/// the test to see the widgets for added assurance. The PAUSE environment
-/// variable can be used to override the default PAUSE here:
-///
-/// flutter test --device-id linux --dart-define=PAUSE=0 integration_test/app_test.dart
-
-const String envPAUSE = String.fromEnvironment('PAUSE', defaultValue: '0');
-final Duration pause = Duration(seconds: int.parse(envPAUSE));
-const Duration delay = Duration(seconds: 1);
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -58,22 +47,12 @@ void main() {
   group('Demo Explore:', () {
     testWidgets('Summary.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
       await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
-      await tester.pump(pause);
-
-      final datasetButtonFinder = find.byType(DatasetButton);
-      expect(datasetButtonFinder, findsOneWidget);
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final datasetButton = find.byType(DatasetButton);
       expect(datasetButton, findsOneWidget);
-      await tester.pump(pause);
+      await tester.pump(interact);
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
 
@@ -85,7 +64,7 @@ void main() {
       expect(demoButton, findsOneWidget);
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -107,7 +86,7 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Summary tab by its title.
 
@@ -123,7 +102,7 @@ void main() {
 
       expect(find.byType(SummaryPanel), findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the button by its text.
 
@@ -135,7 +114,7 @@ void main() {
       await tester.tap(generateSummaryButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the right arrow button in the PageIndicator.
 
@@ -147,7 +126,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await verifyMultipleTextContent(
         tester,
@@ -168,14 +147,14 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow button to go to "Skim of the Dataset" page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "365" as the number of rows.
 
@@ -192,7 +171,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing the min_temp.
 
