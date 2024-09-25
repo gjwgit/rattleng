@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-20 20:22:10 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 06:47:08 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -201,44 +201,50 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('hidden_neurons'),
               controller: _hiddenNeuronsController,
 
-              tooltip: ''' Hidden neurons receive input from all the neurons 
- in the previous layer (input layer) and apply a weighted sum 
- of inputs, followed by an activation function.
+              tooltip: '''
+
+              Hidden neurons receive input from all the neurons in the previous
+              layer (input layer) and apply a weighted sum of inputs, followed
+              by an activation function.
+              
               ''',
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: hiddenNeuronsProvider,
             ),
-            const SizedBox(width: 16),
+            configWidgetSpace,
             NumberField(
-              label: 'Max NWts:',
-              key: const Key('max_NWts'),
-              controller: _maxNWtsController,
-
-              tooltip: ''' The maxNWts parameter in the nnet function 
- controls the maximum number of weights allowed 
- in the neural network model.
-              ''',
-              inputFormatter:
-                  FilteringTextInputFormatter.digitsOnly, // Integers only
-              validator: (value) => validateInteger(value, min: 1),
-              stateProvider: maxNWtsProvider,
-            ),
-            const SizedBox(width: 16),
-            NumberField(
-              label: 'Maxit:',
+              label: 'Max Iterations:',
               key: const Key('maxit'),
               controller: _maxitController,
 
-              tooltip: ''' The maxit parameter in the nnet model 
- controls the maximum number of iterations (or epochs) 
- allowed during the training of the neural network.
+              tooltip: '''
+
+              The maximum number of iterations (or epochs) allowed during the
+              training of the neural network.
+
               ''',
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxitProvider,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Max Weights:',
+              key: const Key('max_NWts'),
+              controller: _maxNWtsController,
+
+              tooltip: '''
+
+              The maximum number of weights allowed in the neural network model.
+              
+              ''',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: maxNWtsProvider,
             ),
           ],
         ),
