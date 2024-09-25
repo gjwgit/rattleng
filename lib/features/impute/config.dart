@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/imputed.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
@@ -243,6 +244,13 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 ref.read(imputedProvider.notifier).state = constant;
                 debugPrint(constant);
                 takeAction();
+
+                ref.read(pageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Impute Missing Values'),
             ),
