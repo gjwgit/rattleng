@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-09-24 15:15:10 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 08:36:03 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -39,6 +39,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
@@ -255,7 +256,7 @@ Xu, Yixiang Yin, Bo Zhang.
               width: 40,
               height: 40,
             ),
-            const SizedBox(width: 20),
+            configWidgetSpace,
             const Text(appTitle),
           ],
         ),

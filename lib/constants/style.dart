@@ -1,13 +1,11 @@
-/// A text widget showing the stderr from the R process.
-///
-/// Time-stamp: <Thursday 2024-09-26 08:32:53 +1000 Graham Williams>
-///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Constants used for different widget text styles.
+// Time-stamp: <Thursday 2024-09-26 08:23:26 +1000 Graham Williams>
+//
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,27 +26,28 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+/// Text style for normal text.
 
-import 'package:rattle/providers/stderr.dart';
-import 'package:rattle/constants/style.dart';
+const TextStyle normalTextStyle = TextStyle(
+  fontSize: 14.0,
+  color: Colors.black,
+);
 
-class StderrText extends ConsumerWidget {
-  const StderrText({super.key});
+// A text style for disabled fields.
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SingleChildScrollView(
-      child: Builder(
-        builder: (BuildContext context) {
-          String stderr = ref.watch(stderrProvider);
+const TextStyle disabledTextStyle = TextStyle(
+  fontSize: 14.0,
+  color: Colors.grey, // Grey out the text
+);
 
-          return SelectableText(
-            'STDERR from the R Process:\n\n$stderr',
-            style: monoSmallTextStyle,
-          );
-        },
-      ),
-    );
-  }
-}
+/// A mono font used for displaying R script and output.
+
+const monoTextStyle = TextStyle(
+  fontFamily: 'RobotoMono',
+  fontSize: 16,
+);
+
+const monoSmallTextStyle = TextStyle(
+  fontFamily: 'RobotoMono',
+  fontSize: 12,
+);
