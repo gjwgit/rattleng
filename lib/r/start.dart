@@ -1,6 +1,6 @@
 /// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Tuesday 2024-09-24 08:04:10 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 15:56:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -100,20 +100,7 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // screen. Let's see what it does on Windows.
 
   await Future(() async {
-    // TODO yyx 20240926 merge conflict: should this part be included or no?
-    // // Create a Completer to ensure pty is ready before writing to it.
-    // Completer<void> ptyReadyCompleter = Completer<void>();
-
-    // // Mark the pty as ready after it has been initialized.
-    // ref.read(ptyProvider).exitCode.then((_) {
-    //   ptyReadyCompleter.complete();
-    // });
-
-    // // extra delay
-    // const duration = Duration(seconds: 1);
-    // await Future.delayed(duration);
     // Add the code to the script.
-
 
     updateScript(ref, code);
 

@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2024-09-26 08:52:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 15:54:05 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -76,10 +76,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   @override
   Widget build(BuildContext context) {
     // Keep the value of text field.
+
     maxWordTextController.text = ref.read(maxWordProvider);
     minFreqTextController.text = ref.read(minFreqProvider).toString();
 
     // Layout the config bar.
+
     return Column(
       children: [
         configTopSpace,
@@ -306,7 +308,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   }
 
   String sanitiseMaxWord(String txt) {
-    // it should be int or Inf. Otherwise, convert to an Inf.
+    // It should be int or Inf. Otherwise, convert to an Inf.
+
     return (txt == 'Inf' || int.tryParse(txt) != null) ? txt : 'Inf';
   }
 
