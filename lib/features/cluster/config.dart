@@ -1,11 +1,11 @@
-/// Widget to configure the CLUSTER tab: button.
+/// Widget to configure the CLUSTER tab.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-06-12 12:11:05 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 11:20:43 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,9 +36,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 
-/// The CLUSTER tab config currently consists of just a BUILD button.
-///
-/// This is a StatefulWidget to pass the ref across to the rSouorce.
+/// A StatefulWidget to pass the ref across to the rSouorce.
 
 class ClusterConfig extends ConsumerStatefulWidget {
   const ClusterConfig({super.key});
@@ -51,13 +49,14 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
   Map<String, String> clusterTypes = {
     'KMeans': '''
 
-      Generate clusters using a kmeans algorithm.
+      Generate clusters using a kmeans algorithm. The kmeans algorithm is the
+      traditional cluster algorithm used in statistics.
 
       ''',
     'Ewkm': '''
 
-      Generate clusters using a kmeans algorithm 
-      with subspaces selected by entropy weighting.
+      Generate clusters using a kmeans algorithm but augmented by slecting
+      subspaces using entropy weighting.
 
       ''',
     'Hierarchical': '''
@@ -67,8 +66,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       ''',
     'BiCluster': '''
 
-      Cluster by identifying suitable subsets of 
-      both the variables and the observations.
+      Cluster by identifying suitable subsets of both the variables and the
+      observations, rather than just the observations as in kmeans.
 
       ''',
   };
