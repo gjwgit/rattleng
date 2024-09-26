@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-09-26 15:17:19 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-09-27 05:29:27 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -49,11 +49,11 @@ mdesc <- "Cluster"
 
 # The variable to set whether the model needs rescale.
 
-re_scale <- RE_SCALE
+rescale <- RESCALE
 
-# Prepare the data for clustering based on the value of re_scale.
+# Prepare the data for clustering based on the value of rescale.
 
-if (re_scale) {
+if (rescale) {
 
   # Rescale the data.
 
