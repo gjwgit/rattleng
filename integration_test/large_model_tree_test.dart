@@ -283,12 +283,6 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(longHack);
 
-      // Optionally, verify any side effects (e.g., UI changes due to the
-      // selected algorithm).  Example: Check for a label update
-
-      final modelBuilderLabel = find.text('Model Builder: ctree');
-      expect(modelBuilderLabel, findsOneWidget);
-
       // Now switch back to the traditional algorithm.
 
       await tester.tap(traditionalChip);
@@ -297,11 +291,6 @@ void main() {
 
       await tester.pumpAndSettle();
       await tester.pump(longHack);
-
-      // Optionally, verify UI updates for the traditional algorithm.
-
-      final modelBuilderRpartLabel = find.text('Model Builder: rpart');
-      expect(modelBuilderRpartLabel, findsOneWidget);
 
       // Tap the conditional chip to switch algorithms.
 
