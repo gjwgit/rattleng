@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Thursday 2024-09-26 16:32:23 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 16:42:54 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -29,10 +29,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
+import 'utils/navigate_to_feature.dart';
 import 'utils/open_dataset_by_path.dart';
 
 const Duration delay = Duration(seconds: 5);
@@ -70,6 +72,10 @@ void main() {
       expect(modelTabFinder, findsOneWidget);
       await tester.tap(modelTabFinder);
       await tester.pumpAndSettle();
+
+      // Navigate to the Tree feature.
+
+      await navigateToFeature(tester, 'Word Cloud', WordCloudPanel);
 
       // Find and tap the 'Display Word Cloud' button
 
