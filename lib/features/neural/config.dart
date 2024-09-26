@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-09-26 08:25:37 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 09:00:39 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -38,6 +38,7 @@ import 'package:rattle/providers/nnet_skip.dart';
 import 'package:rattle/providers/nnet_trace.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 /// The NEURAL tab config currently consists of just an ACTIVITY button.
@@ -159,37 +160,63 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               child: const Text('Build Neural Network'),
             ),
 
+            // 20240927 gjw Remove the TRACE option for now and keep it as
+            // FALSE, the default for R, until we make use of it in the output.
+
+            // configWidgetSpace,
+
+            // DelayedTooltip(
+            //   message: '''
+
+            //   Enable tracing optimization. The prediction error is provided
+            //   after every 10 training iterations.
+
+            //   ''',
+            //   child: Row(
+            //     children: [
+            //       Checkbox(
+            //         key: const Key('NNET Trace'),
+            //         value: nnetTrace,
+            //         onChanged: (value) {
+            //           setState(() {
+            //             nnetTrace = value!;
+            //             ref.read(nnetTraceProvider.notifier).state = value;
+            //           });
+            //         },
+            //       ),
+            //       const Text(
+            //         'Trace',
+            //         style: normalTextStyle,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
             configWidgetSpace,
 
-            const Text(
-              'Trace',
-              style: normalTextStyle,
-            ),
-            Checkbox(
-              key: const Key('NNET Trace'),
-              value: nnetTrace,
-              onChanged: (value) {
-                setState(() {
-                  nnetTrace = value!;
-                  ref.read(nnetTraceProvider.notifier).state = value;
-                });
-              },
-            ),
+            DelayedTooltip(
+              message: '''
 
-            configWidgetSpace,
+              Add skip-layer connections from input to output.
 
-            const Text(
-              'Skip',
-              style: normalTextStyle,
-            ),
-            Checkbox(
-              value: nnetSkip,
-              onChanged: (value) {
-                setState(() {
-                  nnetSkip = value!;
-                  ref.read(nnetSkipProvider.notifier).state = value;
-                });
-              },
+              ''',
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: nnetSkip,
+                    onChanged: (value) {
+                      setState(() {
+                        nnetSkip = value!;
+                        ref.read(nnetSkipProvider.notifier).state = value;
+                      });
+                    },
+                  ),
+                  const Text(
+                    'Skip',
+                    style: normalTextStyle,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

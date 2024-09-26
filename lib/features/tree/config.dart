@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Thursday 2024-09-26 09:04:31 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 09:11:17 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -45,6 +45,7 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class TreeModelConfig extends ConsumerStatefulWidget {
@@ -235,18 +236,30 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 },
               ),
               configWidgetSpace,
-              const Text(
-                'Include Missing',
-                style: normalTextStyle,
-              ),
-              Checkbox(
-                value: includeMissing,
-                onChanged: (value) {
-                  setState(() {
-                    includeMissing = value!;
-                    ref.read(treeIncludeMissingProvider.notifier).state = value;
-                  });
-                },
+              DelayedTooltip(
+                message: '''
+
+                TOOLTIP COMING SOON.
+
+                ''',
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: includeMissing,
+                      onChanged: (value) {
+                        setState(() {
+                          includeMissing = value!;
+                          ref.read(treeIncludeMissingProvider.notifier).state =
+                              value;
+                        });
+                      },
+                    ),
+                    const Text(
+                      'Include Missing',
+                      style: normalTextStyle,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
