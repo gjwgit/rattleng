@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2024-09-16 09:22:26 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 15:41:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -193,23 +193,11 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD
-  ////////////////////////////////////////////////////////////////////////
 
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
   code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
-  if (!clusterReScale) {
-    code = code.replaceAll('sapply(na.omit(ds[tr, numc]), rescaler, "range")',
-        'na.omit(ds[tr, numc])');
-  } else {
-    if (!code.contains('sapply(na.omit(ds[tr, numc]), rescaler, "range")')) {
-      code = code.replaceAll(
-        'na.omit(ds[tr, numc])',
-        'sapply(na.omit(ds[tr, numc]), rescaler, "range")',
-      );
-    }
-  }
   code = code.replaceAll('LANGUAGE', language);
 
   (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
@@ -340,10 +328,32 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
   code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
+
+  ////////////////////////////////////////////////////////////////////////
+  // CLUSTER
+
   code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
+
+  // TODO 20240926 gjw AVOID GENERATING R CODE FROM THE DART
+  //
+  // Use KEYWORD substitution to handle the two pathways. If I wanted to update
+  // how the R code does this later on I don't want to modify the dart code, but
+  // the R code.
+
+  if (!clusterReScale) {
+    code = code.replaceAll('sapply(na.omit(ds[tr, numc]), rescaler, "range")',
+        'na.omit(ds[tr, numc])');
+  } else {
+    if (!code.contains('sapply(na.omit(ds[tr, numc]), rescaler, "range")')) {
+      code = code.replaceAll(
+        'na.omit(ds[tr, numc])',
+        'sapply(na.omit(ds[tr, numc]), rescaler, "range")',
+      );
+    }
+  }
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
