@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Thursday 2024-09-26 15:15:45 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 15:27:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -36,6 +36,7 @@ import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/providers/cluster_re_scale.dart';
 import 'package:rattle/providers/cluster_run.dart';
 import 'package:rattle/providers/cluster_seed.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class ClusterSetting extends ConsumerStatefulWidget {
@@ -127,19 +128,34 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               stateProvider: clusterRunProvider,
             ),
             configWidgetSpace,
-            Checkbox(
-              key: const Key('re_scale'),
-              value: reScale,
-              onChanged: (value) {
-                setState(() {
-                  reScale = value!;
-                  ref.read(clusterReScaleProvider.notifier).state = value;
-                });
-              },
-            ),
-            const Text(
-              'Re-Scale',
-              style: normalTextStyle,
+            DelayedTooltip(
+              message: '''
+
+              Automatically rescale the numeric variables used for cluster
+              analysis to be in the range 0-1 to avoid numeric variables with
+              large values like 45,325 and 490, overwhelming variables with
+              small values like 23, 5, 67.
+
+              ''',
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Checkbox(
+                    key: const Key('re_scale'),
+                    value: reScale,
+                    onChanged: (value) {
+                      setState(() {
+                        reScale = value!;
+                        ref.read(clusterReScaleProvider.notifier).state = value;
+                      });
+                    },
+                  ),
+                  const Text(
+                    'Re-Scale',
+                    style: normalTextStyle,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
