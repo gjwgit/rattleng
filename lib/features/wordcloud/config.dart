@@ -311,13 +311,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   }
 
   void _updateMaxWordProvider() {
-    debugPrint('max word text changed to ${maxWordTextController.text}');
     ref.read(maxWordProvider.notifier).state =
         sanitiseMaxWord(maxWordTextController.text);
   }
 
   void _updateMinFreqProvider() {
-    debugPrint('min freq text changed to ${minFreqTextController.text}');
     ref.read(minFreqProvider.notifier).state =
         int.tryParse(minFreqTextController.text) ?? 1;
   }
