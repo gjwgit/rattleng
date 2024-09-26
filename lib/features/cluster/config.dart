@@ -113,6 +113,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               options: clusterTypes.keys.toList(),
               selectedOption: type,
               tooltips: clusterTypes,
+              enabled: type !=
+                  'KMeans', // Only KMeans is implemented. Others will be implemented in the future.
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {
