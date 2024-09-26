@@ -1,6 +1,6 @@
 /// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Thursday 2024-09-26 15:56:43 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 15:57:57 +1000 Graham Williams>
 //
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -100,7 +100,7 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // screen. Let's see what it does on Windows.
 
   await Future(() async {
-    // Add the code to the script.
+    // Add the code to the SCRIPT tab.
 
     updateScript(ref, code);
 
