@@ -57,7 +57,7 @@ void main() {
     testWidgets('default test.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -65,7 +65,7 @@ void main() {
 
       await tester.pump(hack);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
@@ -82,7 +82,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the scrollable ListView.
 
@@ -216,7 +216,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Pause for a long time to wait for app gets stable.
 
@@ -230,7 +230,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check if SelectableText contains the expected content.
 
@@ -260,7 +260,7 @@ void main() {
 
       expect(optionsDescriptionFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the forth page.
 
@@ -268,7 +268,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final forthPageTitleFinder = find.text('Neural Net Model - Visual');
       expect(forthPageTitleFinder, findsOneWidget);
@@ -278,7 +278,7 @@ void main() {
       // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
 
     testWidgets('nnet model with different parameter settings.',
@@ -287,7 +287,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -309,7 +309,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the scrollable ListView.
 
@@ -454,7 +454,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(delay);
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the second page.
 
@@ -464,7 +464,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(delay);
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Check if SelectableText contains the expected content.
 
@@ -481,14 +481,14 @@ void main() {
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow to go to the forth page.
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final forthPageTitleFinder = find.text('Neural Net Model - Visual');
       expect(forthPageTitleFinder, findsOneWidget);
@@ -498,7 +498,7 @@ void main() {
       // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
   });
 }

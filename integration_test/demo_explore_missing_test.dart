@@ -1,8 +1,8 @@
-/// Test the EXPLORE tab MISSING feature with th LARGE dataset.
+/// Test the EXPLORE tab's MISSING feature with the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 08:44:08 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-18 16:31:55 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang
+/// Authors:  Kevin Wang, Graham Williams
 
 library;
 
@@ -29,37 +29,37 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-
 import 'package:rattle/features/missing/panel.dart';
-import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/navigate_to_feature.dart';
-import 'utils/navigate_to_tab.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'package:rattle/main.dart' as app;
+import 'package:rattle/tabs/explore.dart';
+
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Missing.',
-        (WidgetTester tester) async {
+  group('Demo Explore Missing:', () {
+    testWidgets('basic.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
-      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
-      await navigateToTab(tester, 'Explore');
+      await openDemoDataset(tester);
+      await _navigateToExploreTab(tester);
 
-      await navigateToFeature(tester, 'Missing', MissingPanel);
+      await _navigateToTab(tester, 'Missing', MissingPanel);
 
       await _performMissingAnalysis(tester);
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '20000');
+      // last number on the page.
+
+      await _verifyPageContent(tester, 'Patterns of Missing Data', '380');
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
         tester,
         'Aggregation of Missing Values - Textual',
-        '0',
+        '172',
       );
       await _verifyPageContent(
         tester,
@@ -78,6 +78,32 @@ void main() {
   });
 }
 
+Future<void> _navigateToExploreTab(WidgetTester tester) async {
+  final exploreIconFinder = find.byIcon(Icons.insights);
+  expect(exploreIconFinder, findsOneWidget);
+
+  await tester.tap(exploreIconFinder);
+  await tester.pumpAndSettle();
+
+  expect(find.byType(ExploreTabs), findsOneWidget);
+}
+
+Future<void> _navigateToTab(
+  WidgetTester tester,
+  String tabTitle,
+  Type panelType,
+) async {
+  final tabFinder = find.text(tabTitle);
+  expect(tabFinder, findsOneWidget);
+
+  await tester.tap(tabFinder);
+  await tester.pumpAndSettle();
+
+  await tester.pump(interact);
+
+  expect(find.byType(panelType), findsOneWidget);
+}
+
 Future<void> _performMissingAnalysis(WidgetTester tester) async {
   final generateSummaryButtonFinder = find.text('Perform Missing Analysis');
   expect(generateSummaryButtonFinder, findsOneWidget);
@@ -85,8 +111,8 @@ Future<void> _performMissingAnalysis(WidgetTester tester) async {
   await tester.tap(generateSummaryButtonFinder);
   await tester.pumpAndSettle();
 
-  await tester.pump(pause);
-  await tester.pump(hack);
+  await tester.pump(interact);
+  await tester.pump(delay);
 }
 
 Future<void> _verifyPageContent(
@@ -100,7 +126,7 @@ Future<void> _verifyPageContent(
   await tester.tap(rightArrowFinder);
   await tester.pumpAndSettle();
 
-  await tester.pump(hack);
+  await tester.pump(interact);
 
   final titleFinder = find.textContaining(title);
   expect(titleFinder, findsOneWidget);

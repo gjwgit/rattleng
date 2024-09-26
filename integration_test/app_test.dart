@@ -1,6 +1,6 @@
-/// Test the app startup.
+/// Testing the app startup.
 //
-// Time-stamp: <Monday 2024-09-23 17:16:22 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 13:15:06 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'dart:io';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -50,16 +48,16 @@ void main() {
     await tester.pumpAndSettle();
 
     // Leave time to see the first page during an interactive test. We use a
-    // [pause] which for qtest is 0s and for itest is 5s. Lutra-fs notes that 0
-    // problematic on their testing (hence qtest failing). Perhaps then try with
-    // itest.
+    // [interact] delay which for qtest is 0s and for itest is 5s. Lutra-fs
+    // notes that 0 problematic on their testing (hence qtest failing). Perhaps
+    // then try with itest.
 
-    await tester.pump(pause);
+    await tester.pump(interact);
 
     final datasetButtonFinder = find.byType(DatasetButton);
     expect(datasetButtonFinder, findsOneWidget);
 
-    await tester.pump(pause);
+    await tester.pump(interact);
 
     final welcomeMarkdownFinder = find.byType(Markdown);
     expect(welcomeMarkdownFinder, findsNWidgets(2));

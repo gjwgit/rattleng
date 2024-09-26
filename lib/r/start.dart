@@ -1,6 +1,6 @@
-/// Initiate the R process and setup capture of its output.
+/// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Monday 2024-09-02 07:05:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-09-24 08:04:10 +1000 Graham Williams>
 //
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -26,7 +26,6 @@
 
 library;
 
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -39,7 +38,7 @@ import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/update_script.dart';
 
-/// Start up the R process and set up the capture of stderr and stdout.
+/// Start up the R sub-process and set up the capture of stderr and stdout.
 
 void rStart(BuildContext context, WidgetRef ref) async {
   // Start up an R process from the command line.
@@ -101,22 +100,24 @@ void rStart(BuildContext context, WidgetRef ref) async {
   // screen. Let's see what it does on Windows.
 
   await Future(() async {
-    // Create a Completer to ensure pty is ready before writing to it.
-    Completer<void> ptyReadyCompleter = Completer<void>();
+    // TODO yyx 20240926 merge conflict: should this part be included or no?
+    // // Create a Completer to ensure pty is ready before writing to it.
+    // Completer<void> ptyReadyCompleter = Completer<void>();
 
-    // Mark the pty as ready after it has been initialized.
-    ref.read(ptyProvider).exitCode.then((_) {
-      ptyReadyCompleter.complete();
-    });
+    // // Mark the pty as ready after it has been initialized.
+    // ref.read(ptyProvider).exitCode.then((_) {
+    //   ptyReadyCompleter.complete();
+    // });
 
-    // extra delay
-    const duration = Duration(seconds: 1);
-    await Future.delayed(duration);
+    // // extra delay
+    // const duration = Duration(seconds: 1);
+    // await Future.delayed(duration);
     // Add the code to the script.
+
 
     updateScript(ref, code);
 
-    // Run the code without comments.
+    // Strip the code of comments.
 
     code = rStripComments(code);
 

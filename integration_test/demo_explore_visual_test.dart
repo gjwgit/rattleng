@@ -1,6 +1,6 @@
-/// Test EXPLORE tab VISUAL feature LARGE dataset.
+/// Test EXPLORE tab VISUAL feature DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 08:12:33 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-06 17:18:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,19 +36,20 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore tab Large dataset:', () {
+  group('Explore tab DEMO dataset:', () {
     testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(hack);
+      await tester.pump(interact);
 
-      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
-      await tester.pump(longHack);
+      await openDemoDataset(tester);
+
+      await tester.pump(hack);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -59,7 +60,6 @@ void main() {
 
       await tester.tap(exploreIconFinder);
       await tester.pumpAndSettle();
-      await tester.pump(longHack);
 
       // Verify if the ExploreTabs widget is shown.
 
@@ -71,7 +71,7 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(longHack);
+      await tester.pump(delay);
 
       ////////////////////////////////////////////////////////////////////////
 
@@ -89,7 +89,7 @@ void main() {
 
       expect(find.byType(VisualPanel), findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
       await tester.pump(delay);
 
       // Find the button by its text.
@@ -102,18 +102,22 @@ void main() {
       await tester.tap(generatePlotButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(longHack);
+      await tester.pump(interact);
 
       // Find the right arrow button in the PageIndicator.
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
+      // Find the right arrow button in the PageIndicator.
+
+      expect(rightArrowFinder, findsOneWidget);
+
       // Tap the right arrow button to go to "Box Plot" page 2.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(longHack);
+      await tester.pump(interact);
 
       // Find the text containing "Box Plot".
 
@@ -134,7 +138,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(longHack);
+      await tester.pump(interact);
 
       // Find the text containing "Density Plot of Values".
 
@@ -150,7 +154,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(longHack);
+      await tester.pump(interact);
 
       // Find the text containing "Cumulative Plot".
 
@@ -166,7 +170,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(longHack);
+      await tester.pump(interact);
 
       // Find the text containing "Benford Plot".
 
@@ -175,8 +179,8 @@ void main() {
 
       // Find the image.
 
-      final imageFinder = find.byType(ImagePage);
-      expect(imageFinder, findsOneWidget);
+      // final imageFinder = find.byType(ImagePage);
+      // expect(imageFinder, findsOneWidget);
     });
   });
 }

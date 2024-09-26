@@ -32,6 +32,7 @@ import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
@@ -58,7 +59,7 @@ void main() {
 
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Open the large dataset in the app.
 
@@ -83,6 +84,8 @@ void main() {
       // Allow the UI to settle after the action.
 
       await tester.pump(hack);
+
+      await gotoNextPage(tester);
 
       // Verify that the page content includes the expected dataset summary with 'IZR_middle_name'.
 
@@ -110,7 +113,7 @@ void main() {
 
       await navigateToTab(tester, 'Dataset');
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Allow time for the UI to settle after the tab change.
 

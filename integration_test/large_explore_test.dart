@@ -52,7 +52,7 @@ void main() {
 
       // Leave time to see the first page.
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Locate the TextField where the file path is input.
 
@@ -73,7 +73,7 @@ void main() {
       // Optionally pump the widget tree to reflect the changes.
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Explore tab by icon and tap on it.
 
@@ -95,7 +95,7 @@ void main() {
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the Summary tab by its title.
 
@@ -111,7 +111,7 @@ void main() {
 
       expect(find.byType(SummaryPanel), findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the button by its text.
 
@@ -123,7 +123,7 @@ void main() {
       await tester.tap(generateSummaryButtonFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Add a delay to allow the summary to be generated. This will fix the qtest failure.
 
@@ -139,7 +139,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await tester.pump(hack);
 
@@ -158,7 +158,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "20,000" as the number of rows.
 
@@ -170,7 +170,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "20000" as the number of rows.
 
@@ -187,7 +187,7 @@ void main() {
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Find the text containing "2.35753359" as the weight.
 

@@ -52,7 +52,7 @@ Future<void> openDatasetByPath(WidgetTester tester, String path) async {
 
   await tester.pumpAndSettle();
 
-  await tester.pump(pause);
+  await tester.pump(interact);
 
   // TODO 20240903 zy WE NEED TO ELIMINATE THE hack WAIT DUE TO async.
 

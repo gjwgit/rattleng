@@ -1,6 +1,6 @@
 /// A text widget showing the stderr from the R process.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 08:32:53 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/stderr.dart';
-import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/style.dart';
 
 class StderrText extends ConsumerWidget {
   const StderrText({super.key});

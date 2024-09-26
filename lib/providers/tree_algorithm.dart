@@ -1,8 +1,8 @@
 /// A provider for the algorithm for tree model.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 10:28:56 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +32,7 @@ final treeAlgorithmProvider =
     StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
 
 // Enum for algorithm types.
+
 enum AlgorithmType {
   traditional('Traditional'),
   conditional('Conditional');
