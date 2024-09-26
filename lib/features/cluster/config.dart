@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-09-26 11:20:43 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 05:33:38 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -112,8 +112,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               options: clusterTypes.keys.toList(),
               selectedOption: type,
               tooltips: clusterTypes,
-              enabled: type !=
-                  'KMeans', // Only KMeans is implemented. Others will be implemented in the future.
+              // Only KMeans is implemented. Others will be implemented in the future.
+              enabled: type != 'KMeans',
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {
