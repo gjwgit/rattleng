@@ -331,23 +331,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 
-  // TODO 20240926 gjw AVOID GENERATING R CODE FROM THE DART
-  //
-  // Use KEYWORD substitution to handle the two pathways. If I wanted to update
-  // how the R code does this later on I don't want to modify the dart code, but
-  // the R code.
-
-  if (!clusterReScale) {
-    code = code.replaceAll('sapply(na.omit(ds[tr, numc]), rescaler, "range")',
-        'na.omit(ds[tr, numc])');
-  } else {
-    if (!code.contains('sapply(na.omit(ds[tr, numc]), rescaler, "range")')) {
-      code = code.replaceAll(
-        'na.omit(ds[tr, numc])',
-        'sapply(na.omit(ds[tr, numc]), rescaler, "range")',
-      );
-    }
-  }
+  code = code.replaceAll('RE_SCALE', clusterReScale ? 'TRUE' : 'FALSE');
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');

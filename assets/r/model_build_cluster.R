@@ -47,9 +47,30 @@ library(reshape)
 mtype <- "kmeans"
 mdesc <- "Cluster"
 
+# The variable to set whether the model needs rescale.
+
+re_scale <- RE_SCALE
+
+# Prepare the data for clustering based on the value of re_scale.
+
+if (re_scale) {
+
+  # Rescale the data.
+
+  data_for_clustering <- sapply(na.omit(ds[tr, numc]), rescaler, "range")
+
+} else {
+
+  # Use the data without rescaling.
+
+  data_for_clustering <- na.omit(ds[tr, numc])
+  
+}
+
+
 # Generate a kmeans cluster of size 10.
 
-model_kmeans <- kmeans(sapply(na.omit(ds[tr, numc]), rescaler, "range"),
+model_kmeans <- kmeans(data_for_clustering,
                        centers=CLUSTER_NUM,
                        nstart=CLUSTER_RUN)
 
@@ -61,7 +82,7 @@ print(paste(model_kmeans$size, collapse=' '))
 
 # Data means:
 
-print(colMeans(sapply(na.omit(ds[tr, numc]), rescaler, "range")))
+print(colMeans(data_for_clustering))
 
 # Cluster centers:
 
