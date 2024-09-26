@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 15:15:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
 
 import 'package:flutter/material.dart';
@@ -82,8 +83,12 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
             NumberField(
               label: 'Clusters:',
               key: const Key('cluster_number'),
-              tooltip:
-                  'The number of clusters (k) or a set of initial (distinct) cluster centers.',
+              tooltip: '''
+
+              The number of clusters (k) or a set of initial (distinct) cluster
+              centers.
+
+              ''',
               controller: _clusterController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -93,8 +98,14 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
             NumberField(
               label: 'Seed:',
               key: const Key('cluster_seed'),
-              tooltip:
-                  'Random number seed to obtain the same results each time.',
+              tooltip: '''
+
+              The seed is used to re-initiate the random number
+              generator. Changing the seed will randomly choose observations to
+              initiate the clustering.  To obtain the same results each time use
+              the same seed.
+
+              ''',
               controller: _seedController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -104,8 +115,12 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
             NumberField(
               label: 'Runs:',
               key: const Key('cluster_run'),
-              tooltip:
-                  'The number of random starting partitions when centers is a number.',
+              tooltip: '''
+
+              The number of random starting partitions to explore when centers
+              is a number rather than specific centers. 
+
+              ''',
               controller: _runController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
