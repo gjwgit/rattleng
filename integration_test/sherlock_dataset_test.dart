@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Wednesday 2024-09-25 16:02:18 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 16:32:23 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -66,7 +66,7 @@ void main() {
 
       // Navigate to the Predictive tab
 
-      final modelTabFinder = find.text('Predictive');
+      final modelTabFinder = find.text('Predict');
       expect(modelTabFinder, findsOneWidget);
       await tester.tap(modelTabFinder);
       await tester.pumpAndSettle();
