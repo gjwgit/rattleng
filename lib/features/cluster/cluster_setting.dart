@@ -76,6 +76,8 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
             NumberField(
               label: 'Clusters:',
               key: const Key('cluster_number'),
+              tooltip:
+                  'The number of clusters (k) or a set of initial (distinct) cluster centers.',
               controller: _clusterController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -85,6 +87,8 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
             NumberField(
               label: 'Seed:',
               key: const Key('cluster_seed'),
+              tooltip:
+                  'Random number seed to obtain the same results each time.',
               controller: _seedController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -94,6 +98,8 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
             NumberField(
               label: 'Runs:',
               key: const Key('cluster_run'),
+              tooltip:
+                  'The number of random starting partitions when centers is a number.',
               controller: _runController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
