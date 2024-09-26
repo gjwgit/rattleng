@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Thursday 2024-09-26 15:27:58 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 08:44:19 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -37,6 +37,7 @@ import 'package:rattle/providers/cluster_re_scale.dart';
 import 'package:rattle/providers/cluster_run.dart';
 import 'package:rattle/providers/cluster_seed.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class ClusterSetting extends ConsumerStatefulWidget {
@@ -156,6 +157,11 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
                   ),
                 ],
               ),
+            ),
+            LabelledCheckbox(
+              tooltip: 'TIPPY',
+              label: 'RESCALE',
+              provider: clusterReScaleProvider,
             ),
           ],
         ),
