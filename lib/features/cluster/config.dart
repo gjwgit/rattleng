@@ -28,8 +28,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/cluster/cluster_setting.dart';
 import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/r/source.dart';
@@ -80,13 +80,13 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configBotSpace,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftSpace,
 
             // The BUILD button.
 
