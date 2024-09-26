@@ -46,7 +46,7 @@ void main() {
     testWidgets('build, page.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
       await navigateToTab(tester, 'Explore');
@@ -83,7 +83,7 @@ void main() {
       // Verify the content of the next page.
 
       await verifyNextPage(tester, 'Variable Correlation Plot');
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
   });
 }

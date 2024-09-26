@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Monday 2024-07-22 19:41:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 08:52:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,20 +25,15 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
-// TODO 20240605 gjw WE WILL HAVE OTHER PROVIDERS AS THE APP GROWS. maxword
-// MIGHT BE USED IN OTHER PANELS TOO. PERHAPS WE NEED TO IDENTIFY THESE AS
-// WORDCLOUD PROVIDERS, PERHAPS WITHIN A wordcloudProvider STRUCTURE? FOR
-// CONSIDERATION.
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -61,7 +56,9 @@ class WordCloudConfig extends ConsumerStatefulWidget {
 class _ConfigState extends ConsumerState<WordCloudConfig> {
   final maxWordTextController = TextEditingController();
   final minFreqTextController = TextEditingController();
+
   String dropdownValue = stopwordLanguages.first;
+
   @override
   void initState() {
     super.initState();
@@ -85,22 +82,21 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     // Layout the config bar.
     return Column(
       children: [
-        const SizedBox(height: 5.0),
+        configTopSpace,
 
-        // A BUILD button and functionality explanation.
+        // BUILD button.
 
         Row(
           children: [
-            const SizedBox(width: 5.0),
-
-            // buildButton,
-
+            configLeftSpace,
             ActivityButton(
               onPressed: () async {
                 // Clean up the files from previous use.
 
-                // TODO 20240612 gjw IS THIS REQUIRED HERE? OR CLEANUP WHEN EXIT
-                // THE APP? OR RELY ON OS TO CLEANUP /tmp?
+                // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.
+                //
+                // Is this required here? Or cleanup when exit the app? Or rely
+                // on os to cleanup /tmp?
 
                 File oldWordcloudFile = File(wordCloudImagePath);
                 if (oldWordcloudFile.existsSync()) {
@@ -109,6 +105,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 } else {
                   debugPrint('old wordcloud file not exists');
                 }
+
                 File oldTmpFile = File(tmpImagePath);
                 if (oldTmpFile.existsSync()) {
                   oldTmpFile.deleteSync();
@@ -130,7 +127,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 //     break;
                 //   }
                 // }
+
                 // Toggle the state to trigger rebuild
+
                 debugPrint('build clicked on ${timestamp()}');
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
 
@@ -138,15 +137,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               },
               child: const Text('Display Word Cloud'),
             ),
-
-            const SizedBox(width: 20.0),
-            const Text(
-              'A word cloud visualises word frequencies. '
-              'More frequent words are larger.',
-            ),
           ],
         ),
-        const SizedBox(height: 20.0),
+
+        configRowSpace,
 
         // Options for the current functionality.
 
@@ -163,13 +157,16 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   },
                 ),
                 const DelayedTooltip(
-                  message:
-                      'Plot words in random order, otherwise in decreasing frequency.',
+                  message: '''
+                  
+                  Plot words in random order, otherwise in decreasing frequency.
+
+                  ''',
                   child: Text('Random Order'),
                 ),
               ],
             ),
-            const SizedBox(width: 20),
+            configWidgetSpace,
             Row(
               children: [
                 Checkbox(
@@ -191,7 +188,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ],
             ),
 
-            const SizedBox(width: 20),
+            configWidgetSpace,
             Row(
               children: [
                 Checkbox(
@@ -206,7 +203,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ],
             ),
-            const SizedBox(width: 20),
+            configWidgetSpace,
             Row(
               children: [
                 Checkbox(
@@ -221,14 +218,17 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ],
             ),
-            const SizedBox(width: 20),
+            configWidgetSpace,
             Expanded(
               child: DelayedTooltip(
                 message: '''
-                Select the language to filter out common stopwords from the word cloud.
-                'SMART' means English stopwords from the SMART information retrieval system
-                (as documented in Appendix 11 of https://jmlr.csail.mit.edu/papers/volume5/lewis04a/) 
-              ''',
+                
+                Select the language to filter out common stopwords from the word
+                cloud.  'SMART' means English stopwords from the SMART
+                information retrieval system (as documented in Appendix 11 of
+                https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
+
+                ''',
                 child: DropdownMenu<String>(
                   label: const Text('Language'),
                   leadingIcon: const Icon(Icons.language),
@@ -244,7 +244,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+
+        configRowSpace,
 
         // Parameters for the current functionality.
 
@@ -253,13 +254,16 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           child: Row(
             children: [
               const Text('Tuning Parameters:  '),
-              const SizedBox(width: 5),
+              configLabelSpace,
               // max word text field
               SizedBox(
                 width: 150.0,
                 child: DelayedTooltip(
-                  message: 'Maximum number of words plotted. '
-                      'Drop least frequent words.',
+                  message: '''
+
+                  Maximum number of words plotted.  Drop least frequent words.
+                  
+                  ''',
                   child: TextField(
                     controller: maxWordTextController,
                     style: const TextStyle(fontSize: 16),
@@ -271,7 +275,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
+              configWidgetSpace,
               SizedBox(
                 width: 150.0,
                 child: DelayedTooltip(
@@ -296,10 +300,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ),
         ),
 
-        // Add a little sapce below the underlined input widgets so the
-        // underline is not lost.
-
-        const SizedBox(height: 10),
+        configBotSpace,
       ],
     );
   }

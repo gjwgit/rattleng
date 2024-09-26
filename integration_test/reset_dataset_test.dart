@@ -44,7 +44,7 @@ void main() {
     testWidgets('demo navigate.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -54,13 +54,13 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow button to go to the third page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Reload Demo Dataset. Not using openDemoDataset() for now since it does
       // not handle the popup warning where we need to tap YES.
@@ -86,7 +86,7 @@ void main() {
 
       // await tester.tap(rightArrowFinder);
       // await tester.pumpAndSettle();
-      // await tester.pump(pause);
+      // await tester.pump(interact);
 
       // // Find the text containing "366".
 
@@ -102,7 +102,7 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await verifyMultipleTextContent(
         tester,
@@ -123,7 +123,7 @@ void main() {
     testWidgets('demo then large navigate', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       await openDemoDataset(tester);
 
@@ -133,13 +133,13 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Tap the right arrow button to go to the third page.
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // Reload large dataset.
 
@@ -180,7 +180,7 @@ void main() {
       // Optionally pump the widget tree to reflect the changes.
 
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       // 20240901 gjw A hack to allow time for the dataset to be loaded before
       // progressing with the GUI. This is a rattle bug to be fixed - async of R
@@ -200,7 +200,7 @@ void main() {
       // await tester.tap(rightArrowFinder);
       // await tester.pumpAndSettle();
 
-      // await tester.pump(pause);
+      // await tester.pump(interact);
 
       // final glimpseRowFinder = find.textContaining('Dataset Glimpse');
       // expect(glimpseRowFinder, findsOneWidget);
@@ -214,12 +214,12 @@ void main() {
 
       await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(pause);
+      await tester.pump(interact);
 
       final rolesRecIDFinder = find.textContaining('Variable');
       expect(rolesRecIDFinder, findsOneWidget);
 
-      await tester.pump(pause);
+      await tester.pump(interact);
     });
   });
 }
