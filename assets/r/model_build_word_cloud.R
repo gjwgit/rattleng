@@ -93,4 +93,4 @@ dev.off()
 
 # Show the top words
 
-d %>% filter(freq >= MINFREQ) %>% print(row.names=FALSE)
+d %>% filter(freq >= MINFREQ) %>%  slice_head(n = MAXWORD) %>%  print(row.names = FALSE)  
