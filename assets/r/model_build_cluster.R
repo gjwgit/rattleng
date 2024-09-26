@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:29:04 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-09-26 15:17:19 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -49,7 +49,9 @@ mdesc <- "Cluster"
 
 # Generate a kmeans cluster of size 10.
 
-model_kmeans <- kmeans(sapply(na.omit(ds[tr, numc]), rescaler, "range"), centers = CLUSTER_NUM, nstart = CLUSTER_RUN)
+model_kmeans <- kmeans(sapply(na.omit(ds[tr, numc]), rescaler, "range"),
+                       centers=CLUSTER_NUM,
+                       nstart=CLUSTER_RUN)
 
 # Report on the cluster characteristics. 
 
