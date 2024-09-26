@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2024-09-10 05:57:38 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 08:20:10 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -26,8 +26,6 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 /// The Rattle app's title.
 
 const String appTitle = 'Rattle Next Generation Data Science';
@@ -47,20 +45,6 @@ const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 /// File name of demo file (weather.csv).
 
 const String weatherDemoFile = 'rattle::weather';
-
-/// Text style for normal text.
-const TextStyle normalTextStyle = TextStyle(fontSize: 14.0);
-
-/// A mono font used for displaying R script and output.
-
-const monoTextStyle = TextStyle(
-  fontFamily: 'RobotoMono',
-  fontSize: 16,
-);
-const monoSmallTextStyle = TextStyle(
-  fontFamily: 'RobotoMono',
-  fontSize: 12,
-);
 
 /// Links of R packages for reference.
 
