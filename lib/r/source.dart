@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2024-09-16 09:22:26 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 15:55:31 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -191,7 +191,6 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
   code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
   code = code.replaceAll('LANGUAGE', language);
-
   code = code.replaceAll('MINFREQ', minFreq);
   code = code.replaceAll('MAXWORD', maxWord);
 
