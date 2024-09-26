@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Sunday 2024-06-30 08:20:21 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 18:42:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -64,7 +64,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     String content = '';
 
     String lastBuildTime = ref.watch(wordCloudBuildProvider);
-    debugPrint('received rebuild on $lastBuildTime');
 
     // file exists | build not empty
     // 1 | 1 -> show the png
@@ -75,7 +74,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     if (buildButtonPressed(lastBuildTime)) {
       // The check to see if file exists is not necessary.
       // build button pressed and png file exists
-      debugPrint('Model built. Now Sleeping as needed to await file.');
 
       pages.add(
         ImagePage(

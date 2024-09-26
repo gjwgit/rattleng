@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2024-09-26 15:54:05 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 18:42:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -103,17 +103,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 File oldWordcloudFile = File(wordCloudImagePath);
                 if (oldWordcloudFile.existsSync()) {
                   oldWordcloudFile.deleteSync();
-                  debugPrint('old wordcloud file deleted');
-                } else {
-                  debugPrint('old wordcloud file not exists');
                 }
 
                 File oldTmpFile = File(tmpImagePath);
                 if (oldTmpFile.existsSync()) {
                   oldTmpFile.deleteSync();
-                  debugPrint('old tmp file deleted');
-                } else {
-                  debugPrint('old tmp file not exists');
                 }
 
                 // This is the main action.
@@ -132,7 +126,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 // Toggle the state to trigger rebuild
 
-                debugPrint('build clicked on ${timestamp()}');
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
 
                 // wordCloudDisplayKey.currentState?.goToResultPage();
