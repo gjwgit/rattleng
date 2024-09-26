@@ -306,14 +306,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
   String sanitiseMaxWord(String txt) {
     // it should be int or Inf. Otherwise, convert to an Inf.
-    if (txt != 'Inf') {
-      int? maxWord = int.tryParse(txt);
-      if (maxWord == null) {
-        return 'Inf';
-      }
-      return maxWord.toString();
-    }
-    return txt;
+    return (txt == 'Inf' || int.tryParse(txt) != null) ? txt : 'Inf';
   }
 
   void _updateMaxWordProvider() {
