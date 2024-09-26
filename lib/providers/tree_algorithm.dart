@@ -1,6 +1,6 @@
 /// A provider for the algorithm for tree model.
 ///
-/// Time-stamp: <Thursday 2024-09-26 09:10:13 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 10:28:56 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ final treeAlgorithmProvider =
     StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
 
 // Enum for algorithm types.
+
 enum AlgorithmType {
   traditional('Traditional'),
   conditional('Conditional');
