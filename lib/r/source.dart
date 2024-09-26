@@ -37,6 +37,7 @@ import 'package:universal_io/io.dart' show Platform;
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster_number.dart';
+import 'package:rattle/providers/cluster_re_scale.dart';
 import 'package:rattle/providers/cluster_run.dart';
 import 'package:rattle/providers/cluster_seed.dart';
 import 'package:rattle/providers/complexity.dart';
@@ -101,6 +102,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   bool punctuation = ref.read(punctuationProvider);
   bool stem = ref.read(stemProvider);
   bool stopword = ref.read(stopwordProvider);
+  bool clusterReScale = ref.read(clusterReScaleProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -197,6 +199,17 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
   code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
+  if (!clusterReScale) {
+    code = code.replaceAll('sapply(na.omit(ds[tr, numc]), rescaler, "range")',
+        'na.omit(ds[tr, numc])');
+  } else {
+    if (!code.contains('sapply(na.omit(ds[tr, numc]), rescaler, "range")')) {
+      code = code.replaceAll(
+        'na.omit(ds[tr, numc])',
+        'sapply(na.omit(ds[tr, numc]), rescaler, "range")',
+      );
+    }
+  }
   code = code.replaceAll('LANGUAGE', language);
 
   (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
