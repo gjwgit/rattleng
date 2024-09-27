@@ -45,6 +45,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
+import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class WordCloudConfig extends ConsumerStatefulWidget {
   const WordCloudConfig({super.key});
@@ -143,76 +144,58 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             const Text('Tuning Options:  '),
             // Checkbox for random order of words in the cloud.
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(checkboxProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(checkboxProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: '''
-                  
-                  Plot words in random order, otherwise in decreasing frequency.
 
-                  ''',
-                  child: Text('Random Order'),
-                ),
-              ],
+            LabelledCheckbox(
+              key: const Key('random_order'),
+              tooltip: '''
+
+               Plot words in random order, otherwise in decreasing frequency.
+
+              ''',
+              label: 'Random Order',
+              provider: checkboxProvider,
             ),
             configWidgetSpace,
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stemProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stemProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: '''
 
-                  Stemming reduces words to their base or root form.  Two
-                  different words, when stemmed, can become the same and so can
-                  reduce unecessary clutter in the wordcloud.
+            LabelledCheckbox(
+              key: const Key('stem'),
+              tooltip: '''
 
-                  ''',
-                  child: Text('Stem'),
-                ),
-              ],
+                Stemming reduces words to their base or root form.  Two
+                different words, when stemmed, can become the same and so can
+                reduce unnecessary clutter in the wordcloud.
+
+              ''',
+              label: 'Stem',
+              provider: stemProvider,
             ),
 
             configWidgetSpace,
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(punctuationProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(punctuationProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: 'Remove punctuation marks such as periods.',
-                  child: Text('Remove Punctuation'),
-                ),
-              ],
+
+            LabelledCheckbox(
+              key: const Key('remove_punctuation'),
+              tooltip: '''
+
+                Remove punctuation marks such as periods.
+
+              ''',
+              label: 'Remove Punctuation',
+              provider: punctuationProvider,
             ),
+
             configWidgetSpace,
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stopwordProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stopwordProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: 'Remove common language words for the wordcloud.',
-                  child: Text('Remove Stopwords'),
-                ),
-              ],
+
+            LabelledCheckbox(
+              key: const Key('remove_stopwords'),
+              tooltip: '''
+
+                Remove common language words for the wordcloud.
+
+              ''',
+              label: 'Remove Stopwords',
+              provider: stopwordProvider,
             ),
+
             configWidgetSpace,
             Expanded(
               child: DelayedTooltip(
