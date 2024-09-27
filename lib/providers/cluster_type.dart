@@ -1,6 +1,6 @@
-/// A provider for the algorithm for tree model.
+/// A provider of the cluster type.
 ///
-/// Time-stamp: <Thursday 2024-09-26 10:28:56 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -8,7 +8,6 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
-//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -23,21 +22,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
-
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final treeAlgorithmProvider =
-    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
-
-// Enum for algorithm types.
-
-enum AlgorithmType {
-  traditional('Traditional'),
-  conditional('Conditional');
-
-  final String displayName;
-
-  const AlgorithmType(this.displayName);
-}
+final clusterTypeProvider = StateProvider<String>((ref) => 'KMeans');

@@ -34,7 +34,6 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/open_dataset_by_path.dart';
 
 /// List of specific variables that should have their role automatically set to
 /// 'Ignore' in the DEMO and the LARGE datasets.
