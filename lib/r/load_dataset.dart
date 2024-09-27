@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Monday 2024-09-16 08:51:03 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 20:03:41 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -29,6 +29,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
@@ -94,6 +95,9 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   //
   //  rattle.resetDataset();
 
+  if (context.mounted && Platform.isWindows) {
+    await rSource(context, ref, 'main');
+  }
   if (context.mounted) await rSource(context, ref, 'dataset_prep');
 
   // 20240615 gjw Move this `names(ds)` command into `dataset_prep` otherwise on
