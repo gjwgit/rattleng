@@ -69,11 +69,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
   @override
   Widget build(BuildContext context) {
-    // Checkbox state.
-    bool nnetTrace = ref.read(nnetTraceProvider.notifier).state;
-
-    bool nnetSkip = ref.read(nnetSkipProvider.notifier).state;
-
     // Keep the value of text field.
 
     _hiddenNeuronsController.text =
@@ -138,9 +133,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   return;
                 } else {
-                  ref.read(nnetTraceProvider.notifier).state = nnetTrace;
-                  ref.read(nnetSkipProvider.notifier).state = nnetSkip;
-
                   ref.read(hiddenNeuronsProvider.notifier).state =
                       int.parse(_hiddenNeuronsController.text);
                   ref.read(maxNWtsProvider.notifier).state =

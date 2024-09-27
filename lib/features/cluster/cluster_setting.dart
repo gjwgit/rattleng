@@ -31,12 +31,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/providers/cluster_re_scale.dart';
 import 'package:rattle/providers/cluster_run.dart';
 import 'package:rattle/providers/cluster_seed.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -74,9 +72,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     _runController.text =
         ref.read(clusterRunProvider.notifier).state.toString();
 
-    // Checkbox state.
-
-    bool reScale = ref.read(clusterReScaleProvider.notifier).state;
     return Column(
       children: [
         configTopSpace,
