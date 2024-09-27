@@ -46,7 +46,7 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class TreeModelConfig extends ConsumerStatefulWidget {
@@ -97,9 +97,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
     AlgorithmType selectedAlgorithm =
         ref.read(treeAlgorithmProvider.notifier).state;
-
-    // Checkbox state.
-    bool includeMissing = ref.read(treeIncludeMissingProvider.notifier).state;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -198,8 +195,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     ref.read(priorsProvider.notifier).state =
                         _priorsController.text;
 
-                    ref.read(treeIncludeMissingProvider.notifier).state =
-                        includeMissing;
                     ref.read(lossMatrixProvider.notifier).state =
                         _lossMatrixController.text;
 
@@ -243,30 +238,15 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 },
               ),
               configWidgetSpace,
-              DelayedTooltip(
-                message: '''
+              LabelledCheckbox(
+                key: const Key('include_missing'),
+                tooltip: '''
 
-                TOOLTIP COMING SOON.
+              Include missing.
 
-                ''',
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: includeMissing,
-                      onChanged: (value) {
-                        setState(() {
-                          includeMissing = value!;
-                          ref.read(treeIncludeMissingProvider.notifier).state =
-                              value;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Include Missing',
-                      style: normalTextStyle,
-                    ),
-                  ],
-                ),
+              ''',
+                label: 'Include Missing',
+                provider: treeIncludeMissingProvider,
               ),
             ],
           ),
