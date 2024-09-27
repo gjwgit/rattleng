@@ -1,6 +1,6 @@
 /// A provider manages the state of stem checkbox
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 17:03:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final stemProvider = StateProvider<bool>((ref) => false);
+final stemProvider = StateProvider<bool>((ref) => true);

@@ -1,11 +1,11 @@
-/// Widget to configure the CLUSTER tab: button.
+/// Widget to configure the CLUSTER tab.
 ///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-06-12 12:11:05 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 05:33:38 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,12 +28,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
+import 'package:rattle/features/cluster/cluster_setting.dart';
+import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
-/// The CLUSTER tab config currently consists of just a BUILD button.
-///
-/// This is a StatefulWidget to pass the ref across to the rSouorce.
+/// A StatefulWidget to pass the ref across to the rSouorce.
 
 class ClusterConfig extends ConsumerStatefulWidget {
   const ClusterConfig({super.key});
@@ -43,31 +46,86 @@ class ClusterConfig extends ConsumerStatefulWidget {
 }
 
 class ClusterConfigState extends ConsumerState<ClusterConfig> {
+  Map<String, String> clusterTypes = {
+    'KMeans': '''
+
+      Generate clusters using a kmeans algorithm. The kmeans algorithm is the
+      traditional cluster algorithm used in statistics.
+
+      ''',
+    'Ewkm': '''
+
+      Generate clusters using a kmeans algorithm but augmented by slecting
+      subspaces using entropy weighting.
+
+      ''',
+    'Hierarchical': '''
+
+      Build an agglomerative hierarchical cluster.
+
+      ''',
+    'BiCluster': '''
+
+      Cluster by identifying suitable subsets of both the variables and the
+      observations, rather than just the observations as in kmeans.
+
+      ''',
+  };
   @override
   Widget build(BuildContext context) {
+    String type = ref.read(clusterTypeProvider.notifier).state;
+
     return Column(
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configBotSpace,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftSpace,
 
             // The BUILD button.
 
             ActivityButton(
               onPressed: () {
                 rSource(context, ref, 'model_template');
-                rSource(context, ref, 'model_build_cluster');
+                if (type == 'KMeans') {
+                  rSource(context, ref, 'model_build_cluster');
+                }
               },
               child: const Text('Build Clustering'),
             ),
+
+            configWidgetSpace,
+
+            const Text(
+              'Type:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetSpace,
+
+            ChoiceChipTip<String>(
+              options: clusterTypes.keys.toList(),
+              selectedOption: type,
+              tooltips: clusterTypes,
+              // Only KMeans is implemented. Others will be implemented in the future.
+              enabled: type != 'KMeans',
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    type = chosen;
+                    ref.read(clusterTypeProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
+        const ClusterSetting(),
       ],
     );
   }

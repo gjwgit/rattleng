@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2024-09-16 09:22:26 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 05:36:47 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -36,6 +36,10 @@ import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/cluster_number.dart';
+import 'package:rattle/providers/cluster_re_scale.dart';
+import 'package:rattle/providers/cluster_run.dart';
+import 'package:rattle/providers/cluster_seed.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
@@ -98,12 +102,13 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   bool punctuation = ref.read(punctuationProvider);
   bool stem = ref.read(stemProvider);
   bool stopword = ref.read(stopwordProvider);
+  bool clusterReScale = ref.read(clusterReScaleProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
   String language = ref.read(languageProvider);
   String maxWord = ref.read(maxWordProvider);
-  String minFreq = ref.read(minFreqProvider);
+  String minFreq = ref.read(minFreqProvider).toString();
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
@@ -113,6 +118,10 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   int hiddenNeurons = ref.read(hiddenNeuronsProvider);
   int nnetMaxNWts = ref.read(maxNWtsProvider);
   int nnetMaxit = ref.read(maxitProvider);
+  int clusterSeed = ref.read(clusterSeedProvider);
+  int clusterNum = ref.read(clusterNumberProvider);
+  int clusterRun = ref.read(clusterRunProvider);
+
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(nnetTraceProvider);
@@ -184,21 +193,14 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD
-  ////////////////////////////////////////////////////////////////////////
 
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
   code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
   code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
   code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
   code = code.replaceAll('LANGUAGE', language);
-
-  (minFreq.isNotEmpty && num.tryParse(minFreq) != null)
-      ? code = code.replaceAll('MINFREQ', num.parse(minFreq).toInt().toString())
-      : code = code.replaceAll('MINFREQ', '1');
-
-  (maxWord.isNotEmpty && num.tryParse(maxWord) != null)
-      ? code = code.replaceAll('MAXWORD', num.parse(maxWord).toInt().toString())
-      : code = code.replaceAll('MAXWORD', 'Inf');
+  code = code.replaceAll('MINFREQ', minFreq);
+  code = code.replaceAll('MAXWORD', maxWord);
 
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
@@ -320,7 +322,15 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
   code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
+
+  ////////////////////////////////////////////////////////////////////////
+  // CLUSTER
+
+  code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
+  code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
+  code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
+  code = code.replaceAll('RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
