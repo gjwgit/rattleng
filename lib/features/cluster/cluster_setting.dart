@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Friday 2024-09-27 08:44:19 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 10:28:59 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -129,38 +129,14 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               stateProvider: clusterRunProvider,
             ),
             configWidgetSpace,
-            DelayedTooltip(
-              message: '''
+            LabelledCheckbox(
+              key: const Key('re_scale'),
+              tooltip: '''
 
-              Automatically rescale the numeric variables used for cluster
-              analysis to be in the range 0-1 to avoid numeric variables with
-              large values like 45,325 and 490, overwhelming variables with
-              small values like 23, 5, 67.
+              TIPPY
 
               ''',
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(
-                    key: const Key('re_scale'),
-                    value: reScale,
-                    onChanged: (value) {
-                      setState(() {
-                        reScale = value!;
-                        ref.read(clusterReScaleProvider.notifier).state = value;
-                      });
-                    },
-                  ),
-                  const Text(
-                    'Re-Scale',
-                    style: normalTextStyle,
-                  ),
-                ],
-              ),
-            ),
-            LabelledCheckbox(
-              tooltip: 'TIPPY',
-              label: 'RESCALE',
+              label: 'Re-Scale',
               provider: clusterReScaleProvider,
             ),
           ],
