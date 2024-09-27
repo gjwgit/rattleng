@@ -82,10 +82,10 @@ void showAlertPopup(
         content: Text(
           wordWrap('''
 
-            Please note that currently loading a new dataset is not fully
-            operational. If you load a new dataset it will reset the app but the
-            reset is not yet complete. It is best to exit the app and restart
-            it. Otherwise, are you sure you would like to reset?
+            Please note that if you load a new dataset it will reset the
+            app. You will lose all the work already completed. Consider saving
+            your R script from the Script tab before continuing.  Otherwise, are
+            you sure you would like to reset?
 
             '''),
         ),
