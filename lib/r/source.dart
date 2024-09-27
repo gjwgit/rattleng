@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Friday 2024-09-27 05:36:47 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 20:01:00 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -186,10 +186,10 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
   // Windows.
 
-  String needsInit = 'FALSE';
-  if (Platform.isWindows) needsInit = 'TRUE';
+  // String needsInit = 'FALSE';
+  // if (Platform.isWindows) needsInit = 'TRUE';
 
-  code = code.replaceAll('NEEDS_INIT', needsInit);
+  // code = code.replaceAll('NEEDS_INIT', needsInit);
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD

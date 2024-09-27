@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-09-19 18:35:32 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-09-27 20:13:32 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,125 +45,8 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-########################################################################
-# Load required packages or install if not already.
-########################################################################
-
-# Keep R from asking to select a CRAN site.
-
-# options(repos = c(CRAN = "https://cloud.r-project.org"))
-# options(install.packages.ask = FALSE)
-
-# Load or else install `pacman` to manage package requirements.
-
-# 20240810 Attempt to debug the Windows issue with loading main.R on
-# startup. For now on Windows we initialise here since main.R is not
-# run on startup.
-
-if (NEEDS_INIT) {
-
-
-  if(!require(pacman)) install.packages("pacman")
-
-  pacman::p_load(Hmisc,
-                 VIM,
-                 corrplot,
-                 descr,
-                 fBasics,
-                 ggcorrplot,
-                 ggthemes,
-                 janitor,    # Cleanup: clean_names() remove_constant().
-                 magrittr,   # Utilise %>% and %<>% pipeline operators.
-                 mice,
-                 naniar,
-                 nnet,
-                 NeuralNetTools,
-                 party,
-                 randomForest,
-                 rattle,     # Access the weather dataset and utilities.
-                 readr,
-                 reshape,
-                 rpart,
-                 skimr,
-                 tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-                 tm,
-                 verification,
-                 wordcloud)
-
-  options(width=120)
-  options(crayon.enabled = FALSE)
-  set.seed(42)
-
-  meta_data <- function(df) {
-    sapply(df, function(x) {
-      if (is.numeric(x)) {
-        paste0("min = ", min(x, na.rm = TRUE),
-               ", max = ", max(x, na.rm = TRUE),
-               ", mean = ", mean(x, na.rm = TRUE),
-               ", median = ", median(x, na.rm = TRUE),
-               ", variance = ", var(x, na.rm = TRUE),
-               ", unique = ", length(unique(x)))
-      } else if (is.factor(x) || is.character(x)) {
-        paste0("unique = ", length(unique(x)))
-      } else {
-        "No summary available for this type"
-      }
-    })
-  }
-
-  username <- Sys.getenv("USER")  # On Linux/MacOS
-  if (username == "") {
-    username <- Sys.getenv("USERNAME")  # On Windows
-  }
-  
-  rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
-                     "#0072B2", "#D55E00", "#CC79A7", "#000000")
-
-  # A ggplot2 theme for rattle.
-
-  theme_rattle <- function(base_size = 11, base_family = "") {
-  theme_grey(base_size = base_size, base_family = base_family) +
-    theme(
-      # Customize text elements
-      plot.title = element_text(color = "darkblue",
-                                face = "bold",
-                                size = base_size * 1.2),
-      axis.title = element_text(color = "darkblue"),
-      axis.text = element_text(color = "darkblue"),
-      legend.title = element_text(color = "darkblue"),
-      legend.text = element_text(color = "darkblue"),
-      # Customize panel background
-      panel.background = element_rect(fill = "white"),
-      # Customize grid lines
-      panel.grid.major = element_line(color = "lightgrey"),
-      panel.grid.minor = element_line(color = "lightgrey", linetype = "dotted")
-    )
-  }
-
-  theme_default <- theme_rattle
-
-  is_large_factor <- function(x, maxfactor = 20) {
-    is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
-  
-    if (is.factor(x) || is.ordered(x)) {
-      num_levels <- length(levels(x))
-    } else if (is.character(x)) {
-      num_levels <- length(unique(x))
-    } else {
-      num_levels <- NA  # For non-categorical variables
-    }
-    
-    if (is_categorical) {
-      return(num_levels > maxfactor)
-    }
-    return(FALSE)
-  }
-
-}
-
-# Capture the original variable names for use in plots.
-
-vnames <- names(ds)
+if(!require(dplyr)) install.packages("dplyr")
+if(!require(janitor)) install.packages("janitor")
 
 # Normalise the variable names using janitor::clean_names(). This is
 # done after any dataset load. The DATASET tab has an option to
@@ -205,48 +88,7 @@ if (CLEANSE_DATASET) {
 
 # Check for unique valued columns.
 
-# First  check if values in a column are unique.
-
-check_unique <- function(x) {
-  !any(duplicated(x))
-}
-
-# Then find columns with unique values.
-
-unique_columns <- function(df) {
-  col_names <- names(df)
-  unique_cols <- col_names[sapply(df, check_unique)]
-  return(unique_cols)
-}
-
-# Usage
-
 unique_columns(ds)
-
-find_fewest_levels <- function(df) {
-  # Select only the categorical (factor) columns from the data frame
-  categoric_vars <- df[, sapply(df, is.factor), drop = FALSE]
-  
-  # Check if there are any categorical variables
-  if (ncol(categoric_vars) > 0) {
-    # Find the variable with the fewest levels
-    fewest_levels_var <- names(categoric_vars)[which.min(sapply(categoric_vars, nlevels))]
-    
-    # Find all variables that have the fewest levels
-    min_levels <- min(sapply(categoric_vars, nlevels))
-    fewest_levels_vars <- names(categoric_vars)[sapply(categoric_vars, nlevels) == min_levels]
-    
-    # Select the last variable in case of ties
-    fewest_levels_var <- fewest_levels_vars[length(fewest_levels_vars)]
-    
-    # Return the variable with the fewest levels
-    return(fewest_levels_var)
-  } else {
-    # If no categorical variables are found, return a message
-    return("")
-  }
-}
-
 
 # Find fewest levels
 
