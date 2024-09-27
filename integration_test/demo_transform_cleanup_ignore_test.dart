@@ -377,6 +377,7 @@ void main() {
       // Pause after screen change.
 
       await tester.pump(interact);
+      await tester.pump(hack);
 
       // Tap on the "Visual" sub-tab.
 
