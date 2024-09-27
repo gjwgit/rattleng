@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-09-19 18:35:40 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-09-27 20:10:10 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -52,42 +52,13 @@
 # options(repos = c(CRAN = "https://cloud.r-project.org"))
 # options(install.packages.ask = FALSE)
 
-# Load or else install `pacman` to manage package requirements.
-
-if(!require(pacman)) install.packages("pacman")
-
-pacman::p_load(Hmisc,
-               VIM,
-               corrplot,
-               descr,
-               fBasics,
-               ggcorrplot,
-               ggthemes,
-               janitor,    # Cleanup: clean_names() remove_constant().
-               magrittr,   # Utilise %>% and %<>% pipeline operators.
-               mice,
-               naniar,
-               nnet,
-               NeuralNetTools,
-               party,
-               randomForest,
-               rattle,     # Access the weather dataset and utilities.
-               readr,
-               reshape,
-               rpart,
-               skimr,
-               tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-               tm,
-               verification,
-               wordcloud)
-
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
 
 options(width=120)
 
-# Turn off fancy terminal escap sequences that are produced using the
+# Turn off fancy terminal escape sequences that are produced using the
 # crayon package.
 
 options(crayon.enabled = FALSE)
@@ -124,6 +95,66 @@ if (username == "") {
   username <- Sys.getenv("USERNAME")  # On Windows
 }
 
+# Check if a variable is a factor (including ordered factors) and has
+# more than 20 levels.
+
+is_large_factor <- function(x, maxfactor = 20) {
+  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  
+  if (is.factor(x) || is.ordered(x)) {
+    num_levels <- length(levels(x))
+  } else if (is.character(x)) {
+    num_levels <- length(unique(x))
+  } else {
+    num_levels <- NA  # For non-categorical variables
+  }
+  
+  if (is_categorical) {
+    return(num_levels > maxfactor)
+  }
+
+  return(FALSE)
+}
+
+# First  check if values in a column are unique.
+
+check_unique <- function(x) {
+  !any(duplicated(x))
+}
+
+# Then find columns with unique values.
+
+unique_columns <- function(df) {
+  col_names <- names(df)
+  unique_cols <- col_names[sapply(df, check_unique)]
+  return(unique_cols)
+}
+
+find_fewest_levels <- function(df) {
+  # Select only the categorical (factor) columns from the data frame
+  categoric_vars <- df[, sapply(df, is.factor), drop = FALSE]
+  
+  # Check if there are any categorical variables
+  if (ncol(categoric_vars) > 0) {
+    # Find the variable with the fewest levels
+    fewest_levels_var <- names(categoric_vars)[which.min(sapply(categoric_vars, nlevels))]
+    
+    # Find all variables that have the fewest levels
+    min_levels <- min(sapply(categoric_vars, nlevels))
+    fewest_levels_vars <- names(categoric_vars)[sapply(categoric_vars, nlevels) == min_levels]
+    
+    # Select the last variable in case of ties
+    fewest_levels_var <- fewest_levels_vars[length(fewest_levels_vars)]
+    
+    # Return the variable with the fewest levels
+    return(fewest_levels_var)
+  } else {
+    # If no categorical variables are found, return a message
+    return("")
+  }
+}
+
+if(!require(ggplot2)) install.packages("ggplot2")
 
 # A palette for rattle!
 
@@ -155,21 +186,3 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 
 theme_default <- theme_rattle
 
-# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
-
-is_large_factor <- function(x, maxfactor = 20) {
-  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
-  
-  if (is.factor(x) || is.ordered(x)) {
-    num_levels <- length(levels(x))
-  } else if (is.character(x)) {
-    num_levels <- length(unique(x))
-  } else {
-    num_levels <- NA  # For non-categorical variables
-  }
-  
-  if (is_categorical) {
-    return(num_levels > maxfactor)
-  }
-  return(FALSE)
-}

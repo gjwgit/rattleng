@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Monday 2024-09-23 11:49:06 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 20:56:41 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -26,17 +26,13 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/home.dart';
-import 'package:rattle/r/start.dart';
 import 'package:rattle/widgets/close_dialog.dart';
-
-import 'package:window_manager/window_manager.dart';
 
 // Add a key to reference [RattleHome] to access its method.
 
@@ -83,10 +79,10 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
     setState(() {});
   }
 
-  /// Handles the window close event.
+  /// Handle the window close event.
   ///
-  /// This method is called when the user attempts to close the window.
-  /// It shows a confirmation dialog and performs cleanup if the user confirms.
+  /// This method is called when the user attempts to close the window.  It
+  /// shows a confirmation dialog and performs cleanup if the user confirms.
 
   @override
   void onWindowClose() async {
@@ -105,20 +101,10 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
     );
   }
 
-  /// Builds the widget tree for the Rattle app.
-  ///
-  /// This method initializes the R process.
+  /// Build the widget tree for the Rattle app.
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the R process
-
-    // 20240809 On Windows this does not get run due to the Console not being
-    // ready and not receiving the early input. Delaying until feature/dataset
-    // popup.dart seems to work.
-
-    rStart(context, ref);
-
     return RattleHome(key: rattleHomeKey);
   }
 }

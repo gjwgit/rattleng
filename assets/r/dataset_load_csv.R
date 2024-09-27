@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-29 17:11:38 +0800 Graham Williams>
+# Time-stamp: <Friday 2024-09-27 20:07:57 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,14 +36,16 @@
 #
 # https://survivor.togaware.com/datascience/csv-data-reading.html
 
-library(magrittr)
-library(readr)        # Read/write delimited data: read_csv().
+if(!require(magrittr)) install.packages("magrittr")
+if(!require(readr)) install.packages("readr")
 
 dsname <- "FILENAME" %>% basename() %>% sub(".csv$", "", .)
 
-assign(dsname, read_csv("FILENAME"))
+assign(dsname, readr::read_csv("FILENAME"))
 
 ds <- get(dsname)
+
+# Capture the original variable names for use in plots.
 
 vnames <- names(ds)
 
