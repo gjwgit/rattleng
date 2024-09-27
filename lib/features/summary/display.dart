@@ -35,7 +35,6 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_summary.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 

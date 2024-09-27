@@ -43,7 +43,8 @@ class NewPageIndicator extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   onUpdateCurrentPageIndex(
-                      index); // Update the page when a dot is tapped
+                    index,
+                  ); // Update the page when a dot is tapped
                 },
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4.0),

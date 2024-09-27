@@ -38,7 +38,6 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/show_under_construction.dart';
-import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
 const double heightSpace = 20;

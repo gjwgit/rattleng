@@ -34,7 +34,6 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
