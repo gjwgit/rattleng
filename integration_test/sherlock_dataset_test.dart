@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Thursday 2024-09-26 19:58:55 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 16:54:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -66,9 +66,9 @@ void main() {
           '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}');
       expect(textFinder2, findsOneWidget);
 
-      // Navigate to the Predictive tab
+      // Navigate to the Model tab
 
-      final modelTabFinder = find.text('Predict');
+      final modelTabFinder = find.text('Model');
       expect(modelTabFinder, findsOneWidget);
       await tester.tap(modelTabFinder);
       await tester.pumpAndSettle();

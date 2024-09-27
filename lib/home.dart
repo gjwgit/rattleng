@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-09-26 08:36:03 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 16:52:05 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -76,11 +76,11 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.transform,
   },
   {
-    'title': 'Predict',
+    'title': 'Model',
     'icon': Icons.model_training,
   },
   {
-    'title': 'Generate',
+    'title': 'Evaluate',
     'icon': Icons.leaderboard,
   },
   {
