@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-09-27 20:07:57 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-09-28 06:31:38 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,8 +36,8 @@
 #
 # https://survivor.togaware.com/datascience/csv-data-reading.html
 
-if(!require(magrittr)) install.packages("magrittr")
-if(!require(readr)) install.packages("readr")
+library(magrittr)
+library(readr)
 
 dsname <- "FILENAME" %>% basename() %>% sub(".csv$", "", .)
 

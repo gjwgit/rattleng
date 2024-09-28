@@ -1,11 +1,11 @@
-# Rattle Scripts: Prepare dataset for the template: normalise, clean.
+# Rattle Script to prepare a dataset
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-09-27 20:13:32 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-09-28 08:34:06 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,8 +45,9 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-if(!require(dplyr)) install.packages("dplyr")
-if(!require(janitor)) install.packages("janitor")
+library(dplyr)
+library(janitor)
+library(magrittr)
 
 # Normalise the variable names using janitor::clean_names(). This is
 # done after any dataset load. The DATASET tab has an option to
