@@ -80,7 +80,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(selected2Provider.notifier).state = selected2;
-                rSource(context, ref, 'test');
+                rSource(context, ref, ['test']);
                 // showUnderConstruction(context);
               },
               child: const Text('Perform Statistical Tests'),

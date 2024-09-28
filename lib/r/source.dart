@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Friday 2024-09-27 20:01:00 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-09-28 15:00:04 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -92,7 +92,11 @@ import 'package:rattle/utils/update_script.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
+Future<void> rSource(
+  BuildContext context,
+  WidgetRef ref,
+  List<String> scripts,
+) async {
   // Initialise the state variables used here.
 
   bool checkbox = ref.read(checkboxProvider);
@@ -134,12 +138,17 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   String theme = ref.read(settingsGraphicThemeProvider);
 
-  // First obtain the text from the script.
+  // First obtain the text from each script and combine.
 
-  debugText('R SOURCE', '$script.R');
+  String code = '';
 
-  String asset = 'assets/r/$script.R';
-  String code = await DefaultAssetBundle.of(context).loadString(asset);
+  for (String script in scripts) {
+    debugText('R SOURCE', '$script.R');
+
+    String asset = 'assets/r/$script.R';
+    code += await DefaultAssetBundle.of(context).loadString(asset);
+  }
+
   // var code = File('assets/r/$script.R').readAsStringSync();
 
   ////////////////////////////////////////////////////////////////////////
@@ -352,7 +361,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   updateScript(
     ref,
-    "\n${'#' * 72}\n## -- $script.R --\n${'#' * 72}"
+    //"\n${'#' * 72}\n## -- $script.R --\n${'#' * 72}"
     '\n${rStripHeader(code)}',
   );
 
@@ -362,48 +371,48 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Add a completion marker.
 
-  code = '$code\nprint("Processing $script Completed")\n';
+  // code = '$code\nprint("Processing $script Completed")\n';
 
   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
 
   // Optionally, show a SnackBar when the script finishes executing.
 
-  if (code.contains('Processing $script Completed')) {
-    setStatus(
-        ref,
-        'The R script **$script.R** has run. '
-        'See **Console** for details and **Script** for the R code.');
-    // if (context.mounted) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Row(
-    //         children: [
-    //           const Icon(Icons.thumb_up, color: Colors.blue),
-    //           const SizedBox(width: 40),
-    //           Expanded(
-    //             child: Text(
-    //               'Execution of $script.R is completed.',
-    //               style: const TextStyle(color: Colors.blue),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //       backgroundColor: const Color(0xFFBBDEFB),
-    //       elevation: 5,
-    //       behavior: SnackBarBehavior.floating,
-    //       shape: const StadiumBorder(),
-    //       width: 600,
-    //       // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
-    //       // Set a short duration
-    //       duration: const Duration(seconds: 1),
-    //       action: SnackBarAction(
-    //         label: 'Okay',
-    //         disabledTextColor: Colors.white,
-    //         textColor: Colors.blue,
-    //         onPressed: () {},
-    //       ),
-    //     ),
-    //   );
-    // }
-  }
+//  if (code.contains('Processing $script Completed')) {
+  setStatus(
+      ref,
+      'R scripts **$scripts** completed. '
+      'See **Console** for details, **Script** for R code.');
+  // if (context.mounted) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Row(
+  //         children: [
+  //           const Icon(Icons.thumb_up, color: Colors.blue),
+  //           const SizedBox(width: 40),
+  //           Expanded(
+  //             child: Text(
+  //               'Execution of $script.R is completed.',
+  //               style: const TextStyle(color: Colors.blue),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       backgroundColor: const Color(0xFFBBDEFB),
+  //       elevation: 5,
+  //       behavior: SnackBarBehavior.floating,
+  //       shape: const StadiumBorder(),
+  //       width: 600,
+  //       // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
+  //       // Set a short duration
+  //       duration: const Duration(seconds: 1),
+  //       action: SnackBarAction(
+  //         label: 'Okay',
+  //         disabledTextColor: Colors.white,
+  //         textColor: Colors.blue,
+  //         onPressed: () {},
+  //       ),
+  //     ),
+  //   );
+  // }
+//  }
 }

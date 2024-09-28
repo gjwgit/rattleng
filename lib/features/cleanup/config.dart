@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-09-24 12:38:57 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-28 15:07:16 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -218,7 +218,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 onPressed: () async {
                   Navigator.of(context).pop();
                   // has to use await here because if deletion happens before rsource, rsource won't delete anything in R.
-                  await rSource(context, ref, dispatch(method));
+                  await rSource(context, ref, [dispatch(method)]);
 
                   deletionAction(method);
                 },

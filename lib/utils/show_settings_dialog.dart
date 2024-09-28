@@ -284,7 +284,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               ref
                                   .read(settingsGraphicThemeProvider.notifier)
                                   .setGraphicTheme(_selectedTheme!);
-                              rSource(context, ref, 'settings');
+                              rSource(context, ref, ['settings']);
                             }
                             Navigator.of(context).pop();
                           },
@@ -408,7 +408,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 //                       ref
 //                           .read(settingsGraphicThemeProvider.notifier)
 //                           .setGraphicTheme(_selectedTheme!);
-//                       rSource(context, ref, 'settings');
+//                       rSource(context, ref, ['settings']);
 //                     }
 //                     Navigator.of(context).pop();
 //                   },

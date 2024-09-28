@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Friday 2024-09-27 20:55:13 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-09-28 17:19:42 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -46,7 +46,7 @@ import 'package:rattle/utils/debug_text.dart';
 Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   // On loading a dataset we run the main R script to set things up and then
 
-  if (context.mounted) await rSource(context, ref, 'main');
+//  if (context.mounted) await rSource(context, ref, ['session_setup']);
 
   // Get the path from the provider to identify either a filename or a R package
   // dataset.
@@ -63,17 +63,23 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   path = path.trim();
 
+  // R Scripts.
+
+  String ss = 'session_setup';
+  String dw = 'dataset_load_weather';
+  String dc = 'dataset_load_csv';
+  String dx = 'dataset_load_txt';
+  String dt = 'dataset_template';
+
   if (path == '' || path == weatherDemoFile) {
     // The default, when we get here and no path has been specified yet, is to
     // load the weather dataset as the demo dataset from R's rattle package.
 
-    if (context.mounted) await rSource(context, ref, 'dataset_load_weather');
+    if (context.mounted) await rSource(context, ref, [ss, dw, dt]);
   } else if (path.endsWith('.csv')) {
-    if (context.mounted) await rSource(context, ref, 'dataset_load_csv');
+    if (context.mounted) await rSource(context, ref, [ss, dc, dt]);
   } else if (path.endsWith('.txt')) {
-    if (context.mounted) await rSource(context, ref, 'dataset_load_txt');
-
-    return;
+    if (context.mounted) await rSource(context, ref, [ss, dx]);
   } else {
     debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
 
@@ -94,7 +100,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
     return;
   }
 
-  if (context.mounted) await rSource(context, ref, 'dataset_prep');
+  debugText('R LOADED', path);
 
   // 20240615 gjw Move this `names(ds)` command into `dataset_prep` otherwise on
   // moving to the asset load with async it actually gets executed before the
@@ -110,7 +116,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   // this shows the data 20240916 gjw This is redundent as it is done in
   // dataset_prep or dataset_template.
 
-  // if (context.mounted) await rSource(context, ref, 'dataset_glimpse');
+  // if (context.mounted) await rSource(context, ref, ['dataset_glimpse']);
 
-  debugText('R LOADED', path);
+  return;
 }
