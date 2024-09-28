@@ -96,12 +96,12 @@ void main() {
       expect(freqFinder, findsOneWidget);
 
       final freqFinder2 = find.textContaining('little    7');
-      expect(freqFinder2, findsNothing);
+      expect(freqFinder2, findsOneWidget);
 
       // Confirm these entries are not in the frequency table
 
       final freqFinder5 = find.textContaining('littl    7');
-      expect(freqFinder5, findsOneWidget);
+      expect(freqFinder5, findsNothing);
 
       // Find the second checkbox (which should be the 'Stem' checkbox)
 
