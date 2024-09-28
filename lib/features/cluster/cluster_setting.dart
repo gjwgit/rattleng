@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Thursday 2024-09-26 15:27:58 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 10:28:59 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -31,12 +31,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/providers/cluster_re_scale.dart';
 import 'package:rattle/providers/cluster_run.dart';
 import 'package:rattle/providers/cluster_seed.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class ClusterSetting extends ConsumerStatefulWidget {
@@ -73,9 +72,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     _runController.text =
         ref.read(clusterRunProvider.notifier).state.toString();
 
-    // Checkbox state.
-
-    bool reScale = ref.read(clusterReScaleProvider.notifier).state;
     return Column(
       children: [
         configTopSpace,
@@ -128,34 +124,15 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               stateProvider: clusterRunProvider,
             ),
             configWidgetSpace,
-            DelayedTooltip(
-              message: '''
+            LabelledCheckbox(
+              key: const Key('re_scale'),
+              tooltip: '''
 
-              Automatically rescale the numeric variables used for cluster
-              analysis to be in the range 0-1 to avoid numeric variables with
-              large values like 45,325 and 490, overwhelming variables with
-              small values like 23, 5, 67.
+              TIPPY
 
               ''',
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(
-                    key: const Key('re_scale'),
-                    value: reScale,
-                    onChanged: (value) {
-                      setState(() {
-                        reScale = value!;
-                        ref.read(clusterReScaleProvider.notifier).state = value;
-                      });
-                    },
-                  ),
-                  const Text(
-                    'Re-Scale',
-                    style: normalTextStyle,
-                  ),
-                ],
-              ),
+              label: 'Re-Scale',
+              provider: clusterReScaleProvider,
             ),
           ],
         ),
