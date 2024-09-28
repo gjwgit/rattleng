@@ -230,7 +230,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 20-10-1 network with 241 weights') == true,
+            widget.data?.contains('A 20-10-1 network with 221 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -246,7 +246,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'Options were - entropy fitting.',
                 ) ==
                 true,
       );
@@ -452,7 +452,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 20-11-1 network with 263 weights') == true,
+            widget.data?.contains('A 20-11-1 network with 243 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
@@ -468,7 +468,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - skip-layer connections  entropy fitting',
+                  'Options were - entropy fitting.',
                 ) ==
                 true,
       );
