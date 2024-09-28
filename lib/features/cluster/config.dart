@@ -91,9 +91,9 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
             ActivityButton(
               onPressed: () {
-                rSource(context, ref, 'model_template');
+                rSource(context, ref, ['model_template']);
                 if (type == 'KMeans') {
-                  rSource(context, ref, 'model_build_cluster');
+                  rSource(context, ref, ['model_build_cluster']);
                 }
               },
               child: const Text('Build Clustering'),

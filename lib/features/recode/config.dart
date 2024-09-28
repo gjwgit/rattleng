@@ -110,19 +110,19 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     switch (selectedTransform) {
       case 'Quantiles':
-        rSource(context, ref, 'transform_recode_quantile');
+        rSource(context, ref, ['transform_recode_quantile']);
       case 'KMeans':
-        rSource(context, ref, 'transform_recode_kmeans');
+        rSource(context, ref, ['transform_recode_kmeans']);
       case 'Equal Width':
-        rSource(context, ref, 'transform_recode_equal_width');
+        rSource(context, ref, ['transform_recode_equal_width']);
       case 'Indicator Variable':
-        rSource(context, ref, 'transform_recode_indicator_variable');
+        rSource(context, ref, ['transform_recode_indicator_variable']);
       case 'Join Categorics':
-        rSource(context, ref, 'transform_recode_join_categoric');
+        rSource(context, ref, ['transform_recode_join_categoric']);
       // case 'As Categoric':
-      //   rSource(context, ref, 'transform_rescale_log10_numeric');
+      //   rSource(context, ref, ['transform_rescale_log10_numeric']);
       // case 'As Numeric':
-      //   rSource(context, ref, 'transform_rescale_rank');
+      //   rSource(context, ref, ['transform_rescale_rank']);
       default:
         showUnderConstruction(context);
     }

@@ -112,7 +112,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 // This is the main action.
 
-                rSource(context, ref, 'model_build_word_cloud');
+                rSource(context, ref, ['model_build_word_cloud']);
 
                 // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
 

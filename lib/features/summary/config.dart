@@ -61,7 +61,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
             ActivityButton(
               onPressed: () {
-                rSource(context, ref, 'explore_summary');
+                rSource(context, ref, ['explore_summary']);
               },
               child: const Text('Generate Dataset Summary'),
             ),

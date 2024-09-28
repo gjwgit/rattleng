@@ -61,7 +61,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
 
             ActivityButton(
               onPressed: () {
-                rSource(context, ref, 'explore_correlation');
+                rSource(context, ref, ['explore_correlation']);
               },
               child: const Text('Perform Correlation Analysis'),
             ),

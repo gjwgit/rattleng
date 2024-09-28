@@ -61,7 +61,7 @@ class MissingConfigState extends ConsumerState<MissingConfig> {
 
             ActivityButton(
               onPressed: () {
-                rSource(context, ref, 'explore_missing');
+                rSource(context, ref, ['explore_missing']);
               },
               child: const Text('Perform Missing Analysis'),
             ),
