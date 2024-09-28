@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-09-27 20:10:10 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-09-28 19:28:31 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -51,6 +51,33 @@
 
 # options(repos = c(CRAN = "https://cloud.r-project.org"))
 # options(install.packages.ask = FALSE)
+
+if(!require(Hmisc)) install.packages("Hmisc")
+if(!require(NeuralNetTools)) install.packages("NeuralNetTools")
+if(!require(VIM)) install.packages("VIM")
+if(!require(corrplot)) install.packages("corrplot")
+if(!require(descr)) install.packages("descr")
+if(!require(dplyr)) install.packages("dplyr")
+if(!require(fBasics)) install.packages("fBasics")
+if(!require(ggcorrplot)) install.packages("ggcorrplot")
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(ggthemes)) install.packages("ggthemes")
+if(!require(janitor)) install.packages("janitor")    # Cleanup: clean_names() remove_constant().
+if(!require(magrittr)) install.packages("magrittr")   # Utilise %>% and %<>% pipeline operators.
+if(!require(mice)) install.packages("mice")
+if(!require(naniar)) install.packages("naniar")
+if(!require(nnet)) install.packages("nnet")
+if(!require(party)) install.packages("party")
+if(!require(randomForest)) install.packages("randomForest")
+if(!require(rattle)) install.packages("rattle")     # Access the weather dataset and utilities.
+if(!require(readr)) install.packages("readr")
+if(!require(reshape)) install.packages("reshape")
+if(!require(rpart)) install.packages("rpart")
+if(!require(skimr)) install.packages("skimr")
+if(!require(tidyverse)) install.packages("tidyverse")  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+if(!require(tm)) install.packages("tm")
+if(!require(verification)) install.packages("verification")
+if(!require(wordcloud)) install.packages("wordcloud")
 
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
@@ -154,7 +181,7 @@ find_fewest_levels <- function(df) {
   }
 }
 
-if(!require(ggplot2)) install.packages("ggplot2")
+library(ggplot2)
 
 # A palette for rattle!
 
