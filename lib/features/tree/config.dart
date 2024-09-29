@@ -247,7 +247,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 key: const Key('include_missing'),
                 tooltip: '''
 
-              Include missing.
+              Include missing values in decision tree splits to handle incomplete data without discarding observations.
 
               ''',
                 label: 'Include Missing',
