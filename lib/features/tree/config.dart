@@ -49,6 +49,16 @@ import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
+/// Descriptive tooltips for different decision tree algorithm types,
+/// explaining the splitting method and potential biases.
+
+Map decisionTreeTooltips = {
+  AlgorithmType.conditional:
+      'Uses statistical tests for unbiased splits, preventing overfitting.',
+  AlgorithmType.traditional:
+      'Uses greedy algorithms for splits, which may cause overfitting and bias.',
+};
+
 class TreeModelConfig extends ConsumerStatefulWidget {
   const TreeModelConfig({super.key});
 
@@ -228,6 +238,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 options: AlgorithmType.values,
                 getLabel: (AlgorithmType type) => type.displayName,
                 selectedOption: selectedAlgorithm,
+                tooltips: decisionTreeTooltips,
                 onSelected: (AlgorithmType? selected) {
                   setState(() {
                     if (selected != null) {
