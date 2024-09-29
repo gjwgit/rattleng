@@ -32,6 +32,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/cluster/cluster_setting.dart';
 import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
@@ -95,6 +96,12 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 if (type == 'KMeans') {
                   rSource(context, ref, 'model_build_cluster');
                 }
+                ref.read(clusterPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Clustering'),
             ),
