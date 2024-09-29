@@ -1,6 +1,6 @@
 /// Explore tab Demo dataset.
 //
-// Time-stamp: <Tuesday 2024-09-24 13:13:00 +1000 Graham Williams>
+// Time-stamp: <2024-09-30 09:29:55 gjw>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -39,6 +37,7 @@ import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
 
 import 'utils/delays.dart';
+import 'utils/open_demo_dataset.dart';
 import 'utils/verify_multiple_text.dart';
 
 void main() {
@@ -50,21 +49,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      final datasetButton = find.byType(DatasetButton);
-      expect(datasetButton, findsOneWidget);
-      await tester.pump(interact);
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-      await tester.tap(demoButton);
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+      await openDemoDataset(tester);
 
       // Find the Explore tab by icon and tap on it.
 
