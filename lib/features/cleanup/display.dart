@@ -48,8 +48,8 @@ class CleanupDisplay extends ConsumerStatefulWidget {
 class _CleanupDisplayState extends ConsumerState<CleanupDisplay> {
   @override
   Widget build(BuildContext context) {
-    final pageController = ref
-        .watch(pageControllerProvider); // Get the PageController from Riverpod
+    final pageController = ref.watch(
+        cleanupPageControllerProvider); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 

@@ -69,3 +69,7 @@ final recodePageControllerProvider = StateProvider<PageController>((ref) {
 final clusterPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
+
+final cleanupPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
