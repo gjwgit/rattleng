@@ -229,7 +229,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(selected2Provider.notifier).state = selected2;
                 buildAction();
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(recodePageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),

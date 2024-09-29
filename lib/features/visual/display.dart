@@ -51,8 +51,8 @@ class VisualDisplay extends ConsumerStatefulWidget {
 class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   @override
   Widget build(BuildContext context) {
-    final pageController = ref
-        .watch(pageControllerProvider); // Get the PageController from Riverpod
+    final pageController = ref.watch(
+        visualPageControllerProvider); // Get the PageController from Riverpod
 
     List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
 

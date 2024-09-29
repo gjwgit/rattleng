@@ -183,7 +183,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(rescalePageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),

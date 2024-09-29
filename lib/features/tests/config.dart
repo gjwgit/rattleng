@@ -83,7 +83,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                 ref.read(selected2Provider.notifier).state = selected2;
                 rSource(context, ref, 'test');
                 // showUnderConstruction(context);
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(testsPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),

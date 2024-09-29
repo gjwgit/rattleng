@@ -63,7 +63,7 @@ class MissingConfigState extends ConsumerState<MissingConfig> {
             ActivityButton(
               onPressed: () {
                 rSource(context, ref, 'explore_missing');
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(missingPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),
