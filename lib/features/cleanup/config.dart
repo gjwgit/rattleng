@@ -222,7 +222,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   await rSource(context, ref, dispatch(method));
 
                   deletionAction(method);
-                  ref.read(pageControllerProvider).animateToPage(
+                  ref.read(cleanupPageControllerProvider).animateToPage(
                         // Index of the second page.
                         1,
                         duration: const Duration(milliseconds: 300),
