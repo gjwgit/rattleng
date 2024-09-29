@@ -1,6 +1,6 @@
 /// A provider for nnet model skip.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-09-27 09:17:02 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final nnetSkipProvider = StateProvider<bool>((ref) => true);
+final nnetSkipProvider = StateProvider<bool>((ref) => false);

@@ -1,6 +1,6 @@
 /// Dataset tab.
 ///
-/// Time-stamp: <Monday 2024-07-15 07:59:04 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2024-09-21 18:30:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -48,7 +48,7 @@ class DatasetPanel extends StatelessWidget {
           DatasetConfig(),
 
           // Add a little space below the underlined input widget so the
-          // underline is not lost. Thouoght to include this in config but then
+          // underline is not lost. Thought to include this in config but then
           // I would need an extra Column widget(). Seems okay logically to add
           // the spacer here as part of the tab.
 

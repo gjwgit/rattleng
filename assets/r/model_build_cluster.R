@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-07-14 20:29:04 +1000 Graham Williams>
+# Time-stamp: <Friday 2024-09-27 05:29:27 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,6 +34,10 @@
 # https://survivor.togaware.com/datascience/cluster-analysis.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+# Reset the random number seed to obtain the same results each time.
+
+set.seed(CLUSTER_SEED)
+
 # Load required packages from the local library into the R session.
 
 # The 'reshape' package provides the 'rescaler' function.
@@ -43,9 +47,32 @@ library(reshape)
 mtype <- "kmeans"
 mdesc <- "Cluster"
 
+# The variable to set whether the model needs rescale.
+
+rescale <- RESCALE
+
+# Prepare the data for clustering based on the value of rescale.
+
+if (rescale) {
+
+  # Rescale the data.
+
+  data_for_clustering <- sapply(na.omit(ds[tr, numc]), rescaler, "range")
+
+} else {
+
+  # Use the data without rescaling.
+
+  data_for_clustering <- na.omit(ds[tr, numc])
+  
+}
+
+
 # Generate a kmeans cluster of size 10.
 
-model_kmeans <- kmeans(sapply(na.omit(ds[tr, numc]), rescaler, "range"), 10)
+model_kmeans <- kmeans(data_for_clustering,
+                       centers=CLUSTER_NUM,
+                       nstart=CLUSTER_RUN)
 
 # Report on the cluster characteristics. 
 
@@ -55,7 +82,7 @@ print(paste(model_kmeans$size, collapse=' '))
 
 # Data means:
 
-print(colMeans(sapply(na.omit(ds[tr, numc]), rescaler, "range")))
+print(colMeans(data_for_clustering))
 
 # Cluster centers:
 

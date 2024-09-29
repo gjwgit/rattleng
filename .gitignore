@@ -15,6 +15,7 @@ ARCHIVE
 TMP*
 *.tmp
 
+installers/*.exe
 installers/*.snap
 installers/*.tar.gz
 installers/*-linux.zip
@@ -184,6 +185,7 @@ pubspec.lock
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios
 
 #-----------------------------------------------------------------------
 # macOS

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-09-11 16:48:37 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-09-29 19:17:40 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -70,6 +70,7 @@ pacman::p_load(Hmisc,
                naniar,
                nnet,
                NeuralNetTools,
+               party,
                randomForest,
                rattle,     # Access the weather dataset and utilities.
                readr,
@@ -175,3 +176,22 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 # theme_rattle <- theme_economist
 
 theme_default <- theme_rattle
+
+# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
+
+is_large_factor <- function(x, maxfactor = 20) {
+  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  
+  if (is.factor(x) || is.ordered(x)) {
+    num_levels <- length(levels(x))
+  } else if (is.character(x)) {
+    num_levels <- length(unique(x))
+  } else {
+    num_levels <- NA  # For non-categorical variables
+  }
+  
+  if (is_categorical) {
+    return(num_levels > maxfactor)
+  }
+  return(FALSE)
+}

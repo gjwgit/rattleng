@@ -1,6 +1,6 @@
 /// A provider for the MaxNWts for MODEL NNET.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-09-26 06:35:21 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -22,9 +22,10 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final maxNWtsProvider = StateProvider<int>((ref) => 10000);
+final maxNWtsProvider = StateProvider<int>((ref) => 1000);

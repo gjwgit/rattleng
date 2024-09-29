@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2024-09-06 19:23:54 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-09-24 14:34:20 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,13 +30,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
+import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
 const double heightSpace = 20;
 const double widthSpace = 10;
@@ -128,7 +129,7 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   // TODO 20231018 gjw datasetSelectPackage();
                   Navigator.pop(context, 'Package');
-
+                  showUnderConstruction(context);
                   datasetLoadedUpdate(ref);
                 },
                 child: const Text('Package'),
@@ -142,14 +143,18 @@ class DatasetPopup extends ConsumerWidget {
 
               ElevatedButton(
                 onPressed: () async {
+                  String dest =
+                      await copyAssetToTempDir(asset: 'data/weather.csv');
+                  ref.read(pathProvider.notifier).state = dest;
+
                   // TODO 20231101 gjw DEFINE setPath()
 
-                  ref.read(pathProvider.notifier).state = weatherDemoFile;
+//                  ref.read(pathProvider.notifier).state = weatherDemoFile;
 
                   // TODO 20240714 gjw HOW TO GET THE weather.csv FROM ASSETS
                   // ref.read(pathProvider.notifier).state =
                   //     'assets/data/weather.csv';
-                  await rLoadDataset(context, ref);
+                  if (context.mounted) await rLoadDataset(context, ref);
                   setStatus(ref, statusChooseVariableRoles);
 
                   if (context.mounted) Navigator.pop(context, 'Demo');

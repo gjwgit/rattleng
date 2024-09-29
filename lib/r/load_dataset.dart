@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Wednesday 2024-09-11 16:49:48 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-29 10:45:23 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -108,9 +108,10 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   // rExecute(ref, 'names(ds)');
 
-  // this shows the data
+  // this shows the data 20240916 gjw This is redundent as it is done in
+  // dataset_prep or dataset_template.
 
-  if (context.mounted) await rSource(context, ref, 'dataset_glimpse');
+  // if (context.mounted) await rSource(context, ref, 'dataset_glimpse');
 
   debugText('R LOADED', path);
 }

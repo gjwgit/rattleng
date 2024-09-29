@@ -36,7 +36,7 @@ Future<void> openDemoDataset(WidgetTester tester) async {
   final datasetButtonFinder = find.byType(DatasetButton);
   expect(datasetButtonFinder, findsOneWidget);
 
-  await tester.pump(pause);
+  await tester.pump(interact);
 
   await tester.tap(datasetButtonFinder);
   await tester.pumpAndSettle();
@@ -45,7 +45,7 @@ Future<void> openDemoDataset(WidgetTester tester) async {
   final datasetPopup = find.byType(DatasetPopup);
   expect(datasetPopup, findsOneWidget);
 
-  await tester.pump(pause);
+  await tester.pump(interact);
 
   // TODO 20240902 kev DETECT POPUP WARNING AND TAP YES
   //

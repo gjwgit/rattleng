@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-09-10 05:55:42 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 09:31:53 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,6 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/nnet_hidden_neurons.dart';
@@ -38,6 +37,7 @@ import 'package:rattle/providers/nnet_skip.dart';
 import 'package:rattle/providers/nnet_trace.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 /// The NEURAL tab config currently consists of just an ACTIVITY button.
@@ -69,11 +69,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
   @override
   Widget build(BuildContext context) {
-    // Checkbox state.
-    bool nnetTrace = ref.read(nnetTraceProvider.notifier).state;
-
-    bool nnetSkip = ref.read(nnetSkipProvider.notifier).state;
-
     // Keep the value of text field.
 
     _hiddenNeuronsController.text =
@@ -138,9 +133,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   return;
                 } else {
-                  ref.read(nnetTraceProvider.notifier).state = nnetTrace;
-                  ref.read(nnetSkipProvider.notifier).state = nnetSkip;
-
                   ref.read(hiddenNeuronsProvider.notifier).state =
                       int.parse(_hiddenNeuronsController.text);
                   ref.read(maxNWtsProvider.notifier).state =
@@ -149,8 +141,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                       int.parse(_maxitController.text);
 
                   // Run the R scripts.
+
                   await rSource(context, ref, 'model_template');
-                  await rSource(context, ref, 'model_build_neural_net');
+                  if (context.mounted) {
+                    await rSource(context, ref, 'model_build_neural_net');
+                  }
                 }
               },
               child: const Text('Build Neural Network'),
@@ -158,39 +153,34 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
             configWidgetSpace,
 
-            const Text(
-              'Trace',
-              style: normalTextStyle,
-            ),
-            Checkbox(
+            LabelledCheckbox(
               key: const Key('NNET Trace'),
-              value: nnetTrace,
-              onChanged: (value) {
-                setState(() {
-                  nnetTrace = value!;
-                  ref.read(nnetTraceProvider.notifier).state = value;
-                });
-              },
+              tooltip: '''
+
+              Enable tracing optimization. The prediction error is provided
+              after every 10 training iterations.
+
+              ''',
+              label: 'Trace',
+              provider: nnetTraceProvider,
             ),
 
             configWidgetSpace,
 
-            const Text(
-              'Skip',
-              style: normalTextStyle,
-            ),
-            Checkbox(
-              value: nnetSkip,
-              onChanged: (value) {
-                setState(() {
-                  nnetSkip = value!;
-                  ref.read(nnetSkipProvider.notifier).state = value;
-                });
-              },
+            LabelledCheckbox(
+              tooltip: '''
+
+              Add skip-layer connections from input to output.
+
+              ''',
+              label: 'Skip',
+              provider: nnetSkipProvider,
             ),
           ],
         ),
+
         configTopSpace,
+
         Row(
           children: [
             NumberField(
@@ -198,44 +188,50 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('hidden_neurons'),
               controller: _hiddenNeuronsController,
 
-              tooltip: ''' Hidden neurons receive input from all the neurons 
- in the previous layer (input layer) and apply a weighted sum 
- of inputs, followed by an activation function.
+              tooltip: '''
+
+              Hidden neurons receive input from all the neurons in the previous
+              layer (input layer) and apply a weighted sum of inputs, followed
+              by an activation function.
+              
               ''',
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: hiddenNeuronsProvider,
             ),
-            const SizedBox(width: 16),
+            configWidgetSpace,
             NumberField(
-              label: 'Max NWts:',
-              key: const Key('max_NWts'),
-              controller: _maxNWtsController,
-
-              tooltip: ''' The maxNWts parameter in the nnet function 
- controls the maximum number of weights allowed 
- in the neural network model.
-              ''',
-              inputFormatter:
-                  FilteringTextInputFormatter.digitsOnly, // Integers only
-              validator: (value) => validateInteger(value, min: 1),
-              stateProvider: maxNWtsProvider,
-            ),
-            const SizedBox(width: 16),
-            NumberField(
-              label: 'Maxit:',
+              label: 'Max Iterations:',
               key: const Key('maxit'),
               controller: _maxitController,
 
-              tooltip: ''' The maxit parameter in the nnet model 
- controls the maximum number of iterations (or epochs) 
- allowed during the training of the neural network.
+              tooltip: '''
+
+              The maximum number of iterations (or epochs) allowed during the
+              training of the neural network.
+
               ''',
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxitProvider,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Max Weights:',
+              key: const Key('max_NWts'),
+              controller: _maxNWtsController,
+
+              tooltip: '''
+
+              The maximum number of weights allowed in the neural network model.
+              
+              ''',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: maxNWtsProvider,
             ),
           ],
         ),

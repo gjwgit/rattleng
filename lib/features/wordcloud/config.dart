@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Monday 2024-07-22 19:41:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 18:42:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,20 +25,15 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
-// TODO 20240605 gjw WE WILL HAVE OTHER PROVIDERS AS THE APP GROWS. maxword
-// MIGHT BE USED IN OTHER PANELS TOO. PERHAPS WE NEED TO IDENTIFY THESE AS
-// WORDCLOUD PROVIDERS, PERHAPS WITHIN A wordcloudProvider STRUCTURE? FOR
-// CONSIDERATION.
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -50,6 +45,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
+import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class WordCloudConfig extends ConsumerStatefulWidget {
   const WordCloudConfig({super.key});
@@ -61,7 +57,9 @@ class WordCloudConfig extends ConsumerStatefulWidget {
 class _ConfigState extends ConsumerState<WordCloudConfig> {
   final maxWordTextController = TextEditingController();
   final minFreqTextController = TextEditingController();
+
   String dropdownValue = stopwordLanguages.first;
+
   @override
   void initState() {
     super.initState();
@@ -78,39 +76,39 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
   @override
   Widget build(BuildContext context) {
+    // Keep the value of text field.
+
+    maxWordTextController.text = ref.read(maxWordProvider);
+    minFreqTextController.text = ref.read(minFreqProvider).toString();
+
     // Layout the config bar.
+
     return Column(
       children: [
-        const SizedBox(height: 5.0),
+        configTopSpace,
 
-        // A BUILD button and functionality explanation.
+        // BUILD button.
 
         Row(
           children: [
-            const SizedBox(width: 5.0),
-
-            // buildButton,
-
+            configLeftSpace,
             ActivityButton(
               onPressed: () async {
                 // Clean up the files from previous use.
 
-                // TODO 20240612 gjw IS THIS REQUIRED HERE? OR CLEANUP WHEN EXIT
-                // THE APP? OR RELY ON OS TO CLEANUP /tmp?
+                // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.
+                //
+                // Is this required here? Or cleanup when exit the app? Or rely
+                // on os to cleanup /tmp?
 
                 File oldWordcloudFile = File(wordCloudImagePath);
                 if (oldWordcloudFile.existsSync()) {
                   oldWordcloudFile.deleteSync();
-                  debugPrint('old wordcloud file deleted');
-                } else {
-                  debugPrint('old wordcloud file not exists');
                 }
+
                 File oldTmpFile = File(tmpImagePath);
                 if (oldTmpFile.existsSync()) {
                   oldTmpFile.deleteSync();
-                  debugPrint('old tmp file deleted');
-                } else {
-                  debugPrint('old tmp file not exists');
                 }
 
                 // This is the main action.
@@ -126,23 +124,19 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 //     break;
                 //   }
                 // }
+
                 // Toggle the state to trigger rebuild
-                debugPrint('build clicked on ${timestamp()}');
+
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
 
                 // wordCloudDisplayKey.currentState?.goToResultPage();
               },
               child: const Text('Display Word Cloud'),
             ),
-
-            const SizedBox(width: 20.0),
-            const Text(
-              'A word cloud visualises word frequencies. '
-              'More frequent words are larger.',
-            ),
           ],
         ),
-        const SizedBox(height: 20.0),
+
+        configRowSpace,
 
         // Options for the current functionality.
 
@@ -150,90 +144,86 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             const Text('Tuning Options:  '),
             // Checkbox for random order of words in the cloud.
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(checkboxProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(checkboxProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message:
-                      'Plot words in random order, otherwise in decreasing frequency.',
-                  child: Text('Random Order'),
-                ),
-              ],
+
+            LabelledCheckbox(
+              key: const Key('random_order'),
+              tooltip: '''
+
+               Plot words in random order, otherwise in decreasing frequency.
+
+              ''',
+              label: 'Random Order',
+              provider: checkboxProvider,
             ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stemProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stemProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: '''
+            configWidgetSpace,
 
-                  Stemming reduces words to their base or root form.  Two
-                  different words, when stemmed, can become the same and so can
-                  reduce unecessary clutter in the wordcloud.
+            LabelledCheckbox(
+              key: const Key('stem'),
+              tooltip: '''
 
-                  ''',
-                  child: Text('Stem'),
-                ),
-              ],
+                Stemming reduces words to their base or root form.  Two
+                different words, when stemmed, can become the same and so can
+                reduce unnecessary clutter in the wordcloud.
+
+              ''',
+              label: 'Stem',
+              provider: stemProvider,
             ),
 
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(punctuationProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(punctuationProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: 'Remove punctuation marks such as periods.',
-                  child: Text('Remove Punctuation'),
-                ),
-              ],
+            configWidgetSpace,
+
+            LabelledCheckbox(
+              key: const Key('remove_punctuation'),
+              tooltip: '''
+
+                Remove punctuation marks such as periods.
+
+              ''',
+              label: 'Remove Punctuation',
+              provider: punctuationProvider,
             ),
-            const SizedBox(width: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: ref.watch(stopwordProvider),
-                  onChanged: (bool? v) => {
-                    ref.read(stopwordProvider.notifier).state = v!,
-                  },
-                ),
-                const DelayedTooltip(
-                  message: 'Remove common language words for the wordcloud.',
-                  child: Text('Remove Stopwords'),
-                ),
-              ],
+
+            configWidgetSpace,
+
+            LabelledCheckbox(
+              key: const Key('remove_stopwords'),
+              tooltip: '''
+
+                Remove common language words for the wordcloud.
+
+              ''',
+              label: 'Remove Stopwords',
+              provider: stopwordProvider,
             ),
-            const SizedBox(width: 20),
+
+            configWidgetSpace,
             Expanded(
-              child: DropdownMenu<String>(
-                label: const Text('Language'),
-                leadingIcon: const Icon(Icons.language),
-                initialSelection: stopwordLanguages.first,
-                dropdownMenuEntries: stopwordLanguages.map((s) {
-                  return DropdownMenuEntry(value: s, label: s);
-                }).toList(),
-                onSelected: (String? value) {
-                  ref.read(languageProvider.notifier).state = value!;
-                },
+              child: DelayedTooltip(
+                message: '''
+                
+                Select the language to filter out common stopwords from the word
+                cloud.  'SMART' means English stopwords from the SMART
+                information retrieval system (as documented in Appendix 11 of
+                https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
+
+                ''',
+                child: DropdownMenu<String>(
+                  label: const Text('Language'),
+                  leadingIcon: const Icon(Icons.language),
+                  initialSelection: stopwordLanguages.first,
+                  dropdownMenuEntries: stopwordLanguages.map((s) {
+                    return DropdownMenuEntry(value: s, label: s);
+                  }).toList(),
+                  onSelected: (String? value) {
+                    ref.read(languageProvider.notifier).state = value!;
+                  },
+                ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+
+        configRowSpace,
 
         // Parameters for the current functionality.
 
@@ -242,13 +232,16 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           child: Row(
             children: [
               const Text('Tuning Parameters:  '),
-              const SizedBox(width: 5),
+              configLabelSpace,
               // max word text field
               SizedBox(
                 width: 150.0,
                 child: DelayedTooltip(
-                  message: 'Maximum number of words plotted. '
-                      'Drop least frequent words.',
+                  message: '''
+
+                  Maximum number of words plotted.  Drop least frequent words.
+                  
+                  ''',
                   child: TextField(
                     controller: maxWordTextController,
                     style: const TextStyle(fontSize: 16),
@@ -260,7 +253,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
+              configWidgetSpace,
               SizedBox(
                 width: 150.0,
                 child: DelayedTooltip(
@@ -285,21 +278,24 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ),
         ),
 
-        // Add a little sapce below the underlined input widgets so the
-        // underline is not lost.
-
-        const SizedBox(height: 10),
+        configBotSpace,
       ],
     );
   }
 
+  String sanitiseMaxWord(String txt) {
+    // It should be int or Inf. Otherwise, convert to an Inf.
+
+    return (txt == 'Inf' || int.tryParse(txt) != null) ? txt : 'Inf';
+  }
+
   void _updateMaxWordProvider() {
-    debugPrint('max word text changed to ${maxWordTextController.text}');
-    ref.read(maxWordProvider.notifier).state = maxWordTextController.text;
+    ref.read(maxWordProvider.notifier).state =
+        sanitiseMaxWord(maxWordTextController.text);
   }
 
   void _updateMinFreqProvider() {
-    debugPrint('min freq text changed to ${minFreqTextController.text}');
-    ref.read(minFreqProvider.notifier).state = minFreqTextController.text;
+    ref.read(minFreqProvider.notifier).state =
+        int.tryParse(minFreqTextController.text) ?? 1;
   }
 }
