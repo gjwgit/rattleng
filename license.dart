@@ -1,10 +1,6 @@
 /// <DESCRIPTION>
 //
-<<<<<<< HEAD
-// Time-stamp: <Thursday 2024-08-15 09:59:51 +1000 Graham Williams>
-=======
-// Time-stamp: <Tuesday 2024-09-24 13:22:49 +1000 Graham Williams>
->>>>>>> dev
+// Time-stamp: <Sunday 2024-09-29 19:24:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,8 +24,3 @@
 /// Authors: <AUTHORS>
 
 library;
-<<<<<<< HEAD
-
-// Group imports by dart, flutter, packages, local. Space separated. Alphabetic.
-=======
->>>>>>> dev
