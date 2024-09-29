@@ -51,8 +51,8 @@ class MissingDisplay extends ConsumerStatefulWidget {
 class _MissingDisplayState extends ConsumerState<MissingDisplay> {
   @override
   Widget build(BuildContext context) {
-    final pageController = ref
-        .watch(pageControllerProvider); // Get the PageController from Riverpod
+    final pageController = ref.watch(
+        missingPageControllerProvider); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 

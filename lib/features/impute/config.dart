@@ -245,7 +245,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 debugPrint(constant);
                 takeAction();
 
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(imputePageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),

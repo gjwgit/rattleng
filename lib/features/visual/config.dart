@@ -175,7 +175,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(groupByProvider.notifier).state = groupBy;
                 buildAction();
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(visualPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),

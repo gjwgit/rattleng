@@ -65,7 +65,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
                 rSource(context, ref, 'explore_correlation');
                 // wait for 3 seconds before moving to the next page.
                 Future.delayed(const Duration(seconds: 3));
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(correlationPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),

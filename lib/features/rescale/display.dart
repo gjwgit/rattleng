@@ -48,8 +48,8 @@ class RescaleDisplay extends ConsumerStatefulWidget {
 class _RescaleDisplayState extends ConsumerState<RescaleDisplay> {
   @override
   Widget build(BuildContext context) {
-    final pageController = ref
-        .watch(pageControllerProvider); // Get the PageController from Riverpod
+    final pageController = ref.watch(
+        rescalePageControllerProvider); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 

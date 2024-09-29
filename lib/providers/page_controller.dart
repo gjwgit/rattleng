@@ -37,3 +37,35 @@ final pageControllerProvider = StateProvider<PageController>((ref) {
 final summaryPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
+
+final visualPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final missingPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final correlationPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final testsPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final imputePageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final rescalePageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final recodePageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final clusterPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
