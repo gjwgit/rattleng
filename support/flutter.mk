@@ -284,7 +284,7 @@ qtest:
 		echo "========================================"; \
 		echo $$t; /bin/echo -n $$t >&2; \
 		echo "========================================"; \
-		flutter test --dart-define=PAUSE=0 --device-id $$device_id $$t 2>/dev/null; \
+		flutter test --dart-define=INTERACT=0 --device-id $$device_id $$t 2>/dev/null; \
 		if [ "$$?" -eq 0 ]; then /bin/echo ' YES' >&2; else /bin/echo ' NO *****' >&2; fi; \
 	done
 	@echo $(SEPARATOR)
@@ -296,7 +296,7 @@ qtest:
 		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
 		exit 1; \
 	fi; \
-	flutter test --dart-define=PAUSE=0 --device-id $$device_id integration_test/$*_test.dart 2>/dev/null
+	flutter test --dart-define=INTERACT=0 --device-id $$device_id integration_test/$*_test.dart 2>/dev/null
 
 
 .PHONY: qtest.tmp
