@@ -73,3 +73,19 @@ final clusterPageControllerProvider = StateProvider<PageController>((ref) {
 final cleanupPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
+
+final forestPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final neuralPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final treePageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final wordcloudPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});

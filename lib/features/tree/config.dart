@@ -37,6 +37,7 @@ import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/min_split.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
@@ -212,6 +213,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     } else {
                       rSource(context, ref, 'model_build_rpart');
                     }
+                    ref.read(treePageControllerProvider).animateToPage(
+                          // Index of the second page.
+                          1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
                   }
                   // TODO 20240627  yyx HOW RESTORE THIS EFFECT IN THE NEW WIDGET PAGES?
                   //

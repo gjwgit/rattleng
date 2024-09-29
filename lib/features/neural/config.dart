@@ -36,6 +36,7 @@ import 'package:rattle/providers/nnet_hidden_neurons.dart';
 import 'package:rattle/providers/nnet_maxit.dart';
 import 'package:rattle/providers/nnet_skip.dart';
 import 'package:rattle/providers/nnet_trace.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
@@ -156,6 +157,12 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     await rSource(context, ref, 'model_build_neural_net');
                   }
                 }
+                ref.read(neuralPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Neural Network'),
             ),
