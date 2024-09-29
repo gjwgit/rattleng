@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-09 16:42:30 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 05:39:57 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,16 +24,24 @@
 
 library;
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
-String _basicTemplate(String log) {
+String _basicTemplate(
+  String log,
+  WidgetRef ref,
+) {
   // Here we build up the basic information from the output of the cluster.
 
   // First some strings to put into the output.
 
+  int clusterNum = ref.read(clusterNumberProvider.notifier).state;
+
   const String hd = 'Summary of the KMeans Cluster Analysis';
-  const String md = "(built using 'kmeans' with 10 clusters):";
+  String md = "(built using 'kmeans' with ${clusterNum.toString()} clusters):";
 
   // No extract the output from particular commands.
 
@@ -61,14 +69,17 @@ String _basicTemplate(String log) {
   return result;
 }
 
-String rExtractCluster(String log) {
+String rExtractCluster(
+  String log,
+  WidgetRef ref,
+) {
   // Extract from the R log those lines of output from the cluster.
 
-  String extract = _basicTemplate(log);
+  String extract = _basicTemplate(log, ref);
 
   // Now clean up the output for an annotated presentation of the output.
 
-  // Give there are 10 clusters, for the cluster centers add a separating blank
+  // Given there are 10 clusters, for the cluster centers add a separating blank
   // line after each group of centers, for the case where the variables are more
   // than fit on one line.
 

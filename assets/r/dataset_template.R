@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-29 17:15:48 +0800 Graham Williams>
+# Time-stamp: <Sunday 2024-09-29 16:24:25 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -126,5 +126,24 @@ nmobs <- sum(apply(ds, 1, anyNA))
 
 nmobs
 
+# 20240916 gjw This is required for building the ROLES table but will
+# eventually be replaced by the meta data.
+
 glimpse(ds)
 summary(ds)
+
+# 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
+
+meta_data(ds)
+
+# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
+
+large_factors <- sapply(ds, is_large_factor)
+
+# Get the names of those variables.
+
+large_factor_vars <- names(large_factors)[large_factors]
+
+# Print the variable names.
+
+large_factor_vars

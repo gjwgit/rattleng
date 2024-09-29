@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Thursday 2024-08-15 12:20:57 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-29 10:44:48 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';

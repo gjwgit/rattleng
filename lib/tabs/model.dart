@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Tuesday 2024-08-20 19:47:46 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-09-21 06:48:05 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,6 +29,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/app.dart';
 
 import 'package:rattle/features/model/panel.dart';
 import 'package:rattle/features/cluster/panel.dart';
@@ -41,6 +42,7 @@ import 'package:rattle/features/linear/panel.dart';
 import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/model.dart';
+import 'package:rattle/providers/path.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> modelPanels = [
@@ -55,6 +57,14 @@ final List<Map<String, dynamic>> modelPanels = [
   {
     'title': 'Associations',
     'widget': const AssociationPanel(),
+  },
+  {
+    'title': 'Linear',
+    'widget': const LinearPanel(),
+  },
+  {
+    'title': 'Neural',
+    'widget': const NeuralPanel(),
   },
   {
     'title': 'Tree',
@@ -76,14 +86,6 @@ final List<Map<String, dynamic>> modelPanels = [
     'title': 'SVM',
     'widget': const SvmPanel(),
   },
-  {
-    'title': 'Linear',
-    'widget': const LinearPanel(),
-  },
-  {
-    'title': 'Neural',
-    'widget': const NeuralPanel(),
-  },
 ];
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
@@ -98,15 +100,36 @@ class ModelTabs extends ConsumerStatefulWidget {
 class _ModelTabsState extends ConsumerState<ModelTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late List<Map<String, dynamic>> filteredModelPanels;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: modelPanels.length, vsync: this);
+
+    // Get the path from the provider
+    String currentPath = ref.read(pathProvider);
+
+    // Filter tabs based on the file type in the path
+    if (currentPath.endsWith('.txt')) {
+      // Only show the Word Cloud tab for .txt files
+      filteredModelPanels =
+          modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
+    } else if (currentPath.endsWith('.csv') || currentPath == weatherDemoFile) {
+      // For csv files and demo, show all tabs except the Word Cloud tab
+      filteredModelPanels =
+          modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
+    } else {
+      // For other files including no files
+      filteredModelPanels = modelPanels;
+    }
+
+    // Initialize the TabController with the filtered panels
+    _tabController =
+        TabController(length: filteredModelPanels.length, vsync: this);
 
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
-          modelPanels[_tabController.index]['title'];
+          filteredModelPanels[_tabController.index]['title'];
     });
   }
 
@@ -120,13 +143,14 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
   Widget build(BuildContext context) {
     super.build(context);
     debugText('  BUILD', 'ModelTabs');
+    debugPrint(ref.read(pathProvider));
 
     return Column(
       children: [
         TabBar(
           unselectedLabelColor: Colors.grey,
           controller: _tabController,
-          tabs: modelPanels.map((tab) {
+          tabs: filteredModelPanels.map((tab) {
             return Tab(
               text: tab['title'],
             );
@@ -135,7 +159,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: modelPanels.map((tab) {
+            children: filteredModelPanels.map((tab) {
               return tab['widget'] as Widget;
             }).toList(),
           ),

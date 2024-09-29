@@ -4,12 +4,24 @@ Recorded here are the high level changes for the RattleNG app.
 
 Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.3.n series are heading
-toward a 6.3 release.
+toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Review and rename test scripts [6.3.3 20240925 gjw]
++ SCRIPT remembers location [6.3.3 20240925 zy]
++ Ensure pty started before send R code particularly for WINDOWS [6.3.2 20240923 lutra]
++ Refactor DATASET display [6.3.2 20240923 lutra]
++ On QUIT check for confirmation [6.3.2 20240923 lutra]
++ Update NEURAL. [6.3.1 20240923 gjw]
++ Remove unused Android/iOS/Web support. [6.3.1 20240923 lutra]
+
 ## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
 
++ DATASET updated weather.csv to 2023-2024 [6.3.0 20240921 gjw]
++ INSTALL update windows build using Inno. Bug fixes for Windows [6.2.78 20240919 gjw]
++ NAVIGATION activate dots. Tuning and bug fixes [6.2.77 20240919 kev,gjw,zy]
++ NAVIGATION: Update to a non overlapping page navigator [6.2.76 20240913 zy]
 + DATASET: update welcome; move GLIMPSE to SUMMARY [6.2.75 20240911 gjw]
 + Initial implementation of settings - set plot themes. [6.2.74 20240908 gjw]
 + Bug fix random forest variable importance display [6.2.73 20240907 gjw]

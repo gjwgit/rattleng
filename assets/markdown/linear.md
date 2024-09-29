@@ -22,3 +22,11 @@ If the target has just two possible outcomes it is transformed using a
 logistic or probit function.  A probit regression gives similar
 results to the logistic regression, but often with smaller
 coefficients.
+
+The word regression comes from the word ``regress,'' which means to
+move backwards. It was used in the context of techniques for
+regressing (i.e., moving from) observations to the average. The early
+research included investigations which separated people into different
+classes based on their characteristics. The regression came from
+modelling the heights of related people.
+

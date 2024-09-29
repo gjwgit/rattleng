@@ -1,6 +1,6 @@
 /// A provider manages the state of max word text field
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 17:04:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final maxWordProvider = StateProvider<String>((ref) => '');
+final maxWordProvider = StateProvider<String>((ref) => '100');

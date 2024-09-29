@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-06-29 18:07:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-09-26 11:13:34 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -51,13 +51,19 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     List<Widget> pages = [showMarkdownFile(clusterIntroFile, context)];
 
-    String content = rExtractCluster(stdout);
+    String content = rExtractCluster(stdout, ref);
 
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Cluster Analysis\n\n'
-              'Built using `kmeans()`.\n\n',
+          title: '''
+
+          # Cluster Analysis
+
+          Built using
+          [stats::kmeans()](https://www.rdocumentation.org/packages/stats/topics/kmeans).
+
+          ''',
           content: '\n$content',
         ),
       );
