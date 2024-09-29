@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-09-29 19:17:40 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-09-29 20:02:39 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -114,12 +114,14 @@ meta_data <- function(df) {
         mean = mean(x, na.rm = TRUE),
         median = median(x, na.rm = TRUE),
         variance = var(x, na.rm = TRUE),
-        unique = length(unique(x))
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
       )
     } else if (is.factor(x) || is.character(x)) {
       list(
         datatype = "categoric",
-        unique = length(unique(x))
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
       )
     } else {
       list(
