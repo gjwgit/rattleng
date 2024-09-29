@@ -63,7 +63,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             ActivityButton(
               onPressed: () {
                 rSource(context, ref, 'explore_summary');
-                ref.read(pageControllerProvider).animateToPage(
+                ref.read(summaryPageControllerProvider).animateToPage(
                       // Index of the second page.
 
                       1,

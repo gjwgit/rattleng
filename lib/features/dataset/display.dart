@@ -44,6 +44,7 @@ import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -87,7 +88,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       _addDatasetPage(stdout, pages);
     }
 
-    return Pages(children: pages);
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
+    );
   }
 
   // Add a page for text file content.
