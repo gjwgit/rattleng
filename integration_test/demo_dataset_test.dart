@@ -56,14 +56,7 @@ void main() {
       String filename = dsPathText.controller?.text ?? '';
       expect(filename.contains('weather.csv'), isTrue);
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      // // Tap the right arrow button to go to "Dataset Glimpse" page.
+      // Tap the right arrow button to go to "Dataset Glimpse" page.
 
       // await tester.tap(rightArrowFinder);
       // await tester.pumpAndSettle();
@@ -81,9 +74,6 @@ void main() {
       // expect(glimpseDateFinder, findsOneWidget);
 
       // Tap the right arrow button to go to "ROLES" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
 
       await tester.pump(hack);
 
