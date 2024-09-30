@@ -1,6 +1,6 @@
 /// Test and demonstrate the DATASET tab features with the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-09-18 09:01:20 +1000 Graham Williams>
+// Time-stamp: <2024-09-30 09:50:35 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -47,6 +47,7 @@ void main() {
       await tester.pump(hack);
 
       await openDemoDataset(tester);
+
       await tester.pump(hack);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);
@@ -59,7 +60,8 @@ void main() {
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
-      await tester.pump(delay);
+
+      await tester.pump(interact);
 
       // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
