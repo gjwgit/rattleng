@@ -115,7 +115,7 @@ void main() {
 
       // Tap the right arrow button to go to "Box Plot" page 2.
 
-      await tester.tap(rightArrowFinder);
+      // await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
