@@ -34,9 +34,12 @@ import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
+import 'utils/press_button.dart';
+import 'utils/verify_next_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -53,60 +56,44 @@ void main() {
 
       await navigateToFeature(tester, 'Missing', MissingPanel);
 
-      await _performMissingAnalysis(tester);
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '20000');
-      await _verifyPageContent(tester, 'Patterns of Missing Values');
-      await _verifyPageContent(
-        tester,
+      await pressButton(tester, 'Perform Missing Analysis');
+
+      await verifyPage('Patterns of Missing Data', '20000');
+
+      await gotoNextPage(tester);
+
+      // hack
+
+      await verifyPage('Patterns of Missing Values - Visual');
+
+      await gotoNextPage(tester);
+
+      await verifyPage(
         'Aggregation of Missing Values - Textual',
         '0',
       );
-      await _verifyPageContent(
-        tester,
+
+      await gotoNextPage(tester);
+
+      await verifyPage(
         'Aggregation of Missing Values - Visual',
       );
-      await _verifyPageContent(
-        tester,
+
+      await gotoNextPage(tester);
+
+      await verifyPage(
         'Visualisation of Observations with Missing Values',
       );
-      await _verifyPageContent(
-        tester,
+
+      await gotoNextPage(tester);
+
+      await verifyPage(
         'Comparison of Counts of Missing Values',
       );
-      await _verifyPageContent(tester, 'Patterns of Missingness');
+
+      await gotoNextPage(tester);
+
+      await verifyPage('Patterns of Missingness');
     });
   });
-}
-
-Future<void> _performMissingAnalysis(WidgetTester tester) async {
-  final generateSummaryButtonFinder = find.text('Perform Missing Analysis');
-  expect(generateSummaryButtonFinder, findsOneWidget);
-
-  await tester.tap(generateSummaryButtonFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(interact);
-  await tester.pump(hack);
-}
-
-Future<void> _verifyPageContent(
-  WidgetTester tester,
-  String title, [
-  String? value,
-]) async {
-  final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-  expect(rightArrowFinder, findsOneWidget);
-
-  await tester.tap(rightArrowFinder);
-  await tester.pumpAndSettle();
-
-  await tester.pump(hack);
-
-  final titleFinder = find.textContaining(title);
-  expect(titleFinder, findsOneWidget);
-
-  if (value != null) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsWidgets);
-  }
 }
