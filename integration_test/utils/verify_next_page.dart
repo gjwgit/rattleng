@@ -44,3 +44,16 @@ Future<void> verifyNextPage(
     expect(valueFinder, findsOneWidget);
   }
 }
+
+Future<void> verifyPage(
+  String title, [
+  String? value,
+]) async {
+  final titleFinder = find.textContaining(title);
+  expect(titleFinder, findsOneWidget);
+
+  if (value != null) {
+    final valueFinder = find.textContaining(value);
+    expect(valueFinder, findsOneWidget);
+  }
+}
