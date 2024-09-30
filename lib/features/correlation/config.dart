@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-01 08:40:25 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-01 08:40:41 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -63,7 +63,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             ActivityButton(
               onPressed: () {
                 rSource(context, ref, ['explore_correlation']);
-                // wait for 3 seconds before moving to the next page.
+                // TODO 20241001 kev WAIT FOR 3 SECONDS BEFORE MOVING TO THE NEXT PAGE.
                 Future.delayed(const Duration(seconds: 3));
                 ref.read(correlationPageControllerProvider).animateToPage(
                       // Index of the second page.
