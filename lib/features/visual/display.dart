@@ -30,11 +30,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/utils/image_exists.dart';
-import 'package:rattle/widgets/pages.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 
@@ -50,6 +51,9 @@ class VisualDisplay extends ConsumerStatefulWidget {
 class _VisualDisplayState extends ConsumerState<VisualDisplay> {
   @override
   Widget build(BuildContext context) {
+    final pageController = ref.watch(
+        visualPageControllerProvider); // Get the PageController from Riverpod
+
     List<Widget> pages = [showMarkdownFile(visualIntroFile, context)];
 
     // 20240817 gjw We watch changes to stdout as a clue that we need to rebuild
@@ -225,8 +229,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       }
     }
 
-    return Pages(
-      children: pages,
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
     );
   }
 }

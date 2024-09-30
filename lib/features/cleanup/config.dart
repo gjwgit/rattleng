@@ -29,6 +29,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanup_method.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/debug_text.dart';
@@ -221,6 +222,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   await rSource(context, ref, dispatch(method));
 
                   deletionAction(method);
+                  ref.read(cleanupPageControllerProvider).animateToPage(
+                        // Index of the second page.
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                 },
               ),
             ],
