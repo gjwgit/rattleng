@@ -1,6 +1,6 @@
 /// Tester support function to open the DEMO dataset.
 //
-// Time-stamp: <Tuesday 2024-09-10 15:59:58 +1000 Graham Williams>
+// Time-stamp: <2024-09-30 09:31:24 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -65,4 +65,6 @@ Future<void> openDemoDataset(WidgetTester tester) async {
   await tester.tap(demoButton);
   await tester.pumpAndSettle();
   await tester.pump(hack);
+
+  await tester.pump(interact);
 }

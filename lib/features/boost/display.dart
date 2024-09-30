@@ -19,6 +19,9 @@
 //
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+// Note: The "Dataset" button is not present in this file. It might be located
+// in another file responsible for the app's navigation or main layout.
 ///
 /// Authors: Graham Williams
 
