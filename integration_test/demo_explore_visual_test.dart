@@ -109,13 +109,8 @@ void main() {
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowFinder, findsOneWidget);
 
-      // Find the right arrow button in the PageIndicator.
+      // Automatically go to "Box Plot" page 2.
 
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Box Plot" page 2.
-
-      // await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
