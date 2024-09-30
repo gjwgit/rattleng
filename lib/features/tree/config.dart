@@ -37,6 +37,7 @@ import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/min_split.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
@@ -45,8 +46,19 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
+
+/// Descriptive tooltips for different decision tree algorithm types,
+/// explaining the splitting method and potential biases.
+
+Map decisionTreeTooltips = {
+  AlgorithmType.conditional:
+      'Uses statistical tests for unbiased splits, preventing overfitting.',
+  AlgorithmType.traditional:
+      'Uses greedy algorithms for splits, which may cause overfitting and bias.',
+};
 
 class TreeModelConfig extends ConsumerStatefulWidget {
   const TreeModelConfig({super.key});
@@ -207,6 +219,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     } else {
                       rSource(context, ref, 'model_build_rpart');
                     }
+                    ref.read(treePageControllerProvider).animateToPage(
+                          // Index of the second page.
+                          1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
                   }
                   // TODO 20240627  yyx HOW RESTORE THIS EFFECT IN THE NEW WIDGET PAGES?
                   //
@@ -221,6 +239,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 options: AlgorithmType.values,
                 getLabel: (AlgorithmType type) => type.displayName,
                 selectedOption: selectedAlgorithm,
+                tooltips: decisionTreeTooltips,
                 onSelected: (AlgorithmType? selected) {
                   setState(() {
                     if (selected != null) {
@@ -235,7 +254,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 key: const Key('include_missing'),
                 tooltip: '''
 
-              Include missing.
+              Include missing values in decision tree splits to handle incomplete data without discarding observations.
 
               ''',
                 label: 'Include Missing',
@@ -430,7 +449,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     required Key key,
   }) {
     return Expanded(
-      child: Tooltip(
+      child: DelayedTooltip(
         message: tooltip,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
