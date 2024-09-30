@@ -32,10 +32,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -53,6 +55,8 @@ bool buildButtonPressed(String buildTime) {
 class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
   @override
   Widget build(BuildContext context) {
+    final pageController = ref.watch(
+        wordcloudPageControllerProvider); // Get the PageController from Riverpod
     String stdout = ref.watch(stdoutProvider);
 
     // Build the word cloud widget to be displayed in the tab, consisting of the
@@ -100,6 +104,9 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return Pages(children: pages);
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
+    );
   }
 }

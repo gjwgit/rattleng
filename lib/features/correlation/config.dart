@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-09-18 15:10:13 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-01 08:40:25 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -62,6 +63,14 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             ActivityButton(
               onPressed: () {
                 rSource(context, ref, ['explore_correlation']);
+                // wait for 3 seconds before moving to the next page.
+                Future.delayed(const Duration(seconds: 3));
+                ref.read(correlationPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Perform Correlation Analysis'),
             ),

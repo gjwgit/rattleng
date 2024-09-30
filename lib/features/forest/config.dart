@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-06-12 12:10:40 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-01 08:41:44 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -63,6 +64,12 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               onPressed: () {
                 rSource(context, ref, ['model_template']);
                 rSource(context, ref, ['model_build_random_forest']);
+                ref.read(forestPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Random Forest'),
             ),
