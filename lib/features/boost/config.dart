@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The BOOST tab config currently consists of just an ACTIVITY button.
@@ -60,8 +60,9 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              onPressed: () async {
+                await rSource(context, ref, 'model_template');
+                await rSource(context, ref, 'model_build_xgboost');
               },
               child: const Text('Build Boosted Trees'),
             ),
