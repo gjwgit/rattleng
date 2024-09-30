@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-09-26 08:30:15 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-01 09:06:06 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -57,7 +57,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
     List<Widget> pages = [showMarkdownFile(boostIntroFile, context)];
 
-    String content = rExtract(stdout, 'summary(model_xgb)');
+    String content = rExtract(stdout, 'print(model_xgb)');
 
     if (content.isNotEmpty) {
       pages.add(
@@ -69,7 +69,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           Visit the 
           [Guide](https://xgboost.readthedocs.io/en/stable/R-package/xgboostPresentation.html). Built
           using
-          [xgb::xgb()](https://www.rdocumentation.org/packages/xgboost/versions/1.7.8.1).
+          [xgb::xgb.train()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
             ''',
           content: '\n$content',
@@ -82,7 +82,14 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: 'VAR IMPORTANCE',
+          title: '''
+
+          # Variable Importance
+
+          Generated using
+          [xgb::xgb.importance()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.importance).
+          
+          ''',
           path: image,
         ),
       );
