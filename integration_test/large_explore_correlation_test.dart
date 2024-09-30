@@ -32,6 +32,7 @@ import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
@@ -55,8 +56,7 @@ void main() {
 
       // Verify the content of the page 1.
 
-      await verifyNextPage(
-        tester,
+      await verifyPage(
         'Correlation - Numeric Data',
         'cholesterol_level                1.00           0.00           0.00  -0.01',
       );
@@ -79,7 +79,9 @@ void main() {
       //
       // Must be something we can do to confirm the image. Not sure what yet!
 
-      await verifyNextPage(tester, 'Variable Correlation Plot');
+      await gotoNextPage(tester);
+
+      await verifyPage('Variable Correlation Plot');
     });
   });
 }
