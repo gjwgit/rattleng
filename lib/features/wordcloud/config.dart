@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
@@ -128,6 +129,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 // Toggle the state to trigger rebuild
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
+
+                ref.read(wordcloudPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
 
                 // wordCloudDisplayKey.currentState?.goToResultPage();
               },

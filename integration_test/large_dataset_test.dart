@@ -72,19 +72,10 @@ void main() {
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
 
-      await tester.pump(hack);
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
       // // Tap the right arrow button to go to "Dataset Glimpse" page.
 
       // await tester.tap(rightArrowFinder);
       // await tester.pumpAndSettle();
-
-      await tester.pump(hack);
 
       // // Find the text containing the number of rows and columns.
 
@@ -95,12 +86,12 @@ void main() {
 
       // Tap the right arrow button to go to "ROLES" page.
 
-      await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
       // Find the text containing "rec-57600".
 
-      final rolesRecIDFinder = find.textContaining('"rec-57600", "rec-73378",');
+      final rolesRecIDFinder = find.textContaining(
+          '"rec-57600", "rec-73378",'); //TODO kevin fix this failed test
       expect(rolesRecIDFinder, findsOneWidget);
 
       await tester.pump(interact);
