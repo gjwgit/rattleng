@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-09-23 05:27:07 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-01 09:09:44 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -108,14 +108,13 @@ nrounds <- 100
 # Set parameters for the XGBoost model.
 
 params <- list(
-  booster = "gbtree",       # Use tree-based booster
-  objective = "reg:squarederror", # Change this to "binary:logistic" for classification
-  eta = 0.1,                # Learning rate
-  max_depth = 6,            # Maximum depth of a tree
-  subsample = 0.8,          # Fraction of observations to be randomly sampled for each tree
-  colsample_bytree = 0.8    # Fraction of features to be randomly sampled for each tree
+  booster          = "gbtree",  # Use tree-based booster
+  objective        = "reg:squarederror", # Change this to "binary:logistic" for classification
+  eta              = 0.1,       # Learning rate
+  max_depth        = 6,         # Maximum depth of a tree
+  subsample        = 0.8,       # Fraction of observations to be randomly sampled for each tree
+  colsample_bytree = 0.8        # Fraction of features to be randomly sampled for each tree
 )
-
 
 # Train the XGBoost model.
 
