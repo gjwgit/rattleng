@@ -130,5 +130,24 @@ summary(model_xgb)
 
 svg("TEMPDIR/model_xgb_importance.svg")
 importance_matrix <- xgb.importance(feature_names = colnames(train_data), model = model_xgb)
-xgb.ggplot.importance(importance_matrix, main = "Feature Importance", cex = 0.7)
+
+# Create a ggplot-based importance plot.
+
+importance_plot <- xgb.ggplot.importance(importance_matrix, measure = "Gain", rel_to_first = FALSE)
+
+# Add value labels to the bars using geom_text().
+
+importance_plot <- importance_plot +
+  geom_text(aes(label = round(Importance, 4), y = Importance), 
+            hjust = -0.2, 
+            size = 3,)
+
+# Increase plot limits to make space for the labels.
+
+importance_plot <- importance_plot + expand_limits(y = max(importance_matrix$Importance) * 1.2)
+
+# Display the plot.
+
+print(importance_plot)
+
 dev.off()
