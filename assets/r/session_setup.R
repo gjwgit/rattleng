@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-09-28 19:28:31 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-01 10:21:03 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -45,39 +45,72 @@
 # Load/Instal Required Packages
 ####################################
 
-# 20240816 gjw How to keep R from asking to select a CRAN site?
-# Sometimes I see the popup (perhaps on MacOS) and others it just
-# fails.
+# 20241001 gjw Keep R from asking to select a CRAN site and from
+# asking if to create the user's local R library.  Otherwise it fails
+# and the user will be awfully confused!
 
 # options(repos = c(CRAN = "https://cloud.r-project.org"))
 # options(install.packages.ask = FALSE)
 
-if(!require(Hmisc)) install.packages("Hmisc")
-if(!require(NeuralNetTools)) install.packages("NeuralNetTools")
-if(!require(VIM)) install.packages("VIM")
-if(!require(corrplot)) install.packages("corrplot")
-if(!require(descr)) install.packages("descr")
-if(!require(dplyr)) install.packages("dplyr")
-if(!require(fBasics)) install.packages("fBasics")
-if(!require(ggcorrplot)) install.packages("ggcorrplot")
-if(!require(ggplot2)) install.packages("ggplot2")
-if(!require(ggthemes)) install.packages("ggthemes")
-if(!require(janitor)) install.packages("janitor")    # Cleanup: clean_names() remove_constant().
-if(!require(magrittr)) install.packages("magrittr")   # Utilise %>% and %<>% pipeline operators.
-if(!require(mice)) install.packages("mice")
-if(!require(naniar)) install.packages("naniar")
-if(!require(nnet)) install.packages("nnet")
-if(!require(party)) install.packages("party")
-if(!require(randomForest)) install.packages("randomForest")
-if(!require(rattle)) install.packages("rattle")     # Access the weather dataset and utilities.
-if(!require(readr)) install.packages("readr")
-if(!require(reshape)) install.packages("reshape")
-if(!require(rpart)) install.packages("rpart")
-if(!require(skimr)) install.packages("skimr")
-if(!require(tidyverse)) install.packages("tidyverse")  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-if(!require(tm)) install.packages("tm")
-if(!require(verification)) install.packages("verification")
-if(!require(wordcloud)) install.packages("wordcloud")
+# Function to install a package without prompting for library
+# creation. We then use `library()` each script file to load the
+# required packages from the library.
+
+install_if_missing <- function(pkg) {
+
+  if (!requireNamespace(pkg, character.only=TRUE, quietly=TRUE)) {
+    # Specify a directory for the library
+
+    lib_dir <- Sys.getenv("R_LIBS_USER")
+
+    # Make sure the directory already exists so we won;t be prompted
+    # to create it.
+    
+    if (!dir.exists(lib_dir)) {
+      dir.create(lib_dir, recursive=TRUE)
+      message("Package Library Created: ", lib_dir)
+    }
+
+    # Install the package without prompting for library creation
+
+    install.packages(pkg, lib=lib_dir, dependencies=TRUE, ask=FALSE)
+  }
+}
+
+# We install all packages up front so that in all likelihood any large
+# install of packages happens just once and on the first startup. This
+# will result in the ROLES page being blank while this happens. We
+# need to pop up a message to say to check the CONSOLE as Rattle may
+# be installing the required packages. For documentation suggest the
+# user does the installation of the R package prior to starting
+# Rattle.
+
+install_if_missing('Hmisc')
+install_if_missing('NeuralNetTools')
+install_if_missing('VIM')
+install_if_missing('corrplot')
+install_if_missing('descr')
+install_if_missing('dplyr')
+install_if_missing('fBasics')
+install_if_missing('ggcorrplot')
+install_if_missing('ggplot2')
+install_if_missing('ggthemes')
+install_if_missing('janitor')
+install_if_missing('magrittr')
+install_if_missing('mice')
+install_if_missing('naniar')
+install_if_missing('nnet')
+install_if_missing('party')
+install_if_missing('randomForest')
+install_if_missing('rattle')
+install_if_missing('readr')
+install_if_missing('reshape')
+install_if_missing('rpart')
+install_if_missing('skimr')
+install_if_missing('tidyverse')
+install_if_missing('tm')
+install_if_missing('verification')
+install_if_missing('wordcloud')
 
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
