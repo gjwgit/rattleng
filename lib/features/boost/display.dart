@@ -57,7 +57,8 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
     List<Widget> pages = [showMarkdownFile(boostIntroFile, context)];
 
-    String content = rExtract(stdout, 'print(model_xgb)');
+    String content =
+        rExtract(stdout, 'print(importance_dt, row.names = FALSE)');
 
     if (content.isNotEmpty) {
       pages.add(
