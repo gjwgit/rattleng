@@ -106,7 +106,6 @@ class ImagePage extends StatelessWidget {
           return Container(
             decoration: sunkenBoxDecoration,
             width: double.infinity,
-            padding: const EdgeInsets.only(left: 10),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
