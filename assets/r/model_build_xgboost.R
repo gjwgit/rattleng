@@ -37,9 +37,14 @@ if (!requireNamespace("Matrix", quietly = TRUE)) {
   install.packages("Matrix")
 }
 
+if (!requireNamespace("Ckmeans.1d.dp", quietly = TRUE)) {
+  install.packages("Ckmeans.1d.dp")
+}
+
 library(caret)  # For dummy variable encoding
 library(xgboost) # For XGBoost model
 library(Matrix)  # For handling matrix operations if needed
+library(Ckmeans.1d.dp) # For ggplot
 
 # Define model type and description.
 
@@ -125,5 +130,5 @@ summary(model_xgb)
 
 svg("TEMPDIR/model_xgb_importance.svg")
 importance_matrix <- xgb.importance(feature_names = colnames(train_data), model = model_xgb)
-xgb.plot.importance(importance_matrix, main = "Feature Importance", cex = 0.7)
+xgb.ggplot.importance(importance_matrix, main = "Feature Importance", cex = 0.7)
 dev.off()
