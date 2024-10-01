@@ -41,10 +41,15 @@ if (!requireNamespace("Ckmeans.1d.dp", quietly = TRUE)) {
   install.packages("Ckmeans.1d.dp")
 }
 
+if (!requireNamespace("data.table", quietly = TRUE)) {
+  install.packages("data.table")
+}
+
 library(caret)  # For dummy variable encoding
 library(xgboost) # For XGBoost model
 library(Matrix)  # For handling matrix operations if needed
 library(Ckmeans.1d.dp) # For ggplot
+library(data.table) # Display data as a nicely formatted table
 
 # Define model type and description.
 
@@ -134,6 +139,14 @@ importance_matrix <- xgb.importance(feature_names = colnames(train_data), model 
 # Create a ggplot-based importance plot.
 
 importance_plot <- xgb.ggplot.importance(importance_matrix, measure = "Gain", rel_to_first = FALSE)
+
+# Convert the importance_matrix to a data.table.
+
+importance_dt <- as.data.table(importance_matrix)
+
+# Format the output to match your desired style.
+
+print(importance_dt, row.names = FALSE)
 
 # Add value labels to the bars using geom_text().
 
