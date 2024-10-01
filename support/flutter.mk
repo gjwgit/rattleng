@@ -298,8 +298,11 @@ qtest:
 	flutter test --dart-define=INTERACT=0 --device-id $$device_id integration_test/$*_test.dart
 
 .PHONY: qtest.tmp
-qtest.tmp:
-	make qtest > qtest.tmp
+qtest.tmp: qtest.all
+
+.PHONY: qtest.all
+qtest.all:
+	make qtest > qtest.all
 
 .PHONY: atest
 atest:
