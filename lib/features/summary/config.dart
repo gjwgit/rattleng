@@ -62,44 +62,43 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
             ActivityButton(
               onPressed: () {
-                // Check the current page index before navigating
+                // Check the current page index before navigating.
+
                 final currentPage =
                     ref.read(summaryPageControllerProvider).page?.round() ?? 0;
 
-                // If the current page is already index 2, navigate to index 2.
+                // Always call rSource regardless of the current page.
 
+                rSource(context, ref, 'explore_summary');
+
+                // Determine the target page index based on the current page.
+
+                int targetPage;
                 if (currentPage == 2) {
-                  rSource(context, ref, 'explore_summary');
+                  // Already on page 2, stay on page 2.
+
+                  targetPage = 2;
                 } else if (currentPage == 3) {
-                  rSource(context, ref, 'explore_summary');
-                  // Navigate to page index 3.
+                  // Navigate to page 3.
 
-                  ref.read(summaryPageControllerProvider).animateToPage(
-                        3,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  targetPage = 3;
                 } else if (currentPage == 4) {
-                  rSource(context, ref, 'explore_summary');
-                  // Navigate to page index 4.
+                  // Navigate to page 4.
 
-                  ref.read(summaryPageControllerProvider).animateToPage(
-                        4,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  targetPage = 4;
                 } else {
-                  // Otherwise, call rSource and navigate to page index 1.
+                  // Default to page 1.
 
-                  rSource(context, ref, 'explore_summary');
-                  // Navigate to page index 1.
-
-                  ref.read(summaryPageControllerProvider).animateToPage(
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  targetPage = 1;
                 }
+
+                // Navigate to the target page.
+
+                ref.read(summaryPageControllerProvider).animateToPage(
+                      targetPage,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Generate Dataset Summary'),
             )
