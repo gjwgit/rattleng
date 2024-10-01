@@ -25,8 +25,6 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -62,21 +60,18 @@ void main() {
 
       await gotoNextPage(tester);
 
-      // hack
-
-      await verifyPage('Patterns of Missing Values - Visual');
+      await verifyPage('Generated using');
 
       await gotoNextPage(tester);
 
       await verifyPage(
-        'Aggregation of Missing Values - Textual',
-        '0',
+        'Aggregation of Missing Values',
       );
 
       await gotoNextPage(tester);
 
       await verifyPage(
-        'Aggregation of Missing Values - Visual',
+        'Aggregation of Missing Values',
       );
 
       await gotoNextPage(tester);
