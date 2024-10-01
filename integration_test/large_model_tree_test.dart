@@ -84,11 +84,10 @@ void main() {
 
       await tester.pump(hack);
 
-      // Tap the right arrow to go to the second page.
+      // Automatically go to the second page.
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
-      // await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
 
       final secondPageTitleFinder = find.text('Decision Tree Model');
