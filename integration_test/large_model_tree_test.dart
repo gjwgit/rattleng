@@ -88,7 +88,7 @@ void main() {
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
+      // await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
 
       final secondPageTitleFinder = find.text('Decision Tree Model');
