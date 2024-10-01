@@ -62,17 +62,47 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
             ActivityButton(
               onPressed: () {
-                rSource(context, ref, 'explore_summary');
-                ref.read(summaryPageControllerProvider).animateToPage(
-                      // Index of the second page.
+                // Check the current page index before navigating
+                final currentPage =
+                    ref.read(summaryPageControllerProvider).page?.round() ?? 0;
 
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                // If the current page is already index 2, navigate to index 2.
+
+                if (currentPage == 2) {
+                  rSource(context, ref, 'explore_summary');
+                } else if (currentPage == 3) {
+                  rSource(context, ref, 'explore_summary');
+                  // Navigate to page index 3.
+
+                  ref.read(summaryPageControllerProvider).animateToPage(
+                        3,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                } else if (currentPage == 4) {
+                  rSource(context, ref, 'explore_summary');
+                  // Navigate to page index 4.
+
+                  ref.read(summaryPageControllerProvider).animateToPage(
+                        4,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                } else {
+                  // Otherwise, call rSource and navigate to page index 1.
+
+                  rSource(context, ref, 'explore_summary');
+                  // Navigate to page index 1.
+
+                  ref.read(summaryPageControllerProvider).animateToPage(
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                }
               },
               child: const Text('Generate Dataset Summary'),
-            ),
+            )
           ],
         ),
       ],
