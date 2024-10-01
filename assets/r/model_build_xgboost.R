@@ -88,15 +88,6 @@ train_labels <- combined[, ncol(combined)]
 train_data <- as.matrix(train_data)
 train_labels <- as.numeric(train_labels)
 
-# Verify the dimensions.
-
-cat("Number of rows in train_data:", nrow(train_data), "\n")
-cat("Number of elements in train_labels:", length(train_labels), "\n")
-
-if (nrow(train_data) != length(train_labels)) {
-  stop("Mismatch: The number of rows in train_data does not match the length of train_labels.")
-}
-
 # Construct DMatrix for training.
 
 dtrain <- xgb.DMatrix(data = train_data, label = train_labels)
