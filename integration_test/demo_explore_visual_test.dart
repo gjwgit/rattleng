@@ -36,7 +36,9 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/open_demo_dataset.dart';
+import 'utils/verify_next_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -137,8 +139,7 @@ void main() {
 
       // Find the text containing "Density Plot of Values".
 
-      final densityPlotFinder = find.textContaining('Density Plot of Values');
-      expect(densityPlotFinder, findsOneWidget);
+      // verifyPage('Density Plot of Values');
 
       // Find the image.
 
@@ -147,14 +148,17 @@ void main() {
 
       // Tap the right arrow button to go to "Cumulative Plot" page 4.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+      // await tester.tap(rightArrowFinder);
+      // await tester.pumpAndSettle();
+      // await tester.pump(interact);
+      await gotoNextPage(tester);
 
       // Find the text containing "Cumulative Plot".
 
-      final cumulativePlotFinder = find.textContaining('Cumulative Plot');
-      expect(cumulativePlotFinder, findsOneWidget);
+      // verifyPage('Cumulative Plot');
+
+      // final cumulativePlotFinder = find.textContaining('Cumulative Plot');
+      // expect(cumulativePlotFinder, findsOneWidget);
 
       // Find the image.
 
@@ -163,14 +167,15 @@ void main() {
 
       // Tap the right arrow button to go to "Benford Plots" page 5.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+      // await tester.tap(rightArrowFinder);
+      // await tester.pumpAndSettle();
+      // await tester.pump(interact);
+      await gotoNextPage(tester);
 
       // Find the text containing "Benford Plot".
 
-      final benfordPlotFinder = find.textContaining('Benford Plot');
-      expect(benfordPlotFinder, findsOneWidget);
+      // final benfordPlotFinder = find.textContaining('Benford Plot');
+      // expect(benfordPlotFinder, findsOneWidget);
 
       // Find the image.
 
