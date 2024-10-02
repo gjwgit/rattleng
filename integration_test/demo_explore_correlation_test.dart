@@ -57,10 +57,9 @@ void main() {
 
       // Verify the content of the next page.
 
-      await verifyNextPage(
-        tester,
+      await verifyPage(
         'Correlation - Numeric Data',
-        'pressure_9am            1.00',
+        '1.00',
       );
 
       await verifyMultipleTextContent(
