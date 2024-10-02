@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-07-20 14:58:29 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-09-30 12:42:32 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -43,6 +43,9 @@ mdesc <- "Conditional Inference Tree"
 # Not needed for ctree as it automatically handles the data type
 
 # Define the formula for the model
+
+# TODO 20240930 gjw SHOULDN'T THIS BE FRO `model_template.r`
+
 form <- as.formula(paste(target, "~ ."))
 
 control <- ctree_control(
@@ -51,9 +54,10 @@ control <- ctree_control(
 
 # Train a Conditional Inference Tree model using ctree
 model_ctree <- ctree(
-  formula = form,
-  data = ds[tr, vars],
-  control = control
+  formula   = form,
+  data      = ds[tr, vars],
+  na.action = na.exclude,
+  control   = control
 )
 
 # Generate a textual view of the Conditional Inference Tree model
