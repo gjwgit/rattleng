@@ -242,3 +242,15 @@ String? validateInteger(String? value, {required int min}) {
 
   return null;
 }
+
+// Validation logic for decimal field.
+
+String? validateDecimal(String? value) {
+  if (value == null || value.isEmpty) return 'Cannot be empty';
+  double? doubleValue = double.tryParse(value);
+  if (doubleValue == null || doubleValue < 0.0000 || doubleValue > 1.0000) {
+    return 'Must be between 0.0000 and 1.0000';
+  }
+
+  return null;
+}

@@ -28,8 +28,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
+import 'package:rattle/features/boost/boost_setting.dart';
+import 'package:rattle/providers/boost_config.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
 /// The BOOST tab config currently consists of just an ACTIVITY button.
 ///
@@ -43,8 +48,25 @@ class BoostConfig extends ConsumerStatefulWidget {
 }
 
 class BoostConfigState extends ConsumerState<BoostConfig> {
+  Map<String, String> boostAlgorithm = {
+    'Extreme': '''
+
+      A highly efficient gradient boosting algorithm designed for large-scale 
+      and complex data.
+
+      ''',
+    'Adaptive': '''
+
+      A boosting algorithm that builds a strong classifier by iteratively 
+      combining weak learners, focusing on errors.
+
+      ''',
+  };
+
   @override
   Widget build(BuildContext context) {
+    String algorithm = ref.read(boostAlgorithmProvider.notifier).state;
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -55,7 +77,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftSpace,
 
             // The BUILD button.
 
@@ -66,8 +88,33 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
               },
               child: const Text('Build Boosted Trees'),
             ),
+
+            configWidgetSpace,
+
+            const Text(
+              'Algorithm:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetSpace,
+
+            ChoiceChipTip<String>(
+              options: boostAlgorithm.keys.toList(),
+              selectedOption: algorithm,
+              tooltips: boostAlgorithm,
+              enabled: algorithm != 'Extreme',
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    algorithm = chosen;
+                    ref.read(boostAlgorithmProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
+        const BoostSetting(),
       ],
     );
   }
