@@ -73,24 +73,8 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
                 // Determine the target page index based on the current page.
 
-                int targetPage;
-                if (currentPage == 2) {
-                  // Already on page 2, stay on page 2.
-
-                  targetPage = 2;
-                } else if (currentPage == 3) {
-                  // Navigate to page 3.
-
-                  targetPage = 3;
-                } else if (currentPage == 4) {
-                  // Navigate to page 4.
-
-                  targetPage = 4;
-                } else {
-                  // Default to page 1.
-
-                  targetPage = 1;
-                }
+                int targetPage =
+                    (currentPage >= 2 && currentPage <= 4) ? currentPage : 1;
 
                 // Navigate to the target page.
 
