@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/interval.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
@@ -182,6 +183,12 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
+                ref.read(rescalePageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Rescale Variable Values'),
             ),
