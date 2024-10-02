@@ -1,6 +1,6 @@
 /// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 16:30:57 +1000 Graham Williams>
+// Time-stamp: <2024-10-02 14:22:24 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -49,13 +49,14 @@ void main() {
       await tester.pump(interact);
 
       await openDemoDataset(tester);
+
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
 
       await tester.pump(hack);
 
-      // Verify the content of the next page.
+      // Verify the content of the page.
 
       await verifyPage(
         'Correlation - Numeric Data',
