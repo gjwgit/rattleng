@@ -88,7 +88,6 @@ void main() {
       // Go to the third page
 
       await gotoNextPage(tester);
-      await gotoNextPage(tester);
 
       // Confirm these entries are in the frequency table
 
@@ -118,6 +117,10 @@ void main() {
       await tester.tap(displayWordCloudButtonFinder);
       await tester.pumpAndSettle();
       await tester.pump(delay);
+
+      // Go to the third page
+
+      await gotoNextPage(tester);
 
       // Confirm this entry is not in the frequency table
 
