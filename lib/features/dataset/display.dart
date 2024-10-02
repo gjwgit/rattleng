@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Sunday 2024-09-29 15:57:37 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-10-03 07:30:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -136,7 +136,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     pages.add(
       ListView.builder(
-        key: const Key('roles listView'),
+        key: const Key('roles_list_view'),
 
         // Add 1 for the extra header row.
 
