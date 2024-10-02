@@ -29,11 +29,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -50,6 +52,9 @@ class NeuralDisplay extends ConsumerStatefulWidget {
 class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
+    final pageController = ref.watch(
+        neuralPageControllerProvider); // Get the PageController from Riverpod
+
     String stdout = ref.watch(stdoutProvider);
     String content = '';
 
@@ -162,6 +167,9 @@ $weights
 
     ////////////////////////////////////////////////////////////////////////
 
-    return Pages(children: pages);
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
+    );
   }
 }
