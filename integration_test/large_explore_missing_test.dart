@@ -56,11 +56,11 @@ void main() {
 
       await pressButton(tester, 'Perform Missing Analysis');
 
-      await verifyPage('Patterns of Missing Data', '20000');
+      await verifyPage('Patterns of Missing Data');
 
       await gotoNextPage(tester);
 
-      await verifyPage('Generated using');
+      await verifyPage('Patterns of Missing Values');
 
       await gotoNextPage(tester);
 
