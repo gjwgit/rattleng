@@ -301,7 +301,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               ),
               Expanded(
                 flex: contentFlex,
-                child: Text(content, style: const TextStyle(fontSize: 14)),
+                child: SelectableText(content,
+                    style: const TextStyle(fontSize: 14)),
               ),
             ],
           );
