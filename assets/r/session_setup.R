@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-01 10:21:03 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-10-03 09:23:37 +1000 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -111,6 +111,13 @@ install_if_missing('tidyverse')
 install_if_missing('tm')
 install_if_missing('verification')
 install_if_missing('wordcloud')
+
+install_if_missing('caret')
+install_if_missing('xgboost')
+install_if_missing('Matrix')
+install_if_missing('Ckmeans')
+install_if_missing('data')
+
 
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
