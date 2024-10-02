@@ -134,7 +134,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   String? minBucketError =
                       validateInteger(_minBucketController.text, min: 1);
                   String? complexityError =
-                      _validateComplexity(_complexityController.text);
+                      validateDecimal(_complexityController.text);
                   String? priorsError = _validatePriors(_priorsController.text);
                   String? lossMatrixError =
                       _validateLossMatrix(_lossMatrixController.text);
@@ -320,7 +320,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
-                validator: (value) => _validateComplexity(value),
+                validator: (value) => validateDecimal(value),
                 stateProvider: complexityProvider,
                 interval: 0.0005,
                 decimalPlaces: 4,
@@ -372,18 +372,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
         ],
       ),
     );
-  }
-
-  // Validation logic for complexity field.
-
-  String? _validateComplexity(String? value) {
-    if (value == null || value.isEmpty) return 'Cannot be empty';
-    double? doubleValue = double.tryParse(value);
-    if (doubleValue == null || doubleValue < 0.0000 || doubleValue > 1.0000) {
-      return 'Must be between 0.0000 and 1.0000';
-    }
-
-    return null;
   }
 
   // Validation logic for priors field.
