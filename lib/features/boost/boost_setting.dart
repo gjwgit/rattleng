@@ -46,7 +46,12 @@ List<String> modelObjective = [
 ];
 
 class BoostSetting extends ConsumerStatefulWidget {
-  const BoostSetting({super.key});
+  final String algorithm;
+
+  const BoostSetting({
+    super.key,
+    required this.algorithm,
+  });
 
   @override
   ConsumerState<BoostSetting> createState() => _BoostSettingState();
@@ -109,7 +114,6 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
     _boostObjectiveController.text =
         ref.read(objectiveBoostProvider.notifier).state.toString();
 
-    String algorithm = ref.read(algorithmBoostProvider.notifier).state;
     String objective = ref.read(objectiveBoostProvider.notifier).state;
 
     return Column(
@@ -125,7 +129,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Number of trees in the model; more trees increase accuracy but also complexity.
 
               ''',
-              enabled: algorithm == 'Adaptive',
+              enabled: widget.algorithm == 'Adaptive',
               controller: _boostTreesController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -154,7 +158,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Minimum number of samples required to split an internal node.
 
               ''',
-              enabled: algorithm == 'Adaptive',
+              enabled: widget.algorithm == 'Adaptive',
               controller: _boostMinSplitController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -169,7 +173,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Regularization parameter that penalizes complex trees to prevent overfitting.
 
               ''',
-              enabled: algorithm == 'Adaptive',
+              enabled: widget.algorithm == 'Adaptive',
               controller: _boostComplexityController,
               inputFormatter: FilteringTextInputFormatter.allow(
                 RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
@@ -188,7 +192,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Number of folds in cross-validation; helps estimate model performance.
 
               ''',
-              enabled: algorithm == 'Adaptive',
+              enabled: widget.algorithm == 'Adaptive',
               controller: _boostXValueController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -208,7 +212,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Step size at each iteration; smaller values lead to more robust learning.
 
               ''',
-              enabled: algorithm == 'Extreme',
+              enabled: widget.algorithm == 'Extreme',
               controller: _boostLearningRateController,
               inputFormatter: FilteringTextInputFormatter.allow(
                 RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
@@ -229,7 +233,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Number of threads to use for parallel processing; higher values can speed up training.
 
               ''',
-              enabled: algorithm == 'Extreme',
+              enabled: widget.algorithm == 'Extreme',
               controller: _boostThreadsController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -244,7 +248,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Number of boosting rounds or iterations to train the model.
 
               ''',
-              enabled: algorithm == 'Extreme',
+              enabled: widget.algorithm == 'Extreme',
               controller: _boostIterationsController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -257,7 +261,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               objective,
               ref,
               objectiveBoostProvider,
-              enabled: algorithm == 'Extreme',
+              enabled: widget.algorithm == 'Extreme',
               onChanged: (String? value) {
                 if (value != null) {
                   ref.read(objectiveBoostProvider.notifier).state = value;
