@@ -31,7 +31,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/providers/boost_config.dart';
+import 'package:rattle/providers/boost.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/number_field.dart';
 
