@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-06 17:18:16 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-10-03 10:12:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -105,6 +105,11 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(interact);
+
+      // TODO 20241003 gjw BUG NEED TO TAP THE BUTTON TWICE TO GO TO SECOND PAGE.
+
+//      await tester.tap(generatePlotButtonFinder);
+//      await tester.pumpAndSettle();
 
       // Find the right arrow button in the PageIndicator.
 
