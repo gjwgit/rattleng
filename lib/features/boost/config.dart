@@ -102,7 +102,6 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
               options: boostAlgorithm.keys.toList(),
               selectedOption: algorithm,
               tooltips: boostAlgorithm,
-              enabled: algorithm != 'Extreme',
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {
@@ -114,7 +113,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             ),
           ],
         ),
-        const BoostSetting(),
+        BoostSetting(algorithm: algorithm),
       ],
     );
   }
