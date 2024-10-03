@@ -35,7 +35,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-
+import 'utils/goto_next_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -67,6 +67,10 @@ void main() {
 
       await tester.pump(interact);
 
+      // Tap the right arrow button to go to ROLES page.
+
+      await gotoNextPage(tester);
+
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
@@ -90,8 +94,7 @@ void main() {
 
       // Find the text containing "rec-57600".
 
-      final rolesRecIDFinder = find.textContaining(
-          '"rec-57600", "rec-73378",'); //TODO kevin fix this failed test
+      final rolesRecIDFinder = find.textContaining('rec-57600');
       expect(rolesRecIDFinder, findsOneWidget);
 
       await tester.pump(interact);

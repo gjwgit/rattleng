@@ -38,7 +38,6 @@ import 'package:rattle/tabs/explore.dart';
 
 import 'utils/delays.dart';
 
-
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -136,7 +135,7 @@ void main() {
 
       // Tap the right arrow button to go to "Summary of the Dataset" page.
 
-      await tester.tap(rightArrowFinder);
+      // await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(interact);
