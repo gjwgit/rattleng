@@ -300,8 +300,11 @@ qtest:
 
 
 .PHONY: qtest.tmp
-qtest.tmp:
-	make qtest > qtest.tmp
+qtest.tmp: qtest.all
+
+.PHONY: qtest.all
+qtest.all:
+	make qtest > qtest.all
 
 .PHONY: atest
 atest:
