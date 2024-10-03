@@ -38,10 +38,11 @@ import 'package:rattle/widgets/number_field.dart';
 /// Objectives setting of XGBoost.
 
 List<String> modelObjective = [
-  'binary:logistic',
-  'binary:logitraw',
+  'reg:squarederror',
   'reg:linear',
   'reg:logistic',
+  'binary:logistic',
+  'binary:logitraw',
 ];
 
 class BoostSetting extends ConsumerStatefulWidget {

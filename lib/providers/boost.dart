@@ -35,5 +35,5 @@ final xValueBoostProvider = StateProvider<int>((ref) => 10);
 final learningRateBoostProvider = StateProvider<double>((ref) => 0.3);
 final threadsBoostProvider = StateProvider<int>((ref) => 2);
 final iterationsBoostProvider = StateProvider<int>((ref) => 50);
-final objectiveBoostProvider = StateProvider<String>((ref) => 'binary:logistic');
+final objectiveBoostProvider = StateProvider<String>((ref) => 'reg:squarederror');
 final algorithmBoostProvider = StateProvider<String>((ref) => 'Extreme');
