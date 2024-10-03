@@ -61,15 +61,11 @@ class MissingConfigState extends ConsumerState<MissingConfig> {
 
             // The BUILD button.
             ActivityButton(
-              onPressed: () {
-                handlePageNavigation(
-                  context,
-                  ref,
-                  missingPageControllerProvider, // Pass the correct provider
-                  () {
-                    rSource(context, ref, 'explore_missing');
-                  },
-                );
+              pageControllerProvider:
+                  missingPageControllerProvider, // Optional navigation
+
+              additionalLogic: () {
+                rSource(context, ref, 'explore_missing');
               },
               child: const Text('Perform Missing Analysis'),
             ),

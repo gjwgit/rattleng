@@ -120,72 +120,70 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             children: [
               ActivityButton(
                 key: const Key('Build Decision Tree'),
-                onPressed: () {
-                  handlePageNavigation(context, ref,
-                      treePageControllerProvider, // Pass the correct provider
-                      () {
-                    // TODO 20240926 gjw SPLIT THIS INTO OWN LOCAL FUNCTION
+                pageControllerProvider:
+                    treePageControllerProvider, // Optional navigation
 
-                    // Perform manual validation.
+                additionalLogic: () {
+                  // TODO 20240926 gjw SPLIT THIS INTO OWN LOCAL FUNCTION
 
-                    String? minSplitError =
-                        validateInteger(_minSplitController.text, min: 0);
-                    String? maxDepthError =
-                        validateInteger(_maxDepthController.text, min: 1);
-                    String? minBucketError =
-                        validateInteger(_minBucketController.text, min: 1);
-                    String? complexityError =
-                        _validateComplexity(_complexityController.text);
-                    String? priorsError =
-                        _validatePriors(_priorsController.text);
-                    String? lossMatrixError =
-                        _validateLossMatrix(_lossMatrixController.text);
+                  // Perform manual validation.
 
-                    // Collect all errors.
+                  String? minSplitError =
+                      validateInteger(_minSplitController.text, min: 0);
+                  String? maxDepthError =
+                      validateInteger(_maxDepthController.text, min: 1);
+                  String? minBucketError =
+                      validateInteger(_minBucketController.text, min: 1);
+                  String? complexityError =
+                      _validateComplexity(_complexityController.text);
+                  String? priorsError = _validatePriors(_priorsController.text);
+                  String? lossMatrixError =
+                      _validateLossMatrix(_lossMatrixController.text);
 
-                    List<String> errors = [
-                      if (minSplitError != null) 'Min Split: $minSplitError',
-                      if (maxDepthError != null) 'Max Depth: $maxDepthError',
-                      if (minBucketError != null) 'Min Bucket: $minBucketError',
-                      if (complexityError != null)
-                        'Complexity: $complexityError',
-                      if (priorsError != null) 'Priors: $priorsError',
-                      if (lossMatrixError != null)
-                        'Loss Matrix: $lossMatrixError',
-                    ];
+                  // Collect all errors.
 
-                    // Check if there are any errors.
+                  List<String> errors = [
+                    if (minSplitError != null) 'Min Split: $minSplitError',
+                    if (maxDepthError != null) 'Max Depth: $maxDepthError',
+                    if (minBucketError != null) 'Min Bucket: $minBucketError',
+                    if (complexityError != null) 'Complexity: $complexityError',
+                    if (priorsError != null) 'Priors: $priorsError',
+                    if (lossMatrixError != null)
+                      'Loss Matrix: $lossMatrixError',
+                  ];
 
-                    if (errors.isNotEmpty) {
-                      // Show a warning dialog if validation fails.
+                  // Check if there are any errors.
 
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Validation Error'),
-                          content: Text(
-                            'Please ensure all input fields are valid before building '
-                            'the decision tree:\n\n${errors.join('\n')}',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
+                  if (errors.isNotEmpty) {
+                    // Show a warning dialog if validation fails.
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Validation Error'),
+                        content: Text(
+                          'Please ensure all input fields are valid before building '
+                          'the decision tree:\n\n${errors.join('\n')}',
                         ),
-                      );
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
 
-                      return;
-                    }
-                    // Require a target variable.
-                    if (getTarget(ref) == 'NULL') {
-                      showOk(
-                        context: context,
-                        title: 'No Target Specified',
-                        content: '''
+                    return;
+                  }
+                  // Require a target variable.
+                  if (getTarget(ref) == 'NULL') {
+                    showOk(
+                      context: context,
+                      title: 'No Target Specified',
+                      content: '''
 
                     Please choose a variable from amongst those variables in the
                     dataset as the **Target** for the model. You can do this
@@ -195,44 +193,37 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     value.
 
                     ''',
-                      );
+                    );
+                  } else {
+                    // Update provider value.
+
+                    ref.read(minSplitProvider.notifier).state =
+                        int.parse(_minSplitController.text);
+                    ref.read(maxDepthProvider.notifier).state =
+                        int.parse(_maxDepthController.text);
+                    ref.read(minBucketProvider.notifier).state =
+                        int.parse(_minBucketController.text);
+
+                    ref.read(complexityProvider.notifier).state =
+                        double.parse(_complexityController.text);
+
+                    ref.read(priorsProvider.notifier).state =
+                        _priorsController.text;
+
+                    ref.read(lossMatrixProvider.notifier).state =
+                        _lossMatrixController.text;
+
+                    ref.read(treeAlgorithmProvider.notifier).state =
+                        selectedAlgorithm;
+
+                    // Run the R scripts.
+                    rSource(context, ref, 'model_template');
+                    if (selectedAlgorithm == AlgorithmType.conditional) {
+                      rSource(context, ref, 'model_build_ctree');
                     } else {
-                      // Update provider value.
-
-                      ref.read(minSplitProvider.notifier).state =
-                          int.parse(_minSplitController.text);
-                      ref.read(maxDepthProvider.notifier).state =
-                          int.parse(_maxDepthController.text);
-                      ref.read(minBucketProvider.notifier).state =
-                          int.parse(_minBucketController.text);
-
-                      ref.read(complexityProvider.notifier).state =
-                          double.parse(_complexityController.text);
-
-                      ref.read(priorsProvider.notifier).state =
-                          _priorsController.text;
-
-                      ref.read(lossMatrixProvider.notifier).state =
-                          _lossMatrixController.text;
-
-                      ref.read(treeAlgorithmProvider.notifier).state =
-                          selectedAlgorithm;
-
-                      // Run the R scripts.
-                      rSource(context, ref, 'model_template');
-                      if (selectedAlgorithm == AlgorithmType.conditional) {
-                        rSource(context, ref, 'model_build_ctree');
-                      } else {
-                        rSource(context, ref, 'model_build_rpart');
-                      }
+                      rSource(context, ref, 'model_build_rpart');
                     }
                   }
-                      // TODO 20240627  yyx HOW RESTORE THIS EFFECT IN THE NEW WIDGET PAGES?
-                      //
-                      // it failed to work only when the user first clicks build on
-                      // the panel because the pages are not yet updated.
-                      // treePagesKey.currentState?.goToResultPage();                    },
-                      );
                 },
                 child: const Text('Build Decision Tree'),
               ),

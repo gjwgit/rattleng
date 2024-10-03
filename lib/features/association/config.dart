@@ -60,7 +60,9 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
+              additionalLogic: () {
+                // Logic without page navigation.
+
                 showUnderConstruction(context);
               },
               child: const Text('Build Association Rules'),

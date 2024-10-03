@@ -95,49 +95,44 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
-              onPressed: () {
-                handlePageNavigation(
-                  context,
-                  ref,
-                  wordcloudPageControllerProvider, // Pass the correct provider
-                  () {
-                    // Clean up the files from previous use.
+              pageControllerProvider:
+                  wordcloudPageControllerProvider, // Optional navigation
 
-                    // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.
-                    //
-                    // Is this required here? Or cleanup when exit the app? Or rely
-                    // on os to cleanup /tmp?
+              additionalLogic: () {
+                // Clean up the files from previous use.
 
-                    File oldWordcloudFile = File(wordCloudImagePath);
-                    if (oldWordcloudFile.existsSync()) {
-                      oldWordcloudFile.deleteSync();
-                    }
+                // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.
+                //
+                // Is this required here? Or cleanup when exit the app? Or rely
+                // on os to cleanup /tmp?
 
-                    File oldTmpFile = File(tmpImagePath);
-                    if (oldTmpFile.existsSync()) {
-                      oldTmpFile.deleteSync();
-                    }
+                File oldWordcloudFile = File(wordCloudImagePath);
+                if (oldWordcloudFile.existsSync()) {
+                  oldWordcloudFile.deleteSync();
+                }
 
-                    // This is the main action.
+                File oldTmpFile = File(tmpImagePath);
+                if (oldTmpFile.existsSync()) {
+                  oldTmpFile.deleteSync();
+                }
 
-                    rSource(context, ref, 'model_build_word_cloud');
+                // This is the main action.
 
-                    // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
+                rSource(context, ref, 'model_build_word_cloud');
 
-                    // final file = File(wordCloudImagePath);
-                    // while (true) {
-                    //   if (await file.exists()) {
-                    //     debugPrint('file exists');
-                    //     break;
-                    //   }
-                    // }
+                // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
 
-                    // Toggle the state to trigger rebuild
+                // final file = File(wordCloudImagePath);
+                // while (true) {
+                //   if (await file.exists()) {
+                //     debugPrint('file exists');
+                //     break;
+                //   }
+                // }
 
-                    ref.read(wordCloudBuildProvider.notifier).state =
-                        timestamp();
-                  },
-                );
+                // Toggle the state to trigger rebuild
+
+                ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
               child: const Text('Display Word Cloud'),
             ),
