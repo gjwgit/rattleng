@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,4 +36,4 @@ final learningRateBoostProvider = StateProvider<double>((ref) => 0.3);
 final threadsBoostProvider = StateProvider<int>((ref) => 2);
 final iterationsBoostProvider = StateProvider<int>((ref) => 50);
 final objectiveBoostProvider = StateProvider<String>((ref) => 'binary:logistic');
-final boostAlgorithmProvider = StateProvider<String>((ref) => 'Extreme');
+final algorithmBoostProvider = StateProvider<String>((ref) => 'Extreme');
