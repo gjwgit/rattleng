@@ -102,28 +102,25 @@ train_labels <- as.numeric(train_labels)
 
 dtrain <- xgb.DMatrix(data = train_data, label = train_labels)
 
-# Set additional options.
-
-nrounds <- 100             
-
 # Set parameters for the XGBoost model.
 
 params <- list(
-  booster          = "gbtree",  # Use tree-based booster
-  objective        = "reg:squarederror", # Change this to "binary:logistic" for classification
-  eta              = 0.1,       # Learning rate
-  max_depth        = 6,         # Maximum depth of a tree
-  subsample        = 0.8,       # Fraction of observations to be randomly sampled for each tree
-  colsample_bytree = 0.8        # Fraction of features to be randomly sampled for each tree
+  booster="gbtree",  # Use tree-based booster
+  objective=BOOST_OBJECTIVE, # Change this to "binary:logistic" for classification
+  eta=BOOST_LEARNING_RATE,       # Learning rate
+  max_depth=BOOST_MAX_DEPTH,         # Maximum depth of a tree
+  subsample=0.8,       # Fraction of observations to be randomly sampled for each tree
+  nthread=BOOST_THREADS,          # Set the number of threads
+  colsample_bytree=0.8        # Fraction of features to be randomly sampled for each tree
 )
 
 # Train the XGBoost model.
 
 model_xgb <- xgb.train(
-  params = params,
-  data = dtrain,
-  nrounds = nrounds,
-  verbose = 1                # Set to 1 to see the training progress
+  params=params,
+  data=dtrain,
+  nrounds=BOOST_ITERATIONS,
+  verbose=1                # Set to 1 to see the training progress
 )
 
 # Print the summary of the trained model.
