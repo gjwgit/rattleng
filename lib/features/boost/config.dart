@@ -65,7 +65,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
 
   @override
   Widget build(BuildContext context) {
-    String algorithm = ref.read(boostAlgorithmProvider.notifier).state;
+    String algorithm = ref.read(algorithmBoostProvider.notifier).state;
 
     return Column(
       children: [
@@ -107,7 +107,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
                 setState(() {
                   if (chosen != null) {
                     algorithm = chosen;
-                    ref.read(boostAlgorithmProvider.notifier).state = chosen;
+                    ref.read(algorithmBoostProvider.notifier).state = chosen;
                   }
                 });
               },

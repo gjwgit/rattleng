@@ -108,7 +108,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
     _boostObjectiveController.text =
         ref.read(objectiveBoostProvider.notifier).state.toString();
 
-    String algorithm = ref.read(boostAlgorithmProvider.notifier).state;
+    String algorithm = ref.read(algorithmBoostProvider.notifier).state;
     String objective = ref.read(objectiveBoostProvider.notifier).state;
 
     return Column(
