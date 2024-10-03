@@ -34,6 +34,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
+import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 
 import 'package:rattle/widgets/activity_button.dart';
@@ -79,16 +80,16 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
 
             ActivityButton(
               onPressed: () {
-                ref.read(selectedProvider.notifier).state = selected;
-                ref.read(selected2Provider.notifier).state = selected2;
-                rSource(context, ref, 'test');
-                // showUnderConstruction(context);
-                ref.read(testsPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                handlePageNavigation(
+                  context,
+                  ref,
+                  testsPageControllerProvider, // Pass the correct provider
+                  () {
+                    ref.read(selectedProvider.notifier).state = selected;
+                    ref.read(selected2Provider.notifier).state = selected2;
+                    rSource(context, ref, 'test');
+                  },
+                );
               },
               child: const Text('Perform Statistical Tests'),
             ),

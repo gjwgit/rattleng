@@ -19,7 +19,7 @@ void handlePageNavigation(
   additionalLogic();
 
   // Determine the target page index based on the current page.
-  int targetPage = (currentPage >= 2 && currentPage <= 4) ? currentPage : 1;
+  int targetPage = currentPage >= 2 ? currentPage : 1;
 
   // Navigate to the target page.
   pageController.animateToPage(

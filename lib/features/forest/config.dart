@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The FOREST tab config currently consists of just a BUILD button.
@@ -59,17 +60,17 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             const SizedBox(width: 5),
 
             // The BUILD button.
-
             ActivityButton(
               onPressed: () {
-                rSource(context, ref, 'model_template');
-                rSource(context, ref, 'model_build_random_forest');
-                ref.read(forestPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                handlePageNavigation(
+                  context,
+                  ref,
+                  forestPageControllerProvider, // Pass the correct provider
+                  () {
+                    rSource(context, ref, 'model_template');
+                    rSource(context, ref, 'model_build_random_forest');
+                  },
+                );
               },
               child: const Text('Build Random Forest'),
             ),
