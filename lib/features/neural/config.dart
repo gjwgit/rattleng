@@ -37,6 +37,7 @@ import 'package:rattle/providers/nnet_skip.dart';
 import 'package:rattle/providers/nnet_trace.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
@@ -91,69 +92,69 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             const SizedBox(width: 5),
 
             // The BUILD button.
-
             ActivityButton(
               key: const Key('Build Neural Network'),
               onPressed: () async {
-                // Perform manual validation.
-                String? hiddenNeuronsError =
-                    validateInteger(_hiddenNeuronsController.text, min: 1);
-                String? maxNWtsError =
-                    validateInteger(_maxNWtsController.text, min: 1);
-                String? maxitError =
-                    validateInteger(_maxitController.text, min: 1);
+                handlePageNavigation(
+                  context,
+                  ref,
+                  neuralPageControllerProvider, // Pass the correct provider
+                  () async {
+                    // Perform manual validation.
+                    String? hiddenNeuronsError =
+                        validateInteger(_hiddenNeuronsController.text, min: 1);
+                    String? maxNWtsError =
+                        validateInteger(_maxNWtsController.text, min: 1);
+                    String? maxitError =
+                        validateInteger(_maxitController.text, min: 1);
 
-                // Collect all errors.
-                List<String> errors = [
-                  if (hiddenNeuronsError != null)
-                    'Hidden Neurons: $hiddenNeuronsError',
-                  if (maxNWtsError != null) 'Max NWts: $maxNWtsError',
-                  if (maxitError != null) 'Maxit: $maxitError',
-                ];
+                    // Collect all errors.
+                    List<String> errors = [
+                      if (hiddenNeuronsError != null)
+                        'Hidden Neurons: $hiddenNeuronsError',
+                      if (maxNWtsError != null) 'Max NWts: $maxNWtsError',
+                      if (maxitError != null) 'Maxit: $maxitError',
+                    ];
 
-                // Check if there are any errors.
-                if (errors.isNotEmpty) {
-                  // Show a warning dialog if validation fails.
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Validation Error'),
-                      content: Text(
-                        'Please ensure all input fields are valid before building the nnet model:\n\n${errors.join('\n')}',
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('OK'),
+                    // Check if there are any errors.
+                    if (errors.isNotEmpty) {
+                      // Show a warning dialog if validation fails.
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Validation Error'),
+                          content: Text(
+                            'Please ensure all input fields are valid before building the nnet model:\n\n${errors.join('\n')}',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
+                      );
 
-                  return;
-                } else {
-                  ref.read(hiddenNeuronsProvider.notifier).state =
-                      int.parse(_hiddenNeuronsController.text);
-                  ref.read(maxNWtsProvider.notifier).state =
-                      int.parse(_maxNWtsController.text);
-                  ref.read(maxitProvider.notifier).state =
-                      int.parse(_maxitController.text);
+                      return;
+                    } else {
+                      ref.read(hiddenNeuronsProvider.notifier).state =
+                          int.parse(_hiddenNeuronsController.text);
+                      ref.read(maxNWtsProvider.notifier).state =
+                          int.parse(_maxNWtsController.text);
+                      ref.read(maxitProvider.notifier).state =
+                          int.parse(_maxitController.text);
 
-                  // Run the R scripts.
+                      // Run the R scripts.
 
-                  await rSource(context, ref, 'model_template');
-                  if (context.mounted) {
-                    await rSource(context, ref, 'model_build_neural_net');
-                  }
-                }
-                ref.read(neuralPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                      await rSource(context, ref, 'model_template');
+                      if (context.mounted) {
+                        await rSource(context, ref, 'model_build_neural_net');
+                      }
+                    }
+                  },
+                );
               },
               child: const Text('Build Neural Network'),
             ),

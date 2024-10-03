@@ -43,6 +43,7 @@ import 'package:rattle/providers/wordcloud/punctuation.dart';
 import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
@@ -94,50 +95,49 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
-              onPressed: () async {
-                // Clean up the files from previous use.
+              onPressed: () {
+                handlePageNavigation(
+                  context,
+                  ref,
+                  summaryPageControllerProvider, // Pass the correct provider
+                  () {
+                    // Clean up the files from previous use.
 
-                // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.
-                //
-                // Is this required here? Or cleanup when exit the app? Or rely
-                // on os to cleanup /tmp?
+                    // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.
+                    //
+                    // Is this required here? Or cleanup when exit the app? Or rely
+                    // on os to cleanup /tmp?
 
-                File oldWordcloudFile = File(wordCloudImagePath);
-                if (oldWordcloudFile.existsSync()) {
-                  oldWordcloudFile.deleteSync();
-                }
+                    File oldWordcloudFile = File(wordCloudImagePath);
+                    if (oldWordcloudFile.existsSync()) {
+                      oldWordcloudFile.deleteSync();
+                    }
 
-                File oldTmpFile = File(tmpImagePath);
-                if (oldTmpFile.existsSync()) {
-                  oldTmpFile.deleteSync();
-                }
+                    File oldTmpFile = File(tmpImagePath);
+                    if (oldTmpFile.existsSync()) {
+                      oldTmpFile.deleteSync();
+                    }
 
-                // This is the main action.
+                    // This is the main action.
 
-                rSource(context, ref, 'model_build_word_cloud');
+                    rSource(context, ref, 'model_build_word_cloud');
 
-                // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
+                    // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
 
-                // final file = File(wordCloudImagePath);
-                // while (true) {
-                //   if (await file.exists()) {
-                //     debugPrint('file exists');
-                //     break;
-                //   }
-                // }
+                    // final file = File(wordCloudImagePath);
+                    // while (true) {
+                    //   if (await file.exists()) {
+                    //     debugPrint('file exists');
+                    //     break;
+                    //   }
+                    // }
 
-                // Toggle the state to trigger rebuild
+                    // Toggle the state to trigger rebuild
 
-                ref.read(wordCloudBuildProvider.notifier).state = timestamp();
-
-                ref.read(wordcloudPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-
-                // wordCloudDisplayKey.currentState?.goToResultPage();
+                    ref.read(wordCloudBuildProvider.notifier).state =
+                        timestamp();
+                  },
+                );
               },
               child: const Text('Display Word Cloud'),
             ),
