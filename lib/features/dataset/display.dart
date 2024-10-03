@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Monday 2024-09-23 14:51:27 +1000 Graham Williams>
+// Time-stamp: <2024-10-02 15:17:08 gjw>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -127,7 +127,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     pages.add(
       ListView.builder(
-        key: const Key('roles listView'),
+        key: const Key('roles_list_view'),
 
         // Add 1 for the extra header row.
 
@@ -292,7 +292,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               ),
               Expanded(
                 flex: contentFlex,
-                child: Text(content, style: const TextStyle(fontSize: 14)),
+                child: SelectableText(content,
+                    style: const TextStyle(fontSize: 14)),
               ),
             ],
           );
