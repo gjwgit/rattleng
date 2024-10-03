@@ -60,6 +60,11 @@ mdesc <- "Extreme Gradient Boosting (XGBoost)"
 
 train_data <- ds[tr, vars]
 train_labels <- unlist(ds[tr, target])  # Use `unlist()` to ensure train_labels is not a list.
+
+# XGBoost requires the labels for binary classification to be numeric and specifically 0 and 1.
+
+train_labels <- ifelse(train_labels == 'Yes', 1, 0)
+
 train_labels <- as.numeric(train_labels)  # Convert to numeric.
 
 # Convert categorical features in train_data to dummy variables.
