@@ -35,6 +35,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_catergoric.dart';
+import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/utils/get_inputs.dart';
@@ -147,40 +148,41 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             configLeftSpace,
 
             // The BUILD button.
-
             ActivityButton(
               onPressed: () {
-                // Had to update here because
-                // Unhandled Exception: Tried to modify a provider while the widget tree was building.
-                // If you are encountering this error, chances are you tried to modify a provider
-                // in a widget life-cycle, such as but not limited to:
-                // - build
-                // - initState
-                // - dispose
-                // - didUpdateWidget
-                // - didChangeDependencies
+                handlePageNavigation(
+                  context,
+                  ref,
+                  visualPageControllerProvider, // Pass the correct provider
+                  () {
+                    // Had to update here because
+                    // Unhandled Exception: Tried to modify a provider while the widget tree was building.
+                    // If you are encountering this error, chances are you tried to modify a provider
+                    // in a widget life-cycle, such as but not limited to:
+                    // - build
+                    // - initState
+                    // - dispose
+                    // - didUpdateWidget
+                    // - didChangeDependencies
 
-                // Modifying a provider inside those life-cycles is not allowed, as it could
-                // lead to an inconsistent UI state. For example, two widgets could listen to the
-                // same provider, but incorrectly receive different states.
+                    // Modifying a provider inside those life-cycles is not allowed, as it could
+                    // lead to an inconsistent UI state. For example, two widgets could listen to the
+                    // same provider, but incorrectly receive different states.
 
-                // To fix this problem, you have one of two solutions:
-                // - (preferred) Move the logic for modifying your provider outside of a widget
-                //   life-cycle. For example, maybe you could update your provider inside a button's
-                //   onPressed instead.
+                    // To fix this problem, you have one of two solutions:
+                    // - (preferred) Move the logic for modifying your provider outside of a widget
+                    //   life-cycle. For example, maybe you could update your provider inside a button's
+                    //   onPressed instead.
 
-                // - Delay your modification, such as by encapsulating the modification
-                //   in a `Future(() {...})`.
-                //   This will perform your update after the widget tree is done building
-                ref.read(selectedProvider.notifier).state = selected;
-                ref.read(groupByProvider.notifier).state = groupBy;
-                buildAction();
-                ref.read(visualPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                    // - Delay your modification, such as by encapsulating the modification
+                    //   in a `Future(() {...})`.
+                    //   This will perform your update after the widget tree is done building
+                    ref.read(selectedProvider.notifier).state = selected;
+                    ref.read(groupByProvider.notifier).state = groupBy;
+
+                    buildAction();
+                  },
+                );
               },
               child: const Text('Generate Plots'),
             ),
