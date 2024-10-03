@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The SUMMARY tab config currently consists of just a BUILD button.
@@ -62,30 +63,19 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
             ActivityButton(
               onPressed: () {
-                // Check the current page index before navigating.
+                handlePageNavigation(
+                  context,
+                  ref,
+                  summaryPageControllerProvider, // Pass the correct provider
+                  () {
+                    // Specific logic for "Generate Dataset Summary".
 
-                final currentPage =
-                    ref.read(summaryPageControllerProvider).page?.round() ?? 0;
-
-                // Always call rSource regardless of the current page.
-
-                rSource(context, ref, 'explore_summary');
-
-                // Determine the target page index based on the current page.
-
-                int targetPage =
-                    (currentPage >= 2 && currentPage <= 4) ? currentPage : 1;
-
-                // Navigate to the target page.
-
-                ref.read(summaryPageControllerProvider).animateToPage(
-                      targetPage,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                    rSource(context, ref, 'explore_summary');
+                  },
+                );
               },
               child: const Text('Generate Dataset Summary'),
-            )
+            ),
           ],
         ),
       ],
