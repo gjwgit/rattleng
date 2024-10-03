@@ -214,6 +214,8 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               ),
               interval: 0.05,
               decimalPlaces: 2,
+              max: 1.0,
+              min: 0.0,
               validator: (value) => validateDecimal(value),
               stateProvider: learningRateBoostProvider,
             ),
