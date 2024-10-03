@@ -79,17 +79,13 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                handlePageNavigation(
-                  context,
-                  ref,
-                  testsPageControllerProvider, // Pass the correct provider
-                  () {
-                    ref.read(selectedProvider.notifier).state = selected;
-                    ref.read(selected2Provider.notifier).state = selected2;
-                    rSource(context, ref, 'test');
-                  },
-                );
+              pageControllerProvider:
+                  testsPageControllerProvider, // Optional navigation
+
+              additionalLogic: () {
+                ref.read(selectedProvider.notifier).state = selected;
+                ref.read(selected2Provider.notifier).state = selected2;
+                rSource(context, ref, 'test');
               },
               child: const Text('Perform Statistical Tests'),
             ),

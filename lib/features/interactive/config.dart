@@ -60,7 +60,7 @@ class InteractiveConfigState extends ConsumerState<InteractiveConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
+              additionalLogic: () {
                 showUnderConstruction(context);
               },
               child: const Text('Display'),

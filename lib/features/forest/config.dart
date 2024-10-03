@@ -61,16 +61,12 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
             // The BUILD button.
             ActivityButton(
-              onPressed: () {
-                handlePageNavigation(
-                  context,
-                  ref,
-                  forestPageControllerProvider, // Pass the correct provider
-                  () {
-                    rSource(context, ref, 'model_template');
-                    rSource(context, ref, 'model_build_random_forest');
-                  },
-                );
+              pageControllerProvider:
+                  forestPageControllerProvider, // Optional navigation
+
+              additionalLogic: () {
+                rSource(context, ref, 'model_template');
+                rSource(context, ref, 'model_build_random_forest');
               },
               child: const Text('Build Random Forest'),
             ),

@@ -60,7 +60,7 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
+              additionalLogic: () {
                 showUnderConstruction(context);
               },
               child: const Text('Build Linear Model'),

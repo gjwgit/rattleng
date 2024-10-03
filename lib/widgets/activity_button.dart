@@ -36,12 +36,14 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/show_ok.dart';
 
 class ActivityButton extends ConsumerWidget {
-  final VoidCallback onPressed;
+  final StateProvider<PageController>? pageControllerProvider;
+  final VoidCallback? additionalLogic;
   final Widget child;
 
   const ActivityButton({
     super.key,
-    required this.onPressed,
+    this.pageControllerProvider, // Optional for navigation
+    this.additionalLogic, // Optional for additional logic
     required this.child,
   });
 
@@ -65,7 +67,28 @@ class ActivityButton extends ConsumerWidget {
             ''',
           );
         } else {
-          onPressed();
+          // Perform additional logic, if any.
+          additionalLogic?.call();
+
+          // If page navigation is required, handle it here.
+          if (pageControllerProvider != null) {
+            // Access the PageController directly from the StateProvider.
+            final pageController = ref.read(pageControllerProvider!);
+
+            // Check the current page index before navigating.
+            final currentPage = pageController.page?.round() ?? 0;
+
+            // Determine the target page index based on the current page.
+            int targetPage =
+                (currentPage >= 2 && currentPage <= 4) ? currentPage : 1;
+
+            // Navigate to the target page.
+            pageController.animateToPage(
+              targetPage,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          }
         }
       },
       child: child,

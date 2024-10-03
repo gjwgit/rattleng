@@ -62,17 +62,13 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                handlePageNavigation(
-                  context,
-                  ref,
-                  correlationPageControllerProvider, // Pass the correct provider
-                  () {
-                    // wait for 3 seconds before moving to the next page.
-                    Future.delayed(const Duration(seconds: 3));
-                    rSource(context, ref, 'explore_correlation');
-                  },
-                );
+              pageControllerProvider:
+                  correlationPageControllerProvider, // Optional navigation
+
+              additionalLogic: () {
+                // wait for 3 seconds before moving to the next page.
+                Future.delayed(const Duration(seconds: 3));
+                rSource(context, ref, 'explore_correlation');
               },
               child: const Text('Perform Correlation Analysis'),
             ),

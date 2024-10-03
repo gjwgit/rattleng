@@ -94,67 +94,63 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             // The BUILD button.
             ActivityButton(
               key: const Key('Build Neural Network'),
-              onPressed: () async {
-                handlePageNavigation(
-                  context,
-                  ref,
-                  neuralPageControllerProvider, // Pass the correct provider
-                  () async {
-                    // Perform manual validation.
-                    String? hiddenNeuronsError =
-                        validateInteger(_hiddenNeuronsController.text, min: 1);
-                    String? maxNWtsError =
-                        validateInteger(_maxNWtsController.text, min: 1);
-                    String? maxitError =
-                        validateInteger(_maxitController.text, min: 1);
+              pageControllerProvider:
+                  neuralPageControllerProvider, // Optional navigation
 
-                    // Collect all errors.
-                    List<String> errors = [
-                      if (hiddenNeuronsError != null)
-                        'Hidden Neurons: $hiddenNeuronsError',
-                      if (maxNWtsError != null) 'Max NWts: $maxNWtsError',
-                      if (maxitError != null) 'Maxit: $maxitError',
-                    ];
+              additionalLogic: () async {
+                // Perform manual validation.
+                String? hiddenNeuronsError =
+                    validateInteger(_hiddenNeuronsController.text, min: 1);
+                String? maxNWtsError =
+                    validateInteger(_maxNWtsController.text, min: 1);
+                String? maxitError =
+                    validateInteger(_maxitController.text, min: 1);
 
-                    // Check if there are any errors.
-                    if (errors.isNotEmpty) {
-                      // Show a warning dialog if validation fails.
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Validation Error'),
-                          content: Text(
-                            'Please ensure all input fields are valid before building the nnet model:\n\n${errors.join('\n')}',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
+                // Collect all errors.
+                List<String> errors = [
+                  if (hiddenNeuronsError != null)
+                    'Hidden Neurons: $hiddenNeuronsError',
+                  if (maxNWtsError != null) 'Max NWts: $maxNWtsError',
+                  if (maxitError != null) 'Maxit: $maxitError',
+                ];
+
+                // Check if there are any errors.
+                if (errors.isNotEmpty) {
+                  // Show a warning dialog if validation fails.
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Validation Error'),
+                      content: Text(
+                        'Please ensure all input fields are valid before building the nnet model:\n\n${errors.join('\n')}',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
                         ),
-                      );
+                      ],
+                    ),
+                  );
 
-                      return;
-                    } else {
-                      ref.read(hiddenNeuronsProvider.notifier).state =
-                          int.parse(_hiddenNeuronsController.text);
-                      ref.read(maxNWtsProvider.notifier).state =
-                          int.parse(_maxNWtsController.text);
-                      ref.read(maxitProvider.notifier).state =
-                          int.parse(_maxitController.text);
+                  return;
+                } else {
+                  ref.read(hiddenNeuronsProvider.notifier).state =
+                      int.parse(_hiddenNeuronsController.text);
+                  ref.read(maxNWtsProvider.notifier).state =
+                      int.parse(_maxNWtsController.text);
+                  ref.read(maxitProvider.notifier).state =
+                      int.parse(_maxitController.text);
 
-                      // Run the R scripts.
+                  // Run the R scripts.
 
-                      await rSource(context, ref, 'model_template');
-                      if (context.mounted) {
-                        await rSource(context, ref, 'model_build_neural_net');
-                      }
-                    }
-                  },
-                );
+                  await rSource(context, ref, 'model_template');
+                  if (context.mounted) {
+                    await rSource(context, ref, 'model_build_neural_net');
+                  }
+                }
               },
               child: const Text('Build Neural Network'),
             ),

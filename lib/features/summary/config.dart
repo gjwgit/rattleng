@@ -62,17 +62,11 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                handlePageNavigation(
-                  context,
-                  ref,
-                  summaryPageControllerProvider, // Pass the correct provider
-                  () {
-                    // Specific logic for "Generate Dataset Summary".
+              pageControllerProvider:
+                  summaryPageControllerProvider, // Optional navigation
 
-                    rSource(context, ref, 'explore_summary');
-                  },
-                );
+              additionalLogic: () {
+                rSource(context, ref, 'explore_summary');
               },
               child: const Text('Generate Dataset Summary'),
             ),
