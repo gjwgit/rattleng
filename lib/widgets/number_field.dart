@@ -45,6 +45,8 @@ class NumberField extends ConsumerStatefulWidget {
   final int maxWidth;
   final num interval;
   final int decimalPlaces;
+  final num? min;
+  final num? max;
 
   const NumberField({
     super.key,
@@ -52,6 +54,8 @@ class NumberField extends ConsumerStatefulWidget {
     required this.stateProvider,
     required this.validator,
     required this.inputFormatter,
+    this.min,
+    this.max,
     this.label = '',
     this.tooltip = '',
     this.enabled = true,
@@ -83,17 +87,25 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
   void increment() {
     // Parse the current value, increment by interval, and update the text field.
+
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
     currentValue += widget.interval;
+    if (widget.max != null && currentValue > widget.max!) {
+      currentValue = widget.max!;
+    }
     widget.controller.text = currentValue.toStringAsFixed(widget.decimalPlaces);
     updateField();
   }
 
   void decrement() {
     // Parse the current value, decrement by interval, and update the text field.
+
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
     if (currentValue > widget.interval) {
       currentValue -= widget.interval;
+    }
+    if (widget.min != null && currentValue < widget.min!) {
+      currentValue = widget.min!;
     }
     widget.controller.text = currentValue.toStringAsFixed(widget.decimalPlaces);
     updateField();
@@ -127,9 +139,22 @@ class NumberFieldState extends ConsumerState<NumberField> {
     String updatedText = widget.controller.text;
 
     num? v = num.tryParse(updatedText);
+
     if (v == null) {
       ref.read(widget.stateProvider.notifier).state = updatedText;
     } else {
+      if (widget.max != null && v > widget.max!) {
+        v = widget.max!;
+      } else if (widget.min != null && v < widget.min!) {
+        v = widget.min!;
+      }
+      widget.controller.text = v.toString();
+
+      if (widget.decimalPlaces > 0) {
+        // Convert v to double with specified decimalPlaces.
+
+        v = double.parse(v.toStringAsFixed(widget.decimalPlaces));
+      }
       ref.read(widget.stateProvider.notifier).state = v;
     }
   }
