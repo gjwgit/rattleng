@@ -78,7 +78,7 @@ void main() {
 
       // Tap the right arrow button to go to Variable page.
 
-      await tester.tap(rightArrowFinder);
+      // await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
@@ -226,7 +226,7 @@ void main() {
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
+      // await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
@@ -306,7 +306,7 @@ void main() {
 
       // Tap the right arrow button to go to Variable page.
 
-      await tester.tap(rightArrowFinder);
+      // await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
       await tester.pump(hack);
       await tester.pump(interact);
@@ -460,11 +460,12 @@ void main() {
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
+      // await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
 
       await tester.pump(delay);
       await tester.pump(interact);
+      //
 
       // Check if SelectableText contains the expected content.
 
@@ -475,6 +476,8 @@ void main() {
       );
 
       // Ensure the SelectableText widget with the expected content exists.
+
+      // TODO 20241001 kev the underneath code is not working as expected
 
       expect(modelDescriptionFinder, findsOneWidget);
 

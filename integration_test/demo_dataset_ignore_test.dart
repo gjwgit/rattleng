@@ -1,6 +1,6 @@
-/// Test the set of high level variables to ignore.
+/// Test the default identification of IGNORED variables on the ROLES page.
 //
-// Time-stamp: <Tuesday 2024-09-24 13:23:27 +1000 Graham Williams>
+// Time-stamp: <2024-10-02 15:29:31 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -35,34 +35,29 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/open_demo_dataset.dart';
 
-/// List of specific variables that should have their role automatically set to
-/// 'Ignore' in the DEMO and the LARGE datasets.
+// List of specific variables that should have their role automatically set by
+// the app on loading the data to be 'Ignore'. For the DEMO dataset there are no
+// IGNORED by default.
 
 final List<String> demoVariablesToIgnore = [];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Set Variables to Ignore Test:', () {
-    testWidgets('Test demo dataset.', (WidgetTester tester) async {
+  group('Check Default Ignored Variables:', () {
+    testWidgets('Demo dataset.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
       await openDemoDataset(tester);
 
-      // TODO 20240910 gjw CONSIDER REMOVING THIS HACK
-
       await tester.pump(hack);
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
+      // Find the scrollable ListView that makes up the ROLES page. This should
+      // now be the visible page.
 
-      // Find the scrollable ListView.
-
-      final scrollableFinder = find.byKey(const Key('roles listView'));
+      final scrollableFinder = find.byKey(const Key('roles_list_view'));
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 
