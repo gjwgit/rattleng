@@ -35,6 +35,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/providers/cluster_re_scale.dart';
@@ -129,6 +130,12 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
+
+  int boostMaxDepth = ref.read(maxDepthBoostProvider);
+  double boostLearningRate = ref.read(learningRateBoostProvider);
+  int boostThreads = ref.read(threadsBoostProvider);
+  int boostIterations = ref.read(iterationsBoostProvider);
+  String boostObjective = ref.read(objectiveBoostProvider);
 
   int interval = ref.read(intervalProvider);
 
@@ -346,6 +353,12 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
+
+  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
+  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
+  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
+  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
+  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
 
   // Add the code to the script provider so it will be displayed in the script
   // tab and available to be exported there.
