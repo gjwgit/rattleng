@@ -439,11 +439,11 @@ void main() {
       await tester.tap(neuralNetworkButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(longHack);
+      // await tester.pump(longHack);
 
       // Tap the right arrow to go to the second page.
 
-      await gotoNextPage(tester);
+      // await gotoNextPage(tester);
 
       await tester.pump(delay);
 
@@ -457,6 +457,7 @@ void main() {
 
       // Ensure the SelectableText widget with the expected content exists.
 
+      // TODO 20241001 kev : underneath code is not working as expected
       expect(modelDescriptionFinder, findsOneWidget);
 
       final summaryDecisionTreeFinder = find.byType(TextPage);

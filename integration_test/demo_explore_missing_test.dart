@@ -36,6 +36,7 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/explore.dart';
 
 import 'utils/open_demo_dataset.dart';
+import 'utils/verify_next_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +55,7 @@ void main() {
       await _performMissingAnalysis(tester);
       // last number on the page.
 
-      await _verifyPageContent(tester, 'Patterns of Missing Data', '380');
+      await verifyPage('Patterns of Missing Data', '380');
       await _verifyPageContent(tester, 'Patterns of Missing Values');
       await _verifyPageContent(
         tester,
