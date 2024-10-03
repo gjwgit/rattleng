@@ -99,7 +99,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 handlePageNavigation(
                   context,
                   ref,
-                  summaryPageControllerProvider, // Pass the correct provider
+                  wordcloudPageControllerProvider, // Pass the correct provider
                   () {
                     // Clean up the files from previous use.
 
