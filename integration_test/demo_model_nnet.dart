@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <2024-10-05 18:57:33 gjw>
+// Time-stamp: <Wednesday 2024-10-09 17:26:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -62,8 +62,6 @@ void main() {
       await openDemoDataset(tester);
 
       await tester.pump(interact);
-
-      await tester.pump(hack);
 
       // Find the scrollable ListView.
 
