@@ -117,7 +117,6 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
         configTopSpace,
         Row(
           children: [
-            configWidgetSpace,
             NumberField(
               label: 'Max Depth:',
               key: const Key('boost_max_depth'),
