@@ -27,7 +27,6 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final treesBoostProvider = StateProvider<int>((ref) => 50);
 final maxDepthBoostProvider = StateProvider<int>((ref) => 6);
 final minSplitBoostProvider = StateProvider<int>((ref) => 20);
 final complexityBoostProvider = StateProvider<double>((ref) => 0.01);
@@ -35,5 +34,6 @@ final xValueBoostProvider = StateProvider<int>((ref) => 10);
 final learningRateBoostProvider = StateProvider<double>((ref) => 0.3);
 final threadsBoostProvider = StateProvider<int>((ref) => 2);
 final iterationsBoostProvider = StateProvider<int>((ref) => 50);
-final objectiveBoostProvider = StateProvider<String>((ref) => 'reg:squarederror');
+final objectiveBoostProvider =
+    StateProvider<String>((ref) => 'reg:squarederror');
 final algorithmBoostProvider = StateProvider<String>((ref) => 'Extreme');
