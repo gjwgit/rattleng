@@ -60,7 +60,6 @@ class BoostSetting extends ConsumerStatefulWidget {
 class _BoostSettingState extends ConsumerState<BoostSetting> {
   // Controllers for the input fields.
 
-  final TextEditingController _boostTreesController = TextEditingController();
   final TextEditingController _boostMaxDepthController =
       TextEditingController();
   final TextEditingController _boostMinSplitController =
@@ -80,7 +79,6 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
   void dispose() {
     // Dispose the controllers to free up resources.
 
-    _boostTreesController.dispose();
     _boostMaxDepthController.dispose();
     _boostMinSplitController.dispose();
     _boostComplexityController.dispose();
@@ -95,8 +93,6 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
 
   @override
   Widget build(BuildContext context) {
-    _boostTreesController.text =
-        ref.read(treesBoostProvider.notifier).state.toString();
     _boostMaxDepthController.text =
         ref.read(maxDepthBoostProvider.notifier).state.toString();
     _boostMinSplitController.text =
@@ -121,20 +117,6 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
         configTopSpace,
         Row(
           children: [
-            NumberField(
-              label: 'Trees:',
-              key: const Key('boost_trees'),
-              tooltip: '''
-
-              Number of trees in the model; more trees increase accuracy but also complexity.
-
-              ''',
-              enabled: widget.algorithm == 'Adaptive',
-              controller: _boostTreesController,
-              inputFormatter: FilteringTextInputFormatter.digitsOnly,
-              validator: (value) => validateInteger(value, min: 1),
-              stateProvider: treesBoostProvider,
-            ),
             configWidgetSpace,
             NumberField(
               label: 'Max Depth:',
