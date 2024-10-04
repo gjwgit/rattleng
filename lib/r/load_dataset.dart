@@ -1,6 +1,6 @@
 /// Call upon R to load a dataset.
 ///
-/// Time-stamp: <Monday 2024-09-16 08:51:03 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-09-29 10:45:23 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 /// Load the specified dataset using the appropriate R script.

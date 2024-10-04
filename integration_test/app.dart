@@ -1,6 +1,6 @@
-/// Testing the app startup.
+/// Test that the app starts up.
 //
-// Time-stamp: <Tuesday 2024-09-24 13:15:06 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-02 15:13:17 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -49,23 +49,32 @@ void main() {
 
     // Leave time to see the first page during an interactive test. We use a
     // [interact] delay which for qtest is 0s and for itest is 5s. Lutra-fs
-    // notes that 0 problematic on their testing (hence qtest failing). Perhaps
-    // then try with itest.
+    // notes that 0s is problematic on their testing (hence qtest
+    // failing). Perhaps then try with itest.
 
     await tester.pump(interact);
+
+    // Check that there is DATASET BUILD button.
 
     final datasetButtonFinder = find.byType(DatasetButton);
     expect(datasetButtonFinder, findsOneWidget);
 
     await tester.pump(interact);
 
+    // Confirm the 2 Markdown widgets.
+
     final welcomeMarkdownFinder = find.byType(Markdown);
     expect(welcomeMarkdownFinder, findsNWidgets(2));
+
+    // The first is the welcome widget. We can check it's contents is as
+    // expected.
 
     final welcomeWidget =
         welcomeMarkdownFinder.evaluate().first.widget as Markdown;
     String welcome = welcomeWidget.data;
     expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
+
+    // Check that we have a single status bar.
 
     final statusBarFinder = find.byKey(statusBarKey);
     expect(statusBarFinder, findsOneWidget);

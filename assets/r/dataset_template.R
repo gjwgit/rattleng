@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-09-16 08:53:19 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-09-29 16:24:25 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -132,6 +132,9 @@ nmobs
 glimpse(ds)
 summary(ds)
 
+# 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
+
+meta_data(ds)
 
 # Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
 

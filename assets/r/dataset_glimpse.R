@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2023-09-22 11:29:42 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-08-14 17:45:23 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -27,3 +27,7 @@
 # Glimpse the dataset.
 
 glimpse(ds)
+
+# 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
+
+meta_data(ds)
