@@ -30,7 +30,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The CORRELATION tab config currently consists of just a BUILD button.

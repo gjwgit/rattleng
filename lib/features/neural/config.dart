@@ -37,7 +37,6 @@ import 'package:rattle/providers/nnet_skip.dart';
 import 'package:rattle/providers/nnet_trace.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
