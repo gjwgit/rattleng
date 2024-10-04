@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-09-11 14:37:17 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-09-11 16:49:01 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -83,7 +83,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
       // visualisations.
       onSelected: (String? value) {
         ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        // Here is that subtle difference
         selectedTransform = 'Zero/Missing';
         // We don't buildAction() here since the variable choice might
         // be followed by a transform choice and we don;t want to shoot
