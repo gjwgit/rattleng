@@ -84,7 +84,11 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             ActivityButton(
               onPressed: () async {
                 await rSource(context, ref, 'model_template');
-                await rSource(context, ref, 'model_build_xgboost');
+                if (algorithm == 'Extreme') {
+                  await rSource(context, ref, 'model_build_xgboost');
+                } else if (algorithm == 'Adaptive') {
+                  await rSource(context, ref, 'model_build_adaboost');
+                }
               },
               child: const Text('Build Boosted Trees'),
             ),
