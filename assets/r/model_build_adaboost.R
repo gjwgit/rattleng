@@ -70,10 +70,6 @@ train_df <- na.omit(train_df)
 
 # Set parameters for the AdaBoost model.
 
-BOOST_COMPLEXITY <- 0.01
-BOOST_MIN_SPLIT <- 20
-BOOST_X_VALUE <- 10
-
 ada_control <- rpart.control(maxdepth=BOOST_MAX_DEPTH,
                           cp=BOOST_COMPLEXITY,
                           minsplit=BOOST_MIN_SPLIT,
@@ -83,7 +79,6 @@ ada_control <- rpart.control(maxdepth=BOOST_MAX_DEPTH,
 
 model_ada <- ada(target ~ ., data = train_df, 
                  iter = BOOST_ITERATIONS,  # number of iterations
-                 nu = 0.1,   # learning rate
                  type = "gentle",  # type of boosting
                  control = ada_control)
 

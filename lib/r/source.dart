@@ -132,7 +132,11 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   String lossMatrix = ref.read(lossMatrixProvider);
 
   int boostMaxDepth = ref.read(maxDepthBoostProvider);
+  int boostMinSplit = ref.read(minSplitBoostProvider);
+  int boostXVal = ref.read(xValueBoostProvider);
+  int boostTrees = ref.read(treesBoostProvider);
   double boostLearningRate = ref.read(learningRateBoostProvider);
+  double boostComplexity = ref.read(complexityBoostProvider);
   int boostThreads = ref.read(threadsBoostProvider);
   int boostIterations = ref.read(iterationsBoostProvider);
   String boostObjective = ref.read(objectiveBoostProvider);
@@ -355,7 +359,11 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
 
   code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
+  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
+  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
+  code = code.replaceAll('BOOST_TREES', boostTrees.toString());
   code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
+  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
   code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
   code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
   code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
