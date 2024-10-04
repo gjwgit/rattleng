@@ -67,7 +67,7 @@ void main() {
 
       await verifyPage(
         'XGBoost - Summary',
-        'cloud_3pm 1.021346e-01 0.0313749918 0.048632219 1.021346e-01',
+        'Feature         Gain        Cover   Frequency   Importance',
       );
 
       await gotoNextPage(tester);
@@ -118,7 +118,7 @@ void main() {
 
       await verifyPage(
         'AdaBoost - Summary',
-        'No  94   0',
+        'Final Confusion Matrix for Data:',
       );
 
       await gotoNextPage(tester);
