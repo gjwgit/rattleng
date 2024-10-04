@@ -43,7 +43,6 @@ import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
-import 'package:rattle/utils/page_navigation_logic.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
