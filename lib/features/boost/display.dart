@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -55,15 +56,18 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
 
+    String algorithm = ref.read(algorithmBoostProvider.notifier).state;
+
     List<Widget> pages = [showMarkdownFile(boostIntroFile, context)];
 
-    String content =
-        rExtract(stdout, 'print(importance_dt, row.names = FALSE)');
+    if (algorithm == 'Extreme') {
+      String content =
+          rExtract(stdout, 'print(importance_dt, row.names = FALSE)');
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '''
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: '''
 
           # XGBoost - Summary
 
@@ -73,17 +77,17 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [xgb::xgb.train()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
             ''',
-          content: '\n$content',
-        ),
-      );
-    }
+            content: '\n$content',
+          ),
+        );
+      }
 
-    String image = '$tempDir/model_xgb_importance.svg';
+      String image = '$tempDir/model_xgb_importance.svg';
 
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Variable Importance
 
@@ -91,9 +95,48 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [xgb::xgb.importance()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.importance).
           
           ''',
-          path: image,
-        ),
-      );
+            path: image,
+          ),
+        );
+      }
+    } else if (algorithm == 'Adaptive') {
+      String content = rExtract(stdout, 'print(model_ada)');
+
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: '''
+
+          # AdaBoost - Summary
+
+          Visit the 
+          [Guide](https://www.rdocumentation.org/packages/JOUSBoost/versions/2.1.0/topics/adaboost). Built
+          using
+          [ada()](https://github.com/cran/JOUSBoost/blob/master/R/adaboost.R).
+
+            ''',
+            content: '\n$content',
+          ),
+        );
+      }
+
+      String image = '$tempDir/model_ada_boost.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
+
+          # Variable Importance
+
+          Generated using
+          [ada()](https://github.com/cran/JOUSBoost/blob/master/R/adaboost.R).
+
+          ''',
+            path: image,
+          ),
+        );
+      }
     }
 
     return Pages(

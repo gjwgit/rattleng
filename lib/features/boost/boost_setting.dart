@@ -248,7 +248,6 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               Number of boosting rounds or iterations to train the model.
 
               ''',
-              enabled: widget.algorithm == 'Extreme',
               controller: _boostIterationsController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
