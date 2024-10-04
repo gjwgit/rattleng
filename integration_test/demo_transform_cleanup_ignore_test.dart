@@ -253,13 +253,13 @@ void main() {
 
       // Check that deleted variables are not in the dropdown options.
 
-      for (String variable in deletedVariables) {
-        final dropdownOptionFinder = find.text(variable);
-        // expect(
-        //   dropdownOptionFinder,
-        //   findsNothing,
-        // );
-      }
+      // for (String variable in deletedVariables) {
+      //   final dropdownOptionFinder = find.text(variable);
+      //   // expect(
+      //   //   dropdownOptionFinder,
+      //   //   findsNothing,
+      //   // );
+      // }
 
       // Navigate to the "Dataset" tab.
 

@@ -72,10 +72,6 @@ void main() {
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
       // Tap the right arrow button to go to Variable page.
 
       // await tester.tap(rightArrowFinder);
@@ -299,10 +295,6 @@ void main() {
       // itself - we need to deal with the async issue in Rattle.
 
       await tester.pump(longHack);
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
       // Tap the right arrow button to go to Variable page.
 
