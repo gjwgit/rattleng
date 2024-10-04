@@ -84,5 +84,56 @@ void main() {
 
       await tester.pump(interact);
     });
+
+    testWidgets('AdaBoost.', (WidgetTester tester) async {
+      app.main();
+
+      await tester.pumpAndSettle();
+      await tester.pump(interact);
+
+      await openDemoDataset(tester);
+
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Boost', BoostPanel);
+
+      // Find the ChoiceChipTip widget for the algorithm type.
+
+      final adaChip = find.text(
+        'Adaptive',
+      );
+
+      // Tap the adaptive chip to switch algorithm.
+
+      await tester.tap(adaChip);
+
+      await tester.pumpAndSettle();
+
+      await pressButton(tester, 'Build Boosted Trees');
+      await tester.pump(longHack);
+
+      await gotoNextPage(tester);
+      await tester.pump(hack);
+
+      // Verify the content of the page.
+
+      await verifyPage(
+        'AdaBoost - Summary',
+        'No  94   0',
+      );
+
+      await gotoNextPage(tester);
+      await tester.pump(hack);
+
+      final imagePageTitleFinder = find.text('Variable Importance');
+      expect(imagePageTitleFinder, findsOneWidget);
+
+      final imageFinder = find.byType(ImagePage);
+
+      // Assert that the image is present.
+
+      expect(imageFinder, findsOneWidget);
+
+      await tester.pump(interact);
+    });
   });
 }
