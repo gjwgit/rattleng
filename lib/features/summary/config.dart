@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-05 08:55:09 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-05 11:12:15 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -63,7 +63,6 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             ActivityButton(
               pageControllerProvider:
                   summaryPageControllerProvider, // Optional navigation
-
               onPressed: () {
                 rSource(context, ref, 'explore_summary');
               },
