@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-06 16:43:42 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-05 15:43:30 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -51,8 +51,9 @@ class MissingDisplay extends ConsumerStatefulWidget {
 class _MissingDisplayState extends ConsumerState<MissingDisplay> {
   @override
   Widget build(BuildContext context) {
-    final pageController = ref.watch(
-        missingPageControllerProvider); // Get the PageController from Riverpod
+    // Get the PageController from Riverpod.
+
+    final pageController = ref.watch(missingPageControllerProvider);
 
     String stdout = ref.watch(stdoutProvider);
 
@@ -235,6 +236,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
         ),
       );
     }
+
     return PageViewer(
       pageController: pageController,
       pages: pages,

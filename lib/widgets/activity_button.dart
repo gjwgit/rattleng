@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for Rattle.
 //
-// Time-stamp: <Saturday 2024-10-05 09:01:48 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-05 11:16:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Kevin Wang
 
 library;
 
@@ -68,21 +68,26 @@ class ActivityButton extends ConsumerWidget {
           );
         } else {
           // Perform additional logic, if any.
+
           onPressed?.call();
 
           // If page navigation is required, handle it here.
+
           if (pageControllerProvider != null) {
             // Access the PageController directly from the StateProvider.
+
             final pageController = ref.read(pageControllerProvider!);
 
             // Check the current page index before navigating.
+
             final currentPage = pageController.page?.round() ?? 0;
 
             // Determine the target page index based on the current page.
-            int targetPage =
-                (currentPage >= 2 && currentPage <= 4) ? currentPage : 1;
+
+            int targetPage = currentPage == 0 ? 1 : currentPage;
 
             // Navigate to the target page.
+
             pageController.animateToPage(
               targetPage,
               duration: const Duration(milliseconds: 300),
