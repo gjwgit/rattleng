@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <2024-10-02 15:17:08 gjw>
+// Time-stamp: <Thursday 2024-10-03 07:30:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -43,11 +43,13 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
+import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
+import 'package:rattle/providers/meta_data.dart';
 
 TextStyle defaultTextStyle = const TextStyle(
   fontSize: 14,
@@ -78,6 +80,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
 
+    // FIRST PAGE: Welcome Message
+
     List<Widget> pages = [showMarkdownFile(welcomeMsgFile, context)];
 
     // Handle different file types
@@ -85,6 +89,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
     } else if (path == weatherDemoFile || path.endsWith('.csv')) {
+      // 20240815 gjw Update the metaData provider here if needed.
+
+      updateMetaData(ref);
+
       _addDatasetPage(stdout, pages);
     }
 

@@ -37,18 +37,20 @@ text_data <- readLines("FILENAME")
 docs <- Corpus(VectorSource(text_data))
 
 # Preprocessing.
-
-if (STEM) {
-  docs <- tm_map(docs, stemDocument)
-}
+# the order matters!
 
 if (PUNCTUATION) {
-  docs <- tm_map(docs, removePunctuation)
+  docs <- tm_map(docs, removePunctuation, ucp = TRUE)
 }
 
 if (STOPWORD) {
   docs <- tm_map(docs, removeWords, stopwords("LANGUAGE"))
 }
+
+if (STEM) {
+  docs <- tm_map(docs, stemDocument)
+}
+
 
 # Convert text data to a single character string
 #
