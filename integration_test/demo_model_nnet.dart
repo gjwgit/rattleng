@@ -76,9 +76,6 @@ void main() {
 
       // await tester.tap(rightArrowFinder);
       await tester.pumpAndSettle();
-      await tester.pump(hack);
-
-      await tester.pump(interact);
 
       // Find the scrollable ListView.
 
@@ -222,11 +219,6 @@ void main() {
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
-      // await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
-      await tester.pump(interact);
 
       // Check if SelectableText contains the expected content.
 
@@ -457,7 +449,6 @@ void main() {
 
       await tester.pump(delay);
       await tester.pump(interact);
-      //
 
       // Check if SelectableText contains the expected content.
 
