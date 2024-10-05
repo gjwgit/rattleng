@@ -81,7 +81,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
               pageControllerProvider:
                   testsPageControllerProvider, // Optional navigation
 
-              additionalLogic: () {
+              onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(selected2Provider.notifier).state = selected2;
                 rSource(context, ref, 'test');

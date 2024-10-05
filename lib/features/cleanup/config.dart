@@ -271,7 +271,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
             // The BUILD button.
 
             ActivityButton(
-              additionalLogic: () {
+              onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 takeAction(method);
               },

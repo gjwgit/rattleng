@@ -63,7 +63,7 @@ class MissingConfigState extends ConsumerState<MissingConfig> {
               pageControllerProvider:
                   missingPageControllerProvider, // Optional navigation
 
-              additionalLogic: () {
+              onPressed: () {
                 rSource(context, ref, 'explore_missing');
               },
               child: const Text('Perform Missing Analysis'),

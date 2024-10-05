@@ -180,7 +180,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
-              additionalLogic: () {
+              onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
                 ref.read(rescalePageControllerProvider).animateToPage(

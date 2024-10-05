@@ -63,7 +63,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               pageControllerProvider:
                   forestPageControllerProvider, // Optional navigation
 
-              additionalLogic: () {
+              onPressed: () {
                 rSource(context, ref, 'model_template');
                 rSource(context, ref, 'model_build_random_forest');
               },

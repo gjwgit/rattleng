@@ -122,7 +122,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 pageControllerProvider:
                     treePageControllerProvider, // Optional navigation
 
-                additionalLogic: () {
+                onPressed: () {
                   // TODO 20240926 gjw SPLIT THIS INTO OWN LOCAL FUNCTION
 
                   // Perform manual validation.

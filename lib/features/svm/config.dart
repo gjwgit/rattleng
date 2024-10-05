@@ -60,7 +60,7 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
             // The BUILD button.
 
             ActivityButton(
-              additionalLogic: () {
+              onPressed: () {
                 showUnderConstruction(context);
               },
               child: const Text('Build SVM Model'),

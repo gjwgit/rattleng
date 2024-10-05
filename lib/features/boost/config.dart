@@ -60,7 +60,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             // The BUILD button.
 
             ActivityButton(
-              additionalLogic: () {
+              onPressed: () {
                 showUnderConstruction(context);
               },
               child: const Text('Build Boosted Trees'),

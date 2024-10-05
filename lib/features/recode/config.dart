@@ -225,7 +225,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           children: [
             configTopSpace,
             ActivityButton(
-              additionalLogic: () {
+              onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(selected2Provider.notifier).state = selected2;
                 buildAction();

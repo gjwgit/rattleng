@@ -96,7 +96,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               pageControllerProvider:
                   neuralPageControllerProvider, // Optional navigation
 
-              additionalLogic: () async {
+              onPressed: () async {
                 // Perform manual validation.
                 String? hiddenNeuronsError =
                     validateInteger(_hiddenNeuronsController.text, min: 1);
