@@ -64,7 +64,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               pageControllerProvider:
                   summaryPageControllerProvider, // Optional navigation
 
-              additionalLogic: () {
+              onPressed: () {
                 rSource(context, ref, 'explore_summary');
               },
               child: const Text('Generate Dataset Summary'),

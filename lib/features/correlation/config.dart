@@ -64,7 +64,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
               pageControllerProvider:
                   correlationPageControllerProvider, // Optional navigation
 
-              additionalLogic: () {
+              onPressed: () {
                 // wait for 3 seconds before moving to the next page.
                 Future.delayed(const Duration(seconds: 3));
                 rSource(context, ref, 'explore_correlation');

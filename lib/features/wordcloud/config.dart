@@ -97,7 +97,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               pageControllerProvider:
                   wordcloudPageControllerProvider, // Optional navigation
 
-              additionalLogic: () {
+              onPressed: () {
                 // Clean up the files from previous use.
 
                 // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.

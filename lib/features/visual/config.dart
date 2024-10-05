@@ -150,7 +150,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             ActivityButton(
               pageControllerProvider:
                   visualPageControllerProvider, // Optional navigation
-              additionalLogic: () {
+              onPressed: () {
                 // Had to update here because
                 // Unhandled Exception: Tried to modify a provider while the widget tree was building.
                 // If you are encountering this error, chances are you tried to modify a provider

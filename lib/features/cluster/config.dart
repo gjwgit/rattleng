@@ -91,7 +91,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             // The BUILD button.
 
             ActivityButton(
-              additionalLogic: () {
+              onPressed: () {
                 rSource(context, ref, 'model_template');
                 if (type == 'KMeans') {
                   rSource(context, ref, 'model_build_cluster');

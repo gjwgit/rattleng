@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for Rattle.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:50:04 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-05 09:01:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,13 +37,13 @@ import 'package:rattle/utils/show_ok.dart';
 
 class ActivityButton extends ConsumerWidget {
   final StateProvider<PageController>? pageControllerProvider;
-  final VoidCallback? additionalLogic;
+  final VoidCallback? onPressed;
   final Widget child;
 
   const ActivityButton({
     super.key,
     this.pageControllerProvider, // Optional for navigation
-    this.additionalLogic, // Optional for additional logic
+    this.onPressed, // Optional for additional logic
     required this.child,
   });
 
@@ -68,7 +68,7 @@ class ActivityButton extends ConsumerWidget {
           );
         } else {
           // Perform additional logic, if any.
-          additionalLogic?.call();
+          onPressed?.call();
 
           // If page navigation is required, handle it here.
           if (pageControllerProvider != null) {

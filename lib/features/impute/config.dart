@@ -239,7 +239,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               pageControllerProvider:
                   imputePageControllerProvider, // Optional navigation
 
-              additionalLogic: () {
+              onPressed: () {
                 setState(() {
                   constant = _controller.text;
                 });
