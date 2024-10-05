@@ -48,7 +48,6 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
-import 'package:rattle/providers/meta_data.dart';
 
 TextStyle defaultTextStyle = const TextStyle(
   fontSize: 14,
