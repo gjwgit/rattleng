@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-01 09:09:44 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 10:42:53 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,26 +24,6 @@
 # Author: Zheyuan Xu
 
 # Load required libraries.
-
-if (!requireNamespace("caret", quietly = TRUE)) {
-  install.packages("caret")
-}
-
-if (!requireNamespace("xgboost", quietly = TRUE)) {
-  install.packages("xgboost")
-}
-
-if (!requireNamespace("Matrix", quietly = TRUE)) {
-  install.packages("Matrix")
-}
-
-if (!requireNamespace("Ckmeans.1d.dp", quietly = TRUE)) {
-  install.packages("Ckmeans.1d.dp")
-}
-
-if (!requireNamespace("data.table", quietly = TRUE)) {
-  install.packages("data.table")
-}
 
 library(caret)  # For dummy variable encoding
 library(xgboost) # For XGBoost model
