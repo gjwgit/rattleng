@@ -1,6 +1,6 @@
 /// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <2024-10-02 14:22:24 gjw>
+// Time-stamp: <2024-10-06 06:20:03 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -55,6 +55,10 @@ void main() {
       await pressButton(tester, 'Perform Correlation Analysis');
 
       await tester.pump(hack);
+
+      // 20241006 gjw Try a second time to make sure we go to the right page.
+
+      await pressButton(tester, 'Perform Correlation Analysis');
 
       // Verify the content of the page.
 

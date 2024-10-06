@@ -14,7 +14,7 @@ TODO.md
 ARCHIVE
 TMP*
 *.tmp
-qtest.all
+qtest*.txt
 
 installers/*.exe
 installers/*.snap

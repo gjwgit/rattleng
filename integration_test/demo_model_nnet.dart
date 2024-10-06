@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <Friday 2024-09-20 19:22:08 +1000 Graham Williams>
+// Time-stamp: <2024-10-05 18:57:33 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -61,28 +61,9 @@ void main() {
 
       await openDemoDataset(tester);
 
-      // TODO 20240910 gjw CONSIDER REMOVING THIS HACK
-
-      await tester.pump(hack);
-
       await tester.pump(interact);
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
-      // Tap the right arrow button to go to Variable page.
-
-      // await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
       await tester.pump(hack);
-
-      await tester.pump(interact);
 
       // Find the scrollable ListView.
 
@@ -213,19 +194,17 @@ void main() {
       final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
 
       await tester.tap(neuralNetworkButton);
-
       await tester.pumpAndSettle();
 
       await tester.pump(interact);
+
+      await tester.tap(neuralNetworkButton);
+      await tester.pumpAndSettle();
 
       // Pause for a long time to wait for app gets stable.
 
       await tester.pump(hack);
 
-      // Tap the right arrow to go to the second page.
-
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
       // await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
@@ -262,8 +241,10 @@ void main() {
 
       await tester.pump(interact);
 
-      // Tap the right arrow to go to the forth page.
+      // Tap the right arrow to go to the next page.
 
+      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
+      expect(rightArrowButton, findsOneWidget);
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
       await tester.pump(hack);
