@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 06:33:24 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 08:46:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -102,9 +102,9 @@ if (CLEANSE_DATASET) {
                         ~ if (n_distinct(.) <= MAXFACTOR)
                           as.factor(.) else .))
 
-  # Remove any constant columns,
+  # Remove any constant columns
 
-  ds %<>% remove_constant()
+  ds %<>% janitor::remove_constant()
 
   # Check if the last variable is numeric and has 5 or fewer unique
   # values then treat it as a factor since it is probably a target
