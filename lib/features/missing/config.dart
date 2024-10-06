@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-01 08:42:07 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-07 06:37:25 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -59,16 +59,10 @@ class MissingConfigState extends ConsumerState<MissingConfig> {
             const SizedBox(width: 5),
 
             // The BUILD button.
-
             ActivityButton(
+              pageControllerProvider: missingPageControllerProvider,
               onPressed: () {
-                rSource(context, ref, ['explore_missing']);
-                ref.read(missingPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                rSource(context, ref, 'explore_missing');
               },
               child: const Text('Perform Missing Analysis'),
             ),

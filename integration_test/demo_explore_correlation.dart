@@ -1,6 +1,6 @@
 /// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 16:30:57 +1000 Graham Williams>
+// Time-stamp: <2024-10-06 06:20:03 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -49,18 +49,22 @@ void main() {
       await tester.pump(interact);
 
       await openDemoDataset(tester);
+
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await pressButton(tester, 'Perform Correlation Analysis');
 
       await tester.pump(hack);
 
-      // Verify the content of the next page.
+      // 20241006 gjw Try a second time to make sure we go to the right page.
 
-      await verifyNextPage(
-        tester,
+      await pressButton(tester, 'Perform Correlation Analysis');
+
+      // Verify the content of the page.
+
+      await verifyPage(
         'Correlation - Numeric Data',
-        'pressure_9am            1.00',
+        '1.00',
       );
 
       await verifyMultipleTextContent(

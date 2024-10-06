@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Thursday 2024-09-26 08:27:28 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-10-02 16:24:57 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,6 +33,7 @@ import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
@@ -77,6 +78,7 @@ class RattleStateText extends ConsumerWidget {
 
     Map<String, Role> roles = ref.watch(rolesProvider);
     Map<String, Type> types = ref.watch(typesProvider);
+    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
 
     // We will print out the roles and types so format them.
 
@@ -85,6 +87,12 @@ class RattleStateText extends ConsumerWidget {
 
     String type = types.toString();
     type = type.replaceAll(',', '\n${" " * 13}');
+
+    String meta = metaData.toString();
+    meta = meta.replaceAll('},', '},\n${" " * 13}');
+    meta = meta.replaceAll(': {', ':\n${" " * 18}');
+    meta = meta.replaceAll(', min:', ',\n${" " * 18}min:');
+    meta = meta.replaceAll(', unique:', ',\n${" " * 18}unique:');
 
     return SingleChildScrollView(
       child: Builder(
@@ -98,6 +106,7 @@ class RattleStateText extends ConsumerWidget {
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
+            'META DATA:   $meta\n'
             'ROLES:       $role\n'
             'TYPES:       $type\n'
             'TARGET:      ${getTarget(ref)}\n'
