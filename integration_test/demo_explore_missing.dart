@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab's MISSING feature with the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-09-18 16:31:55 +1000 Graham Williams>
+// Time-stamp: <2024-10-05 20:47:18 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -48,11 +48,14 @@ void main() {
       await tester.pump(interact);
 
       await openDemoDataset(tester);
+      await tester.pump(interact);
+
       await _navigateToExploreTab(tester);
 
       await _navigateToTab(tester, 'Missing', MissingPanel);
 
       await _performMissingAnalysis(tester);
+
       // last number on the page.
 
       await verifyPage('Patterns of Missing Data', '380');
@@ -113,6 +116,7 @@ Future<void> _performMissingAnalysis(WidgetTester tester) async {
   await tester.pumpAndSettle();
 
   await tester.pump(interact);
+  await tester.tap(generateSummaryButtonFinder);
   await tester.pump(delay);
 }
 
