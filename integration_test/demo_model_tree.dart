@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Friday 2024-09-20 12:20:46 +1000 Graham Williams>
+// Time-stamp: <2024-10-06 09:42:44 gjw>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -48,17 +48,11 @@ void main() {
   group('Model Demo Tree:', () {
     testWidgets('rpart.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
 
       await tester.pump(interact);
 
       await openDemoDataset(tester);
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
 
       await tester.pump(hack);
 
@@ -83,8 +77,6 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      // Pause for a long time to wait for app gets stable.
-
       await tester.pump(hack);
 
       // Tap the right arrow to go to the second page.
@@ -92,7 +84,12 @@ void main() {
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
       // await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      //await tester.pumpAndSettle();
+
+      // Try tapping again as it may not have gone to the second page.
+
+      await tester.tap(decisionTreeButton);
+
       await tester.pump(hack);
 
       final secondPageTitleFinder = find.text('Decision Tree Model');
@@ -148,11 +145,6 @@ void main() {
 
       await openDemoDataset(tester);
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
       await tester.pump(hack);
 
       // Tap the model Tab button.
@@ -200,9 +192,7 @@ void main() {
       final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
 
       await tester.tap(decisionTreeButton);
-
       await tester.pumpAndSettle();
-
       await tester.pump(delay);
 
       // Tap the right arrow to go to the second page.
