@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-10-03 09:23:37 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 06:34:36 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -118,7 +118,6 @@ install_if_missing('Matrix')
 install_if_missing('Ckmeans')
 install_if_missing('data')
 
-
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
@@ -135,24 +134,47 @@ options(crayon.enabled = FALSE)
 
 set.seed(42)
 
-# A support function to move into rattle to provide the one line
-# summary of the dataset
+# A support function to move into rattle to provide the dataset
+# summary as JSON used by RattleNG as the dataset summary from which
+# RattleNG gets all of it's meta data. Note the dependency on
+# jsonlite.
 
 meta_data <- function(df) {
-  sapply(df, function(x) {
+  summary_list <- lapply(names(df), function(var_name) {
+    x <- df[[var_name]]
     if (is.numeric(x)) {
-      paste0("min = ", min(x, na.rm = TRUE),
-             ", max = ", max(x, na.rm = TRUE),
-             ", mean = ", mean(x, na.rm = TRUE),
-             ", median = ", median(x, na.rm = TRUE),
-             ", variance = ", var(x, na.rm = TRUE),
-             ", unique = ", length(unique(x)))
+      list(
+        datatype = "numeric",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
+        mean = mean(x, na.rm = TRUE),
+        median = median(x, na.rm = TRUE),
+        variance = var(x, na.rm = TRUE),
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
     } else if (is.factor(x) || is.character(x)) {
-      paste0("unique = ", length(unique(x)))
+      list(
+        datatype = "categoric",
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
     } else {
-      "No summary available for this type"
+      list(
+        datatype = "other",
+        message = "No summary available for this type"
+      )
     }
   })
+
+  # Name the list elements by the variable names
+
+  names(summary_list) <- names(df)
+  
+  # Convert the list to a JSON string.
+  
+  json_output <- jsonlite::toJSON(summary_list, pretty = TRUE)
+  return(json_output)
 }
 
 # Username

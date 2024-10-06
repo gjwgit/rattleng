@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-01 08:47:27 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-07 06:35:49 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,21 +61,13 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             // The BUILD button.
 
             ActivityButton(
+              pageControllerProvider:
+                  correlationPageControllerProvider, // Optional navigation
+
               onPressed: () {
-                rSource(context, ref, ['explore_correlation']);
-                // TODO 20241001 kev WAIT FOR 3 SECONDS BEFORE MOVING TO THE NEXT PAGE.
-                //
-                // 20241001 gjw I don't think this works. The second page does
-                // not get navigated to after the first button push , even
-                // waiting 3s. But a second button push works fine.
-                //
-                Future.delayed(const Duration(seconds: 3));
-                ref.read(correlationPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                // wait for 3 seconds before moving to the next page.
+                // Future.delayed(const Duration(seconds: 3));
+                rSource(context, ref, 'explore_correlation');
               },
               child: const Text('Perform Correlation Analysis'),
             ),

@@ -147,8 +147,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             configLeftSpace,
 
             // The BUILD button.
-
             ActivityButton(
+              pageControllerProvider:
+                  visualPageControllerProvider, // Optional navigation
               onPressed: () {
                 // Had to update here because
                 // Unhandled Exception: Tried to modify a provider while the widget tree was building.
@@ -174,13 +175,8 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 //   This will perform your update after the widget tree is done building
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(groupByProvider.notifier).state = groupBy;
+
                 buildAction();
-                ref.read(visualPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
               },
               child: const Text('Generate Plots'),
             ),

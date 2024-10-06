@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-08-08 13:44:52 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-07 06:38:54 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -78,17 +78,13 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
             // The BUILD button.
 
             ActivityButton(
+              pageControllerProvider:
+                  testsPageControllerProvider, // Optional navigation
+
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(selected2Provider.notifier).state = selected2;
                 rSource(context, ref, ['test']);
-                // showUnderConstruction(context);
-                ref.read(testsPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
               },
               child: const Text('Perform Statistical Tests'),
             ),

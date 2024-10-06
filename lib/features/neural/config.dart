@@ -91,9 +91,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             const SizedBox(width: 5),
 
             // The BUILD button.
-
             ActivityButton(
               key: const Key('Build Neural Network'),
+              pageControllerProvider:
+                  neuralPageControllerProvider, // Optional navigation
+
               onPressed: () async {
                 // Perform manual validation.
                 String? hiddenNeuronsError =
@@ -148,12 +150,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     await rSource(context, ref, ['model_build_neural_net']);
                   }
                 }
-                ref.read(neuralPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
               },
               child: const Text('Build Neural Network'),
             ),

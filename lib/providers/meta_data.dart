@@ -1,6 +1,6 @@
-/// <DESCRIPTION>
+/// Record the meta data from rattle::meta_data(ds)
 //
-// Time-stamp: <Sunday 2024-09-29 19:24:30 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-08-14 18:46:14 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,6 +21,10 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors: Graham Williams
 
 library;
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final metaDataProvider = StateProvider<Map<String, dynamic>>((ref) => {});

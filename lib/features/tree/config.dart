@@ -119,6 +119,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             children: [
               ActivityButton(
                 key: const Key('Build Decision Tree'),
+                pageControllerProvider:
+                    treePageControllerProvider, // Optional navigation
+
                 onPressed: () {
                   // TODO 20240926 gjw SPLIT THIS INTO OWN LOCAL FUNCTION
 
@@ -219,18 +222,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     } else {
                       rSource(context, ref, ['model_build_rpart']);
                     }
-                    ref.read(treePageControllerProvider).animateToPage(
-                          // Index of the second page.
-                          1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
                   }
-                  // TODO 20240627  yyx HOW RESTORE THIS EFFECT IN THE NEW WIDGET PAGES?
-                  //
-                  // it failed to work only when the user first clicks build on
-                  // the panel because the pages are not yet updated.
-                  // treePagesKey.currentState?.goToResultPage();
                 },
                 child: const Text('Build Decision Tree'),
               ),

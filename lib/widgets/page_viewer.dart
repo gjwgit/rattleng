@@ -12,10 +12,10 @@ class PageViewer extends StatefulWidget {
   });
 
   @override
-  _PageViewerState createState() => _PageViewerState();
+  PageViewerState createState() => PageViewerState();
 }
 
-class _PageViewerState extends State<PageViewer> {
+class PageViewerState extends State<PageViewer> {
   int _currentPage = 0;
 
   @override

@@ -1,8 +1,8 @@
-/// Model tree test with demo dataset.
+/// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Friday 2024-09-20 12:20:46 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-20 08:25:10 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -35,27 +33,26 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_demo_dataset.dart';
+import 'utils/open_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Model Demo Tree:', () {
-    testWidgets('rpart.', (WidgetTester tester) async {
+  group('Model Large Tree:', () {
+    testWidgets('raprt.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
-
       await tester.pump(interact);
 
-      await openDemoDataset(tester);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
+      // 20240822 TODO gjw DOES THIS NEED A WAIT FOR THE R CODE TO FINISH!!!
       //
       // How do we ensure the R Code is executed before proceeding in Rattle
       // itself - we need to deal with the async issue in Rattle.
@@ -75,7 +72,7 @@ void main() {
       final markdownContent = find.byKey(const Key('markdown_file'));
       expect(markdownContent, findsOneWidget);
 
-      // Simulate the presence of a decision tree being built.
+      // Simulate the presence of a decision tree being built
 
       final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
 
@@ -83,17 +80,15 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      // Pause for a long time to wait for app gets stable.
+      // Pause for a long time to wait for app to get stable.
 
       await tester.pump(hack);
 
-      // Tap the right arrow to go to the second page.
+      // Automatically go to the second page.
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
-      await tester.pump(hack);
 
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
@@ -117,8 +112,8 @@ void main() {
       // App may raise bugs in loading textPage. Thus, test does not target
       // at content.
 
-      final ruleNumberFinder = find.byType(TextPage);
-      expect(ruleNumberFinder, findsOneWidget);
+      final decisionTreeRulesFinder = find.byType(TextPage);
+      expect(decisionTreeRulesFinder, findsOneWidget);
 
       await tester.pump(interact);
 
@@ -133,27 +128,18 @@ void main() {
       final imageFinder = find.byType(ImagePage);
 
       // Assert that the image is present.
+
       expect(imageFinder, findsOneWidget);
 
       await tester.pump(interact);
     });
 
-    testWidgets('rpart with different parameter settings.',
-        (WidgetTester tester) async {
+    testWidgets('Traditional Parameters.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
-
       await tester.pump(interact);
 
-      await openDemoDataset(tester);
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
-      await tester.pump(hack);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // Tap the model Tab button.
 
@@ -167,7 +153,7 @@ void main() {
 
       final Finder includeMissingCheckbox = find.byType(Checkbox);
       await tester.tap(includeMissingCheckbox);
-      await tester.pumpAndSettle(); // Wait for UI to settle.
+      await tester.pumpAndSettle();
 
       // Find the text fields by their keys and enter the new values.
 
@@ -203,7 +189,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      await tester.pump(longHack);
 
       // Tap the right arrow to go to the second page.
 
@@ -215,23 +201,34 @@ void main() {
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
 
+      await tester.pump(longHack);
+
+      // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
+
       // App may raise bugs in loading textPage. Thus, test does not target
       // at content.
 
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
-      await tester.pump(interact);
+      // TODO 20240902 zy IS THIS pause NEEDED HERE?
+
+      await tester.pump(longHack);
+
+      // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
 
       // Tap the right arrow to go to the third page.
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       final thirdPageTitleFinder = find.text('Decision Tree as Rules');
       expect(thirdPageTitleFinder, findsOneWidget);
 
-      await tester.pump(interact);
+      await tester.pump(longHack);
+
+      // TODO 20240902 zy NEED TO TEST ACTUAL TREE THAT HAS BEEN BUILT
 
       // Tap the right arrow to go to the forth page.
 
@@ -241,24 +238,22 @@ void main() {
       final forthPageTitleFinder = find.text('Tree');
       expect(forthPageTitleFinder, findsOneWidget);
 
+      final imageFinder = find.byType(ImagePage);
+      expect(imageFinder, findsOneWidget);
+
       await tester.pump(interact);
     });
 
-    testWidgets('ctree.', (WidgetTester tester) async {
+    /// TODO 20240826 zy CONDITIONAL TREE NOT OPERATIOANL.
+    ///
+    /// Only testing UI functions.
+
+    testWidgets('Conditional.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
-
       await tester.pump(interact);
 
-      await openDemoDataset(tester);
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
-      await tester.pump(hack);
+      await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
 
       // Tap the model Tab button.
 
@@ -285,6 +280,7 @@ void main() {
       await tester.tap(conditionalChip);
 
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Now switch back to the traditional algorithm.
 
@@ -293,49 +289,40 @@ void main() {
       // Wait for the widget to rebuild and settle.
 
       await tester.pumpAndSettle();
+      await tester.pump(longHack);
 
       // Tap the conditional chip to switch algorithms.
 
       await tester.tap(conditionalChip);
 
       await tester.pumpAndSettle();
-      await tester.pump(interact);
+      await tester.pump(longHack);
 
-      // Simulate the presence of a decision tree being built.
+      // Verify the relevant fields are disabled when Conditional is selected.
 
-      final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
+      final complexityField = find.byKey(const Key('complexityField'));
+      final priorsField = find.byKey(const Key('priorsField'));
+      final lossMatrixField = find.byKey(const Key('lossMatrixField'));
 
-      await tester.tap(decisionTreeButton);
+      // Ensure that these fields are disabled (meaning that they are not accepting input).
+
+      expect(tester.widget<NumberField>(complexityField).enabled, isFalse);
+      expect(tester.widget<TextFormField>(priorsField).enabled, isFalse);
+      expect(tester.widget<TextFormField>(lossMatrixField).enabled, isFalse);
+
+      // Now switch back to the traditional algorithm.
+
+      await tester.tap(traditionalChip);
+      await tester.pumpAndSettle();
+      await tester.pump(longHack);
+
+      // Verify that the relevant fields are now enabled.
+
+      expect(tester.widget<NumberField>(complexityField).enabled, isTrue);
+      expect(tester.widget<TextFormField>(priorsField).enabled, isTrue);
+      expect(tester.widget<TextFormField>(lossMatrixField).enabled, isTrue);
 
       await tester.pumpAndSettle();
-
-      await tester.pump(hack);
-
-      // Tap the right arrow to go to the second page.
-
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-
-      final secondPageTitleFinder = find.text('Decision Tree Model');
-      expect(secondPageTitleFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      // Tap the right arrow to go to the third page.
-
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-
-      final thirdPageTitleFinder = find.text('Tree');
-      expect(thirdPageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-      expect(imageFinder, findsOneWidget);
-
       await tester.pump(interact);
     });
   });

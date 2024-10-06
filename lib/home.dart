@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-09-28 11:04:47 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-10-07 06:39:23 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -45,7 +45,6 @@ import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/execute.dart';
-import 'package:rattle/r/source.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/tabs/debug/tab.dart';

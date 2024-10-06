@@ -1,6 +1,6 @@
 /// CLUSTER feature.
 //
-// Time-stamp: <Tuesday 2024-08-20 20:05:55 +1000 Graham Williams>
+// Time-stamp: <2024-10-05 17:45:55 gjw>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -38,6 +38,7 @@ import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/model.dart';
 
 import 'utils/delays.dart';
+import 'utils/open_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -45,35 +46,11 @@ void main() {
   group('Cluster Feature:', () {
     testWidgets('Demo Dataset, Model, Cluster.', (WidgetTester tester) async {
       app.main();
-
-      // Trigger a frame. Finish animation and scheduled microtasks.
-
-      await tester.pumpAndSettle();
-
-      // Leave time to see the first page.
-
-      await tester.pump(interact);
-
-      final datasetButton = find.byType(DatasetButton);
-      expect(datasetButton, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await tester.tap(datasetButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-
-      final datasetPopup = find.byType(DatasetPopup);
-      expect(datasetPopup, findsOneWidget);
-
-      final demoButton = find.text('Demo');
-      expect(demoButton, findsOneWidget);
-
-      await tester.tap(demoButton);
       await tester.pumpAndSettle();
 
       await tester.pump(interact);
+
+      await openDemoDataset(tester);
 
       // Find the Model tab by icon and tap on it.
 
@@ -111,14 +88,7 @@ void main() {
 
       await tester.pump(interact);
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to the first page.
-
-      await tester.tap(rightArrowFinder);
+      await tester.tap(buildButtonFinder);
       await tester.pumpAndSettle();
 
       await tester.pump(interact);
