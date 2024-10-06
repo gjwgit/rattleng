@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-10-07 06:35:49 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-10-07 06:47:11 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -67,7 +67,7 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
               onPressed: () {
                 // wait for 3 seconds before moving to the next page.
                 // Future.delayed(const Duration(seconds: 3));
-                rSource(context, ref, 'explore_correlation');
+                rSource(context, ref, ['explore_correlation']);
               },
               child: const Text('Perform Correlation Analysis'),
             ),
