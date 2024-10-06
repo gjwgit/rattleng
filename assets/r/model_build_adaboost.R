@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-01 09:09:44 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 10:42:41 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,22 +24,6 @@
 # Author: Zheyuan Xu
 
 # Load required libraries.
-
-if (!requireNamespace("ada", quietly = TRUE)) {
-  install.packages("ada")
-}
-
-if (!requireNamespace("rpart", quietly = TRUE)) {
-  install.packages("rpart")
-}
-
-if (!requireNamespace("caret", quietly = TRUE)) {
-  install.packages("caret")
-}
-
-if (!requireNamespace("ggplot2", quietly = TRUE)) {
-  install.packages("ggplot2")
-}
 
 library(ada)
 library(rpart)
