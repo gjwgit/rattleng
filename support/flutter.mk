@@ -306,6 +306,9 @@ qtest.tmp: qtest.all
 qtest.all:
 	make qtest > qtest_$(shell date +%Y%m%d%H%M%S).txt
 
+clean::
+	rm -f qtest_*.txt
+
 .PHONY: atest
 atest:
 	@echo "Full integration TEST:"
