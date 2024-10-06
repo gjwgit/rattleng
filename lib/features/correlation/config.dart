@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-09-18 15:10:13 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-05 13:38:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,16 +61,13 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             // The BUILD button.
 
             ActivityButton(
+              pageControllerProvider:
+                  correlationPageControllerProvider, // Optional navigation
+
               onPressed: () {
-                rSource(context, ref, 'explore_correlation');
                 // wait for 3 seconds before moving to the next page.
-                Future.delayed(const Duration(seconds: 3));
-                ref.read(correlationPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                // Future.delayed(const Duration(seconds: 3));
+                rSource(context, ref, 'explore_correlation');
               },
               child: const Text('Perform Correlation Analysis'),
             ),
