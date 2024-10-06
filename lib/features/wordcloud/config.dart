@@ -94,7 +94,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
-              onPressed: () async {
+              pageControllerProvider:
+                  wordcloudPageControllerProvider, // Optional navigation
+
+              onPressed: () {
                 // Clean up the files from previous use.
 
                 // TODO 20240612 gjw REVIEW HOW CLEANUP IS DONE.
@@ -129,15 +132,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 // Toggle the state to trigger rebuild
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
-
-                ref.read(wordcloudPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-
-                // wordCloudDisplayKey.currentState?.goToResultPage();
               },
               child: const Text('Display Word Cloud'),
             ),

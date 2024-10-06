@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for Rattle.
 //
-// Time-stamp: <Tuesday 2024-08-20 16:50:04 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-05 11:16:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Kevin Wang
 
 library;
 
@@ -36,12 +36,14 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/show_ok.dart';
 
 class ActivityButton extends ConsumerWidget {
-  final VoidCallback onPressed;
+  final StateProvider<PageController>? pageControllerProvider;
+  final VoidCallback? onPressed;
   final Widget child;
 
   const ActivityButton({
     super.key,
-    required this.onPressed,
+    this.pageControllerProvider, // Optional for navigation
+    this.onPressed, // Optional for additional logic
     required this.child,
   });
 
@@ -65,7 +67,33 @@ class ActivityButton extends ConsumerWidget {
             ''',
           );
         } else {
-          onPressed();
+          // Perform additional logic, if any.
+
+          onPressed?.call();
+
+          // If page navigation is required, handle it here.
+
+          if (pageControllerProvider != null) {
+            // Access the PageController directly from the StateProvider.
+
+            final pageController = ref.read(pageControllerProvider!);
+
+            // Check the current page index before navigating.
+
+            final currentPage = pageController.page?.round() ?? 0;
+
+            // Determine the target page index based on the current page.
+
+            int targetPage = currentPage == 0 ? 1 : currentPage;
+
+            // Navigate to the target page.
+
+            pageController.animateToPage(
+              targetPage,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          }
         }
       },
       child: child,
