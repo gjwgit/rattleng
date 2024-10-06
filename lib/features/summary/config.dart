@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-09-18 15:08:56 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-05 11:12:15 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,15 +61,10 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             // The BUILD button.
 
             ActivityButton(
+              pageControllerProvider:
+                  summaryPageControllerProvider, // Optional navigation
               onPressed: () {
                 rSource(context, ref, 'explore_summary');
-                ref.read(summaryPageControllerProvider).animateToPage(
-                      // Index of the second page.
-
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
               },
               child: const Text('Generate Dataset Summary'),
             ),

@@ -304,7 +304,7 @@ qtest.tmp: qtest.all
 
 .PHONY: qtest.all
 qtest.all:
-	make qtest > qtest.all
+	make qtest > qtest_$(shell date +%Y%m%d%H%M%S).txt
 
 .PHONY: atest
 atest:

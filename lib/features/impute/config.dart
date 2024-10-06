@@ -235,6 +235,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
+              pageControllerProvider:
+                  imputePageControllerProvider, // Optional navigation
+
               onPressed: () {
                 setState(() {
                   constant = _controller.text;
@@ -243,13 +246,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 ref.read(imputedProvider.notifier).state = constant;
                 debugPrint(constant);
                 takeAction();
-
-                ref.read(imputePageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
               },
               child: const Text('Impute Missing Values'),
             ),
