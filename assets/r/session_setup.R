@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 06:34:36 +1100 Graham Williams>
+# Time-stamp: <2024-10-07 08:40:18 gjw>
 #
 # Rattle version VERSION.
 #
@@ -59,6 +59,8 @@
 install_if_missing <- function(pkg) {
 
   if (!requireNamespace(pkg, character.only=TRUE, quietly=TRUE)) {
+
+
     # Specify a directory for the library
 
     lib_dir <- Sys.getenv("R_LIBS_USER")
@@ -85,38 +87,44 @@ install_if_missing <- function(pkg) {
 # user does the installation of the R package prior to starting
 # Rattle.
 
-install_if_missing('Hmisc')
-install_if_missing('NeuralNetTools')
-install_if_missing('VIM')
-install_if_missing('corrplot')
-install_if_missing('descr')
-install_if_missing('dplyr')
-install_if_missing('fBasics')
-install_if_missing('ggcorrplot')
-install_if_missing('ggplot2')
-install_if_missing('ggthemes')
-install_if_missing('janitor')
-install_if_missing('magrittr')
-install_if_missing('mice')
-install_if_missing('naniar')
-install_if_missing('nnet')
-install_if_missing('party')
-install_if_missing('randomForest')
-install_if_missing('rattle')
-install_if_missing('readr')
-install_if_missing('reshape')
-install_if_missing('rpart')
-install_if_missing('skimr')
-install_if_missing('tidyverse')
-install_if_missing('tm')
-install_if_missing('verification')
-install_if_missing('wordcloud')
+# 2024-10-07 08:38 gjw This is all getting too hard to check and
+# install packages within rattle for now. Instead, emphasise the need
+# to install packages before rungging rattle. For Ubuntu we could add
+# instructions for updating apt sources or a user installing the
+# packages themselves. The latter for now.
 
-install_if_missing('caret')
-install_if_missing('xgboost')
-install_if_missing('Matrix')
-install_if_missing('Ckmeans')
-install_if_missing('data')
+## install_if_missing('Hmisc')
+## install_if_missing('NeuralNetTools')
+## install_if_missing('VIM')
+## install_if_missing('corrplot')
+## install_if_missing('descr')
+## install_if_missing('dplyr')
+## install_if_missing('fBasics')
+## install_if_missing('ggcorrplot')
+## install_if_missing('ggplot2')
+## install_if_missing('ggthemes')
+## install_if_missing('janitor')
+## install_if_missing('magrittr')
+## install_if_missing('mice')
+## install_if_missing('naniar')
+## install_if_missing('nnet')
+## install_if_missing('party')
+## install_if_missing('randomForest')
+## install_if_missing('rattle')
+## install_if_missing('readr')
+## install_if_missing('reshape')
+## install_if_missing('rpart')
+## install_if_missing('skimr')
+## install_if_missing('tidyverse')
+## install_if_missing('tm')
+## install_if_missing('verification')
+## install_if_missing('wordcloud')
+
+## install_if_missing('caret')
+## install_if_missing('xgboost')
+## install_if_missing('Matrix')
+## install_if_missing('Ckmeans')
+## install_if_missing('data')
 
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
