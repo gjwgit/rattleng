@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-09-06 20:17:18 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 08:17:24 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# TIMESTAMP
+# Rattle timestamp: TIMESTAMP
 #
 # Run this script after the variable `ds` (dataset) and other data
 # template variables have been defined as in `data_template.R`. this

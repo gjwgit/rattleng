@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2024-10-07 06:39:23 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-08 08:09:36 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -45,6 +45,7 @@ import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/execute.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/tabs/debug/tab.dart';
@@ -200,13 +201,19 @@ class RattleHomeState extends ConsumerState<RattleHome>
           // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
 
           if (path.isNotEmpty) {
-            // On leaving the DATASET tab we run the data template if there is a
-            // dataset loaded, as indicated by the path having a value.
+            // 20241008 gjw On leaving the DATASET tab we run the data template
+            // if there is a dataset loaded, as indicated by the path having a
+            // value. We need to run the template here after we have loaded and
+            // setup the variable roles. Trying to run the dataset template
+            // before leaving the DATASET tab results TARGET in and RISK being
+            // set to NULL.
             //
             // Note that variable roles are set up in
-            // `features/dataset/display.dart`.
+            // `features/dataset/display.dart` after the dataset is loaded and
+            // we need to wait until the roles are set before we run the
+            // template.
 
-            // 20240928 rSource(context, ref, ['dataset_template']);
+            rSource(context, ref, ['dataset_template']);
           }
         }
 

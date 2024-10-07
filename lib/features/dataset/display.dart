@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-10-03 07:30:27 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-08 08:26:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -46,10 +46,8 @@ import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/pages.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
-import 'package:rattle/providers/meta_data.dart';
 
 TextStyle defaultTextStyle = const TextStyle(
   fontSize: 14,

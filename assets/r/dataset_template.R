@@ -1,11 +1,11 @@
-# Setup the dataset template variables.
+# Setup the dataset template variables after the dataset has been prepared.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 05:24:57 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 08:51:48 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -27,12 +27,10 @@
 # Rattle timestamp: TIMESTAMP
 #
 # Run this after the variable `ds` (dataset) has been loaded into
-# Rattle.  This script will then clean and prepare the dataset. The
-# following action is the dataset template processing. We place into
-# `dataset_template.R` the setup when the data within the dataset has
-# changed, which may be called again after, for example, TRANSFORM.
-#
-# Rattle timestamp: TIMESTAMP
+# Rattle and the dataset cleansed and prepared with roles
+# assigned. The actions here in `dataset_template.R` will also setup
+# the data after a dataset has changed, which may be called after, for
+# example, a TRANSFORM.
 #
 # References:
 #
@@ -40,58 +38,9 @@
 #
 # https://survivor.togaware.com/datascience/data-template.html
 
-# Load required packages from the local library into the R session.
-
-library(dplyr)
-library(janitor)
-library(magrittr)
-
-# Normalise the variable names using janitor::clean_names(). This is
-# done after any dataset load. The DATASET tab has an option to
-# normalise the variable names on loading the data. It is set on by
-# default.
-
-if (NORMALISE_NAMES) ds %<>% janitor::clean_names(numerals="right")
-
-# Cleanse the dataset of constant value columns and convert char to
-# factor.
-
-if (CLEANSE_DATASET) {
-  # Map character columns to be factors.
-  
-  ds %<>% mutate(across(where(is.character),
-                        ~ if (n_distinct(.) <= MAXFACTOR)
-                          as.factor(.) else .))
-
-  # Remove any constant columns
-
-  ds %<>% janitor::remove_constant()
-
-  # Check if the last variable is numeric and has 5 or fewer unique
-  # values then treat it as a factor since it is probably a target
-  # variable. This is a little risky but perhaps worth doing. It may
-  # need it's own toggle.
-
-  # Get the name of the last column
-
-  last_col_name <- names(ds)[ncol(ds)]
-
-  # Check if the last column is numeric and has 5 or fewer unique values
-
-  if (is.numeric(ds[[last_col_name]]) && length(unique(ds[[last_col_name]])) <= 5) {
-    ds[[last_col_name]] <- as.factor(ds[[last_col_name]])
-  }
-
-}
-
-# Check for unique valued columns.
-
-unique_columns(ds)
-
-# Find fewest levels
-
-find_fewest_levels(ds)
-
+library(dplyr)        # Wrangling: select() sample_frac().
+library(janitor)      # Cleanup: clean_names().
+library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
 # Index the original variable names by the new names.
 
@@ -211,21 +160,26 @@ nmobs
 # 20240916 gjw This is required for building the ROLES table but will
 # eventually be replaced by the meta data.
 
-glimpse(ds)
-summary(ds)
+# 20241008 gjw I don't think these are required here now.
+
+#glimpse(ds)
+#summary(ds)
 
 # 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
 
-meta_data(ds)
+# 20241008 gjw I think we now move this to PREP rather than here.
 
-# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
+#meta_data(ds)
 
-large_factors <- sapply(ds, is_large_factor)
+# Filter the variables in the dataset that are factors or ordered
+# factors with more than 20 levels.
+
+# large_factors <- sapply(ds, is_large_factor)
 
 # Get the names of those variables.
 
-large_factor_vars <- names(large_factors)[large_factors]
+# large_factor_vars <- names(large_factors)[large_factors]
 
 # Print the variable names.
 
-large_factor_vars
+# large_factor_vars

@@ -1,6 +1,6 @@
 /// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Monday 2024-10-07 18:54:45 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-08 08:32:22 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -67,7 +67,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   String dw = 'dataset_load_weather';
   String dc = 'dataset_load_csv';
   String dx = 'dataset_load_txt';
-  String dt = 'dataset_template';
+  String dp = 'dataset_prep'; // Dataset cleaning and prepartion pre-template.
 
   if (path == '' || path == weatherDemoFile) {
     // 20241007 gjw If no path is specified then we load the sample dataset from
@@ -75,12 +75,13 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
     // we using the rattle::weather dataset which is rather dated. So this
     // option is not currently utilised.
 
-    if (context.mounted) await rSource(context, ref, [ss, dw, dt]);
+    if (context.mounted) await rSource(context, ref, [ss, dw, dp]);
   } else if (path.endsWith('.csv')) {
-    // 20241007 gjw For a CSV file specified we will load that CSV file into the
-    // R process.
+    // 20241007 gjw We will load a CSV file into the R process. Note that we do
+    // not yet run the DATA TEMPLATE as we need to first set up the ROLES. The
+    // dataset template is run in `home.dart` on leaving the DATASET tab.
 
-    if (context.mounted) await rSource(context, ref, [ss, dc, dt]);
+    if (context.mounted) await rSource(context, ref, [ss, dc, dp]);
   } else if (path.endsWith('.txt')) {
     // 20241007 gjw We can also load a text file for the word cloud
     // functionality as a stop gap toward implementing more complete text mining
