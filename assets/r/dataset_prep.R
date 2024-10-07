@@ -1,11 +1,11 @@
-# Rattle Script to prepare a dataset
+# After loading the raw dataset we prepare it for ROLES.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-09-28 08:34:06 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 09:02:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,11 +24,16 @@
 #
 # Author: Graham Williams
 
-# Run this after the variable `ds` (dataset) has been loaded into
-# Rattle.  This script will then clean and prepare the dataset. The
-# following action is the dataset template processing. We place into
-# `dataset_template.R` the setup when the data within the dataset has
-# changed, which may be called again after, for example, TRANSFORM.
+# Rattle timestamp: TIMESTAMP
+#
+# Run this after the raw dataset has been loaded into the variable
+# `ds` in R and before the R data template script is run (on leaving
+# the DATASET tab).  This script cleans and prepares the dataset
+# according to any configured cleaning and needs to do this before we
+# run the template script. After the cleaning we generate the META
+# DATA to be scraped for the ROLES display. The `dataset_template.R`
+# script will be run after the data within the dataset has been
+# prepared, which may be called again after, for example, a TRANSFORM.
 #
 # References:
 #
@@ -36,18 +41,9 @@
 #
 # https://survivor.togaware.com/datascience/data-template.html
 
-# 20240809 gjw Move main.R here to avoid the problem on Windows where
-# main.R is not getting run.
-
-# We begin most scripts by loading the required packages.  Here are
-# some initial packages to load and others will be identified as we
-# proceed through the script. When writing our own scripts we often
-# collect together the library commands at the beginning of the script
-# here.
-
-library(dplyr)
-library(janitor)
-library(magrittr)
+library(dplyr)        # Wrangling: select() sample_frac().
+library(janitor)      # Cleanup: clean_names().
+library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
 # Normalise the variable names using janitor::clean_names(). This is
 # done after any dataset load. The DATASET tab has an option to
@@ -87,14 +83,29 @@ if (CLEANSE_DATASET) {
 
 }
 
-# Check for unique valued columns.
+# 20241008 gjw We can now generate the meta data for the dataset. This
+# will be scraped into the metaProvider by the DATASET DISPLAY and
+# will be the definitive meta data for the dataset, replacing the
+# roles and types providers and many of the below informational
+# queries.
+
+meta_data(ds)
+
+# TODO 20241008 gjw MIGRATE TO META DATA
+
+# Check for unique valued columns. This will be scraped and used in
+# assigning a ROLE of IDENT to the variables
 
 unique_columns(ds)
 
-# Find fewest levels
+# TODO 20241008 gjw MIGRATE TO META DATA
+
+# List the variables having the fewest levels. This will be scraped
+# and used in identifying the TARGET varaible.
 
 find_fewest_levels(ds)
 
+# TODO 20241008 gjw MIGRATE TO META DATA
 
 # Index the original variable names by the new names.
 
@@ -104,13 +115,19 @@ names(vnames) <- names(ds)
 
 names(ds)
 
-# 20240916 gjw This is required for building the ROLES table but will
-# eventually be replaced by the meta data.
+# TODO 20241008 gjw MIGRATE TO META DATA
+
+# 20240916 gjw The glimpse is required for building the ROLES table but will
+# eventually be replaced by the meta data. Keep here for now.
 
 glimpse(ds)
-summary(ds)
+#summary(ds)
 
-# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
+# TODO 20241008 gjw MIGRATE TO META DATA
+
+# Filter the variables in the dataset that are factors or ordered
+# factors with more than 20 levels. This should be replaced by using
+# the meta data.
 
 large_factors <- sapply(ds, is_large_factor)
 

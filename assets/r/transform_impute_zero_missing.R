@@ -1,11 +1,11 @@
-# Rattle Scripts: Data Transformation impute 0 or Missing
+# Data transformation of missing values by imputing 0 or Missing.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-03 14:04:45 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 09:12:26 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,18 +24,22 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replacing NA with zero or 'Missing'
+# Rattle timestamp: TIMESTAMP
+#
+# Transform "SELECTED_VAR" by replacing NA with zero or 'Missing'.
 
+library(dplyr)        # Wrangling: mutate().
+library(tidyr)        # Wrangling: replace_na().
 
 if (is.numeric(ds$SELECTED_VAR))
 {
   ds %<>%
-    mutate(IZR_SELECTED_VAR = replace_na(SELECTED_VAR, 0))
+    dplyr::mutate(IZR_SELECTED_VAR = tidyr::replace_na(SELECTED_VAR, 0))
 } else {
   ds %<>%
-    mutate(IZR_SELECTED_VAR = replace_na(as.character(SELECTED_VAR),
-                                         'Missing'),
-           IZR_SELECTED_VAR = factor(IZR_SELECTED_VAR))
+    dplyr::mutate(IZR_SELECTED_VAR = tidyr::replace_na(as.character(SELECTED_VAR),
+                                                       'Missing'),
+                  IZR_SELECTED_VAR = factor(IZR_SELECTED_VAR))
 }
 
 glimpse(ds)
