@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-09-27 20:16:41 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 16:54:20 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,8 +33,8 @@
 # @williams:2017:essentials
 # https://survivor.togaware.com/datascience/ for further details.
 
-if(!require(skimr)) install.packages("skimr")
-if(!require(timeDate)) install.packages("timeDate")
+library(skimr)
+library(timeDate)
 
 # SkimR presents a nice summary of the dataset
 
