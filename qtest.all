@@ -1,0 +1,940 @@
+========================================
+integration_test/app_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:19 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:20 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:21 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:22 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:23 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:24 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:25 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/app_test.dart                                                                                                               00:25 +0: App Startup.                                                                                                                                                                                 00:26 +0: App Startup.                                                                                                                                                                                 00:26 +0: App Startup.                                                                                                                                                                                 
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+00:31 +1: App Startup.                                                                                                                                                                                 00:31 +1: (tearDownAll)                                                                                                                                                                                00:31 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_dataset_ignore_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:19 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_ignore_test.dart                                                                                               00:19 +0: Check Default Ignored Variables: Demo dataset.                                                                                                                                               00:19 +0: Check Default Ignored Variables: Demo dataset.                                                                                                                                               
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattletLRE1g/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattletLRE1g/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattletLRE1g/weather.csv
+00:57 +1: Check Default Ignored Variables: Demo dataset.                                                                                                                                               00:57 +1: (tearDownAll)                                                                                                                                                                                00:57 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_dataset_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_dataset_test.dart                                                                                                      00:18 +0: Demo Dataset: Glimpse, Roles.                                                                                                                                                                00:18 +0: Demo Dataset: Glimpse, Roles.                                                                                                                                                                
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlefdx1RB/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlefdx1RB/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlefdx1RB/weather.csv
+01:07 +1: Demo Dataset: Glimpse, Roles.                                                                                                                                                                01:07 +1: (tearDownAll)                                                                                                                                                                                01:07 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_explore_correlation_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart                                                                                          00:18 +0: Explore Demo Correlation: build, page.                                                                                                                                                       00:18 +0: Explore Demo Correlation: build, page.                                                                                                                                                       
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleA1fZwf/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleA1fZwf/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleA1fZwf/weather.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_correlation.R
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextContainingWidgetFinder:<Found 0 widgets with text containing 1.00: []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      verifyPage (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/utils/verify_next_page.dart:57:5)
+#5      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart:61:13)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/utils/verify_next_page.dart line 57
+The test description was:
+  build, page.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:53 +0 -1: Explore Demo Correlation: build, page. [E]                                                                                                                                                
+  Test failed. See exception logs above.
+  The test description was: build, page.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_correlation_test.dart -p vm --plain-name 'Explore Demo Correlation: build, page.'
+00:53 +0 -1: (tearDownAll)                                                                                                                                                                             00:53 +0 -1: Some tests failed.                                                                                                                                                                        
+========================================
+integration_test/demo_explore_missing_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_missing_test.dart                                                                                              00:17 +0: Demo Explore Missing: basic.                                                                                                                                                                 00:18 +0: Demo Explore Missing: basic.                                                                                                                                                                 00:18 +0: Demo Explore Missing: basic.                                                                                                                                                                 
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/weather.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_missing.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/explore_missing_mice.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/explore_missing_vim.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/explore_missing_naniar_vismiss.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/explore_missing_naniar_ggmissvar.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleIZOHsH/explore_missing_naniar_ggmissupset.svg
+00:41 +1: Demo Explore Missing: basic.                                                                                                                                                                 00:41 +1: (tearDownAll)                                                                                                                                                                                00:41 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_explore_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_test.dart                                                                                                      00:16 +0: Demo Explore: Summary.                                                                                                                                                                       00:17 +0: Demo Explore: Summary.                                                                                                                                                                       00:17 +0: Demo Explore: Summary.                                                                                                                                                                       
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlemyfXz3/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlemyfXz3/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlemyfXz3/weather.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_summary.R
+00:38 +1: Demo Explore: Summary.                                                                                                                                                                       00:38 +1: (tearDownAll)                                                                                                                                                                                00:38 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_explore_visual_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_explore_visual_test.dart                                                                                               ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:16 +0: Explore tab DEMO dataset: Visual feature.                                                                                                                                                    00:17 +0: Explore tab DEMO dataset: Visual feature.                                                                                                                                                    00:17 +0: Explore tab DEMO dataset: Visual feature.                                                                                                                                                    
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlem95Ywr/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlem95Ywr/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlem95Ywr/weather.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_visual_numeric.R
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlem95Ywr/explore_visual_boxplot.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlem95Ywr/explore_visual_density.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlem95Ywr/explore_visual_ecdf.svg
+00:53 +1: Explore tab DEMO dataset: Visual feature.                                                                                                                                                    00:53 +1: (tearDownAll)                                                                                                                                                                                00:53 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_model_cluster_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_cluster_test.dart                                                                                                00:16 +0: Cluster Feature: Demo Dataset, Model, Cluster.                                                                                                                                               00:17 +0: Cluster Feature: Demo Dataset, Model, Cluster.                                                                                                                                               00:17 +0: Cluster Feature: Demo Dataset, Model, Cluster.                                                                                                                                               
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle2TSO23/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle2TSO23/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle2TSO23/weather.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 model_template.R
+R SOURCE                 model_build_cluster.R
+00:27 +1: Cluster Feature: Demo Dataset, Model, Cluster.                                                                                                                                               00:27 +1: (tearDownAll)                                                                                                                                                                                00:27 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_model_nnet_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart                                                                                                   00:17 +0: NNET Model Demo Tree: default test.                                                                                                                                                          00:18 +0: NNET Model Demo Tree: default test.                                                                                                                                                          00:18 +0: NNET Model Demo Tree: default test.                                                                                                                                                          
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleOos3I1/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleOos3I1/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleOos3I1/weather.csv
+  IGNORE                 wind_gust_dir
+  IGNORE                 wind_dir_9am
+  IGNORE                 wind_dir_3pm
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 model_template.R
+R SOURCE                 model_build_neural_net.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleOos3I1/model_nn_nnet.svg
+01:32 +1: NNET Model Demo Tree: default test.                                                                                                                                                          01:32 +1: NNET Model Demo Tree: nnet model with different parameter settings.                                                                                                                          01:32 +1: NNET Model Demo Tree: default test.                                                                                                                                                          
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+01:38 +1: NNET Model Demo Tree: nnet model with different parameter settings.                                                                                                                          
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleSJpbKJ/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleSJpbKJ/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleSJpbKJ/weather.csv
+  IGNORE                 wind_gust_dir
+  IGNORE                 wind_dir_9am
+  IGNORE                 wind_dir_3pm
+R SOURCE                 dataset_template.R
+02:26 +1: NNET Model Demo Tree: default test.                                                                                                                                                          
+  BUILD                  ActivityButton
+02:30 +1: NNET Model Demo Tree: nnet model with different parameter settings.                                                                                                                          
+R SOURCE                 model_template.R
+R SOURCE                 model_build_neural_net.R
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _WidgetPredicateWidgetFinder:<Found 0 widgets with widget matching predicate: []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart:482:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart line 482
+The test description was:
+  nnet model with different parameter settings.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+02:35 +1 -1: NNET Model Demo Tree: nnet model with different parameter settings. [E]                                                                                                                   
+  Test failed. See exception logs above.
+  The test description was: nnet model with different parameter settings.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_nnet_test.dart -p vm --plain-name 'NNET Model Demo Tree: nnet model with different parameter settings.'
+02:35 +1 -1: (tearDownAll)                                                                                                                                                                             02:35 +1 -1: Some tests failed.                                                                                                                                                                        
+========================================
+integration_test/demo_model_tree_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:19 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_model_tree_test.dart                                                                                                   00:19 +0: Model Demo Tree: rpart.                                                                                                                                                                      00:19 +0: Model Demo Tree: rpart.                                                                                                                                                                      
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlerdcL7C/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlerdcL7C/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlerdcL7C/weather.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 model_template.R
+R SOURCE                 model_build_rpart.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlerdcL7C/model_tree_rpart.svg
+01:13 +1: Model Demo Tree: rpart.                                                                                                                                                                      01:13 +1: Model Demo Tree: rpart with different parameter settings.                                                                                                                                    01:14 +1: Model Demo Tree: rpart with different parameter settings.                                                                                                                                    01:14 +1: Model Demo Tree: rpart.                                                                                                                                                                      
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+01:19 +1: Model Demo Tree: rpart with different parameter settings.                                                                                                                                    
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlejCNJLP/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlejCNJLP/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlejCNJLP/weather.csv
+R SOURCE                 dataset_template.R
+01:42 +1: Model Demo Tree: rpart.                                                                                                                                                                      
+  BUILD                  ActivityButton
+01:47 +1: Model Demo Tree: rpart with different parameter settings.                                                                                                                                    
+R SOURCE                 model_template.R
+R SOURCE                 model_build_rpart.R
+01:47 +1: Model Demo Tree: rpart.                                                                                                                                                                      
+  BUILD                  ActivityButton
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlejCNJLP/model_tree_rpart.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlejCNJLP/model_tree_rpart.svg
+01:50 +2: Model Demo Tree: rpart with different parameter settings.                                                                                                                                    01:50 +2: Model Demo Tree: ctree.                                                                                                                                                                      01:51 +2: Model Demo Tree: ctree.                                                                                                                                                                      01:51 +2: Model Demo Tree: rpart.                                                                                                                                                                      
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+01:56 +2: Model Demo Tree: ctree.                                                                                                                                                                      
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleiFohcW/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleiFohcW/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleiFohcW/weather.csv
+R SOURCE                 dataset_template.R
+02:20 +2: Model Demo Tree: rpart.                                                                                                                                                                      
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+02:23 +2: Model Demo Tree: ctree.                                                                                                                                                                      
+R SOURCE                 model_template.R
+R SOURCE                 model_build_ctree.R
+02:35 +3: Model Demo Tree: ctree.                                                                                                                                                                      02:35 +3: (tearDownAll)                                                                                                                                                                                02:35 +3: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_transform_cleanup_ignore_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:19 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_cleanup_ignore_test.dart                                                                                     00:19 +0: TRANSFORM CLEANUP IGNORE DEMO: cleanup                                                                                                                                                       00:19 +0: TRANSFORM CLEANUP IGNORE DEMO: cleanup                                                                                                                                                       
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlexfSTMk/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlexfSTMk/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlexfSTMk/weather.csv
+  IGNORE                 date
+  IGNORE                 min_temp
+  IGNORE                 max_temp
+  IGNORE                 rainfall
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+R SOURCE                 transform_clean_delete_ignored.R
+  DELETED                date
+  DELETED                min_temp
+  DELETED                max_temp
+  DELETED                rainfall
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+  IGNORE                 wind_gust_dir
+  IGNORE                 wind_gust_speed
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+R SOURCE                 transform_clean_delete_ignored.R
+  DELETED                wind_gust_dir
+  DELETED                wind_gust_speed
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+00:58 +1: TRANSFORM CLEANUP IGNORE DEMO: cleanup                                                                                                                                                       00:58 +1: (tearDownAll)                                                                                                                                                                                00:58 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/demo_transform_impute_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/demo_transform_impute_test.dart                                                                                             00:18 +0: Transform DEMO: build, page.                                                                                                                                                                 00:18 +0: Transform DEMO: build, page.                                                                                                                                                                 
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleLtbcuJ/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleLtbcuJ/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleLtbcuJ/weather.csv
+R SOURCE                 dataset_template.R
+selected changed to rainfall
+  BUILD                  ActivityButton
+
+R SOURCE                 transform_impute_zero_missing.R
+  BUILD                  ActivityButton
+R SOURCE                 dataset_template.R
+00:55 +1: Transform DEMO: build, page.                                                                                                                                                                 00:55 +1: (tearDownAll)                                                                                                                                                                                00:55 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/large_dataset_ignore_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart                                                                                              00:18 +0: Set Variables to Ignore Test: Test large dataset.                                                                                                                                            00:18 +0: Set Variables to Ignore Test: Test large dataset.                                                                                                                                            
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:643:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1193:28)
+#3      Iterable.isEmpty (dart:core/iterable.dart:540:33)
+#4      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:1883:18)
+#5      WidgetController.getCenter (package:flutter_test/src/controller.dart:1784:12)
+#6      WidgetController.fling (package:flutter_test/src/controller.dart:1220:7)
+#7      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart:155:26)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 2 frames from dart:async-patch and package:stack_trace)
+
+The test description was:
+  Test large dataset.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+01:10 +0 -1: Set Variables to Ignore Test: Test large dataset. [E]                                                                                                                                     
+  Test failed. See exception logs above.
+  The test description was: Test large dataset.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_ignore_test.dart -p vm --plain-name 'Set Variables to Ignore Test: Test large dataset.'
+01:10 +0 -1: (tearDownAll)                                                                                                                                                                             01:10 +0 -1: Some tests failed.                                                                                                                                                                        
+========================================
+integration_test/large_dataset_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_dataset_test.dart                                                                                                     ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:16 +0: Dataset large: Glimpse, Roles.                                                                                                                                                               00:17 +0: Dataset large: Glimpse, Roles.                                                                                                                                                               00:17 +0: Dataset large: Glimpse, Roles.                                                                                                                                                               
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+00:22 +1: Dataset large: Glimpse, Roles.                                                                                                                                                               00:22 +1: (tearDownAll)                                                                                                                                                                                00:22 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/large_explore_correlation_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_correlation_test.dart                                                                                         ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:17 +0: Explore Large Correlation: build, page.                                                                                                                                                      00:18 +0: Explore Large Correlation: build, page.                                                                                                                                                      00:18 +0: Explore Large Correlation: build, page.                                                                                                                                                      
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_correlation.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle7hw6xR/explore_correlation.svg
+00:39 +1: Explore Large Correlation: build, page.                                                                                                                                                      00:39 +1: (tearDownAll)                                                                                                                                                                                00:39 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/large_explore_missing_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_missing_test.dart                                                                                             00:15 +0: Explore Tab: Large Dataset, Explore, Missing.                                                                                                                                                00:15 +0: Explore Tab: Large Dataset, Explore, Missing.                                                                                                                                                
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_missing.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleQhMYbC/explore_missing_mice.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleQhMYbC/explore_missing_mice.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleQhMYbC/explore_missing_mice.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleQhMYbC/explore_missing_vim.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleQhMYbC/explore_missing_naniar_vismiss.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleQhMYbC/explore_missing_naniar_ggmissvar.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleQhMYbC/explore_missing_naniar_ggmissupset.svg
+00:39 +1: Explore Tab: Large Dataset, Explore, Missing.                                                                                                                                                00:39 +1: (tearDownAll)                                                                                                                                                                                00:39 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/large_explore_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart                                                                                                     00:17 +0: Explore large: Summary.                                                                                                                                                                      00:18 +0: Explore large: Summary.                                                                                                                                                                      00:18 +0: Explore large: Summary.                                                                                                                                                                      
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_summary.R
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextContainingWidgetFinder:<Found 0 widgets with text containing 2.12090961: []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart:194:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart line 194
+The test description was:
+  Summary.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:39 +0 -1: Explore large: Summary. [E]                                                                                                                                                               
+  Test failed. See exception logs above.
+  The test description was: Summary.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_test.dart -p vm --plain-name 'Explore large: Summary.'
+00:39 +0 -1: (tearDownAll)                                                                                                                                                                             00:39 +0 -1: Some tests failed.                                                                                                                                                                        
+========================================
+integration_test/large_explore_visual_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart                                                                                              00:18 +0: Explore tab Large dataset: Visual feature.                                                                                                                                                   00:19 +0: Explore tab Large dataset: Visual feature.                                                                                                                                                   00:19 +0: Explore tab Large dataset: Visual feature.                                                                                                                                                   
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 explore_visual_numeric.R
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleysw9ld/explore_visual_boxplot.svg
+  BUILD                  ActivityButton
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleysw9ld/explore_visual_boxplot.svg
+  BUILD                  ActivityButton
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleysw9ld/explore_visual_boxplot.svg
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextContainingWidgetFinder:<Found 0 widgets with text containing Density Plot of Values:
+[]>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart:142:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart line 142
+The test description was:
+  Visual feature.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+03:20 +0 -1: Explore tab Large dataset: Visual feature. [E]                                                                                                                                            
+  Test failed. See exception logs above.
+  The test description was: Visual feature.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_explore_visual_test.dart -p vm --plain-name 'Explore tab Large dataset: Visual feature.'
+03:20 +0 -1: (tearDownAll)                                                                                                                                                                             03:20 +0 -1: Some tests failed.                                                                                                                                                                        
+========================================
+integration_test/large_model_nnet_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart                                                                                                  00:18 +0: Model LARGE dataset NNET feature: default test.                                                                                                                                              00:19 +0: Model LARGE dataset NNET feature: default test.                                                                                                                                              00:19 +0: Model LARGE dataset NNET feature: default test.                                                                                                                                              
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:643:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1193:28)
+#3      Iterable.isEmpty (dart:core/iterable.dart:540:33)
+#4      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:1883:18)
+#5      WidgetController.getCenter (package:flutter_test/src/controller.dart:1784:12)
+#6      WidgetController.fling (package:flutter_test/src/controller.dart:1220:7)
+#7      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart:138:26)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 2 frames from dart:async-patch and package:stack_trace)
+
+The test description was:
+  default test.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+01:16 +0 -1: Model LARGE dataset NNET feature: default test. [E]                                                                                                                                       
+  Test failed. See exception logs above.
+  The test description was: default test.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart -p vm --plain-name 'Model LARGE dataset NNET feature: default test.'
+01:16 +0 -1: Model LARGE dataset NNET feature: nnet model with different parameter settings.                                                                                                           01:16 +0 -1: Model LARGE dataset NNET feature: default test.                                                                                                                                           
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+01:20 +0 -1: Model LARGE dataset NNET feature: nnet model with different parameter settings.                                                                                                           
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:643:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1193:28)
+#3      Iterable.isEmpty (dart:core/iterable.dart:540:33)
+#4      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:1883:18)
+#5      WidgetController.getCenter (package:flutter_test/src/controller.dart:1784:12)
+#6      WidgetController.fling (package:flutter_test/src/controller.dart:1220:7)
+#7      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart:350:26)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 2 frames from dart:async-patch and package:stack_trace)
+
+The test description was:
+  nnet model with different parameter settings.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+02:13 +0 -2: Model LARGE dataset NNET feature: nnet model with different parameter settings. [E]                                                                                                       
+  Test failed. See exception logs above.
+  The test description was: nnet model with different parameter settings.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_nnet_test.dart -p vm --plain-name 'Model LARGE dataset NNET feature: nnet model with different parameter settings.'
+02:13 +0 -2: (tearDownAll)                                                                                                                                                                             02:13 +0 -2: Some tests failed.                                                                                                                                                                        
+========================================
+integration_test/large_model_tree_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart                                                                                                  00:18 +0: Model Large Tree: raprt.                                                                                                                                                                     00:18 +0: Model Large Tree: raprt.                                                                                                                                                                     
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 model_template.R
+R SOURCE                 model_build_rpart.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattler1jk53/model_tree_rpart.svg
+01:00 +1: Model Large Tree: raprt.                                                                                                                                                                     01:00 +1: Model Large Tree: Traditional Parameters.                                                                                                                                                    01:00 +1: Model Large Tree: raprt.                                                                                                                                                                     
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+01:03 +1: Model Large Tree: Traditional Parameters.                                                                                                                                                    
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+01:16 +1: Model Large Tree: raprt.                                                                                                                                                                     
+  BUILD                  ActivityButton
+01:21 +1: Model Large Tree: Traditional Parameters.                                                                                                                                                    
+R SOURCE                 model_template.R
+R SOURCE                 model_build_rpart.R
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Decision Tree Model": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart:202:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart line 202
+The test description was:
+  Traditional Parameters.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+01:48 +1 -1: Model Large Tree: Traditional Parameters. [E]                                                                                                                                             
+  Test failed. See exception logs above.
+  The test description was: Traditional Parameters.
+  
+
+To run this test again: /Users/kev/sdk/flutter/bin/cache/dart-sdk/bin/dart test /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_model_tree_test.dart -p vm --plain-name 'Model Large Tree: Traditional Parameters.'
+01:48 +1 -1: Model Large Tree: Conditional.                                                                                                                                                            01:48 +1 -1: Model Large Tree: raprt.                                                                                                                                                                  
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+01:51 +1 -1: Model Large Tree: Conditional.                                                                                                                                                            
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+02:04 +1 -1: Model Large Tree: raprt.                                                                                                                                                                  
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+  BUILD                  ActivityButton
+03:49 +2 -1: Model Large Tree: Conditional.                                                                                                                                                            03:49 +2 -1: (tearDownAll)                                                                                                                                                                             03:49 +2 -1: Some tests failed.                                                                                                                                                                        
+========================================
+integration_test/large_transform_impute_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/large_transform_impute_test.dart                                                                                            ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:18 +0: Transform LARGE: build, page.                                                                                                                                                                00:19 +0: Transform LARGE: build, page.                                                                                                                                                                00:19 +0: Transform LARGE: build, page.                                                                                                                                                                
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+selected changed to middle_name
+  BUILD                  ActivityButton
+
+R SOURCE                 transform_impute_zero_missing.R
+  BUILD                  ActivityButton
+R SOURCE                 dataset_template.R
+01:04 +1: Transform LARGE: build, page.                                                                                                                                                                01:04 +1: (tearDownAll)                                                                                                                                                                                01:04 +1: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/reset_dataset_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:19 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_test.dart                                                                                                     00:19 +0: Dataset Reset: demo navigate.                                                                                                                                                                00:20 +0: Dataset Reset: demo navigate.                                                                                                                                                                00:20 +0: Dataset Reset: demo navigate.                                                                                                                                                                
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlekcxqw3/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlekcxqw3/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlekcxqw3/weather.csv
+  RESET                  
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlekcxqw3/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlekcxqw3/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlekcxqw3/weather.csv
+00:48 +1: Dataset Reset: demo navigate.                                                                                                                                                                00:48 +1: Dataset Reset: demo then large navigate                                                                                                                                                      00:49 +1: Dataset Reset: demo then large navigate                                                                                                                                                      00:49 +1: Dataset Reset: demo navigate.                                                                                                                                                                
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+00:54 +1: Dataset Reset: demo then large navigate                                                                                                                                                      
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleW2wuNs/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleW2wuNs/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleW2wuNs/weather.csv
+  RESET                  
+R START                  main.R
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+01:20 +2: Dataset Reset: demo then large navigate                                                                                                                                                      01:20 +2: (tearDownAll)                                                                                                                                                                                01:20 +2: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/reset_dataset_visual_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              Building macOS application...                                   
+00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/reset_dataset_visual_test.dart                                                                                              ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:17 +0: Dataset Reset and Image Disappear: demo tree image disappear.                                                                                                                                00:18 +0: Dataset Reset and Image Disappear: demo tree image disappear.                                                                                                                                00:18 +0: Dataset Reset and Image Disappear: demo tree image disappear.                                                                                                                                
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+  ASSET                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle5R7ztg/weather.csv
+R LOAD                   /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle5R7ztg/weather.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle5R7ztg/weather.csv
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 model_template.R
+R SOURCE                 model_build_rpart.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle5R7ztg/model_tree_rpart.svg
+  RESET                  
+Deleted: /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattle5R7ztg/model_tree_rpart.svg
+R START                  main.R
+02:08 +1: Dataset Reset and Image Disappear: demo tree image disappear.                                                                                                                                02:08 +1: large dataset tree image disappear.                                                                                                                                                          02:08 +1: Dataset Reset and Image Disappear: demo tree image disappear.                                                                                                                                
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+02:11 +1: large dataset tree image disappear.                                                                                                                                                          
+R LOAD                   integration_test/rattle_test_large.csv
+R SOURCE                 dataset_load_csv.R
+R SOURCE                 dataset_prep.R
+R LOADED                 integration_test/rattle_test_large.csv
+R SOURCE                 dataset_template.R
+02:23 +1: Dataset Reset and Image Disappear: demo tree image disappear.                                                                                                                                
+  BUILD                  ActivityButton
+02:25 +1: large dataset tree image disappear.                                                                                                                                                          
+R SOURCE                 model_template.R
+R SOURCE                 model_build_rpart.R
+02:46 +1: Dataset Reset and Image Disappear: demo tree image disappear.                                                                                                                                
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlemnOVTu/model_tree_rpart.svg
+03:18 +1: large dataset tree image disappear.                                                                                                                                                          
+  RESET                  
+Deleted: /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattlemnOVTu/model_tree_rpart.svg
+R START                  main.R
+03:55 +2: large dataset tree image disappear.                                                                                                                                                          03:55 +2: (tearDownAll)                                                                                                                                                                                03:55 +2: All tests passed!                                                                                                                                                                            
+========================================
+integration_test/sherlock_dataset_test.dart
+========================================
+00:00 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:01 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  Building macOS application...                                   00:02 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  
+00:03 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:04 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:05 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:06 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:07 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:08 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:09 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:10 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:11 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:12 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:13 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:14 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:15 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:16 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:17 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:18 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  ✓ Built build/macos/Build/Products/Debug/rattle.app
+00:19 +0: loading /Users/kev/dev/new_rattle_main/rattleng/integration_test/sherlock_dataset_test.dart                                                                                                  00:19 +0: Sherlock Dataset: Wordcloud                                                                                                                                                                  00:19 +0: Sherlock Dataset: Wordcloud                                                                                                                                                                  
+  BUILD                  ExploreTab
+  BUILD                  TransformTab
+  BUILD                  ModelTabs
+
+R START                  main.R
+R START                  main.R
+R LOAD                   integration_test/sherlock.txt
+R SOURCE                 dataset_load_txt.R
+R SOURCE                 dataset_template.R
+  BUILD                  ActivityButton
+R SOURCE                 model_build_word_cloud.R
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleVq4QBN/wordcloud.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleVq4QBN/wordcloud.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleVq4QBN/wordcloud.svg
+  IMAGE                  /var/folders/n8/9qfdjf_x1qqgrn3rknn5cmtr0000gn/T/rattleVq4QBN/wordcloud.svg
+R SOURCE                 model_build_word_cloud.R
+R SOURCE                 model_build_word_cloud.R
+R SOURCE                 model_build_word_cloud.R
+R SOURCE                 model_build_word_cloud.R
+R SOURCE                 model_build_word_cloud.R
+01:13 +1: Sherlock Dataset: Wordcloud                                                                                                                                                                  01:13 +1: (tearDownAll)                                                                                                                                                                                01:13 +1: All tests passed!                                                                                                                                                                            
+------------------------------------------------------------------------

@@ -27,10 +27,12 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 /// The SUMMARY tab config currently consists of just a BUILD button.
 ///
@@ -44,19 +46,86 @@ class SummaryConfig extends ConsumerStatefulWidget {
 }
 
 class SummaryConfigState extends ConsumerState<SummaryConfig> {
+  // Toggles for the different summary features.
+  List<String> summaryOptions = [
+    'SUMMARY',
+    'SKIM',
+    'SPREAD',
+    'CROSS TAB',
+  ];
+
+  Map<String, bool> selectedOptions = {
+    'SUMMARY': true,
+    'SKIM': true,
+    'SPREAD': true,
+    'CROSS TAB': false, // CROSS TAB is expensive, so it defaults to false.
+  };
+
+  // Tooltips for each option
+  Map<String, String> optionTooltips = {
+    'SUMMARY': 'Generate the summary of the dataset.',
+    'SKIM': 'Perform a skim summary for an overview of variables.',
+    'SPREAD': 'Spread categorical variables.',
+    'CROSS TAB': 'Generate a cross-tabulation (can be expensive).',
+  };
+
+  Widget summaryToggles() {
+    return Expanded(
+      child: Wrap(
+        spacing: 5.0,
+        runSpacing: choiceChipRowSpace,
+        children: summaryOptions.map((option) {
+          return DelayedTooltip(
+            message: optionTooltips[option]!,
+            child: FilterChip(
+              label: Text(option),
+              selectedColor: Colors.lightBlue[200],
+              showCheckmark: false,
+              backgroundColor: selectedOptions[option]!
+                  ? Colors.lightBlue[50]
+                  : Colors.grey[300],
+              shadowColor: Colors.grey,
+              pressElevation: 8.0,
+              elevation: 2.0,
+              selected: selectedOptions[option]!,
+              tooltip: optionTooltips[option], // Tooltip for each chip
+              onSelected: (bool selected) {
+                setState(() {
+                  selectedOptions[option] = selected;
+                });
+              },
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  void takeAction() {
+    // Construct the command based on the selected toggles.
+    List<String> selectedTransforms = [];
+    if (selectedOptions['SUMMARY']!) selectedTransforms.add('explore_summary');
+    if (selectedOptions['SKIM']!) selectedTransforms.add('explore_skim');
+    if (selectedOptions['SPREAD']!) selectedTransforms.add('explore_spread');
+    if (selectedOptions['CROSS TAB']!)
+      selectedTransforms.add('explore_crosstab');
+
+    // Execute the selected transformations using the R source function.
+    for (var transform in selectedTransforms) {
+      rSource(context, ref, transform);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
+        configTopSpace,
 
         Row(
           children: [
-            // Space to the left of the configs.
-
-            const SizedBox(width: 5),
+            configLeftSpace,
 
             // The BUILD button.
 
@@ -64,10 +133,15 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               pageControllerProvider:
                   summaryPageControllerProvider, // Optional navigation
               onPressed: () {
-                rSource(context, ref, 'explore_summary');
+                takeAction();
               },
               child: const Text('Generate Dataset Summary'),
             ),
+
+            configWidgetSpace,
+
+            // The toggle buttons for the different options (SUMMARY, SKIM, SPREAD, CROSS TAB).
+            summaryToggles(),
           ],
         ),
       ],
