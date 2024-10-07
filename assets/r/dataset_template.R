@@ -1,11 +1,11 @@
-# Rattle Scripts: Setup the data template variables.
+# Setup the dataset template variables.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 08:46:39 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 21:41:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,56 +24,19 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# Run this after the variable `ds` (dataset) has been loaded and
-# prep'd or changed in some way, as after a TRANSFORM session.  This
-# script will initialise or update the data template variables.
-#
-# References:
-#
-# @williams:2017:essentials Chapter 3
-#
-# https://survivor.togaware.com/datascience/data-template.html
-
-# Rattle Script to prepare a dataset
-#
-# Copyright (C) 2023, Togaware Pty Ltd.
-#
-# License: GNU General Public License, Version 3 (the "License")
-# https://www.gnu.org/licenses/gpl-3.0.en.html
-#
-# Time-stamp: <Saturday 2024-09-28 08:34:06 +1000 Graham Williams>
-#
-# Licensed under the GNU General Public License, Version 3 (the "License");
-#
-# This program is free software: you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation, either version 3 of the License, or (at your option) any later
-# version.
-#
-# This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program.  If not, see <https://www.gnu.org/licenses/>.
-#
-# Author: Graham Williams
-
 # Run this after the variable `ds` (dataset) has been loaded into
 # Rattle.  This script will then clean and prepare the dataset. The
 # following action is the dataset template processing. We place into
 # `dataset_template.R` the setup when the data within the dataset has
 # changed, which may be called again after, for example, TRANSFORM.
 #
+# Rattle timestamp: TIMESTAMP
+#
 # References:
 #
 # @williams:2017:essentials Chapter 3
 #
 # https://survivor.togaware.com/datascience/data-template.html
-
-# 20240809 gjw Move main.R here to avoid the problem on Windows where
-# main.R is not getting run.
 
 # We begin most scripts by loading the required packages.  Here are
 # some initial packages to load and others will be identified as we

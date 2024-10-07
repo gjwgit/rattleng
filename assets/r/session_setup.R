@@ -1,11 +1,11 @@
-# Rattle Scripts: The main setup.
+# Setup a new Rattle session.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <2024-10-07 08:40:18 gjw>
+# Time-stamp: <Monday 2024-10-07 21:41:17 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -28,6 +28,8 @@
 
 # Initialise R with required packages.
 #
+# Rattle timestamp: TIMESTAMP
+#
 # The concept of templates for data science was introduced in my book,
 # The Essentials of Data Science, 2017, CRC Press, referenced
 # throughout this script as @williams:2017:essentials
@@ -42,8 +44,15 @@
 # here.
 
 ####################################
-# Load/Instal Required Packages
+# Load/Install Required Packages
 ####################################
+
+# 20241007 gjw I am in the process of removing the installation of R
+# packages on startup to avoid a delay in loading your R dataset. For
+# now we will require you to ensure the R packages are already
+# installed before using Rattle. Eventually, I will do the
+# install_if_missing per script rather than up front here. Also move
+# install_if_missing into the rattle R pacakge.
 
 # 20241001 gjw Keep R from asking to select a CRAN site and from
 # asking if to create the user's local R library.  Otherwise it fails
@@ -56,28 +65,28 @@
 # creation. We then use `library()` each script file to load the
 # required packages from the library.
 
-install_if_missing <- function(pkg) {
+## install_if_missing <- function(pkg) {
 
-  if (!requireNamespace(pkg, character.only=TRUE, quietly=TRUE)) {
+##   if (!requireNamespace(pkg, character.only=TRUE, quietly=TRUE)) {
 
 
-    # Specify a directory for the library
+##     # Specify a directory for the library
 
-    lib_dir <- Sys.getenv("R_LIBS_USER")
+##     lib_dir <- Sys.getenv("R_LIBS_USER")
 
-    # Make sure the directory already exists so we won;t be prompted
-    # to create it.
+##     # Make sure the directory already exists so we won;t be prompted
+##     # to create it.
     
-    if (!dir.exists(lib_dir)) {
-      dir.create(lib_dir, recursive=TRUE)
-      message("Package Library Created: ", lib_dir)
-    }
+##     if (!dir.exists(lib_dir)) {
+##       dir.create(lib_dir, recursive=TRUE)
+##       message("Package Library Created: ", lib_dir)
+##     }
 
-    # Install the package without prompting for library creation
+##     # Install the package without prompting for library creation
 
-    install.packages(pkg, lib=lib_dir, dependencies=TRUE, ask=FALSE)
-  }
-}
+##     install.packages(pkg, lib=lib_dir, dependencies=TRUE, ask=FALSE)
+##   }
+## }
 
 # We install all packages up front so that in all likelihood any large
 # install of packages happens just once and on the first startup. This
@@ -126,26 +135,46 @@ install_if_missing <- function(pkg) {
 ## install_if_missing('Ckmeans')
 ## install_if_missing('data')
 
+####################################
+# Default settings
+####################################
+
+# The crayon package in R is used to produce highlighted and
+# emboldened output to the console. We turn off the fancy terminal
+# escape sequences here. These tend to make the parsing of the text
+# output presented to STDOUT somewhat challenging for Rattle.
+
+options(crayon.enabled = FALSE)
+
+# TODO 20241007 gjw MOVE WIDTH LITERAL INTO SETTINGS
+
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
 
 options(width=120)
 
-# Turn off fancy terminal escape sequences that are produced using the
-# crayon package.
+# TODO 20241007 gjw MOVE SEED LITERAL INTO SETTINGS
 
-options(crayon.enabled = FALSE)
-
-# A pre-defined value for the random seed ensures that results are
-# repeatable.
+# A pre-defined value for the random seed. Setting the random seed to
+# a specific known value ensures that the processing and analyses
+# undertaken in Rattle are repeatable every time. Usually, with a
+# different random seed each time R starts up we get different
+# results, like different partitioning, differe trees, etc.
 
 set.seed(42)
 
-# A support function to move into rattle to provide the dataset
-# summary as JSON used by RattleNG as the dataset summary from which
-# RattleNG gets all of it's meta data. Note the dependency on
-# jsonlite.
+####################################
+# Support Functions
+####################################
+
+# TODO 20241007 gjw MOVE R SUPPORT FUNCTIONS INTO RATTLE R PACKAGE
+
+library(jsonlite)
+
+# A function to provide the dataset summary as JSON which can then be
+# parsed by Rattle as the dataset summary from which Rattle gets all
+# of it's meta data.
 
 meta_data <- function(df) {
   summary_list <- lapply(names(df), function(var_name) {
@@ -251,6 +280,10 @@ find_fewest_levels <- function(df) {
   }
 }
 
+####################################
+# A Rattle Theme for Graphics
+####################################
+
 library(ggplot2)
 
 # A palette for rattle!
@@ -282,4 +315,3 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 # theme_rattle <- theme_economist
 
 theme_default <- theme_rattle
-
