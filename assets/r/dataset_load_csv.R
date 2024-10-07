@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 21:39:16 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 05:23:46 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,12 +24,12 @@
 #
 # Author: Graham Williams
 
+# Rattle timestamp: TIMESTAMP
+#
 # The data contained in the file `FILENAME`
 # is loaded as a CSV file into the template variable `ds` (dataset),
 # intialising the `dsname` (a printable name for the dataset) and
 # `vnames` (the variable names).
-#
-# Rattle timestamp: TIMESTAMP
 #
 # References:
 #

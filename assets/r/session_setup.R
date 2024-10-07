@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 21:41:17 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 05:26:06 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -26,8 +26,6 @@
 #
 # Author: Graham Williams
 
-# Initialise R with required packages.
-#
 # Rattle timestamp: TIMESTAMP
 #
 # The concept of templates for data science was introduced in my book,
@@ -37,15 +35,17 @@
 # available from my Data science Desktop Survival Guide
 # https://survivor.togaware.com/datascience/.
 
+####################################
+# Load/Install Required Packages
+####################################
+
 # We begin most scripts by loading the required packages.  Here are
 # some initial packages to load and others will be identified as we
 # proceed through the script. When writing our own scripts we often
 # collect together the library commands at the beginning of the script
 # here.
 
-####################################
-# Load/Install Required Packages
-####################################
+library(ggplot2)
 
 # 20241007 gjw I am in the process of removing the installation of R
 # packages on startup to avoid a delay in loading your R dataset. For
@@ -283,8 +283,6 @@ find_fewest_levels <- function(df) {
 ####################################
 # A Rattle Theme for Graphics
 ####################################
-
-library(ggplot2)
 
 # A palette for rattle!
 
