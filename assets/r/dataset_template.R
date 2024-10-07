@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 21:41:33 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 05:24:57 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,6 +24,8 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
+# Rattle timestamp: TIMESTAMP
+#
 # Run this after the variable `ds` (dataset) has been loaded into
 # Rattle.  This script will then clean and prepare the dataset. The
 # following action is the dataset template processing. We place into
@@ -38,11 +40,7 @@
 #
 # https://survivor.togaware.com/datascience/data-template.html
 
-# We begin most scripts by loading the required packages.  Here are
-# some initial packages to load and others will be identified as we
-# proceed through the script. When writing our own scripts we often
-# collect together the library commands at the beginning of the script
-# here.
+# Load required packages from the local library into the R session.
 
 library(dplyr)
 library(janitor)
