@@ -27,38 +27,6 @@ system instructions are also available:
 + [MacOS](https://survivor.togaware.com/datascience/installing-rattle-on-macos.html)
 + [Windows](https://survivor.togaware.com/datascience/installing-rattle-on-windows.html)
 
-For reference, these are the packages that should be loaded from the R
-library into your **Console**. They should be loaded automatically by
-RattleNG and listed here only in case something goes wrong. Do report
-an issue if you need to do this manually on your platform.
-
-```r
-library(Hmisc)
-library(NeuralNetTools)
-library(VIM)
-library(corrplot)
-library(descr)
-library(fBasics)
-library(ggthemes)
-library(janitor)
-library(magrittr)
-library(mice)
-library(naniar)
-library(nnet)
-library(pacman)
-library(party)
-library(randomForest)
-library(rattle)
-library(readr)
-library(reshape)
-library(rpart)
-library(skimr)
-library(tidyverse)
-library(tm)
-library(verification)
-library(wordcloud)
-```
-
 ## Source Install
 
 You can run the app from the source code available from
