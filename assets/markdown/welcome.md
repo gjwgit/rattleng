@@ -61,7 +61,7 @@ and partitioning will split a dataset into [training, tuning, and
 testing](https://survivor.togaware.com/datascience/train-tune-and-test-datasets.html)
 datasets.
 
-## Resources
+<!-- ## Resources
 
 Rattle V5 is well covered in **Data Mining with Rattle and R**
 (https://bit.ly/rattle_data_mining), as well as other online resources
@@ -78,6 +78,6 @@ Copyright © 2006-2024 Togaware Pty Ltd. Rattle is a registered
 trademark of Togaware Pty Ltd. Rattle was created and implemented by
 Graham Williams with many contributions as acknowledged in the About
 menu. Donations to support the ongoing development can be made through
-[Togaware](https://togaware.com/onepager.html).
+[Togaware](https://togaware.com/onepager.html). -->
 
 > 
