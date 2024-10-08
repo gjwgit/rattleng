@@ -34,11 +34,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/boost.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/image_page.dart';
-import 'package:rattle/widgets/pages.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -60,6 +61,8 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     // Populate the initial overview
 
     List<Widget> pages = [showMarkdownFile(boostIntroFile, context)];
+
+    final pageController = ref.watch(boostPageControllerProvider);
 
     if (algorithm == 'Extreme') {
       String content =
@@ -140,8 +143,9 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
       }
     }
 
-    return Pages(
-      children: pages,
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
     );
   }
 }
