@@ -102,76 +102,70 @@ FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
 }
 
 FutureBuilder showMarkdownFileNew(
-    String markdownFilePath, BuildContext context, List<String> resources) {
+    String markdownFilePath, String newMarkdownFilePath, BuildContext context) {
   return FutureBuilder(
     key: const Key('markdown_file_new'),
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        // Wrap the markdown data into rows with a maximum of 100 characters.
+        // Wrap the markdown data into rows with a maximum of 50 characters.
         final wrappedMarkdown = _wrapText(snapshot.data!, 50);
 
-        return Container(
-          decoration: sunkenBoxDecoration,
-          child: Row(
-            children: [
-              // Left side: Markdown content taking 50% of the screen width.
-              Expanded(
-                flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Markdown(
-                    data: wrappedMarkdown,
-                    selectable: true,
-                    onTapLink: (text, href, title) {
-                      final Uri url = Uri.parse(href ?? '');
-                      launchUrl(url);
-                    },
-                    imageBuilder: (uri, title, alt) {
-                      return Image.asset('$assetsPath/${uri.toString()}');
-                    },
-                  ),
-                ),
-              ),
+        return FutureBuilder(
+          future: loadAsset(newMarkdownFilePath),
+          builder: (context, newSnapshot) {
+            if (newSnapshot.hasData) {
+              // Wrap the new markdown data as well.
+              final wrappedNewMarkdown = _wrapText(newSnapshot.data!, 50);
 
-              // Right side: Resource list taking 50% of the screen width.
-              Expanded(
-                flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Resources',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: resources.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(
-                                resources[index],
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              onTap: () {
-                                // Implement your onTap behavior here.
-                              },
-                            );
+              return Container(
+                decoration: sunkenBoxDecoration,
+                child: Row(
+                  children: [
+                    // Left side: Original Markdown content taking 50% of the screen width.
+                    Expanded(
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Markdown(
+                          data: wrappedMarkdown,
+                          selectable: true,
+                          onTapLink: (text, href, title) {
+                            final Uri url = Uri.parse(href ?? '');
+                            launchUrl(url);
+                          },
+                          imageBuilder: (uri, title, alt) {
+                            return Image.asset('$assetsPath/${uri.toString()}');
                           },
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+
+                    // Right side: New Markdown content taking 50% of the screen width.
+                    Expanded(
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Markdown(
+                          data: wrappedNewMarkdown,
+                          selectable: true,
+                          onTapLink: (text, href, title) {
+                            final Uri url = Uri.parse(href ?? '');
+                            launchUrl(url);
+                          },
+                          imageBuilder: (uri, title, alt) {
+                            return Image.asset('$assetsPath/${uri.toString()}');
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
+              );
+            }
+
+            return const Center(child: CircularProgressIndicator());
+          },
         );
       }
 

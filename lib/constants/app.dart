@@ -38,6 +38,8 @@ const String assetsPath = 'assets';
 
 const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
 
+const String resourcesFile = '$assetsPath/markdown/resourses.md';
+
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
