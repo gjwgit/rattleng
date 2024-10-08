@@ -43,8 +43,9 @@ set.seed(CLUSTER_SEED)
 # The 'reshape' package provides the 'rescaler' function.
 
 library(reshape)
+library(wskm, quietly=TRUE)  # Load the wskm package for EWKM
 
-mtype <- "kmeans"
+mtype <- CLUSTER_TYPE
 mdesc <- "Cluster"
 
 # The variable to set whether the model needs rescale.
@@ -68,28 +69,64 @@ if (rescale) {
 }
 
 
-# Generate a kmeans cluster of size 10.
+# Perform clustering based on mtype.
 
-model_kmeans <- kmeans(data_for_clustering,
-                       centers=CLUSTER_NUM,
-                       nstart=CLUSTER_RUN)
+if (mtype == "KMeans") {
+  # Generate a kmeans cluster of size CLUSTER_NUM.
 
-# Report on the cluster characteristics. 
+  model <- kmeans(data_for_clustering,
+                  centers = CLUSTER_NUM,
+                  nstart = CLUSTER_RUN)
+  
+  # Report on the cluster characteristics.
+  # Cluster sizes:
 
-# Cluster sizes:
+  print(paste(model$size, collapse = ' '))
+  
+  # Data means:
 
-print(paste(model_kmeans$size, collapse=' '))
+  print(colMeans(data_for_clustering))
+  
+  # Cluster centers:
 
-# Data means:
+  print(model$centers)
+  
+  # Within cluster sum of squares:
 
-print(colMeans(data_for_clustering))
+  print(model$withinss)
+  
+} else if (mtype == "Ewkm") {
+  # Use the ewkm function from the wskm package.
+  # Set the lambda parameter for EWKM.
 
-# Cluster centers:
+  lambda <- EWKM_LAMBDA  # Define EWKM_LAMBDA before running the code
+  
+  # Generate an EWKM cluster of size CLUSTER_NUM.
 
-print(model_kmeans$centers)
+  model <- ewkm(data_for_clustering,
+                centers = CLUSTER_NUM,
+                lambda = lambda,
+                maxiter = CLUSTER_RUN)
+  
+  # Report on the cluster characteristics.
+  # Cluster sizes:
 
-# Within cluster sum of squares:
+  print(paste(model$size, collapse = ' '))
+  
+  # Data means:
 
-print(model_kmeans$withinss)
+  print(colMeans(data_for_clustering))
+  
+  # Cluster centers:
+
+  print(model$centers)
+  
+  # Total within-cluster sum of squares:
+
+  print(model$tot.withinss)
+  
+} else {
+  stop("Unsupported clustering method specified in mtype.")
+}
 
 cat("\n")

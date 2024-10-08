@@ -40,6 +40,7 @@ import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/providers/cluster_re_scale.dart';
 import 'package:rattle/providers/cluster_run.dart';
 import 'package:rattle/providers/cluster_seed.dart';
+import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
@@ -129,6 +130,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
+  String clusterType = ref.read(clusterTypeProvider);
 
   int interval = ref.read(intervalProvider);
 
@@ -331,6 +333,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
   code = code.replaceAll('RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('CLUSTER_TYPE', '"${clusterType.toString()}"');
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');

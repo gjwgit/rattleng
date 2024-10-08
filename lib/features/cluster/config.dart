@@ -93,11 +93,11 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                rSource(context, ref, 'model_template');
-                if (type == 'KMeans') {
-                  rSource(context, ref, 'model_build_cluster');
-                }
+              onPressed: () async {
+                await rSource(context, ref, 'model_template');
+
+                await rSource(context, ref, 'model_build_cluster');
+
                 ref.read(clusterPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,

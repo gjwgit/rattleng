@@ -80,7 +80,8 @@ pacman::p_load(Hmisc,
                tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
                tm,
                verification,
-               wordcloud)
+               wordcloud,
+               wskm)
 
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
