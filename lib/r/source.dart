@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Friday 2024-09-27 05:36:47 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-10-09 09:23:36 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Zheyuan Xu
 
 library;
 
@@ -131,6 +131,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
 
+  // BOOST
+
   int boostMaxDepth = ref.read(maxDepthBoostProvider);
   int boostMinSplit = ref.read(minSplitBoostProvider);
   int boostXVal = ref.read(xValueBoostProvider);
@@ -153,7 +155,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // var code = File('assets/r/$script.R').readAsStringSync();
 
   ////////////////////////////////////////////////////////////////////////
-  // Process global template variables.
+
+  // GLOBAL
 
   code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
@@ -183,7 +186,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('MAXFACTOR', '20');
 
   ////////////////////////////////////////////////////////////////////////
-  // Cleanup
+
+  // CLEANUP
 
   // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
 
@@ -202,6 +206,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('NEEDS_INIT', needsInit);
 
   ////////////////////////////////////////////////////////////////////////
+
   // WORD CLOUD
 
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
@@ -334,6 +339,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
 
   ////////////////////////////////////////////////////////////////////////
+
   // CLUSTER
 
   code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
@@ -357,6 +363,10 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
 
+  ////////////////////////////////////////////////////////////////////////
+
+  // BOOST
+
   code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
   code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
   code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
@@ -365,6 +375,8 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
   code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
   code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
+
+  ////////////////////////////////////////////////////////////////////////
 
   // Add the code to the script provider so it will be displayed in the script
   // tab and available to be exported there.

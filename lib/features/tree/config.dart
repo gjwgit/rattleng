@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Friday 2024-09-27 09:11:17 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 09:07:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -374,7 +374,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     );
   }
 
-  // Validation logic for priors field.
+  // Validation logic for priors field. The priors field is specific to the TREE
+  // config and so we define this here as a local util rather than in
+  // `number_field.dart`
 
   String? _validatePriors(String? value) {
     if (value != null && value.isNotEmpty) {
@@ -392,7 +394,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     return null;
   }
 
-  // Validation logic for loss matrix field.
+  // Validation logic for loss matrix field. The loss matrix field is specific
+  // to the TREE config and so we define this here as a local util rather than
+  // in `number_field.dart`
 
   String? _validateLossMatrix(String? value) {
     if (value != null && value.isNotEmpty) {
