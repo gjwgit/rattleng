@@ -52,13 +52,15 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
     'SKIM',
     'SPREAD',
     'CROSS TAB',
+    'GLIMPSE', // Added GLIMPSE
   ];
 
   Map<String, bool> selectedOptions = {
     'SUMMARY': true,
-    'SKIM': true,
-    'SPREAD': true,
-    'CROSS TAB': false, // CROSS TAB is expensive, so it defaults to false.
+    'SKIM': false,
+    'SPREAD': false,
+    'CROSS TAB': false,
+    'GLIMPSE': false, // Default to false.
   };
 
   // Tooltips for each option
@@ -67,7 +69,17 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
     'SKIM': 'Perform a skim summary for an overview of variables.',
     'SPREAD': 'Spread categorical variables.',
     'CROSS TAB': 'Generate a cross-tabulation (can be expensive).',
+    'GLIMPSE':
+        'Quickly glance at a few rows of the dataset.', // Tooltip for GLIMPSE
   };
+
+  // Modify selection logic to only allow one option at a time
+  void selectOnlyOneOption(String selectedOption) {
+    setState(() {
+      selectedOptions.updateAll((key, value) => false); // Deselect all options
+      selectedOptions[selectedOption] = true; // Select the current option
+    });
+  }
 
   Widget summaryToggles() {
     return Expanded(
@@ -90,9 +102,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               selected: selectedOptions[option]!,
               tooltip: optionTooltips[option], // Tooltip for each chip
               onSelected: (bool selected) {
-                setState(() {
-                  selectedOptions[option] = selected;
-                });
+                selectOnlyOneOption(option); // Only select one option at a time
               },
             ),
           );
@@ -102,18 +112,60 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   }
 
   void takeAction() {
-    // Construct the command based on the selected toggles.
-    List<String> selectedTransforms = [];
-    if (selectedOptions['SUMMARY']!) selectedTransforms.add('explore_summary');
-    if (selectedOptions['SKIM']!) selectedTransforms.add('explore_skim');
-    if (selectedOptions['SPREAD']!) selectedTransforms.add('explore_spread');
-    if (selectedOptions['CROSS TAB']!)
-      selectedTransforms.add('explore_crosstab');
+    // Construct the command based on the selected toggle.
+    String selectedTransform = '';
 
-    // Execute the selected transformations using the R source function.
-    for (var transform in selectedTransforms) {
-      rSource(context, ref, transform);
+    rSource(context, ref, "explore_summary");
+
+    if (selectedOptions['SUMMARY']!) {
+      selectedTransform = 'explore_summary';
+      // Navigate to page 1 when SUMMARY is selected
+      final pageController = ref.read(summaryPageControllerProvider);
+      pageController.animateToPage(
+        1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else if (selectedOptions['GLIMPSE']!) {
+      selectedTransform = 'explore_glimpse';
+      // Navigate to page 2 when GLIMPSE is selected
+      final pageController = ref.read(summaryPageControllerProvider);
+      pageController.animateToPage(
+        2,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else if (selectedOptions['SKIM']!) {
+      selectedTransform = 'explore_skim';
+      // Navigate to page 3 when SKIM is selected
+      final pageController = ref.read(summaryPageControllerProvider);
+      pageController.animateToPage(
+        3,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else if (selectedOptions['SPREAD']!) {
+      selectedTransform = 'explore_spread';
+      // Navigate to page 4 when SPREAD is selected
+      final pageController = ref.read(summaryPageControllerProvider);
+      pageController.animateToPage(
+        4,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else if (selectedOptions['CROSS TAB']!) {
+      selectedTransform = 'explore_cross_tab';
+      // Navigate to page 5 when CROSS TAB is selected
+      final pageController = ref.read(summaryPageControllerProvider);
+      pageController.animateToPage(
+        5,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     }
+
+    // Execute the selected transformation using the R source function.
+    if (selectedTransform.isNotEmpty) {}
   }
 
   @override
@@ -128,7 +180,6 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             configLeftSpace,
 
             // The BUILD button.
-
             ActivityButton(
               pageControllerProvider:
                   summaryPageControllerProvider, // Optional navigation
@@ -140,7 +191,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
             configWidgetSpace,
 
-            // The toggle buttons for the different options (SUMMARY, SKIM, SPREAD, CROSS TAB).
+            // The toggle buttons for the different options (SUMMARY, SKIM, SPREAD, CROSS TAB, GLIMPSE).
             summaryToggles(),
           ],
         ),
