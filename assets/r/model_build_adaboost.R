@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 15:17:51 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 15:58:47 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -50,8 +50,8 @@ ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
 
 model_ada <- ada(form,
                  data    = tds, 
-                 iter    = BOOST_ITERATIONS,  # Number of iterations.
-                 type    = "gentle",          # Type of boosting.
+                 iter    = BOOST_ITERATIONS,
+                 type    = "gentle", # Type of boosting.
                  control = ada_control)
 
 # Print the summary of the trained model.
@@ -59,9 +59,9 @@ model_ada <- ada(form,
 print(model_ada)
 summary(model_ada)
 
+####################################
 # Create importance plot.
-
-svg("TEMPDIR/model_ada_boost.svg")
+####################################
 
 # Calculate feature importance.
 
@@ -105,5 +105,6 @@ ada_plot <- ada_plot +
 
 # Save the plot to an SVG file.
 
+svg("TEMPDIR/model_ada_boost.svg")
 print(ada_plot)
 dev.off()
