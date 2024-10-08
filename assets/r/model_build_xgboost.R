@@ -25,96 +25,27 @@
 
 # Load required libraries.
 
-library(caret)  # For dummy variable encoding
 library(xgboost) # For XGBoost model
-library(Matrix)  # For handling matrix operations if needed
 library(Ckmeans.1d.dp) # For ggplot
 library(data.table) # Display data as a nicely formatted table
+
+# Extract features and target variable.
+
+tds <- ds[tr, vars]
 
 # Define model type and description.
 
 mtype <- "xgboost"
 mdesc <- "Extreme Gradient Boosting (XGBoost)"
 
-# Extract features and target variable.
-
-train_data <- ds[tr, vars]
-train_labels <- unlist(ds[tr, target])  # Use `unlist()` to ensure train_labels is not a list.
-
-unique_labels <- unique(train_labels)
-
-# Map the first unique label to 0, the second to 1, keep NA values as NA.
-
-label_mapping <- setNames(c(0, 1), unique_labels[1:2])
-
-
-# XGBoost requires the labels for binary classification to be numeric and specifically 0 and 1.
-
-train_labels <- ifelse(train_labels == unique_labels[1], 1,
-                          ifelse(train_labels == unique_labels[2], 0, train_labels))
-
-train_labels <- as.numeric(train_labels)  # Convert to numeric.
-
-# Convert categorical features in train_data to dummy variables.
-# Option 1: Using model.matrix to one-hot encode categorical variables.
-
-train_data <- model.matrix(~ . - 1, data = train_data)  # -1 removes the intercept column
-
-# Option 2: If `model.matrix()` still leaves character data, manually convert it.
-
-char_cols <- sapply(train_data, is.character)
-
-# Convert character columns to factors and then to numeric.
-
-if (any(char_cols)) {
-  for (col in names(train_data)[char_cols]) {
-    train_data[[col]] <- as.numeric(factor(train_data[[col]]))
-  }
-}
-
-# Convert to numeric matrix format for XGBoost.
-
-train_data <- as.matrix(train_data)
-
-# Remove any rows with NA values to avoid mismatches.
-
-combined <- cbind(train_data, train_labels)
-combined <- na.omit(combined)
-
-# Split back into train_data and train_labels.
-
-train_data <- combined[, -ncol(combined)]
-train_labels <- combined[, ncol(combined)]
-
-# Convert back to appropriate formats.
-
-train_data <- as.matrix(train_data)
-train_labels <- as.numeric(train_labels)
-
-# Construct DMatrix for training.
-
-dtrain <- xgb.DMatrix(data = train_data, label = train_labels)
-
-# Set parameters for the XGBoost model.
-
-params <- list(
-  booster="gbtree",  # Use tree-based booster
-  objective=BOOST_OBJECTIVE, # Change this to "binary:logistic" for classification
-  eta=BOOST_LEARNING_RATE,       # Learning rate
-  max_depth=BOOST_MAX_DEPTH,         # Maximum depth of a tree
-  subsample=0.8,       # Fraction of observations to be randomly sampled for each tree
-  nthread=BOOST_THREADS,          # Set the number of threads
-  colsample_bytree=0.8        # Fraction of features to be randomly sampled for each tree
-)
-
-# Train the XGBoost model.
-
-model_xgb <- xgb.train(
-  params=params,
-  data=dtrain,
-  nrounds=BOOST_ITERATIONS,
-  verbose=1                # Set to 1 to see the training progress
-)
+model_xgb <- xgboost(form, data = tds, 
+                 max_depth=BOOST_MAX_DEPTH,         # Maximum depth of a tree
+                 eta=BOOST_LEARNING_RATE,       # Learning rate
+                 nthread=BOOST_THREADS,          # Set the number of threads
+                 num_parallel_tree = 1, 
+                 nrounds=BOOST_ITERATIONS,
+                 metrics='error',
+                 objective=BOOST_OBJECTIVE, )
 
 # Print the summary of the trained model.
 
@@ -124,7 +55,7 @@ summary(model_xgb)
 # Feature Importance Plot.
 
 svg("TEMPDIR/model_xgb_importance.svg")
-importance_matrix <- xgb.importance(feature_names = colnames(train_data), model = model_xgb)
+importance_matrix <- xgb.importance(model = model_xgb)
 
 # Create a ggplot-based importance plot.
 
