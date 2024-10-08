@@ -38,20 +38,6 @@ mdesc <- "Adaptive Boosting (AdaBoost)"
 # Extract features and target variable.
 
 tds <- ds[tr, vars]
-train_labels <- unlist(ds[tr, target])
-
-# Ensure the target variable is a factor.
-
-train_labels <- as.factor(train_labels)
-
-# Combine data and labels.
-
-tds <- cbind(tds, target = train_labels)
-names(tds)['target'] <- target 
-
-# Remove any rows with NA values.
-
-tds <- na.omit(tds)
 
 # Set parameters for the AdaBoost model.
 
