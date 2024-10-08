@@ -102,27 +102,33 @@ FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
 }
 
 FutureBuilder showMarkdownFileNew(
-    String markdownFilePath, String newMarkdownFilePath, BuildContext context) {
+  String markdownFilePath,
+  String newMarkdownFilePath,
+  BuildContext context,
+) {
   return FutureBuilder(
     key: const Key('markdown_file_new'),
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        // Wrap the markdown data into rows with a maximum of 50 characters.
-        final wrappedMarkdown = _wrapText(snapshot.data!, 50);
+        // Wrap the markdown data into rows with a maximum of 100 characters.
+
+        final wrappedMarkdown = _wrapText(snapshot.data!, 100);
 
         return FutureBuilder(
           future: loadAsset(newMarkdownFilePath),
           builder: (context, newSnapshot) {
             if (newSnapshot.hasData) {
               // Wrap the new markdown data as well.
-              final wrappedNewMarkdown = _wrapText(newSnapshot.data!, 50);
+
+              final wrappedNewMarkdown = _wrapText(newSnapshot.data!, 100);
 
               return Container(
                 decoration: sunkenBoxDecoration,
                 child: Row(
                   children: [
                     // Left side: Original Markdown content taking 50% of the screen width.
+
                     Expanded(
                       flex: 5,
                       child: Padding(
@@ -142,6 +148,7 @@ FutureBuilder showMarkdownFileNew(
                     ),
 
                     // Right side: New Markdown content taking 50% of the screen width.
+
                     Expanded(
                       flex: 5,
                       child: Padding(
@@ -175,6 +182,7 @@ FutureBuilder showMarkdownFileNew(
 }
 
 // Function to wrap text at a specified character limit per row.
+
 String _wrapText(String text, int limit) {
   final buffer = StringBuffer();
   final words = text.split(' ');
@@ -191,7 +199,9 @@ String _wrapText(String text, int limit) {
   }
 
   if (currentLine.isNotEmpty) {
-    buffer.writeln(currentLine); // Add the last line.
+    // Add the last line.
+
+    buffer.writeln(currentLine);
   }
 
   return buffer.toString();
