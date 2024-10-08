@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-09 06:00:06 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 06:27:24 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,7 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
-import 'package:rattle/features/boost/setting.dart';
+import 'package:rattle/features/boost/settings.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -84,7 +84,8 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             ActivityButton(
               tooltip: '''
 
-              Tap here to build the $algorithm Boosted model.
+              Tap here to build the $algorithm Boosted model using the parameter
+              values that you can set here.
 
               ''',
               onPressed: () async {
@@ -126,7 +127,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             ),
           ],
         ),
-        BoostSetting(algorithm: algorithm),
+        BoostSettings(algorithm: algorithm),
       ],
     );
   }
