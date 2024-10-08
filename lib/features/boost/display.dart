@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-01 09:06:06 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-08 20:58:21 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -23,7 +23,7 @@
 // Note: The "Dataset" button is not present in this file. It might be located
 // in another file responsible for the app's navigation or main layout.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zehyuan Xu
 
 library;
 
@@ -74,7 +74,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           Visit the 
           [Guide](https://xgboost.readthedocs.io/en/stable/R-package/xgboostPresentation.html). Built
           using
-          [xgb::xgb.train()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
+          [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
             ''',
             content: '\n$content',
@@ -110,9 +110,9 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           # AdaBoost - Summary
 
           Visit the 
-          [Guide](https://www.rdocumentation.org/packages/JOUSBoost/versions/2.1.0/topics/adaboost). Built
+          [Guide](https://www.rdocumentation.org/packages/JOUSBoost/topics/adaboost). Built
           using
-          [ada()](https://github.com/cran/JOUSBoost/blob/master/R/adaboost.R).
+          [ada::ada()](https://www.rdocumentation.org/packages/ada/topics/ada).
 
             ''',
             content: '\n$content',
@@ -130,7 +130,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           # Variable Importance
 
           Generated using
-          [ada()](https://github.com/cran/JOUSBoost/blob/master/R/adaboost.R).
+          [ada::varplot()](https://www.rdocumentation.org/packages/ada/topics/pairs.ada).
 
           ''',
             path: image,
