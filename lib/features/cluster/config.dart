@@ -47,6 +47,8 @@ class ClusterConfig extends ConsumerStatefulWidget {
 }
 
 class ClusterConfigState extends ConsumerState<ClusterConfig> {
+  // 'Hierarchical' and 'BiCluster' are not implemented.
+
   Map<String, String> clusterTypes = {
     'KMeans': '''
 
@@ -60,17 +62,17 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       subspaces using entropy weighting.
 
       ''',
-    'Hierarchical': '''
+    // 'Hierarchical': '''
 
-      Build an agglomerative hierarchical cluster.
+    //   Build an agglomerative hierarchical cluster.
 
-      ''',
-    'BiCluster': '''
+    //   ''',
+    // 'BiCluster': '''
 
-      Cluster by identifying suitable subsets of both the variables and the
-      observations, rather than just the observations as in kmeans.
+    //   Cluster by identifying suitable subsets of both the variables and the
+    //   observations, rather than just the observations as in kmeans.
 
-      ''',
+    //   ''',
   };
   @override
   Widget build(BuildContext context) {
@@ -119,8 +121,6 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               options: clusterTypes.keys.toList(),
               selectedOption: type,
               tooltips: clusterTypes,
-              // Only KMeans is implemented. Others will be implemented in the future.
-              enabled: type != 'KMeans',
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {
