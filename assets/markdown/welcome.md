@@ -1,4 +1,4 @@
-Welcome to **Rattle** (https://rattle.togaware.com).
+# Welcome to **Rattle** (https://rattle.togaware.com).
 
 Rattle is a toolbox for data science, statistical analyses, data
 visualisation, machine learning, and artificial intelligence,
@@ -19,7 +19,9 @@ original Rattle scripts. You are invited to report any issues you
 notice on [github](https://github.com/gjwgit/rattleng) where code
 contributions are also most welcome.
 
-## Getting Started
+---
+
+**Getting Started**
 
 Tap the **Dataset** button to choose a data source.  The **Demo**
 dataset consists of one year of observations from a weather station in
@@ -37,7 +39,10 @@ each observation is automatically identified as **Ident**
 (identifier). Idents are ignored when modelling as are those with the
 role **Ignore**.
 
-## Work Flow
+---
+
+
+**Work Flow**
 
 Rattle encourages a typical data scientist work flow through the left
 hand *tabs*. On choosing tab a collection of *features* will be
@@ -49,7 +54,9 @@ At any time visit the **Script** tab to see the **R** code that is
 automatically generated. You can export the script as a standalone R
 program.
 
-## Options
+---
+
+**Options**
 
 The toggles within the top left of the configuration panel support
 cleansing, unifying, and partitioning. A dataset is cleansed by
@@ -61,23 +68,3 @@ and partitioning will split a dataset into [training, tuning, and
 testing](https://survivor.togaware.com/datascience/train-tune-and-test-datasets.html)
 datasets.
 
-<!-- ## Resources
-
-Rattle V5 is well covered in **Data Mining with Rattle and R**
-(https://bit.ly/rattle_data_mining), as well as other online resources
-available through https://rattle.togaware.com. Rattle utilises R
-templates as introduced in **The Essentials of Data Science**
-(https://bit.ly/essentials_data_science).
-
-Rattle is licensed under the [GNU General Public License, Version
-3](https://www.gnu.org/licenses/gpl-3.0.en.html), making it free for
-you to use for ever. Rattle comes with ABSOLUTELY NO WARRANTY.
-
-Rattle, RattleNG, and the collection of R template scripts are
-Copyright © 2006-2024 Togaware Pty Ltd. Rattle is a registered
-trademark of Togaware Pty Ltd. Rattle was created and implemented by
-Graham Williams with many contributions as acknowledged in the About
-menu. Donations to support the ongoing development can be made through
-[Togaware](https://togaware.com/onepager.html). -->
-
-> 
