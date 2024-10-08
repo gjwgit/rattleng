@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build an AdaBoost model.
+# Build an AdaBoost model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 10:42:41 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 15:17:51 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,16 +41,17 @@ tds <- ds[tr, vars]
 
 # Set parameters for the AdaBoost model.
 
-ada_control <- rpart.control(maxdepth=BOOST_MAX_DEPTH,
-                          cp=BOOST_COMPLEXITY,
-                          minsplit=BOOST_MIN_SPLIT,
-                          xval=BOOST_X_VALUE)
+ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
+                             cp       = BOOST_COMPLEXITY,
+                             minsplit = BOOST_MIN_SPLIT,
+                             xval     = BOOST_X_VALUE)
 
 # Train the AdaBoost model.
 
-model_ada <- ada(form, data = tds, 
-                 iter = BOOST_ITERATIONS,  # number of iterations
-                 type = "gentle",  # type of boosting
+model_ada <- ada(form,
+                 data    = tds, 
+                 iter    = BOOST_ITERATIONS,  # Number of iterations.
+                 type    = "gentle",          # Type of boosting.
                  control = ada_control)
 
 # Print the summary of the trained model.
