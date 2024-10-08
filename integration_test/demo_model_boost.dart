@@ -65,7 +65,7 @@ void main() {
 
       await verifyPage(
         'XGBoost - Summary',
-        'Feature         Gain        Cover   Frequency   Importance',
+        'Feature         Gain        Cover    Frequency   Importance',
       );
 
       await gotoNextPage(tester);
