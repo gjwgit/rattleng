@@ -1,6 +1,6 @@
 /// Boost setting for different boost algorithms.
 ///
-/// Time-stamp: <Friday 2024-09-27 10:28:59 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-10-09 05:36:26 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -243,7 +243,7 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               objectiveBoostProvider,
               tooltip: '''
 
-              The objective is to minimize a regularized loss function to 
+              The objective is used to minimize a regularized loss function to 
               achieve accurate predictions while preventing over-fitting.
 
               ''',
