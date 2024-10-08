@@ -33,7 +33,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 /// Load the specified dataset using the appropriate R script.
