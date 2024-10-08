@@ -304,6 +304,11 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               selected,
               ref,
               selectedProvider,
+              tooltip: '''
+
+              Select the variable to be deleted from dataset.
+
+              ''',
               // Enable only when method is 'Variable'.
               enabled: method == 'Variable',
               onChanged: (value) {
