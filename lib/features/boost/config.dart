@@ -32,6 +32,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/boost/settings.dart';
 import 'package:rattle/providers/boost.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
@@ -82,6 +83,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             // The BUILD button.
 
             ActivityButton(
+              pageControllerProvider: boostPageControllerProvider,
               tooltip: '''
 
               Tap here to build the $algorithm Boosted model using the parameter
