@@ -37,7 +37,7 @@ mdesc <- "Adaptive Boosting (AdaBoost)"
 
 # Extract features and target variable.
 
-train_data <- ds[tr, vars]
+tds <- ds[tr, vars]
 train_labels <- unlist(ds[tr, target])
 
 # Ensure the target variable is a factor.
@@ -46,11 +46,12 @@ train_labels <- as.factor(train_labels)
 
 # Combine data and labels.
 
-train_df <- cbind(train_data, target = train_labels)
+tds <- cbind(tds, target = train_labels)
+names(tds)['target'] <- target 
 
 # Remove any rows with NA values.
 
-train_df <- na.omit(train_df)
+tds <- na.omit(tds)
 
 # Set parameters for the AdaBoost model.
 
@@ -61,7 +62,7 @@ ada_control <- rpart.control(maxdepth=BOOST_MAX_DEPTH,
 
 # Train the AdaBoost model.
 
-model_ada <- ada(target ~ ., data = train_df, 
+model_ada <- ada(form, data = tds, 
                  iter = BOOST_ITERATIONS,  # number of iterations
                  type = "gentle",  # type of boosting
                  control = ada_control)
