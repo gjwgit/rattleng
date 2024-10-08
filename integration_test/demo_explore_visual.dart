@@ -38,7 +38,6 @@ import 'package:rattle/widgets/image_page.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/verify_next_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
