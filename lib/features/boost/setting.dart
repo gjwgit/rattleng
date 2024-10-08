@@ -241,6 +241,12 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               objective,
               ref,
               objectiveBoostProvider,
+              tooltip: '''
+
+              The objective is to minimize a regularized loss function to 
+              achieve accurate predictions while preventing over-fitting.
+
+              ''',
               enabled: widget.algorithm == 'Extreme',
               onChanged: (String? value) {
                 if (value != null) {
