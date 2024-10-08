@@ -1,6 +1,6 @@
-/// Boost setting for different boost algorithms.
+/// Boost settings for different boost algorithms.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 05:36:26 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-10-09 07:28:50 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -45,19 +45,19 @@ List<String> modelObjective = [
   'binary:logitraw',
 ];
 
-class BoostSetting extends ConsumerStatefulWidget {
+class BoostSettings extends ConsumerStatefulWidget {
   final String algorithm;
 
-  const BoostSetting({
+  const BoostSettings({
     super.key,
     required this.algorithm,
   });
 
   @override
-  ConsumerState<BoostSetting> createState() => _BoostSettingState();
+  ConsumerState<BoostSettings> createState() => _BoostSettingsState();
 }
 
-class _BoostSettingState extends ConsumerState<BoostSetting> {
+class _BoostSettingsState extends ConsumerState<BoostSettings> {
   // Controllers for the input fields.
 
   final TextEditingController _boostMaxDepthController =
@@ -122,9 +122,13 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               key: const Key('boost_max_depth'),
               tooltip: '''
         
-              Maximum depth of each tree; controls model complexity and risk of overfitting.    
+              Maximum depth of each tree. This serves to control the model
+              complexity. Be wary the deeper trees can also lead to the model
+              over-fitting the training data and so a good general model.
 
               ''',
+              max: 10,
+              min: 5,
               controller: _boostMaxDepthController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
@@ -151,7 +155,9 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               key: const Key('boost_complexity'),
               tooltip: '''
 
-              Regularization parameter that penalizes complex trees to prevent overfitting.
+              Regularization parameter that penalizes complex trees to prevent
+              the model over-fitting the training data, and so not a good
+              general model.
 
               ''',
               enabled: widget.algorithm == 'Adaptive',
@@ -170,7 +176,8 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               key: const Key('boost_x_value'),
               tooltip: '''
 
-              Number of folds in cross-validation; helps estimate model performance.
+              Number of folds in cross-validation. This provides an estimate of
+              the model performance in general.
 
               ''',
               enabled: widget.algorithm == 'Adaptive',
@@ -190,7 +197,8 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               key: const Key('boost_learning_rate'),
               tooltip: '''
 
-              Step size at each iteration; smaller values lead to more robust learning.
+              Step size at each iteration. Smaller values can lead to a more
+              robust model but will take more time to train.
 
               ''',
               enabled: widget.algorithm == 'Extreme',
@@ -211,7 +219,9 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               key: const Key('boost_max_depth'),
               tooltip: '''
 
-              Number of threads to use for parallel processing; higher values can speed up training.
+              Number of threads to use for parallel processing. Higher values
+              can speed up training if you have multiple threads available on
+              your CPU.
 
               ''',
               enabled: widget.algorithm == 'Extreme',
@@ -226,7 +236,8 @@ class _BoostSettingState extends ConsumerState<BoostSetting> {
               key: const Key('boost_iteration'),
               tooltip: '''
   
-              Number of boosting rounds or iterations to train the model.
+              Number of boosting rounds or iterations to train the model. This
+              is the number of trees that will be built for the ensemble.
 
               ''',
               controller: _boostIterationsController,
