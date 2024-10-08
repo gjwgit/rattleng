@@ -27,6 +27,8 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/widgets/delayed_tooltip.dart';
+
 Widget variableChooser(
   String label,
   List<String> inputs,
@@ -35,37 +37,41 @@ Widget variableChooser(
   StateProvider stateProvider, {
   // Add this parameter to control if the dropdown is enabled.
   required bool enabled,
+  required String tooltip,
   // Add a callback for onChanged to handle custom logic.
   Function(String?)? onChanged,
 }) {
-  return DropdownMenu(
-    label: Text(label),
-    width: 200,
-    initialSelection: selected,
-    dropdownMenuEntries: inputs.map((s) {
-      return DropdownMenuEntry(value: s, label: s);
-    }).toList(),
+  return DelayedTooltip(
+    message: tooltip,
+    child: DropdownMenu(
+      label: Text(label),
+      width: 200,
+      initialSelection: selected,
+      dropdownMenuEntries: inputs.map((s) {
+        return DropdownMenuEntry(value: s, label: s);
+      }).toList(),
 
-    // Use the enabled parameter to control the dropdown state.
+      // Use the enabled parameter to control the dropdown state.
 
-    enabled: enabled,
-    onSelected: (String? value) {
-      if (enabled) {
-        ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        if (onChanged != null) {
-          // Call the custom callback if provided.
+      enabled: enabled,
+      onSelected: (String? value) {
+        if (enabled) {
+          ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
+          if (onChanged != null) {
+            // Call the custom callback if provided.
 
-          onChanged(value);
+            onChanged(value);
+          }
         }
-      }
-    },
+      },
 
-    // Add a custom style for when it's disabled.
+      // Add a custom style for when it's disabled.
 
-    textStyle: TextStyle(
-      // Set grey when disabled.
+      textStyle: TextStyle(
+        // Set grey when disabled.
 
-      color: enabled ? Colors.black : Colors.grey,
+        color: enabled ? Colors.black : Colors.grey,
+      ),
     ),
   );
 }
