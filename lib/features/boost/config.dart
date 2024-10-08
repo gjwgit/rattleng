@@ -30,7 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
-import 'package:rattle/features/boost/boost_setting.dart';
+import 'package:rattle/features/boost/setting.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
