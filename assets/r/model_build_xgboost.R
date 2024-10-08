@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build an XGBoost model.
+# Build an XGBoost model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 10:42:53 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 15:16:17 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,27 +25,28 @@
 
 # Load required libraries.
 
-library(xgboost) # For XGBoost model
-library(Ckmeans.1d.dp) # For ggplot
-library(data.table) # Display data as a nicely formatted table
-
-# Extract features and target variable.
-
-tds <- ds[tr, vars]
+library(xgboost)        # For XGBoost model
+library(Ckmeans.1d.dp)  # For ggplot
+library(data.table)     # Display data as a nicely formatted table
 
 # Define model type and description.
 
 mtype <- "xgboost"
 mdesc <- "Extreme Gradient Boosting (XGBoost)"
 
-model_xgb <- xgboost(form, data = tds, 
-                 max_depth=BOOST_MAX_DEPTH,         # Maximum depth of a tree
-                 eta=BOOST_LEARNING_RATE,       # Learning rate
-                 nthread=BOOST_THREADS,          # Set the number of threads
-                 num_parallel_tree = 1, 
-                 nrounds=BOOST_ITERATIONS,
-                 metrics='error',
-                 objective=BOOST_OBJECTIVE, )
+# Extract features and target variable.
+
+tds <- ds[tr, vars]
+
+model_xgb <- xgboost(form,
+                     data              = tds, 
+                     max_depth         = BOOST_MAX_DEPTH,     # Maximum depth of a tree
+                     eta               = BOOST_LEARNING_RATE, # Learning rate
+                     nthread           = BOOST_THREADS,       # Set the number of threads
+                     num_parallel_tree = 1, 
+                     nrounds           = BOOST_ITERATIONS,
+                     metrics           = 'error',
+                     objective         = BOOST_OBJECTIVE, )
 
 # Print the summary of the trained model.
 
