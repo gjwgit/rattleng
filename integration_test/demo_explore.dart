@@ -32,8 +32,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/tabs/explore.dart';
 
 import 'utils/delays.dart';
