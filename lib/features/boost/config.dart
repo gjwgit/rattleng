@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 17:06:23 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 06:00:06 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -82,12 +82,21 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             // The BUILD button.
 
             ActivityButton(
+              tooltip: '''
+
+              Tap here to build the $algorithm Boosted model.
+
+              ''',
               onPressed: () async {
                 await rSource(context, ref, 'model_template');
                 if (algorithm == 'Extreme') {
-                  await rSource(context, ref, 'model_build_xgboost');
+                  if (context.mounted) {
+                    await rSource(context, ref, 'model_build_xgboost');
+                  }
                 } else if (algorithm == 'Adaptive') {
-                  await rSource(context, ref, 'model_build_adaboost');
+                  if (context.mounted) {
+                    await rSource(context, ref, 'model_build_adaboost');
+                  }
                 }
               },
               child: const Text('Build Boosted Trees'),
