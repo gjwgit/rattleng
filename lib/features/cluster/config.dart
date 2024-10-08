@@ -30,7 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
-import 'package:rattle/features/cluster/cluster_setting.dart';
+import 'package:rattle/features/cluster/setting.dart';
 import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
