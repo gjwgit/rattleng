@@ -58,8 +58,7 @@ void main() {
       await pressButton(tester, 'Build Boosted Trees');
       await tester.pump(longHack);
 
-      await gotoNextPage(tester);
-      await tester.pump(hack);
+      await pressButton(tester, 'Build Boosted Trees');
 
       // Verify the content of the page.
 
@@ -109,8 +108,7 @@ void main() {
       await pressButton(tester, 'Build Boosted Trees');
       await tester.pump(longHack);
 
-      await gotoNextPage(tester);
-      await tester.pump(hack);
+      await pressButton(tester, 'Build Boosted Trees');
 
       // Verify the content of the page.
 
@@ -118,6 +116,9 @@ void main() {
         'AdaBoost - Summary',
         'Final Confusion Matrix for Data:',
       );
+
+      await gotoNextPage(tester);
+      await tester.pump(hack);
 
       await gotoNextPage(tester);
       await tester.pump(hack);
