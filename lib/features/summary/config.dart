@@ -47,6 +47,7 @@ class SummaryConfig extends ConsumerStatefulWidget {
 
 class SummaryConfigState extends ConsumerState<SummaryConfig> {
   // Toggles for the different summary features.
+
   List<String> summaryOptions = [
     'SUMMARY',
     'GLIMPSE',
@@ -56,14 +57,15 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   ];
 
   Map<String, bool> selectedOptions = {
-    'SUMMARY': true,
+    'SUMMARY': false,
     'GLIMPSE': false,
     'SKIM': false,
     'SPREAD': false,
-    'CROSS TAB': false,
+    'CROSS TAB': true,
   };
 
-  // Tooltips for each option
+  // Tooltips for each option.
+
   Map<String, String> optionTooltips = {
     'SUMMARY': 'Generate the summary of the dataset.',
     'GLIMPSE': 'Quickly glance at a few rows of the dataset.',
@@ -72,11 +74,16 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
     'CROSS TAB': 'Generate a cross-tabulation (can be expensive).',
   };
 
-  // Modify selection logic to only allow one option at a time
+  // Modify selection logic to only allow one option at a time.
+
   void selectOnlyOneOption(String selectedOption) {
     setState(() {
-      selectedOptions.updateAll((key, value) => false); // Deselect all options
-      selectedOptions[selectedOption] = true; // Select the current option
+      // Deselect all options.
+
+      selectedOptions.updateAll((key, value) => false);
+      // Select the current option.
+
+      selectedOptions[selectedOption] = true;
     });
   }
 
@@ -99,9 +106,13 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               pressElevation: 8.0,
               elevation: 2.0,
               selected: selectedOptions[option]!,
-              tooltip: optionTooltips[option], // Tooltip for each chip
+              // Tooltip for each chip.
+
+              tooltip: optionTooltips[option],
               onSelected: (bool selected) {
-                selectOnlyOneOption(option); // Only select one option at a time
+                // Only select one option at a time.
+
+                selectOnlyOneOption(option);
               },
             ),
           );
@@ -114,7 +125,8 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
     rSource(context, ref, 'explore_summary');
 
     if (selectedOptions['SUMMARY']!) {
-      // Navigate to page 1 when SUMMARY is selected
+      // Navigate to page 1 when SUMMARY is selected.
+
       final pageController = ref.read(summaryPageControllerProvider);
       pageController.animateToPage(
         1,
@@ -122,7 +134,8 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
         curve: Curves.easeInOut,
       );
     } else if (selectedOptions['GLIMPSE']!) {
-      // Navigate to page 2 when GLIMPSE is selected
+      // Navigate to page 2 when GLIMPSE is selected.
+
       final pageController = ref.read(summaryPageControllerProvider);
       pageController.animateToPage(
         2,
@@ -130,7 +143,8 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
         curve: Curves.easeInOut,
       );
     } else if (selectedOptions['SKIM']!) {
-      // Navigate to page 3 when SKIM is selected
+      // Navigate to page 3 when SKIM is selected.
+
       final pageController = ref.read(summaryPageControllerProvider);
       pageController.animateToPage(
         3,
@@ -138,7 +152,8 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
         curve: Curves.easeInOut,
       );
     } else if (selectedOptions['SPREAD']!) {
-      // Navigate to page 4 when SPREAD is selected
+      // Navigate to page 4 when SPREAD is selected.
+
       final pageController = ref.read(summaryPageControllerProvider);
       pageController.animateToPage(
         4,
@@ -146,7 +161,8 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
         curve: Curves.easeInOut,
       );
     } else if (selectedOptions['CROSS TAB']!) {
-      // Navigate to page 5 when CROSS TAB is selected
+      // Navigate to page 5 when CROSS TAB is selected.
+
       final pageController = ref.read(summaryPageControllerProvider);
       pageController.animateToPage(
         1,
