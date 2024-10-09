@@ -167,8 +167,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   ? numericMethods.first
                   : categoricMethods.first;
             },
-            tooltip:
-                'Select a secondary variable to assist in the recoding process.',
+            tooltip: '''
+
+            Select a secondary variable to assist in the recoding process.
+              
+            ''',
           ),
         ),
       ],
@@ -241,7 +244,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                           : categoricMethods.first;
                 });
               },
-              tooltip: 'Choose the primary variable to be recoded.',
+              tooltip: '''
+
+              Choose the primary variable to be recoded.
+              
+              ''',
             ),
           ],
         ),
