@@ -167,6 +167,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   ? numericMethods.first
                   : categoricMethods.first;
             },
+            tooltip: '',
           ),
         ),
       ],
@@ -239,6 +240,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                           : categoricMethods.first;
                 });
               },
+              tooltip: '',
             ),
           ],
         ),
