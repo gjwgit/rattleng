@@ -1,6 +1,6 @@
 /// A provider for page controller.
 ///
-/// Time-stamp: <Tuesday 2024-07-30 11:11:48 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-10-09 09:43:42 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -79,6 +79,10 @@ final forestPageControllerProvider = StateProvider<PageController>((ref) {
 });
 
 final neuralPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final boostPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
 
