@@ -45,7 +45,7 @@ set.seed(CLUSTER_SEED)
 library(reshape)
 library(wskm, quietly=TRUE)  # Load the wskm package for EWKM
 
-mtype <- CLUSTER_TYPE
+mtype <- "kmeans"
 mdesc <- "Cluster"
 
 # The variable to set whether the model needs rescale.
@@ -69,64 +69,28 @@ if (rescale) {
 }
 
 
-# Perform clustering based on mtype.
+# Generate a kmeans cluster of size 10.
 
-if (mtype == "KMeans") {
-  # Generate a kmeans cluster of size CLUSTER_NUM.
+model_kmeans <- kmeans(data_for_clustering,
+                       centers=CLUSTER_NUM,
+                       nstart=CLUSTER_RUN)
 
-  model <- kmeans(data_for_clustering,
-                  centers = CLUSTER_NUM,
-                  nstart = CLUSTER_RUN)
-  
-  # Report on the cluster characteristics.
-  # Cluster sizes:
+# Report on the cluster characteristics. 
 
-  print(paste(model$size, collapse = ' '))
-  
-  # Data means:
+# Cluster sizes:
 
-  print(colMeans(data_for_clustering))
-  
-  # Cluster centers:
+print(paste(model_kmeans$size, collapse=' '))
 
-  print(model$centers)
-  
-  # Within cluster sum of squares:
+# Data means:
 
-  print(model$withinss)
-  
-} else if (mtype == "Ewkm") {
-  # Use the ewkm function from the wskm package.
-  # Set the lambda parameter for EWKM.
+print(colMeans(data_for_clustering))
 
-  lambda <- EWKM_LAMBDA  # Define EWKM_LAMBDA before running the code
-  
-  # Generate an EWKM cluster of size CLUSTER_NUM.
+# Cluster centers:
 
-  model <- ewkm(data_for_clustering,
-                centers = CLUSTER_NUM,
-                lambda = lambda,
-                maxiter = CLUSTER_RUN)
-  
-  # Report on the cluster characteristics.
-  # Cluster sizes:
+print(model_kmeans$centers)
 
-  print(paste(model$size, collapse = ' '))
-  
-  # Data means:
+# Within cluster sum of squares:
 
-  print(colMeans(data_for_clustering))
-  
-  # Cluster centers:
-
-  print(model$centers)
-  
-  # Total within-cluster sum of squares:
-
-  print(model$tot.withinss)
-  
-} else {
-  stop("Unsupported clustering method specified in mtype.")
-}
+print(model_kmeans$withinss)
 
 cat("\n")
