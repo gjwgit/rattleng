@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Thursday 2024-09-26 08:20:10 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 17:31:28 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -33,12 +33,6 @@ const String appTitle = 'Rattle Next Generation Data Science';
 /// Project assets folder path used in the APP.
 
 const String assetsPath = 'assets';
-
-/// Location of the markdown file containing the welcome message for the APP.
-
-const String welcomeMsgFile = '$assetsPath/markdown/welcome.md';
-
-const String resourcesFile = '$assetsPath/markdown/resourses.md';
 
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
