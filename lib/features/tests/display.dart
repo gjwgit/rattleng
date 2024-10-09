@@ -33,7 +33,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
