@@ -64,6 +64,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
     'CROSS TAB': true,
   };
 
+  // Modify selection logic to allow multiple options to be selected.
   // Tooltips for each option.
 
   Map<String, String> optionTooltips = {
@@ -76,14 +77,11 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
   // Modify selection logic to only allow one option at a time.
 
-  void selectOnlyOneOption(String selectedOption) {
+  void toggleOption(String selectedOption) {
     setState(() {
-      // Deselect all options.
+      // Toggle the current option.
 
-      selectedOptions.updateAll((key, value) => false);
-      // Select the current option.
-
-      selectedOptions[selectedOption] = true;
+      selectedOptions[selectedOption] = !selectedOptions[selectedOption]!;
     });
   }
 
@@ -110,9 +108,9 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
               tooltip: optionTooltips[option],
               onSelected: (bool selected) {
-                // Only select one option at a time.
+                // Allow multiple options to be selected.
 
-                selectOnlyOneOption(option);
+                toggleOption(option);
               },
             ),
           );
@@ -122,15 +120,21 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   }
 
   void takeAction() {
+    // Execute the selected transformations based on the selected options.
+
     if (selectedOptions['SUMMARY']!) {
       rSource(context, ref, 'explore_summary_summary');
-    } else if (selectedOptions['GLIMPSE']!) {
+    }
+    if (selectedOptions['GLIMPSE']!) {
       rSource(context, ref, 'explore_summary_glimpse');
-    } else if (selectedOptions['SKIM']!) {
+    }
+    if (selectedOptions['SKIM']!) {
       rSource(context, ref, 'explore_summary_skim');
-    } else if (selectedOptions['SPREAD']!) {
+    }
+    if (selectedOptions['SPREAD']!) {
       rSource(context, ref, 'explore_summary_spread');
-    } else if (selectedOptions['CROSS TAB']!) {
+    }
+    if (selectedOptions['CROSS TAB']!) {
       rSource(context, ref, 'explore_summary');
     }
   }
