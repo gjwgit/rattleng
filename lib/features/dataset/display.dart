@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-10-03 07:30:27 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 17:09:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -81,7 +82,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // FIRST PAGE: Welcome Message
 
     List<Widget> pages = [
-      showMarkdownFileNew(welcomeMsgFile, resourcesFile, context)
+      showMarkdownFileNew(welcomeIntroFile1, welcomeIntroFile2, context)
     ];
 
     // Handle different file types
