@@ -34,7 +34,6 @@ import 'package:rattle/utils/timestamp.dart';
 String _basicTemplate(
   String log,
   WidgetRef ref,
-  String type,
 ) {
   // Here we build up the basic information from the output of the cluster.
 
@@ -44,6 +43,8 @@ String _basicTemplate(
 
   String hd;
   String md;
+
+  String type = ref.read(clusterTypeProvider.notifier).state;
 
   if (type == 'KMeans') {
     hd = 'Summary of the KMeans Cluster Analysis';
@@ -96,11 +97,9 @@ String rExtractCluster(
   String log,
   WidgetRef ref,
 ) {
-  String type = ref.read(clusterTypeProvider.notifier).state;
-
   // Extract from the R log those lines of output from the cluster.
 
-  String extract = _basicTemplate(log, ref, type);
+  String extract = _basicTemplate(log, ref);
 
   // Now clean up the output for an annotated presentation of the output.
 
