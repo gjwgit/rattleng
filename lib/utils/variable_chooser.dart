@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-09-24 12:44:41 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 05:42:00 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,12 +20,14 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin, Kevin Wang
+/// Authors: Graham Williams, Yixiang Yin, Kevin Wang, Zheyuan Xu
 
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 Widget variableChooser(
   String label,
@@ -35,37 +37,41 @@ Widget variableChooser(
   StateProvider stateProvider, {
   // Add this parameter to control if the dropdown is enabled.
   required bool enabled,
+  required String tooltip,
   // Add a callback for onChanged to handle custom logic.
   Function(String?)? onChanged,
 }) {
-  return DropdownMenu(
-    label: Text(label),
-    width: 200,
-    initialSelection: selected,
-    dropdownMenuEntries: inputs.map((s) {
-      return DropdownMenuEntry(value: s, label: s);
-    }).toList(),
+  return DelayedTooltip(
+    message: tooltip,
+    child: DropdownMenu(
+      label: Text(label),
+      width: 200,
+      initialSelection: selected,
+      dropdownMenuEntries: inputs.map((s) {
+        return DropdownMenuEntry(value: s, label: s);
+      }).toList(),
 
-    // Use the enabled parameter to control the dropdown state.
+      // Use the enabled parameter to control the dropdown state.
 
-    enabled: enabled,
-    onSelected: (String? value) {
-      if (enabled) {
-        ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        if (onChanged != null) {
-          // Call the custom callback if provided.
+      enabled: enabled,
+      onSelected: (String? value) {
+        if (enabled) {
+          ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
+          if (onChanged != null) {
+            // Call the custom callback if provided.
 
-          onChanged(value);
+            onChanged(value);
+          }
         }
-      }
-    },
+      },
 
-    // Add a custom style for when it's disabled.
+      // Add a custom style for when it's disabled.
 
-    textStyle: TextStyle(
-      // Set grey when disabled.
+      textStyle: TextStyle(
+        // Set grey when disabled.
 
-      color: enabled ? Colors.black : Colors.grey,
+        color: enabled ? Colors.black : Colors.grey,
+      ),
     ),
   );
 }

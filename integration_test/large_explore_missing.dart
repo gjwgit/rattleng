@@ -55,8 +55,9 @@ void main() {
       await navigateToFeature(tester, 'Missing', MissingPanel);
 
       await pressButton(tester, 'Perform Missing Analysis');
+      await gotoNextPage(tester);
 
-      await verifyPage('Patterns of Missing Data');
+      await verifyPage('Patterns of Missing Data - Textual');
 
       await gotoNextPage(tester);
 
