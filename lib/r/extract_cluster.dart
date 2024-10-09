@@ -27,12 +27,14 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/cluster_number.dart';
+import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(
   String log,
   WidgetRef ref,
+  String type,
 ) {
   // Here we build up the basic information from the output of the cluster.
 
@@ -40,15 +42,36 @@ String _basicTemplate(
 
   int clusterNum = ref.read(clusterNumberProvider.notifier).state;
 
-  const String hd = 'Summary of the KMeans Cluster Analysis';
-  String md = "(built using 'kmeans' with ${clusterNum.toString()} clusters):";
+  String hd;
+  String md;
 
-  // No extract the output from particular commands.
+  if (type == 'KMeans') {
+    hd = 'Summary of the KMeans Cluster Analysis';
+    md = "(built using 'kmeans' with ${clusterNum.toString()} clusters):";
+  } else if (type == 'Ewkm') {
+    hd = 'Summary of the Ewkm Cluster Analysis';
+    md = "(built using 'ewkm' with ${clusterNum.toString()} clusters):";
+  } else {
+    // Handle other types or return an empty result.
 
-  final String sz = rExtract(log, '> print(paste(model_kmeans');
-  final String cm = rExtract(log, '> print(colMeans');
-  final String cn = rExtract(log, '> print(model_kmeans\$centers');
-  final String ss = rExtract(log, '> print(model_kmeans\$withinss)');
+    return '';
+  }
+
+  // Now extract the output from particular commands.
+
+  String sz = '', cm = '', cn = '', ss = '';
+
+  if (type == 'KMeans') {
+    sz = rExtract(log, '> print(paste(model_kmeans');
+    cm = rExtract(log, '> print(colMeans');
+    cn = rExtract(log, '> print(model_kmeans\$centers');
+    ss = rExtract(log, '> print(model_kmeans\$withinss)');
+  } else if (type == 'Ewkm') {
+    sz = rExtract(log, "> print(paste(model_ewkm\$size, collapse = ' '))");
+    cm = rExtract(log, '> print(colMeans(data_for_clustering))');
+    cn = rExtract(log, '> print(model_ewkm\$centers)');
+    ss = rExtract(log, '> print(model_ewkm\$withinss)');
+  }
 
   // Obtain the current timestamp.
 
@@ -73,9 +96,11 @@ String rExtractCluster(
   String log,
   WidgetRef ref,
 ) {
+  String type = ref.read(clusterTypeProvider.notifier).state;
+
   // Extract from the R log those lines of output from the cluster.
 
-  String extract = _basicTemplate(log, ref);
+  String extract = _basicTemplate(log, ref, type);
 
   // Now clean up the output for an annotated presentation of the output.
 
