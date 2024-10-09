@@ -442,7 +442,6 @@ void main() {
 
       await tester.pump(delay);
       await tester.pump(interact);
-      //
 
       // Check if SelectableText contains the expected content.
 

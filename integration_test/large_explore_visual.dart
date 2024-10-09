@@ -111,9 +111,6 @@ void main() {
 
       // Automatically go to "Box Plot" page 2.
 
-      // await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
 
       // Find the text containing "Box Plot".
 

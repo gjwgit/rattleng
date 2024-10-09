@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 17:06:23 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 06:27:24 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,8 +28,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
+import 'package:rattle/features/boost/settings.dart';
+import 'package:rattle/providers/boost.dart';
+import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
 /// The BOOST tab config currently consists of just an ACTIVITY button.
 ///
@@ -43,8 +49,25 @@ class BoostConfig extends ConsumerStatefulWidget {
 }
 
 class BoostConfigState extends ConsumerState<BoostConfig> {
+  Map<String, String> boostAlgorithm = {
+    'Extreme': '''
+
+      A highly efficient gradient boosting algorithm designed for large-scale 
+      and complex data.
+
+      ''',
+    'Adaptive': '''
+
+      A boosting algorithm that builds a strong classifier by iteratively 
+      combining weak learners, focusing on errors.
+
+      ''',
+  };
+
   @override
   Widget build(BuildContext context) {
+    String algorithm = ref.read(algorithmBoostProvider.notifier).state;
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -55,18 +78,58 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftSpace,
 
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              pageControllerProvider: boostPageControllerProvider,
+              tooltip: '''
+
+              Tap here to build the $algorithm Boosted model using the parameter
+              values that you can set here.
+
+              ''',
+              onPressed: () async {
+                await rSource(context, ref, 'model_template');
+                if (algorithm == 'Extreme') {
+                  if (context.mounted) {
+                    await rSource(context, ref, 'model_build_xgboost');
+                  }
+                } else if (algorithm == 'Adaptive') {
+                  if (context.mounted) {
+                    await rSource(context, ref, 'model_build_adaboost');
+                  }
+                }
               },
               child: const Text('Build Boosted Trees'),
             ),
+
+            configWidgetSpace,
+
+            const Text(
+              'Algorithm:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetSpace,
+
+            ChoiceChipTip<String>(
+              options: boostAlgorithm.keys.toList(),
+              selectedOption: algorithm,
+              tooltips: boostAlgorithm,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    algorithm = chosen;
+                    ref.read(algorithmBoostProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
+        BoostSettings(algorithm: algorithm),
       ],
     );
   }
