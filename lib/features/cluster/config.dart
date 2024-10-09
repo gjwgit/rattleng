@@ -96,7 +96,11 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               onPressed: () async {
                 await rSource(context, ref, 'model_template');
 
-                await rSource(context, ref, 'model_build_cluster_kmeans');
+                if (type == 'KMeans') {
+                  await rSource(context, ref, 'model_build_cluster_kmeans');
+                } else if (type == 'Ewkm') {
+                  await rSource(context, ref, 'model_build_cluster_ewkm');
+                }
 
                 ref.read(clusterPageControllerProvider).animateToPage(
                       // Index of the second page.
