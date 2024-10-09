@@ -67,18 +67,11 @@ if (rescale) {
 
 data_for_clustering <- as.matrix(data_for_clustering)
 
-# Set EWKM parameters.
-
-lambda_value <- 0.5  # Adjust lambda as needed.
-max_iterations <- 100  # Adjust maxiter as needed.
-
 # Generate an EWKM cluster model.
 
 model_ewkm <- ewkm(
   data_for_clustering,
   centers = CLUSTER_NUM,
-  lambda = lambda_value,
-  maxiter = max_iterations
 )
 
 # Report on the cluster characteristics.
