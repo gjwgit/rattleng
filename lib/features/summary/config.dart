@@ -137,6 +137,14 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
     if (selectedOptions['CROSS TAB']!) {
       rSource(context, ref, 'explore_summary');
     }
+
+    ref.read(selectedOptionsProvider.notifier).state = {
+      'SUMMARY': selectedOptions['SUMMARY']!,
+      'GLIMPSE': selectedOptions['GLIMPSE']!,
+      'SKIM': selectedOptions['SKIM']!,
+      'SPREAD': selectedOptions['SPREAD']!,
+      'CROSS TAB': selectedOptions['CROSS TAB']!,
+    };
   }
 
   @override

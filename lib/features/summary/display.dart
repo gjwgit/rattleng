@@ -57,6 +57,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
+    final selectedOptions = ref.watch(selectedOptionsProvider);
+
     List<Widget> pages = [showMarkdownFile(summaryIntroFile, context)];
 
     String content = '';
@@ -84,10 +86,17 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     content = content.replaceAll(RegExp(r'\n\s*\n\s*\n+'), '\n\n');
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '''
+    ////////////////////////////////////////////////////////////////////////
+    // Conditionally Add Pages Based on Selected Options
+    ////////////////////////////////////////////////////////////////////////
+
+    if (selectedOptions['SUMMARY']! || selectedOptions['CROSS TAB']!) {
+      String content = rExtractSummary(stdout);
+      content = formatContent(content);
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: '''
 
           # Summary of the Dataset
 
@@ -108,9 +117,10 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           missing values.
 
           ''',
-          content: content,
-        ),
-      );
+            content: content,
+          ),
+        );
+      }
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -125,13 +135,16 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
       ''';
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: title,
-          content: '\n$content',
-        ),
-      );
+    if (selectedOptions['GLIMPSE']! || selectedOptions['CROSS TAB']!) {
+      String content = rExtractGlimpse(stdout);
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: title,
+            content: '\n$content',
+          ),
+        );
+      }
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -359,5 +372,10 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     );
 
     // Pages(children: pages);
+  }
+
+  String formatContent(String content) {
+    // Custom content formatting...
+    return content;
   }
 }

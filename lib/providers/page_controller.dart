@@ -89,3 +89,11 @@ final treePageControllerProvider = StateProvider<PageController>((ref) {
 final wordcloudPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
+
+final selectedOptionsProvider = StateProvider<Map<String, bool>>((ref) => {
+      'SUMMARY': false,
+      'GLIMPSE': false,
+      'SKIM': false,
+      'SPREAD': false,
+      'CROSS TAB': false,
+    });
