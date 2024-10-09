@@ -281,10 +281,6 @@ void main() {
 
       await tester.pump(longHack);
 
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
       // Tap the right arrow button to go to Variable page.
 
       // await tester.tap(rightArrowFinder);
@@ -446,7 +442,6 @@ void main() {
 
       await tester.pump(delay);
       await tester.pump(interact);
-      //
 
       // Check if SelectableText contains the expected content.
 

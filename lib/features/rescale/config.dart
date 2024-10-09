@@ -199,6 +199,11 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selected,
               ref,
               selectedProvider,
+              tooltip: '''
+
+              Select the variable to be rescaled.
+
+              ''',
               // Enable only if there are numeric inputs.
               enabled: numericInputs.isNotEmpty,
               onChanged: (value) {

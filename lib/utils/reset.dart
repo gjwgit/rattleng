@@ -1,6 +1,6 @@
-// Reset the app
+// Reset the app.
 //
-// Time-stamp: <Sunday 2024-09-08 12:06:39 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 09:13:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -23,9 +23,17 @@
 ///
 /// Authors: Yixiang Yin, Graham Williams
 
-library;
+// TODO 20241009 gjw DO WE RESET EVERYTHING?
+//
+// We should only reset providers that relate to a specific dataset
+// instance. Leave various configs as they are, so for example all of mt BOOST
+// configs remain untouched on loading a new dataset. But all data variable
+// related provides need to revert to their defaults.
+//
+// Perhaps on the RESET popup we ask if to reset only the data or the data and
+// app.
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
+library;
 
 import 'dart:io';
 
@@ -33,9 +41,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// TODO 20240618 gjw DO WE NEED ALL OF `app.dart`? I THINK IT IS JUST
-// `rattleHomeKey` CAN THAT GO INTO A CONSTANTS FILE INSTEAD WHIC WE IMPORT HERE
-// AND INTO app.dart?
+// TODO 20240618 gjw DO WE NEED ALL OF `app.dart`?
+//
+// I think it is just `rattleHomeKey`. Can that go into a constants file instead
+// which we import here and into app.dart?
 
 import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
@@ -50,7 +59,6 @@ import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/target.dart';
 import 'package:rattle/providers/terminal.dart';
-import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
