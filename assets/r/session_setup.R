@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-10-10 08:55:16 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-10-10 09:07:18 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -145,6 +145,24 @@ if (username == "") {
   username <- Sys.getenv("USERNAME")  # On Windows
 }
 
+# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
+
+is_large_factor <- function(x, maxfactor = 20) {
+  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  
+  if (is.factor(x) || is.ordered(x)) {
+    num_levels <- length(levels(x))
+  } else if (is.character(x)) {
+    num_levels <- length(unique(x))
+  } else {
+    num_levels <- NA  # For non-categorical variables
+  }
+  
+  if (is_categorical) {
+    return(num_levels > maxfactor)
+  }
+  return(FALSE)
+}
 
 # A palette for rattle!
 
@@ -175,22 +193,3 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 # theme_rattle <- theme_economist
 
 theme_default <- theme_rattle
-
-# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
-
-is_large_factor <- function(x, maxfactor = 20) {
-  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
-  
-  if (is.factor(x) || is.ordered(x)) {
-    num_levels <- length(levels(x))
-  } else if (is.character(x)) {
-    num_levels <- length(unique(x))
-  } else {
-    num_levels <- NA  # For non-categorical variables
-  }
-  
-  if (is_categorical) {
-    return(num_levels > maxfactor)
-  }
-  return(FALSE)
-}
