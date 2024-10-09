@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-09-29 20:02:39 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-10-10 09:07:18 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -52,37 +52,34 @@
 # options(repos = c(CRAN = "https://cloud.r-project.org"))
 # options(install.packages.ask = FALSE)
 
-# Load or else install `pacman` to manage package requirements.
+library("Hmisc")
+library("VIM")
+library("corrplot")
+library("descr")
+library("fBasics")
+library("ggcorrplot")
+library("ggthemes")
+library("janitor")    # Cleanup: clean_names() remove_constant().
+library("jsonlite")
+library("magrittr")   # Utilise %>% and %<>% pipeline operators.
+library("mice")
+library("naniar")
+library("nnet")
+library("xgboost")
+library("NeuralNetTools")
+library("party")
+library("randomForest")
+library("rattle")     # Access the weather dataset and utilities.
+library("readr")
+library("reshape")
+library("rpart")
+library("skimr")
+library("tidyverse")  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+library("tm")
+library("verification")
+library("wordcloud")
 
-if(!require(pacman)) install.packages("pacman")
-
-pacman::p_load(Hmisc,
-               VIM,
-               corrplot,
-               descr,
-               fBasics,
-               ggcorrplot,
-               ggthemes,
-               janitor,    # Cleanup: clean_names() remove_constant().
-               jsonlite,
-               magrittr,   # Utilise %>% and %<>% pipeline operators.
-               mice,
-               naniar,
-               nnet,
-               NeuralNetTools,
-               party,
-               randomForest,
-               rattle,     # Access the weather dataset and utilities.
-               readr,
-               reshape,
-               rpart,
-               skimr,
-               tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-               tm,
-               verification,
-               wordcloud)
-
-# Set the width wider than the default 80. Experimentally, on Linux,
+# Set the width wider than the default 80. Experimentally") on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
 
@@ -148,6 +145,24 @@ if (username == "") {
   username <- Sys.getenv("USERNAME")  # On Windows
 }
 
+# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
+
+is_large_factor <- function(x, maxfactor = 20) {
+  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  
+  if (is.factor(x) || is.ordered(x)) {
+    num_levels <- length(levels(x))
+  } else if (is.character(x)) {
+    num_levels <- length(unique(x))
+  } else {
+    num_levels <- NA  # For non-categorical variables
+  }
+  
+  if (is_categorical) {
+    return(num_levels > maxfactor)
+  }
+  return(FALSE)
+}
 
 # A palette for rattle!
 
@@ -178,22 +193,3 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 # theme_rattle <- theme_economist
 
 theme_default <- theme_rattle
-
-# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
-
-is_large_factor <- function(x, maxfactor = 20) {
-  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
-  
-  if (is.factor(x) || is.ordered(x)) {
-    num_levels <- length(levels(x))
-  } else if (is.character(x)) {
-    num_levels <- length(unique(x))
-  } else {
-    num_levels <- NA  # For non-categorical variables
-  }
-  
-  if (is_categorical) {
-    return(num_levels > maxfactor)
-  }
-  return(FALSE)
-}

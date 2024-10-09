@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity initiation for Rattle.
 //
-// Time-stamp: <Saturday 2024-10-05 11:16:40 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 06:01:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,16 +34,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class ActivityButton extends ConsumerWidget {
   final StateProvider<PageController>? pageControllerProvider;
   final VoidCallback? onPressed;
+  final String? tooltip;
   final Widget child;
 
   const ActivityButton({
     super.key,
-    this.pageControllerProvider, // Optional for navigation
-    this.onPressed, // Optional for additional logic
+    // Optional for navigation.
+    this.pageControllerProvider,
+    // Optional for additional logic
+    this.onPressed,
+    this.tooltip,
     required this.child,
   });
 
@@ -51,52 +56,60 @@ class ActivityButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugText('  BUILD', 'ActivityButton');
 
-    return ElevatedButton(
-      onPressed: () {
-        String path = ref.read(pathProvider);
+    return DelayedTooltip(
+      message: tooltip ??
+          '''
 
-        if (path.isEmpty) {
-          showOk(
-            context: context,
-            title: 'No Dataset Loaded',
-            content: '''
+      Tap here to build the Pages for this Feature.
+
+      ''',
+      child: ElevatedButton(
+        onPressed: () {
+          String path = ref.read(pathProvider);
+
+          if (path.isEmpty) {
+            showOk(
+              context: context,
+              title: 'No Dataset Loaded',
+              content: '''
 
             Please choose a dataset to load from the **Dataset** tab. There is
             not much we can do until we have loaded a dataset.
 
             ''',
-          );
-        } else {
-          // Perform additional logic, if any.
-
-          onPressed?.call();
-
-          // If page navigation is required, handle it here.
-
-          if (pageControllerProvider != null) {
-            // Access the PageController directly from the StateProvider.
-
-            final pageController = ref.read(pageControllerProvider!);
-
-            // Check the current page index before navigating.
-
-            final currentPage = pageController.page?.round() ?? 0;
-
-            // Determine the target page index based on the current page.
-
-            int targetPage = currentPage == 0 ? 1 : currentPage;
-
-            // Navigate to the target page.
-
-            pageController.animateToPage(
-              targetPage,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
             );
+          } else {
+            // Perform additional logic, if any.
+
+            onPressed?.call();
+
+            // If page navigation is required, handle it here.
+
+            if (pageControllerProvider != null) {
+              // Access the PageController directly from the StateProvider.
+
+              final pageController = ref.read(pageControllerProvider!);
+
+              // Check the current page index before navigating.
+
+              final currentPage = pageController.page?.round() ?? 0;
+
+              // Determine the target page index based on the current page.
+
+              int targetPage = currentPage == 0 ? 1 : currentPage;
+
+              // Navigate to the target page.
+
+              pageController.animateToPage(
+                targetPage,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            }
           }
-        }
-      },
-      child: child,
+        },
+        child: child,
+      ),
     );
   }
 }

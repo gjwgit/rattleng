@@ -1,6 +1,6 @@
 /// Model NNET test with demo dataset.
 //
-// Time-stamp: <2024-10-05 18:57:33 gjw>
+// Time-stamp: <Wednesday 2024-10-09 17:28:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -62,8 +62,6 @@ void main() {
       await openDemoDataset(tester);
 
       await tester.pump(interact);
-
-      await tester.pump(hack);
 
       // Find the scrollable ListView.
 
@@ -210,6 +208,10 @@ void main() {
       await tester.pump(hack);
 
       await tester.pump(interact);
+      // Tap the right arrow to go to the second page.
+
+      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
+      expect(rightArrowButton, findsOneWidget);
 
       // Check if SelectableText contains the expected content.
 
@@ -442,7 +444,6 @@ void main() {
 
       await tester.pump(delay);
       await tester.pump(interact);
-      //
 
       // Check if SelectableText contains the expected content.
 
