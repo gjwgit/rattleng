@@ -122,53 +122,16 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   }
 
   void takeAction() {
-    rSource(context, ref, 'explore_summary');
-
     if (selectedOptions['SUMMARY']!) {
-      // Navigate to page 1 when SUMMARY is selected.
-
-      final pageController = ref.read(summaryPageControllerProvider);
-      pageController.animateToPage(
-        1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      rSource(context, ref, 'explore_summary_summary');
     } else if (selectedOptions['GLIMPSE']!) {
-      // Navigate to page 2 when GLIMPSE is selected.
-
-      final pageController = ref.read(summaryPageControllerProvider);
-      pageController.animateToPage(
-        2,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      rSource(context, ref, 'explore_summary_glimpse');
     } else if (selectedOptions['SKIM']!) {
-      // Navigate to page 3 when SKIM is selected.
-
-      final pageController = ref.read(summaryPageControllerProvider);
-      pageController.animateToPage(
-        3,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      rSource(context, ref, 'explore_summary_skim');
     } else if (selectedOptions['SPREAD']!) {
-      // Navigate to page 4 when SPREAD is selected.
-
-      final pageController = ref.read(summaryPageControllerProvider);
-      pageController.animateToPage(
-        4,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      rSource(context, ref, 'explore_summary_spread');
     } else if (selectedOptions['CROSS TAB']!) {
-      // Navigate to page 5 when CROSS TAB is selected.
-
-      final pageController = ref.read(summaryPageControllerProvider);
-      pageController.animateToPage(
-        1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      rSource(context, ref, 'explore_summary');
     }
   }
 
