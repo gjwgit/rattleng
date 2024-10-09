@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 05:26:06 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-10-10 08:42:23 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -45,7 +45,9 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-library(ggplot2)
+library(xgboost)      # This needs to be loaded before rattle/tidyverse.
+library(rattle)       #
+library(ggplot2)      # To support a local rattle theme.
 
 # 20241007 gjw I am in the process of removing the installation of R
 # packages on startup to avoid a delay in loading your R dataset. For
