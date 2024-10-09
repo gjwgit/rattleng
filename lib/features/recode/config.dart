@@ -160,6 +160,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             selected2Provider,
             enabled: true,
             onChanged: (String? value) {
+              ref.read(selected2Provider.notifier).state =
+                  value ?? 'IMPOSSIBLE';
               // reset after selection
               selectedTransform = ref.read(typesProvider)[value] == Type.numeric
                   ? numericMethods.first
@@ -225,10 +227,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               selected,
               ref,
               selectedProvider,
-              enabled:
-                  true, // Update this based on your requirements for enabling/disabling.
+              enabled: true,
               onChanged: (String? value) {
                 setState(() {
+                  ref.read(selectedProvider.notifier).state =
+                      value ?? 'IMPOSSIBLE';
                   // Reset the selected transform based on the variable type
                   selectedTransform =
                       ref.read(typesProvider)[value] == Type.numeric

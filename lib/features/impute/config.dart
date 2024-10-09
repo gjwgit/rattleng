@@ -232,17 +232,23 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             ),
             configWidgetSpace,
             // use local one because of the subtle difference
-            // variableChooser(inputs, selected, ref),
             variableChooser(
               'Variable',
               inputs,
               selected,
               ref,
               selectedProvider,
-              enabled: true, // Or use a condition if needed
+              enabled: true,
+              // On selection as well as recording what was selected rebuild the
+              // visualisations.
+
               onChanged: (String? value) {
+                ref.read(selectedProvider.notifier).state =
+                    value ?? 'IMPOSSIBLE';
                 selectedTransform = 'Zero/Missing';
-                // Add additional logic here if needed.
+                // We don't buildAction() here since the variable choice might
+                // be followed by a transform choice and we don;t want to shoot
+                // off building lots of new variables unnecesarily.
               },
             ),
 
