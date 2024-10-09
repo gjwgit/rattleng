@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Monday 2024-10-07 19:21:27 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-10-09 20:43:27 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Zheyuan Xu
 
 library;
 
@@ -35,6 +35,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/providers/cluster_re_scale.dart';
@@ -134,6 +135,17 @@ Future<void> rSource(
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
 
+  // BOOST
+
+  int boostMaxDepth = ref.read(maxDepthBoostProvider);
+  int boostMinSplit = ref.read(minSplitBoostProvider);
+  int boostXVal = ref.read(xValueBoostProvider);
+  double boostLearningRate = ref.read(learningRateBoostProvider);
+  double boostComplexity = ref.read(complexityBoostProvider);
+  int boostThreads = ref.read(threadsBoostProvider);
+  int boostIterations = ref.read(iterationsBoostProvider);
+  String boostObjective = ref.read(objectiveBoostProvider);
+
   int interval = ref.read(intervalProvider);
 
   String theme = ref.read(settingsGraphicThemeProvider);
@@ -157,7 +169,7 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // Process global template variables.
+  // GLOBAL
 
   code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
@@ -193,7 +205,7 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // Cleanup
+  // CLEANUP
 
   // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
 
@@ -212,6 +224,7 @@ Future<void> rSource(
   // code = code.replaceAll('NEEDS_INIT', needsInit);
 
   ////////////////////////////////////////////////////////////////////////
+
   // WORD CLOUD
 
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
@@ -344,6 +357,7 @@ Future<void> rSource(
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
 
   ////////////////////////////////////////////////////////////////////////
+
   // CLUSTER
 
   code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
@@ -366,6 +380,21 @@ Future<void> rSource(
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // BOOST
+
+  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
+  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
+  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
+  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
+  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
+  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
+  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
+  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
+
+  ////////////////////////////////////////////////////////////////////////
 
   // Add the code to the script provider so it will be displayed in the script
   // tab and available to be exported there.

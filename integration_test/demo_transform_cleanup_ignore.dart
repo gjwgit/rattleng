@@ -251,16 +251,6 @@ void main() {
 
       await tester.pump(interact);
 
-      // Check that deleted variables are not in the dropdown options.
-
-      for (String variable in deletedVariables) {
-        final dropdownOptionFinder = find.text(variable);
-        // expect(
-        //   dropdownOptionFinder,
-        //   findsNothing,
-        // );
-      }
-
       // Navigate to the "Dataset" tab.
 
       final datasetTabFinder = find.text(

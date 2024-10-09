@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-10-08 08:09:36 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-10-09 20:42:32 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -179,7 +179,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
       const ExploreTabs(),
       const TransformTabs(),
       const ModelTabs(),
-      const Center(child: Text('COMING SOON: GENERATIVE')),
+      const Center(child: Text('COMING SOON: EVALUATION')),
       const RConsole(),
       const ScriptTab(),
       const DebugTab(),
