@@ -1,6 +1,6 @@
 /// Gloabl variable status as text for the status bar.
 ///
-/// Time-stamp: <Monday 2024-10-07 20:29:44 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-10-10 08:17:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,10 @@ final scriptProvider = StateProvider<String>(
   (ref) => '''# An R script to replicate your Rattle session.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
+#
+# TIMESTAMP
+#
+# Rattle version VERSION.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
