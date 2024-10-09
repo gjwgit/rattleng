@@ -250,6 +250,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 // be followed by a transform choice and we don;t want to shoot
                 // off building lots of new variables unnecesarily.
               },
+              tooltip: '',
             ),
 
             configWidgetSpace,
