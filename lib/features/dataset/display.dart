@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-10-09 17:09:49 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 20:04:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -47,7 +47,7 @@ import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 TextStyle defaultTextStyle = const TextStyle(
@@ -82,7 +82,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // FIRST PAGE: Welcome Message
 
     List<Widget> pages = [
-      showMarkdownFileNew(welcomeIntroFile1, welcomeIntroFile2, context)
+      showMarkdownFile2(welcomeIntroFile1, welcomeIntroFile2, context)
     ];
 
     // Handle different file types
