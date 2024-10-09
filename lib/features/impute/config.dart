@@ -39,6 +39,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// This is a StatefulWidget to pass the REF across to the rSource as well as to
@@ -70,28 +71,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   ];
 
   String selectedTransform = 'Zero/Missing';
-
-  //TODO kevin
-
-  Widget variableChooser(List<String> inputs, String selected, WidgetRef ref) {
-    return DropdownMenu(
-      label: const Text('Variable'),
-      width: 200,
-      initialSelection: selected,
-      dropdownMenuEntries: inputs.map((s) {
-        return DropdownMenuEntry(value: s, label: s);
-      }).toList(),
-      // On selection as well as recording what was selected rebuild the
-      // visualisations.
-      onSelected: (String? value) {
-        ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        selectedTransform = 'Zero/Missing';
-        // We don't buildAction() here since the variable choice might
-        // be followed by a transform choice and we don;t want to shoot
-        // off building lots of new variables unnecesarily.
-      },
-    );
-  }
 
   // TODO 20240810 gjw USE CHOICE CHIP TIP
 
@@ -253,7 +232,20 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             ),
             configWidgetSpace,
             // use local one because of the subtle difference
-            variableChooser(inputs, selected, ref),
+            // variableChooser(inputs, selected, ref),
+            variableChooser(
+              'Variable',
+              inputs,
+              selected,
+              ref,
+              selectedProvider,
+              enabled: true, // Or use a condition if needed
+              onChanged: (String? value) {
+                selectedTransform = 'Zero/Missing';
+                // Add additional logic here if needed.
+              },
+            ),
+
             configWidgetSpace,
             transformChooser(),
             configWidgetSpace,
