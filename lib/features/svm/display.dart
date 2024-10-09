@@ -33,7 +33,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_empty.dart';
-import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file.dart';
 
 /// The panel displays the instructions or the output.
 
