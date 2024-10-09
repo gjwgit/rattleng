@@ -250,7 +250,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 // be followed by a transform choice and we don;t want to shoot
                 // off building lots of new variables unnecesarily.
               },
-              tooltip: '',
+              tooltip:
+                  'Select the variable for which missing values will be imputed',
             ),
 
             configWidgetSpace,
