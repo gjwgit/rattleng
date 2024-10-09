@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-10-03 07:30:27 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 20:04:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -46,7 +47,7 @@ import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 TextStyle defaultTextStyle = const TextStyle(
@@ -80,7 +81,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     // FIRST PAGE: Welcome Message
 
-    List<Widget> pages = [showMarkdownFile(welcomeMsgFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile2(welcomeIntroFile1, welcomeIntroFile2, context)
+    ];
 
     // Handle different file types
 

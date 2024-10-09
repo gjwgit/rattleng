@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Friday 2024-09-27 09:11:17 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 09:07:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -134,7 +134,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   String? minBucketError =
                       validateInteger(_minBucketController.text, min: 1);
                   String? complexityError =
-                      _validateComplexity(_complexityController.text);
+                      validateDecimal(_complexityController.text);
                   String? priorsError = _validatePriors(_priorsController.text);
                   String? lossMatrixError =
                       _validateLossMatrix(_lossMatrixController.text);
@@ -320,7 +320,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
-                validator: (value) => _validateComplexity(value),
+                validator: (value) => validateDecimal(value),
                 stateProvider: complexityProvider,
                 interval: 0.0005,
                 decimalPlaces: 4,
@@ -374,19 +374,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     );
   }
 
-  // Validation logic for complexity field.
-
-  String? _validateComplexity(String? value) {
-    if (value == null || value.isEmpty) return 'Cannot be empty';
-    double? doubleValue = double.tryParse(value);
-    if (doubleValue == null || doubleValue < 0.0000 || doubleValue > 1.0000) {
-      return 'Must be between 0.0000 and 1.0000';
-    }
-
-    return null;
-  }
-
-  // Validation logic for priors field.
+  // Validation logic for priors field. The priors field is specific to the TREE
+  // config and so we define this here as a local util rather than in
+  // `number_field.dart`
 
   String? _validatePriors(String? value) {
     if (value != null && value.isNotEmpty) {
@@ -404,7 +394,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     return null;
   }
 
-  // Validation logic for loss matrix field.
+  // Validation logic for loss matrix field. The loss matrix field is specific
+  // to the TREE config and so we define this here as a local util rather than
+  // in `number_field.dart`
 
   String? _validateLossMatrix(String? value) {
     if (value != null && value.isNotEmpty) {
