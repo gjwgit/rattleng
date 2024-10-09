@@ -39,6 +39,7 @@ import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
@@ -57,36 +58,6 @@ class RecodeConfig extends ConsumerStatefulWidget {
 
 class RecodeConfigState extends ConsumerState<RecodeConfig> {
   // TODO 20240819 gjw EACH WIDGET NEEDS A COMMENT
-
-  // TODO kevin
-
-  Widget variableChooser(
-    String label,
-    List<String> inputs,
-    String selected,
-    WidgetRef ref,
-    StateProvider stateProvider,
-  ) {
-    return DropdownMenu(
-      // label: const Text('Variable'),
-      label: Text(label),
-      width: 200,
-      initialSelection: selected,
-      dropdownMenuEntries: inputs.map((s) {
-        return DropdownMenuEntry(value: s, label: s);
-      }).toList(),
-      // On selection as well as recording what was selected rebuild the
-      // visualisations.
-      onSelected: (String? value) {
-        // ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
-        // reset after selection
-        selectedTransform = ref.read(typesProvider)[value] == Type.numeric
-            ? numericMethods.first
-            : categoricMethods.first;
-      },
-    );
-  }
 
   // the reason we use this instead of the provider is that the provider will only be updated after build.
   // Before build, selected contains the most recent value.
@@ -187,6 +158,13 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             selected2,
             ref,
             selected2Provider,
+            enabled: true,
+            onChanged: (String? value) {
+              // reset after selection
+              selectedTransform = ref.read(typesProvider)[value] == Type.numeric
+                  ? numericMethods.first
+                  : categoricMethods.first;
+            },
           ),
         ),
       ],
@@ -247,6 +225,17 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               selected,
               ref,
               selectedProvider,
+              enabled:
+                  true, // Update this based on your requirements for enabling/disabling.
+              onChanged: (String? value) {
+                setState(() {
+                  // Reset the selected transform based on the variable type
+                  selectedTransform =
+                      ref.read(typesProvider)[value] == Type.numeric
+                          ? numericMethods.first
+                          : categoricMethods.first;
+                });
+              },
             ),
           ],
         ),
