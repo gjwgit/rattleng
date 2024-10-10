@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-09-19 18:35:32 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-10-10 08:57:09 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -54,41 +54,38 @@
 # options(repos = c(CRAN = "https://cloud.r-project.org"))
 # options(install.packages.ask = FALSE)
 
-# Load or else install `pacman` to manage package requirements.
-
 # 20240810 Attempt to debug the Windows issue with loading main.R on
 # startup. For now on Windows we initialise here since main.R is not
 # run on startup.
 
 if (NEEDS_INIT) {
 
-
-  if(!require(pacman)) install.packages("pacman")
-
-  pacman::p_load(Hmisc,
-                 VIM,
-                 corrplot,
-                 descr,
-                 fBasics,
-                 ggcorrplot,
-                 ggthemes,
-                 janitor,    # Cleanup: clean_names() remove_constant().
-                 magrittr,   # Utilise %>% and %<>% pipeline operators.
-                 mice,
-                 naniar,
-                 nnet,
-                 NeuralNetTools,
-                 party,
-                 randomForest,
-                 rattle,     # Access the weather dataset and utilities.
-                 readr,
-                 reshape,
-                 rpart,
-                 skimr,
-                 tidyverse,  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-                 tm,
-                 verification,
-                 wordcloud)
+  library("Hmisc")
+  library("VIM")
+  library("corrplot")
+  library("descr")
+  library("fBasics")
+  library("ggcorrplot")
+  library("ggthemes")
+  library("janitor")    # Cleanup: clean_names() remove_constant().
+  library("jsonlite")
+  library("magrittr")   # Utilise %>% and %<>% pipeline operators.
+  library("mice")
+  library("naniar")
+  library("nnet")
+  library("xgboost")
+  library("NeuralNetTools")
+  library("party")
+  library("randomForest")
+  library("rattle")     # Access the weather dataset and utilities.
+  library("readr")
+  library("reshape")
+  library("rpart")
+  library("skimr")
+  library("tidyverse")  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
+  library("tm")
+  library("verification")
+  library("wordcloud")
 
   options(width=120)
   options(crayon.enabled = FALSE)
