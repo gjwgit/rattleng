@@ -53,7 +53,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        summaryPageControllerProvider); // Get the PageController from Riverpod
+      summaryPageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 

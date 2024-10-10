@@ -49,7 +49,8 @@ class _RecodeDisplayState extends ConsumerState<RecodeDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        recodePageControllerProvider); // Get the PageController from Riverpod
+      recodePageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 

@@ -55,7 +55,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        wordcloudPageControllerProvider); // Get the PageController from Riverpod
+      wordcloudPageControllerProvider,
+    ); // Get the PageController from Riverpod
     String stdout = ref.watch(stdoutProvider);
 
     // Build the word cloud widget to be displayed in the tab, consisting of the

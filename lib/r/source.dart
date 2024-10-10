@@ -94,8 +94,12 @@ import 'package:rattle/utils/update_script.dart';
 /// define the variables and then run the scripts.
 ///
 
-Future<void> rSource(BuildContext context, WidgetRef ref, String script,
-    {bool includeCrossTab = false}) async {
+Future<void> rSource(
+  BuildContext context,
+  WidgetRef ref,
+  String script, {
+  bool includeCrossTab = false,
+}) async {
   // Set default value to false
   // Initialise the state variables used here.
 

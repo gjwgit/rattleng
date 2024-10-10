@@ -54,7 +54,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        treePageControllerProvider); // Get the PageController from Riverpod
+      treePageControllerProvider,
+    ); // Get the PageController from Riverpod
     String stdout = ref.watch(stdoutProvider);
 
     AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
