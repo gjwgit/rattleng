@@ -48,6 +48,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   @override
   Widget build(BuildContext context) {
     // Get the state of the "Include Cross Tab" checkbox from the provider.
+
     final includeCrossTab = ref.watch(includeCrossTabProvider);
 
     return Column(
@@ -69,11 +70,11 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             ),
             const SizedBox(width: 10),
 
-            // The "Include Cross Tab" checkbox.
             Checkbox(
               value: includeCrossTab,
               onChanged: (value) {
                 // Update the state of the checkbox.
+
                 ref.read(includeCrossTabProvider.notifier).state =
                     value ?? false;
               },
