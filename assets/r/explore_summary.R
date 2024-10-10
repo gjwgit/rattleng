@@ -76,14 +76,12 @@ timeDate::skewness(ds[numc], na.rm=TRUE)
 ## ") 
 ## }
 if (INCLUDE_CROSS_TAB) {
-  cat("Including Cross Tab analysis...\n") # This line will indicate the block is being executed.
-  
   for (i in catc) {
     cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target))
     print(descr::CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS"))
     cat(paste(rep("=", 70), collapse=""), "\n")
   }
 } else {
-  cat("Cross Tab analysis is not included.\n") # This line will indicate the block is not being executed.
+  cat("Cross Tab analysis is not included.\n") 
 }
 
