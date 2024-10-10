@@ -73,6 +73,7 @@ if (NEEDS_INIT) {
   library("mice")
   library("naniar")
   library("nnet")
+  library("neuralnet")
   library("xgboost")
   library("NeuralNetTools")
   library("party")
