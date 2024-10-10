@@ -1,6 +1,6 @@
 /// Test that the app starts up.
 //
-// Time-stamp: <Wednesday 2024-10-02 15:13:17 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-10-10 09:33:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -64,15 +64,15 @@ void main() {
     // Confirm the 2 Markdown widgets.
 
     final welcomeMarkdownFinder = find.byType(Markdown);
-    expect(welcomeMarkdownFinder, findsNWidgets(2));
+    expect(welcomeMarkdownFinder, findsNWidgets(3));
 
-    // The first is the welcome widget. We can check it's contents is as
-    // expected.
+    // The first is the first panel of the welcome widget. We can check it's
+    // contents is as expected.
 
     final welcomeWidget =
         welcomeMarkdownFinder.evaluate().first.widget as Markdown;
     String welcome = welcomeWidget.data;
-    expect(welcome, File('assets/markdown/welcome.md').readAsStringSync());
+    expect(welcome, File('assets/markdown/welcome1.md').readAsStringSync());
 
     // Check that we have a single status bar.
 
