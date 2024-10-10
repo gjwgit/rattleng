@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/crosstab.dart';
 import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
@@ -46,28 +47,38 @@ class SummaryConfig extends ConsumerStatefulWidget {
 class SummaryConfigState extends ConsumerState<SummaryConfig> {
   @override
   Widget build(BuildContext context) {
+    // Get the state of the "Include Cross Tab" checkbox from the provider.
+    final includeCrossTab = ref.watch(includeCrossTabProvider);
+
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
         const SizedBox(height: 5),
-
         Row(
           children: [
-            // Space to the left of the configs.
-
             const SizedBox(width: 5),
 
-            // The BUILD button.
-
+            // The "Generate Dataset Summary" button.
             ActivityButton(
-              pageControllerProvider:
-                  summaryPageControllerProvider, // Optional navigation
+              pageControllerProvider: summaryPageControllerProvider,
               onPressed: () {
-                rSource(context, ref, 'explore_summary');
+                // Pass the "Include Cross Tab" selection to rSource.
+                rSource2(context, ref, 'explore_summary',
+                    includeCrossTab: includeCrossTab);
               },
               child: const Text('Generate Dataset Summary'),
             ),
+            const SizedBox(width: 10),
+
+            // The "Include Cross Tab" checkbox.
+            Checkbox(
+              value: includeCrossTab,
+              onChanged: (value) {
+                // Update the state of the checkbox.
+                ref.read(includeCrossTabProvider.notifier).state =
+                    value ?? false;
+              },
+            ),
+            const Text('Include Cross Tab'),
           ],
         ),
       ],
