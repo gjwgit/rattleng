@@ -62,7 +62,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               pageControllerProvider: summaryPageControllerProvider,
               onPressed: () {
                 // Pass the "Include Cross Tab" selection to rSource.
-                rSource2(context, ref, 'explore_summary',
+                rSource(context, ref, 'explore_summary',
                     includeCrossTab: includeCrossTab);
               },
               child: const Text('Generate Dataset Summary'),
