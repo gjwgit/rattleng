@@ -78,6 +78,7 @@ library("tidyverse")  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
 library("tm")
 library("verification")
 library("wordcloud")
+library("wskm")
 
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
