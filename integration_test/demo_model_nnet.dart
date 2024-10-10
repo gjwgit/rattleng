@@ -244,8 +244,7 @@ void main() {
       await tester.pump(interact);
 
       // Tap the right arrow to go to the next page.
-
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
+      
       expect(rightArrowButton, findsOneWidget);
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
