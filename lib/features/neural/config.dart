@@ -30,14 +30,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/max_nwts.dart';
-import 'package:rattle/providers/nnet_hidden_neurons.dart';
-import 'package:rattle/providers/nnet_maxit.dart';
-import 'package:rattle/providers/nnet_skip.dart';
-import 'package:rattle/providers/nnet_trace.dart';
+import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -53,6 +52,17 @@ class NeuralConfig extends ConsumerStatefulWidget {
 }
 
 class NeuralConfigState extends ConsumerState<NeuralConfig> {
+  Map<String, String> neuralAlgorithm = {
+    'nnet': '''
+         A basic neural network with a single hidden layer.
+    Suitable for simple tasks and small datasets.
+    ''',
+    'neuralnet': '''
+         Supports multiple layers, ideal for complex patterns.
+    Commonly used for deeper architectures.
+    ''',
+  };
+
   // Controllers for the input fields.
   final TextEditingController _hiddenNeuronsController =
       TextEditingController();
@@ -77,6 +87,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
     _maxNWtsController.text =
         ref.read(maxNWtsProvider.notifier).state.toString();
     _maxitController.text = ref.read(maxitProvider.notifier).state.toString();
+
+    String algorithm = ref.read(neuralAlgorithmProvider.notifier).state;
 
     return Column(
       children: [
@@ -178,6 +190,28 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               ''',
               label: 'Skip',
               provider: nnetSkipProvider,
+            ),
+            configWidgetSpace,
+
+            const Text(
+              'Algorithm:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetSpace,
+
+            ChoiceChipTip<String>(
+              options: neuralAlgorithm.keys.toList(),
+              selectedOption: algorithm,
+              tooltips: neuralAlgorithm,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    algorithm = chosen;
+                    ref.read(neuralAlgorithmProvider.notifier).state = chosen;
+                  }
+                });
+              },
             ),
           ],
         ),
