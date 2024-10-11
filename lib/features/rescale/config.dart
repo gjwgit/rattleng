@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-10-11 12:05:43 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-10-11 12:09:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -190,6 +190,13 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
+              tooltip: '''
+
+              Tap here to perform the chosen rescale operation on the selected
+              variable. Once the transform has completed the second page will
+              show a summary of the new dartaset.
+
+              ''',
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
