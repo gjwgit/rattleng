@@ -1,11 +1,11 @@
-/// Widget to display the SUMMARY introduction and display output.
+/// Widget to display the SUMMARY introduction and R summary output.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-09-11 14:05:52 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-12 20:42:28 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,8 +64,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
+
     // BASIC R SUMMARY
-    ////////////////////////////////////////////////////////////////////////
 
     content = rExtractSummary(stdout);
 
@@ -317,19 +317,18 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
-    // CROSSTAB<
-    ////////////////////////////////////////////////////////////////////////
+
+    // CROSSTAB
 
     content = rExtract(stdout, 'descr::CrossTable(ds');
 
-    // Remove any line beginning with +.
+    // When no CrossTab is generated the content will be empty. In R we output
+    // an empty line.
+
+    // Remove any line beginning with + by iterating over the lines and modify
+    // them.
 
     lines = content.split('\n');
-
-    // Iterate over the lines and modify them.
-
-    // Remove lines starting with '+'
-
     lines = lines.where((line) => !line.trimLeft().startsWith('+')).toList();
 
     // Join the lines back into a single string.

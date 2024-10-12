@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-29 17:11:38 +0800 Graham Williams>
+# Time-stamp: <Saturday 2024-10-12 20:28:12 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,7 +28,7 @@
 # variable `ds` (dataset), intialising the `dsname` (a printable name
 # for the dataset) and `vnames` (the variable names).
 #
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
