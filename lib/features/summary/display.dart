@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-09-11 14:05:52 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-09-27 20:18:55 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -53,7 +53,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        summaryPageControllerProvider); // Get the PageController from Riverpod
+      summaryPageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 
@@ -145,10 +146,10 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
         TextPage(
           title: '''
 
-          # Skim of the Dataset
+          # Skim the Dataset
 
           Generated using
-          [skimr::skim_tee(ds)](https://www.rdocumentation.org/packages/skimr/topics/skim/).
+          [skimr::skim(ds)](https://www.rdocumentation.org/packages/skimr/topics/skim/).
 
           ''',
           content: content,

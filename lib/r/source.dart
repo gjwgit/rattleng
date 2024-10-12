@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Saturday 2024-10-12 19:14:56 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-10-13 05:30:20 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -45,27 +45,27 @@ import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
+import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/max_nwts.dart';
+import 'package:rattle/providers/min_bucket.dart';
+import 'package:rattle/providers/min_split.dart';
 import 'package:rattle/providers/nnet_hidden_neurons.dart';
 import 'package:rattle/providers/nnet_maxit.dart';
 import 'package:rattle/providers/nnet_skip.dart';
 import 'package:rattle/providers/nnet_trace.dart';
-import 'package:rattle/providers/number.dart';
-import 'package:rattle/providers/min_bucket.dart';
-import 'package:rattle/providers/min_split.dart';
-import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/normalise.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
-import 'package:rattle/providers/tree_include_missing.dart';
-import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/tree_include_missing.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -78,9 +78,9 @@ import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_missing.dart';
+import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/to_r_vector.dart';
-import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [script] and append to the [rattle] script.
@@ -94,7 +94,11 @@ import 'package:rattle/utils/update_script.dart';
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 
-Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
+Future<void> rSource(
+  BuildContext context,
+  WidgetRef ref,
+  List<String> scripts,
+) async {
   // Initialise the state variables used here.
 
   bool checkbox = ref.read(checkboxProvider);
@@ -148,13 +152,22 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   String theme = ref.read(settingsGraphicThemeProvider);
 
-  // First obtain the text from the script.
+  // First obtain the text from each script and combine.
 
-  debugText('R SOURCE', '$script.R');
+  String code = '';
+  String newCode = '';
 
-  String asset = 'assets/r/$script.R';
-  String code = await DefaultAssetBundle.of(context).loadString(asset);
-  // var code = File('assets/r/$script.R').readAsStringSync();
+  for (String script in scripts) {
+    debugText('R SOURCE', '$script.R');
+
+    String asset = 'assets/r/$script.R';
+
+    newCode = await DefaultAssetBundle.of(context).loadString(asset);
+    newCode = rStripHeader(newCode);
+    newCode = "\n${'#' * 72}\n## -- $script.R --\n${'#' * 72}\n$newCode";
+
+    code += newCode;
+  }
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -162,11 +175,13 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
 
-  // Populate the VERSION.
+  // VERSION.
 
   PackageInfo info = await PackageInfo.fromPlatform();
 
   code = code.replaceAll('VERSION', info.version);
+
+  // FILENAME
 
   // 20240825 lutra Fix the path to the dataset to ensure that the Windows path
   // has been correctly converted to a Unix path for R.
@@ -176,10 +191,13 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   }
   code = code.replaceAll('FILENAME', path);
 
-  // TODO 20240630 gjw EVENTUALLY SELECTIVELY REPLACE
-  // AS REQUIRED FOR THE CURRENT FEATURE.
+  // TEMPDIR
 
   code = code.replaceAll('TEMPDIR', tempDir);
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // SETTINGS
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
@@ -202,10 +220,10 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
   // Windows.
 
-  String needsInit = 'FALSE';
-  if (Platform.isWindows) needsInit = 'TRUE';
+  // String needsInit = 'FALSE';
+  // if (Platform.isWindows) needsInit = 'TRUE';
 
-  code = code.replaceAll('NEEDS_INIT', needsInit);
+  // code = code.replaceAll('NEEDS_INIT', needsInit);
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -391,8 +409,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   updateScript(
     ref,
-    "\n${'#' * 72}\n## -- $script.R --\n${'#' * 72}"
-    '\n${rStripHeader(code)}',
+    code,
   );
 
   // Run the code without comments.
@@ -401,48 +418,48 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
 
   // Add a completion marker.
 
-  code = '$code\nprint("Processing $script Completed")\n';
+  // code = '$code\nprint("Processing $script Completed")\n';
 
   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
 
   // Optionally, show a SnackBar when the script finishes executing.
 
-  if (code.contains('Processing $script Completed')) {
-    setStatus(
-        ref,
-        'The R script **$script.R** has run. '
-        'See **Console** for details and **Script** for the R code.');
-    // if (context.mounted) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Row(
-    //         children: [
-    //           const Icon(Icons.thumb_up, color: Colors.blue),
-    //           const SizedBox(width: 40),
-    //           Expanded(
-    //             child: Text(
-    //               'Execution of $script.R is completed.',
-    //               style: const TextStyle(color: Colors.blue),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //       backgroundColor: const Color(0xFFBBDEFB),
-    //       elevation: 5,
-    //       behavior: SnackBarBehavior.floating,
-    //       shape: const StadiumBorder(),
-    //       width: 600,
-    //       // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
-    //       // Set a short duration
-    //       duration: const Duration(seconds: 1),
-    //       action: SnackBarAction(
-    //         label: 'Okay',
-    //         disabledTextColor: Colors.white,
-    //         textColor: Colors.blue,
-    //         onPressed: () {},
-    //       ),
-    //     ),
-    //   );
-    // }
-  }
+//  if (code.contains('Processing $script Completed')) {
+  setStatus(
+      ref,
+      'R scripts **$scripts** completed. '
+      'See **Console** for details, **Script** for R code.');
+  // if (context.mounted) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Row(
+  //         children: [
+  //           const Icon(Icons.thumb_up, color: Colors.blue),
+  //           const SizedBox(width: 40),
+  //           Expanded(
+  //             child: Text(
+  //               'Execution of $script.R is completed.',
+  //               style: const TextStyle(color: Colors.blue),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       backgroundColor: const Color(0xFFBBDEFB),
+  //       elevation: 5,
+  //       behavior: SnackBarBehavior.floating,
+  //       shape: const StadiumBorder(),
+  //       width: 600,
+  //       // margin: const EdgeInsets.fromLTRB(10, 0, 300, 0),
+  //       // Set a short duration
+  //       duration: const Duration(seconds: 1),
+  //       action: SnackBarAction(
+  //         label: 'Okay',
+  //         disabledTextColor: Colors.white,
+  //         textColor: Colors.blue,
+  //         onPressed: () {},
+  //       ),
+  //     ),
+  //   );
+  // }
+//  }
 }

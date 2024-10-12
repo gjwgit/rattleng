@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-05 13:50:12 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-07 06:48:09 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -62,10 +62,7 @@ class MissingConfigState extends ConsumerState<MissingConfig> {
             ActivityButton(
               pageControllerProvider: missingPageControllerProvider,
               onPressed: () {
-                rSource(context, ref, 'explore_missing');
-                // FORCE THE PAGES TO BE REBUILT NOW
-                //Future.delayed(const Duration(seconds: 3));
-                // sleep(const Duration(seconds: 3));
+                rSource(context, ref, ['explore_missing']);
               },
               child: const Text('Perform Missing Analysis'),
             ),

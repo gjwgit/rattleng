@@ -53,7 +53,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        forestPageControllerProvider); // Get the PageController from Riverpod
+      forestPageControllerProvider,
+    ); // Get the PageController from Riverpod
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [showMarkdownFile(forestIntroFile, context)];

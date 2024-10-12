@@ -52,7 +52,8 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        neuralPageControllerProvider); // Get the PageController from Riverpod
+      neuralPageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
     String content = '';

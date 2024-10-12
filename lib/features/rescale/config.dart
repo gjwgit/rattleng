@@ -124,27 +124,27 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
     switch (selectedTransform) {
       case 'Recenter':
-        rSource(context, ref, 'transform_rescale_recenter_numeric');
+        rSource(context, ref, ['transform_rescale_recenter_numeric']);
       case 'Scale [0-1]':
-        rSource(context, ref, 'transform_rescale_scale01_numeric');
+        rSource(context, ref, ['transform_rescale_scale01_numeric']);
       case '-Median/MAD':
-        rSource(context, ref, 'transform_rescale_medmad_numeric');
+        rSource(context, ref, ['transform_rescale_medmad_numeric']);
       case 'Natural Log':
-        rSource(context, ref, 'transform_rescale_natlog_numeric');
+        rSource(context, ref, ['transform_rescale_natlog_numeric']);
       case 'Log 10':
-        rSource(context, ref, 'transform_rescale_log10_numeric');
+        rSource(context, ref, ['transform_rescale_log10_numeric']);
       case 'Rank':
-        rSource(context, ref, 'transform_rescale_rank');
+        rSource(context, ref, ['transform_rescale_rank']);
       case 'Interval':
         // debugPrint('run interval');
-        rSource(context, ref, 'transform_rescale_interval');
+        rSource(context, ref, ['transform_rescale_interval']);
       default:
         showUnderConstruction(context);
     }
     // Notice that rSource is asynchronous so this glimpse is oftwn happening
     // before the above transformation.
     //
-    // rSource(context, ref, 'glimpse');
+    // rSource(context, ref, ['glimpse']);
   }
 
   @override

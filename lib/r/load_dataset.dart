@@ -1,6 +1,6 @@
-/// Call upon R to load a dataset.
+/// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Sunday 2024-09-29 10:45:23 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-08 08:32:22 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -44,8 +44,10 @@ import 'package:rattle/utils/debug_text.dart';
 /// which is the default.
 
 Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
-  // Get the path from the provider to identify either a filename or a R package
-  // dataset.
+  // On loading a dataset we run the main R script to initialise a new session.
+
+  // Get the path to the dataset from the provider to identify either a filename
+  // or an R package dataset.
 
   String path = ref.read(pathProvider);
 
@@ -59,18 +61,36 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   path = path.trim();
 
+  // R Scripts.
+
+  String ss = 'session_setup';
+  String dw = 'dataset_load_weather';
+  String dc = 'dataset_load_csv';
+  String dx = 'dataset_load_txt';
+  String dp = 'dataset_prep'; // Dataset cleaning and prepartion pre-template.
+
   if (path == '' || path == weatherDemoFile) {
-    // The default, when we get here and no path has been specified yet, is to
-    // load the weather dataset as the demo dataset from R's rattle package.
+    // 20241007 gjw If no path is specified then we load the sample dataset from
+    // Rattle. At this time through the GUI we do not have an empty path nor are
+    // we using the rattle::weather dataset which is rather dated. So this
+    // option is not currently utilised.
 
-    await rSource(context, ref, 'dataset_load_weather');
+    if (context.mounted) await rSource(context, ref, [ss, dw, dp]);
   } else if (path.endsWith('.csv')) {
-    await rSource(context, ref, 'dataset_load_csv');
-  } else if (path.endsWith('.txt')) {
-    await rSource(context, ref, 'dataset_load_txt');
+    // 20241007 gjw We will load a CSV file into the R process. Note that we do
+    // not yet run the DATA TEMPLATE as we need to first set up the ROLES. The
+    // dataset template is run in `home.dart` on leaving the DATASET tab.
 
-    return;
+    if (context.mounted) await rSource(context, ref, [ss, dc, dp]);
+  } else if (path.endsWith('.txt')) {
+    // 20241007 gjw We can also load a text file for the word cloud
+    // functionality as a stop gap toward implementing more complete text mining
+    // and language capabilities.
+
+    if (context.mounted) await rSource(context, ref, [ss, dx]);
   } else {
+    // 20241007 gjw Through the GUI we don't expect to be able to reach here.
+
     debugPrint('LOAD_DATASET: PATH NOT RECOGNISED -> ABORT: $path.');
 
     showDialog(
@@ -90,27 +110,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
     return;
   }
 
-  // Reset the dataset variables since we have loaded a new dataset
-  //
-  //  rattle.resetDataset();
-
-  if (context.mounted) await rSource(context, ref, 'dataset_prep');
-
-  // 20240615 gjw Move this `names(ds)` command into `dataset_prep` otherwise on
-  // moving to the asset load with async it actually gets executed before the
-  // `dataset_prep` and thus results in vars not being found at this time and
-  // target becomes `found` as in `ds not found`.
-  //
-  // 20240814 gjw the asyn asset load is no longer required as the R scripts are
-  // loaded on startup so we should be able to do rExecute and get the result
-  // from rExtract now.
-
-  // rExecute(ref, 'names(ds)');
-
-  // this shows the data 20240916 gjw This is redundent as it is done in
-  // dataset_prep or dataset_template.
-
-  // if (context.mounted) await rSource(context, ref, 'dataset_glimpse');
-
   debugText('R LOADED', path);
+
+  return;
 }
