@@ -82,7 +82,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // FIRST PAGE: Welcome Message
 
     List<Widget> pages = [
-      showMarkdownFile2(welcomeIntroFile1, welcomeIntroFile2, context)
+      showMarkdownFile2(welcomeIntroFile1, welcomeIntroFile2, context),
     ];
 
     // Handle different file types
@@ -302,8 +302,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               ),
               Expanded(
                 flex: contentFlex,
-                child: SelectableText(content,
-                    style: const TextStyle(fontSize: 14)),
+                child: SelectableText(
+                  content,
+                  style: const TextStyle(fontSize: 14),
+                ),
               ),
             ],
           );

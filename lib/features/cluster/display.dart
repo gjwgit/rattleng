@@ -65,7 +65,8 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        clusterPageControllerProvider); // Get the PageController from Riverpod
+      clusterPageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String type = ref.read(clusterTypeProvider.notifier).state;
 
