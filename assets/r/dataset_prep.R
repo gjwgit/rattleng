@@ -72,6 +72,7 @@ if (NEEDS_INIT) {
   library("magrittr")   # Utilise %>% and %<>% pipeline operators.
   library("mice")
   library("naniar")
+  library("neuralnet")
   library("nnet")
   library("xgboost")
   library("NeuralNetTools")

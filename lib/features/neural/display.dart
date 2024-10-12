@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
@@ -52,9 +53,12 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        neuralPageControllerProvider); // Get the PageController from Riverpod
+      neuralPageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
+    String algorithm = ref.watch(neuralAlgorithmProvider);
+
     String content = '';
 
     List<Widget> pages = [
@@ -63,7 +67,8 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'print(model_nn)');
+    content = rExtract(stdout,
+        algorithm == 'nnet' ? 'print(model_nn)' : 'print(model_neuralnet)');
 
     if (content.isNotEmpty) {
       // Capitalise each line and for the Input: line, wordwrap and comma
@@ -100,7 +105,11 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
 
       content = lines.join('\n\n');
 
-      String weights = rExtract(stdout, 'summary(model_nn)');
+      String weights = rExtract(
+          stdout,
+          algorithm == 'nnet'
+              ? 'summary(model_nn)'
+              : 'summary(model_neuralnet)');
 
       // Remove the repeated first two lines.
 
@@ -129,7 +138,8 @@ $weights
 
       pages.add(
         TextPage(
-          title: '''
+          title: algorithm == 'nnet'
+              ? '''
 
           # Neural Net Model - Summary and Weights
 
@@ -137,6 +147,16 @@ $weights
           Guide](https://survivor.togaware.com/datascience/neural-networks.html). Built
           using
           [nnet::nnet()](https://www.rdocumentation.org/packages/nnet/topics/nnet).
+
+            '''
+              : '''
+
+          # Neural Net Model - Summary and Weights
+
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/neural-networks.html). Built
+          using
+          [nnet::neuralnet()](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).
 
             ''',
           content: '\n$content',
@@ -146,7 +166,9 @@ $weights
 
     ////////////////////////////////////////////////////////////////////////
 
-    String image = '$tempDir/model_nn_nnet.svg';
+    String image = algorithm == 'nnet'
+        ? '$tempDir/model_nn_nnet.svg'
+        : '$tempDir/model_neuralnet.svg';
 
     if (imageExists(image)) {
       pages.add(
