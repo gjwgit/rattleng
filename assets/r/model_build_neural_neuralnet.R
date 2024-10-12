@@ -25,8 +25,9 @@
 # Author: Zheyuan Xu
 
 library(neuralnet)
-library(ggplot2)
 library(caret)
+library(NeuralNetTools)  # For neural network plotting
+
 
 # Define the target variable.
 
@@ -150,6 +151,11 @@ summary(model_neuralnet)
 # Save the plot as an SVG file.
 
 svg("TEMPDIR/model_neuralnet.svg")
-plot(model_neuralnet)
-print(model_neuralnet)
+NeuralNetTools::plotnet(model_neuralnet,
+                        cex_val=0.5,
+                        circle_cex=2,
+                        rel_rsc = c(1, 3),
+                        pos_col="orange",
+                        neg_col="grey",
+                        node_labs=TRUE)
 dev.off()
