@@ -1,11 +1,11 @@
-# Rattle Scripts: Setup the data template variables.
+# Setup the dataset template variables after the dataset has been prepared.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-09-29 16:24:25 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 08:51:48 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,9 +24,13 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# Run this after the variable `ds` (dataset) has been loaded and
-# prep'd or changed in some way, as after a TRANSFORM session.  This
-# script will initialise or update the data template variables.
+# Rattle timestamp: TIMESTAMP
+#
+# Run this after the variable `ds` (dataset) has been loaded into
+# Rattle and the dataset cleansed and prepared with roles
+# assigned. The actions here in `dataset_template.R` will also setup
+# the data after a dataset has changed, which may be called after, for
+# example, a TRANSFORM.
 #
 # References:
 #
@@ -34,10 +38,37 @@
 #
 # https://survivor.togaware.com/datascience/data-template.html
 
+library(dplyr)        # Wrangling: select() sample_frac().
+library(janitor)      # Cleanup: clean_names().
+library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
+
+# Index the original variable names by the new names.
+
+names(vnames) <- names(ds)
+
+# Display the list of vars.
+
+names(ds)
+
+# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
+
+large_factors <- sapply(ds, is_large_factor)
+
+# Get the names of those variables.
+
+large_factor_vars <- names(large_factors)[large_factors]
+
+# Print the variable names.
+
+large_factor_vars
+
 # PREREQUISITE
 #
 # This is expected to be completed after a dataset_load and then the
 # dataset_prep.
+
+library(dplyr)
+library(magrittr)
 
 # Identify variable roles.
 
@@ -129,21 +160,26 @@ nmobs
 # 20240916 gjw This is required for building the ROLES table but will
 # eventually be replaced by the meta data.
 
-glimpse(ds)
-summary(ds)
+# 20241008 gjw I don't think these are required here now.
+
+#glimpse(ds)
+#summary(ds)
 
 # 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
 
-meta_data(ds)
+# 20241008 gjw I think we now move this to PREP rather than here.
 
-# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
+#meta_data(ds)
 
-large_factors <- sapply(ds, is_large_factor)
+# Filter the variables in the dataset that are factors or ordered
+# factors with more than 20 levels.
+
+# large_factors <- sapply(ds, is_large_factor)
 
 # Get the names of those variables.
 
-large_factor_vars <- names(large_factors)[large_factors]
+# large_factor_vars <- names(large_factors)[large_factors]
 
 # Print the variable names.
 
-large_factor_vars
+# large_factor_vars

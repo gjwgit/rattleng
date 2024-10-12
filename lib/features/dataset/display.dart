@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-10-09 20:04:37 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-09 20:47:00 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -82,7 +82,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // FIRST PAGE: Welcome Message
 
     List<Widget> pages = [
-      showMarkdownFile2(welcomeIntroFile1, welcomeIntroFile2, context)
+      showMarkdownFile2(welcomeIntroFile1, welcomeIntroFile2, context),
     ];
 
     // Handle different file types
@@ -302,8 +302,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               ),
               Expanded(
                 flex: contentFlex,
-                child: SelectableText(content,
-                    style: const TextStyle(fontSize: 14)),
+                child: SelectableText(
+                  content,
+                  style: const TextStyle(fontSize: 14),
+                ),
               ),
             ],
           );

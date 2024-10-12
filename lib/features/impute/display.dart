@@ -49,7 +49,8 @@ class _ImputeDisplayState extends ConsumerState<ImputeDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        imputePageControllerProvider); // Get the PageController from Riverpod
+      imputePageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 
