@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-10-10 09:09:50 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 05:28:30 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #

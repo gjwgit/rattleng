@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 20:43:27 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-10-13 05:30:20 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -41,6 +41,7 @@ import 'package:rattle/providers/cluster_number.dart';
 import 'package:rattle/providers/cluster_re_scale.dart';
 import 'package:rattle/providers/cluster_run.dart';
 import 'package:rattle/providers/cluster_seed.dart';
+import 'package:rattle/providers/cluster_type.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
@@ -134,6 +135,7 @@ Future<void> rSource(
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
+  String clusterType = ref.read(clusterTypeProvider);
 
   // BOOST
 
@@ -353,8 +355,14 @@ Future<void> rSource(
   code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
   code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // NEURAL
+
   code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -363,8 +371,8 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
-  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
-  code = code.replaceAll('RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('CLUSTER_TYPE', '"${clusterType.toString()}"');
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
