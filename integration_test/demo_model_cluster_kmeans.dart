@@ -1,6 +1,6 @@
-/// CLUSTER feature.
+/// Test KMeans cluster analysis.
 //
-// Time-stamp: <2024-10-05 17:45:55 gjw>
+// Time-stamp: <Saturday 2024-10-12 18:59:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -45,8 +43,8 @@ import 'utils/press_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Cluster Feature:', () {
-    testWidgets('Demo Dataset, KMeans, Cluster.', (WidgetTester tester) async {
+  group('Demo Model Cluster KMeans:', () {
+    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -74,49 +72,6 @@ void main() {
 
       final dataFinder =
           find.textContaining("built using 'kmeans' with 10 clusters");
-      expect(dataFinder, findsOneWidget);
-    });
-
-    testWidgets('Demo Dataset, Ewkm, Cluster.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      await openDemoDataset(tester);
-
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
-
-      // Navigate to the Cluster feature.
-
-      await navigateToFeature(tester, 'Cluster', ClusterPanel);
-
-      await tester.pump(interact);
-
-      // Find the ChoiceChipTip widget for Ewkm type.
-
-      final ewkmaChip = find.text(
-        'Ewkm',
-      );
-
-      // Tap the ewkma chip to switch type.
-
-      await tester.tap(ewkmaChip);
-
-      await tester.pumpAndSettle();
-
-      await pressButton(tester, 'Build Clustering');
-
-      await tester.pump(interact);
-
-      // Find the text containing the number of default clusters.
-
-      final dataFinder =
-          find.textContaining("built using 'ewkm' with 10 clusters");
       expect(dataFinder, findsOneWidget);
     });
   });

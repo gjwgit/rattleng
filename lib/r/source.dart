@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 09:23:36 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-10-12 19:14:56 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -337,8 +337,14 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
   code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // NEURAL
+
   code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -347,8 +353,7 @@ Future<void> rSource(BuildContext context, WidgetRef ref, String script) async {
   code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
-  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
-  code = code.replaceAll('RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
   code = code.replaceAll('CLUSTER_TYPE', '"${clusterType.toString()}"');
 
   if (includingMissing) {
