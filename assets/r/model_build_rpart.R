@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build an rpart decision tree.
+# Using the dataset ds build an rpart decision tree.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-09-06 20:11:26 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 05:29:15 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,9 +24,7 @@
 #
 # Author: Graham Williams
 
-# Decision Tree using RPART
-#
-# TIMESTAMP
+# Rattle timestamp: TIMESTAMP
 #
 # References:
 #
@@ -36,8 +34,6 @@
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Load required packages from the local library into the R session.
-
-# The 'rpart' package provides the 'rpart' function.
 
 library(rpart)        # ML: decision tree rpart().
 
@@ -49,9 +45,10 @@ mdesc <- "Tree"
 
 method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
                  "anova", "class")
-method
 
 # Handle ignored variables.
+
+# TODO 20241008 gjw MOVE THIS INTO THE MODEL TEMPLATE
 
 tds <- ds[tr, setdiff(vars, ignore)]
 
@@ -66,20 +63,21 @@ model_rpart <- rpart(
                         maxsurrogate=0, MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model=TRUE)
 
-# Generate a textual view of the Decision Tree model.
+# Output a textual view of the Decision Tree model.
 
 print(model_rpart)
 printcp(model_rpart)
 cat("\n")
 
-# Plot the resulting Decision Tree. 
-
-# We use the rpart.plot package.
+# Plot the resulting Decision Tree using the rpart.plot package via
+# Rattle's fancyRpartPlot().
 
 svg("TEMPDIR/model_tree_rpart.svg")
-fancyRpartPlot(model_rpart, main="Decision Tree weather.csv $ TARGET_VAR", sub=paste("TIMESTAMP", username))
+rattle::fancyRpartPlot(model_rpart,
+                       main = "Decision Tree weather.csv $ TARGET_VAR",
+                       sub  = paste("TIMESTAMP", username))
 dev.off()
 
-# List the rules from the tree using a Rattle support function.
+# Output the rules from the tree.
 
-asRules(model_rpart)
+rattle::asRules(model_rpart)

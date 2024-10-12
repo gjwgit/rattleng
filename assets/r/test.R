@@ -2,7 +2,7 @@
 
 # Use the fBasics package for statistical tests.
 
-if(!require(fBasics)) install.packages("fBasics")
+library(fBasics)
 
 # Perform the test.
 

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-09-24 12:41:12 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-10-11 12:09:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -100,6 +100,13 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         configWidgetSpace,
         NumberField(
           label: 'Interval',
+          tooltip: '''
+
+          When rescaling a numeric variable using an Interval the numeric value
+          here is the maximum value for the resulting interval. A default
+          maximum value of 100 is often used. The minimum value is fixed as 0.
+
+          ''',
           controller: valCtrl,
           inputFormatter:
               FilteringTextInputFormatter.digitsOnly, // Integers only
@@ -117,27 +124,27 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
     switch (selectedTransform) {
       case 'Recenter':
-        rSource(context, ref, 'transform_rescale_recenter_numeric');
+        rSource(context, ref, ['transform_rescale_recenter_numeric']);
       case 'Scale [0-1]':
-        rSource(context, ref, 'transform_rescale_scale01_numeric');
+        rSource(context, ref, ['transform_rescale_scale01_numeric']);
       case '-Median/MAD':
-        rSource(context, ref, 'transform_rescale_medmad_numeric');
+        rSource(context, ref, ['transform_rescale_medmad_numeric']);
       case 'Natural Log':
-        rSource(context, ref, 'transform_rescale_natlog_numeric');
+        rSource(context, ref, ['transform_rescale_natlog_numeric']);
       case 'Log 10':
-        rSource(context, ref, 'transform_rescale_log10_numeric');
+        rSource(context, ref, ['transform_rescale_log10_numeric']);
       case 'Rank':
-        rSource(context, ref, 'transform_rescale_rank');
+        rSource(context, ref, ['transform_rescale_rank']);
       case 'Interval':
         // debugPrint('run interval');
-        rSource(context, ref, 'transform_rescale_interval');
+        rSource(context, ref, ['transform_rescale_interval']);
       default:
         showUnderConstruction(context);
     }
     // Notice that rSource is asynchronous so this glimpse is oftwn happening
     // before the above transformation.
     //
-    // rSource(context, ref, 'glimpse');
+    // rSource(context, ref, ['glimpse']);
   }
 
   @override
@@ -156,9 +163,12 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
     List<String> numericInputs = [];
+    // We want to refresh the options if there are any new variables added so
+    // we use a watch here.
     Map<String, Type> types = ref.watch(
+      // TODO 20241011 gjw MIGRATE TO USING metaData INSTEAD OF types.
       typesProvider,
-    ); // want to refresh the options if there is new variables added so use watch
+    );
     for (var i in inputs) {
       if (types[i] == Type.numeric) {
         numericInputs.add(i);
@@ -180,6 +190,13 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
+              tooltip: '''
+
+              Tap here to perform the chosen rescale operation on the selected
+              variable. Once the transform has completed the second page will
+              show a summary of the new dartaset.
+
+              ''',
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
                 buildAction();
@@ -201,7 +218,11 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selectedProvider,
               tooltip: '''
 
-              Select the variable to be rescaled.
+              Select the variable to be rescaled. Only numeric variables are
+              listed here. Once a variable has been rescaled it will become an
+              ignored variable. It remains listed here together with the newly
+              created transformed variable as we may want to do multiple
+              transforms on the same variable.
 
               ''',
               // Enable only if there are numeric inputs.

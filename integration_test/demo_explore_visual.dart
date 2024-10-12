@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature DEMO dataset.
 //
-// Time-stamp: <Thursday 2024-10-03 10:12:16 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-08 07:03:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -46,33 +46,24 @@ void main() {
     testWidgets('Visual feature.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
+
       await tester.pump(interact);
 
       await openDemoDataset(tester);
 
       await tester.pump(hack);
 
-      // Find the Explore tab by icon and tap on it.
-
-      final exploreIconFinder = find.byIcon(Icons.insights);
-      expect(exploreIconFinder, findsOneWidget);
-
-      // Tap the Explore tab.
-
-      await tester.tap(exploreIconFinder);
-      await tester.pumpAndSettle();
-
-      // Verify if the ExploreTabs widget is shown.
-
-      expect(find.byType(ExploreTabs), findsOneWidget);
-
-      // Navigate to the Explore tab.
+      // Navigate to the Explore tab and tap on it.
 
       final exploreTabFinder = find.text('Explore');
       await tester.tap(exploreTabFinder);
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      await tester.pump(interact);
+
+      // Verify if the ExploreTabs widget is shown.
+
+      expect(find.byType(ExploreTabs), findsOneWidget);
 
       ////////////////////////////////////////////////////////////////////////
 
@@ -107,8 +98,8 @@ void main() {
 
       // TODO 20241003 gjw BUG NEED TO TAP THE BUTTON TWICE TO GO TO SECOND PAGE.
 
-//      await tester.tap(generatePlotButtonFinder);
-//      await tester.pumpAndSettle();
+      await tester.tap(generatePlotButtonFinder);
+      await tester.pumpAndSettle();
 
       // Find the right arrow button in the PageIndicator.
 
@@ -118,12 +109,15 @@ void main() {
       // Automatically go to "Box Plot" page 2.
 
       await tester.pumpAndSettle();
+
       await tester.pump(interact);
 
       // Find the text containing "Box Plot".
 
       final boxPlotFinder = find.textContaining('Box Plot');
       expect(boxPlotFinder, findsOneWidget);
+
+      await tester.pump(hack);
 
       // Find the image.
 

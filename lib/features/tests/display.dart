@@ -51,7 +51,8 @@ class _TestsDisplayState extends ConsumerState<TestsDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        testsPageControllerProvider); // Get the PageController from Riverpod
+      testsPageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
 

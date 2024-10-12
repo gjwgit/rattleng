@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-03 14:27:49 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 09:15:30 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,18 +26,21 @@
 
 # Transform "SELECTED_VAR" by replacing NA with the mode value.
 
+library(dplyr)        # Wrangling: mutate().
+library(tidyr)        # Wrangling: replace_na().
+
 if (is.numeric(ds$SELECTED_VAR))
 {
   ds %<>%
-    mutate(IMO_SELECTED_VAR =
-             replace_na(SELECTED_VAR,
-                        rattle::modalvalue(ds$SELECTED_VAR, na.rm=TRUE)))
+    dplyr::mutate(IMO_SELECTED_VAR =
+                    tidyr::replace_na(SELECTED_VAR,
+                                      rattle::modalvalue(ds$SELECTED_VAR, na.rm=TRUE)))
 } else {
   ds %<>%
-    mutate(IMO_SELECTED_VAR =
-             replace_na(as.character(SELECTED_VAR),
-                        rattle::modalvalue(SELECTED_VAR, na.rm=TRUE)),
-           IMO_SELECTED_VAR = factor(IMO_SELECTED_VAR))
+    dplyr::mutate(IMO_SELECTED_VAR =
+                    tidyr::replace_na(as.character(SELECTED_VAR),
+                                      rattle::modalvalue(SELECTED_VAR, na.rm=TRUE)),
+                  IMO_SELECTED_VAR = factor(IMO_SELECTED_VAR))
 }
   
 

@@ -52,7 +52,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-        correlationPageControllerProvider); // Get the PageController from Riverpod
+      correlationPageControllerProvider,
+    ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
     List<Widget> pages = [showMarkdownFile(correlationIntroFile, context)];
