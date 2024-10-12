@@ -1,6 +1,6 @@
-/// CLUSTER feature.
+/// Test KMeans cluster analysis.
 //
-// Time-stamp: <2024-10-05 17:45:55 gjw>
+// Time-stamp: <Saturday 2024-10-12 18:59:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,24 +25,26 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:rattle/features/cluster/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/model.dart';
 
 import 'utils/delays.dart';
+import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/open_demo_dataset.dart';
+import 'utils/press_button.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Cluster Feature:', () {
-    testWidgets('Demo Dataset, Model, Cluster.', (WidgetTester tester) async {
+  group('Demo Model Cluster KMeans:', () {
+    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -50,51 +52,27 @@ void main() {
 
       await openDemoDataset(tester);
 
-      // Find the Model tab by icon and tap on it.
-
-      final modelIconFinder = find.byIcon(Icons.model_training);
-      expect(modelIconFinder, findsOneWidget);
-
-      // Tap the Model tab.
-
-      await tester.tap(modelIconFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      // Verify if the ModelTabs widget is shown.
-
-      expect(find.byType(ModelTabs), findsOneWidget);
+      await navigateToPage(
+        tester,
+        Icons.model_training,
+        ModelTabs,
+      );
 
       // Navigate to the Cluster feature.
 
-      final clusterTabFinder = find.text('Cluster');
-      await tester.tap(clusterTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToFeature(tester, 'Cluster', ClusterPanel);
 
       await tester.pump(interact);
 
-      // Find the BUILD button by its text.
-
-      final buildButtonFinder = find.text('Build Clustering');
-      expect(buildButtonFinder, findsOneWidget);
-
-      // Tap the button.
-
-      await tester.tap(buildButtonFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      await tester.tap(buildButtonFinder);
-      await tester.pumpAndSettle();
+      await pressButton(tester, 'Build Clustering');
 
       await tester.pump(interact);
 
       // Find the text containing the number of default clusters.
 
-      final dateFinder = find.textContaining('with 10 clusters');
-      expect(dateFinder, findsOneWidget);
+      final dataFinder =
+          find.textContaining("built using 'kmeans' with 10 clusters");
+      expect(dataFinder, findsOneWidget);
     });
   });
 }

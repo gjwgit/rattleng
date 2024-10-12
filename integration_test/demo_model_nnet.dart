@@ -1,6 +1,6 @@
-/// Model NNET test with demo dataset.
+/// Test nnet() with demo dataset.
 //
-// Time-stamp: <Wednesday 2024-10-09 17:28:28 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-10-12 19:06:03 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -41,8 +39,8 @@ import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/open_demo_dataset.dart';
 
-/// List of specific variables that should have their role set to 'Ignore' in
-/// demo dataset. These are factors/chars and don't play well with nnet.
+// List of specific variables that should have their role set to 'Ignore' in
+// demo dataset. These are factors/chars and don't play well with nnet.
 
 final List<String> demoVariablesToIgnore = [
   'wind_gust_dir',
@@ -53,8 +51,8 @@ final List<String> demoVariablesToIgnore = [
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('NNET Model Demo Tree:', () {
-    testWidgets('default test.', (WidgetTester tester) async {
+  group('Demo Model Neural NNet:', () {
+    testWidgets('Load, Ignore, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
@@ -245,7 +243,6 @@ void main() {
 
       // Tap the right arrow to go to the next page.
 
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       expect(rightArrowButton, findsOneWidget);
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
@@ -264,7 +261,7 @@ void main() {
       await tester.pump(interact);
     });
 
-    testWidgets('nnet model with different parameter settings.',
+    testWidgets('Load, Ignore, Navigate, Settings, Build.',
         (WidgetTester tester) async {
       app.main();
 

@@ -65,6 +65,7 @@ library("magrittr")   # Utilise %>% and %<>% pipeline operators.
 library("mice")
 library("naniar")
 library("nnet")
+library("neuralnet")
 library("xgboost")
 library("NeuralNetTools")
 library("party")
@@ -78,8 +79,8 @@ library("tidyverse")  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
 library("tm")
 library("verification")
 library("wordcloud")
+library("wskm")
 
-# Set the width wider than the default 80. Experimentally") on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
 

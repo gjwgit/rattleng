@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-09 08:47:42 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-10-12 19:10:20 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -47,6 +47,8 @@ class ClusterConfig extends ConsumerStatefulWidget {
 }
 
 class ClusterConfigState extends ConsumerState<ClusterConfig> {
+  // 'Hierarchical' and 'BiCluster' are not implemented.
+
   Map<String, String> clusterTypes = {
     'KMeans': '''
 
@@ -60,17 +62,17 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       subspaces using entropy weighting.
 
       ''',
-    'Hierarchical': '''
+    // 'Hierarchical': '''
 
-      Build an agglomerative hierarchical cluster.
+    //   Build an agglomerative hierarchical cluster.
 
-      ''',
-    'BiCluster': '''
+    //   ''',
+    // 'BiCluster': '''
 
-      Cluster by identifying suitable subsets of both the variables and the
-      observations, rather than just the observations as in kmeans.
+    //   Cluster by identifying suitable subsets of both the variables and the
+    //   observations, rather than just the observations as in kmeans.
 
-      ''',
+    //   ''',
   };
   @override
   Widget build(BuildContext context) {
@@ -91,11 +93,21 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                rSource(context, ref, 'model_template');
+              tooltip: '''
+
+              Tap to build the $type cluster model using the parameter
+              values that you can set here.
+              
+              ''',
+              onPressed: () async {
+                await rSource(context, ref, 'model_template');
+
                 if (type == 'KMeans') {
-                  rSource(context, ref, 'model_build_cluster');
+                  await rSource(context, ref, 'model_build_cluster_kmeans');
+                } else if (type == 'Ewkm') {
+                  await rSource(context, ref, 'model_build_cluster_ewkm');
                 }
+
                 ref.read(clusterPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
@@ -119,8 +131,6 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               options: clusterTypes.keys.toList(),
               selectedOption: type,
               tooltips: clusterTypes,
-              // Only KMeans is implemented. Others will be implemented in the future.
-              enabled: type != 'KMeans',
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {
