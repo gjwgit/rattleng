@@ -159,7 +159,12 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   await rSource(context, ref, 'model_template');
                   if (context.mounted) {
-                    await rSource(context, ref, 'model_build_neural_net');
+                    if (algorithm == 'nnet') {
+                      await rSource(context, ref, 'model_build_neural_net');
+                    } else if (algorithm == 'neuralnet') {
+                      await rSource(
+                          context, ref, 'model_build_neural_neuralnet');
+                    }
                   }
                 }
               },

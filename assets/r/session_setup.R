@@ -65,6 +65,7 @@ library("magrittr")   # Utilise %>% and %<>% pipeline operators.
 library("mice")
 library("naniar")
 library("nnet")
+library("neuralnet")
 library("xgboost")
 library("NeuralNetTools")
 library("party")
