@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-05 11:12:15 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-10-12 21:00:42 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,9 +27,10 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/crosstab.dart';
+import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:rattle/providers/page_controller.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
@@ -49,17 +50,21 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   Widget build(BuildContext context) {
     // Get the state of the "Include Cross Tab" checkbox from the provider.
 
-    final includeCrossTab = ref.watch(includeCrossTabProvider);
+    final crossTabSummary = ref.watch(crossTabSummaryProvider);
 
     return Column(
       children: [
-        const SizedBox(height: 5),
+        configTopSpace,
         Row(
           children: [
-            const SizedBox(width: 5),
-
+            configLeftSpace,
             // The "Generate Dataset Summary" button.
             ActivityButton(
+              tooltip: '''
+
+              Tap to request R to generate a few summaries of the dataset.
+
+              ''',
               pageControllerProvider: summaryPageControllerProvider,
               onPressed: () {
                 // Pass the "Include Cross Tab" selection to rSource.
@@ -68,19 +73,18 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
                   context,
                   ref,
                   'explore_summary',
-                  includeCrossTab: includeCrossTab,
+                  includeCrossTab: crossTabSummary,
                 );
               },
               child: const Text('Generate Dataset Summary'),
             ),
-            const SizedBox(width: 10),
-
+            configWidgetSpace,
             Checkbox(
-              value: includeCrossTab,
+              value: crossTabSummary,
               onChanged: (value) {
                 // Update the state of the checkbox.
 
-                ref.read(includeCrossTabProvider.notifier).state =
+                ref.read(crossTabSummaryProvider.notifier).state =
                     value ?? false;
               },
             ),
