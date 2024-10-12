@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 09:23:36 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-10-12 20:32:43 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -194,11 +194,16 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // Additional Logic for Include Cross Tab
+  // BOOST
 
-  // Add a placeholder in the R script that can be replaced based on the includeCrossTab value.
-  code =
-      code.replaceAll('INCLUDE_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
+  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
+  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
+  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
+  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
+  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
+  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
+  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -380,16 +385,10 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // BOOST
+  // EXPLORE
 
-  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
-  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
-  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
-  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
-  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
-  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
-  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
-  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
+  code =
+      code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 
