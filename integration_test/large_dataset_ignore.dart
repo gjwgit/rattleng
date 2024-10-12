@@ -1,6 +1,6 @@
 /// Test the set of high level variables to ignore.
 //
-// Time-stamp: <Tuesday 2024-09-24 13:23:59 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-08 14:42:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -89,7 +89,7 @@ void main() {
 
       // Find the scrollable ListView.
 
-      final scrollableFinder = find.byKey(const Key('roles listView'));
+      final scrollableFinder = find.byKey(const Key('roles_list_view'));
 
       // Iterate over each variable in the list and find its corresponding row in the ListView.
 

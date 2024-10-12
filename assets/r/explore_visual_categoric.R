@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-16 05:41:28 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 17:03:32 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,7 +35,7 @@
 
 # Load required packages from the local library into the R session.
 
-if(!require(ggplot2)) install.packages("ggplot2")
+library(ggplot2)
 
 ########################################################################
 # Bar Plot 
@@ -114,9 +114,9 @@ dev.off()
 # Mosaic Plot 
 ########################################################################
 
-if(!require(ggplot2)) install.packages("ggplot2")
-if(!require(vcd)) install.packages("vcd")
-if(!require(ggplotify)) install.packages("ggplotify")
+library(ggplot2)
+library(vcd)
+library(ggplotify)
 
 svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
 
