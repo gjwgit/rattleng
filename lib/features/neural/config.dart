@@ -241,6 +241,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               label: 'Hidden Layer:',
               key: const Key('hidden_layer_size'),
               controller: _nnetSizeLayerController,
+              enabled: algorithm == 'nnet',
 
               tooltip: '''
 
@@ -276,6 +277,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               label: 'Max Weights:',
               key: const Key('max_NWts'),
               controller: _maxNWtsController,
+              enabled: algorithm == 'nnet',
 
               tooltip: '''
 
