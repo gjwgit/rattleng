@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-09-27 20:56:41 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-10-13 10:36:58 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -29,9 +29,12 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/home.dart';
+import 'package:rattle/providers/script.dart';
+import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/close_dialog.dart';
 
 // Add a key to reference [RattleHome] to access its method.
@@ -77,6 +80,15 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
 
     await windowManager.setPreventClose(true);
     setState(() {});
+
+    // Initialise the template variables in the R script.
+
+    PackageInfo info = await PackageInfo.fromPlatform();
+    ref.read(scriptProvider.notifier).update(
+          (state) => state
+              .replaceAll('VERSION', info.version)
+              .replaceAll('TIMESTAMP', 'Timestamp ${timestamp()}'),
+        );
   }
 
   /// Handle the window close event.
