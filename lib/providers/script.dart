@@ -1,6 +1,6 @@
 /// Gloabl variable status as text for the status bar.
 ///
-/// Time-stamp: <Thursday 2024-10-10 08:17:15 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-10-13 10:36:28 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,9 +33,9 @@ final scriptProvider = StateProvider<String>(
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
-# TIMESTAMP
+# RattleNG Version VERSION.
 #
-# Rattle version VERSION.
+# TIMESTAMP.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
