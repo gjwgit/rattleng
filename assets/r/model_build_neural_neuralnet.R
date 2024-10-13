@@ -28,10 +28,6 @@ library(neuralnet)
 library(caret)
 library(NeuralNetTools)  # For neural network plotting
 
-# Define the target variable.
-
-target_variable <- target
-
 # Subset the training data.
 
 tds <- ds[tr, vars]
@@ -42,7 +38,7 @@ tds <- tds[complete.cases(tds), ]
 
 # Identify predictor variables (excluding the target variable).
 
-predictor_vars <- setdiff(vars, target_variable)
+predictor_vars <- setdiff(vars, target)
 
 # Identify categorical and numerical predictor variables.
 
@@ -76,7 +72,7 @@ predictors_onehot <- cbind(predictors_numeric_scaled, predictors_onehot_categori
 # Handle Target Variable Encoding.
 # Check if the target variable is binary or multiclass.
 
-target_levels <- unique(tds[[target_variable]])
+target_levels <- unique(tds[[target]])
 target_levels <- target_levels[!is.na(target_levels)]  # Remove NA if present
 
 if (length(target_levels) == 2) {
@@ -84,7 +80,7 @@ if (length(target_levels) == 2) {
 
   # Map target variable to 0 and 1.
 
-  tds$target_num <- ifelse(tds[[target_variable]] == target_levels[1], 0, 1)
+  tds$target_num <- ifelse(tds[[target]] == target_levels[1], 0, 1)
 
   # Combine predictors and target.
 
@@ -112,8 +108,8 @@ if (length(target_levels) == 2) {
 
   # One-Hot Encode the Target Variable.
 
-  dmy_target <- dummyVars(~ ., data = tds[target_variable])
-  target_onehot <- as.data.frame(predict(dmy_target, newdata = tds[target_variable]))
+  dmy_target <- dummyVars(~ ., data = tds[target])
+  target_onehot <- as.data.frame(predict(dmy_target, newdata = tds[target]))
 
   # Combine predictors and target.
 
