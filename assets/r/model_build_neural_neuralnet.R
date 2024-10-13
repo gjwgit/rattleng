@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build a neuralnet network.
+# Build a neuralnet() network.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-09-23 05:27:07 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 20:15:24 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -27,7 +27,6 @@
 library(neuralnet)
 library(caret)
 library(NeuralNetTools)  # For neural network plotting
-
 
 # Define the target variable.
 
