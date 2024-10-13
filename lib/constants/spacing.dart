@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Thursday 2024-09-26 08:47:37 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 19:34:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -52,9 +52,13 @@ const configRowSpace = SizedBox(height: 20);
 
 const configLeftSpace = SizedBox(width: 5);
 
-/// Space between widgets in a Row in the the config.
+/// Space between widgets in a Row in the config.
 
 const configWidgetSpace = SizedBox(width: 20.0); // Gap(20);
+
+/// Space separating a series of check boses in the config.
+
+const configCheckBoxSpace = SizedBox(width: 10.0); // Gap(20);
 
 /// Space between a label and the field.
 

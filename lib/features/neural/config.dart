@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-12 19:11:27 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 19:37:32 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -54,12 +54,16 @@ class NeuralConfig extends ConsumerStatefulWidget {
 class NeuralConfigState extends ConsumerState<NeuralConfig> {
   Map<String, String> neuralAlgorithm = {
     'nnet': '''
-         A basic neural network with a single hidden layer.
+    
+    A basic neural network with a single hidden layer.
     Suitable for simple tasks and small datasets.
+    
     ''',
     'neuralnet': '''
-         Supports multiple layers, ideal for complex patterns.
+
+    Supports multiple layers, ideal for complex patterns.
     Commonly used for deeper architectures.
+
     ''',
   };
 
@@ -213,7 +217,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               provider: nnetTraceProvider,
             ),
 
-            configWidgetSpace,
+            configCheckBoxSpace,
 
             LabelledCheckbox(
               tooltip: '''
@@ -227,7 +231,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
           ],
         ),
 
-        configTopSpace,
+        configRowSpace,
 
         Row(
           children: [
