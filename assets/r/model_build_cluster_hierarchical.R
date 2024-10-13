@@ -1,4 +1,4 @@
-# Build an Ewkm cluster.
+# Build an Hierarchical cluster.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -22,7 +22,7 @@
 #
 # Author: Graham Williams, Zheyuan Xu
 
-# Cluster using KMeans
+# Cluster using Hierarchical
 #
 # TIMESTAMP
 #
@@ -43,14 +43,12 @@
 # The 'reshape' package provides the 'rescaler' function.
 
 library(reshape)
-library(wskm)         # Load the wskm package for EWKM
+library(amap)
 
-mtype <- "ewkm"
-mdesc <- "Entropy Weighted K-Means Cluster"
+mtype <- "hierarchical_amap"
+mdesc <- "Hierarchical Clustering using amap package"
 
-# Set whether the data should be rescaled. For cluster analysis this
-# is usually recommended.
-
+# Set whether the data should be rescaled
 rescale <- CLUSTER_RESCALE
 
 # Prepare the data for clustering based on the value of rescale.
@@ -71,24 +69,43 @@ if (rescale) {
 
 tds <- as.matrix(tds)
 
-# Generate an EWKM cluster model.
+# Perform hierarchical clustering using the hcluster function from the amap package.
 
-model_ewkm <- ewkm(tds, centers=CLUSTER_NUM)
+model_hclust <- hcluster(tds, method = "euclidean", link = "ward", nbproc = 1)
+
+# Cut the dendrogram to get the specified number of clusters.
+
+cluster_assignments <- cutree(model_hclust, k = CLUSTER_NUM)
+
+# Add the cluster assignments to the data frame (optional).
+
+tds_with_clusters <- data.frame(tds, cluster = cluster_assignments)
 
 # Report on the cluster characteristics.
 
 # Cluster sizes:
 
-print(paste(model_ewkm$size, collapse = ' '))
+cluster_sizes <- table(cluster_assignments)
+print("Cluster Sizes:")
+print(cluster_sizes)
 
 # Data means:
 
-print(colMeans(tds))
+data_means <- colMeans(tds)
+print("Data Means:")
+print(data_means)
 
 # Cluster centers:
 
-print(model_ewkm$centers)
+cluster_centers <- aggregate(tds, by = list(cluster = cluster_assignments), FUN = mean)
+print("Cluster Centers:")
+print(cluster_centers)
 
 # Within-cluster sum of squares:
 
-print(model_ewkm$withinss)
+withinss <- sapply(split(as.data.frame(tds), cluster_assignments), function(cluster_data) {
+  center <- colMeans(cluster_data)
+  sum(rowSums((cluster_data - center)^2))
+})
+print("Within-Cluster Sum of Squares:")
+print(withinss)
