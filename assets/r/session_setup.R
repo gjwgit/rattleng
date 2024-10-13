@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 10:57:47 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 11:30:21 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -179,12 +179,11 @@ set.seed(42)
 # Or else are there equivalent functions in other packages.
 
 library(jsonlite)
+library(lubridate)    # Check if variable is a date.
 
 # A function to provide the dataset summary as JSON which can then be
 # parsed by Rattle as the dataset summary from which Rattle gets all
 # of it's meta data.
-
-is.date <- function(x) inherits(x, 'Date')
 
 meta_data <- function(df) {
   summary_list <- lapply(names(df), function(var_name) {
@@ -214,7 +213,7 @@ meta_data <- function(df) {
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
-    } else if (is.date(x)) {
+    } else if (lubridate::is.Date(x)) {
       list(
         datatype = "date",
         min = min(x, na.rm = TRUE),
