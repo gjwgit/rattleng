@@ -1,8 +1,8 @@
-/// Test kmeans() cluster analysis with demo dataset.
+/// Build BOOST model.
 //
-// Time-stamp: <Sunday 2024-10-13 13:32:25 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 13:19:44 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,62 +21,78 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 
 library;
-
-import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/cluster/panel.dart';
+import 'package:rattle/features/boost/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/model.dart';
+import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/navigate_to_page.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_button.dart';
+import 'utils/verify_next_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Cluster KMeans:', () {
+  group('Demo Model Boost Ada', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
 
+      await tester.pumpAndSettle();
       await tester.pump(interact);
 
       await openDemoDataset(tester);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Boost', BoostPanel);
 
-      // Navigate to the Cluster feature.
+      // Find the ChoiceChipTip widget for the algorithm type.
 
-      await navigateToFeature(tester, 'Cluster', ClusterPanel);
+      final adaChip = find.text('Adaptive');
 
-      await tester.pump(interact);
+      // Tap the adaptive chip to switch algorithm.
 
-      await pressButton(tester, 'Build Clustering');
+      await tester.tap(adaChip);
+
+      await tester.pumpAndSettle();
+
+      await pressButton(tester, 'Build Boosted Trees');
 
       await tester.pump(delay);
 
-      await pressButton(tester, 'Build Clustering');
+      await pressButton(tester, 'Build Boosted Trees');
+
+      // Verify the content of the page.
+
+      await verifyPage(
+        'AdaBoost - Summary',
+        'Final Confusion Matrix for Data:',
+      );
+
+      await gotoNextPage(tester);
 
       await tester.pump(interact);
 
-      // Find the text containing the number of default clusters.
+      await gotoNextPage(tester);
 
-      final dataFinder =
-          find.textContaining("built using 'kmeans' with 10 clusters");
-      expect(dataFinder, findsOneWidget);
+      await tester.pump(interact);
+
+      final imagePageTitleFinder = find.text('Variable Importance');
+      expect(imagePageTitleFinder, findsOneWidget);
+
+      // Find a single ImagePage being displayed.
+
+      final imageFinder = find.byType(ImagePage);
+      expect(imageFinder, findsOneWidget);
 
       await tester.pump(interact);
     });

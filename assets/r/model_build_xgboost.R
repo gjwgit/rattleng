@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 15:16:17 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 17:22:35 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,7 +25,8 @@
 
 # Load required libraries.
 
-library(xgboost)        # For XGBoost model
+library(xgboost)        # For XGBoost model.
+library(rattle)         # Provides a convenient wrapper for xgboost.
 library(Ckmeans.1d.dp)  # For ggplot
 library(data.table)     # Display data as a nicely formatted table
 
@@ -38,7 +39,7 @@ mdesc <- "Extreme Gradient Boosting (XGBoost)"
 
 tds <- ds[tr, vars]
 
-model_xgb <- xgboost(form,
+model_xgb <- rattle::xgboost(form,
                      data              = tds, 
                      max_depth         = BOOST_MAX_DEPTH,     # Maximum depth of a tree
                      eta               = BOOST_LEARNING_RATE, # Learning rate

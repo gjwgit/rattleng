@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-10-13 05:29:36 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 05:39:06 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -100,12 +100,16 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               
               ''',
               onPressed: () async {
+                String mt = 'model_template';
+                String km = 'model_build_cluster_kmeans';
+                String ew = 'model_build_cluster_ewkm';
+
                 await rSource(context, ref, ['model_template']);
 
                 if (type == 'KMeans') {
-                  await rSource(context, ref, ['model_build_cluster_kmeans']);
+                  if (context.mounted) await rSource(context, ref, [mt, km]);
                 } else if (type == 'Ewkm') {
-                  await rSource(context, ref, ['model_build_cluster_ewkm']);
+                  if (context.mounted) await rSource(context, ref, [mt, ew]);
                 }
 
                 ref.read(clusterPageControllerProvider).animateToPage(

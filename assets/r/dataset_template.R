@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 08:51:48 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 10:40:46 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # Run this after the variable `ds` (dataset) has been loaded into
 # Rattle and the dataset cleansed and prepared with roles

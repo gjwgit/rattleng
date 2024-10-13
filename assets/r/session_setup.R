@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 05:28:30 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 17:24:37 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -26,13 +26,13 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
-# The concept of templates for data science was introduced in my book,
-# The Essentials of Data Science, 2017, CRC Press, referenced
-# throughout this script as @williams:2017:essentials
+# The concept of templates for data science was introduced in The
+# Essentials of Data Science, 2017, CRC Press, referenced throughout
+# this script as @williams:2017:essentials
 # (https://bit.ly/essentials_data_science). On-line examples are
-# available from my Data science Desktop Survival Guide
+# available from the Data Science Desktop Survival Guide
 # https://survivor.togaware.com/datascience/.
 
 ####################################
@@ -45,97 +45,14 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-library(xgboost)      # This needs to be loaded before rattle/tidyverse.
-library(rattle)       #
+# 20241007 gjw Loading packages requires they are already installed
+# into a local library. The RattleNG installation instructions
+# recommends installing these packages before running rattle for the
+# first time. From within RattleNG, tap the DOWNLOAD button in the top
+# right button bar which will run the `packages.R` script to check and
+# install any missing packages.
+
 library(ggplot2)      # To support a local rattle theme.
-
-# 20241007 gjw I am in the process of removing the installation of R
-# packages on startup to avoid a delay in loading your R dataset. For
-# now we will require you to ensure the R packages are already
-# installed before using Rattle. Eventually, I will do the
-# install_if_missing per script rather than up front here. Also move
-# install_if_missing into the rattle R pacakge.
-
-# 20241001 gjw Keep R from asking to select a CRAN site and from
-# asking if to create the user's local R library.  Otherwise it fails
-# and the user will be awfully confused!
-
-# options(repos = c(CRAN = "https://cloud.r-project.org"))
-# options(install.packages.ask = FALSE)
-
-# Function to install a package without prompting for library
-# creation. We then use `library()` each script file to load the
-# required packages from the library.
-
-## install_if_missing <- function(pkg) {
-
-##   if (!requireNamespace(pkg, character.only=TRUE, quietly=TRUE)) {
-
-
-##     # Specify a directory for the library
-
-##     lib_dir <- Sys.getenv("R_LIBS_USER")
-
-##     # Make sure the directory already exists so we won;t be prompted
-##     # to create it.
-    
-##     if (!dir.exists(lib_dir)) {
-##       dir.create(lib_dir, recursive=TRUE)
-##       message("Package Library Created: ", lib_dir)
-##     }
-
-##     # Install the package without prompting for library creation
-
-##     install.packages(pkg, lib=lib_dir, dependencies=TRUE, ask=FALSE)
-##   }
-## }
-
-# We install all packages up front so that in all likelihood any large
-# install of packages happens just once and on the first startup. This
-# will result in the ROLES page being blank while this happens. We
-# need to pop up a message to say to check the CONSOLE as Rattle may
-# be installing the required packages. For documentation suggest the
-# user does the installation of the R package prior to starting
-# Rattle.
-
-# 2024-10-07 08:38 gjw This is all getting too hard to check and
-# install packages within rattle for now. Instead, emphasise the need
-# to install packages before rungging rattle. For Ubuntu we could add
-# instructions for updating apt sources or a user installing the
-# packages themselves. The latter for now.
-
-## install_if_missing('Hmisc')
-## install_if_missing('NeuralNetTools')
-## install_if_missing('VIM')
-## install_if_missing('corrplot')
-## install_if_missing('descr')
-## install_if_missing('dplyr')
-## install_if_missing('fBasics')
-## install_if_missing('ggcorrplot')
-## install_if_missing('ggplot2')
-## install_if_missing('ggthemes')
-## install_if_missing('janitor')
-## install_if_missing('magrittr')
-## install_if_missing('mice')
-## install_if_missing('naniar')
-## install_if_missing('nnet')
-## install_if_missing('party')
-## install_if_missing('randomForest')
-## install_if_missing('rattle')
-## install_if_missing('readr')
-## install_if_missing('reshape')
-## install_if_missing('rpart')
-## install_if_missing('skimr')
-## install_if_missing('tidyverse')
-## install_if_missing('tm')
-## install_if_missing('verification')
-## install_if_missing('wordcloud')
-
-## install_if_missing('caret')
-## install_if_missing('xgboost')
-## install_if_missing('Matrix')
-## install_if_missing('Ckmeans')
-## install_if_missing('data')
 
 ####################################
 # Default settings
@@ -171,8 +88,11 @@ set.seed(42)
 ####################################
 
 # TODO 20241007 gjw MOVE R SUPPORT FUNCTIONS INTO RATTLE R PACKAGE
+#
+# Or else are there equivalent functions in other packages.
 
 library(jsonlite)
+library(lubridate)    # Check if variable is a date.
 
 # A function to provide the dataset summary as JSON which can then be
 # parsed by Rattle as the dataset summary from which Rattle gets all
@@ -192,16 +112,33 @@ meta_data <- function(df) {
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
-    } else if (is.factor(x) || is.character(x)) {
+    } else if (is.factor(x)) {
       list(
-        datatype = "categoric",
+        datatype = "factor",
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
+    } else if (is.character(x)) {
+      list(
+        datatype = "character",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
+    } else if (lubridate::is.Date(x)) {
+      list(
+        datatype = "date",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
     } else {
       list(
         datatype = "other",
-        message = "No summary available for this type"
+        unique = length(unique(x)),
+        missing = sum(is.na(x)),
       )
     }
   })
