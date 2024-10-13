@@ -68,7 +68,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   };
 
   // Controllers for the input fields.
-  final TextEditingController _hiddenNeuronsController =
+  final TextEditingController _nnetSizeLayerController =
       TextEditingController();
   final TextEditingController _maxNWtsController = TextEditingController();
   final TextEditingController _maxitController = TextEditingController();
@@ -76,7 +76,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   @override
   void dispose() {
     // Dispose the controllers to free up resources.
-    _hiddenNeuronsController.dispose();
+    _nnetSizeLayerController.dispose();
     _maxNWtsController.dispose();
     _maxitController.dispose();
     super.dispose();
@@ -86,8 +86,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   Widget build(BuildContext context) {
     // Keep the value of text field.
 
-    _hiddenNeuronsController.text =
-        ref.read(hiddenNeuronsProvider.notifier).state.toString();
+    _nnetSizeLayerController.text =
+        ref.read(nnetSizeLayerProvider.notifier).state.toString();
     _maxNWtsController.text =
         ref.read(maxNWtsProvider.notifier).state.toString();
     _maxitController.text = ref.read(maxitProvider.notifier).state.toString();
@@ -120,8 +120,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
               onPressed: () async {
                 // Perform manual validation.
-                String? hiddenNeuronsError =
-                    validateInteger(_hiddenNeuronsController.text, min: 1);
+                String? sizeHiddenLayerError =
+                    validateInteger(_nnetSizeLayerController.text, min: 1);
                 String? maxNWtsError =
                     validateInteger(_maxNWtsController.text, min: 1);
                 String? maxitError =
@@ -129,8 +129,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                 // Collect all errors.
                 List<String> errors = [
-                  if (hiddenNeuronsError != null)
-                    'Hidden Neurons: $hiddenNeuronsError',
+                  if (sizeHiddenLayerError != null)
+                    'Size Hidden Layer: $sizeHiddenLayerError',
                   if (maxNWtsError != null) 'Max NWts: $maxNWtsError',
                   if (maxitError != null) 'Maxit: $maxitError',
                 ];
@@ -158,8 +158,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   return;
                 } else {
-                  ref.read(hiddenNeuronsProvider.notifier).state =
-                      int.parse(_hiddenNeuronsController.text);
+                  ref.read(nnetSizeLayerProvider.notifier).state =
+                      int.parse(_nnetSizeLayerController.text);
                   ref.read(maxNWtsProvider.notifier).state =
                       int.parse(_maxNWtsController.text);
                   ref.read(maxitProvider.notifier).state =
@@ -238,21 +238,20 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
         Row(
           children: [
             NumberField(
-              label: 'Hidden Neurons:',
-              key: const Key('hidden_neurons'),
-              controller: _hiddenNeuronsController,
+              label: 'Hidden Layer:',
+              key: const Key('hidden_layer_size'),
+              controller: _nnetSizeLayerController,
 
               tooltip: '''
 
-              Hidden neurons receive input from all the neurons in the previous
-              layer (input layer) and apply a weighted sum of inputs, followed
-              by an activation function.
+              The size parameter in the nnet model specifies the number of units 
+              (neurons) in the hidden layer of the neural network.
               
               ''',
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: hiddenNeuronsProvider,
+              stateProvider: nnetSizeLayerProvider,
             ),
             configWidgetSpace,
             NumberField(

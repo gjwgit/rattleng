@@ -204,7 +204,7 @@ void main() {
 
       // Find the text fields by their keys and enter the new values.
 
-      await tester.enterText(find.byKey(const Key('hidden_neurons')), '11');
+      await tester.enterText(find.byKey(const Key('hidden_layer_size')), '11');
       await tester.pumpAndSettle();
 
       await tester.enterText(find.byKey(const Key('max_NWts')), '10001');
