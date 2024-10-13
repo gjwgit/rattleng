@@ -118,7 +118,7 @@ Future<void> rSource(
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
-  int hiddenNeurons = ref.read(nnetSizeLayerProvider);
+  int hiddenLayerSizes = ref.read(nnetSizeLayerProvider);
   int nnetMaxNWts = ref.read(maxNWtsProvider);
   int nnetMaxit = ref.read(maxitProvider);
   int clusterSeed = ref.read(clusterSeedProvider);
@@ -357,7 +357,7 @@ Future<void> rSource(
 
   // NEURAL
 
-  code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
+  code = code.replaceAll('HIDDEN_LAYERS', hiddenLayerSizes.toString());
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
 

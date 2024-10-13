@@ -96,7 +96,7 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula = formula_nn,
     data = ds_onehot,
-    hidden = HIDDEN_NEURONS,
+    hidden = HIDDEN_LAYERS,
     act.fct = "logistic",
     err.fct = "ce",
     linear.output = FALSE,
@@ -130,7 +130,7 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula = formula_nn,
     data = ds_onehot,
-    hidden = HIDDEN_NEURONS,
+    hidden = HIDDEN_LAYERS,
     act.fct = "logistic",
     err.fct = "sse",
     linear.output = FALSE,
