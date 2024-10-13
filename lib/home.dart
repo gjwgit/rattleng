@@ -57,7 +57,6 @@ import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/utils/show_settings_dialog.dart';
-import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
