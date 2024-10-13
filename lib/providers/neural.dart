@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final hiddenNeuronsProvider = StateProvider<int>((ref) => 10);
+final nnetSizeLayerProvider = StateProvider<int>((ref) => 10);
 final maxitProvider = StateProvider<int>((ref) => 100);
 final nnetSkipProvider = StateProvider<bool>((ref) => false);
 final nnetTraceProvider = StateProvider<bool>((ref) => false);
