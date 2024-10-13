@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 20:42:32 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-10-13 17:16:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -57,6 +57,7 @@ import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/utils/show_settings_dialog.dart';
+import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
@@ -375,6 +376,28 @@ Xu, Yixiang Yin, Bo Zhang.
           //   },
           //   tooltip: 'TODO: Save the current view to file.',
           // ),
+
+          // Install R Packages
+
+          DelayedTooltip(
+            message: '''
+
+            R Package Installation: Tap here to check for any R packages that
+            need to be installed. If any are missing locally they will be
+            installed. All packages will also then be loaded into R. Check the
+            CONSOLE tab for details.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.download,
+                color: Colors.blue,
+              ),
+              onPressed: () async {
+                await rSource(context, ref, ['packages']);
+              },
+            ),
+          ),
 
           // Settings.
 
