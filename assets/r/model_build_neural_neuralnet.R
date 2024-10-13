@@ -34,11 +34,11 @@ target_variable <- target
 
 # Subset the training data.
 
-ds_train <- ds[tr, vars]
+tds <- ds[tr, vars]
 
 # Remove rows with missing values in predictors or target variable.
 
-ds_train <- ds_train[complete.cases(ds_train), ]
+tds <- tds[complete.cases(tds), ]
 
 # Identify predictor variables (excluding the target variable).
 
@@ -46,7 +46,7 @@ predictor_vars <- setdiff(vars, target_variable)
 
 # Identify categorical and numerical predictor variables.
 
-categorical_vars <- names(Filter(function(col) is.factor(col) || is.character(col), ds_train[predictor_vars]))
+categorical_vars <- names(Filter(function(col) is.factor(col) || is.character(col), tds[predictor_vars]))
 numerical_vars <- setdiff(predictor_vars, categorical_vars)
 
 # One-Hot Encode Categorical Predictor Variables.
@@ -54,8 +54,8 @@ numerical_vars <- setdiff(predictor_vars, categorical_vars)
 if (length(categorical_vars) > 0) {
   # Create dummy variables for categorical predictors.
 
-  dmy_predictors <- dummyVars(~ ., data = ds_train[categorical_vars])
-  predictors_onehot_categorical <- as.data.frame(predict(dmy_predictors, newdata = ds_train[categorical_vars]))
+  dmy_predictors <- dummyVars(~ ., data = tds[categorical_vars])
+  predictors_onehot_categorical <- as.data.frame(predict(dmy_predictors, newdata = tds[categorical_vars]))
 } else {
   predictors_onehot_categorical <- data.frame()
 }
@@ -63,7 +63,7 @@ if (length(categorical_vars) > 0) {
 # Scale Numerical Predictor Variables.
 
 if (length(numerical_vars) > 0) {
-  predictors_numeric_scaled <- scale(ds_train[numerical_vars])
+  predictors_numeric_scaled <- scale(tds[numerical_vars])
   predictors_numeric_scaled <- as.data.frame(predictors_numeric_scaled)
 } else {
   predictors_numeric_scaled <- data.frame()
@@ -76,7 +76,7 @@ predictors_onehot <- cbind(predictors_numeric_scaled, predictors_onehot_categori
 # Handle Target Variable Encoding.
 # Check if the target variable is binary or multiclass.
 
-target_levels <- unique(ds_train[[target_variable]])
+target_levels <- unique(tds[[target_variable]])
 target_levels <- target_levels[!is.na(target_levels)]  # Remove NA if present
 
 if (length(target_levels) == 2) {
@@ -84,11 +84,11 @@ if (length(target_levels) == 2) {
 
   # Map target variable to 0 and 1.
 
-  ds_train$target_num <- ifelse(ds_train[[target_variable]] == target_levels[1], 0, 1)
+  tds$target_num <- ifelse(tds[[target_variable]] == target_levels[1], 0, 1)
 
   # Combine predictors and target.
 
-  ds_onehot <- cbind(predictors_onehot, target_num = ds_train$target_num)
+  ds_onehot <- cbind(predictors_onehot, target_num = tds$target_num)
 
   # Create formula.
 
@@ -112,8 +112,8 @@ if (length(target_levels) == 2) {
 
   # One-Hot Encode the Target Variable.
 
-  dmy_target <- dummyVars(~ ., data = ds_train[target_variable])
-  target_onehot <- as.data.frame(predict(dmy_target, newdata = ds_train[target_variable]))
+  dmy_target <- dummyVars(~ ., data = tds[target_variable])
+  target_onehot <- as.data.frame(predict(dmy_target, newdata = tds[target_variable]))
 
   # Combine predictors and target.
 
