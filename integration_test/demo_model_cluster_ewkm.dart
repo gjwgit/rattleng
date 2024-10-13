@@ -1,6 +1,6 @@
 /// Test ewkm() cluster analysis with demo dataset.
 //
-// Time-stamp: <Saturday 2024-10-12 19:02:05 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -78,6 +78,10 @@ void main() {
 
       await pressButton(tester, 'Build Clustering');
 
+      await tester.pump(delay);
+
+      await pressButton(tester, 'Build Clustering');
+
       await tester.pump(interact);
 
       // Find the text containing the number of default clusters.
@@ -85,6 +89,8 @@ void main() {
       final dataFinder =
           find.textContaining("built using 'ewkm' with 10 clusters");
       expect(dataFinder, findsOneWidget);
+
+      await tester.pump(interact);
     });
   });
 }
