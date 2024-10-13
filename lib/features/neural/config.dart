@@ -176,6 +176,28 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               },
               child: const Text('Build Neural Network'),
             ),
+            configWidgetSpace,
+
+            const Text(
+              'Algorithm:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetSpace,
+
+            ChoiceChipTip<String>(
+              options: neuralAlgorithm.keys.toList(),
+              selectedOption: algorithm,
+              tooltips: neuralAlgorithm,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    algorithm = chosen;
+                    ref.read(neuralAlgorithmProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
 
             configWidgetSpace,
 
@@ -201,28 +223,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               ''',
               label: 'Skip',
               provider: nnetSkipProvider,
-            ),
-            configWidgetSpace,
-
-            const Text(
-              'Algorithm:',
-              style: normalTextStyle,
-            ),
-
-            configWidgetSpace,
-
-            ChoiceChipTip<String>(
-              options: neuralAlgorithm.keys.toList(),
-              selectedOption: algorithm,
-              tooltips: neuralAlgorithm,
-              onSelected: (chosen) {
-                setState(() {
-                  if (chosen != null) {
-                    algorithm = chosen;
-                    ref.read(neuralAlgorithmProvider.notifier).state = chosen;
-                  }
-                });
-              },
             ),
           ],
         ),
