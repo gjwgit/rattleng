@@ -62,11 +62,11 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       subspaces using entropy weighting.
 
       ''',
-    // 'Hierarchical': '''
+    'Hierarchical': '''
 
-    //   Build an agglomerative hierarchical cluster.
+      Build an agglomerative hierarchical cluster.
 
-    //   ''',
+      ''',
     // 'BiCluster': '''
 
     //   Cluster by identifying suitable subsets of both the variables and the
@@ -103,6 +103,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 String mt = 'model_template';
                 String km = 'model_build_cluster_kmeans';
                 String ew = 'model_build_cluster_ewkm';
+                String hi = 'model_build_cluster_hierarchical';
 
                 await rSource(context, ref, ['model_template']);
 
@@ -110,6 +111,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                   if (context.mounted) await rSource(context, ref, [mt, km]);
                 } else if (type == 'Ewkm') {
                   if (context.mounted) await rSource(context, ref, [mt, ew]);
+                } else if (type == 'Hierarchical') {
+                  if (context.mounted) await rSource(context, ref, [mt, hi]);
                 }
 
                 ref.read(clusterPageControllerProvider).animateToPage(
