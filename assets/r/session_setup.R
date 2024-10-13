@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 05:28:30 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 10:57:47 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -26,13 +26,13 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
-# The concept of templates for data science was introduced in my book,
-# The Essentials of Data Science, 2017, CRC Press, referenced
-# throughout this script as @williams:2017:essentials
+# The concept of templates for data science was introduced in The
+# Essentials of Data Science, 2017, CRC Press, referenced throughout
+# this script as @williams:2017:essentials
 # (https://bit.ly/essentials_data_science). On-line examples are
-# available from my Data science Desktop Survival Guide
+# available from the Data Science Desktop Survival Guide
 # https://survivor.togaware.com/datascience/.
 
 ####################################
@@ -45,8 +45,12 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-library(xgboost)      # This needs to be loaded before rattle/tidyverse.
-library(rattle)       #
+# 20241013 gjw We have a workaround here for the xgboost package which
+# needs to be loaded before rattle and tidyverse. The specific reason
+# is not yet known but once determined we can remove this workaround.
+
+library(xgboost)      # Build extreme gradient boosted tree models.
+library(rattle)       # Support utilities for the data scientist.
 library(ggplot2)      # To support a local rattle theme.
 
 # 20241007 gjw I am in the process of removing the installation of R
@@ -171,12 +175,16 @@ set.seed(42)
 ####################################
 
 # TODO 20241007 gjw MOVE R SUPPORT FUNCTIONS INTO RATTLE R PACKAGE
+#
+# Or else are there equivalent functions in other packages.
 
 library(jsonlite)
 
 # A function to provide the dataset summary as JSON which can then be
 # parsed by Rattle as the dataset summary from which Rattle gets all
 # of it's meta data.
+
+is.date <- function(x) inherits(x, 'Date')
 
 meta_data <- function(df) {
   summary_list <- lapply(names(df), function(var_name) {
@@ -192,16 +200,33 @@ meta_data <- function(df) {
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
-    } else if (is.factor(x) || is.character(x)) {
+    } else if (is.factor(x)) {
       list(
-        datatype = "categoric",
+        datatype = "factor",
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
+    } else if (is.character(x)) {
+      list(
+        datatype = "character",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
+    } else if (is.date(x)) {
+      list(
+        datatype = "date",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
     } else {
       list(
         datatype = "other",
-        message = "No summary available for this type"
+        unique = length(unique(x)),
+        missing = sum(is.na(x)),
       )
     }
   })
