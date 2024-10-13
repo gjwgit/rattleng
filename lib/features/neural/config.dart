@@ -215,6 +215,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               ''',
               label: 'Trace',
               provider: nnetTraceProvider,
+              enabled: algorithm == 'nnet',
             ),
 
             configCheckBoxSpace,
@@ -227,6 +228,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               ''',
               label: 'Skip',
               provider: nnetSkipProvider,
+              enabled: algorithm == 'nnet',
             ),
           ],
         ),
@@ -257,6 +259,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               label: 'Max Iterations:',
               key: const Key('maxit'),
               controller: _maxitController,
+              enabled: algorithm == 'nnet',
 
               tooltip: '''
 
