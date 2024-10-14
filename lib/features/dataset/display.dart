@@ -268,7 +268,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             child: Text(
               'Type',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             ),
           ),
           const Expanded(
@@ -320,7 +320,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             flex: typeFlex,
             child: _buildRoleChips(variable.name, currentRoles),
           ),
-          Expanded(child: Text(variable.type)),
+          Expanded(
+            child: Text(
+              variable.type,
+              // Match header alignment.
+
+              textAlign: TextAlign.center,
+            ),
+          ),
           Expanded(
             child: Text(
               // Unique count.
