@@ -97,10 +97,10 @@ if (length(target_levels) == 2) {
     formula = formula_nn,
     data = ds_onehot,
     hidden = HIDDEN_LAYERS,
-    act.fct = "logistic",
-    err.fct = "ce",
+    act.fct = NEURAL_ACT_FCT,
+    err.fct = NEURAL_ERROR_FCT,
     linear.output = FALSE,
-    threshold = 0.01
+    threshold = NEURAL_THRESHOLD,
   )
 
 } else {

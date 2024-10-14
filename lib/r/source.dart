@@ -133,6 +133,7 @@ Future<void> rSource(
   bool nnetSkip = ref.read(nnetSkipProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
+  double neuralThreshold = ref.read(neuralThresholdProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
   String clusterType = ref.read(clusterTypeProvider);
 
@@ -364,6 +365,7 @@ Future<void> rSource(
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
   code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
   code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
+  code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

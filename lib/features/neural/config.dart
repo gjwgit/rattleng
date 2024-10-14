@@ -87,6 +87,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   final TextEditingController _nnetSizeLayerController =
       TextEditingController();
   final TextEditingController _maxNWtsController = TextEditingController();
+  final TextEditingController _thresholdController = TextEditingController();
   final TextEditingController _maxitController = TextEditingController();
 
   @override
@@ -306,6 +307,26 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxNWtsProvider,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Threshold:',
+              key: const Key('thresholdNeuralField'),
+              controller: _thresholdController,
+              tooltip: '''
+
+                The numeric value specifying the threshold for the partial 
+                derivatives of the error function as stopping criteria.
+
+                ''',
+              enabled: algorithm != 'nnet',
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+              ),
+              validator: (value) => validateDecimal(value),
+              stateProvider: neuralThresholdProvider,
+              interval: 0.0005,
+              decimalPlaces: 4,
             ),
           ],
         ),
