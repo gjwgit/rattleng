@@ -249,13 +249,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               textAlign: TextAlign.left,
             ),
           ),
-          const Expanded(
-            child: Text(
-              'Type',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-          ),
           Expanded(
             flex: typeFlex,
             child: const Text(
@@ -269,6 +262,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               'Unique',
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
+            ),
+          ),
+          const Expanded(
+            child: Text(
+              'Type',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
             ),
           ),
           const Expanded(
@@ -314,13 +314,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(child: _buildFittedText(variable.name)),
-          Expanded(child: Text(variable.type)),
           Expanded(
             // Matching flex value for alignment.
 
             flex: typeFlex,
             child: _buildRoleChips(variable.name, currentRoles),
           ),
+          Expanded(child: Text(variable.type)),
           Expanded(
             child: Text(
               // Unique count.
