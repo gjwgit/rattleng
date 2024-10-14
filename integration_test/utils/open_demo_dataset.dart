@@ -1,6 +1,6 @@
-/// Tester support function to open the DEMO dataset.
+/// Open the DEMO dataset and test its contents.
 //
-// Time-stamp: <2024-09-30 09:31:24 gjw>
+// Time-stamp: <Monday 2024-10-14 14:46:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,25 +21,41 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:rattle/constants/keys.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 
 import 'delays.dart';
+import 'navigate_to_tab.dart';
+import 'test_print.dart';
+import 'verify_text.dart';
+
+/// Open the DEMO dataset and undertake basic tests that it loaded just fine.
 
 Future<void> openDemoDataset(WidgetTester tester) async {
+  testPrint('Open the DEMO Dataset.');
+
+  // Ensure we are on the DATASET tab.
+
+  await navigateToTab(tester, 'Dataset');
+
   final datasetButtonFinder = find.byType(DatasetButton);
   expect(datasetButtonFinder, findsOneWidget);
 
-  await tester.pump(interact);
-
   await tester.tap(datasetButtonFinder);
   await tester.pumpAndSettle();
+
+  // 20241014 gjw Without the following delay the test for the contents of the
+  // ROLES page fails.
+
   await tester.pump(delay);
 
   final datasetPopup = find.byType(DatasetPopup);
@@ -47,7 +63,7 @@ Future<void> openDemoDataset(WidgetTester tester) async {
 
   await tester.pump(interact);
 
-  // TODO 20240902 kev DETECT POPUP WARNING AND TAP YES
+  // TODO 20240902 gjw DETECT POPUP WARNING AND TAP YES
   //
   // If a dataset has already been loaded then a popup warning is
   // displayed. Here we need to identify if the popup is required (perhaps by
@@ -64,7 +80,40 @@ Future<void> openDemoDataset(WidgetTester tester) async {
 
   await tester.tap(demoButton);
   await tester.pumpAndSettle();
-  await tester.pump(hack);
 
   await tester.pump(interact);
+
+  // Expect to find the DEMO filename in the path.
+
+  final dsPathTextFinder = find.byKey(datasetPathKey);
+  expect(dsPathTextFinder, findsOneWidget);
+  final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
+  String filename = dsPathText.controller?.text ?? '';
+  expect(filename.contains('weather.csv'), isTrue);
+
+  testPrint('Found `$filename` as the path.');
+
+  await tester.pump(interact);
+
+  testPrint('Check the ROLES page content for specific text.');
+
+  // Expect specific text in the ROLES page.
+
+  await verifyText(
+    tester,
+    [
+      // Verify dates in the Content Column.
+
+      '2023-07-01',
+      '2023-07-02',
+
+      // Verify min_temp in the Content Column.
+
+      '4.6',
+
+      // Verify max_temp in the Content Column.
+
+      '13.9',
+    ],
+  );
 }

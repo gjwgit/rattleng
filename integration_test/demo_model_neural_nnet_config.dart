@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 15:00:59 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 14:47:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -55,7 +55,6 @@ void main() {
     testWidgets('Load, Ignore, Navigate, Settings, Build.',
         (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
 
       await tester.pump(interact);
@@ -63,11 +62,6 @@ void main() {
       await openDemoDataset(tester);
 
       await tester.pumpAndSettle();
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
 
       await tester.pump(longHack);
 
