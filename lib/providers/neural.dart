@@ -32,6 +32,7 @@ final maxitProvider = StateProvider<int>((ref) => 100);
 final nnetSkipProvider = StateProvider<bool>((ref) => false);
 final nnetTraceProvider = StateProvider<bool>((ref) => false);
 final neuralAlgorithmProvider = StateProvider<String>((ref) => 'nnet');
+final neuralHiddenProvider = StateProvider<String>((ref) => '10');
 final neuralnetErrorFctProvider = StateProvider<String>((ref) => 'sse');
 final neuralnetActionFctProvider = StateProvider<String>((ref) => 'logistic');
 final neuralThresholdProvider = StateProvider<double>((ref) => 0.0100);
