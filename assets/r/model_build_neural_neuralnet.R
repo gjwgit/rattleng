@@ -96,7 +96,7 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula = formula_nn,
     data = ds_onehot,
-    hidden = HIDDEN_LAYERS,
+    hidden = HIDDEN_NEURONS,
     act.fct = NEURAL_ACT_FCT,
     err.fct = NEURAL_ERROR_FCT,
     linear.output = FALSE,

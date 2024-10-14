@@ -40,6 +40,7 @@ import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
+import 'package:rattle/widgets/vector_number_field.dart';
 
 /// The NEURAL tab config currently consists of just an ACTIVITY button.
 ///
@@ -84,8 +85,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   ];
 
   // Controllers for the input fields.
+
   final TextEditingController _nnetSizeLayerController =
       TextEditingController();
+  final TextEditingController _neuralHiddenController = TextEditingController();
   final TextEditingController _maxNWtsController = TextEditingController();
   final TextEditingController _thresholdController = TextEditingController();
   final TextEditingController _maxStepsController = TextEditingController();
@@ -257,23 +260,36 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
         Row(
           children: [
-            NumberField(
-              label: 'Hidden Layers:',
-              key: const Key('hidden_layer_size'),
-              controller: _nnetSizeLayerController,
-              enabled: algorithm == 'nnet',
+            algorithm == 'nnet'
+                ? NumberField(
+                    label: 'Hidden Layers:',
+                    key: const Key('hidden_layer_size'),
+                    controller: _nnetSizeLayerController,
 
-              tooltip: '''
+                    tooltip: '''
 
               The size parameter in the nnet model specifies the number of units 
               (neurons) in the hidden layer of the neural network.
               
               ''',
-              inputFormatter:
-                  FilteringTextInputFormatter.digitsOnly, // Integers only
-              validator: (value) => validateInteger(value, min: 1),
-              stateProvider: nnetSizeLayerProvider,
-            ),
+                    inputFormatter:
+                        FilteringTextInputFormatter.digitsOnly, // Integers only
+                    validator: (value) => validateInteger(value, min: 1),
+                    stateProvider: nnetSizeLayerProvider,
+                  )
+                : VectorNumberField(
+                    controller: _neuralHiddenController,
+                    stateProvider: neuralHiddenProvider,
+                    label: 'Hidden',
+                    tooltip: '''
+
+                A vector of integers specifying the number of hidden neurons (vertices) in each layer.
+
+                ''',
+                    validator: validateVector, // Validation logic
+                    inputFormatter:
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+                  ),
             configWidgetSpace,
             NumberField(
               label: 'Max Iterations:',

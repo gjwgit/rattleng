@@ -117,6 +117,7 @@ Future<void> rSource(
   String selected2 = ref.read(selected2Provider);
   String neuralErrorFct = ref.read(neuralnetErrorFctProvider);
   String neuralActionFct = ref.read(neuralnetActionFctProvider);
+  String hiddenNeurons = ref.read(neuralHiddenProvider);
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
@@ -362,6 +363,7 @@ Future<void> rSource(
   // NEURAL
 
   code = code.replaceAll('HIDDEN_LAYERS', hiddenLayerSizes.toString());
+  code = code.replaceAll('HIDDEN_NEURONS', 'c($hiddenNeurons)');
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
   code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
