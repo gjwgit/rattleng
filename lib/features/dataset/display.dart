@@ -249,7 +249,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               textAlign: TextAlign.left,
             ),
           ),
-          space,
           const Expanded(
             child: Text(
               'Type',
@@ -265,25 +264,20 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               textAlign: TextAlign.left,
             ),
           ),
-          space,
-          Expanded(
-            flex: typeFlex,
-            child: const Text(
+          const Expanded(
+            child: Text(
               'Unique',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             ),
           ),
-          space,
-          Expanded(
-            flex: typeFlex,
-            child: const Text(
+          const Expanded(
+            child: Text(
               'Missing',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             ),
           ),
-          space,
           Expanded(
             flex: contentFlex,
             child: const Text(
@@ -296,7 +290,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ),
     );
   }
-
   // Build data line for each variable.
 
   Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
@@ -315,42 +308,49 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     return Padding(
       padding: const EdgeInsets.all(6.0),
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _buildFittedText(variable.name)),
-              space,
-              Expanded(child: Text(variable.type)),
-              Expanded(
-                flex: typeFlex,
-                child: _buildRoleChips(variable.name, currentRoles),
-              ),
-              Expanded(
-                flex: typeFlex,
-                child: Text(
-                  uniqueCount.toString(), // Display unique count
-                ),
-              ),
-              space,
-              Expanded(
-                flex: typeFlex,
-                child: Text(
-                  missingCount.toString(), // Display missing count
-                ),
-              ),
-              space,
-              Expanded(
-                flex: contentFlex,
-                child: SelectableText(
-                  content,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
-          );
-        },
+      child: Row(
+        // Same alignment.
+
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: _buildFittedText(variable.name)),
+          Expanded(child: Text(variable.type)),
+          Expanded(
+            // Matching flex value for alignment.
+
+            flex: typeFlex,
+            child: _buildRoleChips(variable.name, currentRoles),
+          ),
+          Expanded(
+            child: Text(
+              // Unique count.
+
+              uniqueCount.toString(),
+              // Match header alignment.
+
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              // Missing count.
+
+              missingCount.toString(),
+              // Match header alignment.
+
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            // Matching flex value for alignment.
+
+            flex: contentFlex,
+            child: SelectableText(
+              content,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ],
       ),
     );
   }
