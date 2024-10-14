@@ -54,13 +54,15 @@ class ImputeConfig extends ConsumerStatefulWidget {
 class ImputeConfigState extends ConsumerState<ImputeConfig> {
   String selected = 'NULL';
 
-  // methods enable only for numeric variables
+  // methods enable only for numeric variables.
+
   List<String> numericMethods = [
     'Mean',
     'Median',
   ];
 
   // List choice of methods for imputation.
+
   List<String> methods = [
     'Mean',
     'Median',
@@ -71,20 +73,24 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   String selectedTransform = 'Mean';
 
   // Initialize a TextEditingController for the CONSTANT value.
+
   final TextEditingController _controller = TextEditingController();
 
   @override
   void dispose() {
-    // Dispose of the controller when the widget is disposed
+    // Dispose of the controller when the widget is disposed.
+
     _controller.dispose();
     super.dispose();
   }
 
   // Transform chooser widget with tooltips for each chip.
-// Transform chooser widget with tooltips for each chip.
+
   Widget transformChooser() {
     return Align(
-      alignment: Alignment.centerLeft, // Align the chips to the left
+      // Align the chips to the left.
+
+      alignment: Alignment.centerLeft,
       child: Wrap(
         spacing: 5.0,
         runSpacing: choiceChipRowSpace,
@@ -128,6 +134,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   }
 
   // Set default constant based on variable type.
+
   void _setConstantDefault() {
     if (ref.read(typesProvider)[selected] == Type.numeric) {
       if (_controller.text.isEmpty) {
@@ -141,6 +148,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   }
 
   // Constant entry widget with a tooltip.
+
   Widget constantEntry() {
     return SizedBox(
       width: 150,
@@ -159,8 +167,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   }
 
   // BUILD button action.
+
   void takeAction() {
     // Run the R scripts.
+
     if (selectedTransform == 'Constant' && ref.read(imputedProvider) == '') {
       showOk(
         context: context,
@@ -230,8 +240,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           children: [
             configLeftSpace,
             ActivityButton(
-              pageControllerProvider:
-                  imputePageControllerProvider, // Optional navigation
+              // Optional navigation.
+
+              pageControllerProvider: imputePageControllerProvider,
 
               onPressed: () {
                 setState(() {
@@ -245,7 +256,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               child: const Text('Impute Missing Values'),
             ),
             configWidgetSpace,
-            // use local one because of the subtle difference
+            // use local one because of the subtle difference.
+
             variableChooser(
               'Variable',
               inputs,
@@ -276,8 +288,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             configWidgetSpace,
 
             constantEntry(),
-            // const SizedBox(
-            //     width: 400), // Small spacing between chips and constant entry
           ],
         ),
       ],
