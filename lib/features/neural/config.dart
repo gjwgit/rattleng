@@ -75,6 +75,14 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
     'ce',
   ];
 
+  /// Function that is used for smoothing the result of the cross product
+  /// of the covariate or neurons and the weights.
+
+  List<String> actionFunction = [
+    'logistic',
+    'tanh',
+  ];
+
   // Controllers for the input fields.
   final TextEditingController _nnetSizeLayerController =
       TextEditingController();
@@ -102,6 +110,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
     String algorithm = ref.read(neuralAlgorithmProvider.notifier).state;
     String function = ref.read(neuralnetErrorFctProvider.notifier).state;
+    String action = ref.read(neuralnetActionFctProvider.notifier).state;
 
     return Column(
       children: [
@@ -316,6 +325,28 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               onChanged: (String? value) {
                 if (value != null) {
                   ref.read(neuralnetErrorFctProvider.notifier).state = value;
+                }
+              },
+            ),
+            configWidgetSpace,
+            variableChooser(
+              'Action Function',
+              actionFunction,
+              action,
+              ref,
+              neuralnetActionFctProvider,
+              tooltip: '''
+
+              Function that is used for smoothing the result of the cross product 
+              of the covariate or neurons and the weights. Additionally the strings,
+              'logistic' and 'tanh' are possible for the logistic function and 
+              tangent hyperbolicus.
+
+              ''',
+              enabled: algorithm == 'neuralnet',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(neuralnetActionFctProvider.notifier).state = value;
                 }
               },
             ),
