@@ -88,6 +88,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
       TextEditingController();
   final TextEditingController _maxNWtsController = TextEditingController();
   final TextEditingController _thresholdController = TextEditingController();
+  final TextEditingController _maxStepsController = TextEditingController();
   final TextEditingController _maxitController = TextEditingController();
 
   @override
@@ -327,6 +328,23 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               stateProvider: neuralThresholdProvider,
               interval: 0.0005,
               decimalPlaces: 4,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Max Steps:',
+              key: const Key('neuralMaxStepField'),
+              controller: _maxStepsController,
+              tooltip: '''
+
+                The maximum steps for the training of the neural network. 
+                Reaching this maximum leads to a stop of the neural network's training process.
+
+                ''',
+              enabled: algorithm != 'nnet',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: (value) => validateInteger(value, min: 1000),
+              stateProvider: neuralStepMaxProvider,
             ),
           ],
         ),
