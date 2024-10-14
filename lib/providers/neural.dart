@@ -33,3 +33,4 @@ final nnetSkipProvider = StateProvider<bool>((ref) => false);
 final nnetTraceProvider = StateProvider<bool>((ref) => false);
 final neuralAlgorithmProvider = StateProvider<String>((ref) => 'nnet');
 final neuralnetErrorFctProvider = StateProvider<String>((ref) => 'sse');
+final neuralnetActionFctProvider = StateProvider<String>((ref) => 'logistic');
