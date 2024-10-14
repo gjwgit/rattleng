@@ -102,16 +102,19 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           label: 'Interval',
           tooltip: '''
 
-          When rescaling a numeric variable using an Interval the numeric value
-          here is the maximum value for the resulting interval. A default
-          maximum value of 100 is often used. The minimum value is fixed as 0.
+        When rescaling a numeric variable using an Interval, the numeric value
+        here is the maximum value for the resulting interval. A default
+        maximum value of 100 is often used. The minimum value is fixed as 0.
 
-          ''',
+        ''',
           controller: valCtrl,
           inputFormatter:
               FilteringTextInputFormatter.digitsOnly, // Integers only
           validator: (value) => validateInteger(value, min: 1),
           stateProvider: intervalProvider,
+          // Enable only when "Interval" is selected.
+
+          enabled: selectedTransform == 'Interval',
         ),
       ],
     );
