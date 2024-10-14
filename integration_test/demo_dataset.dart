@@ -1,6 +1,6 @@
-/// Test and demonstrate the DATASET tab features with the DEMO dataset.
+/// Load the DEMO dataset.
 //
-// Time-stamp: <2024-10-05 17:47:13 gjw>
+// Time-stamp: <Monday 2024-10-14 13:55:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,72 +25,21 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
 
-import 'utils/delays.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/verify_multiple_text.dart';
+import 'utils/test_print.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Dataset:', () {
-    testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
+  testWidgets('Demo: Load.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-      await openDemoDataset(tester);
-
-      await tester.pump(hack);
-
-      final dsPathTextFinder = find.byKey(datasetPathKey);
-      expect(dsPathTextFinder, findsOneWidget);
-      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-      String filename = dsPathText.controller?.text ?? '';
-      expect(filename.contains('weather.csv'), isTrue);
-
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
-
-      // await tester.tap(rightArrowFinder);
-      // await tester.pumpAndSettle();
-
-      // await tester.pump(interact);
-
-      // // Find the text containing "366".
-
-      // final glimpseRowFinder = find.textContaining('366');
-      // expect(glimpseRowFinder, findsOneWidget);
-
-      // // Find the text containing "2007-11-01".
-
-      // final glimpseDateFinder = find.textContaining('2007-11-01');
-      // expect(glimpseDateFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "ROLES" page.
-
-      await tester.pump(hack);
-
-      await verifyMultipleTextContent(
-        tester,
-        [
-          // Verify date in the Content Column.
-          '2023-07-01',
-          '2023-07-02',
-
-          // Verify min_temp in the Content Column.
-          '4.6',
-
-          // Verify max_temp in the Content Column.
-          '13.9',
-        ],
-      );
-    });
+    await openDemoDataset(tester);
   });
 }

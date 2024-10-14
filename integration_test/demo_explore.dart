@@ -1,6 +1,6 @@
 /// Explore tab Demo dataset.
 //
-// Time-stamp: <2024-09-30 09:29:55 gjw>
+// Time-stamp: <Monday 2024-10-14 13:35:58 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -36,7 +36,7 @@ import 'package:rattle/tabs/explore.dart';
 
 import 'utils/delays.dart';
 import 'utils/open_demo_dataset.dart';
-import 'utils/verify_multiple_text.dart';
+import 'utils/verify_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -101,7 +101,7 @@ void main() {
 
       await tester.pump(interact);
 
-      await verifyMultipleTextContent(
+      await verifyText(
         tester,
         [
           // Verify date in the Content Column.
