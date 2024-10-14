@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/vars/roles.dart';
@@ -153,7 +154,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             // Regular data rows. We subtract 1 from the index to get the
             // correct variable since the first row is the header row.
 
-            return _buildDataLine(vars[index - 1], currentRoles);
+            return _buildDataLine(
+              vars[index - 1],
+              currentRoles,
+            );
           }
         },
       ),
@@ -263,6 +267,24 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ),
           space,
           Expanded(
+            flex: typeFlex,
+            child: const Text(
+              'Unique',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+          ),
+          space,
+          Expanded(
+            flex: typeFlex,
+            child: const Text(
+              'Missing',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+          ),
+          space,
+          Expanded(
             flex: contentFlex,
             child: const Text(
               'Content',
@@ -286,6 +308,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     String content = _truncateContent(variable.details);
 
+    // Extract unique and missing values from metaDataProvider.
+    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
+    int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
+    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
+
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: LayoutBuilder(
@@ -300,6 +327,20 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 flex: typeFlex,
                 child: _buildRoleChips(variable.name, currentRoles),
               ),
+              Expanded(
+                flex: typeFlex,
+                child: Text(
+                  uniqueCount.toString(), // Display unique count
+                ),
+              ),
+              space,
+              Expanded(
+                flex: typeFlex,
+                child: Text(
+                  missingCount.toString(), // Display missing count
+                ),
+              ),
+              space,
               Expanded(
                 flex: contentFlex,
                 child: SelectableText(
