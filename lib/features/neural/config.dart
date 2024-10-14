@@ -307,7 +307,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxNWtsProvider,
             ),
-            configWidgetSpace,
+          ],
+        ),
+        configRowSpace,
+        Row(
+          children: [
             variableChooser(
               'Error Function',
               errorFunction,
