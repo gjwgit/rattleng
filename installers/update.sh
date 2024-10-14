@@ -8,8 +8,8 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     # Identify the latest Bump Version but one. The latest is now the
     # integration test, and the one before it is the installer build.
 
-    bumpId=$(gh run list --limit 100 --json databaseId,displayTitle \
-		 | jq -r '.[] | select(.displayTitle | startswith("Bump version")) | .databaseId' | head -n 2 | tail -1)
+    bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
+		 | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' | head -n 1)
 
     # Determine the latest version. Assumes the latest action is a
     # Bump veriosn push.
