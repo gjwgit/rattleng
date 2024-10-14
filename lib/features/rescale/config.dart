@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-10-11 12:09:30 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:45:52 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -76,7 +76,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         ChoiceChipTip<String>(
           options: normaliseMethods,

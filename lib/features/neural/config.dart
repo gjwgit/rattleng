@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-12 19:11:27 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:48:53 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -188,7 +188,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
           ],
         ),
 
-        configTopSpace,
+        configRowSpace,
 
         Row(
           children: [
@@ -244,6 +244,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
           ],
         ),
+        configBotSpace,
       ],
     );
   }

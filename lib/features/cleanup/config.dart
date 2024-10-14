@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-09 20:41:56 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:39:07 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -57,7 +57,7 @@ class CleanupConfig extends ConsumerStatefulWidget {
 class CleanupConfigState extends ConsumerState<CleanupConfig> {
   // List choice of methods for cleanup and their tooltips.
 
-  Map<String, String> methods = {
+  Map<String, String> multiMethods = {
     'Vars with Missing': '''
 
       Remove all columns (variables) that have any missing values. The variables
@@ -81,6 +81,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       remove them.
 
       ''',
+  };
+
+  Map<String, String> specificMethods = {
     'Variable': '''
 
       Remove the selected variable. Be sure to select a variable first from the
@@ -281,9 +284,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
             configWidgetSpace,
 
             ChoiceChipTip<String>(
-              options: methods.keys.toList(),
+              options: multiMethods.keys.toList(),
               selectedOption: method,
-              tooltips: methods,
+              tooltips: multiMethods,
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {
@@ -295,6 +298,22 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
             ),
 
             configWidgetSpace,
+
+            ChoiceChipTip<String>(
+              options: specificMethods.keys.toList(),
+              selectedOption: method,
+              tooltips: specificMethods,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    method = chosen;
+                    ref.read(cleanUpMethodProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
+
+            configChooserSpace,
 
             // Use the variableChooser with enabled parameter.
 
