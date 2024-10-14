@@ -1,4 +1,4 @@
-# Welcome to **Rattle** (https://rattle.togaware.com).
+# Welcome to **Rattle**
 
 Rattle is a toolbox for data science, statistical analyses, data
 visualisation, machine learning, and artificial intelligence,
@@ -23,11 +23,10 @@ contributions are also most welcome.
 
 **Resources**
 
++ Rattle home page: https://rattle.togaware.com
+
 + Rattle V5 is well covered in 
   [Data Mining with Rattle and R](https://bit.ly/rattle_data_mining)
-
-+ Other online resources are available through [Rattle Official
-  Website](https://rattle.togaware.com)
 
 + Rattle utilises R templates as introduced in [The Essentials of Data
   Science](https://bit.ly/essentials_data_science)
