@@ -1,6 +1,6 @@
 /// Test that the app starts up.
 //
-// Time-stamp: <Thursday 2024-10-10 09:33:15 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 13:41:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
-/// function to verify the text content in the widget
+/// A simple function to print a message to the testing output.
 //
-// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 14:39:58 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,17 +21,10 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Graham Williams
+
 library;
 
-import 'package:flutter_test/flutter_test.dart';
-
-Future<void> verifyMultipleTextContent(
-  WidgetTester tester,
-  List<String> values,
-) async {
-  for (final value in values) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
+void testPrint(String message) {
+  print('***** $message\n');
 }
