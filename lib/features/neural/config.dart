@@ -35,6 +35,7 @@ import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
@@ -67,6 +68,13 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
     ''',
   };
 
+  /// Function that is used for the calculation of the error.
+
+  List<String> errorFunction = [
+    'sse',
+    'ce',
+  ];
+
   // Controllers for the input fields.
   final TextEditingController _nnetSizeLayerController =
       TextEditingController();
@@ -93,6 +101,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
     _maxitController.text = ref.read(maxitProvider.notifier).state.toString();
 
     String algorithm = ref.read(neuralAlgorithmProvider.notifier).state;
+    String function = ref.read(neuralnetErrorFctProvider.notifier).state;
 
     return Column(
       children: [
@@ -288,6 +297,27 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxNWtsProvider,
+            ),
+            configWidgetSpace,
+            variableChooser(
+              'Error Function',
+              errorFunction,
+              function,
+              ref,
+              neuralnetErrorFctProvider,
+              tooltip: '''
+
+              Function that is used for the calculation of the error. 
+              Alternatively, the strings 'sse' and 'ce' which stand for 
+              the sum of squared errors and the cross-entropy can be used.
+
+              ''',
+              enabled: algorithm == 'neuralnet',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(neuralnetErrorFctProvider.notifier).state = value;
+                }
+              },
             ),
           ],
         ),

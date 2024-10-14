@@ -132,7 +132,7 @@ if (length(target_levels) == 2) {
     data = ds_onehot,
     hidden = HIDDEN_LAYERS,
     act.fct = "logistic",
-    err.fct = "sse",
+    err.fct = NEURAL_ERROR_FCT,
     linear.output = FALSE,
     threshold = 0.01
   )
