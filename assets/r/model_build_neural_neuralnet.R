@@ -101,6 +101,7 @@ if (length(target_levels) == 2) {
     err.fct = NEURAL_ERROR_FCT,
     linear.output = FALSE,
     threshold = NEURAL_THRESHOLD,
+    stepmax = NEURAL_STEP_MAX,
   )
 
 } else {

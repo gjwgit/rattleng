@@ -35,3 +35,4 @@ final neuralAlgorithmProvider = StateProvider<String>((ref) => 'nnet');
 final neuralnetErrorFctProvider = StateProvider<String>((ref) => 'sse');
 final neuralnetActionFctProvider = StateProvider<String>((ref) => 'logistic');
 final neuralThresholdProvider = StateProvider<double>((ref) => 0.0100);
+final neuralStepMaxProvider = StateProvider<int>((ref) => 10000);

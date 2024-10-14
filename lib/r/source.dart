@@ -123,6 +123,7 @@ Future<void> rSource(
   int hiddenLayerSizes = ref.read(nnetSizeLayerProvider);
   int nnetMaxNWts = ref.read(maxNWtsProvider);
   int nnetMaxit = ref.read(maxitProvider);
+  int neuralStepMax = ref.read(neuralStepMaxProvider);
   int clusterSeed = ref.read(clusterSeedProvider);
   int clusterNum = ref.read(clusterNumberProvider);
   int clusterRun = ref.read(clusterRunProvider);
@@ -366,6 +367,7 @@ Future<void> rSource(
   code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
   code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
   code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
+  code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
 
   ////////////////////////////////////////////////////////////////////////
 
