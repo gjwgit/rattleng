@@ -44,7 +44,6 @@ import 'package:rattle/widgets/activity_button.dart';
 
 /// This is a StatefulWidget to pass the REF across to the rSource as well as to
 /// monitor the SELECTED variable to transform.
-
 class ImputeConfig extends ConsumerStatefulWidget {
   const ImputeConfig({super.key});
 
@@ -60,22 +59,32 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     'Mean',
     'Median',
   ];
-  // List choice of methods for imputation.
 
+  // List choice of methods for imputation.
   List<String> methods = [
-    'Zero/Missing',
     'Mean',
     'Median',
     'Mode',
     'Constant',
   ];
 
-  String selectedTransform = 'Zero/Missing';
+  String selectedTransform = 'Mean';
 
-  // TODO 20240810 gjw USE CHOICE CHIP TIP
+  // Initialize a TextEditingController for the CONSTANT value.
+  final TextEditingController _controller = TextEditingController();
 
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is disposed
+    _controller.dispose();
+    super.dispose();
+  }
+
+  // Transform chooser widget with tooltips for each chip.
+// Transform chooser widget with tooltips for each chip.
   Widget transformChooser() {
-    return Expanded(
+    return Align(
+      alignment: Alignment.centerLeft, // Align the chips to the left
       child: Wrap(
         spacing: 5.0,
         runSpacing: choiceChipRowSpace,
@@ -90,7 +99,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           }
 
           return ChoiceChip(
-            label: Text(transform),
+            label: Tooltip(
+              message: 'Select $transform for imputation',
+              child: Text(transform),
+            ),
             selectedColor: Colors.lightBlue[200],
             showCheckmark: false,
             backgroundColor:
@@ -104,6 +116,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 : (bool selected) {
                     setState(() {
                       selectedTransform = selected ? transform : '';
+                      if (selectedTransform == 'Constant') {
+                        _setConstantDefault();
+                      }
                     });
                   },
           );
@@ -112,35 +127,40 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     );
   }
 
-  // Initialize a TextEditingController for the CONSTANT value.
-
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    // Dispose of the controller when the widget is disposed
-    _controller.dispose();
-    super.dispose();
+  // Set default constant based on variable type.
+  void _setConstantDefault() {
+    if (ref.read(typesProvider)[selected] == Type.numeric) {
+      if (_controller.text.isEmpty) {
+        _controller.text = '0';
+      }
+    } else if (ref.read(typesProvider)[selected] == Type.categoric) {
+      if (_controller.text.isEmpty) {
+        _controller.text = 'Missing';
+      }
+    }
   }
 
+  // Constant entry widget with a tooltip.
   Widget constantEntry() {
     return SizedBox(
       width: 150,
-      child: TextField(
-        controller: _controller,
-        decoration: const InputDecoration(
-          labelText: 'Constant',
-          border: OutlineInputBorder(),
+      child: Tooltip(
+        message: 'Enter a constant value for imputation',
+        child: TextField(
+          controller: _controller,
+          decoration: const InputDecoration(
+            labelText: 'Constant',
+            border: OutlineInputBorder(),
+          ),
+          enabled: selectedTransform == 'Constant',
         ),
       ),
     );
   }
 
   // BUILD button action.
-
   void takeAction() {
     // Run the R scripts.
-
     if (selectedTransform == 'Constant' && ref.read(imputedProvider) == '') {
       showOk(
         context: context,
@@ -155,8 +175,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
       );
     } else {
       switch (selectedTransform) {
-        case 'Zero/Missing':
-          rSource(context, ref, ['transform_impute_zero_missing']);
         case 'Mean':
           rSource(context, ref, ['transform_impute_mean_numeric']);
         case 'Median':
@@ -168,10 +186,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
         default:
           showUnderConstruction(context);
       }
-      // Notice that rSource is asynchronous so this glimpse is oftwn happening
-      // before the above transformation.
-      //
-      // rSource(context, ref, ['glimpse']);
     }
   }
 
@@ -245,7 +259,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               onChanged: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                selectedTransform = 'Zero/Missing';
+                selectedTransform = 'Mean';
                 // We don't buildAction() here since the variable choice might
                 // be followed by a transform choice and we don;t want to shoot
                 // off building lots of new variables unnecesarily.
@@ -260,8 +274,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             configWidgetSpace,
             transformChooser(),
             configWidgetSpace,
+
             constantEntry(),
-            configWidgetSpace,
+            // const SizedBox(
+            //     width: 400), // Small spacing between chips and constant entry
           ],
         ),
       ],
