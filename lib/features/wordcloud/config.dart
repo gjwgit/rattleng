@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Sunday 2024-10-13 19:37:22 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:53:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -158,7 +158,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: checkboxProvider,
             ),
 
-            configCheckBoxSpace,
+            configWidgetSpace,
 
             LabelledCheckbox(
               key: const Key('stem'),
@@ -173,7 +173,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stemProvider,
             ),
 
-            configCheckBoxSpace,
+            configWidgetSpace,
 
             LabelledCheckbox(
               key: const Key('remove_punctuation'),
@@ -199,7 +199,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stopwordProvider,
             ),
 
-            configCheckBoxSpace,
+            configWidgetSpace,
 
             Expanded(
               child: DelayedTooltip(

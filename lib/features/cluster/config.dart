@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-10-13 05:39:06 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:47:56 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -146,7 +146,9 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             ),
           ],
         ),
+        configRowSpace,
         const ClusterSetting(),
+        configBotSpace,
       ],
     );
   }

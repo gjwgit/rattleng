@@ -1,6 +1,6 @@
 /// Test the DATASET RESET functionality.
 //
-// Time-stamp: <Wednesday 2024-09-11 19:31:19 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 13:34:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,7 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/open_demo_dataset.dart';
-import 'utils/verify_multiple_text.dart';
+import 'utils/verify_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -104,7 +104,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await verifyMultipleTextContent(
+      await verifyText(
         tester,
         [
           // Verify date in the Content Column.

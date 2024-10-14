@@ -1,6 +1,6 @@
 /// EXPLORE tab: Correlation Large Dataset Test.
 //
-// Time-stamp: <Friday 2024-09-20 08:11:38 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 13:33:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -60,18 +60,11 @@ void main() {
         'Correlation - Numeric Data',
         'cholesterol_level                1.00           0.00           0.00  -0.01',
       );
-      await verifyTextContent(
-        tester,
+      await verifyText(tester, [
         'smoking_status                   0.00           0.01           1.00   0.04  0.05',
-      );
-      await verifyTextContent(
-        tester,
         'bmi                             -0.01           0.03           0.05   0.39  1.00',
-      );
-      await verifyTextContent(
-        tester,
         'age_at_consultation              0.00           0.06           0.08   0.20  0.24',
-      );
+      ]);
 
       // Verify the content of the page 2.
 
