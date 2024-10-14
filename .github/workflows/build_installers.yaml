@@ -1,4 +1,4 @@
-name: Installer Bulder
+name: Build Installers
 
 on:
   push:
