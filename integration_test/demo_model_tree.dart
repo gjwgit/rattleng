@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-10-08 14:06:33 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 19:22:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -135,8 +135,9 @@ void main() {
       await tester.pump(interact);
     });
 
-    testWidgets('rpart with different parameter settings.',
-        (WidgetTester tester) async {
+    testWidgets('rpart with different parameter settings.', (
+      WidgetTester tester,
+    ) async {
       app.main();
 
       await tester.pumpAndSettle();

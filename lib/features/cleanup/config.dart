@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:39:07 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 20:10:15 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -126,7 +126,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
         This shouldn't happen in warningText
 
-        '''
+        ''',
     };
   }
 
@@ -136,7 +136,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       'Variable' => 'transform_clean_delete_selected',
       'Vars with Missing' => 'transform_clean_delete_vars_missing',
       'Obs with Missing' => 'transform_clean_delete_obs_missing',
-      _ => ''
+      _ => '',
     };
   }
 
