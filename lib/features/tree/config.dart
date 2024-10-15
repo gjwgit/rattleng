@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Wednesday 2024-10-09 09:07:04 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:50:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
