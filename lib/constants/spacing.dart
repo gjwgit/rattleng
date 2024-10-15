@@ -52,7 +52,7 @@ const configRowSpace = SizedBox(height: 20);
 
 const configLeftSpace = SizedBox(width: 5);
 
-/// Space between widgets in a Row in the the config.
+/// Space between widgets in a Row in the config.
 
 const configWidgetSpace = SizedBox(width: 20.0); // Gap(20);
 

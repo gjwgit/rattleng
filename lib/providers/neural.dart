@@ -1,6 +1,6 @@
-/// A provider for nnet model trace.
+/// A provider for the parameters for neural.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -27,4 +27,13 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final nnetTraceProvider = StateProvider<bool>((ref) => false);
+final actionFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
+final algorithmNeuralProvider = StateProvider<String>((ref) => 'nnet');
+final errorFctNeuralProvider = StateProvider<String>((ref) => 'sse');
+final hiddenLayersNeuralProvider = StateProvider<String>((ref) => '10');
+final maxitNeuralProvider = StateProvider<int>((ref) => 100);
+final hiddenLayerNeuralProvider = StateProvider<int>((ref) => 10);
+final skipNeuralProvider = StateProvider<bool>((ref) => false);
+final stepMaxNeuralProvider = StateProvider<int>((ref) => 10000);
+final thresholdNeuralProvider = StateProvider<double>((ref) => 0.0100);
+final traceNeuralProvider = StateProvider<bool>((ref) => false);
