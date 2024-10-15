@@ -1,4 +1,4 @@
-name: Run Dart Code Metrics
+name: Lint Checks
 
 on:
   push:
@@ -70,7 +70,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run DCM
+        run: dcm fix lib
         run: dcm analyze .
+        run: dcm check-unused-files lib
+        run: dcm check-unused-code lib
   # END LINTING STAGE
 
   # BEGIN TESTING STAGE
