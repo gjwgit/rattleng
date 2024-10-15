@@ -29,4 +29,3 @@ regressing (i.e., moving from) observations to the average. The early
 research included investigations which separated people into different
 classes based on their characteristics. The regression came from
 modelling the heights of related people.
-
