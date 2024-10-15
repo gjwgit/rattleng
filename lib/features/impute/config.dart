@@ -41,6 +41,7 @@ import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 /// This is a StatefulWidget to pass the REF across to the rSource as well as to
 /// monitor the SELECTED variable to transform.
@@ -84,12 +85,14 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     super.dispose();
   }
 
+  // TODO 20240810 gjw USE CHOICE CHIP TIP
+
   // Transform chooser widget with tooltips for each chip.
 
+// Transform chooser widget with tooltips for each chip.
   Widget transformChooser() {
     return Align(
       // Align the chips to the left.
-
       alignment: Alignment.centerLeft,
       child: Wrap(
         spacing: 5.0,
@@ -104,29 +107,34 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             debugPrint('Error: selected is NULL!!!');
           }
 
-          return ChoiceChip(
-            label: Tooltip(
-              message: 'Select $transform for imputation',
-              child: Text(transform),
+          return DelayedTooltip(
+            message: '''
+
+            Select $transform for imputation
+
+            ''',
+            child: ChoiceChip(
+              selectedColor: Colors.lightBlue[200],
+              showCheckmark: false,
+              backgroundColor: disableNumericMethods
+                  ? Colors.grey[300]
+                  : Colors.lightBlue[50],
+              shadowColor: Colors.grey,
+              pressElevation: 8.0,
+              elevation: 2.0,
+              selected: selectedTransform == transform,
+              label: Text(transform),
+              onSelected: disableNumericMethods
+                  ? null
+                  : (bool selected) {
+                      setState(() {
+                        selectedTransform = selected ? transform : '';
+                        if (selectedTransform == 'Constant') {
+                          _setConstantDefault();
+                        }
+                      });
+                    },
             ),
-            selectedColor: Colors.lightBlue[200],
-            showCheckmark: false,
-            backgroundColor:
-                disableNumericMethods ? Colors.grey[300] : Colors.lightBlue[50],
-            shadowColor: Colors.grey,
-            pressElevation: 8.0,
-            elevation: 2.0,
-            selected: selectedTransform == transform,
-            onSelected: disableNumericMethods
-                ? null
-                : (bool selected) {
-                    setState(() {
-                      selectedTransform = selected ? transform : '';
-                      if (selectedTransform == 'Constant') {
-                        _setConstantDefault();
-                      }
-                    });
-                  },
           );
         }).toList(),
       ),
@@ -152,8 +160,12 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   Widget constantEntry() {
     return SizedBox(
       width: 150,
-      child: Tooltip(
-        message: 'Enter a constant value for imputation',
+      child: DelayedTooltip(
+        message: '''
+        
+        Enter a constant value for imputation
+         
+        ''',
         child: TextField(
           controller: _controller,
           decoration: const InputDecoration(
