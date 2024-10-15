@@ -70,7 +70,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: dcm analyze .
-      - run: dcm fix lib
   # END LINTING STAGE
 
   # BEGIN TESTING STAGE
