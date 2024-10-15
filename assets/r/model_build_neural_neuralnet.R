@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 20:15:24 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-15 15:35:53 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -96,7 +96,7 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula = formula_nn,
     data = ds_onehot,
-    hidden = HIDDEN_NEURONS,
+    hidden = NEURAL_HIDDEN_LAYERS,
     act.fct = NEURAL_ACT_FCT,
     err.fct = NEURAL_ERROR_FCT,
     linear.output = FALSE,
@@ -131,7 +131,7 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula = formula_nn,
     data = ds_onehot,
-    hidden = HIDDEN_LAYERS,
+    hidden = NEURAL_HIDDEN_LAYERS,
     act.fct = NEURAL_ACT_FCT,
     err.fct = NEURAL_ERROR_FCT,
     linear.output = FALSE,
