@@ -1,4 +1,4 @@
-name: cicd
+name: Run Dart Code Metrics
 
 on:
   push:
@@ -48,23 +48,22 @@ jobs:
   #       with:
   #         fatal-infos: true
 
-  # markdown-lint:
-  #   if: contains(github.event.head_commit.message, 'cicd')
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 18
-  #     - run: npm install -g markdownlint-cli
-  #     - run: markdownlint . -p .markdownlintignore -c .markdownlint.yaml
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install -g markdownlint-cli
+      - run: markdownlint assets/markdown
+        # -p .markdownlintignore -c .markdownlint.yaml
 
   dcm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
-#      - uses: bluefireteam/melos-action@v3
       - name: Install DCM
         uses: CQLabs/setup-dcm@v1
         with:
