@@ -23,14 +23,14 @@ contributions are also most welcome.
 
 ## Resources
 
-+ Rattle home page: https://rattle.togaware.com
++ [Rattle home page](https://rattle.togaware.com)
 + Rattle V5 is well covered in
   [Data Mining with Rattle and R](https://bit.ly/rattle_data_mining)
-+ Rattle utilises R templates as introduced in 
++ Rattle utilises R templates as introduced in
   [The Essentials of Data Science](https://bit.ly/essentials_data_science)
-+ Rattle is licensed under the 
-  [GNU General Public License, Version 3](https://www.gnu.org/licenses/gpl-3.0.en.html), 
-  making it free for you to use forever.
++ Rattle is licensed under the [GNU General Public License, Version
+  3](https://www.gnu.org/licenses/gpl-3.0.en.html), making it free for
+  you to use forever.
 + Also visit Togaware's [Data Science Protal](https://togaware.com/onepager.html).
 
 Rattle comes with **NO WARRANTY**. Rattle, RattleNG, and the

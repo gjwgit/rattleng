@@ -13,10 +13,10 @@ bit of style and make them engaging for your audience.
 By default the script is saved as the file *script.R* in your home
 folder (or from where you started up Rattle).
 
-To run a file as an R script use the command line like:
+To run a file as an R script use a shell command line like:
 
-```bash
-$ Rscript script.R
+```
+Rscript script.R
 ```
 
 If you start up R itself, like the R Console or RStudio, run the

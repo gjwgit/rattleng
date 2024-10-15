@@ -21,7 +21,7 @@ R was archived in 2020.
 
 The Debian/Ubuntu version is still available and can be installed as:
 
-```
+```bash
 sudo apt install ggobi
 ```
 
