@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-10-15 15:38:12 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 20:12:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -52,8 +52,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Demo Model Neural NNet Params:', () {
-    testWidgets('Load, Ignore, Navigate, Settings, Build.',
-        (WidgetTester tester) async {
+    testWidgets('Load, Ignore, Navigate, Settings, Build.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
 

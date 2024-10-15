@@ -19,7 +19,7 @@ we will want to save the new version. After working on our dataset
 through the Transform tab it is a good idea to save the data. We can
 do this from the **Console** tab:
 
-```
+```r
 ds %>%
   dplyr::select(date, location, min_temp, max_temp, temp_9am, temp_3pm) %>%
   readr::write_csv('my_new_dataset.csv')
@@ -29,4 +29,4 @@ Visit the [Data Science Survival
 Guide](https://survivor.togaware.com/datascience/transforming-data-in-rattle.html)
 for further details.
 
-> 
+>

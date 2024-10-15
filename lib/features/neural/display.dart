@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-09-21 10:14:52 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 20:06:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -114,11 +114,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
       // Remove the repeated first two lines.
 
       lines = weights.split('\n');
-      if (lines.length > 2) {
-        lines = lines.sublist(2);
-      } else {
-        lines = [];
-      }
+      lines = lines.length > 2 ? lines.sublist(2) : [];
 
       // If the line starts with ' +b' then insert an empty line.
 

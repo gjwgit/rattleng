@@ -1,6 +1,6 @@
 /// R Scripts: Support for running a script.
 ///
-/// Time-stamp: <Sunday 2024-10-13 05:30:20 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-15 17:07:04 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -433,9 +433,10 @@ Future<void> rSource(
 
 //  if (code.contains('Processing $script Completed')) {
   setStatus(
-      ref,
-      'R scripts **$scripts** completed. '
-      'See **Console** for details, **Script** for R code.');
+    ref,
+    'R scripts **$scripts** completed. '
+    'See **Console** for details, **Script** for R code.',
+  );
   // if (context.mounted) {
   //   ScaffoldMessenger.of(context).showSnackBar(
   //     SnackBar(
