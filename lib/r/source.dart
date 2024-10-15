@@ -363,7 +363,7 @@ Future<void> rSource(
   // NEURAL
 
   code = code.replaceAll('HIDDEN_LAYERS', hiddenLayerSizes.toString());
-  code = code.replaceAll('HIDDEN_NEURONS', 'c($hiddenNeurons)');
+  code = code.replaceAll('NEURAL_HIDDEN_LAYERS', 'c($hiddenNeurons)');
   code = code.replaceAll('MAXIT', nnetMaxit.toString());
   code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
   code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
