@@ -76,7 +76,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         ChoiceChipTip<String>(
           options: normaliseMethods,
