@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-10-11 12:09:30 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 15:23:37 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -102,16 +102,19 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           label: 'Interval',
           tooltip: '''
 
-        When rescaling a numeric variable using an Interval, the numeric value
-        here is the maximum value for the resulting interval. A default
-        maximum value of 100 is often used. The minimum value is fixed as 0.
+          When rescaling a numeric variable using an Interval, the numeric value
+          here is the maximum value for the resulting interval. A default
+          maximum value of 100 is often used. The minimum value is fixed as 0.
 
-        ''',
+          ''',
           controller: valCtrl,
-          inputFormatter:
-              FilteringTextInputFormatter.digitsOnly, // Integers only
+
+          // Allow integers only.
+
+          inputFormatter: FilteringTextInputFormatter.digitsOnly,
           validator: (value) => validateInteger(value, min: 1),
           stateProvider: intervalProvider,
+
           // Enable only when "Interval" is selected.
 
           enabled: selectedTransform == 'Interval',
