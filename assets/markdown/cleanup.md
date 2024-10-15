@@ -6,10 +6,10 @@ numbers through the use of the **Transform** tab features **Impute**,
 deletion of rows (observations) and columns (variables) from the
 dataset. You can freely undertake transforms that add new variables,
 explore whether they play a role in the analysis, and to remove any
-that are not required. 
+that are not required.
 
 To undertake your dataset **Cleanup** you can choose from the
-following options: 
+following options:
 
 + **Delete Vars with Missing**;
 
@@ -34,4 +34,4 @@ ds %>%
   readr::write_csv('my_new_dataset.csv')
 ```
 
-> 
+>

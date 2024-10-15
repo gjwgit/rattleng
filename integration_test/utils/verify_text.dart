@@ -1,6 +1,6 @@
-/// function to verify the text content in the widget
+/// Verify multiple text content in the widget
 //
-// Time-stamp: <Tuesday 2024-08-27 20:54:02 +0800 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 13:33:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,13 +21,17 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
+
 library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> verifyTextContent(WidgetTester tester, String? value) async {
-  if (value != null) {
+Future<void> verifyText(
+  WidgetTester tester,
+  List<String> values,
+) async {
+  for (final value in values) {
     final valueFinder = find.textContaining(value);
     expect(valueFinder, findsOneWidget);
   }

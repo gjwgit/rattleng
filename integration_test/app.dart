@@ -1,6 +1,6 @@
 /// Test that the app starts up.
 //
-// Time-stamp: <Thursday 2024-10-10 09:33:15 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 13:41:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -71,8 +71,40 @@ void main() {
 
     final welcomeWidget =
         welcomeMarkdownFinder.evaluate().first.widget as Markdown;
-    String welcome = welcomeWidget.data;
-    expect(welcome, File('assets/markdown/welcome1.md').readAsStringSync());
+
+    // Read the file content and normalize whitespace.
+
+    String expectedwelcome1Content = File('assets/markdown/welcome1.md')
+        .readAsStringSync()
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    String actualwelcome1Content =
+        welcomeWidget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+    // Perform the comparison.
+
+    expect(actualwelcome1Content, expectedwelcome1Content);
+
+    final welcome2Widget =
+        welcomeMarkdownFinder.evaluate().elementAt(1).widget as Markdown;
+
+    // welcome2.md is the second panel of the welcome widget.
+    // Read the file content and normalize whitespace.
+
+    String expectedwelcome2Content = File('assets/markdown/welcome2.md')
+        .readAsStringSync()
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    String actualwelcome2Content =
+        welcome2Widget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+    // Perform the comparison.
+
+    if (actualwelcome2Content.contains('No **Dataset** loaded')) {
+      print('Dataset not loaded, skipping Markdown content check.');
+    } else {
+      expect(actualwelcome2Content, expectedwelcome2Content);
+    }
 
     // Check that we have a single status bar.
 

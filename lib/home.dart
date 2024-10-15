@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 05:37:07 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-15 17:06:38 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -201,13 +201,19 @@ class RattleHomeState extends ConsumerState<RattleHome>
           // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
 
           if (path.isNotEmpty) {
-            // On leaving the DATASET tab we run the data template if there is a
-            // dataset loaded, as indicated by the path having a value.
+            // 20241008 gjw On leaving the DATASET tab we run the data template
+            // if there is a dataset loaded, as indicated by the path having a
+            // value. We need to run the template here after we have loaded and
+            // setup the variable roles. Trying to run the dataset template
+            // before leaving the DATASET tab results TARGET in and RISK being
+            // set to NULL.
             //
             // Note that variable roles are set up in
-            // `features/dataset/display.dart`.
+            // `features/dataset/display.dart` after the dataset is loaded and
+            // we need to wait until the roles are set before we run the
+            // template.
 
-            rSource(context, ref, 'dataset_template');
+            rSource(context, ref, ['dataset_template']);
           }
         }
 
@@ -241,6 +247,7 @@ Xu, Yixiang Yin, Bo Zhang.
   @override
   Widget build(BuildContext context) {
     Flavor flavor = catppuccin.latte;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: flavor.mantle,
@@ -369,6 +376,43 @@ Xu, Yixiang Yin, Bo Zhang.
           //   },
           //   tooltip: 'TODO: Save the current view to file.',
           // ),
+
+          // Install R Packages
+
+          DelayedTooltip(
+            message: '''
+
+            R Package Installation: Tap here to check for any R packages that
+            need to be installed. If any are missing locally they will be
+            installed. All packages will also then be loaded into R. Check the
+            CONSOLE tab for details.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.download,
+                color: Colors.blue,
+              ),
+              onPressed: () async {
+                showOk(
+                  context: context,
+                  title: 'Install R Packages',
+                  content: '''
+
+                  Rattle is now checking each of the requisite R packages and if
+                  not available on your local installation it will be downloaded
+                  and installed. This can take some time (five or more minutes)
+                  depending on how many packages need to be instaleld. Please
+                  check the CONSOLE tab to monitor progress. Type Ctrl-C in the
+                  CONSOLE to abort.
+
+                  ''',
+                );
+                await rSource(context, ref, ['packages']);
+                // TODO 20241014 gjw HOW TO NAVIGATE TO THE CONSOLE TAB
+              },
+            ),
+          ),
 
           // Settings.
 

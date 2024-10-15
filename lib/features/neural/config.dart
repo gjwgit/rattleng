@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-27 09:31:53 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:48:53 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -93,6 +93,12 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             // The BUILD button.
             ActivityButton(
               key: const Key('Build Neural Network'),
+              tooltip: '''
+
+              Tap to build a Nerual Network model using the parameter values
+              that you can set here.
+
+              ''',
               pageControllerProvider:
                   neuralPageControllerProvider, // Optional navigation
 
@@ -145,9 +151,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   // Run the R scripts.
 
-                  await rSource(context, ref, 'model_template');
+                  await rSource(context, ref, ['model_template']);
                   if (context.mounted) {
-                    await rSource(context, ref, 'model_build_neural_net');
+                    await rSource(context, ref, ['model_build_neural_net']);
                   }
                 }
               },
@@ -182,7 +188,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
           ],
         ),
 
-        configTopSpace,
+        configRowSpace,
 
         Row(
           children: [
@@ -238,6 +244,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
           ],
         ),
+        configBotSpace,
       ],
     );
   }

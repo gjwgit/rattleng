@@ -11,7 +11,7 @@ Rattle.
 
 **Two-sample tests** compare the distribution of the values of two
 independent variables to determine whether they come from the
-same population and the same statistical properties. 
+same population and the same statistical properties.
 
 **Paired two-sample tests** assume that we have two samples or
 observations, and that we are testing for a change, usually from one
@@ -35,5 +35,3 @@ test of the hypothesis that the medians are different.
 
 Tests on *variation in the data* include the **f-Test**, a parametric
 test of the hypothesis that the variances are different.
-
-

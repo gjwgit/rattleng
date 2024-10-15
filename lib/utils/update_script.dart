@@ -1,6 +1,6 @@
-/// Update the script provider which captures the R code to replicate the project.
+/// Update the script provider to capture R code to replicate the project.
 ///
-/// Time-stamp: <Wednesday 2024-07-31 08:24:34 +1000 Graham Williams>
+/// Time-stamp: <Monday 2024-10-07 19:02:29 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +31,5 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/script.dart';
 
 void updateScript(WidgetRef ref, String code) {
-  // ref.read(scriptProvider.notifier).state = ref.read(scriptProvider) + code;
   ref.read(scriptProvider.notifier).update((state) => state + code);
 }

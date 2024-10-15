@@ -1,11 +1,11 @@
-# Rattle Scripts: The main setup.
+# Setup a new Rattle session.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-10-10 09:07:18 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-10-13 17:24:37 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -26,14 +26,18 @@
 #
 # Author: Graham Williams
 
-# Initialise R with required packages.
+# TIMESTAMP
 #
-# The concept of templates for data science was introduced in my book,
-# The Essentials of Data Science, 2017, CRC Press, referenced
-# throughout this script as @williams:2017:essentials
+# The concept of templates for data science was introduced in The
+# Essentials of Data Science, 2017, CRC Press, referenced throughout
+# this script as @williams:2017:essentials
 # (https://bit.ly/essentials_data_science). On-line examples are
-# available from my Data science Desktop Survival Guide
+# available from the Data Science Desktop Survival Guide
 # https://survivor.togaware.com/datascience/.
+
+####################################
+# Load/Install Required Packages
+####################################
 
 # We begin most scripts by loading the required packages.  Here are
 # some initial packages to load and others will be identified as we
@@ -41,64 +45,58 @@
 # collect together the library commands at the beginning of the script
 # here.
 
+# 20241007 gjw Loading packages requires they are already installed
+# into a local library. The RattleNG installation instructions
+# recommends installing these packages before running rattle for the
+# first time. From within RattleNG, tap the DOWNLOAD button in the top
+# right button bar which will run the `packages.R` script to check and
+# install any missing packages.
+
+library(ggplot2)      # To support a local rattle theme.
+
 ####################################
-# Load/Instal Required Packages
+# Default settings
 ####################################
 
-# 20240816 gjw How to keep R from asking to select a CRAN site?
-# Sometimes I see the popup (perhaps on MacOS) and others it just
-# fails.
+# The crayon package in R is used to produce highlighted and
+# emboldened output to the console. We turn off the fancy terminal
+# escape sequences here. These tend to make the parsing of the text
+# output presented to STDOUT somewhat challenging for Rattle.
 
-# options(repos = c(CRAN = "https://cloud.r-project.org"))
-# options(install.packages.ask = FALSE)
+options(crayon.enabled = FALSE)
 
-library("Hmisc")
-library("VIM")
-library("corrplot")
-library("descr")
-library("fBasics")
-library("ggcorrplot")
-library("ggthemes")
-library("janitor")    # Cleanup: clean_names() remove_constant().
-library("jsonlite")
-library("magrittr")   # Utilise %>% and %<>% pipeline operators.
-library("mice")
-library("naniar")
-library("nnet")
-library("xgboost")
-library("NeuralNetTools")
-library("party")
-library("randomForest")
-library("rattle")     # Access the weather dataset and utilities.
-library("readr")
-library("reshape")
-library("rpart")
-library("skimr")
-library("tidyverse")  # ggplot2, tibble, tidyr, readr, purr, dplyr, stringr
-library("tm")
-library("verification")
-library("wordcloud")
+# TODO 20241007 gjw MOVE WIDTH LITERAL INTO SETTINGS
 
-# Set the width wider than the default 80. Experimentally") on Linux,
+# Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
 
 options(width=120)
 
-# Turn off fancy terminal escap sequences that are produced using the
-# crayon package.
+# TODO 20241007 gjw MOVE SEED LITERAL INTO SETTINGS
 
-options(crayon.enabled = FALSE)
-
-# A pre-defined value for the random seed ensures that results are
-# repeatable.
+# A pre-defined value for the random seed. Setting the random seed to
+# a specific known value ensures that the processing and analyses
+# undertaken in Rattle are repeatable every time. Usually, with a
+# different random seed each time R starts up we get different
+# results, like different partitioning, differe trees, etc.
 
 set.seed(42)
 
-# A support function to move into rattle to provide the dataset
-# summary as JSON used by RattleNG as the dataset summary from which
-# RattleNG gets all of it's meta data. Note the dependency on
-# jsonlite.
+####################################
+# Support Functions
+####################################
+
+# TODO 20241007 gjw MOVE R SUPPORT FUNCTIONS INTO RATTLE R PACKAGE
+#
+# Or else are there equivalent functions in other packages.
+
+library(jsonlite)
+library(lubridate)    # Check if variable is a date.
+
+# A function to provide the dataset summary as JSON which can then be
+# parsed by Rattle as the dataset summary from which Rattle gets all
+# of it's meta data.
 
 meta_data <- function(df) {
   summary_list <- lapply(names(df), function(var_name) {
@@ -114,16 +112,33 @@ meta_data <- function(df) {
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
-    } else if (is.factor(x) || is.character(x)) {
+    } else if (is.factor(x)) {
       list(
-        datatype = "categoric",
+        datatype = "factor",
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
+    } else if (is.character(x)) {
+      list(
+        datatype = "character",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
+        unique = length(unique(x)),
+        missing = sum(is.na(x))
+      )
+    } else if (lubridate::is.Date(x)) {
+      list(
+        datatype = "date",
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
     } else {
       list(
         datatype = "other",
-        message = "No summary available for this type"
+        unique = length(unique(x)),
+        missing = sum(is.na(x)),
       )
     }
   })
@@ -145,7 +160,8 @@ if (username == "") {
   username <- Sys.getenv("USERNAME")  # On Windows
 }
 
-# Check if a variable is a factor (including ordered factors) and has more than 20 levels.
+# Check if a variable is a factor (including ordered factors) and has
+# more than 20 levels.
 
 is_large_factor <- function(x, maxfactor = 20) {
   is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
@@ -161,8 +177,51 @@ is_large_factor <- function(x, maxfactor = 20) {
   if (is_categorical) {
     return(num_levels > maxfactor)
   }
+
   return(FALSE)
 }
+
+# First  check if values in a column are unique.
+
+check_unique <- function(x) {
+  !any(duplicated(x))
+}
+
+# Then find columns with unique values.
+
+unique_columns <- function(df) {
+  col_names <- names(df)
+  unique_cols <- col_names[sapply(df, check_unique)]
+  return(unique_cols)
+}
+
+find_fewest_levels <- function(df) {
+  # Select only the categorical (factor) columns from the data frame
+  categoric_vars <- df[, sapply(df, is.factor), drop = FALSE]
+  
+  # Check if there are any categorical variables
+  if (ncol(categoric_vars) > 0) {
+    # Find the variable with the fewest levels
+    fewest_levels_var <- names(categoric_vars)[which.min(sapply(categoric_vars, nlevels))]
+    
+    # Find all variables that have the fewest levels
+    min_levels <- min(sapply(categoric_vars, nlevels))
+    fewest_levels_vars <- names(categoric_vars)[sapply(categoric_vars, nlevels) == min_levels]
+    
+    # Select the last variable in case of ties
+    fewest_levels_var <- fewest_levels_vars[length(fewest_levels_vars)]
+    
+    # Return the variable with the fewest levels
+    return(fewest_levels_var)
+  } else {
+    # If no categorical variables are found, return a message
+    return("")
+  }
+}
+
+####################################
+# A Rattle Theme for Graphics
+####################################
 
 # A palette for rattle!
 

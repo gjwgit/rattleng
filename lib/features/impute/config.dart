@@ -156,22 +156,22 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     } else {
       switch (selectedTransform) {
         case 'Zero/Missing':
-          rSource(context, ref, 'transform_impute_zero_missing');
+          rSource(context, ref, ['transform_impute_zero_missing']);
         case 'Mean':
-          rSource(context, ref, 'transform_impute_mean_numeric');
+          rSource(context, ref, ['transform_impute_mean_numeric']);
         case 'Median':
-          rSource(context, ref, 'transform_impute_median_numeric');
+          rSource(context, ref, ['transform_impute_median_numeric']);
         case 'Mode':
-          rSource(context, ref, 'transform_impute_mode');
+          rSource(context, ref, ['transform_impute_mode']);
         case 'Constant':
-          rSource(context, ref, 'transform_impute_constant');
+          rSource(context, ref, ['transform_impute_constant']);
         default:
           showUnderConstruction(context);
       }
       // Notice that rSource is asynchronous so this glimpse is oftwn happening
       // before the above transformation.
       //
-      // rSource(context, ref, 'glimpse');
+      // rSource(context, ref, ['glimpse']);
     }
   }
 

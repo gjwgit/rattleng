@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-08-11 19:28:24 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 09:13:28 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,6 +25,8 @@
 # Author: Graham Williams
 
 # Transform "SELECTED_VAR" by replacing NA with the mean value.
+
+library(dplyr)        # Wrangling: mutate().
 
 if (is.numeric(ds$SELECTED_VAR))
 {
