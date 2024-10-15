@@ -1,7 +1,7 @@
 # Decision Trees
 
 A **decision tree** is the prototypical data mining tool used widely
-for its ease of interpretation. 
+for its ease of interpretation.
 
 A decision tree consists of a root node where the data is split into
 two (for a binary tree) smaller datasets using a test on a single
