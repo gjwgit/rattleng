@@ -1,6 +1,6 @@
 /// Initialises the app for testing.
 //
-// Time-stamp: <Tuesday 2024-09-10 15:56:42 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 19:24:31 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,5 +37,6 @@ Future<ProviderContainer> initApp(WidgetTester tester) async {
     ),
   );
   await tester.pumpAndSettle();
+
   return container;
 }

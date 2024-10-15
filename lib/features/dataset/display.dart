@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Tuesday 2024-10-15 14:12:20 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 20:08:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -148,17 +148,15 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           // Both the header row and the regular row shares the same flex
           // index.
 
-          if (index == 0) {
-            return _buildHeadline();
-          } else {
-            // Regular data rows. We subtract 1 from the index to get the
-            // correct variable since the first row is the header row.
-
-            return _buildDataLine(
-              vars[index - 1],
-              currentRoles,
-            );
-          }
+          return index == 0
+              ? _buildHeadline()
+              :
+              // Regular data rows. We subtract 1 from the index to get the
+              // correct variable since the first row is the header row.
+              _buildDataLine(
+                  vars[index - 1],
+                  currentRoles,
+                );
         },
       ),
     );
@@ -443,6 +441,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String subStr =
         content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
+
     return '${lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr} ...';
   }
 }
