@@ -69,6 +69,23 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     'Interval',
   ];
 
+  // Define tooltips for normaliseMethods.
+
+  Map<String, String> normaliseMethodTooltips = {
+    'Recenter': 'Recenter the values around the mean.',
+    'Scale [0-1]': 'Rescale values to range between 0 and 1.',
+    '-Median/MAD': 'Rescale using Median and Median Absolute Deviation.',
+    'Natural Log': 'Apply natural logarithmic transformation.',
+    'Log 10': 'Apply base 10 logarithmic transformation.',
+  };
+
+  // Define tooltips for orderMethods.
+
+  Map<String, String> orderMethodTooltips = {
+    'Rank': 'Rescale based on the rank order of the values.',
+    'Interval': 'Rescale within the specified interval range.',
+  };
+
   String selectedTransform = 'Recenter';
 
   Widget rescaleChooser() {
@@ -77,6 +94,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
     return Row(
       children: [
+        // Add tooltips to normaliseMethods ChoiceChipTip.
+
         ChoiceChipTip<String>(
           options: normaliseMethods,
           selectedOption: selectedTransform,
@@ -85,8 +104,13 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selectedTransform = selected ?? '';
             });
           },
+          // Adding tooltips here.
+
+          tooltips: normaliseMethodTooltips,
         ),
         configWidgetSpace,
+        // Add tooltips to orderMethods ChoiceChipTip.
+
         ChoiceChipTip<String>(
           options: orderMethods,
           selectedOption: selectedTransform,
@@ -95,6 +119,9 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selectedTransform = selected ?? '';
             });
           },
+          // Adding tooltips here.
+
+          tooltips: orderMethodTooltips,
         ),
         configWidgetSpace,
         NumberField(
@@ -107,8 +134,10 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
           ''',
           controller: valCtrl,
-          inputFormatter:
-              FilteringTextInputFormatter.digitsOnly, // Integers only
+
+          // Only allow digits to be entered.
+
+          inputFormatter: FilteringTextInputFormatter.digitsOnly,
           validator: (value) => validateInteger(value, min: 1),
           stateProvider: intervalProvider,
         ),
