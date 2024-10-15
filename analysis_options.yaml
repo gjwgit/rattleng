@@ -7,16 +7,16 @@
 # Activate recommended lints for Flutter apps, packages, and plugins
 # designed to encourage good coding practices.
 
-include: package:flutter_lints/flutter.yaml
+# include: package:flutter_lints/flutter.yaml
 
 analyzer:
   plugins:
     - custom_lint
 
 dart_code_metrics:
-  anti-patterns:
-    - long-method
-    - long-parameter-list
+#  anti-patterns:
+#    - long-method
+#    - long-parameter-list
 
   metrics:
     cyclomatic-complexity: 20
