@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Monday 2024-10-14 07:43:00 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 19:23:25 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -64,8 +64,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Large Molde Neural NNet Configure:', () {
-    testWidgets('Load, Ignore, Navigate, Configure, Build.',
-        (WidgetTester tester) async {
+    testWidgets('Load, Ignore, Navigate, Configure, Build.', (
+      WidgetTester tester,
+    ) async {
       app.main();
 
       await tester.pumpAndSettle();

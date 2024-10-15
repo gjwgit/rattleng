@@ -1,6 +1,6 @@
 /// Test visual image disappear after the DATASET RESET.
 //
-// Time-stamp: <Friday 2024-09-20 08:09:48 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 19:24:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -133,8 +133,9 @@ void main() {
     });
   });
 
-  testWidgets('large dataset tree image disappear.',
-      (WidgetTester tester) async {
+  testWidgets('large dataset tree image disappear.', (
+    WidgetTester tester,
+  ) async {
     app.main();
     await tester.pumpAndSettle();
     await tester.pump(interact);

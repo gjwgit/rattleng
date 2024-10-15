@@ -1,4 +1,4 @@
-Survival Regression Model
+# Survival Regression Model
 
 Build a regression model taking into account the censoring of the
 data. Censoring is the phenomenon of having data relating to some
