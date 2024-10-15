@@ -41,6 +41,7 @@ import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 /// This is a StatefulWidget to pass the REF across to the rSource as well as to
@@ -89,53 +90,73 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   // Transform chooser widget with tooltips for each chip.
 
+  // Widget transformChooser() {
+  //   return Align(
+  //     // Align the chips to the left.
+  //     alignment: Alignment.centerLeft,
+  //     child: Wrap(
+  //       spacing: 5.0,
+  //       runSpacing: choiceChipRowSpace,
+  //       children: methods.map((transform) {
+  //         bool disableNumericMethods;
+  //         if (selected != 'NULL') {
+  //           disableNumericMethods = numericMethods.contains(transform) &&
+  //               ref.read(typesProvider)[selected] == Type.categoric;
+  //         } else {
+  //           disableNumericMethods = false;
+  //           debugPrint('Error: selected is NULL!!!');
+  //         }
+
+  //         return ChoiceChipTip<String>(
+  //           options: methods,
+  //           selectedOption: selectedTransform,
+  //           onSelected: (transform) {
+  //             setState(() {
+  //               selectedTransform = transform ?? '';
+  //               if (selectedTransform == 'Constant') {
+  //                 _setConstantDefault();
+  //               }
+  //             });
+  //           },
+  //           getLabel: (transform) => transform,
+  //           tooltips: const {
+  //             'Mean': 'Select Mean for imputation',
+  //             'Median': 'Select Median for imputation',
+  //             'Mode': 'Select Mode for imputation',
+  //             'Constant': 'Select Constant for imputation',
+  //           },
+  //           enabled: true,
+  //         );
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
+
+  // Transform chooser widget with tooltips for each chip.
+
   Widget transformChooser() {
     return Align(
       // Align the chips to the left.
       alignment: Alignment.centerLeft,
-      child: Wrap(
-        spacing: 5.0,
-        runSpacing: choiceChipRowSpace,
-        children: methods.map((transform) {
-          bool disableNumericMethods;
-          if (selected != 'NULL') {
-            disableNumericMethods = numericMethods.contains(transform) &&
-                ref.read(typesProvider)[selected] == Type.categoric;
-          } else {
-            disableNumericMethods = false;
-            debugPrint('Error: selected is NULL!!!');
-          }
-
-          return DelayedTooltip(
-            message: '''
-
-            Select $transform for imputation
-
-            ''',
-            child: ChoiceChip(
-              selectedColor: Colors.lightBlue[200],
-              showCheckmark: false,
-              backgroundColor: disableNumericMethods
-                  ? Colors.grey[300]
-                  : Colors.lightBlue[50],
-              shadowColor: Colors.grey,
-              pressElevation: 8.0,
-              elevation: 2.0,
-              selected: selectedTransform == transform,
-              label: Text(transform),
-              onSelected: disableNumericMethods
-                  ? null
-                  : (bool selected) {
-                      setState(() {
-                        selectedTransform = selected ? transform : '';
-                        if (selectedTransform == 'Constant') {
-                          _setConstantDefault();
-                        }
-                      });
-                    },
-            ),
-          );
-        }).toList(),
+      child: ChoiceChipTip<String>(
+        options: methods,
+        selectedOption: selectedTransform,
+        onSelected: (transform) {
+          setState(() {
+            selectedTransform = transform ?? '';
+            if (selectedTransform == 'Constant') {
+              _setConstantDefault();
+            }
+          });
+        },
+        getLabel: (transform) => transform,
+        tooltips: const {
+          'Mean': 'Select Mean for imputation',
+          'Median': 'Select Median for imputation',
+          'Mode': 'Select Mode for imputation',
+          'Constant': 'Select Constant for imputation',
+        },
+        enabled: true,
       ),
     );
   }
