@@ -113,9 +113,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
         ref.read(maxNWtsProvider.notifier).state.toString();
     _maxitController.text = ref.read(maxitProvider.notifier).state.toString();
 
-    String algorithm = ref.read(neuralAlgorithmProvider.notifier).state;
+    String algorithm = ref.read(algorithmNeuralProvider.notifier).state;
     String function = ref.read(neuralnetErrorFctProvider.notifier).state;
-    String action = ref.read(neuralnetActionFctProvider.notifier).state;
+    String action = ref.read(actionFctNeuralProvider.notifier).state;
 
     return Column(
       children: [
@@ -220,7 +220,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                 setState(() {
                   if (chosen != null) {
                     algorithm = chosen;
-                    ref.read(neuralAlgorithmProvider.notifier).state = chosen;
+                    ref.read(algorithmNeuralProvider.notifier).state = chosen;
                   }
                 });
               },
@@ -393,7 +393,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               actionFunction,
               action,
               ref,
-              neuralnetActionFctProvider,
+              actionFctNeuralProvider,
               tooltip: '''
 
               Function that is used for smoothing the result of the cross product 
@@ -405,7 +405,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               enabled: algorithm == 'neuralnet',
               onChanged: (String? value) {
                 if (value != null) {
-                  ref.read(neuralnetActionFctProvider.notifier).state = value;
+                  ref.read(actionFctNeuralProvider.notifier).state = value;
                 }
               },
             ),
