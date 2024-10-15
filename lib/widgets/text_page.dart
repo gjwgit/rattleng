@@ -25,9 +25,13 @@
 
 library;
 
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -62,13 +66,24 @@ class TextPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          MarkdownBody(
-            data: wordWrap(title),
-            selectable: true,
-            onTapLink: (text, href, title) {
-              final Uri url = Uri.parse(href ?? '');
-              launchUrl(url);
-            },
+          // Add the button to view and save as PDF
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              MarkdownBody(
+                data: wordWrap(title),
+                selectable: true,
+                onTapLink: (text, href, title) {
+                  final Uri url = Uri.parse(href ?? '');
+                  launchUrl(url);
+                },
+              ),
+              ElevatedButton.icon(
+                icon: Icon(Icons.picture_as_pdf),
+                label: Text('Save as PDF'),
+                onPressed: () => _saveAsPdf(context),
+              ),
+            ],
           ),
           Expanded(
             child: Scrollbar(
@@ -105,6 +120,51 @@ class TextPage extends StatelessWidget {
     );
   }
 
+  // Function to save the content as a PDF file and open it.
+  Future<void> _saveAsPdf(BuildContext context) async {
+    final pdf = pw.Document();
+
+    // Apply word wrapping to the content using the wordWrap function
+    String wrappedContent = wordWrap(content, width: 60);
+
+    // Add the title and content to the PDF
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) => pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(title,
+                style:
+                    pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 20),
+
+            // Use wrapped content to ensure proper word wrapping in the PDF
+            pw.Text(wrappedContent, style: pw.TextStyle(fontSize: 16)),
+          ],
+        ),
+      ),
+    );
+
+    // Save the PDF to a file
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/text_page.pdf';
+    final file = File(filePath);
+    await file.writeAsBytes(await pdf.save());
+
+    // Show a SnackBar with the file path and open the PDF
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('PDF saved at $filePath'),
+        action: SnackBarAction(
+          label: 'Open',
+          onPressed: () {
+            launchUrl(Uri.file(filePath));
+          },
+        ),
+      ),
+    );
+  }
+
 //   // Utility function to capitalize each line, add line spacing, and indent lines.
 
 //   String _formatContent(String content) {
@@ -116,7 +176,7 @@ class TextPage extends StatelessWidget {
 
 //       // Capitalize the first letter of each line.
 
-//       if (line.isNotEmpty) {
+//       if (line isNotEmpty) {
 //         line = '${line[0].toUpperCase()}${line.substring(1)}';
 //       }
 
