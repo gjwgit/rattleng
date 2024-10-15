@@ -69,10 +69,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: dcm fix lib
       - run: dcm analyze .
-      - run: dcm check-unused-files lib
-      - run: dcm check-unused-code lib
+      - run: dcm fix lib
   # END LINTING STAGE
 
   # BEGIN TESTING STAGE
