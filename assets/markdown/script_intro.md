@@ -15,7 +15,7 @@ folder (or from where you started up Rattle).
 
 To run a file as an R script use a shell command line like:
 
-```
+```bash
 Rscript script.R
 ```
 
