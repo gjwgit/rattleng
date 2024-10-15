@@ -39,7 +39,7 @@ mdesc <- "Neural Network"
 model_nn <- nnet(
   form,
   data = ds[tr, vars],
-  size = NEURAL_HIDDEN_LAYERS,        # Number of units in the hidden layer
+  size = NNET_HIDDEN_LAYERS,        # Number of units in the hidden layer
   skip=TRUE,
   MaxNWts=NEURAL_MAX_NWTS,
   trace=FALSE,
