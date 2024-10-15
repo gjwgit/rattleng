@@ -116,7 +116,7 @@ Future<void> rSource(
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
   String neuralErrorFct = ref.read(neuralnetErrorFctProvider);
-  String neuralActionFct = ref.read(neuralnetActionFctProvider);
+  String neuralActionFct = ref.read(actionFctNeuralProvider);
   String hiddenNeurons = ref.read(neuralHiddenProvider);
 
   int minSplit = ref.read(minSplitProvider);

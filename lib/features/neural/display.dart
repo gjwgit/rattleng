@@ -57,7 +57,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
     ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
-    String algorithm = ref.watch(neuralAlgorithmProvider);
+    String algorithm = ref.watch(algorithmNeuralProvider);
 
     String content = '';
 
