@@ -1,4 +1,4 @@
-# Rattle Scripts: Load a CSV file into the session as `ds`.
+# Load a CSV file into the session as `ds`.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
@@ -30,6 +30,11 @@
 #
 # TIMESTAMP
 #
+# The data contained in the file `FILENAME`
+# is loaded as a CSV file into the template variable `ds` (dataset),
+# intialising the `dsname` (a printable name for the dataset) and
+# `vnames` (the variable names).
+#
 # References:
 #
 # @williams:2017:essentials Chapter 3
@@ -41,9 +46,11 @@ library(readr)        # Read/write delimited data: read_csv().
 
 dsname <- "FILENAME" %>% basename() %>% sub(".csv$", "", .)
 
-assign(dsname, read_csv("FILENAME"))
+assign(dsname, readr::read_csv("FILENAME"))
 
 ds <- get(dsname)
+
+# Capture the original variable names for use in plots.
 
 vnames <- names(ds)
 

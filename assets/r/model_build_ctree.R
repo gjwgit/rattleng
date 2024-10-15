@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-09-30 12:42:32 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 17:03:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,12 +25,6 @@
 # Author: Graham Williams
 
 # Load required packages for conditional inference trees
-if (!requireNamespace("party", quietly = TRUE)) {
-  install.packages("party")
-}
-if (!requireNamespace("partykit", quietly = TRUE)) {
-  install.packages("partykit")
-}
 
 library(party)       # Conditional inference trees
 library(partykit)    # Enhanced visualization and interpretation

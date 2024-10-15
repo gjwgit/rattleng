@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Sunday 2024-09-08 12:08:42 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 17:06:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -221,6 +221,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size; // Get screen size
+
     return Material(
       color: Colors.transparent, // Set the material color to transparent
       child: Padding(
@@ -284,7 +285,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               ref
                                   .read(settingsGraphicThemeProvider.notifier)
                                   .setGraphicTheme(_selectedTheme!);
-                              rSource(context, ref, 'settings');
+                              rSource(context, ref, ['settings']);
                             }
                             Navigator.of(context).pop();
                           },
@@ -408,7 +409,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 //                       ref
 //                           .read(settingsGraphicThemeProvider.notifier)
 //                           .setGraphicTheme(_selectedTheme!);
-//                       rSource(context, ref, 'settings');
+//                       rSource(context, ref, ['settings']);
 //                     }
 //                     Navigator.of(context).pop();
 //                   },

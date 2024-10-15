@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-08-16 05:41:06 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-10-07 16:59:41 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,6 +33,10 @@
 # @williams:2017:essentials
 #
 # https://survivor.togaware.com/datascience/ for further details.
+
+library(dplyr)
+library(ggplot2)
+library(rattle)
 
 ########################################################################
 # BOX PLOT
@@ -112,6 +116,10 @@ tds <- merge(rattle::benfordDistr(digit, len),
 
 for (i in unique(ds$GROUP_BY_VAR))
   tds <- merge(tds, rattle::digitDistr(ds[ds$GROUP_BY_VAR==i, "SELECTED_VAR"], digit, len, i))
+
+# Remove the NA column if it exists. A bug in the rattle fucntion.
+
+tds <- tds[,which(colnames(tds) != "NA")]
 
 # Plot the digital distribution
 

@@ -132,9 +132,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
         // Choose which visualisations to run depending on the
         // selected variable.
         if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
-          rSource(context, ref, 'explore_visual_numeric');
+          rSource(context, ref, ['explore_visual_numeric']);
         } else {
-          rSource(context, ref, 'explore_visual_categoric');
+          rSource(context, ref, ['explore_visual_categoric']);
         }
       }
     }

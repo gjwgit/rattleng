@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Friday 2024-09-20 08:44:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 19:21:41 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -43,8 +43,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Missing.',
-        (WidgetTester tester) async {
+    testWidgets('Large Dataset, Explore, Missing.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);

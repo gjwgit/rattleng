@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:47:40 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-08 09:20:17 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,6 +28,8 @@
 # Transform "SELECTED_VAR" into "RMD_SELETED_VAR" using median/mad or
 # robust rescaling. The rescaling happens by subtracting the median
 # and dividing by median abs deviation.
+
+library(reshape)
 
 ds %<>%
   mutate(RMD_SELECTED_VAR = reshape::rescaler(SELECTED_VAR, "robust"))

@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-09-20 19:37:08 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 13:35:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,7 +36,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_first_button.dart';
-import 'utils/verify_multiple_text.dart';
+import 'utils/verify_text.dart';
 import 'utils/verify_next_page.dart';
 
 void main() {
@@ -83,7 +83,7 @@ void main() {
 
       // Verify specific statistical values for the imputed 'IZR_rainfall' variable.
 
-      await verifyMultipleTextContent(
+      await verifyText(
         tester,
         [
           'Min.   : 0.000', // Minimum value of 'IZR_rainfall'.

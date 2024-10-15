@@ -1,6 +1,6 @@
 /// Test and demonstrate the EXPLORE tab CORRELATION feature with the DEMO dataset.
 //
-// Time-stamp: <2024-10-06 06:20:03 gjw>
+// Time-stamp: <Tuesday 2024-10-15 10:51:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,7 +36,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_demo_dataset.dart';
 import 'utils/press_button.dart';
-import 'utils/verify_multiple_text.dart';
+import 'utils/verify_text.dart';
 import 'utils/verify_next_page.dart';
 
 void main() {
@@ -67,7 +67,7 @@ void main() {
         '1.00',
       );
 
-      await verifyMultipleTextContent(
+      await verifyText(
         tester,
         [
           // Verify risk_mm in the row.

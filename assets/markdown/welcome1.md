@@ -1,4 +1,4 @@
-# Welcome to **Rattle** (https://rattle.togaware.com).
+# Welcome to **Rattle**
 
 Rattle is a toolbox for data science, statistical analyses, data
 visualisation, machine learning, and artificial intelligence,
@@ -21,23 +21,17 @@ contributions are also most welcome.
 
 ---
 
-**Resources**
+## Resources
 
-+ Rattle V5 is well covered in 
++ [Rattle home page](https://rattle.togaware.com)
++ Rattle V5 is well covered in
   [Data Mining with Rattle and R](https://bit.ly/rattle_data_mining)
-
-+ Other online resources are available through [Rattle Official
-  Website](https://rattle.togaware.com)
-
-+ Rattle utilises R templates as introduced in [The Essentials of Data
-  Science](https://bit.ly/essentials_data_science)
-
++ Rattle utilises R templates as introduced in
+  [The Essentials of Data Science](https://bit.ly/essentials_data_science)
 + Rattle is licensed under the [GNU General Public License, Version
   3](https://www.gnu.org/licenses/gpl-3.0.en.html), making it free for
   you to use forever.
-
-+ Also visit Togaware's 
-  [Data Science Protal](https://togaware.com/onepager.html).
++ Also visit Togaware's [Data Science Protal](https://togaware.com/onepager.html).
 
 Rattle comes with **NO WARRANTY**. Rattle, RattleNG, and the
 collection of R template scripts are Copyright © 2006-2024 Togaware

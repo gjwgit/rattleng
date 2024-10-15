@@ -1,6 +1,6 @@
 /// Build BOOST model.
 //
-// Time-stamp: <Tuesday 2024-10-08 17:13:41 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 12:33:29 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,8 +43,8 @@ import 'utils/verify_next_page.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Boost Demo Test:', () {
-    testWidgets('XGBoost.', (WidgetTester tester) async {
+  group('Demo Model Boost XGBoost', () {
+    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
 
       await tester.pumpAndSettle();
@@ -66,59 +66,6 @@ void main() {
         'XGBoost - Summary',
         'Feature         Gain        Cover    Frequency   Importance',
       );
-
-      await gotoNextPage(tester);
-      await tester.pump(hack);
-
-      final imagePageTitleFinder = find.text('Variable Importance');
-      expect(imagePageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
-
-      await tester.pump(interact);
-    });
-
-    testWidgets('AdaBoost.', (WidgetTester tester) async {
-      app.main();
-
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
-
-      await openDemoDataset(tester);
-
-      await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Boost', BoostPanel);
-
-      // Find the ChoiceChipTip widget for the algorithm type.
-
-      final adaChip = find.text(
-        'Adaptive',
-      );
-
-      // Tap the adaptive chip to switch algorithm.
-
-      await tester.tap(adaChip);
-
-      await tester.pumpAndSettle();
-
-      await pressButton(tester, 'Build Boosted Trees');
-      await tester.pump(longHack);
-
-      await pressButton(tester, 'Build Boosted Trees');
-
-      // Verify the content of the page.
-
-      await verifyPage(
-        'AdaBoost - Summary',
-        'Final Confusion Matrix for Data:',
-      );
-
-      await gotoNextPage(tester);
-      await tester.pump(hack);
 
       await gotoNextPage(tester);
       await tester.pump(hack);

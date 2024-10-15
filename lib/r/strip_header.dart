@@ -1,6 +1,6 @@
 /// Utility to strip header comments from an R script file.
 ///
-/// Time-stamp: <Thursday 2023-11-02 09:09:27 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-10-07 18:59:28 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 /// The intention is to strip the initial copyright message from the script,

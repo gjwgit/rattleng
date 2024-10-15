@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <2024-10-06 09:42:44 gjw>
+// Time-stamp: <Tuesday 2024-10-15 19:22:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -135,8 +135,9 @@ void main() {
       await tester.pump(interact);
     });
 
-    testWidgets('rpart with different parameter settings.',
-        (WidgetTester tester) async {
+    testWidgets('rpart with different parameter settings.', (
+      WidgetTester tester,
+    ) async {
       app.main();
 
       await tester.pumpAndSettle();
@@ -195,12 +196,12 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(delay);
 
-      // Tap the right arrow to go to the second page.
+      // TODO 20241008 gjw DOUBLE TAP BUILD FOR TREE.
 
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-      // await tester.tap(rightArrowButton);
+      await tester.tap(decisionTreeButton);
       await tester.pumpAndSettle();
+
+      await tester.pump(hack);
 
       final secondPageTitleFinder = find.text('Decision Tree Model');
       expect(secondPageTitleFinder, findsOneWidget);
@@ -215,6 +216,7 @@ void main() {
 
       // Tap the right arrow to go to the third page.
 
+      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
 

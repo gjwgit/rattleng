@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Wednesday 2024-10-02 16:24:57 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2024-10-13 11:06:20 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -94,6 +94,8 @@ class RattleStateText extends ConsumerWidget {
     meta = meta.replaceAll(', min:', ',\n${" " * 18}min:');
     meta = meta.replaceAll(', unique:', ',\n${" " * 18}unique:');
 
+    String ignored = getIgnored(ref).join('\n${" " * 13}');
+
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
@@ -107,12 +109,13 @@ class RattleStateText extends ConsumerWidget {
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
             'META DATA:   $meta\n'
+            '\n**DEPRECATED** ROLES AND TYPES ARE BEING DEPRECATED.\n\n'
             'ROLES:       $role\n'
-            'TYPES:       $type\n'
+            'TYPES:       $type\n\n'
             'TARGET:      ${getTarget(ref)}\n'
             'RISK:        ${getRisk(ref)} \n'
             'IDENTIFIERS: \$identifiers \n'
-            'IGNORE:      ${getIgnored(ref)}\n'
+            'IGNORE:      $ignored\n'
             'SELECTED:    $selected\n'
             'SELECTED2:   $selected2\n'
             'GROUP BY:    $groupBy\n'

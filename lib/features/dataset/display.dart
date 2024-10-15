@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-10-09 20:04:37 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 20:08:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/vars/roles.dart';
@@ -147,14 +148,15 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           // Both the header row and the regular row shares the same flex
           // index.
 
-          if (index == 0) {
-            return _buildHeadline();
-          } else {
-            // Regular data rows. We subtract 1 from the index to get the
-            // correct variable since the first row is the header row.
-
-            return _buildDataLine(vars[index - 1], currentRoles);
-          }
+          return index == 0
+              ? _buildHeadline()
+              :
+              // Regular data rows. We subtract 1 from the index to get the
+              // correct variable since the first row is the header row.
+              _buildDataLine(
+                  vars[index - 1],
+                  currentRoles,
+                );
         },
       ),
     );
@@ -245,14 +247,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               textAlign: TextAlign.left,
             ),
           ),
-          space,
-          const Expanded(
-            child: Text(
-              'Type',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-          ),
           Expanded(
             flex: typeFlex,
             child: const Text(
@@ -261,11 +255,31 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               textAlign: TextAlign.left,
             ),
           ),
-          space,
+          const Expanded(
+            child: Text(
+              'Type',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const Expanded(
+            child: Text(
+              'Unique',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const Expanded(
+            child: Text(
+              'Missing',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
           Expanded(
             flex: contentFlex,
             child: const Text(
-              'Content',
+              'Sample',
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
@@ -274,7 +288,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ),
     );
   }
-
   // Build data line for each variable.
 
   Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
@@ -286,30 +299,63 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     String content = _truncateContent(variable.details);
 
+    // Extract unique and missing values from metaDataProvider.
+    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
+    int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
+    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
+
     return Padding(
       padding: const EdgeInsets.all(6.0),
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _buildFittedText(variable.name)),
-              space,
-              Expanded(child: Text(variable.type)),
-              Expanded(
-                flex: typeFlex,
-                child: _buildRoleChips(variable.name, currentRoles),
-              ),
-              Expanded(
-                flex: contentFlex,
-                child: SelectableText(
-                  content,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
-          );
-        },
+      child: Row(
+        // Same alignment.
+
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: _buildFittedText(variable.name)),
+          Expanded(
+            // Matching flex value for alignment.
+
+            flex: typeFlex,
+            child: _buildRoleChips(variable.name, currentRoles),
+          ),
+          Expanded(
+            child: Text(
+              variable.type,
+              // Match header alignment.
+
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              // Unique count.
+
+              uniqueCount.toString(),
+              // Match header alignment.
+
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              // Missing count.
+
+              missingCount.toString(),
+              // Match header alignment.
+
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            // Matching flex value for alignment.
+
+            flex: contentFlex,
+            child: SelectableText(
+              content,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -395,6 +441,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String subStr =
         content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
+
     return '${lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr} ...';
   }
 }

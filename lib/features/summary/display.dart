@@ -146,10 +146,10 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
         TextPage(
           title: '''
 
-          # Skim of the Dataset
+          # Skim the Dataset
 
           Generated using
-          [skimr::skim_tee(ds)](https://www.rdocumentation.org/packages/skimr/topics/skim/).
+          [skimr::skim(ds)](https://www.rdocumentation.org/packages/skimr/topics/skim/).
 
           ''',
           content: content,
