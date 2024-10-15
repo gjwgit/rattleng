@@ -263,7 +263,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             algorithm == 'nnet'
                 ? NumberField(
                     label: 'Hidden Layers:',
-                    key: const Key('hidden_layer_size'),
+                    key: const Key('hidden_layers'),
                     controller: _nnetSizeLayerController,
 
                     tooltip: '''
