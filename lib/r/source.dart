@@ -115,27 +115,27 @@ Future<void> rSource(
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
-  String neuralErrorFct = ref.read(neuralnetErrorFctProvider);
+  String neuralErrorFct = ref.read(errorFctNeuralProvider);
   String neuralActionFct = ref.read(actionFctNeuralProvider);
-  String hiddenNeurons = ref.read(neuralHiddenProvider);
+  String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
-  int hiddenLayerSizes = ref.read(nnetSizeLayerProvider);
+  int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
   int nnetMaxNWts = ref.read(maxNWtsProvider);
-  int nnetMaxit = ref.read(maxitProvider);
-  int neuralStepMax = ref.read(neuralStepMaxProvider);
+  int nnetMaxit = ref.read(maxitNeuralProvider);
+  int neuralStepMax = ref.read(stepMaxNeuralProvider);
   int clusterSeed = ref.read(clusterSeedProvider);
   int clusterNum = ref.read(clusterNumberProvider);
   int clusterRun = ref.read(clusterRunProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
-  bool nnetTrace = ref.read(nnetTraceProvider);
-  bool nnetSkip = ref.read(nnetSkipProvider);
+  bool nnetTrace = ref.read(traceNeuralProvider);
+  bool nnetSkip = ref.read(skipNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
-  double neuralThreshold = ref.read(neuralThresholdProvider);
+  double neuralThreshold = ref.read(thresholdNeuralProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
   String clusterType = ref.read(clusterTypeProvider);
 

@@ -108,13 +108,14 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
     // Keep the value of text field.
 
     _nnetSizeLayerController.text =
-        ref.read(nnetSizeLayerProvider.notifier).state.toString();
+        ref.read(hiddenLayerNeuralProvider.notifier).state.toString();
     _maxNWtsController.text =
         ref.read(maxNWtsProvider.notifier).state.toString();
-    _maxitController.text = ref.read(maxitProvider.notifier).state.toString();
+    _maxitController.text =
+        ref.read(maxitNeuralProvider.notifier).state.toString();
 
     String algorithm = ref.read(algorithmNeuralProvider.notifier).state;
-    String function = ref.read(neuralnetErrorFctProvider.notifier).state;
+    String function = ref.read(errorFctNeuralProvider.notifier).state;
     String action = ref.read(actionFctNeuralProvider.notifier).state;
 
     return Column(
@@ -181,11 +182,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   return;
                 } else {
-                  ref.read(nnetSizeLayerProvider.notifier).state =
+                  ref.read(hiddenLayerNeuralProvider.notifier).state =
                       int.parse(_nnetSizeLayerController.text);
                   ref.read(maxNWtsProvider.notifier).state =
                       int.parse(_maxNWtsController.text);
-                  ref.read(maxitProvider.notifier).state =
+                  ref.read(maxitNeuralProvider.notifier).state =
                       int.parse(_maxitController.text);
 
                   // Run the R scripts.
@@ -237,7 +238,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
               ''',
               label: 'Trace',
-              provider: nnetTraceProvider,
+              provider: traceNeuralProvider,
               enabled: algorithm == 'nnet',
             ),
 
@@ -250,7 +251,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
               ''',
               label: 'Skip',
-              provider: nnetSkipProvider,
+              provider: skipNeuralProvider,
               enabled: algorithm == 'nnet',
             ),
           ],
@@ -275,11 +276,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     inputFormatter:
                         FilteringTextInputFormatter.digitsOnly, // Integers only
                     validator: (value) => validateInteger(value, min: 1),
-                    stateProvider: nnetSizeLayerProvider,
+                    stateProvider: hiddenLayerNeuralProvider,
                   )
                 : VectorNumberField(
                     controller: _neuralHiddenController,
-                    stateProvider: neuralHiddenProvider,
+                    stateProvider: hiddenLayersNeuralProvider,
                     label: 'Hidden',
                     tooltip: '''
 
@@ -306,7 +307,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: maxitProvider,
+              stateProvider: maxitNeuralProvider,
             ),
             configWidgetSpace,
             NumberField(
@@ -341,7 +342,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                 RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
               ),
               validator: (value) => validateDecimal(value),
-              stateProvider: neuralThresholdProvider,
+              stateProvider: thresholdNeuralProvider,
               interval: 0.0005,
               decimalPlaces: 4,
             ),
@@ -360,7 +361,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1000),
-              stateProvider: neuralStepMaxProvider,
+              stateProvider: stepMaxNeuralProvider,
             ),
           ],
         ),
@@ -372,7 +373,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               errorFunction,
               function,
               ref,
-              neuralnetErrorFctProvider,
+              errorFctNeuralProvider,
               tooltip: '''
 
               Function that is used for the calculation of the error. 
@@ -383,7 +384,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               enabled: algorithm == 'neuralnet',
               onChanged: (String? value) {
                 if (value != null) {
-                  ref.read(neuralnetErrorFctProvider.notifier).state = value;
+                  ref.read(errorFctNeuralProvider.notifier).state = value;
                 }
               },
             ),
