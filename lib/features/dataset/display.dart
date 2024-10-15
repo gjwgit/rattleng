@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-10-09 20:47:00 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 14:12:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -259,14 +259,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ),
           const Expanded(
             child: Text(
-              'Unique',
+              'Type',
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
           const Expanded(
             child: Text(
-              'Type',
+              'Unique',
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -281,7 +281,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           Expanded(
             flex: contentFlex,
             child: const Text(
-              'Content',
+              'Sample',
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
