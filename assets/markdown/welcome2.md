@@ -1,6 +1,4 @@
----
-
-**Work Flow**
+# Work Flow
 
 Rattle encourages a data science work flow down the left hand vertical
 *tabs*. For each tab we expose *features* available through horizontal
@@ -11,7 +9,7 @@ code that is generated and can be exported as a standalone R program.
 
 ---
 
-**Getting Started**
+## Getting Started
 
 Tap the **Dataset** button to choose a data source.  The **Demo**
 dataset consists of one year of observations from a weather station in
@@ -31,7 +29,7 @@ role **Ignore**.
 
 ---
 
-**Options on Loading your Dataset**
+## Options on Loading your Dataset
 
 The toggles at the top right of the Dataset configuration panel will
 **Cleanse**, **Unify**, and **Partition** your dataset on

@@ -1,4 +1,4 @@
-Principal Components Analysis
+# Principal Components Analysis
 
 Principal Components Analysis can provide insights into the importance
 of variables in explaining the variation found within a dataset. A
