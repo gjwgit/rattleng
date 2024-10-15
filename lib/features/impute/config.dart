@@ -89,7 +89,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   // Transform chooser widget with tooltips for each chip.
 
-// Transform chooser widget with tooltips for each chip.
   Widget transformChooser() {
     return Align(
       // Align the chips to the left.
