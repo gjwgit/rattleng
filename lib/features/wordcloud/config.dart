@@ -157,6 +157,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Random Order',
               provider: checkboxProvider,
             ),
+
             configWidgetSpace,
 
             LabelledCheckbox(
