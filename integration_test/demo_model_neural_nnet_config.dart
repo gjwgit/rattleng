@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Monday 2024-10-14 14:47:33 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 15:38:12 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -198,7 +198,7 @@ void main() {
 
       // Find the text fields by their keys and enter the new values.
 
-      await tester.enterText(find.byKey(const Key('hidden_layer_size')), '11');
+      await tester.enterText(find.byKey(const Key('hidden_layers')), '11');
       await tester.pumpAndSettle();
 
       await tester.enterText(find.byKey(const Key('max_NWts')), '10001');
