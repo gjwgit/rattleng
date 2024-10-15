@@ -1,6 +1,6 @@
 /// An integer vector input field.
 //
-// Time-stamp: <Tuesday 2024-09-10 05:40:11 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-16 09:54:03 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/style.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class VectorNumberField extends ConsumerStatefulWidget {
   final String label;
@@ -109,7 +110,7 @@ class VectorNumberFieldState extends ConsumerState<VectorNumberField> {
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
+    return DelayedTooltip(
       message: widget.tooltip,
       child: SizedBox(
         width: widget.maxWidth * 30.0,

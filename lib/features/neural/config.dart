@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:48:53 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-16 09:56:43 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -233,8 +233,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('NNET Trace'),
               tooltip: '''
 
-              Enable tracing optimization. The prediction error is provided
-              after every 10 training iterations.
+              Enable tracing optimization for the single layer neural
+              network. The prediction error is provided after every 10 training
+              iterations in the Console.
 
               ''',
               label: 'Trace',
@@ -247,7 +248,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             LabelledCheckbox(
               tooltip: '''
 
-              Add skip-layer connections from input to output.
+              Add skip-layer connections from input to output for the single
+              layer neural network.
 
               ''',
               label: 'Skip',
@@ -263,16 +265,18 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
           children: [
             algorithm == 'nnet'
                 ? NumberField(
-                    label: 'Hidden Layers:',
+                    label: 'Hidden Layer:',
                     key: const Key('hidden_layers'),
                     controller: _nnetSizeLayerController,
 
                     tooltip: '''
 
-              The size parameter in the nnet model specifies the number of units 
-              (neurons) in the hidden layer of the neural network.
+                    The Hidden Layer parameter here is used as the size
+                    parameter in the nnet() model call which specifies the
+                    number of units (neurons) in the single hidden layer of the
+                    neural network.
               
-              ''',
+                    ''',
                     inputFormatter:
                         FilteringTextInputFormatter.digitsOnly, // Integers only
                     validator: (value) => validateInteger(value, min: 1),
@@ -281,13 +285,16 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                 : VectorNumberField(
                     controller: _neuralHiddenController,
                     stateProvider: hiddenLayersNeuralProvider,
-                    label: 'Hidden',
+                    label: 'Hidden Layers',
                     tooltip: '''
 
-                A vector of integers specifying the number of hidden neurons (vertices) in each layer.
+                    The Hidden Layers parameter here is a vector of comma
+                    separated integers specifying the number of hidden neurons
+                    (vertices) in each of the layers. The number of layers is
+                    the number of integers supplied.
 
-                ''',
-                    validator: validateVector, // Validation logic
+                    ''',
+                    validator: validateVector,
                     inputFormatter:
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
                   ),
