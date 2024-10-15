@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-09-11 16:49:01 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-16 10:18:41 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -162,7 +162,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
       child: DelayedTooltip(
         message: '''
         
-        Enter a constant value for imputation
+        Enter a constant value for the imputation. Typically this might be 0 or
+        some sentinel value like 99 for numeric variables, or 'Missing' for a
+        categoric variable. This field is only editable when the Constant chip
+        is selected.
          
         ''',
         child: TextField(
@@ -266,8 +269,12 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               },
               child: const Text('Impute Missing Values'),
             ),
+
             configWidgetSpace,
-            // use local one because of the subtle difference.
+
+            // Use local one because of the subtle difference.
+
+            // TODO 20241016 gjw KEVIN PLEASE EXPLAIN THE SUBTLE DIFFERENCE
 
             variableChooser(
               'Variable',
@@ -295,8 +302,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             ),
 
             configWidgetSpace,
+
             transformChooser(),
-            configWidgetSpace,
+
+            configChooserSpace,
 
             constantEntry(),
           ],
