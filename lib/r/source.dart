@@ -126,6 +126,7 @@ Future<void> rSource(
   int clusterSeed = ref.read(seedClusterProvider);
   int clusterNum = ref.read(numberClusterProvider);
   int clusterRun = ref.read(runClusterProvider);
+  int clusterProcessor = ref.read(processorClusterProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
@@ -380,6 +381,7 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_TYPE', '"${clusterType.toString()}"');
   code = code.replaceAll('CLUSTER_DISTANCE', '"${clusterDistance.toString()}"');
   code = code.replaceAll('CLUSTER_LINK', '"${clusterLink.toString()}"');
+  code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
