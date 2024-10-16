@@ -1,11 +1,11 @@
-/// Widget to configure the IMPUTE feature of the TRANSFORM tab.
+/// A widget to configure the IMPUTE feature of the TRANSFORM tab.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-16 10:18:41 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-17 08:50:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,11 +20,9 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Kevin Wang
 
 library;
-
-// TODO 20240811 gjw RE-ENGINEER AS IN CLEANUP
 
 import 'package:flutter/material.dart';
 
@@ -44,8 +42,9 @@ import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
-/// This is a StatefulWidget to pass the REF across to the rSource as well as to
-/// monitor the SELECTED variable to transform.
+/// A [StatefulWidget] (rather than [Stateless]) to pass `ref` across to
+/// `rSource()` as well as to monitor the SELECTED variable to transform.
+
 class ImputeConfig extends ConsumerStatefulWidget {
   const ImputeConfig({super.key});
 
@@ -56,14 +55,14 @@ class ImputeConfig extends ConsumerStatefulWidget {
 class ImputeConfigState extends ConsumerState<ImputeConfig> {
   String selected = 'NULL';
 
-  // methods enable only for numeric variables.
+  // List of transformations enabled only for numeric variables.
 
   List<String> numericMethods = [
     'Mean',
     'Median',
   ];
 
-  // List choice of methods for imputation.
+  // List of all transformations available.
 
   List<String> methods = [
     'Mean',
@@ -71,6 +70,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     'Mode',
     'Constant',
   ];
+
+  // Default transformation.
 
   String selectedTransform = 'Mean';
 
@@ -86,7 +87,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     super.dispose();
   }
 
-  // Transform chooser widget with tooltips for each chip.
+  // Define a transform chooser widget with tooltips for each chip.
 
   Widget transformChooser() {
     return Align(
@@ -95,11 +96,11 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
         spacing: 5.0,
         runSpacing: choiceChipRowSpace,
         children: [
-          // First group of chips (up to 'Mode').
+          // Layout the first group of chips (up to MODE) so we can introduce a
+          // gap before CONSTANT and so tie the CONSTANT chip to the CONSTANT
+          // field for improved UX.
 
           ChoiceChipTip<String>(
-            // Includes 'Mean', 'Median', 'Mode'.
-
             options: methods.sublist(0, 3),
             selectedOption: selectedTransform,
             onSelected: (transform) {
@@ -112,20 +113,41 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             },
             getLabel: (transform) => transform,
             tooltips: const {
-              'Mean': 'Select Mean for imputation',
-              'Median': 'Select Median for imputation',
-              'Mode': 'Select Mode for imputation',
+              'Mean': '''
+
+              Use the mean (average) value of the numeric values of the variable
+              as the value imputed for any missing values. Using the mean is
+              often useful in maintaining the distribution of values for the
+              variable.
+
+              ''',
+              'Median': '''
+
+              Use the median (central) value of the numeric values of the
+              variable as the value imputed for any missing values. Using the
+              median is motivaed as the central value that is less affected by
+              outliers in a skewed distribution.
+
+              ''',
+              'Mode': '''
+
+              Use the mode (most common) value of the variable values as the
+              value imputed for any missing values. Using the mode makes sense
+              when the most common value is the logical choice for missing
+              values.
+
+              ''',
             },
             enabled: true,
           ),
-          // Add the extra space between 'Mode' and 'Constant'.
 
-          const SizedBox(width: 60.0),
-          // Second group of chips (starting from 'Constant').
+          // Add extra space between MODE and CONSTANT.
+
+          configChooserSpace,
+
+          // Second group of chips (only CONSTANT for now).
 
           ChoiceChipTip<String>(
-            // Includes 'Constant'.
-
             options: methods.sublist(3),
             selectedOption: selectedTransform,
             onSelected: (transform) {
@@ -138,7 +160,13 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             },
             getLabel: (transform) => transform,
             tooltips: const {
-              'Constant': 'Select Constant for imputation',
+              'Constant': '''
+
+              Choose a constant value for the imputation. Specify the value in
+              the adjacent Constant field. Typically use 0 for numeric data, if
+              appropriate, or 'Missing' for categoric data.
+
+              ''',
             },
             enabled: true,
           ),
@@ -147,7 +175,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     );
   }
 
-  // Set default constant based on variable type.
+  // Set the default CONSTANT value based on the variable type.
 
   void _setConstantDefault() {
     if (ref.read(typesProvider)[selected] == Type.numeric) {
@@ -157,7 +185,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     }
   }
 
-  // Constant entry widget with a tooltip.
+  // Define a CONSTANT entry widget with a tooltip.
 
   Widget constantEntry() {
     return SizedBox(
@@ -166,9 +194,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
         message: '''
         
         Enter a constant value for the imputation. Typically this might be 0 or
-        some sentinel value like 99 for numeric variables, or 'Missing' for a
-        categoric variable. This field is only editable when the Constant chip
-        is selected.
+        some sentinel value like 99 for numeric variables, if appropriate, or
+        'Missing' for a categoric variable. This field is only editable when the
+        Constant chip is selected.
          
         ''',
         child: TextField(
@@ -183,7 +211,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     );
   }
 
-  // BUILD button action.
+  // Define the BUILD button action.
 
   void takeAction() {
     // Run the R scripts.
@@ -228,8 +256,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     // TODO 20240725 gjw ONLY WANT NUMC VAIABLES AVAILABLE FOR RESCALE
 
     // Retrieve the current selected variable and use that as the initial value
-    // for the dropdown menu. If there is no current value and we do have inputs
-    // then we choose the first input variable.
+    // for the dropdown menu. If there is no current value and we do have
+    // variables with role INPUT then we choose the first INPUT variable.
 
     selected = ref.watch(selectedProvider);
     if (selected == 'NULL' && inputs.isNotEmpty) {
@@ -249,6 +277,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     if (constant == 'NULL') {
       constant = '';
     }
+
+    // Now build and return the configuration widget.
 
     return Column(
       children: [
@@ -286,6 +316,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               ref,
               selectedProvider,
               enabled: true,
+
               // On selection as well as recording what was selected rebuild the
               // visualisations.
 
@@ -293,13 +324,11 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
                 selectedTransform = 'Mean';
-                // We don't buildAction() here since the variable choice might
-                // be followed by a transform choice and we don;t want to shoot
-                // off building lots of new variables unnecesarily.
               },
               tooltip: '''
 
-              Select the variable for which missing values will be imputed.
+              Select the variable for which missing values will be imputed. All
+              variables having a role of INPUT are available for imputation.
 
               ''',
             ),
