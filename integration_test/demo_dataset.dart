@@ -31,7 +31,6 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/open_demo_dataset.dart';
-import 'utils/test_print.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

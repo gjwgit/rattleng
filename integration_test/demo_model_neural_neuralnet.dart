@@ -1,6 +1,6 @@
-/// Test nnet() with demo dataset.
+/// Test neuralnet() with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-10-15 20:12:33 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 15:00:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,11 +36,12 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/open_demo_dataset.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
-// demo dataset. These are factors/chars and don't play well with nnet.
+// demo dataset. These are factors/chars and don't play well with neuralnet.
 
 final List<String> demoVariablesToIgnore = [
   'wind_gust_dir',
@@ -51,26 +52,14 @@ final List<String> demoVariablesToIgnore = [
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Neural NNet Params:', () {
-    testWidgets('Load, Ignore, Navigate, Settings, Build.', (
-      WidgetTester tester,
-    ) async {
+  group('Demo Model Neuralnet:', () {
+    testWidgets('Load, Ignore, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-
       await tester.pump(interact);
 
       await openDemoDataset(tester);
 
-      await tester.pumpAndSettle();
-
-      await tester.pump(longHack);
-
-      // Tap the right arrow button to go to Variable page.
-
-      // await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
       await tester.pump(interact);
 
       // Find the scrollable ListView.
@@ -177,8 +166,9 @@ void main() {
         }
       }
 
+      // Find the Model Page in the Side tab.
+
       final modelTabFinder = find.byIcon(Icons.model_training);
-      expect(modelTabFinder, findsOneWidget);
 
       // Tap the model Tab button.
 
@@ -191,75 +181,72 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      // Find and tap the 'Trace' checkbox.
+      // Verify that the markdown content is loaded.
 
-      final Finder traceCheckbox = find.byKey(const Key('NNET Trace'));
-      await tester.tap(traceCheckbox);
-      await tester.pumpAndSettle(); // Wait for UI to settle.
+      final markdownContent = find.byKey(const Key('markdown_file'));
+      expect(markdownContent, findsOneWidget);
 
-      // Find the text fields by their keys and enter the new values.
+      // Switch algorithm to neuralnet.
 
-      await tester.enterText(find.byKey(const Key('hidden_layers')), '11');
+      final neuralNetChip = find.text(
+        'neuralnet',
+      );
+
+      // Tap the neuralnet chip to switch type.
+
+      await tester.tap(neuralNetChip);
+
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byKey(const Key('max_NWts')), '10001');
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.byKey(const Key('maxit')), '101');
-      await tester.pumpAndSettle();
-
-      // Simulate the presence of a decision tree being built.
+      // Simulate the presence of a neural network being built.
 
       final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
 
       await tester.tap(neuralNetworkButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
       await tester.pump(interact);
 
-      // Tap the right arrow to go to the second page.
-
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-      // await tester.tap(rightArrowButton);
+      await tester.tap(neuralNetworkButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(delay);
+      // Pause for a long time to wait for app gets stable.
+
+      await tester.pump(hack);
+
+      await tester.pumpAndSettle();
+
       await tester.pump(interact);
+
+      await gotoNextPage(tester);
+      await tester.pumpAndSettle();
 
       // Check if SelectableText contains the expected content.
 
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 15-11-1 network with 188 weights') == true,
+            widget.data?.contains('threshold = 0.01, stepmax = 10000,') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
-
-      // TODO 20241001 kev the underneath code is not working as expected
 
       expect(modelDescriptionFinder, findsOneWidget);
 
       final summaryDecisionTreeFinder = find.byType(TextPage);
       expect(summaryDecisionTreeFinder, findsOneWidget);
 
+      await gotoNextPage(tester);
+
       await tester.pump(interact);
 
-      // Tap the right arrow to go to the forth page.
-
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-      await tester.pump(interact);
-
-      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
-      expect(forthPageTitleFinder, findsOneWidget);
+      final imagePageTitleFinder = find.text('Neural Net Model - Visual');
+      expect(imagePageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
 
       // Assert that the image is present.
+
       expect(imageFinder, findsOneWidget);
 
       await tester.pump(interact);

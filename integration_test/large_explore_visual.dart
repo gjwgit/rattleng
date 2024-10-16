@@ -111,7 +111,6 @@ void main() {
 
       // Automatically go to "Box Plot" page 2.
 
-
       // Find the text containing "Box Plot".
 
       final boxPlotFinder = find.textContaining('Box Plot');
