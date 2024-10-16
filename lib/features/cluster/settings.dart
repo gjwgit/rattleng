@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cluster.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -68,6 +69,21 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
         ref.read(seedClusterProvider.notifier).state.toString();
     _runController.text =
         ref.read(runClusterProvider.notifier).state.toString();
+
+    // Data points distance.
+
+    List<String> distance = [
+      'euclidean',
+      'maximum',
+      'manhattan',
+      'canberra',
+      'binary',
+      'pearson',
+      'correlation',
+      'spearman',
+    ];
+    String selectedDistance = ref.watch(distanceClusterProvider);
+    String type = ref.watch(typeClusterProvider);
 
     return Column(
       children: [
@@ -130,6 +146,26 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               ''',
               label: 'Re-Scale',
               provider: reScaleClusterProvider,
+            ),
+            configWidgetSpace,
+            variableChooser(
+              'Distance',
+              distance,
+              selectedDistance,
+              ref,
+              distanceClusterProvider,
+              tooltip: '''
+
+              Distance measures how similar or dissimilar data points are, 
+              determining how they are grouped together in clusters.
+
+              ''',
+              enabled: type == 'Hierarchical',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(distanceClusterProvider.notifier).state = value;
+                }
+              },
             ),
           ],
         ),

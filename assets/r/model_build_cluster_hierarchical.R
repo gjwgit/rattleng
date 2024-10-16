@@ -71,7 +71,7 @@ tds <- as.matrix(tds)
 
 # Perform hierarchical clustering using the hcluster function from the amap package.
 
-model_hclust <- hcluster(tds, method = "euclidean", link = "ward", nbproc = 1)
+model_hclust <- hcluster(tds, method=CLUSTER_DISTANCE, link = "ward", nbproc = 1)
 
 # Cut the dendrogram to get the specified number of clusters.
 

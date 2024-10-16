@@ -114,6 +114,7 @@ Future<void> rSource(
   String neuralErrorFct = ref.read(errorFctNeuralProvider);
   String neuralActionFct = ref.read(actionFctNeuralProvider);
   String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
+  String clusterDistance = ref.read(distanceClusterProvider);
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
@@ -376,6 +377,7 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
   code = code.replaceAll('CLUSTER_TYPE', '"${clusterType.toString()}"');
+  code = code.replaceAll('CLUSTER_DISTANCE', clusterDistance.toString());
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
