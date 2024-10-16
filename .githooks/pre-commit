@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Dart Format
+
+printf "\e[33;1m%s\e[0m\n" 'Running dart format'
+
+result=$(dart format lib integration_test)
+result_lines=$(echo "$result" | wc -l)
+
+if [ "$result_lines" -gt 1 ]; then
+  echo "$result"
+  printf "\e[31;1m%s\e[0m\n" 'Dart format applied changes, please recommit'
+  exit 1
+fi
+
+echo "$result"
+printf "\e[32;1m%s\e[0m\n" 'Finished running dart format'
