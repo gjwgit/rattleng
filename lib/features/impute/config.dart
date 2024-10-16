@@ -151,13 +151,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   void _setConstantDefault() {
     if (ref.read(typesProvider)[selected] == Type.numeric) {
-      if (_controller.text.isEmpty) {
-        _controller.text = '0';
-      }
+      _controller.text = '0';
     } else if (ref.read(typesProvider)[selected] == Type.categoric) {
-      if (_controller.text.isEmpty) {
-        _controller.text = 'Missing';
-      }
+      _controller.text = 'Missing';
     }
   }
 
