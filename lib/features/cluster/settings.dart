@@ -82,7 +82,18 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
       'correlation',
       'spearman',
     ];
+    List<String> link = [
+      'ward',
+      'single',
+      'complete',
+      'average',
+      'mcquitty',
+      'median',
+      'centroid',
+      'centroid2',
+    ];
     String selectedDistance = ref.watch(distanceClusterProvider);
+    String selectedLink = ref.watch(linkClusterProvider);
     String type = ref.watch(typeClusterProvider);
 
     return Column(
@@ -100,6 +111,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _clusterController,
+              enabled: type != 'Hierarchical',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: numberClusterProvider,
@@ -132,6 +144,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _runController,
+              enabled: type != 'Hierarchical',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: runClusterProvider,
@@ -164,6 +177,26 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               onChanged: (String? value) {
                 if (value != null) {
                   ref.read(distanceClusterProvider.notifier).state = value;
+                }
+              },
+            ),
+            configWidgetSpace,
+            variableChooser(
+              'Link',
+              link,
+              selectedLink,
+              ref,
+              linkClusterProvider,
+              tooltip: '''
+
+              A link determines how the distance between clusters is calculated 
+              when merging them, influencing the shape and structure of the resulting clusters.
+
+              ''',
+              enabled: type == 'Hierarchical',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(linkClusterProvider.notifier).state = value;
                 }
               },
             ),
