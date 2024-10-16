@@ -86,77 +86,63 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     super.dispose();
   }
 
-  // TODO 20240810 gjw USE CHOICE CHIP TIP
-
-  // Transform chooser widget with tooltips for each chip.
-
-  // Widget transformChooser() {
-  //   return Align(
-  //     // Align the chips to the left.
-  //     alignment: Alignment.centerLeft,
-  //     child: Wrap(
-  //       spacing: 5.0,
-  //       runSpacing: choiceChipRowSpace,
-  //       children: methods.map((transform) {
-  //         bool disableNumericMethods;
-  //         if (selected != 'NULL') {
-  //           disableNumericMethods = numericMethods.contains(transform) &&
-  //               ref.read(typesProvider)[selected] == Type.categoric;
-  //         } else {
-  //           disableNumericMethods = false;
-  //           debugPrint('Error: selected is NULL!!!');
-  //         }
-
-  //         return ChoiceChipTip<String>(
-  //           options: methods,
-  //           selectedOption: selectedTransform,
-  //           onSelected: (transform) {
-  //             setState(() {
-  //               selectedTransform = transform ?? '';
-  //               if (selectedTransform == 'Constant') {
-  //                 _setConstantDefault();
-  //               }
-  //             });
-  //           },
-  //           getLabel: (transform) => transform,
-  //           tooltips: const {
-  //             'Mean': 'Select Mean for imputation',
-  //             'Median': 'Select Median for imputation',
-  //             'Mode': 'Select Mode for imputation',
-  //             'Constant': 'Select Constant for imputation',
-  //           },
-  //           enabled: true,
-  //         );
-  //       }).toList(),
-  //     ),
-  //   );
-  // }
-
   // Transform chooser widget with tooltips for each chip.
 
   Widget transformChooser() {
     return Align(
-      // Align the chips to the left.
       alignment: Alignment.centerLeft,
-      child: ChoiceChipTip<String>(
-        options: methods,
-        selectedOption: selectedTransform,
-        onSelected: (transform) {
-          setState(() {
-            selectedTransform = transform ?? '';
-            if (selectedTransform == 'Constant') {
-              _setConstantDefault();
-            }
-          });
-        },
-        getLabel: (transform) => transform,
-        tooltips: const {
-          'Mean': 'Select Mean for imputation',
-          'Median': 'Select Median for imputation',
-          'Mode': 'Select Mode for imputation',
-          'Constant': 'Select Constant for imputation',
-        },
-        enabled: true,
+      child: Wrap(
+        spacing: 5.0,
+        runSpacing: choiceChipRowSpace,
+        children: [
+          // First group of chips (up to 'Mode').
+
+          ChoiceChipTip<String>(
+            // Includes 'Mean', 'Median', 'Mode'.
+
+            options: methods.sublist(0, 3),
+            selectedOption: selectedTransform,
+            onSelected: (transform) {
+              setState(() {
+                selectedTransform = transform ?? '';
+                if (selectedTransform == 'Constant') {
+                  _setConstantDefault();
+                }
+              });
+            },
+            getLabel: (transform) => transform,
+            tooltips: const {
+              'Mean': 'Select Mean for imputation',
+              'Median': 'Select Median for imputation',
+              'Mode': 'Select Mode for imputation',
+            },
+            enabled: true,
+          ),
+          // Add the extra space between 'Mode' and 'Constant'.
+
+          const SizedBox(width: 40.0),
+          // Second group of chips (starting from 'Constant').
+
+          ChoiceChipTip<String>(
+            // Includes 'Constant'.
+
+            options: methods.sublist(3),
+            selectedOption: selectedTransform,
+            onSelected: (transform) {
+              setState(() {
+                selectedTransform = transform ?? '';
+                if (selectedTransform == 'Constant') {
+                  _setConstantDefault();
+                }
+              });
+            },
+            getLabel: (transform) => transform,
+            tooltips: const {
+              'Constant': 'Select Constant for imputation',
+            },
+            enabled: true,
+          ),
+        ],
       ),
     );
   }
