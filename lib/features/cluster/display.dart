@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
@@ -68,7 +68,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       clusterPageControllerProvider,
     ); // Get the PageController from Riverpod
 
-    String type = ref.read(clusterTypeProvider.notifier).state;
+    String type = ref.read(typeClusterProvider.notifier).state;
 
     String stdout = ref.watch(stdoutProvider);
 

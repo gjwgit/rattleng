@@ -1,6 +1,6 @@
-/// A provider of the cluster type.
+/// A provider for the parameters for cluster.
 ///
-/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -8,6 +8,7 @@
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -26,4 +27,8 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final clusterTypeProvider = StateProvider<String>((ref) => 'KMeans');
+final numberClusterProvider = StateProvider<int>((ref) => 10);
+final reScaleClusterProvider = StateProvider<bool>((ref) => true);
+final runClusterProvider = StateProvider<int>((ref) => 1);
+final seedClusterProvider = StateProvider<int>((ref) => 42);
+final typeClusterProvider = StateProvider<String>((ref) => 'KMeans');
