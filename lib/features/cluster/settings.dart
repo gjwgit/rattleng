@@ -158,6 +158,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               label: 'Re-Scale',
+              enabled: type != 'Hierarchical',
               provider: reScaleClusterProvider,
             ),
             configWidgetSpace,
