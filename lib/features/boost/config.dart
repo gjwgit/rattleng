@@ -72,7 +72,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configTopSpace,
 
         Row(
           children: [

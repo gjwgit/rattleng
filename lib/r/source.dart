@@ -49,14 +49,11 @@ import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/max_nwts.dart';
+import 'package:rattle/providers/neural.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/min_split.dart';
-import 'package:rattle/providers/nnet_hidden_neurons.dart';
-import 'package:rattle/providers/nnet_maxit.dart';
-import 'package:rattle/providers/nnet_skip.dart';
-import 'package:rattle/providers/nnet_trace.dart';
 import 'package:rattle/providers/normalise.dart';
-import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/priors.dart';
@@ -118,22 +115,27 @@ Future<void> rSource(
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
+  String neuralErrorFct = ref.read(errorFctNeuralProvider);
+  String neuralActionFct = ref.read(actionFctNeuralProvider);
+  String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
-  int hiddenNeurons = ref.read(hiddenNeuronsProvider);
+  int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
   int nnetMaxNWts = ref.read(maxNWtsProvider);
-  int nnetMaxit = ref.read(maxitProvider);
+  int nnetMaxit = ref.read(maxitNeuralProvider);
+  int neuralStepMax = ref.read(stepMaxNeuralProvider);
   int clusterSeed = ref.read(clusterSeedProvider);
   int clusterNum = ref.read(clusterNumberProvider);
   int clusterRun = ref.read(clusterRunProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
-  bool nnetTrace = ref.read(nnetTraceProvider);
-  bool nnetSkip = ref.read(nnetSkipProvider);
+  bool nnetTrace = ref.read(traceNeuralProvider);
+  bool nnetSkip = ref.read(skipNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
+  double neuralThreshold = ref.read(thresholdNeuralProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
   String clusterType = ref.read(clusterTypeProvider);
 
@@ -360,9 +362,14 @@ Future<void> rSource(
 
   // NEURAL
 
-  code = code.replaceAll('HIDDEN_NEURONS', hiddenNeurons.toString());
-  code = code.replaceAll('MAXIT', nnetMaxit.toString());
-  code = code.replaceAll('MAX_NWTS', nnetMaxNWts.toString());
+  code = code.replaceAll('NNET_HIDDEN_LAYERS', hiddenLayerSizes.toString());
+  code = code.replaceAll('NEURAL_HIDDEN_LAYERS', 'c($hiddenNeurons)');
+  code = code.replaceAll('NEURAL_MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('NEURAL_MAX_NWTS', nnetMaxNWts.toString());
+  code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
+  code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
+  code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
+  code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

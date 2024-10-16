@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build a neural network.
+# Build a neural network.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-09-23 05:27:07 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-15 15:33:36 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,11 +39,11 @@ mdesc <- "Neural Network"
 model_nn <- nnet(
   form,
   data = ds[tr, vars],
-  size = HIDDEN_NEURONS,        # Number of units in the hidden layer
+  size = NNET_HIDDEN_LAYERS,        # Number of units in the hidden layer
   skip=TRUE,
-  MaxNWts=MAX_NWTS,
+  MaxNWts=NEURAL_MAX_NWTS,
   trace=FALSE,
-  maxit=MAXIT
+  maxit=NEURAL_MAXIT
 )
 
 # Generate a textual view of the Neural Network model.
