@@ -1,7 +1,7 @@
 # Numeric Variable Correlation
 
 A correlation analysis provides insights into the independence of the
-numeric input variables. Modelling often assumes independence, and 
+numeric input variables. Modelling often assumes independence, and
 better models will result when using independent input variables.
 
 A table of the correlations between each of the numeric variables

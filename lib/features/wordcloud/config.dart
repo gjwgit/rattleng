@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2024-09-26 18:42:29 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 08:53:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -157,6 +157,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Random Order',
               provider: checkboxProvider,
             ),
+
             configWidgetSpace,
 
             LabelledCheckbox(
@@ -199,6 +200,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ),
 
             configWidgetSpace,
+
             Expanded(
               child: DelayedTooltip(
                 message: '''

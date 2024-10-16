@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-09-23 13:57:59 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-14 13:33:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,8 +37,8 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
 import 'utils/press_first_button.dart';
-import 'utils/verify_multiple_text.dart';
 import 'utils/verify_next_page.dart';
+import 'utils/verify_text.dart';
 // import 'utils/check_missing_variable.dart';
 // import 'utils/check_variable_not_missing.dart';
 // import 'utils/init_app.dart';
@@ -97,7 +97,7 @@ void main() {
 
       // Verify specific imputed values for 'IZR_middle_name'.
 
-      await verifyMultipleTextContent(
+      await verifyText(
         tester,
         [
           'Missing: 1987', // Number of missing values imputed.

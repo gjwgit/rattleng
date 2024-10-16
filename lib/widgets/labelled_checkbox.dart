@@ -37,11 +37,13 @@ class LabelledCheckbox extends ConsumerWidget {
   final String label;
   final String tooltip;
   final StateProvider<bool> provider;
+  final bool enabled;
 
   const LabelledCheckbox({
     required this.label,
     required this.tooltip,
     required this.provider,
+    this.enabled = true,
     super.key,
   });
 
@@ -57,10 +59,12 @@ class LabelledCheckbox extends ConsumerWidget {
         children: [
           Checkbox(
             value: isChecked,
-            onChanged: (value) {
-              // Update the provider's value.
-              ref.read(provider.notifier).state = value ?? false;
-            },
+            onChanged: enabled
+                ? (value) {
+                    // Update the provider's value.
+                    ref.read(provider.notifier).state = value ?? false;
+                  }
+                : null,
           ),
           GestureDetector(
             onTap: () {

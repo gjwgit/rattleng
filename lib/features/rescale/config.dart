@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-10-11 12:09:30 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-16 13:32:55 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -69,6 +69,56 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     'Interval',
   ];
 
+  // Define tooltips for normaliseMethods.
+
+  Map<String, String> normaliseMethodTooltips = {
+    'Recenter': '''
+
+    Recenter the values of the variable around zero by subtracting the mean and
+    dividing by the root-mean-square. The resulting values will have a mean of
+    zero and a spread of positive and negative numbers around 0.
+
+    ''',
+    'Scale [0-1]': '''
+
+    Rescale the values of the variable to be in the range between 0 and 1.
+
+    ''',
+    '-Median/MAD': '''
+
+    Similar to the Recenter operation, this will subtract the median (instead of
+    the mean) and and divide by the median absolute deviation. This is
+    considered to be a more robust transformation.
+
+    ''',
+    'Natural Log': '''
+
+    Apply the natural logarithm to the values of the variable.
+
+    ''',
+    'Log 10': '''
+
+    Apply the base 10 logarithm to the values of the variable.
+
+    ''',
+  };
+
+  // Define tooltips for orderMethods.
+
+  Map<String, String> orderMethodTooltips = {
+    'Rank': '''
+
+    Rescale based on the rank order of the values of the variable so the values
+    start from 1 up to the number of different values for the variable..
+
+    ''',
+    'Interval': '''
+
+    Rescale within the specified interval range.
+
+    ''',
+  };
+
   String selectedTransform = 'Recenter';
 
   Widget rescaleChooser() {
@@ -76,8 +126,9 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        // Add tooltips to normaliseMethods ChoiceChipTip.
+
         ChoiceChipTip<String>(
           options: normaliseMethods,
           selectedOption: selectedTransform,
@@ -86,8 +137,13 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selectedTransform = selected ?? '';
             });
           },
+          // Adding tooltips here.
+
+          tooltips: normaliseMethodTooltips,
         ),
         configWidgetSpace,
+        // Add tooltips to orderMethods ChoiceChipTip.
+
         ChoiceChipTip<String>(
           options: orderMethods,
           selectedOption: selectedTransform,
@@ -96,22 +152,31 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selectedTransform = selected ?? '';
             });
           },
+          // Adding tooltips here.
+
+          tooltips: orderMethodTooltips,
         ),
         configWidgetSpace,
         NumberField(
           label: 'Interval',
           tooltip: '''
 
-          When rescaling a numeric variable using an Interval the numeric value
+          When rescaling a numeric variable using an Interval, the numeric value
           here is the maximum value for the resulting interval. A default
           maximum value of 100 is often used. The minimum value is fixed as 0.
 
           ''',
           controller: valCtrl,
-          inputFormatter:
-              FilteringTextInputFormatter.digitsOnly, // Integers only
+
+          // Allow integers only.
+
+          inputFormatter: FilteringTextInputFormatter.digitsOnly,
           validator: (value) => validateInteger(value, min: 1),
           stateProvider: intervalProvider,
+
+          // Enable only when "Interval" is selected.
+
+          enabled: selectedTransform == 'Interval',
         ),
       ],
     );

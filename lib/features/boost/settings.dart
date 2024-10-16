@@ -1,6 +1,6 @@
 /// Boost settings for different boost algorithms.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 07:28:50 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-15 08:53:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -114,7 +114,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
 
     return Column(
       children: [
-        configTopSpace,
+        configRowSpace,
         Row(
           children: [
             NumberField(
@@ -189,7 +189,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
             configWidgetSpace,
           ],
         ),
-        configTopSpace,
+        configRowSpace,
         Row(
           children: [
             NumberField(
