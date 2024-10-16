@@ -31,7 +31,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void checkInPopup(List<String> vars) {
-  
   // Locate the popup.
 
   final popupFinder = find.byType(

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-09-21 10:14:52 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-16 09:48:46 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
@@ -56,6 +57,8 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
     ); // Get the PageController from Riverpod
 
     String stdout = ref.watch(stdoutProvider);
+    String algorithm = ref.watch(algorithmNeuralProvider);
+
     String content = '';
 
     List<Widget> pages = [
@@ -64,73 +67,75 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'print(model_nn)');
+    // TODO 20241016 gjw TUNE THE PROCESSING FOR nnet() SPECIFICALLY
 
-    if (content.isNotEmpty) {
-      // Capitalise each line and for the Input: line, wordwrap and comma
-      // separate the column names.
+    // The original authoir combined the string processing for nnet() and
+    // neuralnet() but we will eventually want function output specific
+    // processing so best to separate them
 
-      List<String> lines = content.split('\n');
+    if (algorithm == 'nnet') {
+      content = rExtract(stdout, 'print(model_nn)');
 
-      lines = lines.map((line) {
-        if (line.isEmpty) return line;
+      if (content.isNotEmpty) {
+        // Capitalise each line and for the Input: line, wordwrap and comma
+        // separate the column names.
 
-        // Comma separate the variable names.
+        List<String> lines = content.split('\n');
 
-        if (line.startsWith('inputs: ')) {
-          String tail = line.substring(8);
-          tail = tail.replaceAll(r' ', ', ');
-          line = 'inputs: $tail';
+        lines = lines.map((line) {
+          if (line.isEmpty) return line;
+
+          // Comma separate the variable names.
+
+          if (line.startsWith('inputs: ')) {
+            String tail = line.substring(8);
+            tail = tail.replaceAll(r' ', ', ');
+            line = 'inputs: $tail';
+          }
+
+          // Capitalise the first letter of the line.
+
+          String result = line[0].toUpperCase();
+          result += line.substring(1).trim();
+
+          // Special case for the first line where the space after the 'A' seems
+          // to have got lost.
+
+          if (result.startsWith('A')) {
+            result = 'A ${result.substring(1)}';
+          }
+
+          return wordWrap(result);
+        }).toList();
+
+        content = lines.join('\n\n');
+
+        String weights = rExtract(stdout, 'summary(model_nn)');
+
+        // Remove the repeated first two lines.
+
+        lines = weights.split('\n');
+        lines = lines.length > 2 ? lines.sublist(2) : [];
+
+        // If the line starts with ' +b' then insert an empty line.
+
+        List<String> newLines = [];
+        for (String line in lines) {
+          if (line.startsWith(RegExp(' +b'))) newLines.add('');
+          newLines.add(line);
         }
 
-        // Capitalise the first letter of the line.
+        weights = newLines.join('\n');
 
-        String result = line[0].toUpperCase();
-        result += line.substring(1).trim();
-        result += '.';
-
-        // Special case for the first line where the space after the 'A' seems
-        // to have got lost.
-
-        if (result.startsWith('A')) {
-          result = 'A ${result.substring(1)}';
-        }
-
-        return wordWrap(result);
-      }).toList();
-
-      content = lines.join('\n\n');
-
-      String weights = rExtract(stdout, 'summary(model_nn)');
-
-      // Remove the repeated first two lines.
-
-      lines = weights.split('\n');
-      if (lines.length > 2) {
-        lines = lines.sublist(2);
-      } else {
-        lines = [];
-      }
-
-      // If the line starts with ' +b' then insert an empty line.
-
-      List<String> newLines = [];
-      for (String line in lines) {
-        if (line.startsWith(RegExp(' +b'))) newLines.add('');
-        newLines.add(line);
-      }
-
-      weights = newLines.join('\n');
-
-      content = '''$content
+        content = '''$content
 
 $weights
 
     ''';
 
-      pages.add(
-        TextPage(
-          title: '''
+        pages.add(
+          TextPage(
+            title: '''
 
           # Neural Net Model - Summary and Weights
 
@@ -140,14 +145,99 @@ $weights
           [nnet::nnet()](https://www.rdocumentation.org/packages/nnet/topics/nnet).
 
             ''',
-          content: '\n$content',
-        ),
-      );
+            content: '\n$content',
+          ),
+        );
+      }
     }
 
     ////////////////////////////////////////////////////////////////////////
 
-    String image = '$tempDir/model_nn_nnet.svg';
+    // TODO 20241016 gjw TUNE THE PROCESSING FOR nnet() SPECIFICALLY
+
+    // The original authoir combined the string processing for nnet() and
+    // neuralnet() but we will eventually want function output specific
+    // processing so best to separate them
+
+    if (algorithm == 'neuralnet') {
+      content = rExtract(stdout, 'print(model_neuralnet)');
+
+      if (content.isNotEmpty) {
+        // Capitalise each line and for the Input: line, wordwrap and comma
+        // separate the column names.
+
+        List<String> lines = content.split('\n');
+
+        lines = lines.map((line) {
+          if (line.isEmpty) return line;
+
+          // Comma separate the variable names.
+
+          if (line.startsWith('inputs: ')) {
+            String tail = line.substring(8);
+            tail = tail.replaceAll(r' ', ', ');
+            line = 'inputs: $tail';
+          }
+
+          // Capitalise the first letter of the line.
+
+          String result = line[0].toUpperCase();
+          result += line.substring(1).trim();
+
+          return wordWrap(result);
+        }).toList();
+
+        content = lines.join('\n\n');
+
+        String weights = rExtract(stdout, 'summary(model_neuralnet)');
+
+        // Remove the repeated first two lines.
+
+        lines = weights.split('\n');
+        lines = lines.length > 2 ? lines.sublist(2) : [];
+
+        // If the line starts with ' +b' then insert an empty line.
+
+        List<String> newLines = [];
+        for (String line in lines) {
+          if (line.startsWith(RegExp(' +b'))) newLines.add('');
+          newLines.add(line);
+        }
+
+        weights = newLines.join('\n');
+
+        content = '''$content
+
+$weights
+
+    ''';
+
+        pages.add(
+          TextPage(
+            title: '''
+
+            # Neural Net Model - Summary and Weights
+
+            Visit the [Survival
+            Guide](https://survivor.togaware.com/datascience/neural-networks.html). Built
+            using
+            [nnet::neuralnet()](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).
+
+            ''',
+            content: '\n$content',
+          ),
+        );
+      }
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    // We use plotnet() for any neural net image so we can use the same page
+    // here for either nnet() or neuralnet().
+
+    String image = algorithm == 'nnet'
+        ? '$tempDir/model_nn_nnet.svg'
+        : '$tempDir/model_neuralnet.svg';
 
     if (imageExists(image)) {
       pages.add(

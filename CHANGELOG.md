@@ -8,6 +8,9 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Add neuralnet() support [6.3.6 20241016 zy]
++ Unify config styles [6.3.5 20241015 gjw]
++ Implement Boost. Cleanup and review and bug fixes [6.3.4 20241013]
 + Review and rename test scripts [6.3.3 20240925 gjw]
 + SCRIPT remembers location [6.3.3 20240925 zy]
 + Ensure pty started before send R code particularly for WINDOWS [6.3.2 20240923 lutra]

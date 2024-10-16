@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 16:57:20 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-15 06:48:05 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -42,10 +42,11 @@ options(install.packages.ask = FALSE)
 
 install_if_missing <- function(pkg) {
 
-  if (!requireNamespace(pkg, character.only=TRUE, quietly=TRUE)) {
+  if (!requireNamespace(pkg, character.only=TRUE)) {
 
-
-    # Specify a directory for the library
+    # Specify a directory for the library. Tested this on Ubuntu
+    # (/home/fred/R/x86_64-pc-linux-gnu-library/4.4), Windows11
+    # (C:\\Users\\fred\\AppData\\Local/R/win-library/4.4).
 
     lib_dir <- Sys.getenv("R_LIBS_USER")
 

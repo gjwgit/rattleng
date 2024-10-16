@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Friday 2024-09-27 16:54:16 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-15 19:22:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -55,7 +55,8 @@ void main() {
       // Check first line of the file
 
       final textFinder = find.textContaining(
-          '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}');
+        '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}',
+      );
       expect(textFinder, findsOneWidget);
 
       await tester.pump(interact);
@@ -63,7 +64,8 @@ void main() {
       // If this passes, it means we are in the same page as before.
 
       final textFinder2 = find.textContaining(
-          '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}');
+        '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}',
+      );
       expect(textFinder2, findsOneWidget);
 
       // Navigate to the Model tab

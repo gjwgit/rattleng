@@ -1,6 +1,6 @@
 /// The root widget for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-10-13 10:36:58 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-15 17:07:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -79,7 +79,9 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
     // Prevent the window from closing by default
 
     await windowManager.setPreventClose(true);
-    setState(() {});
+    setState(() {
+      null;
+    });
 
     // Initialise the template variables in the R script.
 

@@ -1,13 +1,12 @@
-/// A provider for the maxit for MODEL NNET.
-///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
-///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// A simple function to print a message to the testing output.
+//
+// Time-stamp: <Wednesday 2024-10-16 14:32:35 +1100 Graham Williams>
+//
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,9 +21,11 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Graham Williams
+
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final maxitProvider = StateProvider<int>((ref) => 100);
+void testPrint(String message) {
+  // ignore: avoid_print
+  print('***** $message\n');
+}

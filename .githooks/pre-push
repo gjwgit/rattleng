@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Flutter Analyze
+
+printf "\e[33;1m%s\e[0m\n" 'Running flutter analyze.'
+result=$(flutter analyze lib integration_test)
+
+if [ $? -ne 0 ]; then
+  echo -e "$result \n"
+  printf "\e[31;1m%s\e[0m\n" 'Flutter analyze found the above issues, please fix, commit and push again.'
+  exit 1
+fi
+
+echo "$result"
+printf "\e[32;1m%s\e[0m\n" 'Finished running Flutter analyze with 0 issues.'
+
