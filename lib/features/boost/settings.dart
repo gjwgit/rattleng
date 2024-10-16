@@ -114,7 +114,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
 
     return Column(
       children: [
-        configTopSpace,
+        configRowSpace,
         Row(
           children: [
             NumberField(

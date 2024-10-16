@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:48:53 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-16 10:01:53 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,16 +30,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/max_nwts.dart';
-import 'package:rattle/providers/nnet_hidden_neurons.dart';
-import 'package:rattle/providers/nnet_maxit.dart';
-import 'package:rattle/providers/nnet_skip.dart';
-import 'package:rattle/providers/nnet_trace.dart';
+import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
+import 'package:rattle/widgets/vector_number_field.dart';
 
 /// The NEURAL tab config currently consists of just an ACTIVITY button.
 ///
@@ -53,16 +54,50 @@ class NeuralConfig extends ConsumerStatefulWidget {
 }
 
 class NeuralConfigState extends ConsumerState<NeuralConfig> {
+  Map<String, String> neuralAlgorithm = {
+    'nnet': '''
+    
+    A basic neural network with a single hidden layer.
+    Suitable for simple tasks and small datasets.
+    
+    ''',
+    'neuralnet': '''
+
+    Supports multiple layers, ideal for complex patterns.
+    Commonly used for deeper architectures.
+
+    ''',
+  };
+
+  /// Function that is used for the calculation of the error.
+
+  List<String> errorFunction = [
+    'sse',
+    'ce',
+  ];
+
+  /// Function that is used for smoothing the result of the cross product
+  /// of the covariate or neurons and the weights.
+
+  List<String> actionFunction = [
+    'logistic',
+    'tanh',
+  ];
+
   // Controllers for the input fields.
-  final TextEditingController _hiddenNeuronsController =
+
+  final TextEditingController _nnetSizeLayerController =
       TextEditingController();
+  final TextEditingController _neuralHiddenController = TextEditingController();
   final TextEditingController _maxNWtsController = TextEditingController();
+  final TextEditingController _thresholdController = TextEditingController();
+  final TextEditingController _maxStepsController = TextEditingController();
   final TextEditingController _maxitController = TextEditingController();
 
   @override
   void dispose() {
     // Dispose the controllers to free up resources.
-    _hiddenNeuronsController.dispose();
+    _nnetSizeLayerController.dispose();
     _maxNWtsController.dispose();
     _maxitController.dispose();
     super.dispose();
@@ -72,11 +107,16 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   Widget build(BuildContext context) {
     // Keep the value of text field.
 
-    _hiddenNeuronsController.text =
-        ref.read(hiddenNeuronsProvider.notifier).state.toString();
+    _nnetSizeLayerController.text =
+        ref.read(hiddenLayerNeuralProvider.notifier).state.toString();
     _maxNWtsController.text =
         ref.read(maxNWtsProvider.notifier).state.toString();
-    _maxitController.text = ref.read(maxitProvider.notifier).state.toString();
+    _maxitController.text =
+        ref.read(maxitNeuralProvider.notifier).state.toString();
+
+    String algorithm = ref.read(algorithmNeuralProvider.notifier).state;
+    String function = ref.read(errorFctNeuralProvider.notifier).state;
+    String action = ref.read(actionFctNeuralProvider.notifier).state;
 
     return Column(
       children: [
@@ -104,8 +144,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
               onPressed: () async {
                 // Perform manual validation.
-                String? hiddenNeuronsError =
-                    validateInteger(_hiddenNeuronsController.text, min: 1);
+                String? sizeHiddenLayerError =
+                    validateInteger(_nnetSizeLayerController.text, min: 1);
                 String? maxNWtsError =
                     validateInteger(_maxNWtsController.text, min: 1);
                 String? maxitError =
@@ -113,8 +153,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                 // Collect all errors.
                 List<String> errors = [
-                  if (hiddenNeuronsError != null)
-                    'Hidden Neurons: $hiddenNeuronsError',
+                  if (sizeHiddenLayerError != null)
+                    'Size Hidden Layer: $sizeHiddenLayerError',
                   if (maxNWtsError != null) 'Max NWts: $maxNWtsError',
                   if (maxitError != null) 'Maxit: $maxitError',
                 ];
@@ -142,22 +182,52 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   return;
                 } else {
-                  ref.read(hiddenNeuronsProvider.notifier).state =
-                      int.parse(_hiddenNeuronsController.text);
+                  ref.read(hiddenLayerNeuralProvider.notifier).state =
+                      int.parse(_nnetSizeLayerController.text);
                   ref.read(maxNWtsProvider.notifier).state =
                       int.parse(_maxNWtsController.text);
-                  ref.read(maxitProvider.notifier).state =
+                  ref.read(maxitNeuralProvider.notifier).state =
                       int.parse(_maxitController.text);
 
                   // Run the R scripts.
 
                   await rSource(context, ref, ['model_template']);
                   if (context.mounted) {
-                    await rSource(context, ref, ['model_build_neural_net']);
+                    if (algorithm == 'nnet') {
+                      await rSource(context, ref, ['model_build_neural_nnet']);
+                    } else if (algorithm == 'neuralnet') {
+                      await rSource(
+                        context,
+                        ref,
+                        ['model_build_neural_neuralnet'],
+                      );
+                    }
                   }
                 }
               },
               child: const Text('Build Neural Network'),
+            ),
+            configWidgetSpace,
+
+            const Text(
+              'Algorithm:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetSpace,
+
+            ChoiceChipTip<String>(
+              options: neuralAlgorithm.keys.toList(),
+              selectedOption: algorithm,
+              tooltips: neuralAlgorithm,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    algorithm = chosen;
+                    ref.read(algorithmNeuralProvider.notifier).state = chosen;
+                  }
+                });
+              },
             ),
 
             configWidgetSpace,
@@ -166,12 +236,14 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('NNET Trace'),
               tooltip: '''
 
-              Enable tracing optimization. The prediction error is provided
-              after every 10 training iterations.
+              Enable tracing optimization for the single layer neural
+              network. The prediction error is provided after every 10 training
+              iterations in the Console.
 
               ''',
               label: 'Trace',
-              provider: nnetTraceProvider,
+              provider: traceNeuralProvider,
+              enabled: algorithm == 'nnet',
             ),
 
             configWidgetSpace,
@@ -179,11 +251,13 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             LabelledCheckbox(
               tooltip: '''
 
-              Add skip-layer connections from input to output.
+              Add skip-layer connections from input to output for the single
+              layer neural network.
 
               ''',
               label: 'Skip',
-              provider: nnetSkipProvider,
+              provider: skipNeuralProvider,
+              enabled: algorithm == 'nnet',
             ),
           ],
         ),
@@ -192,28 +266,47 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
         Row(
           children: [
-            NumberField(
-              label: 'Hidden Neurons:',
-              key: const Key('hidden_neurons'),
-              controller: _hiddenNeuronsController,
+            algorithm == 'nnet'
+                ? NumberField(
+                    label: 'Hidden Layer:',
+                    key: const Key('hidden_layers'),
+                    controller: _nnetSizeLayerController,
 
-              tooltip: '''
+                    tooltip: '''
 
-              Hidden neurons receive input from all the neurons in the previous
-              layer (input layer) and apply a weighted sum of inputs, followed
-              by an activation function.
+                    The Hidden Layer parameter here is used as the size
+                    parameter in the nnet() model call which specifies the
+                    number of units (neurons) in the single hidden layer of the
+                    neural network.
               
-              ''',
-              inputFormatter:
-                  FilteringTextInputFormatter.digitsOnly, // Integers only
-              validator: (value) => validateInteger(value, min: 1),
-              stateProvider: hiddenNeuronsProvider,
-            ),
+                    ''',
+                    inputFormatter:
+                        FilteringTextInputFormatter.digitsOnly, // Integers only
+                    validator: (value) => validateInteger(value, min: 1),
+                    stateProvider: hiddenLayerNeuralProvider,
+                  )
+                : VectorNumberField(
+                    controller: _neuralHiddenController,
+                    stateProvider: hiddenLayersNeuralProvider,
+                    label: 'Hidden Layers',
+                    tooltip: '''
+
+                    The Hidden Layers parameter here is a vector of comma
+                    separated integers specifying the number of hidden neurons
+                    (vertices) in each of the layers. The number of layers is
+                    the number of integers supplied.
+
+                    ''',
+                    validator: validateVector,
+                    inputFormatter:
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+                  ),
             configWidgetSpace,
             NumberField(
               label: 'Max Iterations:',
               key: const Key('maxit'),
               controller: _maxitController,
+              enabled: algorithm == 'nnet',
 
               tooltip: '''
 
@@ -224,13 +317,14 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: maxitProvider,
+              stateProvider: maxitNeuralProvider,
             ),
             configWidgetSpace,
             NumberField(
               label: 'Max Weights:',
               key: const Key('max_NWts'),
               controller: _maxNWtsController,
+              enabled: algorithm == 'nnet',
 
               tooltip: '''
 
@@ -241,6 +335,90 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxNWtsProvider,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Threshold:',
+              key: const Key('thresholdNeuralField'),
+              controller: _thresholdController,
+              tooltip: '''
+
+                The numeric value specifying the threshold for the partial 
+                derivatives of the error function as stopping criteria.
+
+                ''',
+              enabled: algorithm != 'nnet',
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+              ),
+              validator: (value) => validateDecimal(value),
+              stateProvider: thresholdNeuralProvider,
+              interval: 0.0005,
+              decimalPlaces: 4,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Max Steps:',
+              key: const Key('neuralMaxStepField'),
+              controller: _maxStepsController,
+              tooltip: '''
+
+                The maximum steps for the training of the neural network. 
+                Reaching this maximum leads to a stop of the neural network's training process.
+
+                ''',
+              enabled: algorithm != 'nnet',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: (value) => validateInteger(value, min: 1000),
+              stateProvider: stepMaxNeuralProvider,
+            ),
+          ],
+        ),
+        configRowSpace,
+        Row(
+          children: [
+            variableChooser(
+              'Error Function',
+              errorFunction,
+              function,
+              ref,
+              errorFctNeuralProvider,
+              tooltip: '''
+
+              Function that is used for the calculation of the error. 
+              Alternatively, the strings 'sse' and 'ce' which stand for 
+              the sum of squared errors and the cross-entropy can be used.
+
+              ''',
+              enabled: algorithm == 'neuralnet',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(errorFctNeuralProvider.notifier).state = value;
+                }
+              },
+            ),
+            configWidgetSpace,
+            variableChooser(
+              'Action Function',
+              actionFunction,
+              action,
+              ref,
+              actionFctNeuralProvider,
+              tooltip: '''
+
+              Function that is used for smoothing the result of the cross product 
+              of the covariate or neurons and the weights. Additionally the strings,
+              'logistic' and 'tanh' are possible for the logistic function and 
+              tangent hyperbolicus.
+
+              ''',
+              enabled: algorithm == 'neuralnet',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(actionFctNeuralProvider.notifier).state = value;
+                }
+              },
             ),
           ],
         ),
