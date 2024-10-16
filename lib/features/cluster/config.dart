@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:47:56 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-17 05:34:17 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -52,13 +52,13 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
   Map<String, String> clusterTypes = {
     'KMeans': '''
 
-      Generate clusters using a kmeans algorithm. The kmeans algorithm is the
-      traditional cluster algorithm used in statistics.
+      Generate clusters using a kmeans algorithm, a traditional cluster
+      algorithm used in statistics.
 
       ''',
     'Ewkm': '''
 
-      Generate clusters using a kmeans algorithm but augmented by slecting
+      Generate clusters using a kmeans algorithm initialised by selecting
       subspaces using entropy weighting.
 
       ''',
@@ -74,16 +74,14 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
     //   ''',
   };
+
   @override
   Widget build(BuildContext context) {
     String type = ref.read(typeClusterProvider.notifier).state;
 
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        configBotSpace,
-
+        configTopSpace,
         Row(
           children: [
             // Space to the left of the configs.
@@ -95,17 +93,18 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             ActivityButton(
               tooltip: '''
 
-              Tap to build the $type cluster model using the parameter
-              values that you can set here.
+              Tap to build a $type cluster model using the parameter values that
+              are set here.
               
               ''',
               onPressed: () async {
+                // Identify the R scripts to run for the vcarious choices of
+                // cluster analysis.
+
                 String mt = 'model_template';
                 String km = 'model_build_cluster_kmeans';
                 String ew = 'model_build_cluster_ewkm';
                 String hi = 'model_build_cluster_hierarchical';
-
-                await rSource(context, ref, ['model_template']);
 
                 if (type == 'KMeans') {
                   if (context.mounted) await rSource(context, ref, [mt, km]);
