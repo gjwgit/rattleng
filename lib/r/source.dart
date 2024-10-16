@@ -37,11 +37,7 @@ import 'package:universal_io/io.dart' show Platform;
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
-import 'package:rattle/providers/cluster_number.dart';
-import 'package:rattle/providers/cluster_re_scale.dart';
-import 'package:rattle/providers/cluster_run.dart';
-import 'package:rattle/providers/cluster_seed.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
@@ -105,7 +101,7 @@ Future<void> rSource(
   bool punctuation = ref.read(punctuationProvider);
   bool stem = ref.read(stemProvider);
   bool stopword = ref.read(stopwordProvider);
-  bool clusterReScale = ref.read(clusterReScaleProvider);
+  bool clusterReScale = ref.read(reScaleClusterProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -125,9 +121,9 @@ Future<void> rSource(
   int nnetMaxNWts = ref.read(maxNWtsProvider);
   int nnetMaxit = ref.read(maxitNeuralProvider);
   int neuralStepMax = ref.read(stepMaxNeuralProvider);
-  int clusterSeed = ref.read(clusterSeedProvider);
-  int clusterNum = ref.read(clusterNumberProvider);
-  int clusterRun = ref.read(clusterRunProvider);
+  int clusterSeed = ref.read(seedClusterProvider);
+  int clusterNum = ref.read(numberClusterProvider);
+  int clusterRun = ref.read(runClusterProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
@@ -137,7 +133,7 @@ Future<void> rSource(
   double complexity = ref.read(complexityProvider);
   double neuralThreshold = ref.read(thresholdNeuralProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
-  String clusterType = ref.read(clusterTypeProvider);
+  String clusterType = ref.read(typeClusterProvider);
 
   // BOOST
 

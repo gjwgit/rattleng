@@ -31,7 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/cluster/settings.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -76,7 +76,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
   };
   @override
   Widget build(BuildContext context) {
-    String type = ref.read(clusterTypeProvider.notifier).state;
+    String type = ref.read(typeClusterProvider.notifier).state;
 
     return Column(
       children: [
@@ -115,7 +115,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                   if (context.mounted) await rSource(context, ref, [mt, hi]);
                 }
 
-                ref.read(clusterPageControllerProvider).animateToPage(
+                await ref.read(clusterPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),
@@ -142,7 +142,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 setState(() {
                   if (chosen != null) {
                     type = chosen;
-                    ref.read(clusterTypeProvider.notifier).state = chosen;
+                    ref.read(typeClusterProvider.notifier).state = chosen;
                   }
                 });
               },
