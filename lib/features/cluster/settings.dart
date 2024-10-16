@@ -33,7 +33,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/utils/variable_chooser.dart';
-import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class ClusterSetting extends ConsumerStatefulWidget {
@@ -164,18 +163,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: processorClusterProvider,
-            ),
-            configWidgetSpace,
-            LabelledCheckbox(
-              key: const Key('re_scale'),
-              tooltip: '''
-
-              TIPPY
-
-              ''',
-              label: 'Re-Scale',
-              enabled: type != 'Hierarchical',
-              provider: reScaleClusterProvider,
             ),
             configWidgetSpace,
             variableChooser(

@@ -36,6 +36,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 
 /// A StatefulWidget to pass the ref across to the rSouorce.
 
@@ -145,6 +146,18 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                   }
                 });
               },
+            ),
+            configWidgetSpace,
+            LabelledCheckbox(
+              key: const Key('re_scale'),
+              tooltip: '''
+
+              TIPPY
+
+              ''',
+              label: 'Re-Scale',
+              enabled: type != 'Hierarchical',
+              provider: reScaleClusterProvider,
             ),
           ],
         ),
