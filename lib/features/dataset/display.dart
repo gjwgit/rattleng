@@ -244,7 +244,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             child: Text(
               'Variable',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             ),
           ),
           Expanded(
@@ -252,7 +252,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             child: const Text(
               'Role',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             ),
           ),
           const Expanded(
@@ -281,13 +281,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             child: const Text(
               'Sample',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             ),
           ),
         ],
       ),
     );
   }
+
   // Build data line for each variable.
 
   Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
@@ -300,62 +301,88 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String content = _truncateContent(variable.details);
 
     // Extract unique and missing values from metaDataProvider.
+
     Map<String, dynamic> metaData = ref.watch(metaDataProvider);
     int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
     int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
 
     return Padding(
       padding: const EdgeInsets.all(6.0),
-      child: Row(
-        // Same alignment.
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Define a dynamic space based on the available width.
+          // 2% of available width.
 
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: _buildFittedText(variable.name)),
-          Expanded(
-            // Matching flex value for alignment.
+          double dynamicSpace = constraints.maxWidth * 0.02;
 
-            flex: typeFlex,
-            child: _buildRoleChips(variable.name, currentRoles),
-          ),
-          Expanded(
-            child: Text(
-              variable.type,
-              // Match header alignment.
+          return Row(
+            // Same alignment.
 
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              // Unique count.
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: _buildFittedText(variable.name)),
+              // Three dynamic spaces to make the visual space between the columns consistent.
 
-              uniqueCount.toString(),
-              // Match header alignment.
+              SizedBox(width: dynamicSpace),
+              SizedBox(width: dynamicSpace),
+              SizedBox(width: dynamicSpace),
 
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              // Missing count.
+              Expanded(
+                // Matching flex value for alignment.
 
-              missingCount.toString(),
-              // Match header alignment.
+                flex: typeFlex,
+                child: _buildRoleChips(variable.name, currentRoles),
+              ),
+              Expanded(
+                child: Text(
+                  variable.type,
+                  // Match header alignment.
 
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            // Matching flex value for alignment.
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              // Dynamic space.
 
-            flex: contentFlex,
-            child: SelectableText(
-              content,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
-        ],
+              SizedBox(width: dynamicSpace),
+              Expanded(
+                child: Text(
+                  // Unique count.
+
+                  uniqueCount.toString(),
+                  // Match header alignment.
+
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              // Dynamic space.
+
+              SizedBox(width: dynamicSpace),
+              Expanded(
+                child: Text(
+                  // Missing count.
+
+                  missingCount.toString(),
+                  // Match header alignment.
+
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              // Dynamic space.
+
+              SizedBox(width: dynamicSpace),
+              Expanded(
+                // Matching flex value for alignment.
+
+                flex: contentFlex,
+                child: SelectableText(
+                  content,
+                  style: const TextStyle(fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -365,13 +392,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget _buildFittedText(String text) {
     return FittedBox(
       fit: BoxFit.scaleDown,
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       child: Text(
         text,
         style: defaultTextStyle,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.left,
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -437,7 +464,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Truncate content for display.
 
   String _truncateContent(String content) {
-    int maxLength = 40;
+    int maxLength = 60;
     String subStr =
         content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
