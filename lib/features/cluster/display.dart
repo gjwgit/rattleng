@@ -50,6 +50,11 @@ final Map<String, Map<String, String>> clusterMethods = {
     'functionUrl':
         'https://www.rdocumentation.org/packages/wskm/versions/1.4.40/topics/ewkm',
   },
+  'Hierarchical': {
+    'functionName': 'hcluster',
+    'functionUrl':
+        'https://www.rdocumentation.org/packages/amap/versions/0.8-19/topics/hcluster',
+  },
 };
 
 /// The CLUSTER panel displays the tree instructions or the tree biuld output.

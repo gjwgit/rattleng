@@ -51,6 +51,9 @@ String _basicTemplate(
   } else if (type == 'Ewkm') {
     hd = 'Summary of the Ewkm Cluster Analysis';
     md = "(built using 'ewkm' with ${clusterNum.toString()} clusters):";
+  } else if (type == 'Hierarchical') {
+    hd = 'Summary of the Hierarchical Cluster Analysis';
+    md = "(built using 'Hierarchical'):";
   } else {
     // Handle other types or return an empty result.
 
@@ -71,6 +74,11 @@ String _basicTemplate(
     cm = rExtract(log, '> print(colMeans(data_for_clustering))');
     cn = rExtract(log, '> print(model_ewkm\$centers)');
     ss = rExtract(log, '> print(model_ewkm\$withinss)');
+  } else if (type == 'Hierarchical') {
+    sz = rExtract(log, '> print(cluster_sizes)');
+    cm = rExtract(log, '> print(data_means)');
+    cn = rExtract(log, '> print(cluster_centers)');
+    ss = rExtract(log, '> print(withinss)');
   }
 
   // Obtain the current timestamp.
