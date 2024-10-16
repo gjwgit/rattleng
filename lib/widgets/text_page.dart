@@ -122,47 +122,64 @@ class TextPage extends StatelessWidget {
 
   // Function to save the content as a PDF file and open it.
   Future<void> _saveAsPdf(BuildContext context) async {
+    // Create a PDF document
     final pdf = pw.Document();
+    print("content: $content");
 
-    // Apply word wrapping to the content using the wordWrap function
-    String wrappedContent = wordWrap(content, width: 60);
-
-    // Add the title and content to the PDF
+    // Add the title and content to the PDF page
     pdf.addPage(
       pw.Page(
+        pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) => pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            pw.Text(title,
-                style:
-                    pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.Text(
+              'PDF example', // Constant title
+              style: pw.TextStyle(
+                fontSize: 24,
+                fontWeight: pw.FontWeight.bold,
+              ),
+            ),
             pw.SizedBox(height: 20),
-
-            // Use wrapped content to ensure proper word wrapping in the PDF
-            pw.Text(wrappedContent, style: pw.TextStyle(fontSize: 16)),
+            pw.Paragraph(
+              text:
+                  content, // Write content as a paragraph to ensure it displays
+              style: pw.TextStyle(fontSize: 16),
+            ),
           ],
         ),
       ),
     );
 
-    // Save the PDF to a file
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/text_page.pdf';
-    final file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
+    try {
+      // Save the PDF to a file
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/text_page.pdf';
+      final file = File(filePath);
 
-    // Show a SnackBar with the file path and open the PDF
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('PDF saved at $filePath'),
-        action: SnackBarAction(
-          label: 'Open',
-          onPressed: () {
-            launchUrl(Uri.file(filePath));
-          },
+      // Write the PDF as bytes
+      await file.writeAsBytes(await pdf.save());
+
+      // Show a SnackBar with the file path and open the PDF
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('PDF saved at $filePath'),
+          action: SnackBarAction(
+            label: 'Open',
+            onPressed: () {
+              launchUrl(Uri.file(filePath));
+            },
+          ),
         ),
-      ),
-    );
+      );
+    } catch (e) {
+      // Handle errors if something goes wrong
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to save PDF: $e'),
+        ),
+      );
+    }
   }
 
 //   // Utility function to capitalize each line, add line spacing, and indent lines.
