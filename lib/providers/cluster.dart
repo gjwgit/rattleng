@@ -29,6 +29,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final linkClusterProvider = StateProvider<String>((ref) => 'ward');
 final numberClusterProvider = StateProvider<int>((ref) => 10);
+final processorClusterProvider = StateProvider<int>((ref) => 1);
 final reScaleClusterProvider = StateProvider<bool>((ref) => true);
 final runClusterProvider = StateProvider<int>((ref) => 1);
 final seedClusterProvider = StateProvider<int>((ref) => 42);

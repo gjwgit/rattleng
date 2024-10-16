@@ -49,6 +49,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
   final TextEditingController _clusterController = TextEditingController();
   final TextEditingController _seedController = TextEditingController();
   final TextEditingController _runController = TextEditingController();
+  final TextEditingController _processorController = TextEditingController();
 
   @override
   void dispose() {
@@ -148,6 +149,21 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: runClusterProvider,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Processors:',
+              key: const Key('cluster_processor'),
+              tooltip: '''
+              
+              Integer, number of subprocess for parallelization.
+
+              ''',
+              controller: _processorController,
+              enabled: type == 'Hierarchical',
+              inputFormatter: FilteringTextInputFormatter.digitsOnly,
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: processorClusterProvider,
             ),
             configWidgetSpace,
             LabelledCheckbox(
