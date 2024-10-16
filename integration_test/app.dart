@@ -1,6 +1,6 @@
 /// Test that the app starts up.
 //
-// Time-stamp: <Monday 2024-10-14 13:41:24 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-16 14:30:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -36,6 +36,7 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 
 import 'utils/delays.dart';
+import 'utils/test_print.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -101,7 +102,7 @@ void main() {
     // Perform the comparison.
 
     if (actualwelcome2Content.contains('No **Dataset** loaded')) {
-      print('Dataset not loaded, skipping Markdown content check.');
+      testPrint('Dataset not loaded, skipping Markdown content check.');
     } else {
       expect(actualwelcome2Content, expectedwelcome2Content);
     }

@@ -97,7 +97,7 @@ void main() {
 
       // Verify specific imputed values for 'IZR_middle_name'.
 
-      await verifyTextContent(
+      await verifyText(
         tester,
         [
           'Missing: 1987', // Number of missing values imputed.
