@@ -120,7 +120,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           ),
           // Add the extra space between 'Mode' and 'Constant'.
 
-          const SizedBox(width: 40.0),
+          const SizedBox(width: 60.0),
           // Second group of chips (starting from 'Constant').
 
           ChoiceChipTip<String>(
