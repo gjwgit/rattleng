@@ -1,6 +1,6 @@
-/// R Scripts: Support for running a script.
+/// Support for running an R script using R source().
 ///
-/// Time-stamp: <Tuesday 2024-10-15 17:07:04 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-10-17 05:42:58 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -92,7 +92,7 @@ Future<void> rSource(
   WidgetRef ref,
   List<String> scripts,
 ) async {
-  // Initialise the state variables used here.
+  // Initialise the state variables obtained from the different providers.
 
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
@@ -101,7 +101,6 @@ Future<void> rSource(
   bool punctuation = ref.read(punctuationProvider);
   bool stem = ref.read(stemProvider);
   bool stopword = ref.read(stopwordProvider);
-  bool clusterReScale = ref.read(reScaleClusterProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -111,22 +110,10 @@ Future<void> rSource(
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
-  String neuralErrorFct = ref.read(errorFctNeuralProvider);
-  String neuralActionFct = ref.read(actionFctNeuralProvider);
-  String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
-  String clusterDistance = ref.read(distanceClusterProvider);
-  String clusterLink = ref.read(linkClusterProvider);
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
-  int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
   int nnetMaxNWts = ref.read(maxNWtsProvider);
-  int nnetMaxit = ref.read(maxitNeuralProvider);
-  int neuralStepMax = ref.read(stepMaxNeuralProvider);
-  int clusterSeed = ref.read(seedClusterProvider);
-  int clusterNum = ref.read(numberClusterProvider);
-  int clusterRun = ref.read(runClusterProvider);
-  int clusterProcessor = ref.read(processorClusterProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
@@ -134,20 +121,39 @@ Future<void> rSource(
   bool nnetSkip = ref.read(skipNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
-  double neuralThreshold = ref.read(thresholdNeuralProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
-  String clusterType = ref.read(typeClusterProvider);
 
   // BOOST
 
   int boostMaxDepth = ref.read(maxDepthBoostProvider);
   int boostMinSplit = ref.read(minSplitBoostProvider);
   int boostXVal = ref.read(xValueBoostProvider);
-  double boostLearningRate = ref.read(learningRateBoostProvider);
-  double boostComplexity = ref.read(complexityBoostProvider);
   int boostThreads = ref.read(threadsBoostProvider);
   int boostIterations = ref.read(iterationsBoostProvider);
+  double boostLearningRate = ref.read(learningRateBoostProvider);
+  double boostComplexity = ref.read(complexityBoostProvider);
   String boostObjective = ref.read(objectiveBoostProvider);
+
+  // CLUSTER
+
+  int clusterSeed = ref.read(seedClusterProvider);
+  int clusterNum = ref.read(numberClusterProvider);
+  int clusterRun = ref.read(runClusterProvider);
+  int clusterProcessor = ref.read(processorClusterProvider);
+  bool clusterReScale = ref.read(reScaleClusterProvider);
+  String clusterDistance = ref.read(distanceClusterProvider);
+  String clusterLink = ref.read(linkClusterProvider);
+  String clusterType = ref.read(typeClusterProvider);
+
+  // NEURAL
+
+  int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
+  int nnetMaxit = ref.read(maxitNeuralProvider);
+  int neuralStepMax = ref.read(stepMaxNeuralProvider);
+  double neuralThreshold = ref.read(thresholdNeuralProvider);
+  String neuralErrorFct = ref.read(errorFctNeuralProvider);
+  String neuralActionFct = ref.read(actionFctNeuralProvider);
+  String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
 
   int interval = ref.read(intervalProvider);
 
@@ -225,18 +231,6 @@ Future<void> rSource(
   // if (Platform.isWindows) needsInit = 'TRUE';
 
   // code = code.replaceAll('NEEDS_INIT', needsInit);
-
-  ////////////////////////////////////////////////////////////////////////
-
-  // WORD CLOUD
-
-  code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
-  code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('LANGUAGE', language);
-  code = code.replaceAll('MINFREQ', minFreq);
-  code = code.replaceAll('MAXWORD', maxWord);
 
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
@@ -359,16 +353,16 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // NEURAL
+  // BOOST
 
-  code = code.replaceAll('NNET_HIDDEN_LAYERS', hiddenLayerSizes.toString());
-  code = code.replaceAll('NEURAL_HIDDEN_LAYERS', 'c($hiddenNeurons)');
-  code = code.replaceAll('NEURAL_MAXIT', nnetMaxit.toString());
-  code = code.replaceAll('NEURAL_MAX_NWTS', nnetMaxNWts.toString());
-  code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
-  code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
-  code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
-  code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
+  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
+  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
+  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
+  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
+  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
+  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
+  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
+  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -382,6 +376,33 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_DISTANCE', '"${clusterDistance.toString()}"');
   code = code.replaceAll('CLUSTER_LINK', '"${clusterLink.toString()}"');
   code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // NEURAL
+
+  code = code.replaceAll('NNET_HIDDEN_LAYERS', hiddenLayerSizes.toString());
+  code = code.replaceAll('NEURAL_HIDDEN_LAYERS', 'c($hiddenNeurons)');
+  code = code.replaceAll('NEURAL_MAXIT', nnetMaxit.toString());
+  code = code.replaceAll('NEURAL_MAX_NWTS', nnetMaxNWts.toString());
+  code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
+  code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
+  code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
+  code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // WORD CLOUD
+
+  code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
+  code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('LANGUAGE', language);
+  code = code.replaceAll('MINFREQ', minFreq);
+  code = code.replaceAll('MAXWORD', maxWord);
+
+  ////////////////////////////////////////////////////////////////////////
 
   if (includingMissing) {
     code = code.replaceAll('usesurrogate=0,', '');
@@ -397,19 +418,6 @@ Future<void> rSource(
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
-
-  ////////////////////////////////////////////////////////////////////////
-
-  // BOOST
-
-  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
-  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
-  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
-  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
-  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
-  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
-  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
-  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
 
