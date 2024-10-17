@@ -48,7 +48,8 @@ library(biclust)
 mtype <- "BiCluster_amap"
 mdesc <- "BiCluster Clustering using amap package"
 
-# Set whether the data should be rescaled
+# Set whether the data should be rescaled.
+
 rescale <- CLUSTER_RESCALE
 
 # Prepare the data for bi-clustering based on the value of rescale.
@@ -58,7 +59,6 @@ if (rescale) {
   tds <- sapply(na.omit(ds[tr, numc]), reshape::rescaler, "range")
 } else {
   # Use the data without rescaling.
-
   tds <- na.omit(ds[tr, numc])
 }
 
@@ -72,8 +72,8 @@ model_biclust <- biclust(tds, method=BCCC(), number=CLUSTER_NUM)
 
 # Extract row and column clusters.
 
-row_clusters <- biclust::biclustmember(model_biclust, dimension = 1)
-col_clusters <- biclust::biclustmember(model_biclust, dimension = 2)
+row_clusters <- model_biclust@RowxNumber
+col_clusters <- model_biclust@NumberxCol
 
 print("Row Clusters:")
 print(row_clusters)
@@ -82,23 +82,24 @@ print(col_clusters)
 
 # Add the bi-cluster assignments to the data frame (optional).
 
-tds_with_biclusters <- data.frame(tds, row_cluster = row_clusters)
+row_cluster_assignments <- apply(row_clusters, 1, function(row) which(row == 1))
+tds_with_biclusters <- data.frame(tds, row_cluster = row_cluster_assignments)
 
 # Report on the bi-cluster characteristics.
 
-cluster_sizes <- table(row_clusters)
+cluster_sizes <- colSums(row_clusters)
 print("Row Cluster Sizes:")
 print(cluster_sizes)
 
 # Compute mean for each row cluster (aggregated data).
 
-cluster_means <- aggregate(tds, by = list(cluster = row_clusters), FUN = mean)
+cluster_means <- aggregate(tds, by = list(cluster = row_cluster_assignments), FUN = mean)
 print("Cluster Means:")
 print(cluster_means)
 
 # Within-cluster sum of squares:
 
-withinss <- sapply(split(as.data.frame(tds), row_clusters), function(cluster_data) {
+withinss <- sapply(split(as.data.frame(tds), row_cluster_assignments), function(cluster_data) {
   center <- colMeans(cluster_data)
   sum(rowSums((cluster_data - center)^2))
 })
