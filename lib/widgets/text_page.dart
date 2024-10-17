@@ -121,7 +121,6 @@ class TextPage extends StatelessWidget {
   }
 
   // Function to save the content as a PDF file and open it.
-
   Future<void> _saveAsPdf(BuildContext context) async {
     // Create a PDF document.
 
@@ -131,13 +130,15 @@ class TextPage extends StatelessWidget {
 
     List<String> lines = content.split('\n');
 
-    // Split each line into columns (assuming data is separated by multiple spaces).
+    // Assuming the first line contains the parameter names.
+    String parameterNames = lines.first;
+    List<String> parameters = parameterNames
+        .split(RegExp(r'\s{2,}'))
+        .map((param) => param.trim())
+        .toList();
 
-    List<List<String>> tableData = lines.map((line) {
-      // Split on two or more spaces.
-
-      return line.split(RegExp(r'\s{2,}'));
-    }).toList();
+    // Remove the parameter names from the lines, leaving only the data rows.
+    lines.removeAt(0);
 
     // Add the title and content to the PDF page.
 
@@ -150,35 +151,59 @@ class TextPage extends StatelessWidget {
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
-                // pw.Text(
-                //   '', // Constant title
-                //   style: pw.TextStyle(
-                //     fontSize: 24,
-                //     fontWeight: pw.FontWeight.bold,
-                //   ),
-                // ),
                 pw.SizedBox(height: 20),
-                // Build the table with structured rows and columns without border.
-
-                pw.Table(
-                  // No border for invisible table structure.
-
-                  children: tableData.map((row) {
-                    return pw.TableRow(
-                      children: row.map((cell) {
-                        return pw.Padding(
-                          padding: const pw.EdgeInsets.all(4),
-                          child: pw.Text(
-                            // Trim to remove extra spaces.
-
-                            cell.trim(),
-                            style: pw.TextStyle(fontSize: 5),
-                          ),
-                        );
-                      }).toList(),
+                // Display the parameter names at the top, aligned with the rest of the data.
+                pw.Row(
+                  children: parameters.map((param) {
+                    return pw.Expanded(
+                      child: pw.Text(
+                        param,
+                        style: pw.TextStyle(
+                            fontSize: 5, fontWeight: pw.FontWeight.bold),
+                        textAlign: pw.TextAlign.left,
+                      ),
                     );
                   }).toList(),
                 ),
+                pw.SizedBox(height: 10),
+                // Build each line with structured formatting.
+
+                ...lines.map((line) {
+                  // Split the line into parts at every colon.
+                  List<String> parts = line.split(':');
+
+                  // Add colons back except the last part.
+                  List<String> row = [];
+                  for (int i = 0; i < parts.length; i++) {
+                    if (i < parts.length - 1) {
+                      row.add(parts[i].trim() + ':');
+                    } else {
+                      row.add(parts[i].trim());
+                    }
+                  }
+
+                  // Ensure each line has exactly the same number of parts as the parameters.
+                  while (row.length < parameters.length) {
+                    row.add(''); // Add empty strings to ensure alignment.
+                  }
+
+                  // Return a Row widget for the line, ensuring each part is aligned.
+                  return pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 4),
+                    child: pw.Row(
+                      children: row.map((part) {
+                        // Each part is given equal space to align colons vertically.
+                        return pw.Expanded(
+                          child: pw.Text(
+                            part,
+                            style: pw.TextStyle(fontSize: 5),
+                            textAlign: pw.TextAlign.left,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }).toList(),
               ],
             ),
           );
@@ -190,7 +215,7 @@ class TextPage extends StatelessWidget {
       // Save the PDF to a file.
 
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/11.pdf';
+      final filePath = '${directory.path}/aligned_parameters.pdf';
       final file = File(filePath);
 
       // Write the PDF as bytes.
