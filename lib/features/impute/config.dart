@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-17 08:50:18 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-17 12:07:50 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -302,13 +302,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               },
               child: const Text('Impute Missing Values'),
             ),
-
             configWidgetSpace,
-
-            // Use local one because of the subtle difference.
-
-            // TODO 20241016 gjw KEVIN PLEASE EXPLAIN THE SUBTLE DIFFERENCE
-
             variableChooser(
               'Variable',
               inputs,
@@ -332,13 +326,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
               ''',
             ),
-
             configWidgetSpace,
-
             transformChooser(),
-
             configChooserSpace,
-
             constantEntry(),
           ],
         ),
