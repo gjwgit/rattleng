@@ -124,37 +124,43 @@ class TextPage extends StatelessWidget {
   Future<void> _saveAsPdf(BuildContext context) async {
     // Create a PDF document
     final pdf = pw.Document();
-    print("content: $content");
+    print(content);
 
     // Add the title and content to the PDF page
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) => pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            pw.Text(
-              'PDF example', // Constant title
-              style: pw.TextStyle(
-                fontSize: 24,
-                fontWeight: pw.FontWeight.bold,
-              ),
+        build: (pw.Context context) {
+          return pw.Padding(
+            padding: const pw.EdgeInsets.all(20), // Add padding to the page
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text(
+                  'PDF example', // Constant title
+                  style: pw.TextStyle(
+                    fontSize: 24,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+                pw.SizedBox(height: 20),
+                pw.Flexible(
+                  child: pw.Text(
+                    content, // Write content directly, no wrapping
+                    style: pw.TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
             ),
-            pw.SizedBox(height: 20),
-            pw.Paragraph(
-              text:
-                  content, // Write content as a paragraph to ensure it displays
-              style: pw.TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
 
     try {
       // Save the PDF to a file
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/text_page.pdf';
+      final filePath = '${directory.path}/text_page2.pdf';
       final file = File(filePath);
 
       // Write the PDF as bytes
