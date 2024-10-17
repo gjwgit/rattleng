@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-10-17 21:53:12 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-10-18 05:45:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -21,9 +21,11 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin， Bo Zhang
+/// Authors: Graham Williams, Yixiang Yin， Bo Zhang, Kevin Wang
 
 library;
+
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 
@@ -51,11 +53,8 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-TextStyle defaultTextStyle = const TextStyle(
-  fontSize: 14,
-);
-
-/// The dataset panel displays the RattleNG welcome or a data summary.
+/// The dataset panel displays the RattleNG welcome on the first page and the
+/// ROLES as the second page.
 
 class DatasetDisplay extends ConsumerStatefulWidget {
   const DatasetDisplay({super.key});
@@ -66,8 +65,6 @@ class DatasetDisplay extends ConsumerStatefulWidget {
 
 class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Constants for layout.
-
-  final Widget space = const SizedBox(width: 10);
 
   final int typeFlex = 4;
   final int contentFlex = 3;
@@ -104,7 +101,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     );
   }
 
-  // Add a page for text file content.
+  ////////////////////////////////////////////////////////////////////////
+
+  // Add a page for text file (a .txt file) content for Word Cloud.
 
   void _addTextFilePage(String stdout, List<Widget> pages) {
     String content = rExtract(stdout, '> cat(ds,');
@@ -121,6 +120,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       pages.add(TextPage(title: title, content: '\n$content'));
     }
   }
+
+  ////////////////////////////////////////////////////////////////////////
 
   // Add a page for dataset summary.
 
@@ -244,44 +245,44 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             child: Text(
               'Variable',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
             ),
           ),
           Expanded(
             flex: typeFlex,
             child: const Text(
-              'Role',
+              '      Role',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
             ),
           ),
           const Expanded(
             child: Text(
               'Type',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
             ),
           ),
           const Expanded(
             child: Text(
               'Unique',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.right,
             ),
           ),
           const Expanded(
             child: Text(
               'Missing',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.right,
             ),
           ),
           Expanded(
             flex: contentFlex,
             child: const Text(
-              'Sample',
+              '      Sample',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
             ),
           ),
         ],
@@ -315,16 +316,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
           double dynamicSpace = constraints.maxWidth * 0.02;
 
+          var formatter = NumberFormat('#,###');
+
           return Row(
             // Same alignment.
 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(child: _buildFittedText(variable.name)),
-              // Three dynamic spaces to make the visual space between the columns consistent.
 
-              SizedBox(width: dynamicSpace),
-              SizedBox(width: dynamicSpace),
+              // Three dynamic spaces to make the visual space between the
+              // columns consistent.
+
               SizedBox(width: dynamicSpace),
 
               Expanded(
@@ -333,51 +336,53 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 flex: typeFlex,
                 child: _buildRoleChips(variable.name, currentRoles),
               ),
+
               Expanded(
                 child: Text(
                   variable.type,
                   // Match header alignment.
 
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                 ),
               ),
-              // Dynamic space.
 
               SizedBox(width: dynamicSpace),
+
               Expanded(
                 child: Text(
                   // Unique count.
 
-                  uniqueCount.toString(),
+                  formatter.format(uniqueCount),
+
                   // Match header alignment.
 
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.right,
                 ),
               ),
-              // Dynamic space.
 
               SizedBox(width: dynamicSpace),
+
               Expanded(
                 child: Text(
                   // Missing count.
 
-                  missingCount.toString(),
+                  formatter.format(missingCount),
+
                   // Match header alignment.
 
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.right,
                 ),
               ),
-              // Dynamic space.
 
               SizedBox(width: dynamicSpace),
+
               Expanded(
                 // Matching flex value for alignment.
 
                 flex: contentFlex,
                 child: SelectableText(
                   content,
-                  style: const TextStyle(fontSize: 14),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                 ),
               ),
             ],
@@ -395,10 +400,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       alignment: Alignment.center,
       child: Text(
         text,
-        style: defaultTextStyle,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.left,
       ),
     );
   }
