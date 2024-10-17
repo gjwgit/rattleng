@@ -55,6 +55,11 @@ final Map<String, Map<String, String>> clusterMethods = {
     'functionUrl':
         'https://www.rdocumentation.org/packages/amap/versions/0.8-19/topics/hcluster',
   },
+  'BiCluster': {
+    'functionName': 'biclust',
+    'functionUrl':
+        'https://www.rdocumentation.org/packages/biclust/versions/2.0.3.1/topics/biclust',
+  },
 };
 
 /// The CLUSTER panel displays the tree instructions or the tree biuld output.
