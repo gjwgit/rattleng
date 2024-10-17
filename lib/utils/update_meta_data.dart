@@ -1,6 +1,6 @@
 /// Scrape the latest json from rattle::meta_data and update the provider.
 //
-// Time-stamp: <Thursday 2024-08-15 12:29:19 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-10-17 21:32:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,6 +28,7 @@ library;
 // Group imports by dart, flutter, packages, local. Space separated. Alphabetic.
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,10 +42,24 @@ void updateMetaData(WidgetRef ref) {
   String content = rExtract(stdout, '> meta_data(ds)');
 
   // Only update the meta data if we find meta data in the CONSOLE. Otherwise we
-  // get an unexpected character exception.
+  // get an unexpected character exception. 20241017 gjw Also need to check that
+  // the content is finished being populated. On Windows I was noticing that the
+  // jsonDecode was raising an Exception because the content was not a properly
+  // formed JSON. It was being truncated. So for now, and this might need to be
+  // revisited, lets catch the JSON FormatException, wait 1s, and try
+  // again. This seems to fix the Windows problem for now! And on Linux it
+  // remains snappy.
+
+  Map<String, dynamic> jsonObject = {};
 
   if (content.isNotEmpty) {
-    Map<String, dynamic> jsonObject = jsonDecode(content);
+    try {
+      jsonObject = jsonDecode(content);
+    } on FormatException {
+      sleep(Duration(seconds: 1));
+      stdout = ref.read(stdoutProvider);
+      content = rExtract(stdout, '> meta_data(ds)');
+    }
 
     // 20240815 gjw Iterate through each key-value pair and add to the
     // provider. Simply assigning the object to the provider raises an exception
