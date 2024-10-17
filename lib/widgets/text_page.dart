@@ -121,15 +121,26 @@ class TextPage extends StatelessWidget {
   }
 
   // Function to save the content as a PDF file and open it.
-  Future<void> _saveAsPdf(BuildContext context) async {
-    // Create a PDF document
-    final pdf = pw.Document();
-    print(content);
 
-    // Split the content into lines to format them better
+  Future<void> _saveAsPdf(BuildContext context) async {
+    // Create a PDF document.
+
+    final pdf = pw.Document();
+
+    // Split the content into lines to format them better.
+
     List<String> lines = content.split('\n');
 
-    // Add the title and content to the PDF page
+    // Split each line into columns (assuming data is separated by multiple spaces).
+
+    List<List<String>> tableData = lines.map((line) {
+      // Split on two or more spaces.
+
+      return line.split(RegExp(r'\s{2,}'));
+    }).toList();
+
+    // Add the title and content to the PDF page.
+
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
@@ -139,21 +150,34 @@ class TextPage extends StatelessWidget {
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
-                pw.Text(
-                  'PDF example', // Constant title
-                  style: pw.TextStyle(
-                    fontSize: 24,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
+                // pw.Text(
+                //   '', // Constant title
+                //   style: pw.TextStyle(
+                //     fontSize: 24,
+                //     fontWeight: pw.FontWeight.bold,
+                //   ),
+                // ),
                 pw.SizedBox(height: 20),
-                // Build the content line by line to ensure proper formatting
-                ...lines.map(
-                  (line) => pw.Text(
-                    line.trim(), // Trim each line for formatting
-                    style:
-                        pw.TextStyle(fontSize: 8), // Adjust font size as needed
-                  ),
+                // Build the table with structured rows and columns without border.
+
+                pw.Table(
+                  // No border for invisible table structure.
+
+                  children: tableData.map((row) {
+                    return pw.TableRow(
+                      children: row.map((cell) {
+                        return pw.Padding(
+                          padding: const pw.EdgeInsets.all(4),
+                          child: pw.Text(
+                            // Trim to remove extra spaces.
+
+                            cell.trim(),
+                            style: pw.TextStyle(fontSize: 5),
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
@@ -163,15 +187,18 @@ class TextPage extends StatelessWidget {
     );
 
     try {
-      // Save the PDF to a file
+      // Save the PDF to a file.
+
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/text_page5.pdf';
+      final filePath = '${directory.path}/11.pdf';
       final file = File(filePath);
 
-      // Write the PDF as bytes
+      // Write the PDF as bytes.
+
       await file.writeAsBytes(await pdf.save());
 
-      // Show a SnackBar with the file path and open the PDF
+      // Show a SnackBar with the file path and open the PDF.
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('PDF saved at $filePath'),
@@ -184,7 +211,8 @@ class TextPage extends StatelessWidget {
         ),
       );
     } catch (e) {
-      // Handle errors if something goes wrong
+      // Handle errors if something goes wrong.
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to save PDF: $e'),
