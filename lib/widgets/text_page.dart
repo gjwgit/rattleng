@@ -126,6 +126,9 @@ class TextPage extends StatelessWidget {
     final pdf = pw.Document();
     print(content);
 
+    // Split the content into lines to format them better
+    List<String> lines = content.split('\n');
+
     // Add the title and content to the PDF page
     pdf.addPage(
       pw.Page(
@@ -144,10 +147,12 @@ class TextPage extends StatelessWidget {
                   ),
                 ),
                 pw.SizedBox(height: 20),
-                pw.Flexible(
-                  child: pw.Text(
-                    content, // Write content directly, no wrapping
-                    style: pw.TextStyle(fontSize: 16),
+                // Build the content line by line to ensure proper formatting
+                ...lines.map(
+                  (line) => pw.Text(
+                    line.trim(), // Trim each line for formatting
+                    style:
+                        pw.TextStyle(fontSize: 8), // Adjust font size as needed
                   ),
                 ),
               ],
@@ -160,7 +165,7 @@ class TextPage extends StatelessWidget {
     try {
       // Save the PDF to a file
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/text_page2.pdf';
+      final filePath = '${directory.path}/text_page5.pdf';
       final file = File(filePath);
 
       // Write the PDF as bytes
