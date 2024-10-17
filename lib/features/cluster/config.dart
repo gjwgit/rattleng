@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-17 05:34:17 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-17 11:09:00 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -152,7 +152,12 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               key: const Key('re_scale'),
               tooltip: '''
 
-              TIPPY
+              Distance based cluster analysis is heavily affected by variables
+              with larger magnitudes (like salary, e.g., 45,000 and 50,000 has a
+              distance of 5,000) compared to those with smaller magnitudes (like
+              age, e.g., 45 and 50 has a distance of 5). We enable Re-Scaling by
+              default to avoid this issue on distance based clustering by
+              rescaling all values to be between 0 and 1.
 
               ''',
               label: 'Re-Scale',
