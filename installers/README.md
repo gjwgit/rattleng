@@ -2,23 +2,22 @@
 
 The RattleNG front-end is implemented in
 [Flutter](https://flutter.dev/) with the back-end implemented in
-[R](https://r-project.org/). It runs natively on GNU/Linux, MacOS, and
-Windows.
+[R](https://r-project.org/).
 
-Begin by [installing
-R](https://survivor.togaware.com/datascience/installing-r.html) or
-[installing R with CRAN on
-Ubuntu](https://survivor.togaware.com/datascience/installing-r-with-cran-on-ubuntu.html)
-as explained in the [Data Science Desktop Survival
+First [install
+R](https://survivor.togaware.com/datascience/installing-r.html) or see
+the specific guide for
+[Ubuntu](https://survivor.togaware.com/datascience/installing-r-with-cran-on-ubuntu.html)
+from the [Data Science Desktop Survival
 Guide](https://survivor.togaware.com/datascience/index.html).
 
 Once you have R installed, the next step is to [install
 rattle](https://survivor.togaware.com/datascience/installing-rattle.html). There
 are specific installation guides for
-[**GNU/Linux**](https://survivor.togaware.com/datascience/installing-rattle-on-linux.html),
-[**MacOS**](https://survivor.togaware.com/datascience/installing-rattle-on-macos.html),
-and
-[**Windows**](https://survivor.togaware.com/datascience/installing-rattle-on-windows.html).
+
+- [**GNU/Linux**](https://survivor.togaware.com/datascience/installing-rattle-on-linux.html),
+- [**MacOS**](https://survivor.togaware.com/datascience/installing-rattle-on-macos.html),
+- [**Windows**](https://survivor.togaware.com/datascience/installing-rattle-on-windows.html).
 
 ## Source Install
 
