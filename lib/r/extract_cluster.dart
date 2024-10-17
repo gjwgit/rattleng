@@ -54,6 +54,9 @@ String _basicTemplate(
   } else if (type == 'Hierarchical') {
     hd = 'Summary of the Hierarchical Cluster Analysis';
     md = "(built using 'Hierarchical'):";
+  } else if (type == 'BiCluster') {
+    hd = 'Summary of the Bi-Cluster Analysis';
+    md = "(built using 'BiCluster'):";
   } else {
     // Handle other types or return an empty result.
 
@@ -78,6 +81,11 @@ String _basicTemplate(
     sz = rExtract(log, '> print(cluster_sizes)');
     cm = rExtract(log, '> print(data_means)');
     cn = rExtract(log, '> print(cluster_centers)');
+    ss = rExtract(log, '> print(withinss)');
+  } else if (type == 'BiCluster') {
+    sz = rExtract(log, '> print(cluster_sizes)');
+    cm = rExtract(log, '> print(cluster_means)');
+    cn = rExtract(log, '> print(col_clusters)');
     ss = rExtract(log, '> print(withinss)');
   }
 
