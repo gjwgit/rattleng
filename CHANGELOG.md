@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Add hierarchical cluster plus app tuning [6.3.7 20241017 zy] 
 + Add neuralnet() support [6.3.6 20241016 zy]
 + Unify config styles [6.3.5 20241015 gjw]
 + Implement Boost. Cleanup and review and bug fixes [6.3.4 20241013]
