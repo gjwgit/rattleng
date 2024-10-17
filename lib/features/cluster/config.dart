@@ -68,12 +68,12 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       Build an agglomerative hierarchical cluster.
 
       ''',
-    // 'BiCluster': '''
+    'BiCluster': '''
 
-    //   Cluster by identifying suitable subsets of both the variables and the
-    //   observations, rather than just the observations as in kmeans.
+      Cluster by identifying suitable subsets of both the variables and the
+      observations, rather than just the observations as in kmeans.
 
-    //   ''',
+      ''',
   };
 
   @override
