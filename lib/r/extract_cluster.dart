@@ -26,8 +26,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/cluster_number.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
@@ -39,12 +38,12 @@ String _basicTemplate(
 
   // First some strings to put into the output.
 
-  int clusterNum = ref.read(clusterNumberProvider.notifier).state;
+  int clusterNum = ref.read(numberClusterProvider.notifier).state;
 
   String hd;
   String md;
 
-  String type = ref.read(clusterTypeProvider.notifier).state;
+  String type = ref.read(typeClusterProvider.notifier).state;
 
   if (type == 'KMeans') {
     hd = 'Summary of the KMeans Cluster Analysis';
@@ -52,6 +51,9 @@ String _basicTemplate(
   } else if (type == 'Ewkm') {
     hd = 'Summary of the Ewkm Cluster Analysis';
     md = "(built using 'ewkm' with ${clusterNum.toString()} clusters):";
+  } else if (type == 'Hierarchical') {
+    hd = 'Summary of the Hierarchical Cluster Analysis';
+    md = "(built using 'Hierarchical'):";
   } else {
     // Handle other types or return an empty result.
 
@@ -72,6 +74,11 @@ String _basicTemplate(
     cm = rExtract(log, '> print(colMeans(data_for_clustering))');
     cn = rExtract(log, '> print(model_ewkm\$centers)');
     ss = rExtract(log, '> print(model_ewkm\$withinss)');
+  } else if (type == 'Hierarchical') {
+    sz = rExtract(log, '> print(cluster_sizes)');
+    cm = rExtract(log, '> print(data_means)');
+    cn = rExtract(log, '> print(cluster_centers)');
+    ss = rExtract(log, '> print(withinss)');
   }
 
   // Obtain the current timestamp.
