@@ -43,7 +43,7 @@
 # The 'reshape' package provides the 'rescaler' function.
 
 library(reshape)
-library(amap)
+library(biclust)
 
 mtype <- "BiCluster_amap"
 mdesc <- "BiCluster Clustering using amap package"
@@ -51,14 +51,11 @@ mdesc <- "BiCluster Clustering using amap package"
 # Set whether the data should be rescaled
 rescale <- CLUSTER_RESCALE
 
-# Prepare the data for clustering based on the value of rescale.
+# Prepare the data for bi-clustering based on the value of rescale.
 
 if (rescale) {
   # Rescale the data.
-
-  tds <- sapply(na.omit(ds[tr, numc]),
-                reshape::rescaler,
-                "range")
+  tds <- sapply(na.omit(ds[tr, numc]), reshape::rescaler, "range")
 } else {
   # Use the data without rescaling.
 
@@ -69,41 +66,39 @@ if (rescale) {
 
 tds <- as.matrix(tds)
 
-# Perform hierarchical clustering using the hcluster function from the amap package.
+# Perform bi-clustering using the biclust function.
 
-model_hclust <- hcluster(tds, method=CLUSTER_DISTANCE, link=CLUSTER_LINK, nbproc=CLUSTER_PROCESSOR)
+model_biclust <- biclust(tds, method=BCCC(), number=CLUSTER_NUM)
 
-# Cut the dendrogram to get the specified number of clusters.
+# Extract row and column clusters.
 
-cluster_assignments <- cutree(model_hclust, k = CLUSTER_NUM)
+row_clusters <- biclust::biclustmember(model_biclust, dimension = 1)
+col_clusters <- biclust::biclustmember(model_biclust, dimension = 2)
 
-# Add the cluster assignments to the data frame (optional).
+print("Row Clusters:")
+print(row_clusters)
+print("Column Clusters:")
+print(col_clusters)
 
-tds_with_clusters <- data.frame(tds, cluster = cluster_assignments)
+# Add the bi-cluster assignments to the data frame (optional).
 
-# Report on the cluster characteristics.
+tds_with_biclusters <- data.frame(tds, row_cluster = row_clusters)
 
-# Cluster sizes:
+# Report on the bi-cluster characteristics.
 
-cluster_sizes <- table(cluster_assignments)
-print("Cluster Sizes:")
+cluster_sizes <- table(row_clusters)
+print("Row Cluster Sizes:")
 print(cluster_sizes)
 
-# Data means:
+# Compute mean for each row cluster (aggregated data).
 
-data_means <- colMeans(tds)
-print("Data Means:")
-print(data_means)
-
-# Cluster centers:
-
-cluster_centers <- aggregate(tds, by = list(cluster = cluster_assignments), FUN = mean)
-print("Cluster Centers:")
-print(cluster_centers)
+cluster_means <- aggregate(tds, by = list(cluster = row_clusters), FUN = mean)
+print("Cluster Means:")
+print(cluster_means)
 
 # Within-cluster sum of squares:
 
-withinss <- sapply(split(as.data.frame(tds), cluster_assignments), function(cluster_data) {
+withinss <- sapply(split(as.data.frame(tds), row_clusters), function(cluster_data) {
   center <- colMeans(cluster_data)
   sum(rowSums((cluster_data - center)^2))
 })
