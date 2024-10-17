@@ -119,13 +119,13 @@ class DatasetPopup extends ConsumerWidget {
 
                   // Access the PageController via Riverpod and move to the second page.
 
-                  ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
+                  // ref.read(pageControllerProvider).animateToPage(
+                  //       // Index of the second page.
 
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  //       1,
+                  //       duration: const Duration(milliseconds: 300),
+                  //       curve: Curves.easeInOut,
+                  //     );
                 },
                 child: const Text('Filename'),
               ),
@@ -166,13 +166,13 @@ class DatasetPopup extends ConsumerWidget {
 
                   // Access the PageController via Riverpod and move to the second page.
 
-                  ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
+                  // ref.read(pageControllerProvider).animateToPage(
+                  //       // Index of the second page.
 
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  //       1,
+                  //       duration: const Duration(milliseconds: 300),
+                  //       curve: Curves.easeInOut,
+                  //     );
                 },
                 child: const Text('Demo'),
               ),
