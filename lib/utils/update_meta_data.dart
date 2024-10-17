@@ -1,6 +1,6 @@
 /// Scrape the latest json from rattle::meta_data and update the provider.
 //
-// Time-stamp: <Thursday 2024-10-17 21:29:23 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-17 21:32:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -55,7 +55,7 @@ void updateMetaData(WidgetRef ref) {
   if (content.isNotEmpty) {
     try {
       jsonObject = jsonDecode(content);
-    } on FormatException catch (e) {
+    } on FormatException {
       sleep(Duration(seconds: 1));
       stdout = ref.read(stdoutProvider);
       content = rExtract(stdout, '> meta_data(ds)');
