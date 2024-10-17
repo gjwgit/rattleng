@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Sunday 2024-07-21 17:28:48 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-10-17 22:19:36 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -34,6 +34,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/status.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract_glimpse.dart';
+import 'package:rattle/r/extract_rows_columns.dart';
 
 class StatusBar extends ConsumerWidget {
   const StatusBar({super.key});
@@ -42,6 +45,7 @@ class StatusBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     String path = ref.watch(pathProvider);
     if (path != '') path = '$path   ';
+    String stdout = ref.watch(stdoutProvider);
 
     return Container(
       height: 50,
@@ -57,6 +61,7 @@ class StatusBar extends ConsumerWidget {
         data: '![](resource:assets/images/favicon_small.png)   '
             '[togware.com](https://togaware.com)  '
             '$path'
+            '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
             '${ref.watch(statusProvider)}',
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
       ),
