@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Tuesday 2024-10-15 20:08:40 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-10-18 05:45:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -21,9 +21,11 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin， Bo Zhang
+/// Authors: Graham Williams, Yixiang Yin， Bo Zhang, Kevin Wang
 
 library;
+
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 
@@ -51,11 +53,8 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-TextStyle defaultTextStyle = const TextStyle(
-  fontSize: 14,
-);
-
-/// The dataset panel displays the RattleNG welcome or a data summary.
+/// The dataset panel displays the RattleNG welcome on the first page and the
+/// ROLES as the second page.
 
 class DatasetDisplay extends ConsumerStatefulWidget {
   const DatasetDisplay({super.key});
@@ -66,8 +65,6 @@ class DatasetDisplay extends ConsumerStatefulWidget {
 
 class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Constants for layout.
-
-  final Widget space = const SizedBox(width: 10);
 
   final int typeFlex = 4;
   final int contentFlex = 3;
@@ -104,7 +101,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     );
   }
 
-  // Add a page for text file content.
+  ////////////////////////////////////////////////////////////////////////
+
+  // Add a page for text file (a .txt file) content for Word Cloud.
 
   void _addTextFilePage(String stdout, List<Widget> pages) {
     String content = rExtract(stdout, '> cat(ds,');
@@ -121,6 +120,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       pages.add(TextPage(title: title, content: '\n$content'));
     }
   }
+
+  ////////////////////////////////////////////////////////////////////////
 
   // Add a page for dataset summary.
 
@@ -250,7 +251,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           Expanded(
             flex: typeFlex,
             child: const Text(
-              'Role',
+              '      Role',
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
@@ -259,27 +260,27 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             child: Text(
               'Type',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
             ),
           ),
           const Expanded(
             child: Text(
               'Unique',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.right,
             ),
           ),
           const Expanded(
             child: Text(
               'Missing',
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.right,
             ),
           ),
           Expanded(
             flex: contentFlex,
             child: const Text(
-              'Sample',
+              '      Sample',
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
@@ -288,6 +289,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ),
     );
   }
+
   // Build data line for each variable.
 
   Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
@@ -300,62 +302,92 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String content = _truncateContent(variable.details);
 
     // Extract unique and missing values from metaDataProvider.
+
     Map<String, dynamic> metaData = ref.watch(metaDataProvider);
     int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
     int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
 
     return Padding(
       padding: const EdgeInsets.all(6.0),
-      child: Row(
-        // Same alignment.
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Define a dynamic space based on the available width.
+          // 2% of available width.
 
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: _buildFittedText(variable.name)),
-          Expanded(
-            // Matching flex value for alignment.
+          double dynamicSpace = constraints.maxWidth * 0.02;
 
-            flex: typeFlex,
-            child: _buildRoleChips(variable.name, currentRoles),
-          ),
-          Expanded(
-            child: Text(
-              variable.type,
-              // Match header alignment.
+          var formatter = NumberFormat('#,###');
 
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              // Unique count.
+          return Row(
+            // Same alignment.
 
-              uniqueCount.toString(),
-              // Match header alignment.
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: _buildFittedText(variable.name)),
 
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              // Missing count.
+              // Three dynamic spaces to make the visual space between the
+              // columns consistent.
 
-              missingCount.toString(),
-              // Match header alignment.
+              SizedBox(width: dynamicSpace),
 
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            // Matching flex value for alignment.
+              Expanded(
+                // Matching flex value for alignment.
 
-            flex: contentFlex,
-            child: SelectableText(
-              content,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
-        ],
+                flex: typeFlex,
+                child: _buildRoleChips(variable.name, currentRoles),
+              ),
+
+              Expanded(
+                child: Text(
+                  variable.type,
+                  // Match header alignment.
+
+                  textAlign: TextAlign.left,
+                ),
+              ),
+
+              SizedBox(width: dynamicSpace),
+
+              Expanded(
+                child: Text(
+                  // Unique count.
+
+                  formatter.format(uniqueCount),
+
+                  // Match header alignment.
+
+                  textAlign: TextAlign.right,
+                ),
+              ),
+
+              SizedBox(width: dynamicSpace),
+
+              Expanded(
+                child: Text(
+                  // Missing count.
+
+                  formatter.format(missingCount),
+
+                  // Match header alignment.
+
+                  textAlign: TextAlign.right,
+                ),
+              ),
+
+              SizedBox(width: dynamicSpace),
+
+              Expanded(
+                // Matching flex value for alignment.
+
+                flex: contentFlex,
+                child: SelectableText(
+                  content,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -365,10 +397,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget _buildFittedText(String text) {
     return FittedBox(
       fit: BoxFit.scaleDown,
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       child: Text(
         text,
-        style: defaultTextStyle,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.left,
@@ -437,7 +468,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Truncate content for display.
 
   String _truncateContent(String content) {
-    int maxLength = 40;
+    int maxLength = 30;
     String subStr =
         content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
