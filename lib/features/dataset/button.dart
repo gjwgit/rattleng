@@ -31,8 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
-import 'package:rattle/utils/reset.dart';
-import 'package:rattle/utils/word_wrap.dart';
+import 'package:rattle/utils/show_dataset_alert_dialog.dart.~1~';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends ConsumerWidget {
@@ -43,17 +42,22 @@ class DatasetButton extends ConsumerWidget {
     return ElevatedButton(
       onPressed: () async {
         if (ref.read(datasetLoaded)) {
-          showAlertPopup(context, ref, true);
+          showDatasetAlertDialog(context, ref, true);
         } else {
-          _showOptionPopup(context, ref);
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const DatasetPopup();
+            },
+          );
         }
       },
       child: const DelayedTooltip(
         message: '''
 
-        Tap here to view a popup with the option to load data from a CSV or TXT
-        file, or from an R package's dataset, or to load the demo dataset from
-        rattle::weather.
+        Tap here to choose a dataset to load.  A popup provides options to load
+        data from a CSV or TXT file, or from an R package's dataset, or to load
+        the demo dataset from rattle::weather.
 
         ''',
         child: Text('Dataset'),
@@ -62,73 +66,73 @@ class DatasetButton extends ConsumerWidget {
   }
 }
 
-void showAlertPopup(
-  BuildContext context,
-  WidgetRef ref,
-  bool loadNewDataset,
-) {
-  // Show Alert Window and then reset the app after confirmation.
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.warning, color: Colors.red),
-            SizedBox(width: 20),
-            Text('Warning'),
-          ],
-        ),
-        content: Text(
-          wordWrap('''
+// void showAlertPopup(
+//   BuildContext context,
+//   WidgetRef ref,
+//   bool loadNewDataset,
+// ) {
+//   // Show Alert Window and then reset the app after confirmation.
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: const Row(
+//           children: [
+//             Icon(Icons.warning, color: Colors.red),
+//             SizedBox(width: 20),
+//             Text('Warning'),
+//           ],
+//         ),
+//         content: Text(
+//           wordWrap('''
 
-            Please note that if you load a new dataset it will reset the
-            app. You will lose all the work already completed. Consider saving
-            your R script from the Script tab before continuing.  Otherwise, are
-            you sure you would like to reset?
+//             Please note that if you load a new dataset it will reset the
+//             app. You will lose all the work already completed. Consider saving
+//             your R script from the Script tab before continuing.  Otherwise, are
+//             you sure you would like to reset?
 
-            '''),
-        ),
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('No'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Yes'),
-            onPressed: () async {
-              // 20240817 gjw Note the reset before showOptionPopup because the
-              // other way around casues a bug? First set load to true and then
-              // reset it to false but the dataset actually is loaded as a
-              // consequence the previous result won't be reset because load
-              // indicates no dataset has been loaded and the app is fresh.
-              await reset(context, ref);
-              if (context.mounted) Navigator.of(context).pop();
+//             '''),
+//         ),
+//         actions: <Widget>[
+//           TextButton(
+//             style: TextButton.styleFrom(
+//               textStyle: Theme.of(context).textTheme.labelLarge,
+//             ),
+//             child: const Text('No'),
+//             onPressed: () {
+//               Navigator.of(context).pop();
+//             },
+//           ),
+//           TextButton(
+//             style: TextButton.styleFrom(
+//               textStyle: Theme.of(context).textTheme.labelLarge,
+//             ),
+//             child: const Text('Yes'),
+//             onPressed: () async {
+//               // 20240817 gjw Note the reset before showOptionPopup because the
+//               // other way around casues a bug? First set load to true and then
+//               // reset it to false but the dataset actually is loaded as a
+//               // consequence the previous result won't be reset because load
+//               // indicates no dataset has been loaded and the app is fresh.
+//               await reset(context, ref);
+//               if (context.mounted) Navigator.of(context).pop();
 
-              if (loadNewDataset) {
-                if (context.mounted) _showOptionPopup(context, ref);
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+//               if (loadNewDataset) {
+//                 if (context.mounted) _showOptionPopup(context, ref);
+//               }
+//             },
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
 
-void _showOptionPopup(BuildContext context, WidgetRef ref) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return const DatasetPopup();
-    },
-  );
-}
+// void _showOptionPopup(BuildContext context, WidgetRef ref) {
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return const DatasetPopup();
+//     },
+//   );
+// }
