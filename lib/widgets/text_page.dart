@@ -130,16 +130,6 @@ class TextPage extends StatelessWidget {
 
     List<String> lines = content.split('\n');
 
-    // Assuming the first line contains the parameter names.
-    String parameterNames = lines.first;
-    List<String> parameters = parameterNames
-        .split(RegExp(r'\s{2,}'))
-        .map((param) => param.trim())
-        .toList();
-
-    // Remove the parameter names from the lines, leaving only the data rows.
-    lines.removeAt(0);
-
     // Add the title and content to the PDF page.
 
     pdf.addPage(
@@ -151,53 +141,30 @@ class TextPage extends StatelessWidget {
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
+                // pw.Text(
+                //   '', // Constant title
+                //   style: pw.TextStyle(
+                //     fontSize: 24,
+                //     fontWeight: pw.FontWeight.bold,
+                //   ),
+                // ),
                 pw.SizedBox(height: 20),
-                // Display the parameter names at the top, aligned with the rest of the data.
-                pw.Row(
-                  children: parameters.map((param) {
-                    return pw.Expanded(
-                      child: pw.Text(
-                        param,
-                        style: pw.TextStyle(
-                            fontSize: 5, fontWeight: pw.FontWeight.bold),
-                        textAlign: pw.TextAlign.left,
-                      ),
-                    );
-                  }).toList(),
-                ),
-                pw.SizedBox(height: 10),
                 // Build each line with structured formatting.
 
                 ...lines.map((line) {
-                  // Split the line into parts at every colon.
-                  List<String> parts = line.split(':');
+                  // Split the line into components separated by two or more spaces.
+                  List<String> parts = line.split(RegExp(r'\s{2,}'));
 
-                  // Add colons back except the last part.
-                  List<String> row = [];
-                  for (int i = 0; i < parts.length; i++) {
-                    if (i < parts.length - 1) {
-                      row.add(parts[i].trim() + ':');
-                    } else {
-                      row.add(parts[i].trim());
-                    }
-                  }
-
-                  // Ensure each line has exactly the same number of parts as the parameters.
-                  while (row.length < parameters.length) {
-                    row.add(''); // Add empty strings to ensure alignment.
-                  }
-
-                  // Return a Row widget for the line, ensuring each part is aligned.
+                  // Return a Row widget for each line.
                   return pw.Padding(
                     padding: const pw.EdgeInsets.only(bottom: 4),
                     child: pw.Row(
-                      children: row.map((part) {
-                        // Each part is given equal space to align colons vertically.
+                      children: parts.map((part) {
+                        // Add some spacing between parts for alignment.
                         return pw.Expanded(
                           child: pw.Text(
-                            part,
+                            part.trim(),
                             style: pw.TextStyle(fontSize: 5),
-                            textAlign: pw.TextAlign.left,
                           ),
                         );
                       }).toList(),
@@ -215,7 +182,7 @@ class TextPage extends StatelessWidget {
       // Save the PDF to a file.
 
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/aligned_parameters.pdf';
+      final filePath = '${directory.path}/121.pdf';
       final file = File(filePath);
 
       // Write the PDF as bytes.
