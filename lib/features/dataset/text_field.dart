@@ -30,10 +30,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/popup.dart';
+import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/check_file_exists.dart';
 import 'package:rattle/utils/set_status.dart';
+import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends ConsumerWidget {
@@ -79,12 +82,26 @@ class DatasetTextField extends ConsumerWidget {
           onChanged: (newPath) {
             ref.watch(pathProvider.notifier).state = newPath;
           },
-          onSubmitted: (newPath) {
+          onSubmitted: (newPath) async {
             if (checkFileExists(context, newPath)) {
-              rLoadDataset(context, ref);
+              if (ref.read(datasetLoaded)) {
+                showDatasetAlertDialog(context, ref, false);
+              }
+              ref.read(pathProvider.notifier).state = newPath;
+              await rLoadDataset(context, ref);
               setStatus(ref, statusChooseVariableRoles);
 
               datasetLoadedUpdate(ref);
+
+              // Access the PageController via Riverpod and move to the second page.
+
+              ref.read(pageControllerProvider).animateToPage(
+                    // Index of the second page.
+
+                    1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
             }
           },
 
