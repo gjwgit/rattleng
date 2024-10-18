@@ -45,8 +45,8 @@
 library(reshape)
 library(biclust)
 
-mtype <- "BiCluster_amap"
-mdesc <- "BiCluster Clustering using amap package"
+mtype <- "BiCluster"
+mdesc <- "BiCluster Clustering"
 
 # Set whether the data should be rescaled.
 
