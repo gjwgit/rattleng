@@ -44,17 +44,18 @@ String _basicTemplate(
   String md;
 
   String type = ref.read(typeClusterProvider.notifier).state;
+  type = type.toLowerCase();
 
-  if (type == 'KMeans') {
+  if (type == 'kmeans') {
     hd = 'Summary of the KMeans Cluster Analysis';
     md = "(built using 'kmeans' with ${clusterNum.toString()} clusters):";
-  } else if (type == 'Ewkm') {
+  } else if (type == 'ewkm') {
     hd = 'Summary of the Ewkm Cluster Analysis';
     md = "(built using 'ewkm' with ${clusterNum.toString()} clusters):";
-  } else if (type == 'Hierarchical') {
+  } else if (type == 'hierarchical') {
     hd = 'Summary of the Hierarchical Cluster Analysis';
     md = "(built using 'Hierarchical'):";
-  } else if (type == 'BiCluster') {
+  } else if (type == 'bicluster') {
     hd = 'Summary of the Bi-Cluster Analysis';
     md = "(built using 'BiCluster'):";
   } else {
@@ -67,22 +68,22 @@ String _basicTemplate(
 
   String sz = '', cm = '', cn = '', ss = '';
 
-  if (type == 'KMeans') {
+  if (type == 'kmeans') {
     sz = rExtract(log, '> print(paste(model_kmeans');
     cm = rExtract(log, '> print(colMeans');
     cn = rExtract(log, '> print(model_kmeans\$centers');
     ss = rExtract(log, '> print(model_kmeans\$withinss)');
-  } else if (type == 'Ewkm') {
+  } else if (type == 'ewkm') {
     sz = rExtract(log, "> print(paste(model_ewkm\$size, collapse = ' '))");
     cm = rExtract(log, '> print(colMeans(data_for_clustering))');
     cn = rExtract(log, '> print(model_ewkm\$centers)');
     ss = rExtract(log, '> print(model_ewkm\$withinss)');
-  } else if (type == 'Hierarchical') {
+  } else if (type == 'hierarchical') {
     sz = rExtract(log, '> print(cluster_sizes)');
     cm = rExtract(log, '> print(data_means)');
     cn = rExtract(log, '> print(cluster_centers)');
     ss = rExtract(log, '> print(withinss)');
-  } else if (type == 'BiCluster') {
+  } else if (type == 'bicluster') {
     sz = rExtract(log, '> print(cluster_sizes)');
     cm = rExtract(log, '> print(cluster_means)');
     cn = rExtract(log, '> print(col_clusters)');

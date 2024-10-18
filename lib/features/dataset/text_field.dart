@@ -32,7 +32,6 @@ import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
-import 'package:rattle/utils/check_file_exists.dart.~3~';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
