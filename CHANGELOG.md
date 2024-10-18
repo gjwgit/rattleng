@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ ROLES and status bar data size updates [6.3.9 20241018 gjw kev]
 + Fix a Windows json parse exception [6.3.8 20241017 gjw]
 + Add hierarchical cluster plus app tuning [6.3.7 20241017 zy] 
 + Add neuralnet() support [6.3.6 20241016 zy]
