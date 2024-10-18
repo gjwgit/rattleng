@@ -68,12 +68,12 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       Build an agglomerative hierarchical cluster.
 
       ''',
-    // 'BiCluster': '''
+    'BiCluster': '''
 
-    //   Cluster by identifying suitable subsets of both the variables and the
-    //   observations, rather than just the observations as in kmeans.
+      Cluster by identifying suitable subsets of both the variables and the
+      observations, rather than just the observations as in kmeans.
 
-    //   ''',
+      ''',
   };
 
   @override
@@ -106,6 +106,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 String km = 'model_build_cluster_kmeans';
                 String ew = 'model_build_cluster_ewkm';
                 String hi = 'model_build_cluster_hierarchical';
+                String bi = 'model_build_cluster_bicluster';
 
                 if (type == 'KMeans') {
                   if (context.mounted) await rSource(context, ref, [mt, km]);
@@ -113,6 +114,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                   if (context.mounted) await rSource(context, ref, [mt, ew]);
                 } else if (type == 'Hierarchical') {
                   if (context.mounted) await rSource(context, ref, [mt, hi]);
+                } else if (type == 'BiCluster') {
+                  if (context.mounted) await rSource(context, ref, [mt, bi]);
                 }
 
                 await ref.read(clusterPageControllerProvider).animateToPage(
