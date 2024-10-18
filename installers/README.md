@@ -1,6 +1,6 @@
-# RattleNG Installers
+# Rattle Installers
 
-The RattleNG front-end is implemented in
+The Rattle front-end is implemented in
 [Flutter](https://flutter.dev/) with the back-end implemented in
 [R](https://r-project.org/).
 
