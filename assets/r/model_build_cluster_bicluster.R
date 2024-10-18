@@ -1,11 +1,11 @@
-# Build an BiCluster cluster.
+# Undertake BiCluster analysis.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-10-12 18:45:49 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-10-19 06:50:01 +1100 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -20,9 +20,9 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
-# Cluster using BiCluster
+# Cluster analysis using BiCluster
 #
 # TIMESTAMP
 #
@@ -32,21 +32,14 @@
 # https://survivor.togaware.com/datascience/cluster-analysis.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Reset the random number seed to obtain the same results each
-# time. 20241012 gjw RattleV5 did not reset the seed so that we can
-# demonstrate that each time we get a different random start and then
-# a different model.
-
-# set.seed(CLUSTER_SEED)
-
 # Load required packages from the local library into the R session.
 # The 'reshape' package provides the 'rescaler' function.
 
 library(reshape)
 library(biclust)
 
-mtype <- "BiCluster"
-mdesc <- "BiCluster Clustering"
+mtype <- "bicluster"
+mdesc <- "BiCluster cluster analysis"
 
 # Set whether the data should be rescaled.
 
