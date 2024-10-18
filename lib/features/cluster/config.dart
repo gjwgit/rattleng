@@ -106,7 +106,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 String km = 'model_build_cluster_kmeans';
                 String ew = 'model_build_cluster_ewkm';
                 String hi = 'model_build_cluster_hierarchical';
-                String bi = 'model_build_cluster_biCluster';
+                String bi = 'model_build_cluster_bicluster';
 
                 if (type == 'KMeans') {
                   if (context.mounted) await rSource(context, ref, [mt, km]);
