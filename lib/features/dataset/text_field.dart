@@ -32,6 +32,7 @@ import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
+import 'package:rattle/utils/check_file_exists.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
@@ -79,10 +80,12 @@ class DatasetTextField extends ConsumerWidget {
             ref.watch(pathProvider.notifier).state = newPath;
           },
           onSubmitted: (newPath) {
-            rLoadDataset(context, ref);
-            setStatus(ref, statusChooseVariableRoles);
+            if (checkFileExists(context, newPath)) {
+              rLoadDataset(context, ref);
+              setStatus(ref, statusChooseVariableRoles);
 
-            datasetLoadedUpdate(ref);
+              datasetLoadedUpdate(ref);
+            }
           },
 
           // For an empty value we show a helpful message.
