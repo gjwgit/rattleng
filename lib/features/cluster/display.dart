@@ -99,7 +99,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
             # Cluster Analysis
 
             Built using
-            [stats::$functionName()]($functionUrl).
+            [biclust::$functionName()]($functionUrl).
 
             ''',
             content: '\n$content',
