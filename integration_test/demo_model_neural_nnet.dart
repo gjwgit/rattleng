@@ -36,6 +36,7 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/open_demo_dataset.dart';
 
@@ -201,10 +202,6 @@ void main() {
 
       await tester.pump(hack);
 
-      // await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
       await tester.pump(interact);
       // Tap the right arrow to go to the second page.
 
@@ -230,7 +227,7 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - entropy fitting.',
+                  'Options were - entropy fitting',
                 ) ==
                 true,
       );
@@ -249,6 +246,8 @@ void main() {
       await tester.pump(hack);
 
       await tester.pump(interact);
+
+      await gotoNextPage(tester);
 
       final forthPageTitleFinder = find.text('Neural Net Model - Visual');
       expect(forthPageTitleFinder, findsOneWidget);
