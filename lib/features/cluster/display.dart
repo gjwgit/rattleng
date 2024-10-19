@@ -29,10 +29,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
+import 'package:rattle/utils/image_exists.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -47,8 +50,7 @@ final Map<String, Map<String, String>> clusterMethods = {
   },
   'Ewkm': {
     'functionName': 'ewkm',
-    'functionUrl':
-        'https://cran.r-project.org/web/packages/wskm/index.html',
+    'functionUrl': 'https://cran.r-project.org/web/packages/wskm/index.html',
   },
   'Hierarchical': {
     'functionName': 'hcluster',
@@ -57,8 +59,7 @@ final Map<String, Map<String, String>> clusterMethods = {
   },
   'BiCluster': {
     'functionName': 'biclust',
-    'functionUrl':
-        'https://cran.r-project.org/web/packages/biclust/index.html',
+    'functionUrl': 'https://cran.r-project.org/web/packages/biclust/index.html',
   },
 };
 
@@ -106,6 +107,26 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           ),
         );
       }
+    }
+
+    String discriminantImage = type == 'KMeans'
+        ? '$tempDir/model_cluster_discriminant.svg'
+        : '$tempDir/model_cluster_discriminant.svg';
+
+    if (imageExists(discriminantImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Cluster Analysis - Visual
+
+          Visit
+          [cluster::clusplot()](https://www.rdocumentation.org/packages/stats/topics/kmeans).
+
+          ''',
+          path: discriminantImage,
+        ),
+      );
     }
 
     return PageViewer(
