@@ -111,7 +111,9 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     String discriminantImage = type == 'KMeans'
         ? '$tempDir/model_cluster_discriminant.svg'
-        : '$tempDir/model_cluster_discriminant.svg';
+        : type == 'Ewkm'
+            ? '$tempDir/model_cluster_ewkm.svg'
+            : '$tempDir/model_cluster_discriminant.svg';
 
     if (imageExists(discriminantImage)) {
       pages.add(
