@@ -1,6 +1,6 @@
 /// Open the DEMO dataset and test its contents.
 //
-// Time-stamp: <Monday 2024-10-14 14:46:39 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-10-19 11:02:26 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -93,9 +93,13 @@ Future<void> openDemoDataset(WidgetTester tester) async {
 
   testPrint('Found `$filename` as the path.');
 
-  await tester.pump(interact);
-
   testPrint('Check the ROLES page content for specific text.');
+
+  // 20241019 gjw Add a delay here. Whilst app and demo_dataset and
+  // demo_dataset_ignore loaded the dataset just fine, demo_explore failed to
+  // find the text '2023-07-01'.
+
+  await tester.pump(delay);
 
   // Expect specific text in the ROLES page.
 
