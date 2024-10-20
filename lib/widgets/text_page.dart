@@ -31,8 +31,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:file_picker/file_picker.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
@@ -120,7 +120,8 @@ class TextPage extends StatelessWidget {
     );
   }
 
-  // Function to save the content as a PDF file and open it.
+  // Function to save the PDF with a user-selected directory and custom file name.
+
   Future<void> _saveAsPdf(BuildContext context) async {
     // Create a PDF document.
 
@@ -137,71 +138,91 @@ class TextPage extends StatelessWidget {
         pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
           return pw.Padding(
-            padding: const pw.EdgeInsets.all(20), // Add padding to the page
+            padding: const pw.EdgeInsets.all(20),
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                // pw.Text(
-                //   '', // Constant title
-                //   style: pw.TextStyle(
-                //     fontSize: 24,
-                //     fontWeight: pw.FontWeight.bold,
-                //   ),
-                // ),
-                pw.SizedBox(height: 20),
-                // Build each line with structured formatting.
-
-                ...lines.map((line) {
-                  // Split the line into components separated by two or more spaces.
-                  List<String> parts = line.split(RegExp(r'\s{2,}'));
-
-                  // Return a Row widget for each line.
-                  return pw.Padding(
-                    padding: const pw.EdgeInsets.only(bottom: 4),
-                    child: pw.Row(
-                      children: parts.map((part) {
-                        // Add some spacing between parts for alignment.
-                        return pw.Expanded(
-                          child: pw.Text(
-                            part.trim(),
-                            style: pw.TextStyle(fontSize: 5),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  );
-                }).toList(),
-              ],
+              children: lines.map((line) {
+                return pw.Padding(
+                  padding: const pw.EdgeInsets.only(bottom: 4),
+                  child: pw.Text(
+                    line.trim(),
+                    style: pw.TextStyle(fontSize: 5),
+                  ),
+                );
+              }).toList(),
             ),
           );
         },
       ),
     );
 
+    // Prompt the user to select a directory and specify the file name.
+
     try {
-      // Save the PDF to a file.
+      // Pick a directory to save the PDF file.
 
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/121.pdf';
-      final file = File(filePath);
+      String? directoryPath = await FilePicker.platform.getDirectoryPath();
 
-      // Write the PDF as bytes.
+      if (directoryPath != null) {
+        // Show a dialog to enter the custom file name.
 
-      await file.writeAsBytes(await pdf.save());
+        TextEditingController fileNameController = TextEditingController();
 
-      // Show a SnackBar with the file path and open the PDF.
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Enter File Name'),
+              content: TextField(
+                controller: fileNameController,
+                decoration: const InputDecoration(hintText: 'File Name'),
+              ),
+              actions: [
+                TextButton(
+                  child: const Text('Save'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('PDF saved at $filePath'),
-          action: SnackBarAction(
-            label: 'Open',
-            onPressed: () {
-              launchUrl(Uri.file(filePath));
-            },
+        // Use the custom file name or a default name if not provided.
+
+        String fileName = fileNameController.text.isNotEmpty
+            ? fileNameController.text
+            : 'default_name';
+        String filePath = '$directoryPath/$fileName.pdf';
+        final file = File(filePath);
+
+        // Write the PDF as bytes.
+
+        await file.writeAsBytes(await pdf.save());
+
+        // Show a SnackBar with the file path and open the PDF.
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('PDF saved at $filePath'),
+            action: SnackBarAction(
+              label: 'Open',
+              onPressed: () {
+                launchUrl(Uri.file(filePath));
+              },
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        // Handle case when no directory is selected.
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No directory selected.'),
+          ),
+        );
+      }
     } catch (e) {
       // Handle errors if something goes wrong.
 
