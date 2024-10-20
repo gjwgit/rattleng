@@ -112,7 +112,9 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
         ? '$tempDir/model_cluster_discriminant.svg'
         : type == 'Ewkm'
             ? '$tempDir/model_cluster_ewkm.svg'
-            : '$tempDir/model_cluster_discriminant.svg';
+            : type == 'Hierarchical'
+                ? '$tempDir/model_cluster_hierarchical.svg'
+                : '';
 
     if (imageExists(discriminantImage)) {
       pages.add(
