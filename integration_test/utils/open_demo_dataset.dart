@@ -1,6 +1,6 @@
 /// Open the DEMO dataset and test its contents.
 //
-// Time-stamp: <Saturday 2024-10-19 11:02:26 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-20 13:57:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -91,8 +91,6 @@ Future<void> openDemoDataset(WidgetTester tester) async {
   String filename = dsPathText.controller?.text ?? '';
   expect(filename.contains('weather.csv'), isTrue);
 
-  testPrint('Found `$filename` as the path.');
-
   testPrint('Check the ROLES page content for specific text.');
 
   // 20241019 gjw Add a delay here. Whilst app and demo_dataset and
@@ -120,4 +118,6 @@ Future<void> openDemoDataset(WidgetTester tester) async {
       '13.9',
     ],
   );
+
+  testPrint('Finished openning the DEMO Dataset.');
 }
