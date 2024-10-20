@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
@@ -50,6 +50,11 @@ final Map<String, Map<String, String>> clusterMethods = {
     'functionUrl':
         'https://www.rdocumentation.org/packages/wskm/versions/1.4.40/topics/ewkm',
   },
+  'Hierarchical': {
+    'functionName': 'hcluster',
+    'functionUrl':
+        'https://www.rdocumentation.org/packages/amap/versions/0.8-19/topics/hcluster',
+  },
 };
 
 /// The CLUSTER panel displays the tree instructions or the tree biuld output.
@@ -68,7 +73,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       clusterPageControllerProvider,
     ); // Get the PageController from Riverpod
 
-    String type = ref.read(clusterTypeProvider.notifier).state;
+    String type = ref.read(typeClusterProvider.notifier).state;
 
     String stdout = ref.watch(stdoutProvider);
 
