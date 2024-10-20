@@ -66,7 +66,8 @@ class TextPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Add the button to view and save as PDF
+          // Add the button to view and save as PDF.
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -245,7 +246,7 @@ class TextPage extends StatelessWidget {
 
 //       // Capitalize the first letter of each line.
 
-//       if (line isNotEmpty) {
+//       if (line.isNotEmpty) {
 //         line = '${line[0].toUpperCase()}${line.substring(1)}';
 //       }
 
