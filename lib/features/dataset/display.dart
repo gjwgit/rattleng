@@ -141,23 +141,17 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ListView.builder(
         key: const Key('roles_list_view'),
 
-        // Add 1 for the extra header row.
+        // Item count is the same as the number of variables.
 
-        itemCount: vars.length + 1,
+        itemCount: vars.length,
 
         itemBuilder: (context, index) {
-          // Both the header row and the regular row shares the same flex
-          // index.
+          // Each row represents a data line for a variable.
 
-          return index == 0
-              ? _buildHeadline()
-              :
-              // Regular data rows. We subtract 1 from the index to get the
-              // correct variable since the first row is the header row.
-              _buildDataLine(
-                  vars[index - 1],
-                  currentRoles,
-                );
+          return _buildDataLine(
+            vars[index],
+            currentRoles,
+          );
         },
       ),
     );
@@ -289,8 +283,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ),
     );
   }
-
-  // Build data line for each variable.
+// Build data line for each variable, including the table header.
 
   Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
     // Truncate the content to fit one line. The text could wrap over two
@@ -307,87 +300,134 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
     int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
 
+    var formatter = NumberFormat('#,###');
+
     return Padding(
       padding: const EdgeInsets.all(6.0),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          // Define a dynamic space based on the available width.
-          // 2% of available width.
+      child: Table(
+        columnWidths: const {
+          0: FlexColumnWidth(),
+          1: FlexColumnWidth(4),
+          2: FlexColumnWidth(),
+          3: FlexColumnWidth(),
+          4: FlexColumnWidth(),
+          5: FlexColumnWidth(3),
+        },
+        children: [
+          // Table header row.
 
-          double dynamicSpace = constraints.maxWidth * 0.02;
-
-          var formatter = NumberFormat('#,###');
-
-          return Row(
-            // Same alignment.
-
-            crossAxisAlignment: CrossAxisAlignment.start,
+          const TableRow(
             children: [
-              Expanded(child: _buildFittedText(variable.name)),
+              // Header for variable name.
 
-              // Three dynamic spaces to make the visual space between the
-              // columns consistent.
-
-              SizedBox(width: dynamicSpace),
-
-              Expanded(
-                // Matching flex value for alignment.
-
-                flex: typeFlex,
-                child: _buildRoleChips(variable.name, currentRoles),
-              ),
-
-              Expanded(
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
                 child: Text(
-                  variable.type,
-                  // Match header alignment.
-
+                  'Variable',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
 
-              SizedBox(width: dynamicSpace),
+              // Header for role.
 
-              Expanded(
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
                 child: Text(
-                  // Unique count.
+                  'Role',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
+              ),
 
-                  formatter.format(uniqueCount),
+              // Header for type.
 
-                  // Match header alignment.
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  'Type',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
+              ),
 
+              // Header for unique count.
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  'Unique',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.right,
                 ),
               ),
 
-              SizedBox(width: dynamicSpace),
+              // Header for missing count.
 
-              Expanded(
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
                 child: Text(
-                  // Missing count.
-
-                  formatter.format(missingCount),
-
-                  // Match header alignment.
-
+                  'Missing',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.right,
                 ),
               ),
 
-              SizedBox(width: dynamicSpace),
+              // Header for content.
 
-              Expanded(
-                // Matching flex value for alignment.
-
-                flex: contentFlex,
-                child: SelectableText(
-                  content,
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  'Sample',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
             ],
-          );
-        },
+          ),
+
+          // Table data row for variable.
+
+          TableRow(
+            children: [
+              // Variable name column.
+
+              _buildFittedText(variable.name),
+
+              // Role choice chips column.
+
+              _buildRoleChips(variable.name, currentRoles),
+
+              // Variable type column.
+
+              Text(
+                variable.type,
+                textAlign: TextAlign.left,
+              ),
+
+              // Unique count column.
+
+              Text(
+                formatter.format(uniqueCount),
+                textAlign: TextAlign.right,
+              ),
+
+              // Missing count column.
+
+              Text(
+                formatter.format(missingCount),
+                textAlign: TextAlign.right,
+              ),
+
+              // Content column.
+
+              SelectableText(
+                content,
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -397,7 +437,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   Widget _buildFittedText(String text) {
     return FittedBox(
       fit: BoxFit.scaleDown,
-      alignment: Alignment.center,
+      alignment: Alignment.topLeft,
       child: Text(
         text,
         maxLines: 1,
