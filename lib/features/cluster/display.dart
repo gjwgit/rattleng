@@ -47,13 +47,15 @@ final Map<String, Map<String, String>> clusterMethods = {
   },
   'Ewkm': {
     'functionName': 'ewkm',
-    'functionUrl':
-        'https://www.rdocumentation.org/packages/wskm/versions/1.4.40/topics/ewkm',
+    'functionUrl': 'https://www.rdocumentation.org/packages/wskm',
   },
   'Hierarchical': {
     'functionName': 'hcluster',
-    'functionUrl':
-        'https://www.rdocumentation.org/packages/amap/versions/0.8-19/topics/hcluster',
+    'functionUrl': 'https://www.rdocumentation.org/packages/stats',
+  },
+  'BiCluster': {
+    'functionName': 'biclust',
+    'functionUrl': 'https://www.rdocumentation.org/packages/biclust',
   },
 };
 
@@ -94,7 +96,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
             # Cluster Analysis
 
             Built using
-            [stats::$functionName()]($functionUrl).
+            [biclust::$functionName()]($functionUrl).
 
             ''',
             content: '\n$content',
