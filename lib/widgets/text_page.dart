@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Thursday 2024-09-26 08:33:53 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-21 12:33:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -147,7 +147,7 @@ class TextPage extends StatelessWidget {
                   padding: const pw.EdgeInsets.only(bottom: 4),
                   child: pw.Text(
                     line.trim(),
-                    style: pw.TextStyle(fontSize: 5),
+                    style: pw.TextStyle(font: pw.Font.courier(), fontSize: 5),
                   ),
                 );
               }).toList(),
