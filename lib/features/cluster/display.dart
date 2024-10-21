@@ -142,10 +142,10 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           # Cluster Analysis - Visual
 
           Visit
-          [cluster::clusplot()](https://www.rdocumentation.org/packages/wskm).
+          [cluster::clusplot()](https://www.rdocumentation.org/packages/wskm/topics/ewkm).
 
           ''',
-            path: discriminantImage,
+            path: weightImage,
           ),
         );
       }
