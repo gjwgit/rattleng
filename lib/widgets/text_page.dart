@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Monday 2024-10-21 12:33:40 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-10-21 14:02:46 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -137,6 +137,9 @@ class TextPage extends StatelessWidget {
 
     final pdf = pw.Document();
 
+    // var mono =
+    //     Font.ttf(await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'));
+
     // Split the content into lines to format them better.
 
     List<String> lines = content.split('\n');
@@ -148,19 +151,20 @@ class TextPage extends StatelessWidget {
         pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
           return pw.Padding(
-            padding: const pw.EdgeInsets.all(20),
+            padding: const pw.EdgeInsets.all(-40),
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: lines.map((line) {
                 return pw.Padding(
                   padding: const pw.EdgeInsets.only(bottom: 4),
                   child: pw.Text(
-                    line.trim(),
+                    line,
                     style: pw.TextStyle(
-                      fontSize: 6,
+                      fontSize: 8,
                       height: 1.2,
                       font: robotoMonoFont,
                     ),
+                    //style: pw.TextStyle(font: pw.Font.courier(), fontSize: 8),
                   ),
                 );
               }).toList(),
