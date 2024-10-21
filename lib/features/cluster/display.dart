@@ -132,6 +132,25 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       );
     }
 
+    if (type == 'Ewkm') {
+      String weightImage = '$tempDir/model_cluster_ewkm_weights.svg';
+      if (imageExists(weightImage)) {
+        pages.add(
+          ImagePage(
+            title: '''
+
+          # Cluster Analysis - Visual
+
+          Visit
+          [cluster::clusplot()](https://www.rdocumentation.org/packages/wskm).
+
+          ''',
+            path: discriminantImage,
+          ),
+        );
+      }
+    }
+
     return PageViewer(
       pageController: pageController,
       pages: pages,

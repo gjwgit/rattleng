@@ -109,4 +109,24 @@ tds_matrix <- as.matrix(tds)
 
 cluster::clusplot(tds_matrix, model_ewkm$cluster, color=TRUE, shade=TRUE,
                   labels=2, lines=0, main='Discriminant Coordinates Plot')
+
+dev.off()
+
+svg("TEMPDIR/model_cluster_ewkm_weights.svg")
+
+
+# Create a bar plot of cluster weights.
+
+barplot(
+  model_ewkm$weights,
+  main = "Cluster Weights",
+  xlab = "Features",
+  ylab = "Weights",
+  col = "blue",
+  beside = TRUE,
+  legend = paste("Cluster", 1:CLUSTER_NUM)
+)
+
+# Close the SVG device for the weights plot.
+
 dev.off()
