@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-10-14 13:35:28 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-10-19 21:00:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -65,7 +65,7 @@ void main() {
 
       // await checkMissingVariable(container, 'rainfall');
 
-      // Step 2: Simulate pressing the button to impute missing values.
+      // Step 2: Simulate pressing the button to impute missing value as mean.
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
@@ -78,7 +78,7 @@ void main() {
       await verifyNextPage(
         tester,
         'Dataset Summary',
-        'IZR_rainfall',
+        'IMN_rainfall',
       );
 
       // Verify specific statistical values for the imputed 'IZR_rainfall' variable.
@@ -89,7 +89,7 @@ void main() {
           'Min.   : 0.000', // Minimum value of 'IZR_rainfall'.
           '1st Qu.: 0.000', // First quartile value of 'IZR_rainfall'.
           'Median : 0.000', // Median value of 'IZR_rainfall'.
-          'Mean   : 1.815', // Mean value of 'IZR_rainfall'.
+          'Mean   : 1.825', // Mean value of 'IZR_rainfall'.
           '3rd Qu.: 0.200', // Third quartile value of 'IZR_rainfall'.
           'Max.   :44.800', // Maximum value of 'IZR_rainfall'.
         ],
