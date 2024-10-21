@@ -28,6 +28,7 @@ library;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -79,10 +80,12 @@ class TextPage extends StatelessWidget {
                   launchUrl(url);
                 },
               ),
-              ElevatedButton.icon(
-                icon: Icon(Icons.picture_as_pdf),
-                label: Text('Save as PDF'),
+              IconButton(
                 onPressed: () => _saveAsPdf(context),
+                icon: Icon(
+                  Icons.save,
+                  color: Colors.blue,
+                ),
               ),
             ],
           ),
@@ -124,6 +127,12 @@ class TextPage extends StatelessWidget {
   // Function to save the PDF with a user-selected directory and custom file name.
 
   Future<void> _saveAsPdf(BuildContext context) async {
+    // Load the 'RobotoMono' font from assets.
+
+    final robotoMonoFont = pw.Font.ttf(
+      await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'),
+    );
+
     // Create a PDF document.
 
     final pdf = pw.Document();
@@ -147,7 +156,11 @@ class TextPage extends StatelessWidget {
                   padding: const pw.EdgeInsets.only(bottom: 4),
                   child: pw.Text(
                     line.trim(),
-                    style: pw.TextStyle(font: pw.Font.courier(), fontSize: 5),
+                    style: pw.TextStyle(
+                      fontSize: 6,
+                      height: 1.2,
+                      font: robotoMonoFont,
+                    ),
                   ),
                 );
               }).toList(),
@@ -157,76 +170,48 @@ class TextPage extends StatelessWidget {
       ),
     );
 
-    // Prompt the user to select a directory and specify the file name.
+    // Use FilePicker to select a save location and file name.
 
-    try {
-      // Pick a directory to save the PDF file.
+    String? filePath = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save PDF',
+      fileName: 'exported.pdf',
+    );
 
-      String? directoryPath = await FilePicker.platform.getDirectoryPath();
+    // Check if a file path was provided.
 
-      if (directoryPath != null) {
-        // Show a dialog to enter the custom file name.
+    if (filePath != null) {
+      final file = File(filePath);
 
-        TextEditingController fileNameController = TextEditingController();
+      // Write the PDF as bytes.
 
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Enter File Name'),
-              content: TextField(
-                controller: fileNameController,
-                decoration: const InputDecoration(hintText: 'File Name'),
-              ),
-              actions: [
-                TextButton(
-                  child: const Text('Save'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
+      await file.writeAsBytes(await pdf.save());
 
-        // Use the custom file name or a default name if not provided.
+      // Show a SnackBar with the file path and open the PDF.
 
-        String fileName = fileNameController.text.isNotEmpty
-            ? fileNameController.text
-            : 'default_name';
-        String filePath = '$directoryPath/$fileName.pdf';
-        final file = File(filePath);
-
-        // Write the PDF as bytes.
-
-        await file.writeAsBytes(await pdf.save());
-
-        // Show a SnackBar with the file path and open the PDF.
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('PDF saved at $filePath'),
-            action: SnackBarAction(
-              label: 'Open',
-              onPressed: () {
-                launchUrl(Uri.file(filePath));
-              },
-            ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('PDF saved at $filePath'),
+          action: SnackBarAction(
+            label: 'Open',
+            onPressed: () {
+              launchUrl(Uri.file(filePath));
+            },
           ),
-        );
-      } else {
-        // Handle case when no directory is selected.
+        ),
+      );
+    } else {
+      // Handle case when no file is selected.
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No directory selected.'),
-          ),
-        );
-      }
-    } catch (e) {
-      // Handle errors if something goes wrong.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No file selected.'),
+        ),
+      );
+    }
 
+    // Catch and handle any errors that occur during PDF saving.
+
+    try {} catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to save PDF: $e'),
@@ -234,7 +219,6 @@ class TextPage extends StatelessWidget {
       );
     }
   }
-
 //   // Utility function to capitalize each line, add line spacing, and indent lines.
 
 //   String _formatContent(String content) {
