@@ -47,15 +47,15 @@ final Map<String, Map<String, String>> clusterMethods = {
   },
   'Ewkm': {
     'functionName': 'ewkm',
-    'functionUrl': 'https://www.rdocumentation.org/packages/wskm',
+    'functionUrl': 'https://www.rdocumentation.org/packages/wskm/topics/ewkm',
   },
   'Hierarchical': {
     'functionName': 'hcluster',
-    'functionUrl': 'https://www.rdocumentation.org/packages/stats',
+    'functionUrl': 'https://www.rdocumentation.org/packages/stats/topics/hclust',
   },
   'BiCluster': {
     'functionName': 'biclust',
-    'functionUrl': 'https://www.rdocumentation.org/packages/biclust',
+    'functionUrl': 'https://www.rdocumentation.org/packages/biclust/topics/biclust',
   },
 };
 
