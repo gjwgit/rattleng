@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Monday 2024-10-21 14:02:46 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-22 09:54:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -178,7 +178,7 @@ class TextPage extends StatelessWidget {
 
     String? filePath = await FilePicker.platform.saveFile(
       dialogTitle: 'Save PDF',
-      fileName: 'exported.pdf',
+      fileName: 'rattle_text_.pdf',
     );
 
     // Check if a file path was provided.
@@ -194,7 +194,7 @@ class TextPage extends StatelessWidget {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('PDF saved at $filePath'),
+          content: Text('PDF saved as $filePath'),
           action: SnackBarAction(
             label: 'Open',
             onPressed: () {
