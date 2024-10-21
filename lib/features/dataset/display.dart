@@ -148,7 +148,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         itemBuilder: (context, index) {
           // Show header only for the first row.
 
-          return _buildDataLine(
+          return _buildDataTable(
             vars[index],
             currentRoles,
             showHeader: index == 0,
@@ -286,7 +286,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   }
 // Build data line for each variable, including the table header if specified.
 
-  Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles,
+  Widget _buildDataTable(VariableInfo variable, Map<String, Role> currentRoles,
       {bool showHeader = false}) {
     // Truncate the content to fit one line. The text could wrap over two
     // lines and so show more of the data, but our point here is more to
@@ -361,7 +361,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   child: Text(
                     'Unique',
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.right,
+                    textAlign: TextAlign.center,
                   ),
                 ),
 
@@ -372,7 +372,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   child: Text(
                     'Missing',
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.right,
+                    textAlign: TextAlign.center,
                   ),
                 ),
 
@@ -412,14 +412,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
               Text(
                 formatter.format(uniqueCount),
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.center,
               ),
 
               // Missing count column.
 
               Text(
                 formatter.format(missingCount),
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.center,
               ),
 
               // Content column.
