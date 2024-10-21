@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.3.0
   window_manager: ^0.4.2
   xterm: ^4.0.0
+  pdf: ^3.11.1
 
 dev_dependencies:
   flutter_launcher_icons: '^0.13.1'
