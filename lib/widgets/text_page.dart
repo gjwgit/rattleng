@@ -208,16 +208,6 @@ class TextPage extends StatelessWidget {
         ),
       );
     }
-
-    // Catch and handle any errors that occur during PDF saving.
-
-    try {} catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to save PDF: $e'),
-        ),
-      );
-    }
   }
 //   // Utility function to capitalize each line, add line spacing, and indent lines.
 
