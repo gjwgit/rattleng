@@ -146,11 +146,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         itemCount: vars.length,
 
         itemBuilder: (context, index) {
-          // Each row represents a data line for a variable.
+          // Show header only for the first row.
 
           return _buildDataLine(
             vars[index],
             currentRoles,
+            showHeader: index == 0,
           );
         },
       ),
@@ -283,9 +284,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ),
     );
   }
-// Build data line for each variable, including the table header.
+// Build data line for each variable, including the table header if specified.
 
-  Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles) {
+  Widget _buildDataLine(VariableInfo variable, Map<String, Role> currentRoles,
+      {bool showHeader = false}) {
     // Truncate the content to fit one line. The text could wrap over two
     // lines and so show more of the data, but our point here is more to
     // have a reminder of the data to assist in deciding on the ROLE of each
@@ -314,77 +316,78 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           5: FlexColumnWidth(3),
         },
         children: [
-          // Table header row.
+          if (showHeader)
+            // Table header row.
 
-          const TableRow(
-            children: [
-              // Header for variable name.
+            const TableRow(
+              children: [
+                // Header for variable name.
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  'Variable',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    'Variable',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-              ),
 
-              // Header for role.
+                // Header for role.
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  'Role',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    'Role',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-              ),
 
-              // Header for type.
+                // Header for type.
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  'Type',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    'Type',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-              ),
 
-              // Header for unique count.
+                // Header for unique count.
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  'Unique',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.right,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    'Unique',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.right,
+                  ),
                 ),
-              ),
 
-              // Header for missing count.
+                // Header for missing count.
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  'Missing',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.right,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    'Missing',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.right,
+                  ),
                 ),
-              ),
 
-              // Header for content.
+                // Header for content.
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  'Sample',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    'Sample',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
           // Table data row for variable.
 
