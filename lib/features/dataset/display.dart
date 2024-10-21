@@ -284,7 +284,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ),
     );
   }
-// Build data line for each variable, including the table header if specified.
+  // Build data line for each variable, including the table header if specified.
 
   Widget _buildDataTable(VariableInfo variable, Map<String, Role> currentRoles,
       {bool showHeader = false}) {
@@ -308,12 +308,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       padding: const EdgeInsets.all(6.0),
       child: Table(
         columnWidths: const {
-          0: FlexColumnWidth(),
-          1: FlexColumnWidth(4),
-          2: FlexColumnWidth(),
-          3: FlexColumnWidth(),
-          4: FlexColumnWidth(),
-          5: FlexColumnWidth(3),
+          0: FlexColumnWidth(), // Variable name column.
+          // 1: FlexColumnWidth(4), // Role column.
+          1: FixedColumnWidth(500.0), // Type column.
+
+          2: FixedColumnWidth(60.0), // Type column.
+          3: FixedColumnWidth(60.0), // Unique column.
+          4: FixedColumnWidth(70.0), // Missing column.
+          5: FlexColumnWidth(3), // Content column.
         },
         children: [
           if (showHeader)
@@ -334,7 +336,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 Text(
                   'Role',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                 ),
 
                 // Header for type.
@@ -342,10 +344,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 Text(
                   'Type',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                 ),
 
                 // Header for unique count.
+
                 Text(
                   'Unique',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -353,6 +356,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 ),
 
                 // Header for missing count.
+
                 Text(
                   'Missing',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -360,10 +364,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 ),
 
                 // Header for content.
+
                 Text(
                   'Sample',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -384,7 +389,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
               Text(
                 variable.type,
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
               ),
 
               // Unique count column.
@@ -405,7 +410,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
               SelectableText(
                 content,
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -432,24 +437,26 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Build role choice chips.
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
-    return Wrap(
-      spacing: 5.0,
-      runSpacing: choiceChipRowSpace,
-      children: choices.map((choice) {
-        return ChoiceChip(
-          label: Text(choice.displayString),
-          disabledColor: Colors.grey,
-          selectedColor: Colors.lightBlue[200],
-          backgroundColor: Colors.lightBlue[50],
-          showCheckmark: false,
-          shadowColor: Colors.grey,
-          pressElevation: 8.0,
-          elevation: 2.0,
-          selected: remap(currentRoles[columnName]!, choice),
-          onSelected: (bool selected) =>
-              _handleRoleSelection(selected, choice, columnName, currentRoles),
-        );
-      }).toList(),
+    return Center(
+      child: Wrap(
+        spacing: 5.0,
+        runSpacing: choiceChipRowSpace,
+        children: choices.map((choice) {
+          return ChoiceChip(
+            label: Text(choice.displayString),
+            disabledColor: Colors.grey,
+            selectedColor: Colors.lightBlue[200],
+            backgroundColor: Colors.lightBlue[50],
+            showCheckmark: false,
+            shadowColor: Colors.grey,
+            pressElevation: 8.0,
+            elevation: 2.0,
+            selected: remap(currentRoles[columnName]!, choice),
+            onSelected: (bool selected) => _handleRoleSelection(
+                selected, choice, columnName, currentRoles),
+          );
+        }).toList(),
+      ),
     );
   }
 
