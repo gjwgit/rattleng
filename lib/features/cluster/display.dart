@@ -87,16 +87,15 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     List<Widget> pages = [showMarkdownFile(clusterIntroFile, context)];
 
+    // Retrieve the function name and URL from the mapping.
+
+    String functionName = clusterMethods[type]!['functionName']!;
+    String functionPackage = clusterMethods[type]!['package']!;
+    String functionUrl = '$clusterPrefix$functionPackage/topics/$functionName';
+
     if (clusterMethods.containsKey(type)) {
       String content = rExtractCluster(stdout, ref);
       if (content.isNotEmpty) {
-        // Retrieve the function name and URL from the mapping.
-
-        String functionName = clusterMethods[type]!['functionName']!;
-        String functionPackage = clusterMethods[type]!['package']!;
-        String functionUrl =
-            '$clusterPrefix$functionPackage/topics/$functionName';
-
         pages.add(
           TextPage(
             title: '''
@@ -129,7 +128,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           # Cluster Analysis - Visual
 
           Visit
-          [cluster::clusplot()](https://www.rdocumentation.org/packages/stats/topics/kmeans).
+          [$functionPackage::$functionName()]($functionUrl).
 
           ''',
           path: discriminantImage,
@@ -147,7 +146,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           # Cluster Analysis - Visual
 
           Visit
-          [cluster::clusplot()](https://www.rdocumentation.org/packages/wskm/topics/ewkm).
+          [$functionPackage::$functionName()]($functionUrl).
 
           ''',
             path: weightImage,
