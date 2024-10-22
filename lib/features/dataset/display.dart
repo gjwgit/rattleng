@@ -308,14 +308,24 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       padding: const EdgeInsets.all(6.0),
       child: Table(
         columnWidths: const {
-          0: FlexColumnWidth(), // Variable name column.
-          // 1: FlexColumnWidth(4), // Role column.
-          1: FixedColumnWidth(500.0), // Type column.
+          // Variable name column.
 
-          2: FixedColumnWidth(60.0), // Type column.
-          3: FixedColumnWidth(60.0), // Unique column.
-          4: FixedColumnWidth(70.0), // Missing column.
-          5: FlexColumnWidth(3), // Content column.
+          0: FlexColumnWidth(),
+          // Role column.
+
+          1: FixedColumnWidth(500.0),
+          // Type column.
+
+          2: FixedColumnWidth(80.0),
+          // Unique column.
+
+          3: FixedColumnWidth(80.0),
+          // Missing column.
+
+          4: FixedColumnWidth(80.0),
+          // Content column.
+
+          5: FlexColumnWidth(3),
         },
         children: [
           if (showHeader)
@@ -372,6 +382,19 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 ),
               ],
             ),
+
+          // Extra space after header row.
+
+          TableRow(
+            children: [
+              SizedBox(height: 10),
+              SizedBox(height: 10),
+              SizedBox(height: 10),
+              SizedBox(height: 10),
+              SizedBox(height: 10),
+              SizedBox(height: 10),
+            ],
+          ),
 
           // Table data row for variable.
 
