@@ -117,15 +117,7 @@ svg("TEMPDIR/model_cluster_ewkm_weights.svg")
 
 # Create a bar plot of cluster weights.
 
-barplot(
-  model_ewkm$weights,
-  main = "Cluster Weights",
-  xlab = "Features",
-  ylab = "Weights",
-  col = "blue",
-  beside = TRUE,
-  legend = paste("Cluster", 1:CLUSTER_NUM)
-)
+plot(levelplot(model_ewkm))
 
 # Close the SVG device for the weights plot.
 
