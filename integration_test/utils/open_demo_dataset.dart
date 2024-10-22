@@ -1,6 +1,6 @@
 /// Open the DEMO dataset and test its contents.
 //
-// Time-stamp: <Monday 2024-10-14 14:46:39 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-20 13:57:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -91,11 +91,13 @@ Future<void> openDemoDataset(WidgetTester tester) async {
   String filename = dsPathText.controller?.text ?? '';
   expect(filename.contains('weather.csv'), isTrue);
 
-  testPrint('Found `$filename` as the path.');
-
-  await tester.pump(interact);
-
   testPrint('Check the ROLES page content for specific text.');
+
+  // 20241019 gjw Add a delay here. Whilst app and demo_dataset and
+  // demo_dataset_ignore loaded the dataset just fine, demo_explore failed to
+  // find the text '2023-07-01'.
+
+  await tester.pump(delay);
 
   // Expect specific text in the ROLES page.
 
@@ -116,4 +118,6 @@ Future<void> openDemoDataset(WidgetTester tester) async {
       '13.9',
     ],
   );
+
+  testPrint('Finished openning the DEMO Dataset.');
 }
