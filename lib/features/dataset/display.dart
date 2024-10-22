@@ -53,6 +53,8 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
 
+const smallSpace = SizedBox(height: 10);
+
 /// The dataset panel displays the RattleNG welcome on the first page and the
 /// ROLES as the second page.
 
@@ -387,12 +389,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
           TableRow(
             children: [
-              SizedBox(height: 10),
-              SizedBox(height: 10),
-              SizedBox(height: 10),
-              SizedBox(height: 10),
-              SizedBox(height: 10),
-              SizedBox(height: 10),
+              smallSpace,
+              smallSpace,
+              smallSpace,
+              smallSpace,
+              smallSpace,
+              smallSpace,
             ],
           ),
 
