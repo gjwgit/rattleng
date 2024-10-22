@@ -372,7 +372,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 Text(
                   'Missing',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.right,
                 ),
 
                 // Header for content.
@@ -428,7 +428,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
               Text(
                 formatter.format(missingCount),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.right,
               ),
 
               // Content column.
