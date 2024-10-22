@@ -173,7 +173,7 @@ class TextPage extends StatelessWidget {
                   child: pw.Text(
                     line,
                     style: pw.TextStyle(
-                      fontSize: 8,
+                      fontSize: 6,
                       height: 1.2,
                       font: font,
                     ),
