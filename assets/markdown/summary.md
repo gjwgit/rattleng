@@ -15,4 +15,3 @@ categoric values will be listed.
 
 A count of **missing values** is often shown for any variables with
 missing values.
-
