@@ -224,29 +224,24 @@ class ImagePage extends StatelessWidget {
                   LayoutBuilder(
                     builder: (context, constraints) {
                       // The max available width from LayoutBuilder.
+
                       final maxWidth = constraints.maxWidth;
 
                       // Apply a bounded height to avoid infinite height error.
+                      
                       final double maxHeight =
-                          MediaQuery.of(context).size.height * 0.8;
+                          MediaQuery.of(context).size.height * 0.6;
 
                       return SizedBox(
                         height: maxHeight,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: InteractiveViewer(
-                                maxScale: 5,
-                                child: SvgPicture.memory(
-                                  bytes,
-                                  width: maxWidth,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                          ],
+                        width: maxWidth,
+                        child: InteractiveViewer(
+                          maxScale: 5,
+                          alignment: Alignment.topCenter,
+                          child: SvgPicture.memory(
+                            bytes,
+                            fit: BoxFit.scaleDown,
+                          ),
                         ),
                       );
                     },
