@@ -40,25 +40,28 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
 
+/// Cluster R package prefix URL.
+
+String clusterPrefix = 'https://www.rdocumentation.org/packages/';
+
 /// Define a mapping from type to function name and URL.
 
 final Map<String, Map<String, String>> clusterMethods = {
   'KMeans': {
     'functionName': 'kmeans',
-    'functionUrl':
-        'https://www.rdocumentation.org/packages/stats/topics/kmeans',
+    'package': 'stats',
   },
   'Ewkm': {
     'functionName': 'ewkm',
-    'functionUrl': 'https://www.rdocumentation.org/packages/wskm',
+    'package': 'wskm',
   },
   'Hierarchical': {
-    'functionName': 'hcluster',
-    'functionUrl': 'https://www.rdocumentation.org/packages/stats',
+    'functionName': 'hclust',
+    'package': 'stats',
   },
   'BiCluster': {
     'functionName': 'biclust',
-    'functionUrl': 'https://www.rdocumentation.org/packages/biclust',
+    'package': 'biclust',
   },
 };
 
@@ -90,7 +93,9 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
         // Retrieve the function name and URL from the mapping.
 
         String functionName = clusterMethods[type]!['functionName']!;
-        String functionUrl = clusterMethods[type]!['functionUrl']!;
+        String functionPackage = clusterMethods[type]!['package']!;
+        String functionUrl =
+            '$clusterPrefix$functionPackage/topics/$functionName';
 
         pages.add(
           TextPage(
@@ -99,7 +104,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
             # Cluster Analysis
 
             Built using
-            [biclust::$functionName()]($functionUrl).
+            [$functionPackage::$functionName()]($functionUrl).
 
             ''',
             content: '\n$content',
