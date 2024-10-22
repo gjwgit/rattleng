@@ -148,20 +148,12 @@ class TextPage extends StatelessWidget {
     );
   }
 
-  // Function to generate and open the PDF in a separate window.
+// Function to generate the PDF document with given content and font.
 
-  Future<void> _generateAndOpenPdf(BuildContext context) async {
-    // Load the 'RobotoMono' font from assets.
-
-    final robotoMonoFont = pw.Font.ttf(
-      await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'),
-    );
-
-    // Create a PDF document.
-
+  Future<pw.Document> _createPdf(String content, pw.Font font) async {
     final pdf = pw.Document();
 
-    // Split the content into lines to format them better.
+    // Split the content into lines for formatting.
 
     List<String> lines = content.split('\n');
 
@@ -181,9 +173,9 @@ class TextPage extends StatelessWidget {
                   child: pw.Text(
                     line,
                     style: pw.TextStyle(
-                      fontSize: 6,
+                      fontSize: 8,
                       height: 1.2,
-                      font: robotoMonoFont,
+                      font: font,
                     ),
                   ),
                 );
@@ -193,6 +185,22 @@ class TextPage extends StatelessWidget {
         },
       ),
     );
+
+    return pdf;
+  }
+
+// Function to generate and open the PDF in a separate window.
+
+  Future<void> _generateAndOpenPdf(BuildContext context) async {
+    // Load the 'RobotoMono' font from assets.
+
+    final robotoMonoFont = pw.Font.ttf(
+      await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'),
+    );
+
+    // Create the PDF document using the helper function.
+
+    final pdf = await _createPdf(content, robotoMonoFont);
 
     // Get the temporary directory path.
 
@@ -213,7 +221,7 @@ class TextPage extends StatelessWidget {
     }
   }
 
-  // Function to save the PDF with a user-selected directory and custom file name.
+// Function to save the PDF with a user-selected directory and custom file name.
 
   Future<void> _saveAsPdf(BuildContext context) async {
     // Load the 'RobotoMono' font from assets.
@@ -222,46 +230,9 @@ class TextPage extends StatelessWidget {
       await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'),
     );
 
-    // Create a PDF document.
+    // Create the PDF document using the helper function.
 
-    final pdf = pw.Document();
-
-    // var mono =
-    //     Font.ttf(await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'));
-
-    // Split the content into lines to format them better.
-
-    List<String> lines = content.split('\n');
-
-    // Add the title and content to the PDF page.
-
-    pdf.addPage(
-      pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return pw.Padding(
-            padding: const pw.EdgeInsets.all(-40),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: lines.map((line) {
-                return pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: 4),
-                  child: pw.Text(
-                    line,
-                    style: pw.TextStyle(
-                      fontSize: 8,
-                      height: 1.2,
-                      font: robotoMonoFont,
-                    ),
-                    //style: pw.TextStyle(font: pw.Font.courier(), fontSize: 8),
-                  ),
-                );
-              }).toList(),
-            ),
-          );
-        },
-      ),
-    );
+    final pdf = await _createPdf(content, robotoMonoFont);
 
     // Use FilePicker to select a save location and file name.
 
@@ -302,25 +273,4 @@ class TextPage extends StatelessWidget {
       );
     }
   }
-//   // Utility function to capitalize each line, add line spacing, and indent lines.
-
-//   String _formatContent(String content) {
-//     final lines = content.split('\n');
-
-//     final formattedLines = lines.asMap().entries.map((entry) {
-//       int index = entry.key;
-//       String line = entry.value.trim();
-
-//       // Capitalize the first letter of each line.
-
-//       if (line.isNotEmpty) {
-//         line = '${line[0].toUpperCase()}${line.substring(1)}';
-//       }
-
-//       return index == 0 ? line : '    $line';
-//     }).toList();
-
-//     // Join the lines with line breaks
-//     return formattedLines.join('\n');
-//   }
 }
