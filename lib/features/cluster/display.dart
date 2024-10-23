@@ -29,10 +29,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
+import 'package:rattle/utils/image_exists.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -84,16 +87,15 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     List<Widget> pages = [showMarkdownFile(clusterIntroFile, context)];
 
+    // Retrieve the function name and URL from the mapping.
+
+    String functionName = clusterMethods[type]!['functionName']!;
+    String functionPackage = clusterMethods[type]!['package']!;
+    String functionUrl = '$clusterPrefix$functionPackage/topics/$functionName';
+
     if (clusterMethods.containsKey(type)) {
       String content = rExtractCluster(stdout, ref);
       if (content.isNotEmpty) {
-        // Retrieve the function name and URL from the mapping.
-
-        String functionName = clusterMethods[type]!['functionName']!;
-        String functionPackage = clusterMethods[type]!['package']!;
-        String functionUrl =
-            '$clusterPrefix$functionPackage/topics/$functionName';
-
         pages.add(
           TextPage(
             title: '''
@@ -105,6 +107,49 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
             ''',
             content: '\n$content',
+          ),
+        );
+      }
+    }
+
+    String discriminantImage = type == 'KMeans'
+        ? '$tempDir/model_cluster_discriminant.svg'
+        : type == 'Ewkm'
+            ? '$tempDir/model_cluster_ewkm.svg'
+            : type == 'Hierarchical'
+                ? '$tempDir/model_cluster_hierarchical.svg'
+                : '';
+
+    if (imageExists(discriminantImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Cluster Analysis - Visual
+
+          Visit
+          [$functionPackage::$functionName()]($functionUrl).
+
+          ''',
+          path: discriminantImage,
+        ),
+      );
+    }
+
+    if (type == 'Ewkm') {
+      String weightImage = '$tempDir/model_cluster_ewkm_weights.svg';
+      if (imageExists(weightImage)) {
+        pages.add(
+          ImagePage(
+            title: '''
+
+          # Cluster Analysis - Visual
+
+          Visit
+          [$functionPackage::$functionName()]($functionUrl).
+
+          ''',
+            path: weightImage,
           ),
         );
       }

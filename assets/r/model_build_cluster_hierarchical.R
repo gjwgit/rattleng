@@ -109,3 +109,27 @@ withinss <- sapply(split(as.data.frame(tds), cluster_assignments), function(clus
 })
 print("Within-Cluster Sum of Squares:")
 print(withinss)
+
+cat("\n")
+
+# Plot the dendrogram plot.
+
+svg("TEMPDIR/model_cluster_hierarchical.svg", width = 20, height = 9)  # Adjust width and height as needed
+
+# Convert the hcluster object to an hclust object if necessary.
+# This ensures compatibility with the plot function.
+
+model_hclust_hclust <- as.hclust(model_hclust)
+
+# Draw the dendrogram plot.
+
+plot(model_hclust_hclust,
+     main = "Hierarchical Clustering Dendrogram",
+     sub = paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]),
+     xlab = "",
+     ylab = "Height")
+
+# Close the SVG device.
+
+dev.off()
+
