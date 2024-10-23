@@ -156,6 +156,15 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Regular.ttf
+    # - family: NotoSans
+    #   fonts:
+    #     - asset: assets/fonts/NotoSans-Regular.ttf
+    #
+    # A fullback font supporting unicode block characters used in skimr.
+    - family: DejaVuSans
+      fonts:
+        - asset: assets/fonts/DejaVuSans.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

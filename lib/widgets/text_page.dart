@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Tuesday 2024-10-22 09:54:02 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-23 16:50:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -148,21 +148,102 @@ class TextPage extends StatelessWidget {
     );
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  // PDF Creation
+
+  /// Extract the title from the title string. The actual title is expected to
+  /// be the fist line and begins with the markdown #. We strip the #. If not
+  /// title is found the return the empty string.
+
   String extractTitle(String title) {
-    // Use a regular expression to match the first line and remove the leading '#'.
+    List<String> lines = title.split('\n');
 
-    final regex = RegExp(r'^#?\s*(.*)');
-    final match = regex.firstMatch(title);
+    for (String line in lines) {
+      // Trim leading and trailing spaces and check if the string is not empty.
 
-    // Return the matched line or an empty string if no match is found.
+      if (line.trim().isNotEmpty) {
+        // Use a regular expression to check if the string starts with spaces
+        // followed by a #.
 
-    return match != null ? match.group(1)!.trim() : '';
+        RegExp regExp = RegExp(r'^\s*#(.*)');
+
+        // If the string matches the pattern, return the part after the # and
+        // spaces.  Return an empty string if the first non-empty string doesn't
+        // start with #
+
+        Match? match = regExp.firstMatch(line);
+
+        if (match != null) {
+          return match.group(1)?.trim() ?? '';
+        } else {
+          return '';
+        }
+      }
+    }
+    return '';
   }
 
-// Function to generate the PDF document with given content and font.
+  /// Fromt he title string remove the first line title that begins with # and
+  /// format the remainder to add to the PDF page.
 
-  Future<pw.Document> _createPdf(String content, pw.Font font) async {
+  String extractCommentary(String title) {
+    bool foundTitle = false;
+    List<String> result = [];
+    List<String> lines = title.split('\n');
+
+    // Use a regular expression to check if the string starts with spaces
+    // followed by a #.
+
+    RegExp regExp = RegExp(r'^\s*#(.*)');
+
+    for (String line in lines) {
+      // Check if the string is the first non-empty line that starts with
+      // optional space followed by #.
+
+      if (!foundTitle) {
+        if (regExp.hasMatch(line)) {
+          foundTitle = true;
+          continue;
+        }
+      } else {
+        result.add(line);
+      }
+    }
+
+    // Replace matches of [XXXX](YYYY) with the desired format.
+
+    String fin = result.join().trim().replaceAll(RegExp(r'\s+'), ' ');
+    regExp = RegExp(r'\[([^\]]+)\]\(([^)]+)\)');
+    fin = fin.replaceAllMapped(regExp, (Match match) {
+      String text = match.group(1)!; // XXXXX
+      // String link = match.group(2)!; // YYYY
+      return text;
+    });
+
+    return fin;
+  }
+
+  // Generate the PDF document with given content.
+
+  Future<pw.Document> _createPdf(String content) async {
     String extractedTitle = extractTitle(title);
+
+    // Load the 'RobotoMono' font from assets.
+
+    final fixed = pw.Font.ttf(
+      await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'),
+    );
+
+    final sans = pw.Font.ttf(
+      await rootBundle.load('assets/fonts/OpenSans-Regular.ttf'),
+    );
+
+    // A fullback font that supports the unicode block characters from the skimr
+    // output.
+
+    final dejavu = pw.Font.ttf(
+      await rootBundle.load('assets/fonts/DejaVuSans.ttf'),
+    );
 
     final pdf = pw.Document();
 
@@ -188,11 +269,22 @@ class TextPage extends StatelessWidget {
                   style: pw.TextStyle(
                     fontSize: 14,
                     fontWeight: pw.FontWeight.bold,
-                    font: font,
+                    font: sans,
                   ),
                 ),
 
                 // Add some space below the title.
+
+                pw.SizedBox(height: 10),
+
+                pw.Text(
+                  extractCommentary(title),
+                  style: pw.TextStyle(
+                    fontSize: 8,
+                    fontStyle: pw.FontStyle.italic,
+                    font: sans,
+                  ),
+                ),
 
                 pw.SizedBox(height: 10),
 
@@ -206,7 +298,8 @@ class TextPage extends StatelessWidget {
                       style: pw.TextStyle(
                         fontSize: 6,
                         height: 1.2,
-                        font: font,
+                        font: fixed,
+                        fontFallback: [dejavu],
                       ),
                     ),
                   );
@@ -224,15 +317,9 @@ class TextPage extends StatelessWidget {
 // Function to generate and open the PDF in a separate window.
 
   Future<void> _generateAndOpenPdf(BuildContext context) async {
-    // Load the 'RobotoMono' font from assets.
-
-    final robotoMonoFont = pw.Font.ttf(
-      await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'),
-    );
-
     // Create the PDF document using the helper function.
 
-    final pdf = await _createPdf(content, robotoMonoFont);
+    final pdf = await _createPdf(content);
 
     // Get the temporary directory path.
 
@@ -256,15 +343,9 @@ class TextPage extends StatelessWidget {
 // Function to save the PDF with a user-selected directory and custom file name.
 
   Future<void> _saveAsPdf(BuildContext context) async {
-    // Load the 'RobotoMono' font from assets.
-
-    final robotoMonoFont = pw.Font.ttf(
-      await rootBundle.load('assets/fonts/RobotoMono-Regular.ttf'),
-    );
-
     // Create the PDF document using the helper function.
 
-    final pdf = await _createPdf(content, robotoMonoFont);
+    final pdf = await _createPdf(content);
 
     // Use FilePicker to select a save location and file name.
 
