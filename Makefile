@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-08-21 20:14:50 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-10-24 05:25:22 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -109,11 +109,8 @@ OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 local: tgz
 	sudo tar zxvf installers/$(APP).tar.gz -C /opt/
 
-# No more tgz to togaware. Moved to zip archives.
-#
-# tgz::
-#	chmod a+r installers/*.tar.gz
-#	rsync -avzh installers/*.tar.gz togaware.com:apps/access/
+# A ginstall of the built bundles from github, installed to
+# solidcommunity.au and moved into ARCHIVE.
 
 ginstall:
 	(cd installers; make $@)
