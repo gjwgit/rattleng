@@ -34,7 +34,6 @@ import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
-import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
@@ -73,6 +72,18 @@ void main() {
       final markdownContent = find.byKey(const Key('markdown_file'));
       expect(markdownContent, findsOneWidget);
 
+      // Switch algorithm to neuralnet.
+
+      final neuralNetChip = find.text(
+        'neuralnet',
+      );
+
+      // Tap the neuralnet chip to switch type.
+
+      await tester.tap(neuralNetChip);
+
+      await tester.pumpAndSettle();
+
       // Find and tap the 'Ignore Categoric' checkbox.
 
       final Finder ignoreCheckbox =
@@ -107,28 +118,14 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 14-10-1 network with 161 weights') == true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      expect(modelDescriptionFinder, findsOneWidget);
-
-      final summaryDecisionTreeFinder = find.byType(TextPage);
-      expect(summaryDecisionTreeFinder, findsOneWidget);
-
-      final optionsDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
             widget.data?.contains(
-                  'Options were - entropy fitting',
-                ) ==
+                    'Neuralnet(formula = formula_nn, data = ds_final, hidden =',) ==
                 true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
 
-      expect(optionsDescriptionFinder, findsOneWidget);
+      expect(modelDescriptionFinder, findsOneWidget);
 
       await tester.pump(interact);
 
