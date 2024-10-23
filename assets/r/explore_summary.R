@@ -79,10 +79,6 @@ if (SUMMARY_CROSS_TAB) {
     cat(paste(rep("=", 70), collapse=""), "\n")
   }
 } else {
-<<<<<<< HEAD
   cat("\n") 
-=======
-  print("Cross Tab analysis is not included.") 
->>>>>>> 0a6d8741 (1)
 }
 
