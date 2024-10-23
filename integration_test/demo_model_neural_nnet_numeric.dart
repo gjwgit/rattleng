@@ -1,4 +1,4 @@
-/// Test nnet() with demo dataset.
+/// Test nnet() with numeric demo dataset.
 //
 // Time-stamp: <Sunday 2024-10-13 15:00:27 +1100 Graham Williams>
 //
@@ -52,7 +52,7 @@ final List<String> demoVariablesToIgnore = [
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Neural NNet:', () {
+  group('Numeric Demo Model Neural NNet:', () {
     testWidgets('Load, Ignore, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -186,6 +186,13 @@ void main() {
       final markdownContent = find.byKey(const Key('markdown_file'));
       expect(markdownContent, findsOneWidget);
 
+      // Find and tap the 'Ignore Categoric' checkbox.
+
+      final Finder ignoreCheckbox =
+          find.byKey(const Key('Neural Ignore Categoric'));
+      await tester.tap(ignoreCheckbox);
+      await tester.pumpAndSettle();
+
       // Simulate the presence of a neural network being built.
 
       final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
@@ -213,7 +220,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('A 15-10-1 network with 171 weights') == true,
+            widget.data?.contains('A 14-10-1 network with 161 weights') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.
