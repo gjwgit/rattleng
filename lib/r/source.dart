@@ -436,8 +436,11 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // EXPLORE
+  // read the boolean value from the provider.
+
   bool includeCrossTab = ref.watch(crossTabSummaryProvider);
+
+  // Cross tabulation summary.
 
   code =
       code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
