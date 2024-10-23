@@ -74,13 +74,11 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             ),
             configWidgetSpace,
             LabelledCheckbox(
-              label: 'Cross Tab Summary',
+              label: 'Include Cross Tab',
               tooltip: 'Enable or disable cross-tab summary',
               provider: crossTabSummaryProvider,
               enabled: true,
             ),
-
-            const Text('Include Cross Tab'),
           ],
         ),
       ],

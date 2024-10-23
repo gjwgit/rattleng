@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -436,10 +437,10 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
 
   // EXPLORE
+  bool includeCrossTab = ref.watch(crossTabSummaryProvider);
 
-  // code =
-  //     code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('SUMMARY_CROSS_TAB', 'TRUE');
+  code =
+      code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 
