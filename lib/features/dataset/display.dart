@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Friday 2024-10-18 05:45:40 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-23 15:14:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -311,23 +311,19 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       child: Table(
         columnWidths: const {
           // Variable name column.
-
-          0: FlexColumnWidth(),
+          0: FixedColumnWidth(150.0),
           // Role column.
-
-          1: FixedColumnWidth(500.0),
+          1: FixedColumnWidth(400.0),
           // Type column.
-
-          2: FixedColumnWidth(80.0),
+          2: FixedColumnWidth(40.0),
           // Unique column.
-
           3: FixedColumnWidth(80.0),
           // Missing column.
-
           4: FixedColumnWidth(80.0),
+          // Gap of 20px between the columns
+          5: FixedColumnWidth(20.0),
           // Content column.
-
-          5: FlexColumnWidth(3),
+          6: FlexColumnWidth(),
         },
         children: [
           if (showHeader)
@@ -364,7 +360,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 Text(
                   'Unique',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.right,
                 ),
 
                 // Header for missing count.
@@ -375,12 +371,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   textAlign: TextAlign.right,
                 ),
 
+                // Empty cell acting as a gap
+
+                SizedBox.shrink(),
+
                 // Header for content.
 
                 Text(
                   'Sample',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                 ),
               ],
             ),
@@ -389,6 +389,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
           TableRow(
             children: [
+              smallSpace,
               smallSpace,
               smallSpace,
               smallSpace,
@@ -421,7 +422,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
               Text(
                 formatter.format(uniqueCount),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.right,
               ),
 
               // Missing count column.
@@ -431,11 +432,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 textAlign: TextAlign.right,
               ),
 
+              // Empty cell acting as a gap
+
+              SizedBox.shrink(),
               // Content column.
 
               SelectableText(
                 content,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
             ],
           ),
@@ -522,7 +526,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Truncate content for display.
 
   String _truncateContent(String content) {
-    int maxLength = 30;
+    int maxLength = 50;
     String subStr =
         content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
