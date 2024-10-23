@@ -32,12 +32,14 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/open_demo_dataset.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
@@ -62,13 +64,11 @@ void main() {
 
       await tester.pump(interact);
 
-      // Find the Model Page in the Side tab.
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
-
-      // Tap the model Tab button.
-
-      await tester.tap(modelTabFinder);
+      await navigateToPage(
+        tester,
+        Icons.model_training,
+        ModelTabs,
+      );
       await tester.pumpAndSettle();
 
       // Navigate to the Neural feature.
