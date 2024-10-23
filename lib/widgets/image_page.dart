@@ -228,7 +228,7 @@ class ImagePage extends StatelessWidget {
                       final maxWidth = constraints.maxWidth;
 
                       // Apply a bounded height to avoid infinite height error.
-                      
+
                       final double maxHeight =
                           MediaQuery.of(context).size.height * 0.6;
 
