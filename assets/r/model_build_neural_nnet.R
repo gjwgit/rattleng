@@ -37,7 +37,7 @@ mdesc <- "Neural Network"
 # Conditional logic to handle categorical variables based on 'neural_ignore_categoric'.
 
 if (neural_ignore_categoric) {
-  model_data <- ds[tr, neural_ignore_categoric]  
+  model_data <- ds[tr, ignore_categoric_vars]  
 } else {
   model_data <- ds[tr, vars]  
 }
