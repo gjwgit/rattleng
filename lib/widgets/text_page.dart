@@ -148,9 +148,22 @@ class TextPage extends StatelessWidget {
     );
   }
 
+  String extractTitle(String title) {
+    // Use a regular expression to match the first line and remove the leading '#'.
+
+    final regex = RegExp(r'^#?\s*(.*)');
+    final match = regex.firstMatch(title);
+
+    // Return the matched line or an empty string if no match is found.
+
+    return match != null ? match.group(1)!.trim() : '';
+  }
+
 // Function to generate the PDF document with given content and font.
 
   Future<pw.Document> _createPdf(String content, pw.Font font) async {
+    String extractedTitle = extractTitle(title);
+
     final pdf = pw.Document();
 
     // Split the content into lines for formatting.
@@ -167,19 +180,38 @@ class TextPage extends StatelessWidget {
             padding: const pw.EdgeInsets.all(20),
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: lines.map((line) {
-                return pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: 4),
-                  child: pw.Text(
-                    line,
-                    style: pw.TextStyle(
-                      fontSize: 6,
-                      height: 1.2,
-                      font: font,
-                    ),
+              children: [
+                // Add the title at the top of the page.
+
+                pw.Text(
+                  extractedTitle,
+                  style: pw.TextStyle(
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                    font: font,
                   ),
-                );
-              }).toList(),
+                ),
+
+                // Add some space below the title.
+
+                pw.SizedBox(height: 10),
+
+                // Add the content lines.
+
+                ...lines.map((line) {
+                  return pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 4),
+                    child: pw.Text(
+                      line,
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        height: 1.2,
+                        font: font,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ],
             ),
           );
         },
