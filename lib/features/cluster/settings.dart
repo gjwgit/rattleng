@@ -31,11 +31,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/providers/cluster_number.dart';
-import 'package:rattle/providers/cluster_re_scale.dart';
-import 'package:rattle/providers/cluster_run.dart';
-import 'package:rattle/providers/cluster_seed.dart';
-import 'package:rattle/widgets/labelled_checkbox.dart';
+import 'package:rattle/providers/cluster.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class ClusterSetting extends ConsumerStatefulWidget {
@@ -51,6 +48,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
   final TextEditingController _clusterController = TextEditingController();
   final TextEditingController _seedController = TextEditingController();
   final TextEditingController _runController = TextEditingController();
+  final TextEditingController _processorController = TextEditingController();
 
   @override
   void dispose() {
@@ -66,11 +64,37 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
   @override
   Widget build(BuildContext context) {
     _clusterController.text =
-        ref.read(clusterNumberProvider.notifier).state.toString();
+        ref.read(numberClusterProvider.notifier).state.toString();
     _seedController.text =
-        ref.read(clusterSeedProvider.notifier).state.toString();
+        ref.read(seedClusterProvider.notifier).state.toString();
     _runController.text =
-        ref.read(clusterRunProvider.notifier).state.toString();
+        ref.read(runClusterProvider.notifier).state.toString();
+
+    // Data points distance.
+
+    List<String> distance = [
+      'euclidean',
+      'maximum',
+      'manhattan',
+      'canberra',
+      'binary',
+      'pearson',
+      'correlation',
+      'spearman',
+    ];
+    List<String> link = [
+      'ward',
+      'single',
+      'complete',
+      'average',
+      'mcquitty',
+      'median',
+      'centroid',
+      'centroid2',
+    ];
+    String selectedDistance = ref.watch(distanceClusterProvider);
+    String selectedLink = ref.watch(linkClusterProvider);
+    String type = ref.watch(typeClusterProvider);
 
     return Column(
       children: [
@@ -87,9 +111,10 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _clusterController,
+              enabled: type != 'Hierarchical',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: clusterNumberProvider,
+              stateProvider: numberClusterProvider,
             ),
             configWidgetSpace,
             NumberField(
@@ -106,7 +131,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               controller: _seedController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: clusterSeedProvider,
+              stateProvider: seedClusterProvider,
             ),
             configWidgetSpace,
             NumberField(
@@ -119,20 +144,65 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _runController,
+              enabled: type != 'Hierarchical' && type != 'BiCluster',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: clusterRunProvider,
+              stateProvider: runClusterProvider,
             ),
             configWidgetSpace,
-            LabelledCheckbox(
-              key: const Key('re_scale'),
+            NumberField(
+              label: 'Processors:',
+              key: const Key('cluster_processor'),
               tooltip: '''
-
-              TIPPY
+              
+              Integer, number of subprocess for parallelization.
 
               ''',
-              label: 'Re-Scale',
-              provider: clusterReScaleProvider,
+              controller: _processorController,
+              enabled: type == 'Hierarchical',
+              inputFormatter: FilteringTextInputFormatter.digitsOnly,
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: processorClusterProvider,
+            ),
+            configWidgetSpace,
+            variableChooser(
+              'Distance',
+              distance,
+              selectedDistance,
+              ref,
+              distanceClusterProvider,
+              tooltip: '''
+
+              Distance measures how similar or dissimilar data points are, 
+              determining how they are grouped together in clusters.
+
+              ''',
+              enabled: type == 'Hierarchical',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(distanceClusterProvider.notifier).state = value;
+                }
+              },
+            ),
+            configWidgetSpace,
+            variableChooser(
+              'Link',
+              link,
+              selectedLink,
+              ref,
+              linkClusterProvider,
+              tooltip: '''
+
+              A link determines how the distance between clusters is calculated 
+              when merging them, influencing the shape and structure of the resulting clusters.
+
+              ''',
+              enabled: type == 'Hierarchical',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(linkClusterProvider.notifier).state = value;
+                }
+              },
             ),
           ],
         ),

@@ -3,14 +3,16 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rattle"
-#define MyAppVersion "0.0.0"
+#define MyAppVersion "dev-windows-inno"
 #define MyAppPublisher "Togaware"
 #define MyAppURL "https://rattle.togaware.com/"
 #define MyAppExeName "rattle.exe"
 
 [Setup]
-; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
+; NOTE: The value of AppId uniquely identifies this application.
+; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+; (On Ubunut run `uuidgen` to generate a unique AppId.)
 AppId={{2C2A7757-EE3A-456D-ABCA-045C3C411AF2}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}

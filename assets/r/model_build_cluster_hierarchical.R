@@ -1,4 +1,4 @@
-# Build an Ewkm cluster.
+# Build an Hierarchical cluster.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -22,7 +22,7 @@
 #
 # Author: Graham Williams, Zheyuan Xu
 
-# Cluster using KMeans
+# Cluster using Hierarchical
 #
 # TIMESTAMP
 #
@@ -43,14 +43,12 @@
 # The 'reshape' package provides the 'rescaler' function.
 
 library(reshape)
-library(wskm)         # Load the wskm package for EWKM
+library(amap)
 
-mtype <- "ewkm"
-mdesc <- "Entropy Weighted K-Means Cluster"
+mtype <- "hierarchical_amap"
+mdesc <- "Hierarchical Clustering using amap package"
 
-# Set whether the data should be rescaled. For cluster analysis this
-# is usually recommended.
-
+# Set whether the data should be rescaled
 rescale <- CLUSTER_RESCALE
 
 # Prepare the data for clustering based on the value of rescale.
@@ -71,54 +69,67 @@ if (rescale) {
 
 tds <- as.matrix(tds)
 
-# Generate an EWKM cluster model.
+# Perform hierarchical clustering using the hcluster function from the amap package.
 
-model_ewkm <- ewkm(tds, centers=CLUSTER_NUM)
+model_hclust <- hcluster(tds, method=CLUSTER_DISTANCE, link=CLUSTER_LINK, nbproc=CLUSTER_PROCESSOR)
+
+# Cut the dendrogram to get the specified number of clusters.
+
+cluster_assignments <- cutree(model_hclust, k = CLUSTER_NUM)
+
+# Add the cluster assignments to the data frame (optional).
+
+tds_with_clusters <- data.frame(tds, cluster = cluster_assignments)
 
 # Report on the cluster characteristics.
 
 # Cluster sizes:
 
-print(paste(model_ewkm$size, collapse = ' '))
+cluster_sizes <- table(cluster_assignments)
+print("Cluster Sizes:")
+print(cluster_sizes)
 
 # Data means:
 
-print(colMeans(tds))
+data_means <- colMeans(tds)
+print("Data Means:")
+print(data_means)
 
 # Cluster centers:
 
-print(model_ewkm$centers)
+cluster_centers <- aggregate(tds, by = list(cluster = cluster_assignments), FUN = mean)
+print("Cluster Centers:")
+print(cluster_centers)
 
 # Within-cluster sum of squares:
 
-print(model_ewkm$withinss)
+withinss <- sapply(split(as.data.frame(tds), cluster_assignments), function(cluster_data) {
+  center <- colMeans(cluster_data)
+  sum(rowSums((cluster_data - center)^2))
+})
+print("Within-Cluster Sum of Squares:")
+print(withinss)
 
 cat("\n")
 
-# Plot the first two principal components, which serve as discriminant coordinates.
+# Plot the dendrogram plot.
 
-svg("TEMPDIR/model_cluster_ewkm.svg")
+svg("TEMPDIR/model_cluster_hierarchical.svg", width = 20, height = 9)  # Adjust width and height as needed
 
-# Generate a discriminant coordinates plot.
+# Convert the hcluster object to an hclust object if necessary.
+# This ensures compatibility with the plot function.
 
-# Convert tds to a matrix if it's not already.
+model_hclust_hclust <- as.hclust(model_hclust)
 
-tds_matrix <- as.matrix(tds)
+# Draw the dendrogram plot.
 
-# Generate the clusplot.
+plot(model_hclust_hclust,
+     main = "Hierarchical Clustering Dendrogram",
+     sub = paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]),
+     xlab = "",
+     ylab = "Height")
 
-cluster::clusplot(tds_matrix, model_ewkm$cluster, color=TRUE, shade=TRUE,
-                  labels=2, lines=0, main='Discriminant Coordinates Plot')
-
-dev.off()
-
-svg("TEMPDIR/model_cluster_ewkm_weights.svg")
-
-
-# Create a bar plot of cluster weights.
-
-plot(levelplot(model_ewkm))
-
-# Close the SVG device for the weights plot.
+# Close the SVG device.
 
 dev.off()
+

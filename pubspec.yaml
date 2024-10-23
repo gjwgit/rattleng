@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.6+124
+version: 6.3.14+134
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.3.0
   window_manager: ^0.4.2
   xterm: ^4.0.0
+  pdf: ^3.11.1
 
 dev_dependencies:
   flutter_launcher_icons: '^0.13.1'
@@ -155,6 +156,15 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Regular.ttf
+    # - family: NotoSans
+    #   fonts:
+    #     - asset: assets/fonts/NotoSans-Regular.ttf
+    #
+    # A fullback font supporting unicode block characters used in skimr.
+    - family: DejaVuSans
+      fonts:
+        - asset: assets/fonts/DejaVuSans.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

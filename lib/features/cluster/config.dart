@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:47:56 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-17 11:09:00 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,11 +31,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/cluster/settings.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 
 /// A StatefulWidget to pass the ref across to the rSouorce.
 
@@ -52,38 +53,36 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
   Map<String, String> clusterTypes = {
     'KMeans': '''
 
-      Generate clusters using a kmeans algorithm. The kmeans algorithm is the
-      traditional cluster algorithm used in statistics.
+      Generate clusters using a kmeans algorithm, a traditional cluster
+      algorithm used in statistics.
 
       ''',
     'Ewkm': '''
 
-      Generate clusters using a kmeans algorithm but augmented by slecting
+      Generate clusters using a kmeans algorithm initialised by selecting
       subspaces using entropy weighting.
 
       ''',
-    // 'Hierarchical': '''
+    'Hierarchical': '''
 
-    //   Build an agglomerative hierarchical cluster.
+      Build an agglomerative hierarchical cluster.
 
-    //   ''',
-    // 'BiCluster': '''
+      ''',
+    'BiCluster': '''
 
-    //   Cluster by identifying suitable subsets of both the variables and the
-    //   observations, rather than just the observations as in kmeans.
+      Cluster by identifying suitable subsets of both the variables and the
+      observations, rather than just the observations as in kmeans.
 
-    //   ''',
+      ''',
   };
+
   @override
   Widget build(BuildContext context) {
-    String type = ref.read(clusterTypeProvider.notifier).state;
+    String type = ref.read(typeClusterProvider.notifier).state;
 
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        configBotSpace,
-
+        configTopSpace,
         Row(
           children: [
             // Space to the left of the configs.
@@ -95,24 +94,31 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             ActivityButton(
               tooltip: '''
 
-              Tap to build the $type cluster model using the parameter
-              values that you can set here.
+              Tap to build a $type cluster model using the parameter values that
+              are set here.
               
               ''',
               onPressed: () async {
+                // Identify the R scripts to run for the vcarious choices of
+                // cluster analysis.
+
                 String mt = 'model_template';
                 String km = 'model_build_cluster_kmeans';
                 String ew = 'model_build_cluster_ewkm';
-
-                await rSource(context, ref, ['model_template']);
+                String hi = 'model_build_cluster_hierarchical';
+                String bi = 'model_build_cluster_bicluster';
 
                 if (type == 'KMeans') {
                   if (context.mounted) await rSource(context, ref, [mt, km]);
                 } else if (type == 'Ewkm') {
                   if (context.mounted) await rSource(context, ref, [mt, ew]);
+                } else if (type == 'Hierarchical') {
+                  if (context.mounted) await rSource(context, ref, [mt, hi]);
+                } else if (type == 'BiCluster') {
+                  if (context.mounted) await rSource(context, ref, [mt, bi]);
                 }
 
-                ref.read(clusterPageControllerProvider).animateToPage(
+                await ref.read(clusterPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
                       duration: const Duration(milliseconds: 300),
@@ -139,10 +145,27 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 setState(() {
                   if (chosen != null) {
                     type = chosen;
-                    ref.read(clusterTypeProvider.notifier).state = chosen;
+                    ref.read(typeClusterProvider.notifier).state = chosen;
                   }
                 });
               },
+            ),
+            configWidgetSpace,
+            LabelledCheckbox(
+              key: const Key('re_scale'),
+              tooltip: '''
+
+              Distance based cluster analysis is heavily affected by variables
+              with larger magnitudes (like salary, e.g., 45,000 and 50,000 has a
+              distance of 5,000) compared to those with smaller magnitudes (like
+              age, e.g., 45 and 50 has a distance of 5). We enable Re-Scaling by
+              default to avoid this issue on distance based clustering by
+              rescaling all values to be between 0 and 1.
+
+              ''',
+              label: 'Re-Scale',
+              enabled: type != 'Hierarchical',
+              provider: reScaleClusterProvider,
             ),
           ],
         ),

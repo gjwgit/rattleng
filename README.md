@@ -75,12 +75,12 @@ Then:
   of the saved script file).
 + From your own command line run `Rscript script.R`
 
-Currently implemented features as of version 6.2.18:
+Currently implemented features as of version 6.3.9 (2024-10-18):
 
 + Dataset
-  + CSV
   + Demo
-  + Glimpse
+  + CSV
+  + TXT
   + Roles
 + Explore
   + Summary
@@ -95,8 +95,10 @@ Currently implemented features as of version 6.2.18:
   + Cleanup
 + Model
   + Cluster
+  + Neural
   + Tree
   + Forest
+  + Boost
   + Word Cloud
 + Console
 + Script

@@ -84,6 +84,8 @@ pkgs <- c(
   'NeuralNetTools',
   'VIM',
   'ada',
+  'amap',
+  'biclust',
   'corrplot',
   'descr',
   'fBasics',

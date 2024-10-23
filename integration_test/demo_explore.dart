@@ -1,6 +1,6 @@
 /// Explore tab Demo dataset.
 //
-// Time-stamp: <Monday 2024-10-14 13:35:58 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-10-19 11:03:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -133,15 +133,19 @@ void main() {
 
       await tester.pump(interact);
 
-      // Find the text containing "365" as the number of rows.
+      // Find the text containing "365" as the number of rows. 20241019 gjw
+      // There should now be two of them, one in the DISPLAY and now another in
+      // the STATUS BAR.
 
       final rowsFinder = find.textContaining('365');
-      expect(rowsFinder, findsOneWidget);
+      expect(rowsFinder, findsNWidgets(2));
 
-      // Find the text containing "21" as the number of columns.
+      // Find the text containing "21" as the number of columns. 20241019 gjw
+      // There should now be two of them, one in the DISPLAY and now another in
+      // the STATUS BAR.
 
       final columnsFinder = find.textContaining('21');
-      expect(columnsFinder, findsOneWidget);
+      expect(columnsFinder, findsNWidgets(2));
 
       // Tap the right arrow button to go to "Kurtosis and Skewness" page.
 
