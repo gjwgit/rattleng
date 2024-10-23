@@ -33,6 +33,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 
 /// The SUMMARY tab config currently consists of just a BUILD button.
 ///
@@ -72,15 +73,13 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               child: const Text('Generate Dataset Summary'),
             ),
             configWidgetSpace,
-            Checkbox(
-              value: crossTabSummary,
-              onChanged: (value) {
-                // Update the state of the checkbox.
-
-                ref.read(crossTabSummaryProvider.notifier).state =
-                    value ?? false;
-              },
+            LabelledCheckbox(
+              label: 'Cross Tab Summary',
+              tooltip: 'Enable or disable cross-tab summary',
+              provider: crossTabSummaryProvider,
+              enabled: true,
             ),
+
             const Text('Include Cross Tab'),
           ],
         ),
