@@ -1,8 +1,8 @@
-/// Test kmeans() cluster analysis with demo dataset.
+/// Test bicluster() cluster analysis with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 13:32:25 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Zheyuan Xu
 
 library;
 
@@ -33,10 +33,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/cluster/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/model.dart';
-import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_demo_dataset.dart';
@@ -45,7 +43,7 @@ import 'utils/press_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Cluster KMeans:', () {
+  group('Demo Model BiCluster:', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -66,6 +64,18 @@ void main() {
 
       await tester.pump(interact);
 
+      // Find the ChoiceChipTip widget for BiCluster type.
+
+      final biclusterChip = find.text(
+        'BiCluster',
+      );
+
+      // Tap the BiCluster chip to switch type.
+
+      await tester.tap(biclusterChip);
+
+      await tester.pumpAndSettle();
+
       await pressButton(tester, 'Build Clustering');
 
       await tester.pump(delay);
@@ -76,28 +86,8 @@ void main() {
 
       // Find the text containing the number of default clusters.
 
-      final dataFinder =
-          find.textContaining("built using 'kmeans' with 10 clusters");
+      final dataFinder = find.textContaining('Cluster Means:');
       expect(dataFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
-      expect(imagePageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
 
       await tester.pump(interact);
     });

@@ -29,26 +29,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
+import 'package:rattle/utils/image_exists.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/text_page.dart';
+
+/// Cluster R package prefix URL.
+
+String clusterPrefix = 'https://www.rdocumentation.org/packages/';
 
 /// Define a mapping from type to function name and URL.
 
 final Map<String, Map<String, String>> clusterMethods = {
   'KMeans': {
     'functionName': 'kmeans',
-    'functionUrl':
-        'https://www.rdocumentation.org/packages/stats/topics/kmeans',
+    'package': 'stats',
   },
   'Ewkm': {
     'functionName': 'ewkm',
-    'functionUrl':
-        'https://www.rdocumentation.org/packages/wskm/versions/1.4.40/topics/ewkm',
+    'package': 'wskm',
+  },
+  'Hierarchical': {
+    'functionName': 'hclust',
+    'package': 'stats',
+  },
+  'BiCluster': {
+    'functionName': 'biclust',
+    'package': 'biclust',
   },
 };
 
@@ -68,20 +81,21 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       clusterPageControllerProvider,
     ); // Get the PageController from Riverpod
 
-    String type = ref.read(clusterTypeProvider.notifier).state;
+    String type = ref.read(typeClusterProvider.notifier).state;
 
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [showMarkdownFile(clusterIntroFile, context)];
 
+    // Retrieve the function name and URL from the mapping.
+
+    String functionName = clusterMethods[type]!['functionName']!;
+    String functionPackage = clusterMethods[type]!['package']!;
+    String functionUrl = '$clusterPrefix$functionPackage/topics/$functionName';
+
     if (clusterMethods.containsKey(type)) {
       String content = rExtractCluster(stdout, ref);
       if (content.isNotEmpty) {
-        // Retrieve the function name and URL from the mapping.
-
-        String functionName = clusterMethods[type]!['functionName']!;
-        String functionUrl = clusterMethods[type]!['functionUrl']!;
-
         pages.add(
           TextPage(
             title: '''
@@ -89,10 +103,53 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
             # Cluster Analysis
 
             Built using
-            [stats::$functionName()]($functionUrl).
+            [$functionPackage::$functionName()]($functionUrl).
 
             ''',
             content: '\n$content',
+          ),
+        );
+      }
+    }
+
+    String discriminantImage = type == 'KMeans'
+        ? '$tempDir/model_cluster_discriminant.svg'
+        : type == 'Ewkm'
+            ? '$tempDir/model_cluster_ewkm.svg'
+            : type == 'Hierarchical'
+                ? '$tempDir/model_cluster_hierarchical.svg'
+                : '';
+
+    if (imageExists(discriminantImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Cluster Analysis - Visual
+
+          Visit
+          [$functionPackage::$functionName()]($functionUrl).
+
+          ''',
+          path: discriminantImage,
+        ),
+      );
+    }
+
+    if (type == 'Ewkm') {
+      String weightImage = '$tempDir/model_cluster_ewkm_weights.svg';
+      if (imageExists(weightImage)) {
+        pages.add(
+          ImagePage(
+            title: '''
+
+          # Cluster Analysis - Visual
+
+          Visit
+          [$functionPackage::$functionName()]($functionUrl).
+
+          ''',
+            path: weightImage,
           ),
         );
       }

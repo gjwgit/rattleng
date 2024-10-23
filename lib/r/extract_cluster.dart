@@ -26,8 +26,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/cluster_number.dart';
-import 'package:rattle/providers/cluster_type.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
@@ -39,19 +38,26 @@ String _basicTemplate(
 
   // First some strings to put into the output.
 
-  int clusterNum = ref.read(clusterNumberProvider.notifier).state;
+  int clusterNum = ref.read(numberClusterProvider.notifier).state;
 
   String hd;
   String md;
 
-  String type = ref.read(clusterTypeProvider.notifier).state;
+  String type = ref.read(typeClusterProvider.notifier).state;
+  type = type.toLowerCase();
 
-  if (type == 'KMeans') {
+  if (type == 'kmeans') {
     hd = 'Summary of the KMeans Cluster Analysis';
     md = "(built using 'kmeans' with ${clusterNum.toString()} clusters):";
-  } else if (type == 'Ewkm') {
+  } else if (type == 'ewkm') {
     hd = 'Summary of the Ewkm Cluster Analysis';
     md = "(built using 'ewkm' with ${clusterNum.toString()} clusters):";
+  } else if (type == 'hierarchical') {
+    hd = 'Summary of the Hierarchical Cluster Analysis';
+    md = "(built using 'Hierarchical'):";
+  } else if (type == 'bicluster') {
+    hd = 'Summary of the Bi-Cluster Analysis';
+    md = "(built using 'BiCluster'):";
   } else {
     // Handle other types or return an empty result.
 
@@ -62,16 +68,26 @@ String _basicTemplate(
 
   String sz = '', cm = '', cn = '', ss = '';
 
-  if (type == 'KMeans') {
+  if (type == 'kmeans') {
     sz = rExtract(log, '> print(paste(model_kmeans');
     cm = rExtract(log, '> print(colMeans');
     cn = rExtract(log, '> print(model_kmeans\$centers');
     ss = rExtract(log, '> print(model_kmeans\$withinss)');
-  } else if (type == 'Ewkm') {
+  } else if (type == 'ewkm') {
     sz = rExtract(log, "> print(paste(model_ewkm\$size, collapse = ' '))");
     cm = rExtract(log, '> print(colMeans(data_for_clustering))');
     cn = rExtract(log, '> print(model_ewkm\$centers)');
     ss = rExtract(log, '> print(model_ewkm\$withinss)');
+  } else if (type == 'hierarchical') {
+    sz = rExtract(log, '> print(cluster_sizes)');
+    cm = rExtract(log, '> print(data_means)');
+    cn = rExtract(log, '> print(cluster_centers)');
+    ss = rExtract(log, '> print(withinss)');
+  } else if (type == 'bicluster') {
+    sz = rExtract(log, '> print(cluster_sizes)');
+    cm = rExtract(log, '> print(cluster_means)');
+    cn = rExtract(log, '> print(col_clusters)');
+    ss = rExtract(log, '> print(withinss)');
   }
 
   // Obtain the current timestamp.

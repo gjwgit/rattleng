@@ -8,6 +8,15 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Deploy CLUSTER visualisations [6.3.14 20241023 zy]
++ Reduce default image size to fit page [6.3.13 20241023 zy]
++ Support PDF popup and improve PDF SAVE [6.3.12 20241023 kev gjw]
++ Utilise the Table widget for ROLES [6.3.11 20241023 kev]
++ Implement all CLUSTER methods [6.3.10 20241022 zy]
++ Add SAVE button for TextPage widgets [6.3.10 20241022 kev]
++ ROLES and status bar data size updates [6.3.9 20241018 gjw kev]
++ Fix a Windows json parse exception [6.3.8 20241017 gjw]
++ Add hierarchical cluster plus app tuning [6.3.7 20241017 zy] 
 + Add neuralnet() support [6.3.6 20241016 zy]
 + Unify config styles [6.3.5 20241015 gjw]
 + Implement Boost. Cleanup and review and bug fixes [6.3.4 20241013]
