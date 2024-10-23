@@ -261,6 +261,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
             configWidgetSpace,
             LabelledCheckbox(
+              key: const Key('Neural Ignore Categoric'),
               tooltip: '''
 
               Build the model ignoring the categoric variables.
