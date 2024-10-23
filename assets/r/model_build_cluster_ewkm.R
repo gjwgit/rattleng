@@ -92,3 +92,33 @@ print(model_ewkm$centers)
 # Within-cluster sum of squares:
 
 print(model_ewkm$withinss)
+
+cat("\n")
+
+# Plot the first two principal components, which serve as discriminant coordinates.
+
+svg("TEMPDIR/model_cluster_ewkm.svg")
+
+# Generate a discriminant coordinates plot.
+
+# Convert tds to a matrix if it's not already.
+
+tds_matrix <- as.matrix(tds)
+
+# Generate the clusplot.
+
+cluster::clusplot(tds_matrix, model_ewkm$cluster, color=TRUE, shade=TRUE,
+                  labels=2, lines=0, main='Discriminant Coordinates Plot')
+
+dev.off()
+
+svg("TEMPDIR/model_cluster_ewkm_weights.svg")
+
+
+# Create a bar plot of cluster weights.
+
+plot(levelplot(model_ewkm))
+
+# Close the SVG device for the weights plot.
+
+dev.off()

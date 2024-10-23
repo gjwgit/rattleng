@@ -33,8 +33,10 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/cluster/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/model.dart';
+import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_demo_dataset.dart';
@@ -77,6 +79,25 @@ void main() {
       final dataFinder =
           find.textContaining("built using 'kmeans' with 10 clusters");
       expect(dataFinder, findsOneWidget);
+
+      await tester.pump(interact);
+
+      await gotoNextPage(tester);
+
+      await tester.pump(interact);
+
+      await gotoNextPage(tester);
+
+      await tester.pump(interact);
+
+      final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
+      expect(imagePageTitleFinder, findsOneWidget);
+
+      final imageFinder = find.byType(ImagePage);
+
+      // Assert that the image is present.
+
+      expect(imageFinder, findsOneWidget);
 
       await tester.pump(interact);
     });
