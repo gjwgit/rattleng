@@ -36,15 +36,6 @@ tds <- ds[tr, vars]
 
 tds <- tds[complete.cases(tds), ]
 
-# Identify predictor variables (excluding the target variable).
-
-predictor_vars <- setdiff(vars, target)
-
-# Identify categorical and numerical predictor variables.
-
-categorical_vars <- names(Filter(function(col) is.factor(col) || is.character(col), tds[predictor_vars]))
-numerical_vars <- setdiff(predictor_vars, categorical_vars)
-
 # One-Hot Encode Categorical Predictor Variables.
 
 if (length(categorical_vars) > 0) {

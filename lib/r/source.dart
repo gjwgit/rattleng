@@ -119,6 +119,7 @@ Future<void> rSource(
   bool includingMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
   bool nnetSkip = ref.read(skipNeuralProvider);
+  bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
@@ -389,6 +390,10 @@ Future<void> rSource(
   code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
   code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
   code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
+  code = code.replaceAll(
+    'NEURAL_IGNORE_CATEGORIC',
+    neuralIgnoreCategoric.toString().toUpperCase(),
+  );
 
   ////////////////////////////////////////////////////////////////////////
 
