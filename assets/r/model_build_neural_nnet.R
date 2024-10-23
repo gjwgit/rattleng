@@ -34,11 +34,19 @@ library(NeuralNetTools)  # For neural network plotting
 mtype <- "neuralnet"
 mdesc <- "Neural Network"
 
+# Conditional logic to handle categorical variables based on 'neural_ignore_categoric'.
+
+if (neural_ignore_categoric) {
+  model_data <- ds[tr, neural_ignore_categoric]  
+} else {
+  model_data <- ds[tr, vars]  
+}
+
 # Train a Neural Network model using nnet.
 
 model_nn <- nnet(
   form,
-  data = ds[tr, vars],
+  data = model_data,
   size = NNET_HIDDEN_LAYERS,        # Number of units in the hidden layer
   skip=TRUE,
   MaxNWts=NEURAL_MAX_NWTS,
