@@ -1,4 +1,4 @@
-/// Test nnet() with numeric demo dataset.
+/// Test neuralnet() with numeric demo dataset.
 //
 // Time-stamp: <Sunday 2024-10-13 15:00:27 +1100 Graham Williams>
 //
@@ -41,15 +41,6 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_demo_dataset.dart';
-
-// List of specific variables that should have their role set to 'Ignore' in
-// demo dataset. These are factors/chars and don't play well with nnet.
-
-final List<String> demoVariablesToIgnore = [
-  'wind_gust_dir',
-  'wind_dir_9am',
-  'wind_dir_3pm',
-];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
