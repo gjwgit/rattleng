@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-10-23 15:14:37 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-23 15:17:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -230,66 +230,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
-  // Build headline for the dataset summary.
-
-  Widget _buildHeadline() {
-    return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Expanded(
-            child: Text(
-              'Variable',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-          ),
-          Expanded(
-            flex: typeFlex,
-            child: const Text(
-              '      Role',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-          ),
-          const Expanded(
-            child: Text(
-              'Type',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-          ),
-          const Expanded(
-            child: Text(
-              'Unique',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.right,
-            ),
-          ),
-          const Expanded(
-            child: Text(
-              'Missing',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.right,
-            ),
-          ),
-          Expanded(
-            flex: contentFlex,
-            child: const Text(
-              '      Sample',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
   // Build data line for each variable, including the table header if specified.
 
-  Widget _buildDataTable(VariableInfo variable, Map<String, Role> currentRoles,
-      {bool showHeader = false}) {
+  Widget _buildDataTable(
+    VariableInfo variable,
+    Map<String, Role> currentRoles, {
+    bool showHeader = false,
+  }) {
     // Truncate the content to fit one line. The text could wrap over two
     // lines and so show more of the data, but our point here is more to
     // have a reminder of the data to assist in deciding on the ROLE of each
@@ -482,7 +429,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             elevation: 2.0,
             selected: remap(currentRoles[columnName]!, choice),
             onSelected: (bool selected) => _handleRoleSelection(
-                selected, choice, columnName, currentRoles),
+              selected,
+              choice,
+              columnName,
+              currentRoles,
+            ),
           );
         }).toList(),
       ),
