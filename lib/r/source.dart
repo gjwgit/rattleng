@@ -437,8 +437,9 @@ Future<void> rSource(
 
   // EXPLORE
 
-  code =
-      code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
+  // code =
+  //     code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('SUMMARY_CROSS_TAB', 'TRUE');
 
   ////////////////////////////////////////////////////////////////////////
 
