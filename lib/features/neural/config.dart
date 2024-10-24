@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-24 17:16:51 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-24 17:21:07 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -274,10 +274,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                     tooltip: '''
 
-                    The Hidden Layer parameter here is used as the size
-                    parameter in the nnet() model call which specifies the
-                    number of units (neurons) in the single hidden layer of the
-                    neural network.
+                    The Hidden Layer parameter is used as the size parameter in
+                    the nnet() model which specifies the number of units
+                    (neurons) in the single hidden layer of the neural
+                    network. It is a simple integer.
               
                     ''',
                     inputFormatter:
@@ -291,10 +291,12 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     label: 'Hidden Layers',
                     tooltip: '''
 
-                    The Hidden Layers parameter here is a vector of comma
-                    separated integers specifying the number of hidden neurons
-                    (vertices) in each of the layers. The number of layers is
-                    the number of integers supplied.
+                    The Hidden Layers parameter is a vector of comma separated
+                    integers specifying the number of hidden neurons (vertices)
+                    in each of the layers. The number of layers is the number of
+                    integers supplied. For example, to specify a network
+                    architecture with 10 neurons in the first layer, 5 int he
+                    next, and 2 in the penultimate layer, we specify "10,5,2".
 
                     ''',
                     validator: validateVector,
