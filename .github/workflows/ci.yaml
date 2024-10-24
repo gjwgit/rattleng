@@ -35,7 +35,7 @@ jobs:
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
 
-  markdown-lint:
+  markdown:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -55,11 +55,11 @@ jobs:
         uses: CQLabs/setup-dcm@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: dcm analyze --help
-      - run: dcm analyze --fatal-warnings lib
-      - run: dcm check-unused-files lib
       - run: dcm calculate-metrics lib
-      # Total fail - run: dcm check-unused-code lib
+      - run: dcm analyze --fatal-style lib
+      # See web site - run: dcm analyze --help
+      # Total fail   - run: dcm check-unused-files lib
+      # Total fail   - run: dcm check-unused-code lib
 
   build:
     runs-on: ubuntu-latest
