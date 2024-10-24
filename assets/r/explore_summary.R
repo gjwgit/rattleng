@@ -1,11 +1,11 @@
-# Rattle Scripts: For dataset ds generate summary statistics.
+# Generate summary statistics for the dataset.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 16:54:20 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-10-12 20:40:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,8 @@
 #
 # Author: Graham Williams
 
-# Summary of a Dataset
+# Various summaries that are provided by R and different pacakges are
+# generated to obtain some insight into the dataset we are looking at.
 #
 # TIMESTAMP
 #
@@ -33,8 +34,8 @@
 # @williams:2017:essentials
 # https://survivor.togaware.com/datascience/ for further details.
 
+library(descr)
 library(skimr)
-library(timeDate)
 
 # SkimR presents a nice summary of the dataset
 
@@ -68,13 +69,16 @@ timeDate::kurtosis(ds[numc], na.rm=TRUE)
 timeDate::skewness(ds[numc], na.rm=TRUE)
 
 # Generate cross tabulations for categoric data. 20240815 gjw This is
-# too costly, and memory hungry, for a 20,000 observation dataset so
-# drop for now.
+# qite costly, and memory hungry, for a 20,000 observation dataset so
+# by default we do not build the cross tabulation. 
 
-## for (i in catc) { 
-##   cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target)) 
-##   print(descr::CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS")) 
-##   cat(paste(rep("=", 70), collapse=""), "
+if (SUMMARY_CROSS_TAB) {
+  for (i in catc) {
+    cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target))
+    print(descr::CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS"))
+    cat(paste(rep("=", 70), collapse=""), "\n")
+  }
+} else {
+  cat("\n") 
+}
 
-## ") 
-## }
