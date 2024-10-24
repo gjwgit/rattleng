@@ -26,4 +26,3 @@ network. Make your choice, specify the layers and other parameters,
 and then **build** the network. The resulting pages will provide a
 textual summary and a visual summary of the networks, and a measure of
 their performance on the tuning dataset.
-
