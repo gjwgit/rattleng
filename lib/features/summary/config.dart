@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-24 14:45:47 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-24 15:38:15 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -51,7 +51,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   Widget build(BuildContext context) {
     // Get the state of the "Include Cross Tab" checkbox from the provider.
 
-    final crossTabSummary = ref.watch(crossTabSummaryProvider);
+    ref.watch(crossTabSummaryProvider);
 
     return Column(
       children: [
