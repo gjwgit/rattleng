@@ -11,6 +11,9 @@ on:
     branches:
       - dev
 
+env:
+  FLUTTER_VERSION: '3.24.3'
+
 jobs:
 
   ########################################################################
@@ -38,7 +41,7 @@ jobs:
         with:
           channel: stable
           architecture: x64
-          flutter-version: 3.24.3
+          flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Confirm Flutter Version
         run: flutter --version
@@ -86,7 +89,7 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
-          flutter-version: '3.24.3'
+          flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Install Project Dependencies
         run: flutter pub get
@@ -129,7 +132,7 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
-          flutter-version: '3.24.3'
+          flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Install project dependencies
         run: flutter pub get
@@ -171,7 +174,7 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
-          flutter-version: '3.24.3'
+          flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Install Project Dependencies
         run: flutter pub get
