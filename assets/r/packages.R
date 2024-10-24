@@ -86,6 +86,7 @@ pkgs <- c(
   'ada',
   'amap',
   'arules',
+  'arulesViz',
   'biclust',
   'corrplot',
   'descr',
