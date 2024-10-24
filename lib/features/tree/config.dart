@@ -252,6 +252,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 label: 'Include Missing',
                 provider: treeIncludeMissingProvider,
               ),
+              configWidgetSpace,
+              Text('Target: ${getTarget(ref)}'),
             ],
           ),
           configRowSpace,
