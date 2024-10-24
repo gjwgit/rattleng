@@ -1,6 +1,6 @@
-# Rattle Scripts: From dataset ds build a random forest model.
+# Rattle Scripts: From dataset ds build an association model.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -22,9 +22,9 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Zheyuan Xu
 
-# Random Forest using randomForest()
+# Association using arules()
 #
 # TIMESTAMP
 #
@@ -33,65 +33,49 @@
 # @williams:2017:essentials Chapter 8.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
+library(arules) 
 
-library(randomForest) # ML: randomForest() na.roughfix() for missing data.
+# Model type and description.
 
-mtype <- "randomForest"
-mdesc <- "Forest"
-
-# Typically we use na.roughfix() for na.action.
+mtype <- "arules"
+mdesc <- "Association Rules"
 
 tds <- ds[tr, vars]
 
-model_randomForest <- randomForest(
-  form,
-  data=tds, 
-  ntree=RF_NUM_TREES,
-  mtry=RF_MTRY,
-  importance=TRUE,
-  na.action=RF_NA_ACTION,
-  replace=FALSE)
+# Generate transactions from the dataset.
 
-# Generate textual output of the 'Random Forest' model.
+transactions <- as(tds, "transactions")
 
-print(model_randomForest)
+# Build the association model using the Apriori algorithm.
 
-# The `pROC' package implements various AUC functions.
+model_arules <- apriori(
+  data = transactions,
+  parameter = list(support = 0.1, confidence = 0.1, minlen = 2)
+)
 
-# Calculate the Area Under the Curve (AUC).
+# Generate textual output of the 'Association Rules' model.
 
-print(pROC::roc(model_randomForest$y,
-                as.numeric(model_randomForest$predicted)))
+print(summary(model_arules))
 
-# Calculate the AUC Confidence Interval.
+# List the generated rules, sorted by support.
 
-print(pROC::ci.auc(model_randomForest$y, as.numeric(model_randomForest$predicted)))
+inspect(sort(model_arules, by = "support"))
 
-# List the importance of the variables.
+# Calculate interesting measures for the rules.
 
-rn <- round(randomForest::importance(model_randomForest), 2)
-rn[order(rn[,3], decreasing=TRUE),]
+interest_measures <- interestMeasure(
+  sort(model_arules, by = "support"),
+  measure = c("chiSquare", "lift", "confidence", "leverage", "oddsRatio", "phi"),
+  transactions = transactions,
+)
 
-# Plot the relative importance of the variables.
+print(interest_measures)
 
-svg("TEMPDIR/model_random_forest_varimp.svg")
-ggVarImp(model_randomForest,
-         n=nrow(tds), # Bug fix for head(tds,n) with n=NULL - needs fixing in rattle.
-         title="Variable Importance Random Forest weather.csv")
+# Plot the relative importance of the rules using arulesViz.
+
+library(arulesViz)
+
+svg("TEMPDIR/model_arules_rules_plot.svg")
+
+plot(model_arules, method = "graph", control = list(type = "items"))
 dev.off()
-
-# p <- ggVarImp(crs$rf,
-#              title="Variable Importance Random Forest weather.csv")
-# p
-
-# Plot the error rate against the number of trees.
-
-## plot(crs$rf, main="")
-## legend("topright", c("OOB", "No", "Yes"), text.col=1:6, lty=1:3, col=1:3)
-## title(main="Error Rates Random Forest weather.csv",
-##     sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
-
-# Display tree number 1.
-
-printRandomForests(model_randomForest, 1)
