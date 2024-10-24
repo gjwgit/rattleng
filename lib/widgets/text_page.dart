@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Wednesday 2024-10-23 16:50:33 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-10-25 08:27:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -173,13 +173,10 @@ class TextPage extends StatelessWidget {
 
         Match? match = regExp.firstMatch(line);
 
-        if (match != null) {
-          return match.group(1)?.trim() ?? '';
-        } else {
-          return '';
-        }
+        return match != null ? match.group(1)?.trim() ?? '' : '';
       }
     }
+
     return '';
   }
 
@@ -217,6 +214,7 @@ class TextPage extends StatelessWidget {
     fin = fin.replaceAllMapped(regExp, (Match match) {
       String text = match.group(1)!; // XXXXX
       // String link = match.group(2)!; // YYYY
+
       return text;
     });
 
