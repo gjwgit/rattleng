@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-12 21:00:42 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-24 15:38:15 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -51,7 +51,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
   Widget build(BuildContext context) {
     // Get the state of the "Include Cross Tab" checkbox from the provider.
 
-    final crossTabSummary = ref.watch(crossTabSummaryProvider);
+    ref.watch(crossTabSummaryProvider);
 
     return Column(
       children: [
@@ -75,7 +75,14 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             configWidgetSpace,
             LabelledCheckbox(
               label: 'Include Cross Tab',
-              tooltip: 'Enable or disable cross-tab summary',
+              tooltip: '''
+
+              Enable the generation of a cross-tabulation summary. Note that
+              this can be quite time consuming and using considerable amount of
+              memory. By default the option is disabled. Enable it here to
+              obtain the cross tabulation summary.
+
+              ''',
               provider: crossTabSummaryProvider,
               enabled: true,
             ),
