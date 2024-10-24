@@ -193,6 +193,7 @@ jobs:
         with:
           type: 'zip'
           directory: build/macos/Build/Products/Release
+          path: rattle.app
           filename: rattle-${{github.ref_name}}-macos.zip
 
       - name: Review Bundle Contents
