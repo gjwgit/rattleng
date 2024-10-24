@@ -55,7 +55,10 @@ jobs:
         uses: CQLabs/setup-dcm@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: dcm analyze lib
+      - run: dcm analyze --help
+      - run: dcm analyze --fatal-warnings lib
+      - run: dcm check-unused-files lib
+      - run: dcm calculate-metrics lib
       # Total fail - run: dcm check-unused-code lib
 
   build:
