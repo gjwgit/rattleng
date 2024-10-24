@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-10-20 17:09:23 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-24 17:16:51 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -236,8 +236,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('NNET Trace'),
               tooltip: '''
 
-              Enable tracing optimization for the single layer neural
-              network. The prediction error is provided after every 10 training
+              Enable tracing optimization for the **single layer neural
+              network**. The prediction error is provided after every 10 training
               iterations in the Console.
 
               ''',
@@ -251,8 +251,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             LabelledCheckbox(
               tooltip: '''
 
-              Add skip-layer connections from input to output for the single
-              layer neural network.
+              Add skip-layer connections from input to output for the **single
+              layer neural network**.
 
               ''',
               label: 'Skip',
