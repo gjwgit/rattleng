@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The ASSOCIATION tab config currently consists of just an ACTIVITY button.
@@ -60,8 +60,12 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              onPressed: () async {
+                await rSource(
+                  context,
+                  ref,
+                  ['model_template', 'model_build_association'],
+                );
               },
               child: const Text('Build Association Rules'),
             ),
