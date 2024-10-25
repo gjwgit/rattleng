@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -86,6 +87,7 @@ import 'package:rattle/utils/update_script.dart';
 /// rattleNG. So decided to remove the angle brackets. The scripts still can not
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
+///
 
 Future<void> rSource(
   BuildContext context,
@@ -212,6 +214,19 @@ Future<void> rSource(
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
 
   code = code.replaceAll('MAXFACTOR', '20');
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // BOOST
+
+  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
+  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
+  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
+  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
+  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
+  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
+  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
+  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -423,6 +438,17 @@ Future<void> rSource(
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // read the boolean value from the provider.
+
+  bool includeCrossTab = ref.watch(crossTabSummaryProvider);
+
+  // Cross tabulation summary.
+
+  code =
+      code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 
