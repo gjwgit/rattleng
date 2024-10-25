@@ -57,20 +57,6 @@ model_arules <- apriori(
 
 print(summary(model_arules))
 
-# List the generated rules, sorted by support.
-
-inspect(sort(model_arules, by = "support"))
-
-# Calculate interesting measures for the rules.
-
-interest_measures <- interestMeasure(
-  sort(model_arules, by = "support"),
-  measure = c("chiSquare", "lift", "confidence", "leverage", "oddsRatio", "phi"),
-  transactions = transactions,
-)
-
-print(interest_measures)
-
 # Plot the relative importance of the rules using arulesViz.
 
 library(arulesViz)
