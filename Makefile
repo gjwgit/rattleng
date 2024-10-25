@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2024-10-24 05:25:22 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-10-24 08:14:35 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -59,10 +59,9 @@ endif
 define HELP
 $(APP):
 
-  rtest       Run the R script tests.
+  ginstall	After a github build download bundles and upload to togaware.com
 
-  local	     Install to $(HOME)/.local/share/$(APP)
-    tgz	     Upload the installer to access.togaware.com
+  rtest       	Run the R script tests.
 
 endef
 export HELP
@@ -104,13 +103,8 @@ rattle.zip:
 
 OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 
-# Linux: Install locally.
-
-local: tgz
-	sudo tar zxvf installers/$(APP).tar.gz -C /opt/
-
-# A ginstall of the built bundles from github, installed to
-# solidcommunity.au and moved into ARCHIVE.
+# 20241024 gjw A ginstall of the built bundles from github, installed
+# to togaware.com and moved into ARCHIVE.
 
 ginstall:
 	(cd installers; make $@)

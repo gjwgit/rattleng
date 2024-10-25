@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-10-07 06:38:07 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-24 15:38:15 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,10 +27,13 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:rattle/providers/page_controller.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 
 /// The SUMMARY tab config currently consists of just a BUILD button.
 ///
@@ -46,27 +49,42 @@ class SummaryConfig extends ConsumerStatefulWidget {
 class SummaryConfigState extends ConsumerState<SummaryConfig> {
   @override
   Widget build(BuildContext context) {
+    // Get the state of the "Include Cross Tab" checkbox from the provider.
+
+    ref.watch(crossTabSummaryProvider);
+
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
-
+        configTopSpace,
         Row(
           children: [
-            // Space to the left of the configs.
-
-            const SizedBox(width: 5),
-
-            // The BUILD button.
-
+            configLeftSpace,
+            // The "Generate Dataset Summary" button.
             ActivityButton(
-              pageControllerProvider:
-                  summaryPageControllerProvider, // Optional navigation
+              tooltip: '''
+
+              Tap to request R to generate a few summaries of the dataset.
+
+              ''',
+              pageControllerProvider: summaryPageControllerProvider,
               onPressed: () {
                 rSource(context, ref, ['explore_summary']);
               },
               child: const Text('Generate Dataset Summary'),
+            ),
+            configWidgetSpace,
+            LabelledCheckbox(
+              label: 'Include Cross Tab',
+              tooltip: '''
+
+              Enable the generation of a cross-tabulation summary. Note that
+              this can be quite time consuming and using considerable amount of
+              memory. By default the option is disabled. Enable it here to
+              obtain the cross tabulation summary.
+
+              ''',
+              provider: crossTabSummaryProvider,
+              enabled: true,
             ),
           ],
         ),
