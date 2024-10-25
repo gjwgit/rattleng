@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Wednesday 2024-10-23 16:50:33 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-10-25 08:27:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -173,13 +173,10 @@ class TextPage extends StatelessWidget {
 
         Match? match = regExp.firstMatch(line);
 
-        if (match != null) {
-          return match.group(1)?.trim() ?? '';
-        } else {
-          return '';
-        }
+        return match != null ? match.group(1)?.trim() ?? '' : '';
       }
     }
+
     return '';
   }
 
@@ -217,13 +214,14 @@ class TextPage extends StatelessWidget {
     fin = fin.replaceAllMapped(regExp, (Match match) {
       String text = match.group(1)!; // XXXXX
       // String link = match.group(2)!; // YYYY
+
       return text;
     });
 
     return fin;
   }
 
-  // Generate the PDF document with given content.
+// Generate the PDF document with given content.
 
   Future<pw.Document> _createPdf(String content) async {
     String extractedTitle = extractTitle(title);
@@ -238,8 +236,7 @@ class TextPage extends StatelessWidget {
       await rootBundle.load('assets/fonts/OpenSans-Regular.ttf'),
     );
 
-    // A fullback font that supports the unicode block characters from the skimr
-    // output.
+    // A fallback font that supports the unicode block characters from the skimr output.
 
     final dejavu = pw.Font.ttf(
       await rootBundle.load('assets/fonts/DejaVuSans.ttf'),
@@ -254,66 +251,63 @@ class TextPage extends StatelessWidget {
     // Add the title and content to the PDF page.
 
     pdf.addPage(
-      pw.Page(
+      pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(20),
         build: (pw.Context context) {
-          return pw.Padding(
-            padding: const pw.EdgeInsets.all(20),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                // Add the title at the top of the page.
+          return [
+            // Add the title at the top of the document.
 
-                pw.Text(
-                  extractedTitle,
-                  style: pw.TextStyle(
-                    fontSize: 14,
-                    fontWeight: pw.FontWeight.bold,
-                    font: sans,
-                  ),
-                ),
-
-                // Add some space below the title.
-
-                pw.SizedBox(height: 10),
-
-                pw.Text(
-                  extractCommentary(title),
-                  style: pw.TextStyle(
-                    fontSize: 8,
-                    fontStyle: pw.FontStyle.italic,
-                    font: sans,
-                  ),
-                ),
-
-                pw.SizedBox(height: 10),
-
-                // Add the content lines.
-
-                ...lines.map((line) {
-                  return pw.Padding(
-                    padding: const pw.EdgeInsets.only(bottom: 4),
-                    child: pw.Text(
-                      line,
-                      style: pw.TextStyle(
-                        fontSize: 6,
-                        height: 1.2,
-                        font: fixed,
-                        fontFallback: [dejavu],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ],
+            pw.Text(
+              extractedTitle,
+              style: pw.TextStyle(
+                fontSize: 14,
+                fontWeight: pw.FontWeight.bold,
+                font: sans,
+              ),
             ),
-          );
+
+            pw.SizedBox(height: 10),
+
+            // Add a commentary text.
+
+            pw.Text(
+              extractCommentary(title),
+              style: pw.TextStyle(
+                fontSize: 8,
+                fontStyle: pw.FontStyle.italic,
+                font: sans,
+              ),
+            ),
+
+            pw.SizedBox(height: 10),
+
+            // Add the content lines.
+
+            pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: lines.map((line) {
+                return pw.Padding(
+                  padding: const pw.EdgeInsets.only(bottom: 4),
+                  child: pw.Text(
+                    line,
+                    style: pw.TextStyle(
+                      fontSize: 6,
+                      height: 1.2,
+                      font: fixed,
+                      fontFallback: [dejavu],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ];
         },
       ),
     );
 
     return pdf;
   }
-
 // Function to generate and open the PDF in a separate window.
 
   Future<void> _generateAndOpenPdf(BuildContext context) async {

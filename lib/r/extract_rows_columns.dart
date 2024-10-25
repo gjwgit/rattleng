@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-17 22:21:57 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-10-25 08:25:34 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -37,7 +37,7 @@ String rExtractRowsColumns(String txt) {
   // Split the string into lines.
 
   List<String> lines = txt.split('\n');
-  txt = '${lines[0]} ${lines[1]}';
+  txt = '${lines.first} ${lines[1]}';
 
   RegExp regExp = RegExp(r'[\d,]+');
   Iterable<Match> matches = regExp.allMatches(txt);
@@ -49,7 +49,7 @@ String rExtractRowsColumns(String txt) {
   String result = '';
 
   if (numbers.length >= 2) {
-    result = '${numbers[0]} x ${numbers[1]}';
+    result = '${numbers.first} x ${numbers[1]}';
   }
 
   return result;
