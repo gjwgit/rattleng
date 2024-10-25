@@ -63,5 +63,5 @@ library(arulesViz)
 
 svg("TEMPDIR/model_arules_rules_plot.svg")
 
-plot(model_arules, method = "graph", control = list(type = "items"))
+plot(model_arules, method = "graph")
 dev.off()
