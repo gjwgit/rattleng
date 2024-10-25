@@ -119,7 +119,8 @@ void main() {
         (widget) =>
             widget is SelectableText &&
             widget.data?.contains(
-                    'Neuralnet(formula = formula_nn, data = ds_final, hidden =',) ==
+                  'Neuralnet(formula = formula_nn, data = ds_final, hidden =',
+                ) ==
                 true,
       );
 
