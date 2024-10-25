@@ -77,3 +77,23 @@ if (!is.null(risk))
   ds %>% slice(tu) %>% pull(risk) -> risk_tu
   ds %>% slice(te) %>% pull(risk) -> risk_te
 }
+
+neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
+
+# Subset the training data.
+
+tds <- ds[tr, vars]
+
+# Remove rows with missing values in predictors or target variable.
+
+tds <- tds[complete.cases(tds), ]
+
+# Identify predictor variables (excluding the target variable).
+
+predictor_vars <- setdiff(vars, target)
+
+# Identify categorical and numerical predictor variables.
+
+categorical_vars <- names(Filter(function(col) is.factor(col) || is.character(col), tds[predictor_vars]))
+numerical_vars <- setdiff(predictor_vars, categorical_vars)
+ignore_categoric_vars <- c(numerical_vars, target)

@@ -259,6 +259,17 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               provider: skipNeuralProvider,
               enabled: algorithm == 'nnet',
             ),
+            configWidgetSpace,
+            LabelledCheckbox(
+              key: const Key('Neural Ignore Categoric'),
+              tooltip: '''
+
+              Build the model ignoring the categoric variables.
+
+              ''',
+              label: 'Ignore Categoric',
+              provider: ignoreCategoricNeuralProvider,
+            ),
           ],
         ),
 

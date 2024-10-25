@@ -31,6 +31,7 @@ final actionFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
 final algorithmNeuralProvider = StateProvider<String>((ref) => 'nnet');
 final errorFctNeuralProvider = StateProvider<String>((ref) => 'sse');
 final hiddenLayersNeuralProvider = StateProvider<String>((ref) => '10');
+final ignoreCategoricNeuralProvider = StateProvider<bool>((ref) => false);
 final maxitNeuralProvider = StateProvider<int>((ref) => 100);
 final hiddenLayerNeuralProvider = StateProvider<int>((ref) => 10);
 final skipNeuralProvider = StateProvider<bool>((ref) => false);
