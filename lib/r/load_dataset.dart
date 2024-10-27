@@ -81,7 +81,11 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
     // not yet run the DATA TEMPLATE as we need to first set up the ROLES. The
     // dataset template is run in `home.dart` on leaving the DATASET tab.
 
-    if (context.mounted) await rSource(context, ref, [ss, dc, dp]);
+    if (context.mounted) await rSource(context, ref, [ss]);
+    if (context.mounted) await rSource(context, ref, [dc]);
+    if (context.mounted) await rSource(context, ref, [dp]);
+
+    // if (context.mounted) await rSource(context, ref, [ss, dc, dp]);
   } else if (path.endsWith('.txt')) {
     // 20241007 gjw We can also load a text file for the word cloud
     // functionality as a stop gap toward implementing more complete text mining
