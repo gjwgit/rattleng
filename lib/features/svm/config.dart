@@ -27,6 +27,8 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/utils/get_target.dart';
 
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -65,6 +67,8 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
               },
               child: const Text('Build SVM Model'),
             ),
+            configWidgetSpace,
+            Text('Target: ${getTarget(ref)}'),
           ],
         ),
       ],
