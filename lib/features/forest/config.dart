@@ -27,9 +27,11 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The FOREST tab config currently consists of just a BUILD button.
@@ -72,6 +74,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               },
               child: const Text('Build Random Forest'),
             ),
+            configWidgetSpace,
+            Text('Target: ${getTarget(ref)}'),
           ],
         ),
       ],

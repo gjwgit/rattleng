@@ -35,6 +35,7 @@ import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
@@ -259,6 +260,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               provider: skipNeuralProvider,
               enabled: algorithm == 'nnet',
             ),
+            configWidgetSpace,
+            Text('Target: ${getTarget(ref)}'),
           ],
         ),
 
