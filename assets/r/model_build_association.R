@@ -61,7 +61,7 @@ print(summary(model_arules))
 
 library(arulesViz)
 
-svg("TEMPDIR/model_arules_rules_plot.svg")
+svg("TEMPDIR/model_arules_item_frequency.svg")
 
-plot(model_arules, method = "graph")
+itemFrequencyPlot(transactions, topN = 10, type = "relative")
 dev.off()
