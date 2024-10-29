@@ -50,7 +50,7 @@ transactions <- as(tds, "transactions")
 
 model_arules <- apriori(
   data = transactions,
-  parameter = list(support = 0.1, confidence = 0.1, minlen = 2)
+  parameter = list(support = ASSOCIATION_SUPPORT, confidence = ASSOCIATION_CONFIDENCE, minlen = ASSOCIATION_MIN_LENGTH)
 )
 
 # Generate textual output of the 'Association Rules' model.
