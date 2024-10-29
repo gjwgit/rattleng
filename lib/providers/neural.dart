@@ -1,6 +1,6 @@
 /// A provider for the parameters for neural.
 ///
-/// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-29 15:23:44 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -23,7 +23,10 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
+
+// TODO 20241029 gjw EVENTUALLY RENAME THESE TO START WITH `neural`.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-24 17:21:07 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-10-29 15:21:35 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -265,7 +265,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('Neural Ignore Categoric'),
               tooltip: '''
 
-              Build the model ignoring the categoric variables.
+              Build the model ignoring the categoric variables. Categoric
+              variables are handled by the neural net models by enumerating
+              their levels across the other variables. This can result in many
+              introduced variables.
 
               ''',
               label: 'Ignore Categoric',

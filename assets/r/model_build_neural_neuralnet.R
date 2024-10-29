@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-15 15:35:53 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-29 15:17:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -29,14 +29,19 @@ library(caret)
 library(NeuralNetTools)  # For neural network plotting
 
 # Subset the training data.
+
 if (neural_ignore_categoric) {
+
   # Only use numerical variables when ignoring categorical.
 
   vars_to_use <- numerical_vars
   tds <- ds[tr, c(numerical_vars, target)]
+
 } else {
+
   vars_to_use <- vars
   tds <- ds[tr, vars]
+
 }
 
 # Remove rows with missing values in predictors or target variable.
@@ -147,10 +152,10 @@ summary(model_neuralnet)
 
 svg("TEMPDIR/model_neuralnet.svg")
 NeuralNetTools::plotnet(model_neuralnet,
-                        cex_val=0.5,
-                        circle_cex=2,
-                        rel_rsc = c(1, 3),
-                        pos_col="orange",
-                        neg_col="grey",
-                        node_labs=TRUE)
+                        cex_val    = 0.5,
+                        circle_cex = 2,
+                        rel_rsc    = c(1, 3),
+                        pos_col    = "orange",
+                        neg_col    = "grey",
+                        node_labs  = TRUE)
 dev.off()
