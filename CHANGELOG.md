@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Support categoric ignore for neural models [6.3.16 20241029 zy]
 + Add CROSSTAB to SUMMARY with user choice [6.3.15 20241024 kev]
 + Deploy CLUSTER visualisations [6.3.14 20241023 zy]
 + Reduce default image size to fit page [6.3.13 20241023 zy]
