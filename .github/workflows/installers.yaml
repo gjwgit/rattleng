@@ -105,7 +105,7 @@ jobs:
         run: flutter build windows
 
       - name: Check the Generated Files
-        run: dir /s build\windows\x64\runner\Release\
+        run: dir D:\a\rattleng\rattleng\build\windows\x64\runner\Release\
         
       - name: Get Version from pubspec.yaml
         run: |
