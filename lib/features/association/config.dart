@@ -25,13 +25,17 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/utils/get_target.dart';
 
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/association.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/number_field.dart';
+import 'package:rattle/widgets/vector_number_field.dart';
 
 /// The ASSOCIATION tab config currently consists of just an ACTIVITY button.
 ///
@@ -45,6 +49,21 @@ class AssociationConfig extends ConsumerStatefulWidget {
 }
 
 class AssociationConfigState extends ConsumerState<AssociationConfig> {
+  final TextEditingController _supportController = TextEditingController();
+  final TextEditingController _confidenceController = TextEditingController();
+  final TextEditingController _minLengthController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose the controllers to free up resources.
+
+    _supportController.dispose();
+    _confidenceController.dispose();
+    _minLengthController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -73,6 +92,60 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             ),
             configWidgetSpace,
             Text('Target: ${getTarget(ref)}'),
+            configWidgetSpace,
+            NumberField(
+              label: 'Support:',
+              key: const Key('supportAssociationField'),
+              controller: _supportController,
+              tooltip: '''
+
+                Support measures how frequently an item or itemset appears 
+                in a dataset, indicating its ove.
+
+                ''',
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+              ),
+              validator: (value) => validateDecimal(value),
+              stateProvider: supportAssociationProvider,
+              interval: 0.005,
+              decimalPlaces: 4,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Confidence:',
+              key: const Key('confidenceAssociationField'),
+              controller: _confidenceController,
+              tooltip: '''
+
+                Confidence measures the likelihood that an item appears in transactions 
+                containing another item, indicating the strength of the rule.
+
+                ''',
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+              ),
+              validator: (value) => validateDecimal(value),
+              stateProvider: confidenceAssociationProvider,
+              interval: 0.005,
+              decimalPlaces: 4,
+            ),
+            configWidgetSpace,
+            NumberField(
+              label: 'Min Length:',
+              key: const Key('minLengthAssociationField'),
+              controller: _minLengthController,
+              tooltip: '''
+
+                Min length sets the minimum number of items in the itemsets or 
+                rules generated, controlling the complexity of the rules.
+
+                ''',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: validateVector,
+              stateProvider: minLengthAssociationProvider,
+            ),
           ],
         ),
       ],
