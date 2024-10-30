@@ -26,7 +26,9 @@ jobs:
   # is GLIBC2.30.
  
   build-linux-zip:
-    if: contains(github.event.head_commit.message, 'bump version')
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers)
     runs-on: ubuntu-20.04
 
     steps:
@@ -77,7 +79,9 @@ jobs:
   ########################################################################
 
   build-windows-inno:
-    if: contains(github.event.head_commit.message, 'bump version')
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers)
     runs-on: windows-latest
 
     steps:
@@ -120,7 +124,9 @@ jobs:
   ########################################################################
 
   build-windows-zip:
-    if: contains(github.event.head_commit.message, 'bump version')
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers)
     runs-on: windows-latest
 
     steps:
@@ -162,7 +168,9 @@ jobs:
   ########################################################################
 
   build-macos-zip:
-    if: contains(github.event.head_commit.message, 'bump version')
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers)
     runs-on: macos-latest
 
     steps:
