@@ -28,7 +28,7 @@ jobs:
   build-linux-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build X installers')
+      contains(github.event.head_commit.message, 'build installers')
     runs-on: ubuntu-20.04
 
     steps:
@@ -104,7 +104,7 @@ jobs:
       - name: Build Artifact
         run: flutter build windows
 
-      - name: Check the Generated Files
+      - name: Check the DLLs for Inclusion in the .iss script
         run: dir D:\a\rattleng\rattleng\build\windows\x64\runner\Release\
         
       - name: Get Version from pubspec.yaml
@@ -129,7 +129,7 @@ jobs:
   build-windows-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build X installers')
+      contains(github.event.head_commit.message, 'build installers')
     runs-on: windows-latest
 
     steps:
@@ -173,7 +173,7 @@ jobs:
   build-macos-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build X installers')
+      contains(github.event.head_commit.message, 'build installers')
     runs-on: macos-latest
 
     steps:
