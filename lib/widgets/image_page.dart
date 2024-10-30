@@ -116,6 +116,7 @@ class ImagePage extends StatelessWidget {
     if (byteData == null) {
       throw Exception('Failed to convert SVG to image bytes');
     }
+    
     return byteData;
   }
 
@@ -312,7 +313,8 @@ class ImagePage extends StatelessWidget {
                                   builder: (context) => AlertDialog(
                                     title: const Text('Error'),
                                     content: const Text(
-                                        'Unsupported file extension, please select a file with .svg, .pdf, or .png extension.',),
+                                      'Unsupported file extension, please select a file with .svg, .pdf, or .png extension.',
+                                    ),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(context),
