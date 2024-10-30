@@ -58,6 +58,15 @@ class ImagePage extends StatelessWidget {
     required this.path,
   });
 
+  /// Loads the image bytes from the specified file path.
+  ///
+  /// This method attempts to read the image file as bytes. It waits for the file
+  /// to exist, retrying up to 5 times with a 1-second delay between each retry.
+  /// If the file does not exist after the retries, it returns `null`.
+  ///
+  /// Returns a [Future] that completes with the image bytes as a [Uint8List] if
+  /// the file exists, or `null` if the file does not exist.
+
   Future<Uint8List?> _loadImageBytes() async {
     var imageFile = File(path);
 
@@ -77,7 +86,18 @@ class ImagePage extends StatelessWidget {
     return await imageFile.readAsBytes();
   }
 
-  Future<void> _exportToPdf(String svgPath, String pdfPath) async {
+  /// Converts an SVG file to image bytes in PNG format.
+  ///
+  /// Takes the path of the SVG file as input and returns the image bytes.
+  ///
+  /// Throws an [Exception] if the conversion fails.
+  ///
+  /// - Parameters:
+  ///   - svgPath: The file path of the SVG file.
+  ///
+  /// - Returns: A [Future] that resolves to the image bytes in PNG format.
+
+  Future<ByteData> _svgToImageBytes(String svgPath) async {
     final svgString = await File(svgPath).readAsString();
     final pictureInfo = await vg.loadPicture(
       SvgStringLoader(svgString),
@@ -90,17 +110,33 @@ class ImagePage extends StatelessWidget {
     canvas.scale(1.0, 1.0);
     pictureInfo.picture.toImage(size.width.toInt(), size.height.toInt());
 
-    final pdf = pw.Document();
     final image = await pictureInfo.picture
         .toImage(size.width.toInt(), size.height.toInt());
-    final pngBytes = await image.toByteData(format: ui.ImageByteFormat.png);
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    if (byteData == null) {
+      throw Exception('Failed to convert SVG to image bytes');
+    }
+    return byteData;
+  }
 
+  /// Exports an SVG file to a PDF file.
+  ///
+  /// Takes the path of the SVG file and the desired path for the PDF file as input.
+  ///
+  /// - Parameters:
+  ///   - svgPath: The file path of the SVG file.
+  ///   - pdfPath: The file path where the PDF file will be saved.
+
+  Future<void> _exportToPdf(String svgPath, String pdfPath) async {
+    final pngBytes = await _svgToImageBytes(svgPath);
+
+    final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) {
           return pw.Center(
             child: pw.Image(
-              pw.MemoryImage(pngBytes!.buffer.asUint8List()),
+              pw.MemoryImage(pngBytes.buffer.asUint8List()),
             ),
           );
         },
@@ -111,25 +147,19 @@ class ImagePage extends StatelessWidget {
     await file.writeAsBytes(await pdf.save());
   }
 
+  /// Exports an SVG file to a PNG file.
+  ///
+  /// Takes the path of the SVG file and the desired path for the PNG file as input.
+  ///
+  /// - Parameters:
+  ///   - svgPath: The file path of the SVG file.
+  ///   - pngPath: The file path where the PNG file will be saved.
+
   Future<void> _exportToPng(String svgPath, String pngPath) async {
-    final svgString = await File(svgPath).readAsString();
-    final pictureInfo = await vg.loadPicture(
-      SvgStringLoader(svgString),
-      null,
-    );
-
-    final recorder = ui.PictureRecorder();
-    final canvas = ui.Canvas(recorder);
-    final size = pictureInfo.size;
-    canvas.scale(1.0, 1.0);
-    pictureInfo.picture.toImage(size.width.toInt(), size.height.toInt());
-
-    final image = await pictureInfo.picture
-        .toImage(size.width.toInt(), size.height.toInt());
-    final pngBytes = await image.toByteData(format: ui.ImageByteFormat.png);
+    final pngBytes = await _svgToImageBytes(svgPath);
 
     final file = File(pngPath);
-    await file.writeAsBytes(pngBytes!.buffer.asUint8List());
+    await file.writeAsBytes(pngBytes.buffer.asUint8List());
   }
 
   @override
@@ -176,7 +206,7 @@ class ImagePage extends StatelessWidget {
                       // not getting pushed all the way to the right after
                       // adding Flexible.
                       //
-                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdow
+                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdown
                       // text overflowing to the elevarted Export
                       // button.
                       MarkdownBody(
@@ -254,65 +284,46 @@ class ImagePage extends StatelessWidget {
                         for future reference.
 
                         ''',
-                        child: PopupMenuButton<String>(
+                        child: IconButton(
                           icon: const Icon(
                             Icons.save,
                             color: Colors.blue,
                           ),
-
-                          // do not hide the message from DelayedTooltip
-
-                          tooltip: '',
-                          onSelected: (String result) async {
-                            String fileName = path.split('/').last;
-                            String? pathToSave;
-                            switch (result) {
-                              case 'SVG':
-                                pathToSave = await selectFile(
-                                  defaultFileName: fileName,
-                                  allowedExtensions: ['svg'],
+                          onPressed: () async {
+                            String defaultFileName = 'image.svg';
+                            String? pathToSave = await selectFile(
+                              defaultFileName: defaultFileName,
+                              allowedExtensions: ['svg', 'pdf', 'png'],
+                            );
+                            if (pathToSave != null) {
+                              String extension =
+                                  pathToSave.split('.').last.toLowerCase();
+                              if (extension == 'svg') {
+                                await File(path).copy(pathToSave);
+                              } else if (extension == 'pdf') {
+                                await _exportToPdf(path, pathToSave);
+                              } else if (extension == 'png') {
+                                await _exportToPng(path, pathToSave);
+                              } else {
+                                // User selected an unsupported file extension.
+                                // Show an error dialog.
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Error'),
+                                    content: const Text(
+                                        'Unsupported file extension, please select a file with .svg, .pdf, or .png extension.',),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
                                 );
-                                if (pathToSave != null) {
-                                  await File(path).copy(pathToSave);
-                                }
-                                break;
-                              case 'PDF':
-                                pathToSave = await selectFile(
-                                  defaultFileName:
-                                      fileName.replaceAll('.svg', '.pdf'),
-                                  allowedExtensions: ['pdf'],
-                                );
-                                if (pathToSave != null) {
-                                  await _exportToPdf(path, pathToSave);
-                                }
-                                break;
-                              case 'PNG':
-                                pathToSave = await selectFile(
-                                  defaultFileName:
-                                      fileName.replaceAll('.svg', '.png'),
-                                  allowedExtensions: ['png'],
-                                );
-                                if (pathToSave != null) {
-                                  await _exportToPng(path, pathToSave);
-                                }
-                                break;
+                              }
                             }
                           },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'SVG',
-                              child: Text('Save as SVG'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'PDF',
-                              child: Text('Save as PDF'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'PNG',
-                              child: Text('Save as PNG'),
-                            ),
-                          ],
                         ),
                       ),
                       const SizedBox(width: 5),
