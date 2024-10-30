@@ -261,7 +261,7 @@ class ImagePage extends StatelessWidget {
                           ),
 
                           // do not hide the message from DelayedTooltip
-                          
+
                           tooltip: '',
                           onSelected: (String result) async {
                             String fileName = path.split('/').last;
