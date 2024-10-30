@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-24 17:21:07 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-10-30 10:59:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,6 +35,7 @@ import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
@@ -259,6 +260,23 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               provider: skipNeuralProvider,
               enabled: algorithm == 'nnet',
             ),
+            configWidgetSpace,
+            LabelledCheckbox(
+              key: const Key('Neural Ignore Categoric'),
+              tooltip: '''
+
+              Build the model ignoring the categoric variables. Categoric
+              variables are handled by the neural net models by enumerating
+              their levels across the other variables. Because this can result
+              in many introduced variables we enable Ignore Categoric by
+              default.
+
+              ''',
+              label: 'Ignore Categoric',
+              provider: ignoreCategoricNeuralProvider,
+            ),
+            configWidgetSpace,
+            Text('Target: ${getTarget(ref)}'),
           ],
         ),
 

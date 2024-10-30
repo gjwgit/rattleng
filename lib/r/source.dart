@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-10-17 05:42:58 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-10-29 15:23:05 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -121,6 +121,7 @@ Future<void> rSource(
   bool includingMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
   bool nnetSkip = ref.read(skipNeuralProvider);
+  bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
@@ -397,6 +398,7 @@ Future<void> rSource(
   // NEURAL
 
   code = code.replaceAll('NNET_HIDDEN_LAYERS', hiddenLayerSizes.toString());
+
   code = code.replaceAll('NEURAL_HIDDEN_LAYERS', 'c($hiddenNeurons)');
   code = code.replaceAll('NEURAL_MAXIT', nnetMaxit.toString());
   code = code.replaceAll('NEURAL_MAX_NWTS', nnetMaxNWts.toString());
@@ -404,6 +406,11 @@ Future<void> rSource(
   code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
   code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
   code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
+
+  code = code.replaceAll(
+    'NEURAL_IGNORE_CATEGORIC',
+    neuralIgnoreCategoric.toString().toUpperCase(),
+  );
 
   ////////////////////////////////////////////////////////////////////////
 

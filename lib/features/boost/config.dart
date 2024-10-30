@@ -34,6 +34,7 @@ import 'package:rattle/features/boost/settings.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 
@@ -127,6 +128,8 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
                 });
               },
             ),
+            configWidgetSpace,
+            Text('Target: ${getTarget(ref)}'),
           ],
         ),
         configRowSpace,
