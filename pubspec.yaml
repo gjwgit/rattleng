@@ -51,7 +51,7 @@ dependencies:
   riverpod_annotation: ^2.2.1
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
-  window_manager: ^0.4.2
+  window_manager: ^0.4.3
   xterm: ^4.0.0
   pdf: ^3.11.1
 
