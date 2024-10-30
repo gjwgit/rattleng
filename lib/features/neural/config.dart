@@ -193,6 +193,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   // Run the R scripts.
 
                   await rSource(context, ref, ['model_template']);
+                  //TODO kevin
                   if (context.mounted) {
                     if (algorithm == 'nnet') {
                       await rSource(context, ref, ['model_build_neural_nnet']);
@@ -203,6 +204,29 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                         ['model_build_neural_neuralnet'],
                       );
                     }
+                  }
+                  // If page navigation is required, handle it here.
+
+                  if (pageControllerProvider != null) {
+                    // Access the PageController directly from the StateProvider.
+
+                    final pageController = ref.read(pageControllerProvider!);
+
+                    // Check the current page index before navigating.
+
+                    final currentPage = pageController.page?.round() ?? 0;
+
+                    // Determine the target page index based on the current page.
+
+                    int targetPage = currentPage == 0 ? 1 : currentPage;
+
+                    // Navigate to the target page.
+
+                    pageController.animateToPage(
+                      targetPage,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
                   }
                 }
               },
@@ -227,6 +251,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     algorithm = chosen;
                     ref.read(algorithmNeuralProvider.notifier).state = chosen;
                   }
+                  // if selected algorithm is neuralnet, navigate to page 0
+                  //TODO kevin
                 });
               },
             ),
