@@ -31,11 +31,13 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
@@ -73,6 +75,61 @@ class ImagePage extends StatelessWidget {
 
     // Read file as bytes
     return await imageFile.readAsBytes();
+  }
+
+  Future<void> _exportToPdf(String svgPath, String pdfPath) async {
+    final svgString = await File(svgPath).readAsString();
+    final pictureInfo = await vg.loadPicture(
+      SvgStringLoader(svgString),
+      null,
+    );
+
+    final recorder = ui.PictureRecorder();
+    final canvas = ui.Canvas(recorder);
+    final size = pictureInfo.size;
+    canvas.scale(1.0, 1.0);
+    pictureInfo.picture.toImage(size.width.toInt(), size.height.toInt());
+
+    final pdf = pw.Document();
+    final image = await pictureInfo.picture
+        .toImage(size.width.toInt(), size.height.toInt());
+    final pngBytes = await image.toByteData(format: ui.ImageByteFormat.png);
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Image(
+              pw.MemoryImage(pngBytes!.buffer.asUint8List()),
+            ),
+          );
+        },
+      ),
+    );
+
+    final file = File(pdfPath);
+    await file.writeAsBytes(await pdf.save());
+  }
+
+  Future<void> _exportToPng(String svgPath, String pngPath) async {
+    final svgString = await File(svgPath).readAsString();
+    final pictureInfo = await vg.loadPicture(
+      SvgStringLoader(svgString),
+      null,
+    );
+
+    final recorder = ui.PictureRecorder();
+    final canvas = ui.Canvas(recorder);
+    final size = pictureInfo.size;
+    canvas.scale(1.0, 1.0);
+    pictureInfo.picture.toImage(size.width.toInt(), size.height.toInt());
+
+    final image = await pictureInfo.picture
+        .toImage(size.width.toInt(), size.height.toInt());
+    final pngBytes = await image.toByteData(format: ui.ImageByteFormat.png);
+
+    final file = File(pngPath);
+    await file.writeAsBytes(pngBytes!.buffer.asUint8List());
   }
 
   @override
@@ -190,31 +247,72 @@ class ImagePage extends StatelessWidget {
                       DelayedTooltip(
                         message: '''
 
-                        Save: Tap here to save the plot into an SVG file on your
-                        local storage. This will allow you to review the plot
-                        later, after you have finished with the app. You can
-                        convert the SVG to other formats like PDF or PNG with
-                        your operating system commands (e.g., the `convert`
-                        command from ImageMagick). You can also include the
-                        plots in your reports or keep them around for later
-                        reference.
+                        Save: Click here to save the plot in your preferred 
+                        format (SVG, PDF, or PNG). You can directly choose your 
+                        desired format from the menu and save it to your local 
+                        storage. Perfect for including in reports or keeping 
+                        for future reference.
 
                         ''',
-                        child: IconButton(
+                        child: PopupMenuButton<String>(
                           icon: const Icon(
                             Icons.save,
                             color: Colors.blue,
                           ),
-                          onPressed: () async {
+
+                          // do not hide the message from DelayedTooltip
+                          
+                          tooltip: '',
+                          onSelected: (String result) async {
                             String fileName = path.split('/').last;
-                            String? pathToSave = await selectFile(
-                              defaultFileName: fileName,
-                            );
-                            if (pathToSave != null) {
-                              // Copy generated image from /tmp to user's location.
-                              await File(path).copy(pathToSave);
+                            String? pathToSave;
+                            switch (result) {
+                              case 'SVG':
+                                pathToSave = await selectFile(
+                                  defaultFileName: fileName,
+                                  allowedExtensions: ['svg'],
+                                );
+                                if (pathToSave != null) {
+                                  await File(path).copy(pathToSave);
+                                }
+                                break;
+                              case 'PDF':
+                                pathToSave = await selectFile(
+                                  defaultFileName:
+                                      fileName.replaceAll('.svg', '.pdf'),
+                                  allowedExtensions: ['pdf'],
+                                );
+                                if (pathToSave != null) {
+                                  await _exportToPdf(path, pathToSave);
+                                }
+                                break;
+                              case 'PNG':
+                                pathToSave = await selectFile(
+                                  defaultFileName:
+                                      fileName.replaceAll('.svg', '.png'),
+                                  allowedExtensions: ['png'],
+                                );
+                                if (pathToSave != null) {
+                                  await _exportToPng(path, pathToSave);
+                                }
+                                break;
                             }
                           },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'SVG',
+                              child: Text('Save as SVG'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'PDF',
+                              child: Text('Save as PDF'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'PNG',
+                              child: Text('Save as PNG'),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(width: 5),
