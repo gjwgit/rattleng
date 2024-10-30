@@ -71,13 +71,26 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         ),
       );
     }
-    String image = '$tempDir/model_arules_item_frequency.svg';
 
-    if (imageExists(image)) {
+    String plotImage = '$tempDir/model_arules_item_plot.png';
+
+    if (imageExists(plotImage)) {
       pages.add(
         ImagePage(
           title: 'ASSOCIATION RULES',
-          path: image,
+          path: plotImage,
+          svgImage: false,
+        ),
+      );
+    }
+
+    String frequencyImage = '$tempDir/model_arules_item_frequency.svg';
+
+    if (imageExists(frequencyImage)) {
+      pages.add(
+        ImagePage(
+          title: 'ASSOCIATION FREQUENCY',
+          path: frequencyImage,
         ),
       );
     }

@@ -64,4 +64,11 @@ library(arulesViz)
 svg("TEMPDIR/model_arules_item_frequency.svg")
 
 itemFrequencyPlot(transactions, topN = 10, type = "relative")
+
+dev.off()
+
+png("TEMPDIR/model_arules_item_plot.png")
+
+plot(model_arules, method="graph")
+
 dev.off()
