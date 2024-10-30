@@ -14,7 +14,7 @@ DEST=${HOST}:${FLDR}
 # latest one.
 
 bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
-	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+	     | jq -r '.[] | select(.workflowName | startswith("Build installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
 	     | head -n 1)
 
 status=$(gh run view ${bumpId} --json status --jq '.status')
