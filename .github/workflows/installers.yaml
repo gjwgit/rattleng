@@ -215,3 +215,99 @@ jobs:
         with:
           name: rattle-macos-zip
           path: build/macos/Build/Products/Release/rattle-${{github.ref_name}}-macos.zip
+
+  ########################################################################
+
+  # build-macos-dmg:
+  #   if: |
+  #     contains(github.event.head_commit.message, 'bump version') ||
+  #     contains(github.event.head_commit.message, 'build installers')
+  #   runs-on: macos-latest
+
+  #   steps:
+  #     - name: Clone Repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: 'stable'
+  #         architecture: x64
+  #         flutter-version: ${{env.FLUTTER_VERSION}}
+
+  #     - name: Install Project Dependencies
+  #       run: flutter pub get
+
+  #     - name: Generate intermediates
+  #       run: flutter pub run build_runner build --delete-conflicting-outputs
+
+  #     - name: Enable macOS build
+  #       run: flutter config --enable-macos-desktop
+
+  #     - name: Build artifacts
+  #       run: flutter build macos --release
+
+  #     - name: Archive Release
+  #       uses: thedoctor0/zip-release@master
+  #       with:
+  #         type: 'zip'
+  #         directory: build/macos/Build/Products/Release
+  #         path: rattle.app
+  #         filename: rattle-${{github.ref_name}}-macos.zip
+
+  #     - name: Review Bundle Contents
+  #       run: ls -lh build/macos/Build/Products/Release
+
+  #     - name: Upload Artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: rattle-macos-zip
+  #         path: build/macos/Build/Products/Release/rattle-${{github.ref_name}}-macos.zip
+
+  # ########################################################################
+
+  # build-ios-zip:
+  #   if: |
+  #     contains(github.event.head_commit.message, 'bump version') ||
+  #     contains(github.event.head_commit.message, 'build installers')
+  #   runs-on: macos-latest
+
+  #   steps:
+  #     - name: Clone Repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: 'stable'
+  #         architecture: x64
+  #         flutter-version: ${{env.FLUTTER_VERSION}}
+
+  #     - name: Install Project Dependencies
+  #       run: flutter pub get
+
+  #     - name: Generate intermediates
+  #       run: flutter pub run build_runner build --delete-conflicting-outputs
+
+  #     - name: Enable macOS build
+  #       run: flutter config --enable-macos-desktop
+
+  #     - name: Build artifacts
+  #       run: flutter build ios --release --nocodesign
+
+  #     - name: Archive Release
+  #       uses: thedoctor0/zip-release@master
+  #       with:
+  #         type: 'zip'
+  #         directory: build/macos/Build/Products/Release
+  #         path: rattle.app
+  #         filename: rattle-${{github.ref_name}}-ios.zip
+
+  #     - name: Review Bundle Contents
+  #       run: ls -lh build/macos/Build/Products/Release
+
+  #     - name: Upload Artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: rattle-macos-zip
+  #         path: build/macos/Build/Products/Release/rattle-${{github.ref_name}}-macos.zip
