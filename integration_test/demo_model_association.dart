@@ -1,8 +1,8 @@
-/// Test ewkm() cluster analysis with demo dataset.
+/// Test apriori() association analysis with demo dataset.
 //
 // Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Zheyuan Xu
 
 library;
 
@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/cluster/panel.dart';
+import 'package:rattle/features/association/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -45,7 +45,7 @@ import 'utils/press_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Cluster EWKM:', () {
+  group('Demo Model Association:', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -60,36 +60,25 @@ void main() {
         ModelTabs,
       );
 
-      // Navigate to the Cluster feature.
+      // Navigate to the Association feature.
 
-      await navigateToFeature(tester, 'Cluster', ClusterPanel);
+      await navigateToFeature(tester, 'Associations', AssociationPanel);
 
       await tester.pump(interact);
 
-      // Find the ChoiceChipTip widget for Ewkm type.
-
-      final ewkmaChip = find.text(
-        'Ewkm',
-      );
-
-      // Tap the ewkma chip to switch type.
-
-      await tester.tap(ewkmaChip);
-
-      await tester.pumpAndSettle();
-
-      await pressButton(tester, 'Build Clustering');
+      await pressButton(tester, 'Build Association Rules');
 
       await tester.pump(delay);
 
-      await pressButton(tester, 'Build Clustering');
+      await pressButton(tester, 'Build Association Rules');
 
       await tester.pump(interact);
 
       // Find the text containing the number of default clusters.
 
-      final dataFinder =
-          find.textContaining("built using 'ewkm' with 10 clusters");
+      final dataFinder = find.textContaining(
+        "Summary of the Association Rules (built using 'apriori'):",
+      );
       expect(dataFinder, findsOneWidget);
 
       await tester.pump(interact);
@@ -98,11 +87,7 @@ void main() {
 
       await tester.pump(interact);
 
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
+      final imagePageTitleFinder = find.text('ASSOCIATION RULES');
       expect(imagePageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
@@ -110,6 +95,19 @@ void main() {
       // Assert that the image is present.
 
       expect(imageFinder, findsOneWidget);
+
+      await gotoNextPage(tester);
+
+      await tester.pump(interact);
+
+      final secondImagePageTitleFinder = find.text('ASSOCIATION FREQUENCY');
+      expect(secondImagePageTitleFinder, findsOneWidget);
+
+      final secondImageFinder = find.byType(ImagePage);
+
+      // Assert that the image is present.
+
+      expect(secondImageFinder, findsOneWidget);
     });
   });
 }

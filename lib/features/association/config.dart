@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/association.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -83,11 +84,18 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
 
             ActivityButton(
               onPressed: () async {
-                await rSource(
-                  context,
-                  ref,
-                  ['model_template', 'model_build_association'],
-                );
+                if (context.mounted)
+                  await rSource(
+                    context,
+                    ref,
+                    ['model_template', 'model_build_association'],
+                  );
+                await ref.read(associationControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Association Rules'),
             ),
