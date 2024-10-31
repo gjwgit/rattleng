@@ -10,12 +10,18 @@ HOST=togaware.com
 FLDR=apps/access/
 DEST=${HOST}:${FLDR}
 
-# Identify the Bump Version pushes to the repositroy and get the
-# latest one.
+# From the recent 'Build Installers' workflows, identify the 'Bump
+# version' pushes to the repositroy and get the latest one as the one
+# we want to download the artefacts.
 
 bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
-	     | jq -r '.[] | select(.workflowName | startswith("Build installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
 	     | head -n 1)
+
+if [[ -z "${bumpId}" ]]; then
+    echo "No workflow found."
+    exit 1
+fi
 
 status=$(gh run view ${bumpId} --json status --jq '.status')
 conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
