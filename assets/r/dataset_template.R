@@ -73,6 +73,7 @@ library(magrittr)
 # Identify variable roles.
 
 target <- "TARGET_VAR"
+ident <- "IDENT_VAR"
 risk   <- "RISK_VAR"
 id     <- c(ID_VARS)
 

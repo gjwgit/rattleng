@@ -129,6 +129,7 @@ Future<void> rSource(
 
   // ASSOCIATION
 
+  bool associationBaskets = ref.read(basketsAssociationProvider);
   double associationSupport = ref.read(supportAssociationProvider);
   double associationConfidence = ref.read(confidenceAssociationProvider);
   int associationMinLength = ref.read(minLengthAssociationProvider);
@@ -294,9 +295,12 @@ Future<void> rSource(
   // Extract the target variable from the rolesProvider.
 
   String target = 'NULL';
+  String ident = 'NULL';
   roles.forEach((key, value) {
     if (value == Role.target) {
       target = key;
+    } else if (value == Role.ident) {
+      ident = key;
     }
   });
 
@@ -316,6 +320,11 @@ Future<void> rSource(
     code = code.replaceAll('"TARGET_VAR"', target);
   }
   code = code.replaceAll('TARGET_VAR', target);
+
+  if (ident == 'NULL') {
+    code = code.replaceAll('"IDENT_VAR"', ident);
+  }
+  code = code.replaceAll('IDENT_VAR', ident);
 
   //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
 
@@ -378,11 +387,22 @@ Future<void> rSource(
 
   // ASSOCIATE
 
-  code = code.replaceAll('ASSOCIATION_SUPPORT', associationSupport.toString(),);
   code = code.replaceAll(
-      'ASSOCIATION_CONFIDENCE', associationConfidence.toString(),);
+    'ASSOCIATION_BASKETS',
+    associationBaskets ? 'TRUE' : 'FALSE',
+  );
   code = code.replaceAll(
-      'ASSOCIATION_MIN_LENGTH', associationMinLength.toString(),);
+    'ASSOCIATION_SUPPORT',
+    associationSupport.toString(),
+  );
+  code = code.replaceAll(
+    'ASSOCIATION_CONFIDENCE',
+    associationConfidence.toString(),
+  );
+  code = code.replaceAll(
+    'ASSOCIATION_MIN_LENGTH',
+    associationMinLength.toString(),
+  );
 
   // BOOST
 

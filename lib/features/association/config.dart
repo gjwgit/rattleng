@@ -34,6 +34,7 @@ import 'package:rattle/providers/association.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/vector_number_field.dart';
 
@@ -90,9 +91,24 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               },
               child: const Text('Build Association Rules'),
             ),
+
             configWidgetSpace,
-            Text('Target: ${getTarget(ref)}'),
+
+            LabelledCheckbox(
+              key: const Key('basketsAssociationField'),
+              tooltip: '''
+
+              If checked, baskets are identified by the ident variable and items
+              in the basket by the target variable. Otherwise a basket is the 
+              collection of input variables.
+
+              ''',
+              label: 'Baskets',
+              provider: basketsAssociationProvider,
+            ),
+
             configWidgetSpace,
+
             NumberField(
               label: 'Support:',
               key: const Key('supportAssociationField'),
@@ -146,6 +162,8 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               validator: validateVector,
               stateProvider: minLengthAssociationProvider,
             ),
+            configWidgetSpace,
+            Text('Target: ${getTarget(ref)}'),
           ],
         ),
       ],

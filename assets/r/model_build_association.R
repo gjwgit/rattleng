@@ -40,11 +40,19 @@ library(arules)
 mtype <- "arules"
 mdesc <- "Association Rules"
 
+# Set whether the baskets applied to association model.
+
+isBaskets <- ASSOCIATION_BASKETS
+
 tds <- ds[tr, vars]
 
 # Generate transactions from the dataset.
 
-transactions <- as(tds, "transactions")
+if(isBaskets){
+  transactions <- as(split(tds$TARGET_VAR, ds$IDENT_VAR), "transactions")
+}else{
+  transactions <- as(tds, "transactions")
+}
 
 # Build the association model using the Apriori algorithm.
 

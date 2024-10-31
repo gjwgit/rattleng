@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/association.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_association.dart';
@@ -52,6 +53,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
+    bool associationBaskets = ref.read(basketsAssociationProvider);
 
     final pageController = ref.watch(
       associationControllerProvider,
@@ -72,16 +74,18 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
       );
     }
 
-    String plotImage = '$tempDir/model_arules_item_plot.png';
+    if (!associationBaskets) {
+      String plotImage = '$tempDir/model_arules_item_plot.png';
 
-    if (imageExists(plotImage)) {
-      pages.add(
-        ImagePage(
-          title: 'ASSOCIATION RULES',
-          path: plotImage,
-          svgImage: false,
-        ),
-      );
+      if (imageExists(plotImage)) {
+        pages.add(
+          ImagePage(
+            title: 'ASSOCIATION RULES',
+            path: plotImage,
+            svgImage: false,
+          ),
+        );
+      }
     }
 
     String frequencyImage = '$tempDir/model_arules_item_frequency.svg';
