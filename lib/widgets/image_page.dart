@@ -1,6 +1,6 @@
-/// Helper widget to build the common image based pages.
+/// A widget to build the common image based pages.
 //
-// Time-stamp: <Thursday 2024-09-19 18:40:39 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 10:19:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,17 +25,17 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'dart:io';
 import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
@@ -43,6 +43,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
+import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
@@ -55,6 +56,15 @@ class ImagePage extends StatelessWidget {
     required this.title,
     required this.path,
   });
+
+  /// Load the image bytes from the specified file path.
+  ///
+  /// This method attempts to read the image file as bytes. It waits for the
+  /// file to exist, retrying up to 5 times with a 1-second delay between each
+  /// retry.  If the file does not exist after the retries, it returns `null`.
+  ///
+  /// Returns a [Future] that completes with the image bytes as a [Uint8List] if
+  /// the file exists, or `null` if the file does not exist.
 
   Future<Uint8List?> _loadImageBytes() async {
     var imageFile = File(path);
@@ -73,6 +83,68 @@ class ImagePage extends StatelessWidget {
 
     // Read file as bytes
     return await imageFile.readAsBytes();
+  }
+
+  /// Convert the file [svgPath] return [Future] image bytes in PNG format.
+  ///
+  /// Throws an [Exception] if the conversion fails.
+
+  Future<ByteData> _svgToImageBytes(String svgPath) async {
+    final svgString = await File(svgPath).readAsString();
+
+    final pictureInfo = await vg.loadPicture(
+      SvgStringLoader(svgString),
+      null,
+    );
+
+    final recorder = ui.PictureRecorder();
+    final canvas = ui.Canvas(recorder);
+    final size = pictureInfo.size;
+
+    canvas.scale(1.0, 1.0);
+
+    pictureInfo.picture.toImage(size.width.toInt(), size.height.toInt());
+
+    final image = await pictureInfo.picture
+        .toImage(size.width.toInt(), size.height.toInt());
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+    if (byteData == null) {
+      throw Exception('Failed to convert SVG to image bytes');
+    }
+
+    return byteData;
+  }
+
+  /// Export the SVG file [svgPath] into a PDF file [pdfPath].
+
+  Future<void> _exportToPdf(String svgPath, String pdfPath) async {
+    final pngBytes = await _svgToImageBytes(svgPath);
+
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Image(
+              pw.MemoryImage(pngBytes.buffer.asUint8List()),
+            ),
+          );
+        },
+      ),
+    );
+
+    final file = File(pdfPath);
+    await file.writeAsBytes(await pdf.save());
+  }
+
+  /// Export the SVG file [svgPath] into a PNG file [pngPath].
+
+  Future<void> _exportToPng(String svgPath, String pngPath) async {
+    final pngBytes = await _svgToImageBytes(svgPath);
+
+    final file = File(pngPath);
+    await file.writeAsBytes(pngBytes.buffer.asUint8List());
   }
 
   @override
@@ -119,7 +191,7 @@ class ImagePage extends StatelessWidget {
                       // not getting pushed all the way to the right after
                       // adding Flexible.
                       //
-                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdow
+                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdown
                       // text overflowing to the elevarted Export
                       // button.
                       MarkdownBody(
@@ -190,14 +262,12 @@ class ImagePage extends StatelessWidget {
                       DelayedTooltip(
                         message: '''
 
-                        Save: Tap here to save the plot into an SVG file on your
-                        local storage. This will allow you to review the plot
-                        later, after you have finished with the app. You can
-                        convert the SVG to other formats like PDF or PNG with
-                        your operating system commands (e.g., the `convert`
-                        command from ImageMagick). You can also include the
-                        plots in your reports or keep them around for later
-                        reference.
+                        Save: Tap here to save the plot in your preferred format
+                        (SVG, PDF, or PNG). You can directly choose your desired
+                        format by replacing the default SVG filename extension
+                        with either PDF or PNG. The file is saved to your local
+                        storage. Perfect for including in reports or keeping for
+                        future reference.
 
                         ''',
                         child: IconButton(
@@ -209,10 +279,34 @@ class ImagePage extends StatelessWidget {
                             String fileName = path.split('/').last;
                             String? pathToSave = await selectFile(
                               defaultFileName: fileName,
+                              allowedExtensions: ['svg', 'pdf', 'png'],
                             );
                             if (pathToSave != null) {
-                              // Copy generated image from /tmp to user's location.
-                              await File(path).copy(pathToSave);
+                              String extension =
+                                  pathToSave.split('.').last.toLowerCase();
+                              if (extension == 'svg') {
+                                await File(path).copy(pathToSave);
+                              } else if (extension == 'pdf') {
+                                await _exportToPdf(path, pathToSave);
+                              } else if (extension == 'png') {
+                                await _exportToPng(path, pathToSave);
+                              } else {
+                                // If the user selected an unsupported file
+                                // extension show an error dialog.
+                                showOk(
+                                  title: 'Error',
+                                  context: context,
+                                  content: //const Text(
+                                      '''
+
+                                      An unsupported filename extension was
+                                      provided: .$extension.  Please try again
+                                      and select a filename with one of the
+                                      supported extensions: .svg, .pdf, or .png.
+
+                                      ''',
+                                );
+                              }
                             }
                           },
                         ),
