@@ -1,6 +1,6 @@
-/// Helper widget to build the common image based pages.
+/// A widget to build the common image based pages.
 //
-// Time-stamp: <Thursday 2024-09-19 18:40:39 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 10:19:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'dart:io';
 import 'dart:async';
 import 'dart:math';
@@ -45,6 +43,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
+import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart';
 
@@ -58,11 +57,11 @@ class ImagePage extends StatelessWidget {
     required this.path,
   });
 
-  /// Loads the image bytes from the specified file path.
+  /// Load the image bytes from the specified file path.
   ///
-  /// This method attempts to read the image file as bytes. It waits for the file
-  /// to exist, retrying up to 5 times with a 1-second delay between each retry.
-  /// If the file does not exist after the retries, it returns `null`.
+  /// This method attempts to read the image file as bytes. It waits for the
+  /// file to exist, retrying up to 5 times with a 1-second delay between each
+  /// retry.  If the file does not exist after the retries, it returns `null`.
   ///
   /// Returns a [Future] that completes with the image bytes as a [Uint8List] if
   /// the file exists, or `null` if the file does not exist.
@@ -86,19 +85,13 @@ class ImagePage extends StatelessWidget {
     return await imageFile.readAsBytes();
   }
 
-  /// Converts an SVG file to image bytes in PNG format.
-  ///
-  /// Takes the path of the SVG file as input and returns the image bytes.
+  /// Convert the file [svgPath] return [Future] image bytes in PNG format.
   ///
   /// Throws an [Exception] if the conversion fails.
-  ///
-  /// - Parameters:
-  ///   - svgPath: The file path of the SVG file.
-  ///
-  /// - Returns: A [Future] that resolves to the image bytes in PNG format.
 
   Future<ByteData> _svgToImageBytes(String svgPath) async {
     final svgString = await File(svgPath).readAsString();
+
     final pictureInfo = await vg.loadPicture(
       SvgStringLoader(svgString),
       null,
@@ -107,26 +100,23 @@ class ImagePage extends StatelessWidget {
     final recorder = ui.PictureRecorder();
     final canvas = ui.Canvas(recorder);
     final size = pictureInfo.size;
+
     canvas.scale(1.0, 1.0);
+
     pictureInfo.picture.toImage(size.width.toInt(), size.height.toInt());
 
     final image = await pictureInfo.picture
         .toImage(size.width.toInt(), size.height.toInt());
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
     if (byteData == null) {
       throw Exception('Failed to convert SVG to image bytes');
     }
-    
+
     return byteData;
   }
 
-  /// Exports an SVG file to a PDF file.
-  ///
-  /// Takes the path of the SVG file and the desired path for the PDF file as input.
-  ///
-  /// - Parameters:
-  ///   - svgPath: The file path of the SVG file.
-  ///   - pdfPath: The file path where the PDF file will be saved.
+  /// Export the SVG file [svgPath] into a PDF file [pdfPath].
 
   Future<void> _exportToPdf(String svgPath, String pdfPath) async {
     final pngBytes = await _svgToImageBytes(svgPath);
@@ -148,13 +138,7 @@ class ImagePage extends StatelessWidget {
     await file.writeAsBytes(await pdf.save());
   }
 
-  /// Exports an SVG file to a PNG file.
-  ///
-  /// Takes the path of the SVG file and the desired path for the PNG file as input.
-  ///
-  /// - Parameters:
-  ///   - svgPath: The file path of the SVG file.
-  ///   - pngPath: The file path where the PNG file will be saved.
+  /// Export the SVG file [svgPath] into a PNG file [pngPath].
 
   Future<void> _exportToPng(String svgPath, String pngPath) async {
     final pngBytes = await _svgToImageBytes(svgPath);
@@ -278,11 +262,12 @@ class ImagePage extends StatelessWidget {
                       DelayedTooltip(
                         message: '''
 
-                        Save: Click here to save the plot in your preferred 
-                        format (SVG, PDF, or PNG). You can directly choose your 
-                        desired format from the menu and save it to your local 
-                        storage. Perfect for including in reports or keeping 
-                        for future reference.
+                        Save: Tap here to save the plot in your preferred format
+                        (SVG, PDF, or PNG). You can directly choose your desired
+                        format by replacing the default SVG filename extension
+                        with either PDF or PNG. The file is saved to your local
+                        storage. Perfect for including in reports or keeping for
+                        future reference.
 
                         ''',
                         child: IconButton(
@@ -306,22 +291,20 @@ class ImagePage extends StatelessWidget {
                               } else if (extension == 'png') {
                                 await _exportToPng(path, pathToSave);
                               } else {
-                                // User selected an unsupported file extension.
-                                // Show an error dialog.
-                                showDialog(
+                                // If the user selected an unsupported file
+                                // extension show an error dialog.
+                                showOk(
+                                  title: 'Error',
                                   context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Error'),
-                                    content: const Text(
-                                      'Unsupported file extension, please select a file with .svg, .pdf, or .png extension.',
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  ),
+                                  content: //const Text(
+                                      '''
+
+                                      An unsupported filename extension was
+                                      provided: .$extension.  Please try again
+                                      and select a filename with one of the
+                                      supported extensions: .svg, .pdf, or .png.
+
+                                      ''',
                                 );
                               }
                             }

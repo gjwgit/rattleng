@@ -1,6 +1,6 @@
-/// Promote the user to pick a location to save the file
+/// Promt the user to select a name and location to save a file.
 //
-// Time-stamp: <Sunday 2024-09-08 13:47:39 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 09:51:36 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,11 +21,9 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin, Graham Williams
+/// Authors: Yixiang Yin, Graham Williams, Lutra
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:file_picker/file_picker.dart';
 
@@ -33,18 +31,11 @@ Future<String?> selectFile({
   String defaultFileName = 'image.svg',
   List<String> allowedExtensions = const ['svg'],
 }) async {
-  // Use the [FilePicker] to select a file asynchronously so as not to block the
-  // main UI thread.
+  // Use a [FilePicker] to select a file. This is performed asynchronously so as
+  // not to block the main UI thread.
 
   String? result = await FilePicker.platform.saveFile(
     dialogTitle: 'Provide a filename to save the file to',
-
-    // NOTE 20240604 gjw DEFAULT FILE NAME, TILE, ETC DOES NOT APPEAR IN DIALOG.
-    //
-    // Seems to be a Linux or even Ubuntu/Gnome issue. However it works okay for
-    // saving in the SCRIPT tab? Works for Lutra-Fs on Windows and Linux
-    // (zenity). 20240908 gjw
-
     fileName: defaultFileName,
     type: FileType.custom,
     allowedExtensions: allowedExtensions,
