@@ -291,9 +291,9 @@ class ImagePage extends StatelessWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            String defaultFileName = 'image.svg';
+                            String fileName = path.split('/').last;
                             String? pathToSave = await selectFile(
-                              defaultFileName: defaultFileName,
+                              defaultFileName: fileName,
                               allowedExtensions: ['svg', 'pdf', 'png'],
                             );
                             if (pathToSave != null) {
