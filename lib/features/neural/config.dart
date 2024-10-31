@@ -193,7 +193,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   // Run the R scripts.
 
                   await rSource(context, ref, ['model_template']);
-                  //TODO kevin
                   if (context.mounted) {
                     if (algorithm == 'nnet') {
                       await rSource(context, ref, ['model_build_neural_nnet']);
@@ -251,8 +250,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     algorithm = chosen;
                     ref.read(algorithmNeuralProvider.notifier).state = chosen;
                   }
-                  // if selected algorithm is neuralnet, navigate to page 0
-                  //TODO kevin
                 });
               },
             ),
