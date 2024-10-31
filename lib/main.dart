@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Tuesday 2024-09-24 09:47:55 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-11-01 09:10:12 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -60,8 +60,8 @@ void main() async {
 
     WindowOptions windowOptions = const WindowOptions(
       // Setting [alwaysOnTop] here will ensure the desktop app starts on top of
-      // other apps on the desktop so that it is visible. We later turn it of as
-      // we don't want to force it always on top.
+      // other apps on the desktop so that it is visible. We later turn it off
+      // as we don't want to force it always on top.
 
       alwaysOnTop: true,
 
