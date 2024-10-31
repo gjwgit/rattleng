@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.17+136
+version: 6.3.18+137
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -97,6 +97,7 @@ dev_dependencies:
   # riverpod_lint: ^2.3.2
 
 dependency_overrides:
+  # Required for dart-code-metrics.
   collection: ^1.19.0
 
 # For information on the generic Dart part of this file, see the
