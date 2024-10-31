@@ -64,7 +64,6 @@ String rExtractAssociation(String log) {
       dotAll: true,
     ),
     (match) {
-
       String txt = match.group(1) ?? '';
 
       txt = txt.replaceAll('\n', '');
