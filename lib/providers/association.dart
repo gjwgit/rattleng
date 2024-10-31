@@ -30,4 +30,5 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final basketsAssociationProvider = StateProvider<bool>((ref) => false);
 final confidenceAssociationProvider = StateProvider<double>((ref) => 0.1);
 final minLengthAssociationProvider = StateProvider<int>((ref) => 2);
+final sortByAssociationProvider = StateProvider<String>((ref) => 'Support');
 final supportAssociationProvider = StateProvider<double>((ref) => 0.1);

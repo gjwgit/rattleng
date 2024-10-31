@@ -34,10 +34,19 @@ import 'package:rattle/providers/association.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/vector_number_field.dart';
+
+/// Sort by methods of ASSOCIATION rules.
+
+List<String> associationRulesSortBy = [
+  'Support',
+  'Confidence',
+  'Lift',
+];
 
 /// The ASSOCIATION tab config currently consists of just an ACTIVITY button.
 ///
@@ -68,12 +77,13 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
 
   @override
   Widget build(BuildContext context) {
+    String sortByAssociation =
+        ref.read(sortByAssociationProvider.notifier).state;
+    bool basketsTicked = ref.read(basketsAssociationProvider.notifier).state;
+
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
-
+        configLeftSpace,
         Row(
           children: [
             // Space to the left of the configs.
@@ -113,6 +123,14 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               ''',
               label: 'Baskets',
               provider: basketsAssociationProvider,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(basketsAssociationProvider.notifier).state =
+                        ticked;
+                  }
+                });
+              },
             ),
 
             configWidgetSpace,
@@ -169,6 +187,31 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: validateVector,
               stateProvider: minLengthAssociationProvider,
+            ),
+          ],
+        ),
+        configRowSpace,
+        Row(
+          children: [
+            configLeftSpace,
+            variableChooser(
+              'Sort by:',
+              associationRulesSortBy,
+              sortByAssociation,
+              ref,
+              sortByAssociationProvider,
+              tooltip: '''
+
+              Refer to ranking rules based on metrics such as support, confidence, 
+              or lift to prioritize the most significant and relevant patterns.
+
+              ''',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(sortByAssociationProvider.notifier).state = value;
+                }
+              },
+              enabled: !basketsTicked,
             ),
             configWidgetSpace,
             Text('Target: ${getTarget(ref)}'),
