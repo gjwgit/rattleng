@@ -72,6 +72,7 @@ else
     gh run view ${bumpId}
     gh run view ${bumpId} --json status,conclusion
     echo ''
-    echo "Latest github actions has not successfully completed. Exiting."
+    echo "***** Latest github actions has not successfully completed. Exiting."
+    echo ''
     exit 1
 fi
