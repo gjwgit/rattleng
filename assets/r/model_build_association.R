@@ -65,6 +65,22 @@ model_arules <- apriori(
 
 print(summary(model_arules))
 
+# Limit the number of rules for calculating interest measures.
+
+top_rules <- sort(model_arules, by = "support")[1:20] 
+
+# Interesting Measures.
+
+measures <- interestMeasure(
+  top_rules,
+  c("chiSquare", "hyperLift", "hyperConfidence", "leverage", "oddsRatio", "phi"),
+  transactions,
+)
+
+# Print the computed interest measures.
+
+print(measures)
+
 # Plot the relative importance of the rules using arulesViz.
 
 library(arulesViz)

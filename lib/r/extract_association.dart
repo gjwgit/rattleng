@@ -27,10 +27,12 @@ library;
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
-String _basicTemplate(String log) {
-  const String hd = 'Summary of the Association Rules';
+String _basicTemplate(String log, bool isSummary) {
+  String hd =
+      isSummary ? 'Summary of the Association Rules' : 'Interesting Measures';
   const String md = "(built using 'apriori'):";
-  final String sm = rExtract(log, '> print(summary(model_arules))');
+  final String sm = rExtract(
+      log, isSummary ? '> print(summary(model_arules))' : '> print(measures)',);
 
   final String ts = timestamp();
 
@@ -45,8 +47,8 @@ String _basicTemplate(String log) {
 
 /// Extract from the R [log] lines of output.
 
-String rExtractAssociation(String log) {
-  String extract = _basicTemplate(log);
+String rExtractAssociation(String log, bool isSummary) {
+  String extract = _basicTemplate(log, isSummary);
 
   extract = extract.replaceAllMapped(
     RegExp(r'\nn= '),

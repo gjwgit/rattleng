@@ -61,8 +61,20 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
     List<Widget> pages = [showMarkdownFile(associationIntroFile, context)];
     String content = '';
+    String measuresContent = '';
 
-    content = rExtractAssociation(stdout);
+    content = rExtractAssociation(stdout, true);
+    measuresContent = rExtractAssociation(stdout, false);
+
+    if (measuresContent.isNotEmpty && !associationBaskets) {
+      pages.add(
+        TextPage(
+          title: '# Interesting Measures\n\n'
+              'Built using `apriori()`.\n\n',
+          content: '\n$measuresContent',
+        ),
+      );
+    }
 
     if (content.isNotEmpty) {
       pages.add(

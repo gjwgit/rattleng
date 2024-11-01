@@ -83,7 +83,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
 
     return Column(
       children: [
-        configLeftSpace,
+        configRowSpace,
         Row(
           children: [
             // Space to the left of the configs.
