@@ -74,7 +74,20 @@ void main() {
 
       await tester.pump(interact);
 
-      // Find the text containing the number of default clusters.
+      // Find the title of text page.
+
+      final titleFinder = find.textContaining(
+        "Interesting Measures (built using 'apriori'):",
+      );
+      expect(titleFinder, findsOneWidget);
+
+      await tester.pump(interact);
+
+      await gotoNextPage(tester);
+
+      await tester.pump(interact);
+
+      // Find the title of text page.
 
       final dataFinder = find.textContaining(
         "Summary of the Association Rules (built using 'apriori'):",
