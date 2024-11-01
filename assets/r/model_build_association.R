@@ -67,7 +67,7 @@ print(summary(model_arules))
 
 # Limit the number of rules for calculating interest measures.
 
-top_rules <- sort(model_arules, by = "support")[1:20] 
+top_rules <- sort(model_arules, by = "support")[1:ASSOCIATION_INTEREST_MEASURE] 
 
 # Interesting Measures.
 

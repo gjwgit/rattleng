@@ -133,6 +133,8 @@ Future<void> rSource(
   double associationSupport = ref.read(supportAssociationProvider);
   double associationConfidence = ref.read(confidenceAssociationProvider);
   int associationMinLength = ref.read(minLengthAssociationProvider);
+  int associationInterestMeasureLimit =
+      ref.read(interestMeasuresAssociationProvider);
 
   // BOOST
 
@@ -403,6 +405,9 @@ Future<void> rSource(
     'ASSOCIATION_MIN_LENGTH',
     associationMinLength.toString(),
   );
+
+  code = code.replaceAll('ASSOCIATION_INTEREST_MEASURE',
+      associationInterestMeasureLimit.toString(),);
 
   // BOOST
 

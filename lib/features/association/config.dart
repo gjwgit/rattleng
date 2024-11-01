@@ -63,6 +63,8 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
   final TextEditingController _supportController = TextEditingController();
   final TextEditingController _confidenceController = TextEditingController();
   final TextEditingController _minLengthController = TextEditingController();
+  final TextEditingController _limitNumberMeasureController =
+      TextEditingController();
 
   @override
   void dispose() {
@@ -71,6 +73,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
     _supportController.dispose();
     _confidenceController.dispose();
     _minLengthController.dispose();
+    _limitNumberMeasureController.dispose();
 
     super.dispose();
   }
@@ -194,6 +197,24 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
         Row(
           children: [
             configLeftSpace,
+            NumberField(
+              label: 'Limit Number:',
+              key: const Key('measuresLimitAssociationField'),
+              controller: _limitNumberMeasureController,
+              tooltip: '''
+
+                Limit the number of rules for calculating interest measures.
+
+                ''',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: (value) => validateInteger(
+                value,
+                min: 2,
+              ),
+              stateProvider: interestMeasuresAssociationProvider,
+            ),
+            configWidgetSpace,
             variableChooser(
               'Sort by:',
               associationRulesSortBy,
