@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Tuesday 2024-10-15 08:50:14 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 16:20:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -227,6 +227,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 child: const Text('Build Decision Tree'),
               ),
               configWidgetSpace,
+              Text('Target: ${getTarget(ref)}'),
+              configWidgetSpace,
               ChoiceChipTip<AlgorithmType>(
                 options: AlgorithmType.values,
                 getLabel: (AlgorithmType type) => type.displayName,
@@ -252,8 +254,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 label: 'Include Missing',
                 provider: treeIncludeMissingProvider,
               ),
-              configWidgetSpace,
-              Text('Target: ${getTarget(ref)}'),
             ],
           ),
           configRowSpace,

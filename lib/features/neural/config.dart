@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-30 10:59:30 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 16:20:03 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -208,6 +208,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               },
               child: const Text('Build Neural Network'),
             ),
+
+            configWidgetSpace,
+
+            Text('Target: ${getTarget(ref)}'),
+
             configWidgetSpace,
 
             const Text(
@@ -275,8 +280,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               label: 'Ignore Categoric',
               provider: ignoreCategoricNeuralProvider,
             ),
-            configWidgetSpace,
-            Text('Target: ${getTarget(ref)}'),
           ],
         ),
 
