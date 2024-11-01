@@ -1,4 +1,4 @@
-/// Test apriori() association analysis with demo dataset.
+/// Test apriori() association analysis with demo dataset with baskets.
 //
 // Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
 //
@@ -45,7 +45,7 @@ import 'utils/press_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Association:', () {
+  group('Demo Model Association with ticked baskets:', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -66,6 +66,13 @@ void main() {
 
       await tester.pump(interact);
 
+      // Find and tap the 'Baskets' checkbox.
+
+      final Finder basketsCheckbox =
+          find.byKey(const Key('basketsAssociationField'));
+      await tester.tap(basketsCheckbox);
+      await tester.pumpAndSettle();
+
       await pressButton(tester, 'Build Association Rules');
 
       await tester.pump(delay);
@@ -73,17 +80,6 @@ void main() {
       await pressButton(tester, 'Build Association Rules');
 
       await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final titleFinder = find.textContaining(
-        "Interestingness Measures (built using 'apriori'):",
-      );
-      expect(titleFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
 
       await tester.pump(interact);
 
@@ -100,7 +96,7 @@ void main() {
 
       await tester.pump(interact);
 
-      final imagePageTitleFinder = find.text('ASSOCIATION RULES');
+      final imagePageTitleFinder = find.text('ASSOCIATION FREQUENCY');
       expect(imagePageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
@@ -108,19 +104,6 @@ void main() {
       // Assert that the image is present.
 
       expect(imageFinder, findsOneWidget);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final secondImagePageTitleFinder = find.text('ASSOCIATION FREQUENCY');
-      expect(secondImagePageTitleFinder, findsOneWidget);
-
-      final secondImageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(secondImageFinder, findsOneWidget);
     });
   });
 }
