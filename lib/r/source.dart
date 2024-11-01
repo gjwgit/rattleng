@@ -135,6 +135,8 @@ Future<void> rSource(
   int associationMinLength = ref.read(minLengthAssociationProvider);
   int associationInterestMeasureLimit =
       ref.read(interestMeasuresAssociationProvider);
+  String associationRulesSortBy =
+      ref.read(sortByAssociationProvider).toLowerCase();
 
   // BOOST
 
@@ -406,8 +408,13 @@ Future<void> rSource(
     associationMinLength.toString(),
   );
 
-  code = code.replaceAll('ASSOCIATION_INTEREST_MEASURE',
-      associationInterestMeasureLimit.toString(),);
+  code = code.replaceAll(
+    'ASSOCIATION_INTEREST_MEASURE',
+    associationInterestMeasureLimit.toString(),
+  );
+
+  code =
+      code.replaceAll('ASSOCIATION_RULES_SORT_BY', '"$associationRulesSortBy"');
 
   // BOOST
 
