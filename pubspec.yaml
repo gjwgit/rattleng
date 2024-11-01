@@ -74,8 +74,6 @@ dev_dependencies:
   # a paid service. This fork maintains it's compatibility with the
   # latest flutter.
 
-  # TODO 20240906 yz DART CODE METRICS HAS DEPENDENCY ISSUES
-
   dart_code_metrics:
     git:
       url: https://github.com/anusii/dart-code-metrics.git

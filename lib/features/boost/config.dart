@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:52:02 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 16:21:12 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -108,6 +108,10 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
 
             configWidgetSpace,
 
+            Text('Target: ${getTarget(ref)}'),
+
+            configWidgetSpace,
+
             const Text(
               'Algorithm:',
               style: normalTextStyle,
@@ -128,8 +132,6 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
                 });
               },
             ),
-            configWidgetSpace,
-            Text('Target: ${getTarget(ref)}'),
           ],
         ),
         configRowSpace,
