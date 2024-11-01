@@ -74,7 +74,7 @@ class LabelledCheckbox extends ConsumerWidget {
           GestureDetector(
             onTap: () {
               // Toggle checkbox when the label is tapped.
-              
+
               ref.read(provider.notifier).state = !isChecked;
               if (onSelected != null) {
                 onSelected!(!isChecked);
