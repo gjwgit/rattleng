@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Export images to (SVG default) PDF and PNG [6.3.18 20241101 lutra]
 + Windows installer updated with window_manger update [6.3.17 20241030 gjw]
 + Support categoric ignore for neural models [6.3.16 20241029 zy]
 + Add CROSSTAB to SUMMARY with user choice [6.3.15 20241024 kev]
