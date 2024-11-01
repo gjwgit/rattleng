@@ -77,7 +77,7 @@ void main() {
       // Find the title of text page.
 
       final titleFinder = find.textContaining(
-        "Interesting Measures (built using 'apriori'):",
+        "Interestingness Measures (built using 'apriori'):",
       );
       expect(titleFinder, findsOneWidget);
 

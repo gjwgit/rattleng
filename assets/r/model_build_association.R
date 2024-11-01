@@ -69,7 +69,7 @@ print(summary(model_arules))
 
 top_rules <- sort(model_arules, by = ASSOCIATION_RULES_SORT_BY)[1:ASSOCIATION_INTEREST_MEASURE] 
 
-# Interesting Measures.
+# Interestingness Measures.
 
 measures <- interestMeasure(
   top_rules,

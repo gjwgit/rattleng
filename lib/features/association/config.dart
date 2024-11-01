@@ -115,6 +115,10 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
 
             configWidgetSpace,
 
+            Text('Target: ${getTarget(ref)}'),
+
+            configWidgetSpace,
+
             LabelledCheckbox(
               key: const Key('basketsAssociationField'),
               tooltip: '''
@@ -135,9 +139,12 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
                 });
               },
             ),
-
-            configWidgetSpace,
-
+          ],
+        ),
+        configRowSpace,
+        Row(
+          children: [
+            configLeftSpace,
             NumberField(
               label: 'Support:',
               key: const Key('supportAssociationField'),
@@ -191,12 +198,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               validator: validateVector,
               stateProvider: minLengthAssociationProvider,
             ),
-          ],
-        ),
-        configRowSpace,
-        Row(
-          children: [
-            configLeftSpace,
+            configWidgetSpace,
             NumberField(
               label: 'Limit Number:',
               key: const Key('measuresLimitAssociationField'),
@@ -213,6 +215,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
                 min: 2,
               ),
               stateProvider: interestMeasuresAssociationProvider,
+              enabled: !basketsTicked,
             ),
             configWidgetSpace,
             variableChooser(
@@ -234,8 +237,6 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               },
               enabled: !basketsTicked,
             ),
-            configWidgetSpace,
-            Text('Target: ${getTarget(ref)}'),
           ],
         ),
       ],

@@ -69,7 +69,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
     if (measuresContent.isNotEmpty && !associationBaskets) {
       pages.add(
         TextPage(
-          title: '# Interesting Measures\n\n'
+          title: '# Interestingness Measures\n\n'
               'Built using `apriori()`.\n\n',
           content: '\n$measuresContent',
         ),

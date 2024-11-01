@@ -28,11 +28,14 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log, bool isSummary) {
-  String hd =
-      isSummary ? 'Summary of the Association Rules' : 'Interesting Measures';
+  String hd = isSummary
+      ? 'Summary of the Association Rules'
+      : 'Interestingness Measures';
   const String md = "(built using 'apriori'):";
   final String sm = rExtract(
-      log, isSummary ? '> print(summary(model_arules))' : '> print(measures)',);
+    log,
+    isSummary ? '> print(summary(model_arules))' : '> print(measures)',
+  );
 
   final String ts = timestamp();
 
