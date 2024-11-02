@@ -74,7 +74,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               },
               child: const Text('Build Random Forest'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             Text('Target: ${getTarget(ref)}'),
           ],
         ),

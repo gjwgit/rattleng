@@ -70,10 +70,10 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
 
             // The BUILD button.
 
@@ -88,7 +88,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
               },
               child: const Text('Perform Statistical Tests'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             DropdownMenu(
               label: const Text('Input'),
               initialSelection: selected,
@@ -103,7 +103,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                 // build();
               },
             ),
-            configWidgetSpace,
+            configWidgetGap,
             DropdownMenu(
               label: const Text('Second'),
               initialSelection: selected2,

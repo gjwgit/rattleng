@@ -209,18 +209,18 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               child: const Text('Build Neural Network'),
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             Text('Target: ${getTarget(ref)}'),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             const Text(
               'Algorithm:',
               style: normalTextStyle,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: neuralAlgorithm.keys.toList(),
@@ -236,7 +236,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               },
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('NNET Trace'),
@@ -252,7 +252,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               enabled: algorithm == 'nnet',
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               tooltip: '''
@@ -265,7 +265,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               provider: skipNeuralProvider,
               enabled: algorithm == 'nnet',
             ),
-            configWidgetSpace,
+            configWidgetGap,
             LabelledCheckbox(
               key: const Key('Neural Ignore Categoric'),
               tooltip: '''
@@ -283,7 +283,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
           ],
         ),
 
-        configRowSpace,
+        configRowGap,
 
         Row(
           children: [
@@ -324,7 +324,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     inputFormatter:
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
                   ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Max Iterations:',
               key: const Key('maxit'),
@@ -342,7 +342,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxitNeuralProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Max Weights:',
               key: const Key('max_nwts'),
@@ -359,7 +359,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxNWtsProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Threshold:',
               key: const Key('thresholdNeuralField'),
@@ -379,7 +379,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               interval: 0.0005,
               decimalPlaces: 4,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Max Steps:',
               key: const Key('neuralMaxStepField'),
@@ -398,7 +398,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
           ],
         ),
-        configRowSpace,
+        configRowGap,
         Row(
           children: [
             variableChooser(
@@ -421,7 +421,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                 }
               },
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Action Function',
               actionFunction,
@@ -445,7 +445,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
           ],
         ),
-        configBotSpace,
+        configBotGap,
       ],
     );
   }

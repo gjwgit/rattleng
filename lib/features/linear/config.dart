@@ -67,7 +67,7 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
               },
               child: const Text('Build Linear Model'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             Text('Target: ${getTarget(ref)}'),
           ],
         ),

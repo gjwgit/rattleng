@@ -73,13 +73,13 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
       children: [
         // Space above the beginning of the configs.
 
-        configTopSpace,
+        configTopGap,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            configLeftSpace,
+            configLeftGap,
 
             // The BUILD button.
 
@@ -106,18 +106,18 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
               child: const Text('Build Boosted Trees'),
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             Text('Target: ${getTarget(ref)}'),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             const Text(
               'Algorithm:',
               style: normalTextStyle,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: boostAlgorithm.keys.toList(),
@@ -134,9 +134,9 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             ),
           ],
         ),
-        configRowSpace,
+        configRowGap,
         BoostSettings(algorithm: algorithm),
-        configBotSpace,
+        configBotGap,
       ],
     );
   }

@@ -82,12 +82,12 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
             // Space to the left of the configs.
 
-            configLeftSpace,
+            configLeftGap,
 
             // The BUILD button.
 
@@ -128,14 +128,14 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               child: const Text('Build Clustering'),
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             const Text(
               'Type:',
               style: normalTextStyle,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: clusterTypes.keys.toList(),
@@ -150,7 +150,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 });
               },
             ),
-            configWidgetSpace,
+            configWidgetGap,
             LabelledCheckbox(
               key: const Key('re_scale'),
               tooltip: '''
@@ -169,9 +169,9 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             ),
           ],
         ),
-        configRowSpace,
+        configRowGap,
         const ClusterSetting(),
-        configBotSpace,
+        configBotGap,
       ],
     );
   }

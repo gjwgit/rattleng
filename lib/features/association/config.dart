@@ -86,7 +86,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
 
     return Column(
       children: [
-        configRowSpace,
+        configRowGap,
         Row(
           children: [
             // Space to the left of the configs.
@@ -113,11 +113,11 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               child: const Text('Build Association Rules'),
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             Text('Target: ${getTarget(ref)}'),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('basketsAssociationField'),
@@ -141,10 +141,10 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             ),
           ],
         ),
-        configRowSpace,
+        configRowGap,
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
             NumberField(
               label: 'Support:',
               key: const Key('supportAssociationField'),
@@ -163,7 +163,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               interval: 0.005,
               decimalPlaces: 4,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Confidence:',
               key: const Key('confidenceAssociationField'),
@@ -182,7 +182,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               interval: 0.005,
               decimalPlaces: 4,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Min Length:',
               key: const Key('minLengthAssociationField'),
@@ -198,7 +198,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               validator: validateVector,
               stateProvider: minLengthAssociationProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Limit Number:',
               key: const Key('measuresLimitAssociationField'),
@@ -217,7 +217,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               stateProvider: interestMeasuresAssociationProvider,
               enabled: !basketsTicked,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Sort by:',
               associationRulesSortBy,

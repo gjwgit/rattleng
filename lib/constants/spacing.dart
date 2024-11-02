@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Thursday 2024-10-17 08:22:05 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-11-02 14:07:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,9 +25,7 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
-import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 // TODO 20240901 gjw CONSIDER THE gap PACKAGE FOR SLIGHTLY SIMPLER GAPs.
 
@@ -37,33 +35,33 @@ const choiceChipRowSpace = 10.0;
 
 /// Space above the beginning of the configs Row.
 
-const configTopSpace = SizedBox(height: 10);
+const configTopGap = Gap(10);
 
 /// Space below the last row of configs often to ensure the underline of numeric
 /// paramaters is not lost.
 
-const configBotSpace = SizedBox(height: 5);
+const configBotGap = Gap(5);
 
 /// Space between the config Rows.
 
-const configRowSpace = SizedBox(height: 20);
+const configRowGap = Gap(20);
 
 /// Space to the left of the configs within a Row.
 
-const configLeftSpace = SizedBox(width: 5);
+const configLeftGap = Gap(5);
 
 /// Space between widgets in a Row in the config.
 
-const configWidgetSpace = SizedBox(width: 20.0); // Gap(20);
+const configWidgetGap = Gap(20);
 
 /// Space between widgets in a Row in the the config.
 
-const configChooserSpace = SizedBox(width: 10.0); // Gap(20);
+const configChooserGap = Gap(10);
 
 /// Space between a label and the field.
 
-const configLabelSpace = SizedBox(width: 5);
+const configLabelGap = Gap(5);
 
 /// Space before the bottom divider in the display pages.
 
-const textPageBottomSpace = SizedBox(height: 20.0); //Gap(20);
+const textPageBottomGap = Gap(20);
