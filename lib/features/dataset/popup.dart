@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Saturday 2024-11-02 10:53:30 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-11-02 14:13:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -29,7 +29,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
