@@ -101,52 +101,6 @@ class DatasetPopup extends ConsumerWidget {
 
           configRowGap,
 
-          // Radio buttons for selecting demo dataset.
-
-          Consumer(builder: (context, ref, child) {
-            String selectedDataset = ref.watch(demoDatasetProvider);
-            return Column(
-              children: [
-                ListTile(
-                  title: const Text('Weather'),
-                  leading: Radio<String>(
-                    value: 'weather',
-                    groupValue: selectedDataset,
-                    onChanged: (value) {
-                      ref.read(demoDatasetProvider.notifier).state = value!;
-                    },
-                  ),
-                ),
-
-                // Option for Audit dataset.
-
-                ListTile(
-                  title: const Text('Audit'),
-                  leading: Radio<String>(
-                    value: 'audit',
-                    groupValue: selectedDataset,
-                    onChanged: (value) {
-                      ref.read(demoDatasetProvider.notifier).state = value!;
-                    },
-                  ),
-                ),
-
-                // Option for Movies dataset.
-
-                ListTile(
-                  title: const Text('Movies'),
-                  leading: Radio<String>(
-                    value: 'movies',
-                    groupValue: selectedDataset,
-                    onChanged: (value) {
-                      ref.read(demoDatasetProvider.notifier).state = value!;
-                    },
-                  ),
-                ),
-              ],
-            );
-          }),
-
           // Space between dataset choices and row of options.
 
           configRowGap,
@@ -247,6 +201,54 @@ class DatasetPopup extends ConsumerWidget {
               ),
             ],
           ),
+
+          configRowGap,
+
+          // Radio buttons for selecting demo dataset.
+
+          Consumer(builder: (context, ref, child) {
+            String selectedDataset = ref.watch(demoDatasetProvider);
+            return Column(
+              children: [
+                ListTile(
+                  title: const Text('Weather'),
+                  leading: Radio<String>(
+                    value: 'weather',
+                    groupValue: selectedDataset,
+                    onChanged: (value) {
+                      ref.read(demoDatasetProvider.notifier).state = value!;
+                    },
+                  ),
+                ),
+
+                // Option for Audit dataset.
+
+                ListTile(
+                  title: const Text('Audit'),
+                  leading: Radio<String>(
+                    value: 'audit',
+                    groupValue: selectedDataset,
+                    onChanged: (value) {
+                      ref.read(demoDatasetProvider.notifier).state = value!;
+                    },
+                  ),
+                ),
+
+                // Option for Movies dataset.
+
+                ListTile(
+                  title: const Text('Movies'),
+                  leading: Radio<String>(
+                    value: 'movies',
+                    groupValue: selectedDataset,
+                    onChanged: (value) {
+                      ref.read(demoDatasetProvider.notifier).state = value!;
+                    },
+                  ),
+                ),
+              ],
+            );
+          }),
 
           // SPACE between row of options and the cancel button.
 
