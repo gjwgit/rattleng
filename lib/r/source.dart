@@ -32,7 +32,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -40,6 +39,7 @@ import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/complexity.dart';
+import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
@@ -58,6 +58,7 @@ import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
@@ -147,6 +148,11 @@ Future<void> rSource(
   String clusterDistance = ref.read(distanceClusterProvider);
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
+
+  // FOREST
+
+  int forestTrees = ref.read(treeNumForestProvider);
+  int forestPredictorNum = ref.read(predictorNumForestProvider);
 
   // NEURAL
 
@@ -392,6 +398,11 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_DISTANCE', '"${clusterDistance.toString()}"');
   code = code.replaceAll('CLUSTER_LINK', '"${clusterLink.toString()}"');
   code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
+
+  // FOREST
+
+  code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
+  code = code.replaceAll('RF_MTRY', forestPredictorNum.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

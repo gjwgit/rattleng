@@ -1,4 +1,4 @@
-/// A provider for the parameters for neural.
+/// A provider for the parameters for forest.
 ///
 /// Time-stamp: <Wednesday 2024-10-30 10:59:48 +1100 Graham Williams>
 ///
@@ -25,3 +25,8 @@
 /// Authors: Zheyuan Xu
 
 library;
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final predictorNumForestProvider = StateProvider<int>((ref) => 4);
+final treeNumForestProvider = StateProvider<int>((ref) => 500);
