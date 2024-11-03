@@ -67,6 +67,10 @@ class DatasetPopup extends ConsumerWidget {
 
     // rStart(context, ref);
 
+    // A state to hold the selected demo dataset.
+
+    final demoDatasetProvider = StateProvider<String>((ref) => 'weather');
+
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -94,6 +98,56 @@ class DatasetPopup extends ConsumerWidget {
           ),
 
           // Space between title and buttons.
+
+          configRowGap,
+
+          // Radio buttons for selecting demo dataset.
+
+          Consumer(builder: (context, ref, child) {
+            String selectedDataset = ref.watch(demoDatasetProvider);
+            return Column(
+              children: [
+                ListTile(
+                  title: const Text('Weather'),
+                  leading: Radio<String>(
+                    value: 'weather',
+                    groupValue: selectedDataset,
+                    onChanged: (value) {
+                      ref.read(demoDatasetProvider.notifier).state = value!;
+                    },
+                  ),
+                ),
+
+                // Option for Audit dataset.
+
+                ListTile(
+                  title: const Text('Audit'),
+                  leading: Radio<String>(
+                    value: 'audit',
+                    groupValue: selectedDataset,
+                    onChanged: (value) {
+                      ref.read(demoDatasetProvider.notifier).state = value!;
+                    },
+                  ),
+                ),
+
+                // Option for Movies dataset.
+
+                ListTile(
+                  title: const Text('Movies'),
+                  leading: Radio<String>(
+                    value: 'movies',
+                    groupValue: selectedDataset,
+                    onChanged: (value) {
+                      ref.read(demoDatasetProvider.notifier).state = value!;
+                    },
+                  ),
+                ),
+              ],
+            );
+          }),
+
+          // Space between dataset choices and row of options.
 
           configRowGap,
 
@@ -152,10 +206,24 @@ class DatasetPopup extends ConsumerWidget {
               const SizedBox(width: widthSpace),
 
               // DEMO
+
               ElevatedButton(
                 onPressed: () async {
-                  String dest =
-                      await copyAssetToTempDir(asset: 'data/weather.csv');
+                  String asset;
+                  switch (ref.read(demoDatasetProvider)) {
+                    case 'audit':
+                      asset = 'data/audit.csv';
+                      break;
+                    case 'movies':
+                      asset = 'data/movies.csv';
+                      break;
+                    case 'weather':
+                    default:
+                      asset = 'data/weather.csv';
+                      break;
+                  }
+
+                  String dest = await copyAssetToTempDir(asset: asset);
                   ref.read(pathProvider.notifier).state = dest;
 
                   if (context.mounted) await rLoadDataset(context, ref);
