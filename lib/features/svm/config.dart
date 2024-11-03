@@ -67,7 +67,7 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
               },
               child: const Text('Build SVM Model'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             Text('Target: ${getTarget(ref)}'),
           ],
         ),

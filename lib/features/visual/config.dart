@@ -141,10 +141,10 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
 
             // The BUILD button.
             ActivityButton(
@@ -181,7 +181,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               child: const Text('Generate Plots'),
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             DropdownMenu(
               label: const Text('Variable'),
@@ -199,7 +199,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               },
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             DropdownMenu(
               label: const Text('Group by'),

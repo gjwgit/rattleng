@@ -55,10 +55,10 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
             // The "Generate Dataset Summary" button.
             ActivityButton(
               tooltip: '''
@@ -72,7 +72,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               },
               child: const Text('Generate Dataset Summary'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             LabelledCheckbox(
               label: 'Include Cross Tab',
               tooltip: '''

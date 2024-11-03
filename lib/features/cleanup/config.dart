@@ -266,10 +266,10 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
 
             // The BUILD button.
 
@@ -281,7 +281,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               child: const Text('Delete from Dataset'),
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: multiMethods.keys.toList(),
@@ -297,7 +297,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: specificMethods.keys.toList(),
@@ -313,7 +313,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
             ),
 
-            configChooserSpace,
+            configChooserGap,
 
             // Use the variableChooser with enabled parameter.
 
@@ -341,7 +341,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
           ],
         ),
       ],

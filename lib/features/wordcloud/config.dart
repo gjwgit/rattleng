@@ -86,13 +86,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
 
         // BUILD button.
 
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
             ActivityButton(
               pageControllerProvider:
                   wordcloudPageControllerProvider, // Optional navigation
@@ -138,7 +138,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ],
         ),
 
-        configRowSpace,
+        configRowGap,
 
         // Options for the current functionality.
 
@@ -158,7 +158,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: checkboxProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('stem'),
@@ -173,7 +173,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stemProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('remove_punctuation'),
@@ -186,7 +186,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: punctuationProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('remove_stopwords'),
@@ -199,7 +199,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stopwordProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             Expanded(
               child: DelayedTooltip(
@@ -227,7 +227,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ],
         ),
 
-        configRowSpace,
+        configRowGap,
 
         // Parameters for the current functionality.
 
@@ -236,7 +236,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           child: Row(
             children: [
               const Text('Tuning Parameters:  '),
-              configLabelSpace,
+              configLabelGap,
               // max word text field
               SizedBox(
                 width: 150.0,
@@ -257,7 +257,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ),
                 ),
               ),
-              configWidgetSpace,
+              configWidgetGap,
               SizedBox(
                 width: 150.0,
                 child: DelayedTooltip(
@@ -282,7 +282,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ),
         ),
 
-        configBotSpace,
+        configBotGap,
       ],
     );
   }

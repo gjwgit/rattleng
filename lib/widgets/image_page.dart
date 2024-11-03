@@ -50,11 +50,13 @@ import 'package:rattle/widgets/delayed_tooltip.dart';
 class ImagePage extends StatelessWidget {
   final String title;
   final String path;
+  final bool svgImage;
 
   const ImagePage({
     super.key,
     required this.title,
     required this.path,
+    this.svgImage = true,
   });
 
   /// Load the image bytes from the specified file path.
@@ -332,10 +334,12 @@ class ImagePage extends StatelessWidget {
                         child: InteractiveViewer(
                           maxScale: 5,
                           alignment: Alignment.topCenter,
-                          child: SvgPicture.memory(
-                            bytes,
-                            fit: BoxFit.scaleDown,
-                          ),
+                          child: svgImage
+                              ? SvgPicture.memory(
+                                  bytes,
+                                  fit: BoxFit.scaleDown,
+                                )
+                              : Image.memory(bytes),
                         ),
                       );
                     },

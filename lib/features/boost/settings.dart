@@ -114,7 +114,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
 
     return Column(
       children: [
-        configRowSpace,
+        configRowGap,
         Row(
           children: [
             NumberField(
@@ -134,7 +134,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxDepthBoostProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Min Split:',
               key: const Key('boost_min_split'),
@@ -149,7 +149,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: minSplitBoostProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Complexity:',
               key: const Key('boost_complexity'),
@@ -170,7 +170,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateDecimal(value),
               stateProvider: complexityBoostProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'X Val:',
               key: const Key('boost_x_value'),
@@ -186,10 +186,10 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: xValueBoostProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
           ],
         ),
-        configRowSpace,
+        configRowGap,
         Row(
           children: [
             NumberField(
@@ -213,7 +213,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateDecimal(value),
               stateProvider: learningRateBoostProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Threads:',
               key: const Key('boost_max_depth'),
@@ -230,7 +230,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: threadsBoostProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Iterations:',
               key: const Key('boost_iteration'),
@@ -245,7 +245,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: iterationsBoostProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Objective',
               modelObjective,

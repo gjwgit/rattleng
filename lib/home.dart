@@ -263,7 +263,7 @@ Xu, Yixiang Yin, Bo Zhang.
               width: 40,
               height: 40,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             const Text(appTitle),
           ],
         ),

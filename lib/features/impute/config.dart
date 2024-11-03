@@ -143,7 +143,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
           // Add extra space between MODE and CONSTANT.
 
-          configChooserSpace,
+          configChooserGap,
 
           // Second group of chips (only CONSTANT for now).
 
@@ -282,10 +282,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
             ActivityButton(
               // Optional navigation.
 
@@ -302,7 +302,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               },
               child: const Text('Impute Missing Values'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Variable',
               inputs,
@@ -326,9 +326,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
               ''',
             ),
-            configWidgetSpace,
+            configWidgetGap,
             transformChooser(),
-            configChooserSpace,
+            configChooserGap,
             constantEntry(),
           ],
         ),

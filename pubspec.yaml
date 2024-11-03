@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.18+137
+version: 6.3.19+138
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -43,6 +43,7 @@ dependencies:
       ref: main
   flutter_riverpod: ^2.4.4
   flutter_svg: ^2.0.7
+  gap: ^3.0.1
   intl: ^0.19.0
   package_info_plus: ^8.0.0
   path: ^1.8.3

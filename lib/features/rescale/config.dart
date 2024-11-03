@@ -141,7 +141,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
           tooltips: normaliseMethodTooltips,
         ),
-        configWidgetSpace,
+        configWidgetGap,
         // Add tooltips to orderMethods ChoiceChipTip.
 
         ChoiceChipTip<String>(
@@ -156,7 +156,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
           tooltips: orderMethodTooltips,
         ),
-        configWidgetSpace,
+        configWidgetGap,
         NumberField(
           label: 'Interval',
           tooltip: '''
@@ -250,10 +250,10 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
             ActivityButton(
               tooltip: '''
 
@@ -274,7 +274,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               },
               child: const Text('Rescale Variable Values'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Variable',
               numericInputs,

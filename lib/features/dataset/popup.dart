@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Thursday 2024-10-17 14:55:12 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-11-02 14:13:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
@@ -94,7 +95,7 @@ class DatasetPopup extends ConsumerWidget {
 
           // Space between title and buttons.
 
-          const SizedBox(height: heightSpace),
+          configRowGap,
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -181,7 +182,7 @@ class DatasetPopup extends ConsumerWidget {
 
           // SPACE between row of options and the cancel button.
 
-          const SizedBox(height: heightSpace),
+          configRowGap,
 
           // Add a CANCEL button to do nothing but return.
 
