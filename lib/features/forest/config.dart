@@ -56,7 +56,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
   @override
   void dispose() {
     // Dispose the controllers to free up resources.
-    
+
     _treesController.dispose();
     _variablesController.dispose();
     super.dispose();
@@ -94,7 +94,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             Text('Target: ${getTarget(ref)}'),
           ],
         ),
-        configRowSpace,
+        configRowGap,
+
         Row(
           children: [
             // Space to the left of the configs.
@@ -117,7 +118,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               stateProvider: treeNumForestProvider,
               interval: 10,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Variables:',
               key: const Key('variablesForest'),
