@@ -127,6 +127,17 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       );
     }
 
+    String oobRocImage = '$tempDir/model_random_forest_oob_roc_curve.svg';
+
+    if (imageExists(oobRocImage)) {
+      pages.add(
+        ImagePage(
+          title: 'OOB ROC Curve',
+          path: oobRocImage,
+        ),
+      );
+    }
+
     return PageViewer(
       pageController: pageController,
       pages: pages,
