@@ -36,6 +36,8 @@
 # Load required packages from the local library into the R session.
 
 library(randomForest) # ML: randomForest() na.roughfix() for missing data.
+library(ggplot2)
+library(reshape2)
 
 mtype <- "randomForest"
 mdesc <- "Forest"
@@ -76,21 +78,33 @@ rn[order(rn[,3], decreasing=TRUE),]
 # Plot the relative importance of the variables.
 
 svg("TEMPDIR/model_random_forest_varimp.svg")
-ggVarImp(model_randomForest,
-         n=nrow(tds), # Bug fix for head(tds,n) with n=NULL - needs fixing in rattle.
-         title="Variable Importance Random Forest weather.csv")
+
+# Assuming `model_randomForest` is already trained.
+# Extract variable importance for each class.
+
+importance_matrix <- importance(model_randomForest)
+
+# Convert to a data frame for easy plotting.
+
+importance_df <- as.data.frame(importance_matrix)
+importance_df$Variable <- rownames(importance_df)
+
+# Melt the data frame to long format for ggplot.
+
+importance_long <- melt(importance_df, id.vars = "Variable", 
+                        variable.name = "Class", value.name = "Importance")
+
+ggplot(importance_long, aes(x = reorder(Variable, Importance), y = Importance, fill = Class)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  labs(
+    title = "Variable Importance for Different Target Classes",
+    x = "Variable",
+    y = "Importance"
+  ) +
+  theme_minimal()
+
 dev.off()
-
-# p <- ggVarImp(crs$rf,
-#              title="Variable Importance Random Forest weather.csv")
-# p
-
-# Plot the error rate against the number of trees.
-
-## plot(crs$rf, main="")
-## legend("topright", c("OOB", "No", "Yes"), text.col=1:6, lty=1:3, col=1:3)
-## title(main="Error Rates Random Forest weather.csv",
-##     sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
 
 # Display tree number 1.
 
