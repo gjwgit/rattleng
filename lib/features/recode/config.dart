@@ -129,7 +129,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             });
           },
         ),
-        configWidgetSpace,
+        configWidgetGap,
         NumberField(
           label: 'Number',
           controller: valCtrl,
@@ -138,7 +138,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
           enabled: isNumeric,
         ),
-        configWidgetSpace,
+        configWidgetGap,
         ChoiceChipTip(
           enabled: selected == 'NULL' || !isNumeric,
           options: categoricMethods,
@@ -149,7 +149,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             });
           },
         ),
-        configWidgetSpace,
+        configWidgetGap,
         Expanded(
           child: variableChooser(
             'Secondary',
@@ -206,10 +206,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
-            configTopSpace,
+            configTopGap,
             ActivityButton(
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
@@ -224,7 +224,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               },
               child: const Text('Recode Variable Values'),
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Variable',
               inputs,
@@ -251,7 +251,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             ),
           ],
         ),
-        configTopSpace,
+        configTopGap,
         recodeChooser(inputs, selected2),
       ],
     );

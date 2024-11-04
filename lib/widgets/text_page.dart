@@ -133,7 +133,7 @@ class TextPage extends StatelessWidget {
           // navigation when scrolling to the bottom of the page so that it can
           // be visible in at least some part of any very busy pages.
 
-          textPageBottomSpace,
+          textPageBottomGap,
 
           // 20240812 gjw Add a divider to mark the end of the text page.
 
