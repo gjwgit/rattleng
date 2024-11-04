@@ -209,6 +209,7 @@ class DatasetPopup extends ConsumerWidget {
           Consumer(
             builder: (context, ref, child) {
               String selectedDataset = ref.watch(demoDatasetProvider);
+
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
