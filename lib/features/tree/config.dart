@@ -142,10 +142,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   // Collect all errors.
 
                   List<String> errors = [
-                    if (minSplitError != null) 'Min Split: $minSplitError',
-                    if (maxDepthError != null) 'Max Depth: $maxDepthError',
-                    if (minBucketError != null) 'Min Bucket: $minBucketError',
-                    if (complexityError != null) 'Complexity: $complexityError',
+                    'Min Split: $minSplitError',
+                    'Max Depth: $maxDepthError',
+                    'Min Bucket: $minBucketError',
+                    'Complexity: $complexityError',
                     if (priorsError != null) 'Priors: $priorsError',
                     if (lossMatrixError != null)
                       'Loss Matrix: $lossMatrixError',

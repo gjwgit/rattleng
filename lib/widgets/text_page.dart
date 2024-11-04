@@ -350,34 +350,24 @@ class TextPage extends StatelessWidget {
 
     // Check if a file path was provided.
 
-    if (filePath != null) {
-      final file = File(filePath);
+    final file = File(filePath);
 
-      // Write the PDF as bytes.
+    // Write the PDF as bytes.
 
-      await file.writeAsBytes(await pdf.save());
+    await file.writeAsBytes(await pdf.save());
 
-      // Show a SnackBar with the file path and open the PDF.
+    // Show a SnackBar with the file path and open the PDF.
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('PDF saved as $filePath'),
-          action: SnackBarAction(
-            label: 'Open',
-            onPressed: () {
-              launchUrl(Uri.file(filePath));
-            },
-          ),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('PDF saved as $filePath'),
+        action: SnackBarAction(
+          label: 'Open',
+          onPressed: () {
+            launchUrl(Uri.file(filePath));
+          },
         ),
-      );
-    } else {
-      // Handle case when no file is selected.
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('No file selected.'),
-        ),
-      );
+      ),
+    );
     }
-  }
 }

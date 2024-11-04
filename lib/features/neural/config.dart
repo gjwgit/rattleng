@@ -160,6 +160,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   if (maxitError != null) 'Maxit: $maxitError',
                 ];
 
+
                 // Check if there are any errors.
                 if (errors.isNotEmpty) {
                   // Show a warning dialog if validation fails.
@@ -206,28 +207,26 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   }
                   // If page navigation is required, handle it here.
 
-                  if (pageControllerProvider != null) {
-                    // Access the PageController directly from the StateProvider.
+                  // Access the PageController directly from the StateProvider.
 
-                    final pageController = ref.read(pageControllerProvider!);
+                  final pageController = ref.read(pageControllerProvider!);
 
-                    // Check the current page index before navigating.
+                  // Check the current page index before navigating.
 
-                    final currentPage = pageController.page?.round() ?? 0;
+                  final currentPage = pageController.page?.round() ?? 0;
 
-                    // Determine the target page index based on the current page.
+                  // Determine the target page index based on the current page.
 
-                    int targetPage = currentPage == 0 ? 1 : currentPage;
+                  int targetPage = currentPage == 0 ? 1 : currentPage;
 
-                    // Navigate to the target page.
+                  // Navigate to the target page.
 
-                    pageController.animateToPage(
-                      targetPage,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                }
+                  pageController.animateToPage(
+                    targetPage,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                                }
               },
               child: const Text('Build Neural Network'),
             ),
@@ -249,6 +248,19 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   if (chosen != null) {
                     algorithm = chosen;
                     ref.read(algorithmNeuralProvider.notifier).state = chosen;
+                    //TODO kevin
+                                   // Access the PageController directly from the StateProvider.
+
+                  final pageController = ref.read(pageControllerProvider!);
+
+
+                  // Navigate to the target page.
+
+                  pageController.animateToPage(
+                    0,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
                   }
                 });
               },

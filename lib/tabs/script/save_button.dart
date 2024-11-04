@@ -57,14 +57,9 @@ class ScriptSaveButton extends ConsumerWidget {
       allowedExtensions: ['R'],
     );
     if (context.mounted) {
-      if (outputPath != null) {
-        // User picked a file.
-        _saveScript(ref, outputPath, context);
-      } else {
-        // user canceled the file picker
-        _showErrorDialog(context, 'No file selected');
-      }
-    } else {
+      // User picked a file.
+      _saveScript(ref, outputPath, context);
+        } else {
       // The context is no longer mounted.
       debugPrint('ERROR: Context is no longer mounted');
     }

@@ -210,11 +210,9 @@ class ImagePage extends StatelessWidget {
                             String? pathToSave = await selectFile(
                               defaultFileName: fileName,
                             );
-                            if (pathToSave != null) {
-                              // Copy generated image from /tmp to user's location.
-                              await File(path).copy(pathToSave);
-                            }
-                          },
+                            // Copy generated image from /tmp to user's location.
+                            await File(path).copy(pathToSave);
+                                                    },
                         ),
                       ),
                       const SizedBox(width: 5),
