@@ -35,6 +35,7 @@
 
 # Load required packages from the local library into the R session.
 
+library(rattle)
 library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 library(ggplot2)
 library(reshape2)
@@ -75,6 +76,10 @@ print(pROC::ci.auc(model_randomForest$y, as.numeric(model_randomForest$predicted
 rn <- round(randomForest::importance(model_randomForest), 2)
 rn[order(rn[,3], decreasing=TRUE),]
 
+# Display tree number 1.
+
+printRandomForests(model_randomForest, 1)
+
 # Plot the relative importance of the variables.
 
 svg("TEMPDIR/model_random_forest_varimp.svg")
@@ -106,9 +111,6 @@ ggplot(importance_long, aes(x = reorder(Variable, Importance), y = Importance, f
 
 dev.off()
 
-# Display tree number 1.
-
-printRandomForests(model_randomForest, 1)
 
 # Plot the OOB ROC curve.
 
