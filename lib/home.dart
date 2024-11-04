@@ -298,40 +298,7 @@ Xu, Yixiang Yin, Bo Zhang.
           ),
           const SizedBox(width: 50),
 
-          // Viewer.
-
-          DelayedTooltip(
-            message: '''
-
-            Viewer: Tap here to open a separate window to view the current
-            dataset.  The default and quite simple data viewer in R will be
-            used. It is invoked as `view(ds)`.
-
-            ''',
-            child: IconButton(
-              icon: const Icon(
-                Icons.table_view,
-                color: Colors.blue,
-              ),
-              onPressed: () {
-                String path = ref.read(pathProvider);
-                if (path.isEmpty) {
-                  showOk(
-                    context: context,
-                    title: 'No Dataset Loaded',
-                    content: '''
-
-                Please choose a dataset to load from the **Dataset** tab. There is
-                not much we can do until we have loaded a dataset.
-
-                ''',
-                  );
-                } else {
-                  rExecute(ref, 'view(ds)\n');
-                }
-              },
-            ),
-          ),
+ 
 
           // Reset.
 
