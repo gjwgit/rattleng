@@ -208,42 +208,48 @@ class DatasetPopup extends ConsumerWidget {
 
           Consumer(builder: (context, ref, child) {
             String selectedDataset = ref.watch(demoDatasetProvider);
-            return Column(
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ListTile(
-                  title: const Text('Weather'),
-                  leading: Radio<String>(
-                    value: 'weather',
-                    groupValue: selectedDataset,
-                    onChanged: (value) {
-                      ref.read(demoDatasetProvider.notifier).state = value!;
-                    },
+                // Option for Weather dataset.
+                Expanded(
+                  child: ListTile(
+                    title: const Text('Weather'),
+                    leading: Radio<String>(
+                      value: 'weather',
+                      groupValue: selectedDataset,
+                      onChanged: (value) {
+                        ref.read(demoDatasetProvider.notifier).state = value!;
+                      },
+                    ),
                   ),
                 ),
 
                 // Option for Audit dataset.
-
-                ListTile(
-                  title: const Text('Audit'),
-                  leading: Radio<String>(
-                    value: 'audit',
-                    groupValue: selectedDataset,
-                    onChanged: (value) {
-                      ref.read(demoDatasetProvider.notifier).state = value!;
-                    },
+                Expanded(
+                  child: ListTile(
+                    title: const Text('Audit'),
+                    leading: Radio<String>(
+                      value: 'audit',
+                      groupValue: selectedDataset,
+                      onChanged: (value) {
+                        ref.read(demoDatasetProvider.notifier).state = value!;
+                      },
+                    ),
                   ),
                 ),
 
                 // Option for Movies dataset.
-
-                ListTile(
-                  title: const Text('Movies'),
-                  leading: Radio<String>(
-                    value: 'movies',
-                    groupValue: selectedDataset,
-                    onChanged: (value) {
-                      ref.read(demoDatasetProvider.notifier).state = value!;
-                    },
+                Expanded(
+                  child: ListTile(
+                    title: const Text('Movies'),
+                    leading: Radio<String>(
+                      value: 'movies',
+                      groupValue: selectedDataset,
+                      onChanged: (value) {
+                        ref.read(demoDatasetProvider.notifier).state = value!;
+                      },
+                    ),
                   ),
                 ),
               ],
