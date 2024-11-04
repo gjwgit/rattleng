@@ -116,6 +116,17 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       );
     }
 
+    String errorRatesImage = '$tempDir/model_random_forest_error_rate.svg';
+
+    if (imageExists(errorRatesImage)) {
+      pages.add(
+        ImagePage(
+          title: 'ERROR RATE',
+          path: errorRatesImage,
+        ),
+      );
+    }
+
     return PageViewer(
       pageController: pageController,
       pages: pages,

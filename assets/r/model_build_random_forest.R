@@ -112,14 +112,13 @@ ggplot(importance_long, aes(x = reorder(Variable, Importance), y = Importance, f
 dev.off()
 
 
-# Plot the OOB ROC curve.
+# Plot the error rate against the number of trees.
 
-## library(verification)
-## aucc <- verification::roc.area(as.integer(as.factor(crs$dataset[crs$train, crs$target]))-1,
-##                  crs$rf$votes[,2])$A
-## verification::roc.plot(as.integer(as.factor(crs$dataset[crs$train, crs$target]))-1,
-##          crs$rf$votes[,2], main="")
-## legend("bottomright", bty="n",
-##        sprintf("Area Under the Curve (AUC) = %1.3f", aucc))
-## title(main="OOB ROC Curve Random Forest weather.csv",
-##     sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+svg("TEMPDIR/model_random_forest_error_rate.svg")
+
+plot(model_randomForest, main="")
+legend("topright", c("OOB", "No", "Yes"), text.col=1:6, lty=1:3, col=1:3)
+title(main="Error Rates Random",
+    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+dev.off()
