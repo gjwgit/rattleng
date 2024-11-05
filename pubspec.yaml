@@ -45,10 +45,11 @@ dependencies:
   flutter_svg: ^2.0.7
   gap: ^3.0.1
   intl: ^0.19.0
-  markdown_tooltip:
-    git:
-      url: https://github.com/gjwgit/markdown_tooltip
-      ref: dev
+  markdown_tooltip: ^0.0.2
+    # path: ../markdown_tooltip
+    # git:
+    #   url: https://github.com/gjwgit/markdown_tooltip
+    #   ref: dev
   package_info_plus: ^8.0.0
   path: ^1.8.3
   path_provider: ^2.1.3
