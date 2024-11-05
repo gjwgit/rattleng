@@ -79,7 +79,7 @@ rn[order(rn[,3], decreasing=TRUE),]
 
 # Display tree number 1.
 
-printRandomForests(model_randomForest, 1)
+printRandomForests(model_randomForest, RF_NO_TREE)
 
 # Plot the relative importance of the variables.
 

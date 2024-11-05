@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
@@ -56,6 +57,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       forestPageControllerProvider,
     ); // Get the PageController from Riverpod
     String stdout = ref.watch(stdoutProvider);
+    int forestNo = ref.watch(treeNoForestProvider);
 
     List<Widget> pages = [showMarkdownFile(forestIntroFile, context)];
 
@@ -91,7 +93,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'printRandomForests(model_randomForest, 1)');
+    content =
+        rExtract(stdout, 'printRandomForests(model_randomForest, ${forestNo})');
 
     if (content.isNotEmpty) {
       pages.add(

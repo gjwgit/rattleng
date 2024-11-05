@@ -165,6 +165,7 @@ Future<void> rSource(
 
   int forestTrees = ref.read(treeNumForestProvider);
   int forestPredictorNum = ref.read(predictorNumForestProvider);
+  int forestNo = ref.read(treeNoForestProvider);
 
   // NEURAL
 
@@ -450,6 +451,7 @@ Future<void> rSource(
 
   code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
   code = code.replaceAll('RF_MTRY', forestPredictorNum.toString());
+  code = code.replaceAll('RF_NO_TREE', forestNo.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

@@ -52,6 +52,7 @@ class ForestConfig extends ConsumerStatefulWidget {
 class ForestConfigState extends ConsumerState<ForestConfig> {
   final TextEditingController _treesController = TextEditingController();
   final TextEditingController _variablesController = TextEditingController();
+  final TextEditingController _treeNoController = TextEditingController();
 
   @override
   void dispose() {
@@ -59,11 +60,13 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
     _treesController.dispose();
     _variablesController.dispose();
+    _treeNoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    int treeNum = ref.watch(treeNumForestProvider);
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -133,6 +136,22 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: predictorNumForestProvider,
+            ),
+            configWidgetGap,
+            NumberField(
+              label: 'NO. Tree:',
+              key: const Key('treeNoForest'),
+              controller: _treeNoController,
+              tooltip: '''
+
+                Which tree to display.
+
+                ''',
+              max: treeNum,
+              validator: validateVector,
+              inputFormatter:
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+              stateProvider: treeNoForestProvider,
             ),
           ],
         ),
