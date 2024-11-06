@@ -25,5 +25,6 @@
 # Author: Graham Williams, Yixiang Yin
 
 # Bin the SELECTED_VAR into NUMBER bins using quantiles.
+library(dlookr)
 
-ds[["BQT_SELECTED_VAR_NUMBER"]] <- binning(ds[["SELECTED_VAR"]], NUMBER, method="quantile", ordered=FALSE)
+ds[["BQT_SELECTED_VAR_NUMBER"]] <- binning(ds[["SELECTED_VAR"]], NUMBER, type="quantile", ordered=FALSE)
