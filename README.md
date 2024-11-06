@@ -1,3 +1,6 @@
+[![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
+[![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
+
 # Rattle the Next Generation Data Scientist
 
 Rattle has been in development and use for almost 20 years as a Data
