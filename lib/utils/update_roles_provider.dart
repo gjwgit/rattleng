@@ -40,12 +40,7 @@ import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/is_numeric.dart';
 
 // Define the prefixes that need special handling. They have an number at suffix
-Set<String> specialPrefixes = {
-  'RIN',
-  'BK',
-  'BQ',
-  'BE',
-};
+final List<String> specialPrefixes = ['RIN', 'BKM', 'BQT', 'BEQ'];
 
 Set<String> transformPrefix = {
 // rescale
@@ -63,9 +58,9 @@ Set<String> transformPrefix = {
   'IMO',
   'IMP',
 // Recode
-  'BK', // number at suffix
-  'BQ', // number at suffix
-  'BE', // number at suffix
+  'BKM', // number at suffix
+  'BQT', // number at suffix
+  'BEQ', // number at suffix
   'TJN',
   'TIN',
 };
@@ -81,9 +76,7 @@ bool isTransformedVar(String name) {
 }
 
 String getOriginal(String input) {
-  // It should return the var name before the transformation given the var name after the transformation
-  // Define the prefixes that need special handling
-  final List<String> specialPrefixes = ['RIN', 'BK', 'BQ', 'BE'];
+  // It should return the variable name before the transformation given the variable name after the transformation
 
   // Find the index of the first underscore
   int firstUnderscoreIndex = input.indexOf('_');
@@ -125,7 +118,11 @@ void updateVariablesProvider(WidgetRef ref) {
     // update roles
     if (!ref.read(rolesProvider.notifier).state.containsKey(column.name)) {
       if (isTransformedVar(column.name)) {
+        // update the old variable's role.
+
         ref.read(rolesProvider.notifier).state[column.name] = Role.input;
+        // update the new variable's role.
+        
         ref.read(rolesProvider.notifier).state[getOriginal(column.name)] =
             Role.ignoreAfterTransformed;
       } else {
