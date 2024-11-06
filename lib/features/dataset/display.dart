@@ -147,7 +147,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           // Positioned DelayedTooltip in the top-right corner.
 
           Align(
-            alignment: Alignment.topRight,
+            alignment: Alignment.topCenter,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: DelayedTooltip(
