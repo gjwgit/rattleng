@@ -79,7 +79,8 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
             // The BUILD button
 
             ActivityButton(
-              pageControllerProvider: testsPageControllerProvider, // Optional navigation
+              pageControllerProvider:
+                  testsPageControllerProvider, // Optional navigation
 
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
@@ -100,7 +101,8 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
               onSelected: (String? value) {
-                ref.read(selectedProvider.notifier).state = value ?? 'IMPOSSIBLE';
+                ref.read(selectedProvider.notifier).state =
+                    value ?? 'IMPOSSIBLE';
               },
             ),
 
@@ -115,7 +117,8 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
               onSelected: (String? value) {
-                ref.read(selected2Provider.notifier).state = value ?? 'IMPOSSIBLE';
+                ref.read(selected2Provider.notifier).state =
+                    value ?? 'IMPOSSIBLE';
               },
             ),
           ],

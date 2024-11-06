@@ -32,7 +32,6 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract_large_factors.dart';
 
-
 /// Return a list of numeric variables that are not ignored.
 
 List<String> getNumeric(WidgetRef ref) {
