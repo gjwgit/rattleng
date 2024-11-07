@@ -166,6 +166,7 @@ Future<void> rSource(
   int forestTrees = ref.read(treeNumForestProvider);
   int forestPredictorNum = ref.read(predictorNumForestProvider);
   int forestNo = ref.read(treeNoForestProvider);
+  bool forestImpute = ref.read(imputeForestProvider);
 
   // NEURAL
 
@@ -499,7 +500,8 @@ Future<void> rSource(
 
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
-  code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
+  code = code.replaceAll(
+      'RF_NA_ACTION', forestImpute ? 'randomForest::na.roughfix' : 'na.omit',);
 
   ////////////////////////////////////////////////////////////////////////
 

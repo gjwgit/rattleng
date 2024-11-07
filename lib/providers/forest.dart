@@ -32,6 +32,7 @@ import 'package:rattle/providers/tree_algorithm.dart';
 
 final algorithmForestProvider =
     StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
+final imputeForestProvider = StateProvider<bool>((ref) => true);
 final predictorNumForestProvider = StateProvider<int>((ref) => 4);
 final treeNumForestProvider = StateProvider<int>((ref) => 500);
 final treeNoForestProvider = StateProvider<int>((ref) => 1);

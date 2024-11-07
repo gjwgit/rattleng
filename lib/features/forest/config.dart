@@ -37,6 +37,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/vector_number_field.dart';
 
@@ -189,6 +190,18 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: treeNoForestProvider,
+            ),
+            configWidgetGap,
+            LabelledCheckbox(
+              key: const Key('imputeForest'),
+              tooltip: '''
+
+              Impute the median (numerical) or most frequent (categoric) value 
+              for missing data using na.roughfix() from randomForest.
+
+              ''',
+              label: 'Impute',
+              provider: imputeForestProvider,
             ),
           ],
         ),
