@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-16 13:32:55 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-07 14:57:54 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -141,22 +141,47 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
           tooltips: normaliseMethodTooltips,
         ),
+
         configWidgetGap,
-        // Add tooltips to orderMethods ChoiceChipTip.
+
+        // Add a ChoiceChip with Tooltip for RANK. This is separated out now so
+        // that we can have a larger gap between this and INTERVAL. The INTERVAL
+        // button needs to be closer to the INTERVAL number widget.
 
         ChoiceChipTip<String>(
-          options: orderMethods,
+          options: orderMethods.sublist(0, 1),
           selectedOption: selectedTransform,
           onSelected: (String? selected) {
             setState(() {
               selectedTransform = selected ?? '';
             });
           },
+
           // Adding tooltips here.
 
           tooltips: orderMethodTooltips,
         ),
+
         configWidgetGap,
+
+        // Add tooltips to orderMethods ChoiceChipTip. INTERVAL
+
+        ChoiceChipTip<String>(
+          options: orderMethods.sublist(1),
+          selectedOption: selectedTransform,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
+
+          // Adding tooltips here.
+
+          tooltips: orderMethodTooltips,
+        ),
+
+        configWidgetGap,
+
         NumberField(
           label: 'Interval',
           tooltip: '''
