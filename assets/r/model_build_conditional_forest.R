@@ -33,189 +33,64 @@
 # @williams:2017:essentials Chapter 8.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
+# Load required packages
 
-library(rattle)
-library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 library(ggplot2)
+library(rattle)
+library(party)
 library(reshape2)
-library(verification)
 
-mtype <- "randomForest"
+mtype <- "conditionalForest"
 mdesc <- "Forest"
 
-# Typically we use na.roughfix() for na.action.
+# Extract the response variable name from the formula.
 
-tds <- ds[tr, vars]
+response_variable <- all.vars(form)[1]
 
-model_randomForest <- randomForest(
+# Remove observations with missing values in the response variable.
+
+tds_clean <- tds[!is.na(tds[[response_variable]]), ]
+
+# Build the conditional random forest model using tds_clean.
+
+model_conditionalForest <- cforest(
   form,
-  data=tds, 
-  ntree=RF_NUM_TREES,
-  mtry=RF_MTRY,
-  importance=TRUE,
-  na.action=RF_NA_ACTION,
-  replace=FALSE)
+  data = tds_clean,
+  controls = cforest_unbiased(
+    ntree = RF_NUM_TREES,
+    mtry = RF_MTRY,
+  )
+)
 
-# Generate textual output of the 'Random Forest' model.
+# Generate textual output of the 'Conditional Random Forest' model.
 
-print(model_randomForest)
-
-# The `pROC' package implements various AUC functions.
-
-# Calculate the Area Under the Curve (AUC).
-
-print(pROC::roc(model_randomForest$y,
-                as.numeric(model_randomForest$predicted)))
-
-# Calculate the AUC Confidence Interval.
-
-print(pROC::ci.auc(model_randomForest$y, as.numeric(model_randomForest$predicted)))
+print(model_conditionalForest)
 
 # List the importance of the variables.
 
-rn <- round(randomForest::importance(model_randomForest), 2)
-rn[order(rn[,3], decreasing=TRUE),]
+importance_values <- party::varimp(model_conditionalForest)
+importance_df <- data.frame(
+  Variable = names(importance_values),
+  Importance = importance_values
+)
+importance_df <- importance_df[order(importance_df$Importance, decreasing = TRUE), ]
 
-# Display tree number 1.
+print(importance_df)
 
-printRandomForests(model_randomForest, RF_NO_TREE)
+# Display tree number.
 
-# Plot the relative importance of the variables.
+prettytree(model_conditionalForest@ensemble[[RF_NO_TREE]], names(model_conditionalForest@data@get("input")))
 
-svg("TEMPDIR/model_random_forest_varimp.svg")
+svg("TEMPDIR/model_conditional_forest.svg")
 
-# Assuming `model_randomForest` is already trained.
-# Extract variable importance for each class.
-
-importance_matrix <- importance(model_randomForest)
-
-# Convert to a data frame for easy plotting.
-
-importance_df <- as.data.frame(importance_matrix)
-importance_df$Variable <- rownames(importance_df)
-
-# Melt the data frame to long format for ggplot.
-
-importance_long <- melt(importance_df, id.vars = "Variable", 
-                        variable.name = "Class", value.name = "Importance")
-
-ggplot(importance_long, aes(x = reorder(Variable, Importance), y = Importance, fill = Class)) +
-  geom_bar(stat = "identity", position = "dodge") +
+ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
   labs(
-    title = "Variable Importance for Different Target Classes",
+    title = "Variable Importance from Conditional Forest",
     x = "Variable",
     y = "Importance"
   ) +
   theme_minimal()
-
-dev.off()
-
-
-# Plot the error rate against the number of trees.
-
-svg("TEMPDIR/model_random_forest_error_rate.svg")
-
-plot(model_randomForest, main="")
-legend("topright", c("OOB", "No", "Yes"), text.col=1:6, lty=1:3, col=1:3)
-title(main="Error Rates Random",
-    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
-
-dev.off()
-
-# Plot the OOB ROC curve.
-
-svg("TEMPDIR/model_random_forest_oob_roc_curve.svg")
-
-# Extract observed class labels from the Random Forest model.
-
-observed <- model_randomForest$y  # This is a factor
-
-# Get the class labels from the model.
-
-class_labels <- levels(observed)
-
-# Check the distribution of classes.
-
-class_counts <- table(observed)
-
-# Decide on the positive class.
-# Let's choose the class with fewer observations as the positive class.
-
-positive_class <- names(which.min(class_counts))
-
-# Convert observed outcomes to binary (0/1).
-
-observed_binary <- ifelse(observed == positive_class, 1, 0)
-
-# Extract the OOB predicted probabilities for the positive class.
-
-predicted_probs <- model_randomForest$votes[, positive_class]
-
-# Remove any NA values.
-
-valid_indices <- !is.na(predicted_probs) & !is.na(observed_binary)
-predicted_probs <- predicted_probs[valid_indices]
-observed_binary <- observed_binary[valid_indices]
-
-# Check if we have enough data points in each class.
-
-min_class_size <- min(sum(observed_binary == 1), sum(observed_binary == 0))
-
-if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
-  # Calculate ROC curve using pROC package instead of verification.
-
-  roc_obj <- pROC::roc(observed_binary, predicted_probs, 
-                       quiet = TRUE, 
-                       ci = TRUE, 
-                       ci.method = "delong")
-  
-  # Plot ROC curve.
-
-  plot(roc_obj, 
-       main = "OOB ROC Curve Random Forest",
-       col = "blue", 
-       lwd = 2,
-       legacy.axes = TRUE)
-  
-  # Add diagonal reference line.
-
-  abline(0, 1, lty = 2, col = "gray")
-  
-  # Add AUC to the plot.
-
-  auc_value <- pROC::auc(roc_obj)
-  legend("bottomright", 
-         legend = sprintf("AUC = %.3f\n95%% CI: %.3f-%.3f", 
-                         auc_value,
-                         roc_obj$ci[1],
-                         roc_obj$ci[3]),
-         bty = "n")
-  
-  # Add subtitle.
-
-  mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), 
-              Sys.info()["user"]), 
-        side = 3, 
-        line = 0.5, 
-        cex = 0.8)
-  
-} else {
-  # Create an empty plot with an error message.
-
-  plot(0, 0, 
-       type = "n", 
-       main = "ROC Curve Error", 
-       xlab = "", 
-       ylab = "",
-       axes = FALSE)
-  text(0, 0, 
-       paste("Insufficient data for ROC curve:\n",
-             "Minimum class size =", min_class_size,
-             "\nUnique probability values =", 
-             length(unique(predicted_probs))),
-       cex = 1.2)
-}
 
 dev.off()

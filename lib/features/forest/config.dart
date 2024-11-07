@@ -31,12 +31,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/tree_algorithm.dart';
 
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/vector_number_field.dart';
+
+/// Descriptive tooltips for different algorithm types,
+/// explaining the splitting method and potential biases.
+
+Map forestTooltips = {
+  AlgorithmType.conditional:
+      'Build multiple decision trees using random samples of data and features, then aggregate their predictions.',
+  AlgorithmType.traditional:
+      'Adjust for covariate distributions during tree construction to provide unbiased variable importance measures.',
+};
 
 /// The FOREST tab config currently consists of just a BUILD button.
 ///
@@ -67,6 +79,10 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
   @override
   Widget build(BuildContext context) {
     int treeNum = ref.watch(treeNumForestProvider);
+
+    AlgorithmType selectedAlgorithm =
+        ref.read(algorithmForestProvider.notifier).state;
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -84,17 +100,38 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               pageControllerProvider:
                   forestPageControllerProvider, // Optional navigation
 
-              onPressed: () {
-                rSource(
-                  context,
-                  ref,
-                  ['model_template', 'model_build_random_forest'],
-                );
+              onPressed: () async {
+                selectedAlgorithm == AlgorithmType.traditional
+                    ? await rSource(
+                        context,
+                        ref,
+                        ['model_template', 'model_build_random_forest'],
+                      )
+                    : await rSource(
+                        context,
+                        ref,
+                        ['model_template', 'model_build_conditional_forest'],
+                      );
               },
               child: const Text('Build Random Forest'),
             ),
             configWidgetGap,
             Text('Target: ${getTarget(ref)}'),
+            configWidgetGap,
+            ChoiceChipTip<AlgorithmType>(
+              options: AlgorithmType.values,
+              getLabel: (AlgorithmType type) => type.displayName,
+              selectedOption: selectedAlgorithm,
+              tooltips: forestTooltips,
+              onSelected: (AlgorithmType? selected) {
+                setState(() {
+                  if (selected != null) {
+                    selectedAlgorithm = selected;
+                    ref.read(algorithmForestProvider.notifier).state = selected;
+                  }
+                });
+              },
+            ),
           ],
         ),
         configRowGap,

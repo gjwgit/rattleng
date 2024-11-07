@@ -28,6 +28,10 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/tree_algorithm.dart';
+
+final algorithmForestProvider =
+    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
 final predictorNumForestProvider = StateProvider<int>((ref) => 4);
 final treeNumForestProvider = StateProvider<int>((ref) => 500);
 final treeNoForestProvider = StateProvider<int>((ref) => 1);
