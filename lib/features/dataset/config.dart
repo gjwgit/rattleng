@@ -1,7 +1,7 @@
 /// Widget to configure the dataset: button, path, clear, and toggles.
-///
+/// 
 /// Copyright (C) 2023, Togaware Pty Ltd.
-///
+/// 
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -24,63 +24,112 @@
 
 library;
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
 import 'package:flutter/material.dart';
 
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/clear_text_field.dart';
 import 'package:rattle/features/dataset/text_field.dart';
 import 'package:rattle/features/dataset/toggles.dart';
+import 'package:rattle/providers/role.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
 const double widthSpace = 5;
 
 /// The dataset config allows selection and tuning of the data for Rattle.
-///
+/// 
 /// The widget consists of a button to allow picking the dataset and a text
 /// field where the dataset path or name is displayed or entered by the user
 /// typing it in.
-///
+/// 
 /// This is a StatefulWidget to record the name of the chosen dataset. TODO THE
 /// DATASET NAME MAY NEED TO BE PUSHED HIGHER FOR ACCESS FROM OTHER PAGES.
 
-class DatasetConfig extends StatefulWidget {
+class DatasetConfig extends ConsumerStatefulWidget {
   const DatasetConfig({super.key});
 
   @override
-  State<DatasetConfig> createState() => _DatasetConfigState();
+  ConsumerState<DatasetConfig> createState() => _DatasetConfigState();
 }
 
-class _DatasetConfigState extends State<DatasetConfig> {
+class _DatasetConfigState extends ConsumerState<DatasetConfig> {
+  
   // A controller for the text field so it can be updated programmatically.
-
+  // 
   // final TextEditingController _textController = TextEditingController();
+
+    Map<String, String> rolesOption = {
+    'IGNORE': '''
+
+      Ignore this dataset during analysis.
+
+      ''',
+    'INPUT': '''
+
+      Include this dataset for input during analysis.
+
+      ''',
+  };
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+        String role = ref.read(roleProvider.notifier).state;
+
+    return Column(
       children: [
-        // Some fixed space so the widgets aren't crowded.
+        Row(
+          children: [
+            // Some fixed space so the widgets aren't crowded.
 
-        SizedBox(width: widthSpace),
+            const SizedBox(width: widthSpace),
 
-        // Widget to select the dataset filename.
+            // Widget to select the dataset filename.
 
-        DatasetButton(),
+            const DatasetButton(),
 
-        SizedBox(width: widthSpace),
+            SizedBox(width: widthSpace),
 
-        // A text field to display the selected dataset name.
+            // A text field to display the selected dataset name.
 
-        DatasetTextField(),
+            const DatasetTextField(),
 
-        // Clear the textfield entry.
+            // Clear the textfield entry.
 
-        DatasetClearTextField(),
+            const DatasetClearTextField(),
 
-        SizedBox(width: widthSpace),
+            SizedBox(width: widthSpace),
 
-        // Toggles to choose what to do on loading the dataset.
+            // Toggles to choose what to do on loading the dataset.
 
-        DatasetToggles(),
+            const DatasetToggles(),
+          ],
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            // Space between the two rows.
+
+            const SizedBox(width: widthSpace),
+
+            // ChoiceChipTip for selecting options like 'IGNORE' and 'INPUT'.
+
+            ChoiceChipTip<String>(
+              options: rolesOption.keys.toList(),
+              selectedOption: role,
+              tooltips: rolesOption,
+              onSelected: (chosen) {
+                setState(() {
+                       if (chosen != null) {
+                    role = chosen;
+                    ref.read(roleProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
+          ],
+        ),
       ],
     );
   }
