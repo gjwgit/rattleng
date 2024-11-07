@@ -25,6 +25,7 @@
 
 library;
 
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/selectedRow.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
@@ -74,6 +76,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   final int typeFlex = 4;
   final int contentFlex = 3;
 
+    // Track pressed keys for shift selection
+  
+  bool _isShiftPressed = false;
+
   @override
   Widget build(BuildContext context) {
     final pageController = ref
@@ -99,6 +105,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
       _addDatasetPage(stdout, pages);
     }
+
+    // Listen for shift key events
+    
+    RawKeyboard.instance.addListener((event) {
+      setState(() {
+        _isShiftPressed = event.isShiftPressed;
+      });
+    });
 
     return PageViewer(
       pageController: pageController,
@@ -282,168 +296,140 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   // Build data line for each variable, including the table header if specified.
 
-  Widget _buildDataTable(
+    Widget _buildDataTable(
     VariableInfo variable,
     Map<String, Role> currentRoles, {
-    bool showHeader = false,
+    required bool showHeader,
+    required int rowIndex,
   }) {
-    // Truncate the content to fit one line. The text could wrap over two
-    // lines and so show more of the data, but our point here is more to
-    // have a reminder of the data to assist in deciding on the ROLE of each
-    // variable, not any real insight into the data which we leave to the
-    // SUMMARY feature.
-
+    // Check if the row is selected
+    
+    final selectedRows = ref.watch(selectedRowIndicesProvider);
+    bool isSelected = selectedRows.contains(rowIndex);
     String content = _truncateContent(variable.details);
 
-    // Extract unique and missing values from metaDataProvider.
-
-    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
-    int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
-    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
-
-    var formatter = NumberFormat('#,###');
-
-    return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: Table(
-        columnWidths: const {
-          // Variable name column.
-          0: FixedColumnWidth(150.0),
-          // Role column.
-          1: FixedColumnWidth(400.0),
-          // Type column.
-          2: FixedColumnWidth(40.0),
-          // Unique column.
-          3: FixedColumnWidth(80.0),
-          // Missing column.
-          4: FixedColumnWidth(80.0),
-          // Gap of 20px between the columns
-          5: FixedColumnWidth(20.0),
-          // Content column.
-          6: FlexColumnWidth(),
-        },
-        children: [
-          if (showHeader)
-            // Table header row.
-
-            const TableRow(
-              children: [
-                // Header for variable name.
-
-                Text(
-                  'Variable',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),
-
-                // Header for role.
-
-                Text(
-                  'Role',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
-                // Header for type.
-
-                Text(
-                  'Type',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
-                // Header for unique count.
-
-                Text(
-                  'Unique',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.right,
-                ),
-
-                // Header for missing count.
-
-                Text(
-                  'Missing',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.right,
-                ),
-
-                // Empty cell acting as a gap
-
-                SizedBox.shrink(),
-
-                // Header for content.
-
-                Text(
-                  'Sample',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-
-          // Extra space after header row.
-
-          TableRow(
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (_isShiftPressed) {
+            selectedRows.add(rowIndex); // Shift to multi-select
+          } else {
+            selectedRows.clear();
+            
+            selectedRows.add(rowIndex); // Single-select
+          }
+        });
+      },
+      
+      onLongPressMoveUpdate: (details) {
+        setState(() {
+          selectedRows.add(rowIndex); // Select multiple on drag
+        });
+      },
+      
+      child: Container(
+        color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
+        
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Table(
+            columnWidths: const {
+              0: FixedColumnWidth(150.0),
+              
+              1: FixedColumnWidth(400.0),
+              
+              2: FixedColumnWidth(40.0),
+              
+              3: FixedColumnWidth(80.0),
+              
+              4: FixedColumnWidth(80.0),
+              
+              5: FixedColumnWidth(20.0),
+              
+              6: FlexColumnWidth(),
+            },
+            
             children: [
-              smallSpace,
-              smallSpace,
-              smallSpace,
-              smallSpace,
-              smallSpace,
-              smallSpace,
-              smallSpace,
-            ],
-          ),
-
-          // Table data row for variable.
-
-          TableRow(
-            children: [
-              // Variable name column.
-
-              _buildFittedText(variable.name),
-
-              // Role choice chips column.
-
-              _buildRoleChips(variable.name, currentRoles),
-
-              // Variable type column.
-
-              Text(
-                variable.type,
-                textAlign: TextAlign.center,
-              ),
-
-              // Unique count column.
-
-              Text(
-                formatter.format(uniqueCount),
-                textAlign: TextAlign.right,
-              ),
-
-              // Missing count column.
-
-              Text(
-                formatter.format(missingCount),
-                textAlign: TextAlign.right,
-              ),
-
-              // Empty cell acting as a gap
-
-              SizedBox.shrink(),
-              // Content column.
-
-              SelectableText(
-                content,
-                textAlign: TextAlign.left,
+              if (showHeader)
+                const TableRow(
+                  children: [
+                    Text(
+                      'Variable',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    
+                    Text(
+                      'Role',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    
+                    Text(
+                      'Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    
+                    Text(
+                      'Unique',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.right,
+                    ),
+                    
+                    Text(
+                      'Missing',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.right,
+                    ),
+                    
+                    SizedBox.shrink(),
+                    
+                    Text(
+                      'Sample',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+                
+              TableRow(
+                children: [
+                  _buildFittedText(variable.name),
+                  
+                  _buildRoleChips(variable.name, currentRoles),
+                  
+                  Text(
+                    variable.type,
+                    textAlign: TextAlign.center,
+                  ),
+                  
+                  Text(
+                    formatter.format(uniqueCount),
+                    textAlign: TextAlign.right,
+                  ),
+                  
+                  Text(
+                    formatter.format(missingCount),
+                    textAlign: TextAlign.right,
+                  ),
+                  
+                  SizedBox.shrink(),
+                  
+                  SelectableText(
+                    content,
+                    textAlign: TextAlign.left,
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
+
+ 
 
   // Build fitted text for variable name.
 

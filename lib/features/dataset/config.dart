@@ -33,7 +33,10 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/clear_text_field.dart';
 import 'package:rattle/features/dataset/text_field.dart';
 import 'package:rattle/features/dataset/toggles.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/role.dart';
+import 'package:rattle/providers/selectedRow.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 
 const double widthSpace = 5;
@@ -55,77 +58,68 @@ class DatasetConfig extends ConsumerStatefulWidget {
 }
 
 class _DatasetConfigState extends ConsumerState<DatasetConfig> {
+  final Set<int> _selectedRowIndices = {}; // Track selected rows
   
-  // A controller for the text field so it can be updated programmatically.
-  // 
-  // final TextEditingController _textController = TextEditingController();
-
-    Map<String, String> rolesOption = {
-    'IGNORE': '''
-
-      Ignore this dataset during analysis.
-
-      ''',
-    'INPUT': '''
-
-      Include this dataset for input during analysis.
-
-      ''',
+  Map<String, String> rolesOption = {
+    'IGNORE': 'Ignore this dataset during analysis.',
+    
+    'INPUT': 'Include this dataset for input during analysis.',
   };
+
+  // Function to update the role for multiple selected rows
+  
+  void _updateRoleForSelectedRows(String newRole) {
+    setState(() {
+      final selectedRows = ref.read(selectedRowIndicesProvider);
+      
+      selectedRows.forEach((index) {
+        String columnName = ref.read(metaDataProvider)[index]['name'];
+        
+        ref.read(rolesProvider.notifier).state[columnName] = newRole == 'IGNORE' ? Role.ignore : Role.input;
+      });
+      
+      selectedRows.clear(); // Clear selection after updating
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-        String role = ref.read(roleProvider.notifier).state;
+    String role = ref.read(roleProvider.notifier).state;
 
     return Column(
       children: [
         Row(
           children: [
-            // Some fixed space so the widgets aren't crowded.
-
             const SizedBox(width: widthSpace),
-
-            // Widget to select the dataset filename.
-
+            
             const DatasetButton(),
-
+            
             SizedBox(width: widthSpace),
-
-            // A text field to display the selected dataset name.
-
+            
             const DatasetTextField(),
-
-            // Clear the textfield entry.
-
+            
             const DatasetClearTextField(),
-
+            
             SizedBox(width: widthSpace),
-
-            // Toggles to choose what to do on loading the dataset.
-
+            
             const DatasetToggles(),
           ],
         ),
+        
         SizedBox(height: 10),
+        
         Row(
           children: [
-            // Space between the two rows.
-
             const SizedBox(width: widthSpace),
-
-            // ChoiceChipTip for selecting options like 'IGNORE' and 'INPUT'.
-
+            
             ChoiceChipTip<String>(
               options: rolesOption.keys.toList(),
               selectedOption: role,
               tooltips: rolesOption,
               onSelected: (chosen) {
-                setState(() {
-                       if (chosen != null) {
-                    role = chosen;
-                    ref.read(roleProvider.notifier).state = chosen;
-                  }
-                });
+                if (chosen != null) {
+                  _updateRoleForSelectedRows(chosen); // Apply role to selected rows
+                }
               },
             ),
           ],
