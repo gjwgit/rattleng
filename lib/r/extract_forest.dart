@@ -23,7 +23,6 @@
 /// Authors: Graham Williams
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/forest.dart';
