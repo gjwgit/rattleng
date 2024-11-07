@@ -10,7 +10,7 @@ on:
     types: [opened, reopened, synchronize]
 
 env:
-  FLUTTER_VERSION: '3.24.3'
+  FLUTTER_VERSION: '3.24.4'
 
 jobs:
 
