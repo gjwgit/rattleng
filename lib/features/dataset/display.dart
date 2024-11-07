@@ -307,6 +307,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     final selectedRows = ref.watch(selectedRowIndicesProvider);
     bool isSelected = selectedRows.contains(rowIndex);
     String content = _truncateContent(variable.details);
+        int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
+    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
+
+    var formatter = NumberFormat('#,###');
 
     return GestureDetector(
       onTap: () {
