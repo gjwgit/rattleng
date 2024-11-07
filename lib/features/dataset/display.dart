@@ -201,24 +201,26 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
           // Main ListView for displaying data table.
 
-          Padding(
-            padding: const EdgeInsets.only(top: 56.0),
-            child: ListView.builder(
-              key: const Key('roles_list_view'),
+Padding(
+  padding: const EdgeInsets.only(top: 56.0),
+  child: ListView.builder(
+    key: const Key('roles_list_view'),
 
-              // Item count is the same as the number of variables.
-              itemCount: vars.length,
+    // Item count is the same as the number of variables.
+    itemCount: vars.length,
 
-              itemBuilder: (context, index) {
-                // Show header only for the first row.
-                return _buildDataTable(
-                  vars[index],
-                  currentRoles,
-                  showHeader: index == 0,
-                );
-              },
-            ),
-          ),
+    itemBuilder: (context, index) {
+      // Show header only for the first row.
+      return _buildDataTable(
+        vars[index],
+        currentRoles,
+        showHeader: index == 0,
+        rowIndex: index, // Pass the index to _buildDataTable for selection tracking
+      );
+    },
+  ),
+),
+
         ],
       ),
     );
@@ -302,6 +304,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     required bool showHeader,
     required int rowIndex,
   }) {
+        // Extract unique and missing values from metaDataProvider.
+
+    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
     // Check if the row is selected
     
     final selectedRows = ref.watch(selectedRowIndicesProvider);
