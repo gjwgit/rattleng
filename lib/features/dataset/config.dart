@@ -56,9 +56,7 @@ class DatasetConfig extends ConsumerStatefulWidget {
   @override
   ConsumerState<DatasetConfig> createState() => _DatasetConfigState();
 }
-
 class _DatasetConfigState extends ConsumerState<DatasetConfig> {
-  final Set<int> _selectedRowIndices = {}; // Track selected rows
   
   Map<String, String> rolesOption = {
     'IGNORE': 'Ignore this dataset during analysis.',
@@ -66,9 +64,11 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
     'INPUT': 'Include this dataset for input during analysis.',
   };
 
+  String? selectedRole; // No default selection
+
   // Function to update the role for multiple selected rows
-  
   void _updateRoleForSelectedRows(String newRole) {
+    print('Updating role for selected rows to $newRole');
     setState(() {
       final selectedRows = ref.read(selectedRowIndicesProvider);
       
@@ -84,8 +84,6 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
 
   @override
   Widget build(BuildContext context) {
-    String role = ref.read(roleProvider.notifier).state;
-
     return Column(
       children: [
         Row(
@@ -112,15 +110,42 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
           children: [
             const SizedBox(width: widthSpace),
             
-            ChoiceChipTip<String>(
-              options: rolesOption.keys.toList(),
-              selectedOption: role,
-              tooltips: rolesOption,
-              onSelected: (chosen) {
-                if (chosen != null) {
-                  _updateRoleForSelectedRows(chosen); // Apply role to selected rows
-                }
-              },
+            Expanded(
+              child: Column(
+                children: [
+                  // Radio button for 'IGNORE' option
+                  RadioListTile<String>(
+                    title: Text(rolesOption['IGNORE']!),
+                    value: 'IGNORE',
+                    groupValue: selectedRole,
+                    onChanged: (value) {
+                      print('Chosen role: $value');
+                      setState(() {
+                        selectedRole = value;
+                      });
+                      if (value != null) {
+                        _updateRoleForSelectedRows(value); // Apply role to selected rows
+                      }
+                    },
+                  ),
+                  
+                  // Radio button for 'INPUT' option
+                  RadioListTile<String>(
+                    title: Text(rolesOption['INPUT']!),
+                    value: 'INPUT',
+                    groupValue: selectedRole,
+                    onChanged: (value) {
+                      print('Chosen role: $value');
+                      setState(() {
+                        selectedRole = value;
+                      });
+                      if (value != null) {
+                        _updateRoleForSelectedRows(value); // Apply role to selected rows
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
