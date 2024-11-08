@@ -36,7 +36,9 @@ import 'package:rattle/features/dataset/toggles.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/role.dart';
 import 'package:rattle/providers/selectedRow.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/roles.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 
 const double widthSpace = 5;
@@ -71,9 +73,15 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
     print('Updating role for selected rows to $newRole');
     setState(() {
       final selectedRows = ref.read(selectedRowIndicesProvider);
+          Map<String, dynamic> metaData = ref.watch(metaDataProvider);
+              String stdout = ref.watch(stdoutProvider);
+
+              List<VariableInfo> vars = extractVariables(stdout);
+
+
       
       selectedRows.forEach((index) {
-        String columnName = ref.read(metaDataProvider)[index]['name'];
+        String columnName = vars[index].name;
         
         ref.read(rolesProvider.notifier).state[columnName] = newRole == 'IGNORE' ? Role.ignore : Role.input;
       });
@@ -144,6 +152,11 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
                       }
                     },
                   ),
+                  ElevatedButton(onPressed: 
+                  () => ref.read(rolesProvider.notifier).state.forEach((key, value) {
+                    print('$key: $value');
+                  })
+                  , child: Text("test"))
                 ],
               ),
             ),
