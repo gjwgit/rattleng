@@ -21,11 +21,9 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
-
 library;
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -33,9 +31,8 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/get_inputs.dart';
+import 'package:rattle/utils/get_numeric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
-
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The TESTS tab config currently consists of just a BUILD button.
@@ -52,20 +49,24 @@ class TestsConfig extends ConsumerStatefulWidget {
 class TestsConfigState extends ConsumerState<TestsConfig> {
   @override
   Widget build(BuildContext context) {
-    // update the rolesProvider to get the latest inputs
+    // Update the rolesProvider to get the latest inputs
+
     updateVariablesProvider(ref);
-    // Retrieve the current selected variable and use that as the initial value
-    // for the dropdown menu. If there is no current value then we choose the
-    // first input variable.
-    List<String> inputs = getInputs(ref);
+
+    // Retrieve numeric inputs for both dropdowns
+
+    List<String> numericInputs = getNumeric(ref);
+
+    // Set default selections for dropdowns if not yet selected
+
     String selected = ref.watch(selectedProvider);
-    if (selected == 'NULL' && inputs.isNotEmpty) {
-      selected = inputs.first;
+    if (selected == 'NULL' && numericInputs.isNotEmpty) {
+      selected = numericInputs.first;
     }
 
     String selected2 = ref.watch(selected2Provider);
-    if (selected2 == 'NULL' && inputs.isNotEmpty) {
-      selected2 = inputs[1];
+    if (selected2 == 'NULL' && numericInputs.length > 1) {
+      selected2 = numericInputs[1];
     }
 
     return Column(
@@ -75,7 +76,7 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
           children: [
             configLeftGap,
 
-            // The BUILD button.
+            // The BUILD button
 
             ActivityButton(
               pageControllerProvider:
@@ -88,34 +89,36 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
               },
               child: const Text('Perform Statistical Tests'),
             ),
+
             configWidgetGap,
+
+            // Dropdown for first numeric input
+
             DropdownMenu(
-              label: const Text('Input'),
+              label: const Text('Input (Numeric)'),
               initialSelection: selected,
-              dropdownMenuEntries: inputs.map((s) {
+              dropdownMenuEntries: numericInputs.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
-              // On selection as well as recording what was selected rebuild the
-              // visualisations.
               onSelected: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                // build();
               },
             ),
+
             configWidgetGap,
+
+            // Dropdown for second numeric input
+
             DropdownMenu(
-              label: const Text('Second'),
+              label: const Text('Second (Numeric)'),
               initialSelection: selected2,
-              dropdownMenuEntries: inputs.map((s) {
+              dropdownMenuEntries: numericInputs.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
-              // On selection as well as recording what was selected rebuild the
-              // visualisations.
               onSelected: (String? value) {
                 ref.read(selected2Provider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                // build();
               },
             ),
           ],
