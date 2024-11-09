@@ -111,7 +111,7 @@ String rExtractForest(
     );
 
     extract = extract.replaceAll(
-        '\nConfusion matrix:\n', '\n\nConfusion matrix:\n\n');
+        '\nConfusion matrix:\n', '\n\nConfusion matrix:\n\n',);
 
     extract = extract.replaceAll('\nArea under', '\n\nArea under');
   } else if (forestAlgorithm == AlgorithmType.conditional) {

@@ -102,7 +102,7 @@ void main() {
       // Find the title of text page.
 
       final dataFinder = find.textContaining(
-        "humidity_3pm",
+        'humidity_3pm',
       );
       expect(dataFinder, findsOneWidget);
 
@@ -115,7 +115,7 @@ void main() {
       // Find the title of text page.
 
       final sampleRulesFinder = find.textContaining(
-        "Sample Rules",
+        'Sample Rules',
       );
       expect(sampleRulesFinder, findsOneWidget);
 
