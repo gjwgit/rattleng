@@ -1,4 +1,4 @@
-/// Test apriori() association analysis with demo dataset.
+/// Test randomForest() with demo dataset.
 //
 // Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
 //
@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/association/panel.dart';
+import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -45,7 +45,7 @@ import 'utils/press_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Association:', () {
+  group('Demo Model RandomForest:', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -60,26 +60,30 @@ void main() {
         ModelTabs,
       );
 
-      // Navigate to the Association feature.
+      // Navigate to the Forest feature.
 
-      await navigateToFeature(tester, 'Associations', AssociationPanel);
+      await navigateToFeature(tester, 'Forest', ForestPanel);
 
       await tester.pump(interact);
 
-      await pressButton(tester, 'Build Association Rules');
+      await pressButton(tester, 'Build Random Forest');
 
       await tester.pump(delay);
 
-      await pressButton(tester, 'Build Association Rules');
+      await pressButton(tester, 'Build Random Forest');
 
       await tester.pump(interact);
 
       // Find the title of text page.
 
       final titleFinder = find.textContaining(
-        "Interestingness Measures (built using 'apriori'):",
+        "Summary of the Random Forest model for Classification (built using 'randomForest'):",
       );
       expect(titleFinder, findsOneWidget);
+
+      await tester.pump(interact);
+
+      await gotoNextPage(tester);
 
       await tester.pump(interact);
 
@@ -90,7 +94,7 @@ void main() {
       // Find the title of text page.
 
       final dataFinder = find.textContaining(
-        "Summary of the Association Rules (built using 'apriori'):",
+        "humidity_3pm",
       );
       expect(dataFinder, findsOneWidget);
 
@@ -100,7 +104,20 @@ void main() {
 
       await tester.pump(interact);
 
-      final imagePageTitleFinder = find.text('ASSOCIATION RULES');
+      // Find the title of text page.
+
+      final sampleRulesFinder = find.textContaining(
+        "Random Forest Model 1 ",
+      );
+      expect(sampleRulesFinder, findsOneWidget);
+
+      await tester.pump(interact);
+
+      await gotoNextPage(tester);
+
+      await tester.pump(interact);
+
+      final imagePageTitleFinder = find.text('VAR IMPORTANCE');
       expect(imagePageTitleFinder, findsOneWidget);
 
       final imageFinder = find.byType(ImagePage);
@@ -113,7 +130,7 @@ void main() {
 
       await tester.pump(interact);
 
-      final secondImagePageTitleFinder = find.text('ASSOCIATION FREQUENCY');
+      final secondImagePageTitleFinder = find.text('ERROR RATE');
       expect(secondImagePageTitleFinder, findsOneWidget);
 
       final secondImageFinder = find.byType(ImagePage);
@@ -121,6 +138,19 @@ void main() {
       // Assert that the image is present.
 
       expect(secondImageFinder, findsOneWidget);
+
+      await gotoNextPage(tester);
+
+      await tester.pump(interact);
+
+      final thirdImagePageTitleFinder = find.text('OOB ROC Curve');
+      expect(thirdImagePageTitleFinder, findsOneWidget);
+
+      final thirdImageFinder = find.byType(ImagePage);
+
+      // Assert that the image is present.
+
+      expect(thirdImageFinder, findsOneWidget);
     });
   });
 }
