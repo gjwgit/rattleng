@@ -113,6 +113,13 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                         ref,
                         ['model_template', 'model_build_conditional_forest'],
                       );
+
+                await ref.read(forestPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Random Forest'),
             ),
