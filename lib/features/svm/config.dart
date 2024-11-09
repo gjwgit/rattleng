@@ -29,9 +29,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/svm.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+
+/// Kernel setting of SVM.
+
+List<String> svmKernel = [
+  'Radial Basis (rbfdot)',
+  'Polynomial (polydot)',
+  'Linear (vanilladot)',
+  'Hyperbolic Tangent (tanhdot)',
+  'Laplacian (laplacedot)',
+  'Bessel (besseldot)',
+  'ANOVA RBF (anovadot)',
+  'Spline (splinedot)',
+];
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
 ///
@@ -47,6 +62,8 @@ class SvmConfig extends ConsumerStatefulWidget {
 class SvmConfigState extends ConsumerState<SvmConfig> {
   @override
   Widget build(BuildContext context) {
+    String kernel = ref.read(kernelSVMProvider.notifier).state;
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -73,6 +90,26 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
             ),
             configWidgetGap,
             Text('Target: ${getTarget(ref)}'),
+            configWidgetGap,
+            variableChooser(
+              'Kernel:',
+              svmKernel,
+              kernel,
+              ref,
+              kernelSVMProvider,
+              tooltip: '''
+
+              A mathematical function that transforms data into a higher-dimensional space, 
+              enabling the model to find a more effective boundary between classes.
+
+              ''',
+              enabled: true,
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(kernelSVMProvider.notifier).state = value;
+                }
+              },
+            ),
           ],
         ),
       ],
