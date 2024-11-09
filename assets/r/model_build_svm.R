@@ -42,7 +42,4 @@ svm_model <- ksvm(
 # Print a summary of the trained SVM model.
 
 print(svm_model)
-
-png("TEMPDIR/svm_model_plot.png")
-plot(svm_model, data = train_data)
 dev.off()

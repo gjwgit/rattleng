@@ -97,3 +97,7 @@ final treePageControllerProvider = StateProvider<PageController>((ref) {
 final wordcloudPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
+
+final svmPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
