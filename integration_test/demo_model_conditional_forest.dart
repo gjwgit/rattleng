@@ -1,4 +1,4 @@
-/// Test randomForest() with demo dataset.
+/// Test cforest() with demo dataset.
 //
 // Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
 //
@@ -45,7 +45,7 @@ import 'utils/press_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model RandomForest:', () {
+  group('Demo Model Conditional Forest:', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -66,6 +66,18 @@ void main() {
 
       await tester.pump(interact);
 
+      // Find the ChoiceChipTip widget for the Conditional algorithm type.
+
+      final conditionalChip = find.text('Conditional');
+
+      expect(conditionalChip, findsOneWidget);
+
+      // Tap the conditional chip to switch algorithms.
+
+      await tester.tap(conditionalChip);
+
+      await tester.pumpAndSettle();
+
       await pressButton(tester, 'Build Random Forest');
 
       await tester.pump(delay);
@@ -77,13 +89,9 @@ void main() {
       // Find the title of text page.
 
       final titleFinder = find.textContaining(
-        "Summary of the Random Forest model for Classification (built using 'randomForest'):",
+        "Summary of the Conditional Forest model for Classification (built using 'cforest'):",
       );
       expect(titleFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
 
       await tester.pump(interact);
 
@@ -107,7 +115,7 @@ void main() {
       // Find the title of text page.
 
       final sampleRulesFinder = find.textContaining(
-        "Random Forest Model 1 ",
+        "Sample Rules",
       );
       expect(sampleRulesFinder, findsOneWidget);
 
@@ -125,32 +133,6 @@ void main() {
       // Assert that the image is present.
 
       expect(imageFinder, findsOneWidget);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final secondImagePageTitleFinder = find.text('ERROR RATE');
-      expect(secondImagePageTitleFinder, findsOneWidget);
-
-      final secondImageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(secondImageFinder, findsOneWidget);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final thirdImagePageTitleFinder = find.text('OOB ROC Curve');
-      expect(thirdImagePageTitleFinder, findsOneWidget);
-
-      final thirdImageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(thirdImageFinder, findsOneWidget);
     });
   });
 }
