@@ -501,7 +501,9 @@ Future<void> rSource(
   code = code.replaceAll('RF_NUM_TREES', '500');
   code = code.replaceAll('RF_MTRY', '4');
   code = code.replaceAll(
-      'RF_NA_ACTION', forestImpute ? 'randomForest::na.roughfix' : 'na.omit',);
+    'RF_NA_ACTION',
+    forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
+  );
 
   ////////////////////////////////////////////////////////////////////////
 
