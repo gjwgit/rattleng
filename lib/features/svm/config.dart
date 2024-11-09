@@ -27,10 +27,10 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/utils/get_target.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
@@ -62,8 +62,12 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              onPressed: () async {
+                await rSource(
+                  context,
+                  ref,
+                  ['model_template', 'model_build_svm'],
+                );
               },
               child: const Text('Build SVM Model'),
             ),

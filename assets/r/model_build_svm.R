@@ -24,75 +24,25 @@
 #
 # Author: Zheyuan Xu
 
-# Association using arules()
-#
-# TIMESTAMP
-#
-# References:
-#
-# @williams:2017:essentials Chapter 8.
-# https://survivor.togaware.com/datascience/ for further details.
+library(kernlab)
 
-library(arules) 
+# Define the dataset, input, and target.
 
-# Model type and description.
+target_var <- target
+train_data <- ds[tr, vars]
+input_vars <- setdiff(names(train_data), target_var)
 
-mtype <- "arules"
-mdesc <- "Association Rules"
-
-# Set whether the baskets applied to association model.
-
-isBaskets <- ASSOCIATION_BASKETS
-
-tds <- ds[tr, vars]
-
-# Generate transactions from the dataset.
-
-if(isBaskets){
-  transactions <- as(split(tds$TARGET_VAR, ds$IDENT_VAR), "transactions")
-}else{
-  transactions <- as(tds, "transactions")
-}
-
-# Build the association model using the Apriori algorithm.
-
-model_arules <- apriori(
-  data = transactions,
-  parameter = list(support = ASSOCIATION_SUPPORT, confidence = ASSOCIATION_CONFIDENCE, minlen = ASSOCIATION_MIN_LENGTH)
+svm_model <- ksvm(
+  as.factor(train_data[[target_var]]) ~ .,
+  data = train_data[, c(input_vars, target_var)],
+  kernel = "rbfdot",
+  prob.model = TRUE
 )
 
-# Generate textual output of the 'Association Rules' model.
+# Print a summary of the trained SVM model.
 
-print(summary(model_arules))
+print(svm_model)
 
-# Limit the number of rules for calculating interest measures.
-
-top_rules <- sort(model_arules, by = ASSOCIATION_RULES_SORT_BY)[1:ASSOCIATION_INTEREST_MEASURE] 
-
-# Interestingness Measures.
-
-measures <- interestMeasure(
-  top_rules,
-  c("chiSquare", "hyperLift", "hyperConfidence", "leverage", "oddsRatio", "phi"),
-  transactions,
-)
-
-# Print the computed interest measures.
-
-print(measures)
-
-# Plot the relative importance of the rules using arulesViz.
-
-library(arulesViz)
-
-svg("TEMPDIR/model_arules_item_frequency.svg")
-
-itemFrequencyPlot(transactions, topN = 10, type = "relative")
-
-dev.off()
-
-png("TEMPDIR/model_arules_item_plot.png")
-
-plot(model_arules, method="graph")
-
+png("TEMPDIR/svm_model_plot.png")
+plot(svm_model, data = train_data)
 dev.off()
