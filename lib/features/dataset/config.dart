@@ -129,34 +129,27 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
                   // Only render the RadioListTile widgets if showTooltips is true.
 
                   if (showTooltips)
-                    ...rolesOption.keys.map((roleKey) => DelayedTooltip(
-                          message: rolesOption[roleKey]!,
-                          wait: const Duration(
-                              seconds: 1), // Optional delay customization
-                          child: RadioListTile<String>(
-                            title: Text(roleKey),
-                            value: roleKey,
-                            groupValue: selectedRole,
-                            onChanged: (value) {
-                              print('Chosen role: $value');
-                              setState(() {
-                                selectedRole = value;
-                              });
-                              if (value != null) {
-                                _updateRoleForSelectedRows(value);
-                              }
-                            },
-                          ),
-                        )),
-
-                  ElevatedButton(
-                      onPressed: () => ref
-                              .read(rolesProvider.notifier)
-                              .state
-                              .forEach((key, value) {
-                            print('$key: $value');
-                          }),
-                      child: Text("test"))
+                    ...rolesOption.keys.map(
+                      (roleKey) => DelayedTooltip(
+                        message: rolesOption[roleKey]!,
+                        wait: const Duration(
+                            seconds: 1), // Optional delay customization
+                        child: RadioListTile<String>(
+                          title: Text(roleKey),
+                          value: roleKey,
+                          groupValue: selectedRole,
+                          onChanged: (value) {
+                            print('Chosen role: $value');
+                            setState(() {
+                              selectedRole = value;
+                            });
+                            if (value != null) {
+                              _updateRoleForSelectedRows(value);
+                            }
+                          },
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

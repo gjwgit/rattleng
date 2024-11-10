@@ -77,8 +77,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   final int typeFlex = 4;
   final int contentFlex = 3;
 
-    // Track pressed keys for shift selection
-  
+  // Track pressed keys for shift selection
+
   bool _isShiftPressed = false;
 
   @override
@@ -108,7 +108,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
 
     // Listen for shift key events
-    
+
     RawKeyboard.instance.addListener((event) {
       setState(() {
         _isShiftPressed = event.isShiftPressed;
@@ -202,28 +202,26 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
           // Main ListView for displaying data table.
 
-Padding(
-  padding: const EdgeInsets.only(top: 56.0),
-  child: ListView.builder(
-    key: const Key('roles_list_view'),
+          Padding(
+            padding: const EdgeInsets.only(top: 56.0),
+            child: ListView.builder(
+              key: const Key('roles_list_view'),
 
-    // Item count is the same as the number of variables.
-    itemCount: vars.length,
+              // Item count is the same as the number of variables.
+              itemCount: vars.length,
 
-    itemBuilder: (context, index) {
-      // Show header only for the first row.
+              itemBuilder: (context, index) {
+                // Show header only for the first row.
 // Show header only for the first row.
-return _buildDataTable(
-  variable: vars[index],
-  showHeader: index == 0,
-  rowIndex: index, // Pass the index to _buildDataTable for selection tracking
-);
-
-    },
-  ),
-),
-
-
+                return _buildDataTable(
+                  variable: vars[index],
+                  showHeader: index == 0,
+                  rowIndex:
+                      index, // Pass the index to _buildDataTable for selection tracking
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -301,124 +299,122 @@ return _buildDataTable(
 
   // Build data line for each variable, including the table header if specified.
 
-Widget _buildDataTable({
-  required VariableInfo variable,
-  required bool showHeader,
-  required int rowIndex,
-}) {
-  // Watch the latest roles directly from rolesProvider
-  Map<String, Role> currentRoles = ref.watch(rolesProvider);
+  Widget _buildDataTable({
+    required VariableInfo variable,
+    required bool showHeader,
+    required int rowIndex,
+  }) {
+    // Watch the latest roles directly from rolesProvider
+    Map<String, Role> currentRoles = ref.watch(rolesProvider);
 
-  // Check if the row is selected
-  final selectedRows = ref.watch(selectedRowIndicesProvider);
-  bool isSelected = selectedRows.contains(rowIndex);
-  String content = _truncateContent(variable.details);
+    // Check if the row is selected
+    final selectedRows = ref.watch(selectedRowIndicesProvider);
+    bool isSelected = selectedRows.contains(rowIndex);
+    String content = _truncateContent(variable.details);
 
-  Map<String, dynamic> metaData = ref.watch(metaDataProvider);
-  int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
-  int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
+    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
+    int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
+    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
 
-  var formatter = NumberFormat('#,###');
+    var formatter = NumberFormat('#,###');
 
-  return GestureDetector(
-    onTap: () {
-      setState(() {
-        if (_isShiftPressed) {
-          selectedRows.add(rowIndex); // Shift to multi-select
-        } else {
-          selectedRows.clear();
-          selectedRows.add(rowIndex); // Single-select
-        }
-      });
-    },
-    onLongPressMoveUpdate: (details) {
-      setState(() {
-        selectedRows.add(rowIndex); // Select multiple on drag
-      });
-    },
-    child: Container(
-      color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.all(6.0),
-        child: Table(
-          columnWidths: const {
-            0: FixedColumnWidth(150.0),
-            1: FixedColumnWidth(400.0),
-            2: FixedColumnWidth(40.0),
-            3: FixedColumnWidth(80.0),
-            4: FixedColumnWidth(80.0),
-            5: FixedColumnWidth(20.0),
-            6: FlexColumnWidth(),
-          },
-          children: [
-            if (showHeader)
-              const TableRow(
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (_isShiftPressed) {
+            selectedRows.add(rowIndex); // Shift to multi-select
+          } else {
+            selectedRows.clear();
+            selectedRows.add(rowIndex); // Single-select
+          }
+        });
+      },
+      onLongPressMoveUpdate: (details) {
+        setState(() {
+          selectedRows.add(rowIndex); // Select multiple on drag
+        });
+      },
+      child: Container(
+        color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Table(
+            columnWidths: const {
+              0: FixedColumnWidth(150.0),
+              1: FixedColumnWidth(400.0),
+              2: FixedColumnWidth(40.0),
+              3: FixedColumnWidth(80.0),
+              4: FixedColumnWidth(80.0),
+              5: FixedColumnWidth(20.0),
+              6: FlexColumnWidth(),
+            },
+            children: [
+              if (showHeader)
+                const TableRow(
+                  children: [
+                    Text(
+                      'Variable',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      'Role',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Unique',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.right,
+                    ),
+                    Text(
+                      'Missing',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.right,
+                    ),
+                    SizedBox.shrink(),
+                    Text(
+                      'Sample',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+              TableRow(
                 children: [
+                  _buildFittedText(variable.name),
+                  _buildRoleChips(variable.name,
+                      currentRoles), // Role chip updates based on currentRoles
                   Text(
-                    'Variable',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    'Role',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    variable.type,
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    'Type',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Unique',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    formatter.format(uniqueCount),
                     textAlign: TextAlign.right,
                   ),
                   Text(
-                    'Missing',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    formatter.format(missingCount),
                     textAlign: TextAlign.right,
                   ),
                   SizedBox.shrink(),
-                  Text(
-                    'Sample',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  SelectableText(
+                    content,
                     textAlign: TextAlign.left,
                   ),
                 ],
               ),
-            TableRow(
-              children: [
-                _buildFittedText(variable.name),
-                _buildRoleChips(variable.name, currentRoles), // Role chip updates based on currentRoles
-                Text(
-                  variable.type,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  formatter.format(uniqueCount),
-                  textAlign: TextAlign.right,
-                ),
-                Text(
-                  formatter.format(missingCount),
-                  textAlign: TextAlign.right,
-                ),
-                SizedBox.shrink(),
-                SelectableText(
-                  content,
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
-
- 
+    );
+  }
 
   // Build fitted text for variable name.
 
