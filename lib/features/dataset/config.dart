@@ -129,29 +129,33 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
           children: [
             const SizedBox(width: widthSpace),
             Expanded(
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   // Only render the RadioListTile widgets if showTooltips is true.
-
                   if (showTooltips)
                     ...rolesOption.keys.map(
                       (roleKey) => DelayedTooltip(
                         message: rolesOption[roleKey]!,
                         wait: const Duration(
                             seconds: 1), // Optional delay customization
-                        child: RadioListTile<String>(
-                          title: Text(roleKey),
-                          value: roleKey,
-                          groupValue: selectedRole,
-                          onChanged: (value) {
-                            print('Chosen role: $value');
-                            setState(() {
-                              selectedRole = value;
-                            });
-                            if (value != null) {
-                              _updateRoleForSelectedRows(value);
-                            }
-                          },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: roleKey,
+                              groupValue: selectedRole,
+                              onChanged: (value) {
+                                print('Chosen role: $value');
+                                setState(() {
+                                  selectedRole = value;
+                                });
+                                if (value != null) {
+                                  _updateRoleForSelectedRows(value);
+                                }
+                              },
+                            ),
+                            Text(roleKey),
+                          ],
                         ),
                       ),
                     ),
