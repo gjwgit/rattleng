@@ -35,7 +35,7 @@ input_vars <- setdiff(names(train_data), target_var)
 svm_model <- ksvm(
   as.factor(train_data[[target_var]]) ~ .,
   data = train_data[, c(input_vars, target_var)],
-  kernel = "rbfdot",
+  kernel = SVM_KERNEL,
   prob.model = TRUE
 )
 

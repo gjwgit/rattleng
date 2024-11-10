@@ -59,6 +59,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/summary_crosstab.dart';
+import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
@@ -168,6 +169,14 @@ Future<void> rSource(
   double neuralThreshold = ref.read(thresholdNeuralProvider);
   String neuralErrorFct = ref.read(errorFctNeuralProvider);
   String neuralActionFct = ref.read(actionFctNeuralProvider);
+
+  // SVM
+
+  RegExp regex = RegExp(r'\(([^)]+)\)');
+  String svmKernelItem = ref.read(kernelSVMProvider);
+  final match = regex.firstMatch(svmKernelItem);
+  String svmKernel = match != null ? match.group(1)! : '';
+
   String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
 
   int interval = ref.read(intervalProvider);
@@ -458,6 +467,10 @@ Future<void> rSource(
     'NEURAL_IGNORE_CATEGORIC',
     neuralIgnoreCategoric.toString().toUpperCase(),
   );
+
+  // SVM
+
+  code = code.replaceAll('SVM_KERNEL', '"${svmKernel.toString()}"');
 
   ////////////////////////////////////////////////////////////////////////
 
