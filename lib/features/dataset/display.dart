@@ -212,12 +212,13 @@ Padding(
 
     itemBuilder: (context, index) {
       // Show header only for the first row.
-      return _buildDataTable(
-        vars[index],
-        currentRoles,
-        showHeader: index == 0,
-        rowIndex: index, // Pass the index to _buildDataTable for selection tracking
-      );
+// Show header only for the first row.
+return _buildDataTable(
+  variable: vars[index],
+  showHeader: index == 0,
+  rowIndex: index, // Pass the index to _buildDataTable for selection tracking
+);
+
     },
   ),
 ),
@@ -300,145 +301,122 @@ Padding(
 
   // Build data line for each variable, including the table header if specified.
 
-    Widget _buildDataTable(
-    VariableInfo variable,
-    Map<String, Role> currentRoles, {
-    required bool showHeader,
-    required int rowIndex,
-  }) {
-        // Extract unique and missing values from metaDataProvider.
+Widget _buildDataTable({
+  required VariableInfo variable,
+  required bool showHeader,
+  required int rowIndex,
+}) {
+  // Watch the latest roles directly from rolesProvider
+  Map<String, Role> currentRoles = ref.watch(rolesProvider);
 
-    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
-    // Check if the row is selected
-    
-    final selectedRows = ref.watch(selectedRowIndicesProvider);
-    bool isSelected = selectedRows.contains(rowIndex);
-    String content = _truncateContent(variable.details);
-        int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
-    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
+  // Check if the row is selected
+  final selectedRows = ref.watch(selectedRowIndicesProvider);
+  bool isSelected = selectedRows.contains(rowIndex);
+  String content = _truncateContent(variable.details);
 
-    var formatter = NumberFormat('#,###');
+  Map<String, dynamic> metaData = ref.watch(metaDataProvider);
+  int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
+  int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
 
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (_isShiftPressed) {
-            selectedRows.add(rowIndex); // Shift to multi-select
-          } else {
-            selectedRows.clear();
-            
-            selectedRows.add(rowIndex); // Single-select
-          }
-        });
-      },
-      
-      onLongPressMoveUpdate: (details) {
-        setState(() {
-          selectedRows.add(rowIndex); // Select multiple on drag
-        });
-      },
-      
-      child: Container(
-        color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
-        
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Table(
-            columnWidths: const {
-              0: FixedColumnWidth(150.0),
-              
-              1: FixedColumnWidth(400.0),
-              
-              2: FixedColumnWidth(40.0),
-              
-              3: FixedColumnWidth(80.0),
-              
-              4: FixedColumnWidth(80.0),
-              
-              5: FixedColumnWidth(20.0),
-              
-              6: FlexColumnWidth(),
-            },
-            
-            children: [
-              if (showHeader)
-                const TableRow(
-                  children: [
-                    Text(
-                      'Variable',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    
-                    Text(
-                      'Role',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    
-                    Text(
-                      'Type',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    
-                    Text(
-                      'Unique',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.right,
-                    ),
-                    
-                    Text(
-                      'Missing',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.right,
-                    ),
-                    
-                    SizedBox.shrink(),
-                    
-                    Text(
-                      'Sample',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
-                
-              TableRow(
+  var formatter = NumberFormat('#,###');
+
+  return GestureDetector(
+    onTap: () {
+      setState(() {
+        if (_isShiftPressed) {
+          selectedRows.add(rowIndex); // Shift to multi-select
+        } else {
+          selectedRows.clear();
+          selectedRows.add(rowIndex); // Single-select
+        }
+      });
+    },
+    onLongPressMoveUpdate: (details) {
+      setState(() {
+        selectedRows.add(rowIndex); // Select multiple on drag
+      });
+    },
+    child: Container(
+      color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: Table(
+          columnWidths: const {
+            0: FixedColumnWidth(150.0),
+            1: FixedColumnWidth(400.0),
+            2: FixedColumnWidth(40.0),
+            3: FixedColumnWidth(80.0),
+            4: FixedColumnWidth(80.0),
+            5: FixedColumnWidth(20.0),
+            6: FlexColumnWidth(),
+          },
+          children: [
+            if (showHeader)
+              const TableRow(
                 children: [
-                  _buildFittedText(variable.name),
-                  
-                  _buildRoleChips(variable.name, currentRoles),
-                  
                   Text(
-                    variable.type,
+                    'Variable',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    'Role',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  
                   Text(
-                    formatter.format(uniqueCount),
+                    'Type',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Unique',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right,
                   ),
-                  
                   Text(
-                    formatter.format(missingCount),
+                    'Missing',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right,
                   ),
-                  
                   SizedBox.shrink(),
-                  
-                  SelectableText(
-                    content,
+                  Text(
+                    'Sample',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.left,
                   ),
                 ],
               ),
-            ],
-          ),
+            TableRow(
+              children: [
+                _buildFittedText(variable.name),
+                _buildRoleChips(variable.name, currentRoles), // Role chip updates based on currentRoles
+                Text(
+                  variable.type,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  formatter.format(uniqueCount),
+                  textAlign: TextAlign.right,
+                ),
+                Text(
+                  formatter.format(missingCount),
+                  textAlign: TextAlign.right,
+                ),
+                SizedBox.shrink(),
+                SelectableText(
+                  content,
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
  
 

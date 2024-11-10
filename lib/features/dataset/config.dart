@@ -121,37 +121,24 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
             Expanded(
               child: Column(
                 children: [
-                  // Radio button for 'IGNORE' option
-                  RadioListTile<String>(
-                    title: Text(rolesOption['IGNORE']!),
-                    value: 'IGNORE',
-                    groupValue: selectedRole,
-                    onChanged: (value) {
-                      print('Chosen role: $value');
-                      setState(() {
-                        selectedRole = value;
-                      });
-                      if (value != null) {
-                        _updateRoleForSelectedRows(value); // Apply role to selected rows
-                      }
-                    },
-                  ),
-                  
-                  // Radio button for 'INPUT' option
-                  RadioListTile<String>(
-                    title: Text(rolesOption['INPUT']!),
-                    value: 'INPUT',
-                    groupValue: selectedRole,
-                    onChanged: (value) {
-                      print('Chosen role: $value');
-                      setState(() {
-                        selectedRole = value;
-                      });
-                      if (value != null) {
-                        _updateRoleForSelectedRows(value); // Apply role to selected rows
-                      }
-                    },
-                  ),
+                                    ...rolesOption.keys.map((roleKey) => Tooltip(
+                        message: rolesOption[roleKey]!,
+                        child: RadioListTile<String>(
+                          title: Text(roleKey),
+                          value: roleKey,
+                          groupValue: selectedRole,
+                          onChanged: (value) {
+                            print('Chosen role: $value');
+                            setState(() {
+                              selectedRole = value;
+                            });
+                            if (value != null) {
+                              _updateRoleForSelectedRows(value); // Apply role to selected rows
+                            }
+                          },
+                        ),
+                      )),
+   
                   ElevatedButton(onPressed: 
                   () => ref.read(rolesProvider.notifier).state.forEach((key, value) {
                     print('$key: $value');
