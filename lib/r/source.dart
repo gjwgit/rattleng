@@ -177,6 +177,8 @@ Future<void> rSource(
   final match = regex.firstMatch(svmKernelItem);
   String svmKernel = match != null ? match.group(1)! : '';
 
+  int svmDegree = ref.read(degreeSVMProvider);
+
   String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
 
   int interval = ref.read(intervalProvider);
@@ -471,6 +473,7 @@ Future<void> rSource(
   // SVM
 
   code = code.replaceAll('SVM_KERNEL', '"${svmKernel.toString()}"');
+  code = code.replaceAll('SVM_DEGREE', svmDegree.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

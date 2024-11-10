@@ -25,6 +25,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,6 +35,7 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 /// Kernel setting of SVM.
 
@@ -60,6 +62,17 @@ class SvmConfig extends ConsumerStatefulWidget {
 }
 
 class SvmConfigState extends ConsumerState<SvmConfig> {
+  final TextEditingController _svmDegreeController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose the controllers to free up resources.
+
+    _svmDegreeController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     String kernel = ref.read(kernelSVMProvider.notifier).state;
@@ -105,10 +118,28 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
               ''',
               enabled: true,
               onChanged: (String? value) {
-                if (value != null) {
-                  ref.read(kernelSVMProvider.notifier).state = value;
-                }
+                setState(() {
+                  if (value != null) {
+                    ref.read(kernelSVMProvider.notifier).state = value;
+                  }
+                });
               },
+            ),
+            configWidgetGap,
+            NumberField(
+              label: 'Degree:',
+              key: const Key('svm_degree'),
+              tooltip: '''
+
+              Controls the complexity of the polynomial decision boundary, 
+              with higher degrees allowing more complex relationships.
+
+              ''',
+              enabled: kernel == svmKernel[1],
+              controller: _svmDegreeController,
+              inputFormatter: FilteringTextInputFormatter.digitsOnly,
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: degreeSVMProvider,
             ),
           ],
         ),

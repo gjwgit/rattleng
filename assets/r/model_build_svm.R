@@ -31,13 +31,24 @@ library(kernlab)
 target_var <- target
 train_data <- ds[tr, vars]
 input_vars <- setdiff(names(train_data), target_var)
+svm_kernel <- SVM_KERNEL
 
-svm_model <- ksvm(
-  as.factor(train_data[[target_var]]) ~ .,
-  data = train_data[, c(input_vars, target_var)],
-  kernel = SVM_KERNEL,
-  prob.model = TRUE
-)
+if (svm_kernel == "polydot") {
+  svm_model <- ksvm(
+    as.factor(train_data[[target_var]]) ~ .,
+    data = train_data[, c(input_vars, target_var)],
+    kernel = SVM_KERNEL,
+    kpar = list("degree"=SVM_DEGREE),
+    prob.model = TRUE
+  )
+} else {
+  svm_model <- ksvm(
+    as.factor(train_data[[target_var]]) ~ .,
+    data = train_data[, c(input_vars, target_var)],
+    kernel = SVM_KERNEL,
+    prob.model = TRUE
+  )
+}
 
 # Print a summary of the trained SVM model.
 
