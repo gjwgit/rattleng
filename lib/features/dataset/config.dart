@@ -1,7 +1,7 @@
 /// Widget to configure the dataset: button, path, clear, and toggles.
-/// 
+///
 /// Copyright (C) 2023, Togaware Pty Ltd.
-/// 
+///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -26,7 +26,6 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import 'package:flutter/material.dart';
 
 import 'package:rattle/features/dataset/button.dart';
@@ -40,15 +39,16 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 
 const double widthSpace = 5;
 
 /// The dataset config allows selection and tuning of the data for Rattle.
-/// 
+///
 /// The widget consists of a button to allow picking the dataset and a text
 /// field where the dataset path or name is displayed or entered by the user
 /// typing it in.
-/// 
+///
 /// This is a StatefulWidget to record the name of the chosen dataset. TODO THE
 /// DATASET NAME MAY NEED TO BE PUSHED HIGHER FOR ACCESS FROM OTHER PAGES.
 
@@ -58,42 +58,39 @@ class DatasetConfig extends ConsumerStatefulWidget {
   @override
   ConsumerState<DatasetConfig> createState() => _DatasetConfigState();
 }
+
 class _DatasetConfigState extends ConsumerState<DatasetConfig> {
-  
   Map<String, String> rolesOption = {
     'IGNORE': 'Ignore this dataset during analysis.',
-    
     'INPUT': 'Include this dataset for input during analysis.',
   };
-  
 
   String? selectedRole; // No default selection
 
-    bool showTooltips = false;
-
+  bool showTooltips = false;
 
   // Function to update the role for multiple selected rows
   void _updateRoleForSelectedRows(String newRole) {
     print('Updating role for selected rows to $newRole');
     setState(() {
       final selectedRows = ref.read(selectedRowIndicesProvider);
-          Map<String, dynamic> metaData = ref.watch(metaDataProvider);
-              String stdout = ref.watch(stdoutProvider);
+      Map<String, dynamic> metaData = ref.watch(metaDataProvider);
+      String stdout = ref.watch(stdoutProvider);
 
-              List<VariableInfo> vars = extractVariables(stdout);
+      List<VariableInfo> vars = extractVariables(stdout);
 
-
-      
       selectedRows.forEach((index) {
         String columnName = vars[index].name;
-        
-        ref.read(rolesProvider.notifier).state[columnName] = newRole == 'IGNORE' ? Role.ignore : Role.input;
+
+        ref.read(rolesProvider.notifier).state[columnName] =
+            newRole == 'IGNORE' ? Role.ignore : Role.input;
       });
-      
+
       selectedRows.clear(); // Clear selection after updating
     });
   }
-    void _showTooltips() {
+
+  void _showTooltips() {
     setState(() {
       showTooltips = true;
     });
@@ -106,58 +103,60 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
         Row(
           children: [
             const SizedBox(width: widthSpace),
-            
-          // Pass _showTooltips as the callback to DatasetButton.
 
-            DatasetButton(onDatasetButtonPressed: _showTooltips),      
+            // Pass _showTooltips as the callback to DatasetButton.
+
+            DatasetButton(onDatasetButtonPressed: _showTooltips),
 
             SizedBox(width: widthSpace),
-            
+
             const DatasetTextField(),
-            
+
             const DatasetClearTextField(),
-            
+
             SizedBox(width: widthSpace),
-            
+
             const DatasetToggles(),
           ],
         ),
-        
         SizedBox(height: 10),
-        
         Row(
           children: [
             const SizedBox(width: widthSpace),
-            
             Expanded(
               child: Column(
                 children: [
-// Only render the RadioListTile widgets if showTooltips is true
-if (showTooltips)
-  ...rolesOption.keys.map((roleKey) => Tooltip(
-        message: rolesOption[roleKey]!,
-        child: RadioListTile<String>(
-          title: Text(roleKey),
-          value: roleKey,
-          groupValue: selectedRole,
-          onChanged: (value) {
-            print('Chosen role: $value');
-            setState(() {
-              selectedRole = value;
-            });
-            if (value != null) {
-              _updateRoleForSelectedRows(value);
-            }
-          },
-        ),
-      )),
+                  // Only render the RadioListTile widgets if showTooltips is true.
 
-   
-                  ElevatedButton(onPressed: 
-                  () => ref.read(rolesProvider.notifier).state.forEach((key, value) {
-                    print('$key: $value');
-                  })
-                  , child: Text("test"))
+                  if (showTooltips)
+                    ...rolesOption.keys.map((roleKey) => DelayedTooltip(
+                          message: rolesOption[roleKey]!,
+                          wait: const Duration(
+                              seconds: 1), // Optional delay customization
+                          child: RadioListTile<String>(
+                            title: Text(roleKey),
+                            value: roleKey,
+                            groupValue: selectedRole,
+                            onChanged: (value) {
+                              print('Chosen role: $value');
+                              setState(() {
+                                selectedRole = value;
+                              });
+                              if (value != null) {
+                                _updateRoleForSelectedRows(value);
+                              }
+                            },
+                          ),
+                        )),
+
+                  ElevatedButton(
+                      onPressed: () => ref
+                              .read(rolesProvider.notifier)
+                              .state
+                              .forEach((key, value) {
+                            print('$key: $value');
+                          }),
+                      child: Text("test"))
                 ],
               ),
             ),
