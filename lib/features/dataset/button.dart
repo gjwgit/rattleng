@@ -36,12 +36,18 @@ import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends ConsumerWidget {
-  const DatasetButton({super.key});
+    final VoidCallback onDatasetButtonPressed; // Callback to notify button press
+
+  const DatasetButton({Key? key, required this.onDatasetButtonPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () async {
+              // Trigger the callback to show ignore and input radio buttons.
+              
+        onDatasetButtonPressed();
+
         if (ref.read(datasetLoaded)) {
           showAlertPopup(context, ref, true);
         } else {

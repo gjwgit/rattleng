@@ -65,8 +65,12 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
     
     'INPUT': 'Include this dataset for input during analysis.',
   };
+  
 
   String? selectedRole; // No default selection
+
+    bool showTooltips = false;
+
 
   // Function to update the role for multiple selected rows
   void _updateRoleForSelectedRows(String newRole) {
@@ -89,6 +93,11 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
       selectedRows.clear(); // Clear selection after updating
     });
   }
+    void _showTooltips() {
+    setState(() {
+      showTooltips = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +107,10 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
           children: [
             const SizedBox(width: widthSpace),
             
-            const DatasetButton(),
-            
+          // Pass _showTooltips as the callback to DatasetButton.
+
+            DatasetButton(onDatasetButtonPressed: _showTooltips),      
+
             SizedBox(width: widthSpace),
             
             const DatasetTextField(),
@@ -121,23 +132,26 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
             Expanded(
               child: Column(
                 children: [
-                                    ...rolesOption.keys.map((roleKey) => Tooltip(
-                        message: rolesOption[roleKey]!,
-                        child: RadioListTile<String>(
-                          title: Text(roleKey),
-                          value: roleKey,
-                          groupValue: selectedRole,
-                          onChanged: (value) {
-                            print('Chosen role: $value');
-                            setState(() {
-                              selectedRole = value;
-                            });
-                            if (value != null) {
-                              _updateRoleForSelectedRows(value); // Apply role to selected rows
-                            }
-                          },
-                        ),
-                      )),
+// Only render the RadioListTile widgets if showTooltips is true
+if (showTooltips)
+  ...rolesOption.keys.map((roleKey) => Tooltip(
+        message: rolesOption[roleKey]!,
+        child: RadioListTile<String>(
+          title: Text(roleKey),
+          value: roleKey,
+          groupValue: selectedRole,
+          onChanged: (value) {
+            print('Chosen role: $value');
+            setState(() {
+              selectedRole = value;
+            });
+            if (value != null) {
+              _updateRoleForSelectedRows(value);
+            }
+          },
+        ),
+      )),
+
    
                   ElevatedButton(onPressed: 
                   () => ref.read(rolesProvider.notifier).state.forEach((key, value) {
