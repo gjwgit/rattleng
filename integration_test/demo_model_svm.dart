@@ -1,4 +1,4 @@
-/// Test apriori() association analysis with demo dataset.
+/// Test ksvm() svm with demo dataset.
 //
 // Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
 //
@@ -30,13 +30,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/association/panel.dart';
+import 'package:rattle/features/svm/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/tabs/model.dart';
-import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_demo_dataset.dart';
@@ -45,7 +43,7 @@ import 'utils/press_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Association:', () {
+  group('Demo Model SVM:', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -62,65 +60,26 @@ void main() {
 
       // Navigate to the Association feature.
 
-      await navigateToFeature(tester, 'Associations', AssociationPanel);
+      await navigateToFeature(tester, 'SVM', SvmPanel);
 
       await tester.pump(interact);
 
-      await pressButton(tester, 'Build Association Rules');
+      await pressButton(tester, 'Build SVM Model');
 
       await tester.pump(delay);
 
-      await pressButton(tester, 'Build Association Rules');
+      await pressButton(tester, 'Build SVM Model');
 
       await tester.pump(interact);
 
       // Find the title of text page.
 
       final titleFinder = find.textContaining(
-        "Interestingness Measures (built using 'apriori'):",
+        'Support Vector Machine object of class "ksvm"',
       );
       expect(titleFinder, findsOneWidget);
 
       await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final dataFinder = find.textContaining(
-        "Summary of the Association Rules (built using 'apriori'):",
-      );
-      expect(dataFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final imagePageTitleFinder = find.text('ASSOCIATION RULES');
-      expect(imagePageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final secondImagePageTitleFinder = find.text('ASSOCIATION FREQUENCY');
-      expect(secondImagePageTitleFinder, findsOneWidget);
-
-      final secondImageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(secondImageFinder, findsOneWidget);
     });
   });
 }
