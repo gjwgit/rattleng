@@ -34,6 +34,7 @@ import 'package:rattle/features/dataset/text_field.dart';
 import 'package:rattle/features/dataset/toggles.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/role.dart';
+import 'package:rattle/providers/rolesTableRebuild.dart';
 import 'package:rattle/providers/selectedRow.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/roles.dart';
@@ -79,14 +80,18 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
 
       List<VariableInfo> vars = extractVariables(stdout);
 
+      // Update roles for each selected row
       selectedRows.forEach((index) {
         String columnName = vars[index].name;
-
         ref.read(rolesProvider.notifier).state[columnName] =
             newRole == 'IGNORE' ? Role.ignore : Role.input;
       });
 
-      selectedRows.clear(); // Clear selection after updating
+      // Clear selection after updating
+      selectedRows.clear();
+
+      // Increment the rebuild trigger to refresh DatasetDisplay
+      ref.read(rebuildTriggerProvider.notifier).state++;
     });
   }
 

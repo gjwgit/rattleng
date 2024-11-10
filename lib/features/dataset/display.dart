@@ -39,6 +39,7 @@ import 'package:rattle/features/dataset/config.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/rolesTableRebuild.dart';
 import 'package:rattle/providers/selectedRow.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -88,6 +89,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
+
+    // Watch rebuildTriggerProvider to trigger a rebuild when its value changes.
+
+    ref.watch(rebuildTriggerProvider);
 
     // FIRST PAGE: Welcome Message
 
