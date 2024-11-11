@@ -390,6 +390,19 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                     ),
                   ],
                 ),
+              if (showHeader)
+                // Spacer row to add more space after the header
+                const TableRow(
+                  children: [
+                    SizedBox(height: 10), // Adjust the height as needed
+                    SizedBox(height: 10),
+                    SizedBox(height: 10),
+                    SizedBox(height: 10),
+                    SizedBox(height: 10),
+                    SizedBox(height: 10),
+                    SizedBox(height: 10),
+                  ],
+                ),
               TableRow(
                 children: [
                   _buildFittedText(variable.name),
