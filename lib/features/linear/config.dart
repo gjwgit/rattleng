@@ -30,7 +30,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/utils/get_target.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// The LINEAR tab config currently consists of just an ACTIVITY button.
@@ -62,9 +61,7 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
-              },
+              onPressed: () async {},
               child: const Text('Build Linear Model'),
             ),
             configWidgetGap,
