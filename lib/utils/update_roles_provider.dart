@@ -122,7 +122,7 @@ void updateVariablesProvider(WidgetRef ref) {
 
         ref.read(rolesProvider.notifier).state[column.name] = Role.input;
         // update the new variable's role.
-        
+
         ref.read(rolesProvider.notifier).state[getOriginal(column.name)] =
             Role.ignoreAfterTransformed;
       } else {
