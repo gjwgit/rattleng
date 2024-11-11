@@ -28,3 +28,6 @@
 library(dlookr)
 
 ds[["BQT_SELECTED_VAR_NUMBER"]] <- binning(ds[["SELECTED_VAR"]], NUMBER, type="quantile", ordered=FALSE)
+
+glimpse(ds)
+summary(ds)
