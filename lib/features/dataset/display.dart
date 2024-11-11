@@ -114,10 +114,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     // Listen for shift key events
 
-    RawKeyboard.instance.addListener((event) {
+    HardwareKeyboard.instance.addHandler((event) {
       setState(() {
-        _isShiftPressed = event.isShiftPressed;
+        _isShiftPressed = HardwareKeyboard.instance.logicalKeysPressed
+                .contains(LogicalKeyboardKey.shiftLeft) ||
+            HardwareKeyboard.instance.logicalKeysPressed
+                .contains(LogicalKeyboardKey.shiftRight);
       });
+      // Return a boolean value.
+
+      return false;
     });
 
     return PageViewer(
