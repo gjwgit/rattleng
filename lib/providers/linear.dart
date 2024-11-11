@@ -1,8 +1,8 @@
-/// A provider for interval (transform/rescale)
+/// A provider for linear model.
 ///
 /// Time-stamp: <Tuesday 2024-07-30 11:11:48 +1000 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -22,11 +22,10 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Zheyuan Xu
 
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-const initInterval = 100;
-final intervalProvider = StateProvider<int>((ref) => initInterval);
+final familyLinearProvider = StateProvider<String>((ref) => 'Logit');

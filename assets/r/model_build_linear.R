@@ -37,7 +37,7 @@ form <- as.formula(paste(target, "~ ."))
 model_glm <- glm(
   form,
   data = ds[tr, vars],
-  family = binomial(link = "logit"),
+  family = binomial(link = LINEAR_FAMILY),
 )
 
 # Generate a textual view of the Logistic Regression Model.

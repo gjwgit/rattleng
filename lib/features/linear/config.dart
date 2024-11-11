@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
+import 'package:rattle/providers/linear.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -48,7 +49,7 @@ class LinearConfig extends ConsumerStatefulWidget {
 
 class LinearConfigState extends ConsumerState<LinearConfig> {
   Map<String, String> linearFamily = {
-    'Logistic': '''
+    'Logit': '''
 
         The logit model uses the logistic function to model the probability of a binary outcome, 
         mapping it to a log-odds scale for linearity in coefficients.
@@ -64,7 +65,7 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
 
   @override
   Widget build(BuildContext context) {
-    String family = 'Logistic';
+    String family = ref.read(familyLinearProvider);
 
     return Column(
       children: [
@@ -106,7 +107,7 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
                 setState(() {
                   if (chosen != null) {
                     family = chosen;
-                    // ref.read(algorithmNeuralProvider.notifier).state = chosen;
+                    ref.read(familyLinearProvider.notifier).state = chosen;
                   }
                 });
               },

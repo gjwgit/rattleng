@@ -43,6 +43,7 @@ import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
+import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/max_nwts.dart';
@@ -160,6 +161,10 @@ Future<void> rSource(
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
 
+  // LINEAR
+
+  String linearFamily = ref.read(familyLinearProvider).toLowerCase();
+
   // NEURAL
 
   int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
@@ -242,7 +247,9 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // CLEANUP
+  // LINEAR
+
+  code = code.replaceAll('LINEAR_FAMILY', '"$linearFamily"');
 
   // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
 
