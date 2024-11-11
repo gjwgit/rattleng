@@ -1,6 +1,6 @@
-# Rattle Scripts: From dataset ds build a conditional inference tree.
+# Rattle Scripts: From dataset ds build a linear model.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -22,44 +22,42 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
-
-# Load required packages for conditional inference trees
-
-library(party)       # Conditional inference trees
-library(partykit)    # Enhanced visualization and interpretation
+# Author: Zheyuan Xu
 
 # Define model type and description
-mtype <- "ctree"
-mdesc <- "Conditional Inference Tree"
-
-# Determine what type of model to build based on the number of values of the target variable
-# Not needed for ctree as it automatically handles the data type
+mtype <- "linear"
+mdesc <- "Linear Model"
 
 # Define the formula for the model
 
-# TODO 20240930 gjw SHOULDN'T THIS BE FRO `model_template.r`
-
 form <- as.formula(paste(target, "~ ."))
 
-control <- ctree_control(
-  MINSPLIT, MINBUCKET, MAXDEPTH
+# Build a Logistic Regression Model.
+
+model_glm <- glm(
+  form,
+  data = ds[tr, vars],
+  family = binomial(link = "logit"),
 )
 
-# Train a Conditional Inference Tree model using ctree
-model_ctree <- ctree(
-  formula   = form,
-  data      = ds[tr, vars],
-  na.action = na.exclude,
-  control   = control
-)
+# Generate a textual view of the Logistic Regression Model.
 
-# Generate a textual view of the Conditional Inference Tree model
-print(model_ctree)
-summary(model_ctree)
+print(summary(model_glm))
+
+# Display additional model statistics.
+
+cat(sprintf("Log likelihood: %.3f (%d df)\n",
+            logLik(model_glm)[1],
+            attr(logLik(model_glm), "df")))
+
+cat(sprintf("Null/Residual deviance difference: %.3f (%d df)\n",
+            model_glm$null.deviance - model_glm$deviance,
+            model_glm$df.null - model_glm$df.residual))
+
+cat(sprintf("Pseudo R-Square (optimistic): %.8f\n",
+             cor(model_glm$y, model_glm$fitted.values)))
+
+cat('\n==== ANOVA ====\n\n')
+print(anova(model_glm, test = "Chisq"))
 cat("\n")
-
-# Plot the resulting Conditional Inference Tree
-svg("TEMPDIR/model_tree_ctree.svg")
-plot(model_ctree, main = paste("Conditional Inference Tree", target))
 dev.off()

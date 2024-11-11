@@ -82,6 +82,10 @@ final forestPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
 
+final linearPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
 final neuralPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
