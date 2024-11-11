@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-10-31 13:37:42 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-07 17:06:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -40,15 +40,18 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
+import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -126,7 +129,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   ////////////////////////////////////////////////////////////////////////
 
   // Add a page for dataset summary.
-
   void _addDatasetPage(String stdout, List<Widget> pages) {
     Map<String, Role> currentRoles = ref.read(rolesProvider);
     List<VariableInfo> vars = extractVariables(stdout);
@@ -134,28 +136,76 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     _initializeRoles(vars, highVars, currentRoles);
 
-    // When a new row is added after transformation, initialise its role and
-    // update the role of the old variable
+    // When a new row is added after transformation, initialize its role and
+    // update the role of the old variable.
 
     updateVariablesProvider(ref);
 
     pages.add(
-      ListView.builder(
-        key: const Key('roles_list_view'),
+      Stack(
+        children: [
+          // Positioned DelayedTooltip in the top-right corner.
 
-        // Item count is the same as the number of variables.
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: DelayedTooltip(
+                message: '''
+              
+              Viewer: Tap here to open a separate window to view the current
+              dataset. The default and quite simple data viewer in R will be
+              used. It is invoked as `view(ds)`.
 
-        itemCount: vars.length,
+              ''',
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.table_view,
+                    color: Colors.blue,
+                  ),
+                  onPressed: () {
+                    String path = ref.read(pathProvider);
+                    if (path.isEmpty) {
+                      showOk(
+                        context: context,
+                        title: 'No Dataset Loaded',
+                        content: '''
 
-        itemBuilder: (context, index) {
-          // Show header only for the first row.
+                      Please choose a dataset to load from the **Dataset** tab. There is
+                      not much we can do until we have loaded a dataset.
 
-          return _buildDataTable(
-            vars[index],
-            currentRoles,
-            showHeader: index == 0,
-          );
-        },
+                      ''',
+                      );
+                    } else {
+                      rExecute(ref, 'View(ds)\n');
+                    }
+                  },
+                ),
+              ),
+            ),
+          ),
+
+          // Main ListView for displaying data table.
+
+          Padding(
+            padding: const EdgeInsets.only(top: 56.0),
+            child: ListView.builder(
+              key: const Key('roles_list_view'),
+
+              // Item count is the same as the number of variables.
+              itemCount: vars.length,
+
+              itemBuilder: (context, index) {
+                // Show header only for the first row.
+                return _buildDataTable(
+                  vars[index],
+                  currentRoles,
+                  showHeader: index == 0,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

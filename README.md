@@ -1,5 +1,6 @@
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
 [![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
+[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 
 # Rattle the Next Generation Data Scientist
 
