@@ -32,15 +32,6 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/clear_text_field.dart';
 import 'package:rattle/features/dataset/text_field.dart';
 import 'package:rattle/features/dataset/toggles.dart';
-import 'package:rattle/providers/meta_data.dart';
-import 'package:rattle/providers/role.dart';
-import 'package:rattle/providers/rolesTableRebuild.dart';
-import 'package:rattle/providers/selectedRow.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/vars/roles.dart';
-import 'package:rattle/r/extract_vars.dart';
-import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 
 const double widthSpace = 5;
 
@@ -61,46 +52,6 @@ class DatasetConfig extends ConsumerStatefulWidget {
 }
 
 class _DatasetConfigState extends ConsumerState<DatasetConfig> {
-  Map<String, String> rolesOption = {
-    'IGNORE': 'Ignore this dataset during analysis.',
-    'INPUT': 'Include this dataset for input during analysis.',
-  };
-
-  String? selectedRole; // No default selection
-
-  bool showTooltips = false;
-
-  // Function to update the role for multiple selected rows
-  void _updateRoleForSelectedRows(String newRole) {
-    print('Updating role for selected rows to $newRole');
-    setState(() {
-      final selectedRows = ref.read(selectedRowIndicesProvider);
-      Map<String, dynamic> metaData = ref.watch(metaDataProvider);
-      String stdout = ref.watch(stdoutProvider);
-
-      List<VariableInfo> vars = extractVariables(stdout);
-
-      // Update roles for each selected row
-      selectedRows.forEach((index) {
-        String columnName = vars[index].name;
-        ref.read(rolesProvider.notifier).state[columnName] =
-            newRole == 'IGNORE' ? Role.ignore : Role.input;
-      });
-
-      // Clear selection after updating
-      selectedRows.clear();
-
-      // Increment the rebuild trigger to refresh DatasetDisplay
-      ref.read(rebuildTriggerProvider.notifier).state++;
-    });
-  }
-
-  void _showTooltips() {
-    setState(() {
-      showTooltips = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -108,62 +59,15 @@ class _DatasetConfigState extends ConsumerState<DatasetConfig> {
         Row(
           children: [
             const SizedBox(width: widthSpace),
-
-            // Pass _showTooltips as the callback to DatasetButton.
-
-            DatasetButton(onDatasetButtonPressed: _showTooltips),
-
+            DatasetButton(),
             SizedBox(width: widthSpace),
-
             const DatasetTextField(),
-
             const DatasetClearTextField(),
-
             SizedBox(width: widthSpace),
-
             const DatasetToggles(),
           ],
         ),
         SizedBox(height: 10),
-        Row(
-          children: [
-            const SizedBox(width: widthSpace),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // Only render the RadioListTile widgets if showTooltips is true.
-                  if (showTooltips)
-                    ...rolesOption.keys.map(
-                      (roleKey) => DelayedTooltip(
-                        message: rolesOption[roleKey]!,
-                        wait: const Duration(
-                            seconds: 1), // Optional delay customization
-                        child: Row(
-                          children: [
-                            Radio<String>(
-                              value: roleKey,
-                              groupValue: selectedRole,
-                              onChanged: (value) {
-                                print('Chosen role: $value');
-                                setState(() {
-                                  selectedRole = value;
-                                });
-                                if (value != null) {
-                                  _updateRoleForSelectedRows(value);
-                                }
-                              },
-                            ),
-                            Text(roleKey),
-                          ],
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }

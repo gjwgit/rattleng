@@ -161,16 +161,80 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     updateVariablesProvider(ref);
 
+    Map<String, String> rolesOption = {
+      'IGNORE': 'Ignore this dataset during analysis.',
+      'INPUT': 'Include this dataset for input during analysis.',
+    };
+
+    String? selectedRole; // No default selection
+
+    // Function to update the role for multiple selected rows
+    void _updateRoleForSelectedRows(String newRole) {
+      print('Updating role for selected rows to $newRole');
+      setState(() {
+        final selectedRows = ref.read(selectedRowIndicesProvider);
+        String stdout = ref.watch(stdoutProvider);
+
+        List<VariableInfo> vars = extractVariables(stdout);
+
+        // Update roles for each selected row
+        selectedRows.forEach((index) {
+          String columnName = vars[index].name;
+          ref.read(rolesProvider.notifier).state[columnName] =
+              newRole == 'IGNORE' ? Role.ignore : Role.input;
+        });
+
+        // Clear selection after updating
+        selectedRows.clear();
+
+        // Increment the rebuild trigger to refresh DatasetDisplay
+        ref.read(rebuildTriggerProvider.notifier).state++;
+      });
+    }
+
     pages.add(
       Stack(
         children: [
           // Positioned DelayedTooltip in the top-right corner.
 
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: DelayedTooltip(
+          Row(
+            children: [
+              const SizedBox(width: widthSpace),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // Only render the ElevatedButton widgets if showTooltips is true.
+                    ...rolesOption.keys.map(
+                      (roleKey) => DelayedTooltip(
+                        message: rolesOption[roleKey]!,
+                        wait: const Duration(
+                            seconds: 1), // Optional delay customization
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              print('Chosen role: $roleKey');
+                              setState(() {
+                                selectedRole = roleKey;
+                              });
+                              _updateRoleForSelectedRows(roleKey);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: selectedRole == roleKey
+                                  ? Colors.blue // Highlight the selected role
+                                  : Colors
+                                      .white, // Default color for unselected roles
+                            ),
+                            child: Text(roleKey),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              DelayedTooltip(
                 message: '''
               
               Viewer: Tap here to open a separate window to view the current
@@ -202,7 +266,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   },
                 ),
               ),
-            ),
+            ],
           ),
 
           // Main ListView for displaying data table.
