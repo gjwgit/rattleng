@@ -29,9 +29,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
 /// The LINEAR tab config currently consists of just an ACTIVITY button.
 ///
@@ -45,8 +47,25 @@ class LinearConfig extends ConsumerStatefulWidget {
 }
 
 class LinearConfigState extends ConsumerState<LinearConfig> {
+  Map<String, String> linearFamily = {
+    'Logistic': '''
+
+        The logit model uses the logistic function to model the probability of a binary outcome, 
+        mapping it to a log-odds scale for linearity in coefficients.
+    
+    ''',
+    'Probit': '''
+        
+        The probit model uses the cumulative normal distribution to model the probability of 
+        a binary outcome, mapping probabilities to a z-score scale for linearity in coefficients.
+    
+    ''',
+  };
+
   @override
   Widget build(BuildContext context) {
+    String family = 'Logistic';
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -73,6 +92,25 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
             ),
             configWidgetGap,
             Text('Target: ${getTarget(ref)}'),
+            configWidgetGap,
+            const Text(
+              'Family:',
+              style: normalTextStyle,
+            ),
+            configWidgetGap,
+            ChoiceChipTip<String>(
+              options: linearFamily.keys.toList(),
+              selectedOption: family,
+              tooltips: linearFamily,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    family = chosen;
+                    // ref.read(algorithmNeuralProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
       ],
