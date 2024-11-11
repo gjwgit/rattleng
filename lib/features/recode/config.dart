@@ -57,6 +57,8 @@ class RecodeConfig extends ConsumerStatefulWidget {
 }
 
 class RecodeConfigState extends ConsumerState<RecodeConfig> {
+  bool _isLoading = false;
+
   // TODO 20240819 gjw EACH WIDGET NEEDS A COMMENT
 
   // the reason we use this instead of the provider is that the provider will only be updated after build.
@@ -204,55 +206,82 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       selected2 = inputs[1];
     }
 
-    return Column(
+    return Stack(
       children: [
-        configTopGap,
-        Row(
+        Column(
           children: [
             configTopGap,
-            ActivityButton(
-              onPressed: () {
-                ref.read(selectedProvider.notifier).state = selected;
-                ref.read(selected2Provider.notifier).state = selected2;
-                buildAction();
-                ref.read(recodePageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-              },
-              child: const Text('Recode Variable Values'),
-            ),
-            configWidgetGap,
-            variableChooser(
-              'Variable',
-              inputs,
-              selected,
-              ref,
-              selectedProvider,
-              enabled: true,
-              onChanged: (String? value) {
-                setState(() {
-                  ref.read(selectedProvider.notifier).state =
-                      value ?? 'IMPOSSIBLE';
-                  // Reset the selected transform based on the variable type
-                  selectedTransform =
-                      ref.read(typesProvider)[value] == Type.numeric
-                          ? numericMethods.first
-                          : categoricMethods.first;
-                });
-              },
-              tooltip: '''
+            Row(
+              children: [
+                configTopGap,
+                ActivityButton(
+                  onPressed: () async {
+                    setState(() {
+                      _isLoading = true;
+                    });
 
-              Choose the primary variable to be recoded.
-              
-              ''',
+                    ref.read(selectedProvider.notifier).state = selected;
+                    ref.read(selected2Provider.notifier).state = selected2;
+                    buildAction();
+                    //wait for 5 seconds before switching to the text page.
+                    // It takes time for the R script to run.
+
+                    await Future.delayed(const Duration(seconds: 5));
+
+                    setState(() {
+                      _isLoading = false;
+                    });
+
+                    ref.read(recodePageControllerProvider).animateToPage(
+                          1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                  },
+                  child: const Text('Recode Variable Values'),
+                ),
+                configWidgetGap,
+                variableChooser(
+                  'Variable',
+                  inputs,
+                  selected,
+                  ref,
+                  selectedProvider,
+                  enabled: true,
+                  onChanged: (String? value) {
+                    setState(() {
+                      ref.read(selectedProvider.notifier).state =
+                          value ?? 'IMPOSSIBLE';
+                      // Reset the selected transform based on the variable type
+
+                      selectedTransform =
+                          ref.read(typesProvider)[value] == Type.numeric
+                              ? numericMethods.first
+                              : categoricMethods.first;
+                    });
+                  },
+                  tooltip: '''
+
+                  Choose the primary variable to be recoded.
+                  
+                  ''',
+                ),
+              ],
             ),
+            configTopGap,
+            recodeChooser(inputs, selected2),
           ],
         ),
-        configTopGap,
-        recodeChooser(inputs, selected2),
+        if (_isLoading)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black
+                  .withOpacity(0.3), // Optional: adds a translucent overlay
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
       ],
     );
   }
