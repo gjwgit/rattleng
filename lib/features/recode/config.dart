@@ -34,6 +34,7 @@ import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 // TODO 20240819 gjw RENAME SELECTED2 TO SECONDARY
+
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
@@ -61,8 +62,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   // TODO 20240819 gjw EACH WIDGET NEEDS A COMMENT
 
-  // the reason we use this instead of the provider is that the provider will only be updated after build.
+  // The reason we use this instead of the provider is that the provider will only be updated after build.
   // Before build, selected contains the most recent value.
+
   String selected = 'NULL';
   String selectedTransform = '';
 
@@ -87,18 +89,19 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     switch (selectedTransform) {
       case 'Quantiles':
         rSource(context, ref, ['transform_recode_quantile']);
+        break;
       case 'KMeans':
         rSource(context, ref, ['transform_recode_kmeans']);
+        break;
       case 'Equal Width':
         rSource(context, ref, ['transform_recode_equal_width']);
+        break;
       case 'Indicator Variable':
         rSource(context, ref, ['transform_recode_indicator_variable']);
+        break;
       case 'Join Categorics':
         rSource(context, ref, ['transform_recode_join_categoric']);
-      // case 'As Categoric':
-      //   rSource(context, ref, ['transform_rescale_log10_numeric']);
-      // case 'As Numeric':
-      //   rSource(context, ref, ['transform_rescale_rank']);
+        break;
       default:
         showUnderConstruction(context);
     }
@@ -110,7 +113,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     bool isNumeric = true;
 
-    // On startup with no dataset (so nothing selected) the default is to enable
+    // On startup with no dataset (so nothing selected), the default is to enable
     // all the chips.
 
     if (selected != 'NULL') {
@@ -163,7 +166,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             onChanged: (String? value) {
               ref.read(selected2Provider.notifier).state =
                   value ?? 'IMPOSSIBLE';
-              // reset after selection
+
+              // Reset after selection.
+
               selectedTransform = ref.read(typesProvider)[value] == Type.numeric
                   ? numericMethods.first
                   : categoricMethods.first;
@@ -187,14 +192,18 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     if (selected == 'NULL' && inputs.isNotEmpty) {
       setState(() {
         selected = inputs.first;
-        // initialise the chip selection
+
+        // Initialize the chip selection.
+
         selectedTransform = ref.read(typesProvider)[selected] == Type.numeric
             ? numericMethods.first
             : categoricMethods.first;
         debugPrint('selected changed to $selected');
       });
     }
-    // This is to ensure if we come back later, the selection is not cleared
+
+    // This is to ensure if we come back later, the selection is not cleared.
+
     if (selected != 'NULL' && selectedTransform == '') {
       selectedTransform = ref.read(typesProvider)[selected] == Type.numeric
           ? numericMethods.first
@@ -217,16 +226,16 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                 ActivityButton(
                   onPressed: () async {
                     setState(() {
-                      _isLoading = true;
+                      _isLoading = selectedTransform == 'Quantiles';
                     });
 
                     ref.read(selectedProvider.notifier).state = selected;
                     ref.read(selected2Provider.notifier).state = selected2;
                     buildAction();
-                    //wait for 5 seconds before switching to the text page.
-                    // It takes time for the R script to run.
 
-                    await Future.delayed(const Duration(seconds: 5));
+                    if (selectedTransform == 'Quantiles') {
+                      await Future.delayed(const Duration(seconds: 5));
+                    }
 
                     setState(() {
                       _isLoading = false;
@@ -252,7 +261,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     setState(() {
                       ref.read(selectedProvider.notifier).state =
                           value ?? 'IMPOSSIBLE';
-                      // Reset the selected transform based on the variable type
+
+                      // Reset the selected transform based on the variable type.
 
                       selectedTransform =
                           ref.read(typesProvider)[value] == Type.numeric
@@ -273,14 +283,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           ],
         ),
         if (_isLoading)
-          Positioned.fill(
-            child: Container(
-              color: Colors.black
-                  .withOpacity(0.3), // Optional: adds a translucent overlay
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+          const Center(
+            child: CircularProgressIndicator(),
           ),
       ],
     );
