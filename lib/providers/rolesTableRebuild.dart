@@ -1,4 +1,4 @@
-///  Provider for rebuildTriggerProvider in Roles page
+///  Provider for rebuilding the roles table
 ///
 /// Time-stamp: <Sunday 2024-10-13 10:36:28 +1100 Graham Williams>
 ///

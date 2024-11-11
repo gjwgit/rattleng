@@ -44,30 +44,45 @@ const double widthSpace = 5;
 /// This is a StatefulWidget to record the name of the chosen dataset. TODO THE
 /// DATASET NAME MAY NEED TO BE PUSHED HIGHER FOR ACCESS FROM OTHER PAGES.
 
-class DatasetConfig extends ConsumerStatefulWidget {
+class DatasetConfig extends StatefulWidget {
   const DatasetConfig({super.key});
 
   @override
-  ConsumerState<DatasetConfig> createState() => _DatasetConfigState();
+  State<DatasetConfig> createState() => _DatasetConfigState();
 }
 
-class _DatasetConfigState extends ConsumerState<DatasetConfig> {
+class _DatasetConfigState extends State<DatasetConfig> {
+  // A controller for the text field so it can be updated programmatically.
+
+  // final TextEditingController _textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Row(
       children: [
-        Row(
-          children: [
-            const SizedBox(width: widthSpace),
-            DatasetButton(),
-            SizedBox(width: widthSpace),
-            const DatasetTextField(),
-            const DatasetClearTextField(),
-            SizedBox(width: widthSpace),
-            const DatasetToggles(),
-          ],
-        ),
-        SizedBox(height: 10),
+        // Some fixed space so the widgets aren't crowded.
+
+        SizedBox(width: widthSpace),
+
+        // Widget to select the dataset filename.
+
+        DatasetButton(),
+
+        SizedBox(width: widthSpace),
+
+        // A text field to display the selected dataset name.
+
+        DatasetTextField(),
+
+        // Clear the textfield entry.
+
+        DatasetClearTextField(),
+
+        SizedBox(width: widthSpace),
+
+        // Toggles to choose what to do on loading the dataset.
+
+        DatasetToggles(),
       ],
     );
   }

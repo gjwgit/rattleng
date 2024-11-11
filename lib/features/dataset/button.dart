@@ -36,9 +36,7 @@ import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends ConsumerWidget {
-  const DatasetButton({
-    Key? key,
-  }) : super(key: key);
+  const DatasetButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

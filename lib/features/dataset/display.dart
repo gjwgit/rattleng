@@ -170,7 +170,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     String? selectedRole; // No default selection
 
-    // Function to update the role for multiple selected rows
+    // Function to update the role for multiple selected rows.
+
     void _updateRoleForSelectedRows(String newRole) {
       setState(() {
         final selectedRows = ref.read(selectedRowIndicesProvider);
@@ -179,6 +180,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         List<VariableInfo> vars = extractVariables(stdout);
 
         // Update roles for each selected row
+
         selectedRows.forEach((index) {
           String columnName = vars[index].name;
           ref.read(rolesProvider.notifier).state[columnName] =
@@ -186,9 +188,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         });
 
         // Clear selection after updating
+
         selectedRows.clear();
 
         // Increment the rebuild trigger to refresh DatasetDisplay
+
         ref.read(rebuildTriggerProvider.notifier).state++;
       });
     }
@@ -196,8 +200,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     pages.add(
       Stack(
         children: [
-          // Positioned DelayedTooltip in the top-right corner.
-
           Row(
             children: [
               const SizedBox(width: widthSpace),
@@ -212,50 +214,51 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                           seconds: 1,
                         ),
                         child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                final selectedRows =
-                                    ref.read(selectedRowIndicesProvider);
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              final selectedRows =
+                                  ref.read(selectedRowIndicesProvider);
 
-                                if (selectedRows.isEmpty) {
-                                  // Show a warning dialog if no rows are selected.
+                              if (selectedRows.isEmpty) {
+                                // Show a warning dialog if no rows are selected.
 
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('No Row Selected'),
-                                        content: const Text(
-                                            'You have not selected a row to set the Role.'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  // Proceed to update the role if rows are selected.
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('No Row Selected'),
+                                      content: const Text(
+                                        'You have not selected a row to set the Role.',
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                // Proceed to update the role if rows are selected.
 
-                                  setState(() {
-                                    selectedRole = roleKey;
-                                  });
-                                  _updateRoleForSelectedRows(roleKey);
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: selectedRole == roleKey
-                                    ? Colors.blue
-                                    : Colors.white,
-                              ),
-                              child: Text(roleKey),
-                            )),
+                                setState(() {
+                                  selectedRole = roleKey;
+                                });
+                                _updateRoleForSelectedRows(roleKey);
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: selectedRole == roleKey
+                                  ? Colors.blue
+                                  : Colors.white,
+                            ),
+                            child: Text(roleKey),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -304,16 +307,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               key: const Key('roles_list_view'),
 
               // Item count is the same as the number of variables.
+
               itemCount: vars.length,
 
               itemBuilder: (context, index) {
                 // Show header only for the first row.
-// Show header only for the first row.
+
                 return _buildDataTable(
                   variable: vars[index],
                   showHeader: index == 0,
-                  rowIndex:
-                      index, // Pass the index to _buildDataTable for selection tracking
+                  // Pass the index to _buildDataTable for selection tracking
+
+                  rowIndex: index,
                 );
               },
             ),
@@ -497,8 +502,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               TableRow(
                 children: [
                   _buildFittedText(variable.name),
-                  _buildRoleChips(variable.name,
-                      currentRoles), // Role chip updates based on currentRoles
+                  _buildRoleChips(
+                    variable.name,
+                    currentRoles,
+                  ), // Role chip updates based on currentRoles
                   Text(
                     variable.type,
                     textAlign: TextAlign.center,
