@@ -162,15 +162,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     updateVariablesProvider(ref);
 
     Map<String, String> rolesOption = {
-      'IGNORE': 'Ignore this dataset during analysis.',
-      'INPUT': 'Include this dataset for input during analysis.',
+      'IGNORE': ''' Ignore this dataset during analysis.
+      ''',
+      'INPUT': '''Include this dataset for input during analysis.
+      ''',
     };
 
     String? selectedRole; // No default selection
 
     // Function to update the role for multiple selected rows
     void _updateRoleForSelectedRows(String newRole) {
-      print('Updating role for selected rows to $newRole');
       setState(() {
         final selectedRows = ref.read(selectedRowIndicesProvider);
         String stdout = ref.watch(stdoutProvider);
@@ -204,31 +205,57 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // Only render the ElevatedButton widgets if showTooltips is true.
                     ...rolesOption.keys.map(
                       (roleKey) => DelayedTooltip(
                         message: rolesOption[roleKey]!,
                         wait: const Duration(
-                            seconds: 1), // Optional delay customization
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              print('Chosen role: $roleKey');
-                              setState(() {
-                                selectedRole = roleKey;
-                              });
-                              _updateRoleForSelectedRows(roleKey);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: selectedRole == roleKey
-                                  ? Colors.blue // Highlight the selected role
-                                  : Colors
-                                      .white, // Default color for unselected roles
-                            ),
-                            child: Text(roleKey),
-                          ),
+                          seconds: 1,
                         ),
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                final selectedRows =
+                                    ref.read(selectedRowIndicesProvider);
+
+                                if (selectedRows.isEmpty) {
+                                  // Show a warning dialog if no rows are selected.
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('No Row Selected'),
+                                        content: const Text(
+                                            'You have not selected a row to set the Role.'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  // Proceed to update the role if rows are selected.
+
+                                  setState(() {
+                                    selectedRole = roleKey;
+                                  });
+                                  _updateRoleForSelectedRows(roleKey);
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: selectedRole == roleKey
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
+                              child: Text(roleKey),
+                            )),
                       ),
                     ),
                   ],
