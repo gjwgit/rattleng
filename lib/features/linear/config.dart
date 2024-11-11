@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/linear.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -88,6 +89,12 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
                   ref,
                   ['model_template', 'model_build_linear'],
                 );
+                await ref.read(linearPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Linear Model'),
             ),

@@ -29,10 +29,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -66,6 +69,24 @@ class _LinearDisplayState extends ConsumerState<LinearDisplay> {
           title: '# Linear Model\n\n'
               'Built using `glm()`.\n\n',
           content: '\n$content',
+        ),
+      );
+    }
+
+    String image = '$tempDir/model_glm_diagnostic_plots.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Linear Model - Visual
+
+          Visit
+          [stats::glm()](https://www.rdocumentation.org/packages/stats/topics/glm).
+
+          ''',
+          path: image,
         ),
       );
     }

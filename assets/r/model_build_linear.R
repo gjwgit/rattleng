@@ -60,4 +60,10 @@ cat(sprintf("Pseudo R-Square (optimistic): %.8f\n",
 cat('\n==== ANOVA ====\n\n')
 print(anova(model_glm, test = "Chisq"))
 cat("\n")
+
+# Plot diagnostic plots for the logistic regression model.
+
+svg("TEMPDIR/model_glm_diagnostic_plots.svg")
+par(mfrow = c(2, 2))
+plot(model_glm)
 dev.off()
