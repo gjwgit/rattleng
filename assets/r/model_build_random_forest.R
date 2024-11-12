@@ -50,12 +50,12 @@ tds <- ds[tr, vars]
 
 model_randomForest <- randomForest(
   form,
-  data=tds, 
-  ntree=RF_NUM_TREES,
-  mtry=RF_MTRY,
-  importance=TRUE,
-  na.action=RF_NA_ACTION,
-  replace=FALSE)
+  data       = tds, 
+  ntree      = RF_NUM_TREES,
+  mtry       = RF_MTRY,
+  importance = TRUE,
+  na.action  = RF_NA_ACTION,
+  replace    = FALSE)
 
 # Generate textual output of the 'Random Forest' model.
 
@@ -97,16 +97,21 @@ importance_df$Variable <- rownames(importance_df)
 
 # Melt the data frame to long format for ggplot.
 
-importance_long <- melt(importance_df, id.vars = "Variable", 
-                        variable.name = "Class", value.name = "Importance")
+importance_long <- melt(importance_df, 
+                        id.vars       = "Variable", 
+                        variable.name = "Class", 
+                        value.name    = "Importance")
 
-ggplot(importance_long, aes(x = reorder(Variable, Importance), y = Importance, fill = Class)) +
-  geom_bar(stat = "identity", position = "dodge") +
+ggplot(importance_long, aes(x    = reorder(Variable, Importance), 
+                            y    = Importance, 
+                            fill = Class)) +
+  geom_bar(stat     = "identity", 
+           position = "dodge") +
   coord_flip() +
   labs(
-    title="Variable Importance for Different Target Classes",
-    x="Variable",
-    y="Importance"
+    title = "Variable Importance for Different Target Classes",
+    x     = "Variable",
+    y     = "Importance"
   ) +
   theme_minimal()
 
@@ -118,7 +123,10 @@ dev.off()
 svg("TEMPDIR/model_random_forest_error_rate.svg")
 
 plot(model_randomForest, main="")
-legend("topright", c("OOB", "No", "Yes"), text.col=1:6, lty=1:3, col=1:3)
+legend("topright", c("OOB", "No", "Yes"), 
+       text.col = 1:6, 
+       lty      = 1:3, 
+       col      = 1:3)
 title(main="Error Rates Random",
     sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
 
@@ -167,17 +175,17 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
   # Calculate ROC curve using pROC package instead of verification.
 
   roc_obj <- pROC::roc(observed_binary, predicted_probs, 
-                       quiet=TRUE, 
-                       ci=TRUE, 
-                       ci.method="delong")
+                       quiet     = TRUE, 
+                       ci        = TRUE, 
+                       ci.method = "delong")
   
   # Plot ROC curve.
 
   plot(roc_obj, 
-       main="OOB ROC Curve Random Forest",
-       col="blue", 
-       lwd=2,
-       legacy.axes=TRUE)
+       main        = "OOB ROC Curve Random Forest",
+       col         = "blue", 
+       lwd         = 2,
+       legacy.axes = TRUE)
   
   # Add diagonal reference line.
 
@@ -197,19 +205,19 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
 
   mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), 
               Sys.info()["user"]), 
-        side=3, 
-        line=0.5, 
-        cex=0.8)
+        side = 3, 
+        line = 0.5, 
+        cex  = 0.8)
   
 } else {
   # Create an empty plot with an error message.
 
   plot(0, 0, 
-       type="n", 
-       main="ROC Curve Error", 
-       xlab="", 
-       ylab="",
-       axes=FALSE)
+       type = "n", 
+       main = "ROC Curve Error", 
+       xlab = "", 
+       ylab = "",
+       axes = FALSE)
   text(0, 0, 
        paste("Insufficient data for ROC curve:\n",
              "Minimum class size =", min_class_size,
