@@ -56,12 +56,13 @@ tds <- ds[tr, setdiff(vars, ignore)]
 
 model_rpart <- rpart(
   form,
-  data=tds,
-  method=method,
-  parms=list(split="information" PRIORS LOSS),
-  control=rpart.control(usesurrogate=0,
-                        maxsurrogate=0, MINSPLIT, MINBUCKET, MAXDEPTH, CP),
-  model=TRUE)
+  data    = tds,
+  method  = method,
+  parms   = list(split="information" PRIORS LOSS),
+  control = rpart.control(usesurrogate = 0,
+                          maxsurrogate = 0, 
+                          MINSPLIT, MINBUCKET, MAXDEPTH, CP),
+  model   = TRUE)
 
 # Output a textual view of the Decision Tree model.
 
