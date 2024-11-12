@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Saturday 2024-11-02 14:07:51 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-11-13 09:17:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,41 +27,52 @@ library;
 
 import 'package:gap/gap.dart';
 
-// TODO 20240901 gjw CONSIDER THE gap PACKAGE FOR SLIGHTLY SIMPLER GAPs.
+/// A general gap used between buttons, like in the dataset popup.
 
-/// Spacing between rows in a ChoiceChip.
+const buttonGap = Gap(10);
+
+/// Width between rows in a ChoiceChip.
 
 const choiceChipRowSpace = 10.0;
 
-/// Space above the beginning of the configs Row.
+/// Gap above the beginning of the configs Row.
 
 const configTopGap = Gap(10);
 
-/// Space below the last row of configs often to ensure the underline of numeric
+/// Gap below the last row of configs often to ensure the underline of numeric
 /// paramaters is not lost.
 
 const configBotGap = Gap(5);
 
-/// Space between the config Rows.
+/// Gap between the config Rows.
 
 const configRowGap = Gap(20);
 
-/// Space to the left of the configs within a Row.
+/// Gap to the left of the configs within a Row.
 
 const configLeftGap = Gap(5);
 
-/// Space between widgets in a Row in the config.
+/// Gap between widgets in a Row in the config.
 
 const configWidgetGap = Gap(20);
 
-/// Space between widgets in a Row in the the config.
+/// Gap between widgets in a Row in the the config.
 
 const configChooserGap = Gap(10);
 
-/// Space between a label and the field.
+/// Gap between a label and the field.
 
 const configLabelGap = Gap(5);
 
-/// Space before the bottom divider in the display pages.
+/// Gap between the title row of a popup between the icon and the text of the
+/// title.
+
+const popupIconGap = Gap(20);
+
+/// Gap between a popup's title row and content.
+
+const popupTitleGap = Gap(40);
+
+/// Gap before the bottom divider in the display pages.
 
 const textPageBottomGap = Gap(20);

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-06-07 13:59:17 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-11-13 09:12:16 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,13 +25,12 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:rattle/constants/spacing.dart';
 
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/clear_text_field.dart';
 import 'package:rattle/features/dataset/text_field.dart';
 import 'package:rattle/features/dataset/toggles.dart';
-
-const double widthSpace = 5;
 
 /// The dataset config allows selection and tuning of the data for Rattle.
 ///
@@ -60,13 +59,13 @@ class _DatasetConfigState extends State<DatasetConfig> {
       children: [
         // Some fixed space so the widgets aren't crowded.
 
-        SizedBox(width: widthSpace),
+        configWidgetGap,
 
         // Widget to select the dataset filename.
 
         DatasetButton(),
 
-        SizedBox(width: widthSpace),
+        configWidgetGap,
 
         // A text field to display the selected dataset name.
 
@@ -76,7 +75,7 @@ class _DatasetConfigState extends State<DatasetConfig> {
 
         DatasetClearTextField(),
 
-        SizedBox(width: widthSpace),
+        configWidgetGap,
 
         // Toggles to choose what to do on loading the dataset.
 

@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/utils/reset.dart';
@@ -75,7 +76,7 @@ void showAlertPopup(
         title: const Row(
           children: [
             Icon(Icons.warning, color: Colors.red),
-            SizedBox(width: 20),
+            configWidgetGap,
             Text('Warning'),
           ],
         ),
