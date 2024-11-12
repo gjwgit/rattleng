@@ -406,9 +406,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     required int rowIndex,
   }) {
     // Watch the latest roles directly from rolesProvider
+
     Map<String, Role> currentRoles = ref.watch(rolesProvider);
 
     // Check if the row is selected
+
     final selectedRows = ref.watch(selectedRowIndicesProvider);
     bool isSelected = selectedRows.contains(rowIndex);
     String content = _truncateContent(variable.details);
@@ -419,27 +421,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     var formatter = NumberFormat('#,###');
 
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (_isShiftPressed) {
-            selectedRows.add(rowIndex); // Shift to multi-select
-          } else {
-            selectedRows.clear();
-            selectedRows.add(rowIndex); // Single-select
-          }
-        });
-      },
-      onLongPressMoveUpdate: (details) {
-        setState(() {
-          selectedRows.add(rowIndex); // Select multiple on drag
-        });
-      },
-      child: Container(
-        color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Table(
+    return Column(
+      children: [
+        if (showHeader)
+          // Only render the header once, without selection logic
+
+          Table(
             columnWidths: const {
               0: FixedColumnWidth(150.0),
               1: FixedColumnWidth(400.0),
@@ -449,86 +436,123 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               5: FixedColumnWidth(20.0),
               6: FlexColumnWidth(),
             },
-            children: [
-              if (showHeader)
-                const TableRow(
-                  children: [
-                    Text(
-                      'Variable',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      'Role',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      'Type',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      'Unique',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.right,
-                    ),
-                    Text(
-                      'Missing',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.right,
-                    ),
-                    SizedBox.shrink(),
-                    Text(
-                      'Sample',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
-              if (showHeader)
-                // Spacer row to add more space after the header
-                const TableRow(
-                  children: [
-                    SizedBox(height: 10), // Adjust the height as needed
-                    SizedBox(height: 10),
-                    SizedBox(height: 10),
-                    SizedBox(height: 10),
-                    SizedBox(height: 10),
-                    SizedBox(height: 10),
-                    SizedBox(height: 10),
-                  ],
-                ),
+            children: const [
               TableRow(
                 children: [
-                  _buildFittedText(variable.name),
-                  _buildRoleChips(
-                    variable.name,
-                    currentRoles,
-                  ), // Role chip updates based on currentRoles
                   Text(
-                    variable.type,
+                    'Variable',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    'Role',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    formatter.format(uniqueCount),
+                    'Type',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Unique',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right,
                   ),
                   Text(
-                    formatter.format(missingCount),
+                    'Missing',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right,
                   ),
                   SizedBox.shrink(),
-                  SelectableText(
-                    content,
+                  Text(
+                    'Sample',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.left,
                   ),
                 ],
               ),
+              TableRow(
+                children: [
+                  SizedBox(height: 10), // Spacer row for header
+
+                  SizedBox(height: 10),
+                  SizedBox(height: 10),
+                  SizedBox(height: 10),
+                  SizedBox(height: 10),
+                  SizedBox(height: 10),
+                  SizedBox(height: 10),
+                ],
+              ),
             ],
           ),
+
+        // Apply selection only to data rows
+
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              if (_isShiftPressed) {
+                selectedRows.add(rowIndex); // Shift to multi-select
+              } else {
+                selectedRows.clear();
+                selectedRows.add(rowIndex); // Single-select
+              }
+            });
+          },
+          onLongPressMoveUpdate: (details) {
+            setState(() {
+              selectedRows.add(rowIndex); // Select multiple on drag
+            });
+          },
+          child: Container(
+            color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Table(
+                columnWidths: const {
+                  0: FixedColumnWidth(150.0),
+                  1: FixedColumnWidth(400.0),
+                  2: FixedColumnWidth(40.0),
+                  3: FixedColumnWidth(80.0),
+                  4: FixedColumnWidth(80.0),
+                  5: FixedColumnWidth(20.0),
+                  6: FlexColumnWidth(),
+                },
+                children: [
+                  TableRow(
+                    children: [
+                      _buildFittedText(variable.name),
+                      _buildRoleChips(
+                        variable.name,
+                        currentRoles,
+                      ), // Role chip updates based on currentRoles
+
+                      Text(
+                        variable.type,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        formatter.format(uniqueCount),
+                        textAlign: TextAlign.right,
+                      ),
+                      Text(
+                        formatter.format(missingCount),
+                        textAlign: TextAlign.right,
+                      ),
+                      SizedBox.shrink(),
+                      SelectableText(
+                        content,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
