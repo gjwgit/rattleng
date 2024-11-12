@@ -1,11 +1,11 @@
-# Rattle Scripts: Data Transformation/Wrangling
+# Rattle Scripts: From dataset ds build a SVM model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-19 08:47:35 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-09-07 15:38:57 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,11 +22,33 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams, Yixiang Yin
+# Author: Zheyuan Xu
 
-# Bin the SELECTED_VAR into NUMBER bins using equal widths.
+library(kernlab)
 
-ds[["BEQ_SELECTED_VAR_NUMBER"]] <- cut(ds[["SELECTED_VAR"]], NUMBER)
+# Define the dataset, input, and target.
 
-glimpse(ds)
-summary(ds)
+tds <- ds[tr, vars]
+svm_kernel <- SVM_KERNEL
+
+if (svm_kernel == "polydot") {
+  svm_model <- ksvm(
+    as.factor(tds[[target]]) ~ .,
+    data       = tds,
+    kernel     = SVM_KERNEL,
+    kpar       = list("degree" = SVM_DEGREE),
+    prob.model = TRUE
+  )
+} else {
+  svm_model <- ksvm(
+    as.factor(tds[[target]]) ~ .,
+    data       = tds,
+    kernel     = SVM_KERNEL,
+    prob.model = TRUE
+  )
+}
+
+# Print a summary of the trained SVM model.
+
+print(svm_model)
+dev.off()

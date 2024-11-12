@@ -1,6 +1,6 @@
 /// Utility to extract the latest random forest from R log.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -20,21 +20,41 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 library;
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:rattle/providers/forest.dart';
+import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
-String _basicTemplate(String log) {
-  const String hd = 'Summary of the Random Forest model for Classification';
-  const String md = "(built using 'randomForest'):";
-  final String fm = rExtract(log, '> print(form)');
-  final String pr = rExtract(log, '> print(model_randomForest)');
-  final String pe = rExtract(
-    log,
-    '+                 as.numeric(model_randomForest\$predicted))',
-  );
+String _basicTemplate(
+  String log,
+  WidgetRef ref,
+) {
+  AlgorithmType forestAlgorithm =
+      ref.read(algorithmForestProvider.notifier).state;
+
+  String hd = forestAlgorithm == AlgorithmType.traditional
+      ? 'Summary of the Random Forest model for Classification'
+      : 'Summary of the Conditional Forest model for Classification';
+  String md = forestAlgorithm == AlgorithmType.traditional
+      ? "(built using 'randomForest'):"
+      : "(built using 'cforest'):";
+  final String fm = forestAlgorithm == AlgorithmType.traditional
+      ? rExtract(log, '> print(form)')
+      : rExtract(log, '> print(model_conditionalForest)');
+  final String pr = forestAlgorithm == AlgorithmType.traditional
+      ? rExtract(log, '> print(model_randomForest)')
+      : '';
+  final String pe = forestAlgorithm == AlgorithmType.traditional
+      ? rExtract(
+          log,
+          '+                 as.numeric(model_randomForest\$predicted))',
+        )
+      : '';
   final String ts = timestamp();
 
   String result = '';
@@ -42,50 +62,88 @@ String _basicTemplate(String log) {
   if (pr != '') {
     result = '$hd $md\n\nFormula: $fm\n$pr \n$pe\n\nRattle timestamp: $ts';
   }
+  if (fm != '') result = '$hd $md\n\nFormula: $fm\n\nRattle timestamp: $ts';
 
   return result;
 }
 
 /// Extract from the R [log] lines of output from the random forest.
 
-String rExtractForest(String log) {
-  String extract = _basicTemplate(log);
+String rExtractForest(
+  String log,
+  WidgetRef ref,
+) {
+  AlgorithmType forestAlgorithm =
+      ref.read(algorithmForestProvider.notifier).state;
+
+  String extract = _basicTemplate(log, ref);
 
   extract = extract.replaceAll('Call:\n', '');
 
-  // Nicely format the call to randomForest.
+  if (forestAlgorithm == AlgorithmType.traditional) {
+    // Nicely format the call to randomForest.
 
-  extract = extract.replaceAllMapped(
-    RegExp(
-      r'\n (randomForest\(.*?)\)',
-      multiLine: true,
-      dotAll: false,
-    ),
-    (match) {
-      // The first group is then the whole randomForest(...) call.
+    extract = extract.replaceAllMapped(
+      RegExp(
+        r'\n (randomForest\(.*?)\)',
+        multiLine: true,
+        dotAll: false,
+      ),
+      (match) {
+        // The first group is then the whole randomForest(...) call.
 
-      String txt = match.group(1) ?? '';
+        String txt = match.group(1) ?? '';
 
-      txt = txt.replaceAll('\n', '');
-      txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
+        txt = txt.replaceAll('\n', '');
+        txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
 
-      txt = txt.replaceAllMapped(
-        RegExp(r'(\w+)\s*=\s*([^,]+),'),
-        (match) {
-          return '\n    ${match.group(1)}=${match.group(2)},';
-        },
-      );
+        txt = txt.replaceAllMapped(
+          RegExp(r'(\w+)\s*=\s*([^,]+),'),
+          (match) {
+            return '\n    ${match.group(1)}=${match.group(2)},';
+          },
+        );
 
-      txt = txt.replaceAll(' = ', '=');
+        txt = txt.replaceAll(' = ', '=');
 
-      return '\n$txt\n)\n';
-    },
-  );
+        return '\n$txt\n)\n';
+      },
+    );
 
-  extract =
-      extract.replaceAll('\nConfusion matrix:\n', '\n\nConfusion matrix:\n\n');
+    extract = extract.replaceAll(
+      '\nConfusion matrix:\n',
+      '\n\nConfusion matrix:\n\n',
+    );
 
-  extract = extract.replaceAll('\nArea under', '\n\nArea under');
+    extract = extract.replaceAll('\nArea under', '\n\nArea under');
+  } else if (forestAlgorithm == AlgorithmType.conditional) {
+    // Nicely format the call to model_conditionalForest.
+
+    extract = extract.replaceAllMapped(
+      RegExp(
+        r'\n (model_conditionalForest\(.*?)\)',
+        multiLine: true,
+        dotAll: false,
+      ),
+      (match) {
+        String txt = match.group(1) ?? '';
+
+        txt = txt.replaceAll('\n', '');
+        txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
+
+        txt = txt.replaceAllMapped(
+          RegExp(r'(\w+)\s*=\s*([^,]+),'),
+          (match) {
+            return '\n    ${match.group(1)}=${match.group(2)},';
+          },
+        );
+
+        txt = txt.replaceAll(' = ', '=');
+
+        return '\n$txt\n)\n';
+      },
+    );
+  }
 
   return extract;
 }
