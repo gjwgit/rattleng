@@ -27,3 +27,6 @@
 # Bin the SELECTED_VAR into NUMBER bins using equal widths.
 
 ds[["BEQ_SELECTED_VAR_NUMBER"]] <- cut(ds[["SELECTED_VAR"]], NUMBER)
+
+glimpse(ds)
+summary(ds)
