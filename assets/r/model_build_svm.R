@@ -28,23 +28,22 @@ library(kernlab)
 
 # Define the dataset, input, and target.
 
-target_var <- target
-train_data <- ds[tr, vars]
-input_vars <- setdiff(names(train_data), target_var)
+tds <- ds[tr, vars]
+input_vars <- setdiff(names(tds), target)
 svm_kernel <- SVM_KERNEL
 
 if (svm_kernel == "polydot") {
   svm_model <- ksvm(
-    as.factor(train_data[[target_var]]) ~ .,
-    data=train_data[, c(input_vars, target_var)],
+    as.factor(tds[[target]]) ~ .,
+    data=tds[, c(input_vars, target)],
     kernel=SVM_KERNEL,
     kpar=list("degree"=SVM_DEGREE),
     prob.model=TRUE
   )
 } else {
   svm_model <- ksvm(
-    as.factor(train_data[[target_var]]) ~ .,
-    data=train_data[, c(input_vars, target_var)],
+    as.factor(tds[[target]]) ~ .,
+    data=tds[, c(input_vars, target)],
     kernel=SVM_KERNEL,
     prob.model=TRUE
   )
