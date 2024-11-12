@@ -453,6 +453,10 @@ Future<void> rSource(
   code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
   code = code.replaceAll('RF_MTRY', forestPredictorNum.toString());
   code = code.replaceAll('RF_NO_TREE', forestNo.toString());
+  code = code.replaceAll(
+    'RF_NA_ACTION',
+    forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
+  );
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -495,15 +499,6 @@ Future<void> rSource(
   code =
       code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
   code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
-
-  // TODO if (script == 'model_build_random_forest')) {
-
-  code = code.replaceAll('RF_NUM_TREES', '500');
-  code = code.replaceAll('RF_MTRY', '4');
-  code = code.replaceAll(
-    'RF_NA_ACTION',
-    forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
-  );
 
   ////////////////////////////////////////////////////////////////////////
 
