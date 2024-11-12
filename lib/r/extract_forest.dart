@@ -1,6 +1,6 @@
 /// Utility to extract the latest random forest from R log.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
