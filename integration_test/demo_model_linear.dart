@@ -60,7 +60,7 @@ void main() {
         ModelTabs,
       );
 
-      // Navigate to the Association feature.
+      // Navigate to the Linear feature.
 
       await navigateToFeature(tester, 'Linear', LinearPanel);
 
