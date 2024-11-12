@@ -82,13 +82,13 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configTopGap,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftGap,
 
             // The BUILD button.
 
@@ -109,9 +109,13 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
               },
               child: const Text('Build SVM Model'),
             ),
+
             configWidgetGap,
+
             Text('Target: ${getTarget(ref)}'),
+
             configWidgetGap,
+
             variableChooser(
               'Kernel:',
               svmKernel,
@@ -133,7 +137,9 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
                 });
               },
             ),
+
             configWidgetGap,
+
             NumberField(
               label: 'Degree:',
               key: const Key('svm_degree'),
