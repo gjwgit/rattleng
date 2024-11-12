@@ -55,10 +55,10 @@ tds_clean <- tds[!is.na(tds[[response_variable]]), ]
 
 model_conditionalForest <- cforest(
   form,
-  data = tds_clean,
-  controls = cforest_unbiased(
-    ntree = RF_NUM_TREES,
-    mtry = RF_MTRY,
+  data=tds_clean,
+  controls=cforest_unbiased(
+    ntree=RF_NUM_TREES,
+    mtry=RF_MTRY,
   )
 )
 
