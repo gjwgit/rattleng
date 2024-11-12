@@ -35,11 +35,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/features/dataset/config.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/rolesTableRebuild.dart';
+import 'package:rattle/providers/roles_table_rebuild.dart';
 import 'package:rattle/providers/selectedRow.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -168,9 +167,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     updateVariablesProvider(ref);
 
     Map<String, String> rolesOption = {
-      'IGNORE': ''' Ignore this dataset during analysis.
+      'Ignore': ''' Ignore this dataset during analysis.
       ''',
-      'INPUT': '''Include this dataset for input during analysis.
+      'Input': '''Include this dataset for input during analysis.
       ''',
     };
 
@@ -190,7 +189,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         selectedRows.forEach((index) {
           String columnName = vars[index].name;
           ref.read(rolesProvider.notifier).state[columnName] =
-              newRole == 'IGNORE' ? Role.ignore : Role.input;
+              newRole == 'Ignore' ? Role.ignore : Role.input;
         });
 
         // Clear selection after updating
@@ -257,11 +256,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                                 _updateRoleForSelectedRows(roleKey);
                               }
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: selectedRole == roleKey
-                                  ? Colors.blue
-                                  : Colors.white,
-                            ),
                             child: Text(roleKey),
                           ),
                         ),

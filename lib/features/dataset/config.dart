@@ -25,13 +25,12 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:rattle/constants/spacing.dart';
 
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/clear_text_field.dart';
 import 'package:rattle/features/dataset/text_field.dart';
 import 'package:rattle/features/dataset/toggles.dart';
-
-const double widthSpace = 5;
 
 /// The dataset config allows selection and tuning of the data for Rattle.
 ///

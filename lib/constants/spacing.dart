@@ -27,6 +27,10 @@ library;
 
 import 'package:gap/gap.dart';
 
+/// Space between widgets in a Row.
+
+const double widthSpace = 5;
+
 // TODO 20240901 gjw CONSIDER THE gap PACKAGE FOR SLIGHTLY SIMPLER GAPs.
 
 /// Spacing between rows in a ChoiceChip.
