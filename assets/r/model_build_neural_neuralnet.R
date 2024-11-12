@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:26:53 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:48:51 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,8 +34,8 @@ if (neural_ignore_categoric) {
 
   # Only use numeric variables when ignoring categoric.
 
-  vars_to_use <- numeric_vars
-  tds <- ds[tr, c(numeric_vars, target)]
+  vars_to_use <- num_vars
+  tds <- ds[tr, c(num_vars, target)]
 
 } else {
 
@@ -52,20 +52,20 @@ tds <- tds[complete.cases(tds), ]
 
 predictors_combined <- data.frame()
 
-# Handle numerical variables scaling.
+# Handle numeric variables scaling.
 
-if (length(numeric_vars) > 0) {
-  predictors_numeric_scaled <- scale(tds[numeric_vars])
+if (length(num_vars) > 0) {
+  predictors_numeric_scaled <- scale(tds[num_vars])
   predictors_combined <- as.data.frame(predictors_numeric_scaled)
 }
 
 # Handle categoric variables only if not ignoring them.
 
-if (!neural_ignore_categoric && length(categoric_vars) > 0) {
+if (!neural_ignore_categoric && length(cat_vars) > 0) {
   # Create dummy variables for categoric predictors.
 
-  dmy_predictors <- dummyVars(~ ., data = tds[categoric_vars])
-  predictors_categoric <- as.data.frame(predict(dmy_predictors, newdata = tds[categoric_vars]))
+  dmy_predictors <- dummyVars(~ ., data = tds[cat_vars])
+  predictors_categoric <- as.data.frame(predict(dmy_predictors, newdata = tds[cat_vars]))
 
   # Combine with numeric predictors if they exist.
 

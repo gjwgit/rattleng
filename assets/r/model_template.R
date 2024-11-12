@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:23:18 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:59:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -82,9 +82,11 @@ if (!is.null(risk))
 
 trds <- ds[tr, setdiff(vars, ignore)]
 
-# Remove rows with missing values in predictors or target variable.
+# Remove rows with missing values for the target variable.
 
-# THIS REMOVES ALL ROWS WITH MISSING??? trds <- trds[complete.cases(trds), ]
+trds <- trds[!is.na(trds[[target]]), ]
+
+# TODO 20241112 gjw The tr, tu, te, indicies are now out od sync FIX THIS!!!!
 
 # Identify predictor variables (excluding the target variable).
 

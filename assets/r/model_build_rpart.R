@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:10:01 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:28:28 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -53,7 +53,7 @@ method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
 
 model_rpart <- rpart(
   form,
-  data    = tds,
+  data    = trds,
   method  = method,
   parms   = list(split="information" PRIORS LOSS),
   control = rpart.control(usesurrogate = 0,
