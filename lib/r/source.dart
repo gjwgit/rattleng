@@ -40,6 +40,7 @@ import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/complexity.dart';
+import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
@@ -159,6 +160,13 @@ Future<void> rSource(
   String clusterDistance = ref.read(distanceClusterProvider);
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
+
+  // FOREST
+
+  int forestTrees = ref.read(treeNumForestProvider);
+  int forestPredictorNum = ref.read(predictorNumForestProvider);
+  int forestNo = ref.read(treeNoForestProvider);
+  bool forestImpute = ref.read(imputeForestProvider);
 
   // NEURAL
 
@@ -440,6 +448,16 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_LINK', '"${clusterLink.toString()}"');
   code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
 
+  // FOREST
+
+  code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
+  code = code.replaceAll('RF_MTRY', forestPredictorNum.toString());
+  code = code.replaceAll('RF_NO_TREE', forestNo.toString());
+  code = code.replaceAll(
+    'RF_NA_ACTION',
+    forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
+  );
+
   ////////////////////////////////////////////////////////////////////////
 
   // NEURAL
@@ -481,12 +499,6 @@ Future<void> rSource(
   code =
       code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
   code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
-
-  // TODO if (script == 'model_build_random_forest')) {
-
-  code = code.replaceAll('RF_NUM_TREES', '500');
-  code = code.replaceAll('RF_MTRY', '4');
-  code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
 
   ////////////////////////////////////////////////////////////////////////
 

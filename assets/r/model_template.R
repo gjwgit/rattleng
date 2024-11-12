@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 08:17:24 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:59:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -57,9 +57,9 @@ if (SPLIT_DATASET) {
 
   split <- c(DATA_SPLIT_TR_TU_TE)
 
-  nobs %>% sample(split[1]*nobs)                               -> tr
-  nobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*nobs) -> tu
-  nobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)           -> te
+  tr <- nobs %>% sample(split[1]*nobs)
+  tu <- nobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*nobs)
+  te <- nobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
 
 } else {
   tr <- tu <- te <- seq_len(nobs)
@@ -67,33 +67,39 @@ if (SPLIT_DATASET) {
 
 # Note the actual target values and the risk values.
 
-ds %>% slice(tr) %>% pull(target) -> actual_tr
-ds %>% slice(tu) %>% pull(target) -> actual_tu
-ds %>% slice(te) %>% pull(target) -> actual_te
+actual_tr <- ds %>% slice(tr) %>% pull(target)
+actual_tu <- ds %>% slice(tu) %>% pull(target)
+actual_te <- ds %>% slice(te) %>% pull(target)
   
 if (!is.null(risk))
 {
-  ds %>% slice(tr) %>% pull(risk) -> risk_tr
-  ds %>% slice(tu) %>% pull(risk) -> risk_tu
-  ds %>% slice(te) %>% pull(risk) -> risk_te
+  risk_tr <- ds %>% slice(tr) %>% pull(risk)
+  risk_tu <- ds %>% slice(tu) %>% pull(risk)
+  risk_te <- ds %>% slice(te) %>% pull(risk)
 }
-
-neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
 
 # Subset the training data.
 
-tds <- ds[tr, vars]
+trds <- ds[tr, setdiff(vars, ignore)]
 
-# Remove rows with missing values in predictors or target variable.
+# Remove rows with missing values for the target variable.
 
-tds <- tds[complete.cases(tds), ]
+trds <- trds[!is.na(trds[[target]]), ]
+
+# TODO 20241112 gjw The tr, tu, te, indicies are now out od sync FIX THIS!!!!
 
 # Identify predictor variables (excluding the target variable).
 
-predictor_vars <- setdiff(vars, target)
+# WHY IS THIS NEEDED - USE INPUTS predictor_vars <- setdiff(vars, target)
 
-# Identify categorical and numerical predictor variables.
+# Identify categoric and numeric input variables.
 
-categorical_vars <- names(Filter(function(col) is.factor(col) || is.character(col), tds[predictor_vars]))
-numerical_vars <- setdiff(predictor_vars, categorical_vars)
-ignore_categoric_vars <- c(numerical_vars, target)
+cat_vars <- names(Filter(function(col) is.factor(col) || is.character(col), ds[inputs]))
+num_vars <- setdiff(inputs, cat_vars)
+
+# TODO 20241112 gjw FIX THIS CLUMSY NAME
+
+ignore_categoric_vars <- c(num_vars, target)
+
+neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
+

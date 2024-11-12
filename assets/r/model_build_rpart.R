@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 05:29:15 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:28:28 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,24 +44,22 @@ mdesc <- "Tree"
 # of the target variable.
 
 method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
-                 "anova", "class")
+                 "anova",
+                 "class")
 
 # Handle ignored variables.
-
-# TODO 20241008 gjw MOVE THIS INTO THE MODEL TEMPLATE
-
-tds <- ds[tr, setdiff(vars, ignore)]
 
 # Train a decision tree model.
 
 model_rpart <- rpart(
   form,
-  data=tds,
-  method=method,
-  parms=list(split="information" PRIORS LOSS),
-  control=rpart.control(usesurrogate=0,
-                        maxsurrogate=0, MINSPLIT, MINBUCKET, MAXDEPTH, CP),
-  model=TRUE)
+  data    = trds,
+  method  = method,
+  parms   = list(split="information" PRIORS LOSS),
+  control = rpart.control(usesurrogate = 0,
+                          maxsurrogate = 0, 
+                          MINSPLIT, MINBUCKET, MAXDEPTH, CP),
+  model   = TRUE)
 
 # Output a textual view of the Decision Tree model.
 
