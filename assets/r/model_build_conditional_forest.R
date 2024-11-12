@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Random Forest using randomForest()
+# Random Forest using cforest()
 #
 # TIMESTAMP
 #
