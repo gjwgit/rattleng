@@ -8,6 +8,8 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ ROLES selection in table [6.3.20 20241113 kev]
++ FOREST and SVM implementation [6.3.20 20241113 zy]
 + ASSOCIATE implementation [6.3.19 20241102 zy]
 + Export images to (SVG default) PDF and PNG [6.3.18 20241101 lutra]
 + Windows installer updated with window_manger update [6.3.17 20241030 gjw]
