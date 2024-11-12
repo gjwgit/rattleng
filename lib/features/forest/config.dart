@@ -131,9 +131,13 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               },
               child: const Text('Build Random Forest'),
             ),
+            
             configWidgetGap,
+
             Text('Target: ${getTarget(ref)}'),
+
             configWidgetGap,
+
             ChoiceChipTip<AlgorithmType>(
               options: AlgorithmType.values,
               getLabel: (AlgorithmType type) => type.displayName,
@@ -150,6 +154,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             ),
           ],
         ),
+
         configRowGap,
 
         Row(
@@ -174,7 +179,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               stateProvider: treeNumForestProvider,
               interval: 10,
             ),
+
             configWidgetGap,
+
             NumberField(
               label: 'Variables:',
               key: const Key('variablesForest'),
@@ -190,7 +197,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: predictorNumForestProvider,
             ),
+
             configWidgetGap,
+
             NumberField(
               label: 'NO. Tree:',
               key: const Key('treeNoForest'),
@@ -206,7 +215,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: treeNoForestProvider,
             ),
+
             configWidgetGap,
+
             LabelledCheckbox(
               key: const Key('imputeForest'),
               tooltip: '''
