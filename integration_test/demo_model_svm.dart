@@ -58,7 +58,7 @@ void main() {
         ModelTabs,
       );
 
-      // Navigate to the Association feature.
+      // Navigate to the SVM feature.
 
       await navigateToFeature(tester, 'SVM', SvmPanel);
 
