@@ -20,18 +20,22 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 
 library;
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/utils/get_target.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
+import 'package:rattle/providers/linear.dart';
+import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 
 /// The LINEAR tab config currently consists of just an ACTIVITY button.
 ///
@@ -45,30 +49,82 @@ class LinearConfig extends ConsumerStatefulWidget {
 }
 
 class LinearConfigState extends ConsumerState<LinearConfig> {
+  Map<String, String> linearFamily = {
+    'Logit': '''
+
+        The logit model uses the logistic function to model the probability of a binary outcome, 
+        mapping it to a log-odds scale for linearity in coefficients.
+    
+    ''',
+    'Probit': '''
+        
+        The probit model uses the cumulative normal distribution to model the probability of 
+        a binary outcome, mapping probabilities to a z-score scale for linearity in coefficients.
+    
+    ''',
+  };
+
   @override
   Widget build(BuildContext context) {
+    String family = ref.read(familyLinearProvider);
+
     return Column(
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configBotGap,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftGap,
 
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              onPressed: () async {
+                await rSource(
+                  context,
+                  ref,
+                  ['model_template', 'model_build_linear'],
+                );
+                await ref.read(linearPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Linear Model'),
             ),
+
             configWidgetGap,
+
             Text('Target: ${getTarget(ref)}'),
+
+            configWidgetGap,
+
+            const Text(
+              'Family:',
+              style: normalTextStyle,
+            ),
+
+            configWidgetGap,
+
+            ChoiceChipTip<String>(
+              options: linearFamily.keys.toList(),
+              selectedOption: family,
+              tooltips: linearFamily,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    family = chosen;
+                    ref.read(familyLinearProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
       ],
