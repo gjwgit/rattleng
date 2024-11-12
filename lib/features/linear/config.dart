@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 
 library;
 
@@ -72,13 +72,13 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configBotGap,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftGap,
 
             // The BUILD button.
 
@@ -98,14 +98,20 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
               },
               child: const Text('Build Linear Model'),
             ),
+
             configWidgetGap,
+
             Text('Target: ${getTarget(ref)}'),
+
             configWidgetGap,
+            
             const Text(
               'Family:',
               style: normalTextStyle,
             ),
+
             configWidgetGap,
+            
             ChoiceChipTip<String>(
               options: linearFamily.keys.toList(),
               selectedOption: family,
