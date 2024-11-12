@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Tuesday 2024-11-05 12:19:26 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-11-13 09:09:18 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -42,9 +42,6 @@ import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
-const double heightSpace = 20;
-const double widthSpace = 10;
-
 void datasetLoadedUpdate(WidgetRef ref) {
   ref.read(datasetLoaded.notifier).state = true;
 }
@@ -83,11 +80,7 @@ class DatasetPopup extends ConsumerWidget {
                 size: 24,
                 color: Colors.blue,
               ),
-
-              // Space between icon and title.
-
-              SizedBox(width: widthSpace),
-
+              popupIconGap,
               Text(
                 'Choose the Dataset Source:',
                 style: TextStyle(
@@ -98,13 +91,7 @@ class DatasetPopup extends ConsumerWidget {
             ],
           ),
 
-          // Space between title and buttons.
-
-          configRowGap,
-
-          // Space between dataset choices and row of options.
-
-          configRowGap,
+          popupTitleGap,
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -149,11 +136,7 @@ class DatasetPopup extends ConsumerWidget {
                 ),
               ),
 
-              // SPACE
-
-              const SizedBox(width: widthSpace),
-
-              // PACKAGE - Remove for now but include once implemented.
+              buttonGap,
 
               ElevatedButton(
                 onPressed: () {
@@ -174,9 +157,7 @@ class DatasetPopup extends ConsumerWidget {
                 ),
               ),
 
-              // SPACE
-
-              const SizedBox(width: widthSpace),
+              buttonGap,
 
               // DEMO
 

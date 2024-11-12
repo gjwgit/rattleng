@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Tuesday 2024-11-12 14:02:19 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-11-13 09:12:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -205,7 +205,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         children: [
           Row(
             children: [
-              const SizedBox(width: widthSpace),
+              configWidgetGap,
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,

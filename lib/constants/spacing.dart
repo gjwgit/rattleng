@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Saturday 2024-11-02 14:07:51 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-11-13 09:09:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,12 +26,6 @@
 library;
 
 import 'package:gap/gap.dart';
-
-/// Space between widgets in a Row.
-
-const double widthSpace = 5;
-
-// TODO 20240901 gjw CONSIDER THE gap PACKAGE FOR SLIGHTLY SIMPLER GAPs.
 
 /// Spacing between rows in a ChoiceChip.
 
@@ -69,3 +63,11 @@ const configLabelGap = Gap(5);
 /// Space before the bottom divider in the display pages.
 
 const textPageBottomGap = Gap(20);
+
+/// Space between a popup's title and content.
+
+const popupTitleGap = Gap(40);
+
+const popupIconGap = Gap(20);
+
+const buttonGap = Gap(10);
