@@ -24,11 +24,12 @@
 #
 # Author: Zheyuan Xu
 
-# Define model type and description
+# Define model type and description.
+
 mtype <- "linear"
 mdesc <- "Linear Model"
 
-# Define the formula for the model
+# Define the formula for the model.
 
 form <- as.formula(paste(target, "~ ."))
 
