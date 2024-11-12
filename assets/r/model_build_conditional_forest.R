@@ -1,4 +1,4 @@
-# Rattle Scripts: From dataset ds build a random forest model.
+# Rattle Scripts: From dataset ds build a conditional forest model.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
@@ -60,8 +60,8 @@ print(model_conditionalForest)
 
 importance_values <- party::varimp(model_conditionalForest)
 importance_df <- data.frame(
-  Variable = names(importance_values),
-  Importance = importance_values
+  Variable=names(importance_values),
+  Importance=importance_values
 )
 importance_df <- importance_df[order(importance_df$Importance, decreasing = TRUE), ]
 
@@ -77,9 +77,9 @@ ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
   labs(
-    title = "Variable Importance from Conditional Forest",
-    x = "Variable",
-    y = "Importance"
+    title="Variable Importance from Conditional Forest",
+    x="Variable",
+    y="Importance"
   ) +
   theme_minimal()
 
