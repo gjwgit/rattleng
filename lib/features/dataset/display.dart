@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-11-13 09:12:56 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-11-13 09:42:03 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -39,7 +39,7 @@ import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/roles_table_rebuild.dart';
-import 'package:rattle/providers/selectedRow.dart';
+import 'package:rattle/providers/selected_row.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
