@@ -308,13 +308,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               itemBuilder: (context, index) {
                 // Show header only for the first row.
 
-                return _buildDataTable(
-                  variable: vars[index],
-                  showHeader: index == 0,
-                  // Pass the index to _buildDataTable for selection tracking
-
-                  rowIndex: index,
-                );
+                return _buildDataTable(vars);
               },
             ),
           ),
@@ -395,159 +389,248 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   // Build data line for each variable, including the table header if specified.
 
-  Widget _buildDataTable({
-    required VariableInfo variable,
-    required bool showHeader,
-    required int rowIndex,
-  }) {
-    // Watch the latest roles directly from rolesProvider
+  // Widget _buildDataTable({
+  //   required VariableInfo variable,
+  //   required bool showHeader,
+  //   required int rowIndex,
+  // }) {
+  //   // Watch the latest roles directly from rolesProvider
 
+  //   Map<String, Role> currentRoles = ref.watch(rolesProvider);
+
+  //   // Check if the row is selected
+
+  //   final selectedRows = ref.watch(selectedRowIndicesProvider);
+  //   bool isSelected = selectedRows.contains(rowIndex);
+  //   String content = _truncateContent(variable.details);
+
+  //   Map<String, dynamic> metaData = ref.watch(metaDataProvider);
+  //   int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
+  //   int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
+
+  //   var formatter = NumberFormat('#,###');
+
+  //   return Column(
+  //     children: [
+  //       if (showHeader)
+  //         // Only render the header once, without selection logic
+
+  //         Table(
+  //           columnWidths: const {
+  //             0: FixedColumnWidth(150.0),
+  //             1: FixedColumnWidth(400.0),
+  //             2: FixedColumnWidth(40.0),
+  //             3: FixedColumnWidth(80.0),
+  //             4: FixedColumnWidth(80.0),
+  //             5: FixedColumnWidth(20.0),
+  //             6: FlexColumnWidth(),
+  //           },
+  //           children: const [
+  //             TableRow(
+  //               children: [
+  //                 Text(
+  //                   'Variable',
+  //                   style: TextStyle(fontWeight: FontWeight.bold),
+  //                   textAlign: TextAlign.left,
+  //                 ),
+  //                 Text(
+  //                   'Role',
+  //                   style: TextStyle(fontWeight: FontWeight.bold),
+  //                   textAlign: TextAlign.center,
+  //                 ),
+  //                 Text(
+  //                   'Type',
+  //                   style: TextStyle(fontWeight: FontWeight.bold),
+  //                   textAlign: TextAlign.center,
+  //                 ),
+  //                 Text(
+  //                   'Unique',
+  //                   style: TextStyle(fontWeight: FontWeight.bold),
+  //                   textAlign: TextAlign.right,
+  //                 ),
+  //                 Text(
+  //                   'Missing',
+  //                   style: TextStyle(fontWeight: FontWeight.bold),
+  //                   textAlign: TextAlign.right,
+  //                 ),
+  //                 SizedBox.shrink(),
+  //                 Text(
+  //                   'Sample',
+  //                   style: TextStyle(fontWeight: FontWeight.bold),
+  //                   textAlign: TextAlign.left,
+  //                 ),
+  //               ],
+  //             ),
+  //             TableRow(
+  //               children: [
+  //                 SizedBox(height: 10), // Spacer row for header
+
+  //                 SizedBox(height: 10),
+  //                 SizedBox(height: 10),
+  //                 SizedBox(height: 10),
+  //                 SizedBox(height: 10),
+  //                 SizedBox(height: 10),
+  //                 SizedBox(height: 10),
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+
+  //       // Apply selection only to data rows
+
+  //       GestureDetector(
+  //         onTap: () {
+  //           setState(() {
+  //             if (_isShiftPressed) {
+  //               selectedRows.add(rowIndex); // Shift to multi-select
+  //             } else {
+  //               selectedRows.clear();
+  //               selectedRows.add(rowIndex); // Single-select
+  //             }
+  //           });
+  //         },
+  //         onLongPressMoveUpdate: (details) {
+  //           setState(() {
+  //             selectedRows.add(rowIndex); // Select multiple on drag
+  //           });
+  //         },
+  //         child: Container(
+  //           color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(6.0),
+  //             child: Table(
+  //               columnWidths: const {
+  //                 0: FixedColumnWidth(150.0),
+  //                 1: FixedColumnWidth(400.0),
+  //                 2: FixedColumnWidth(40.0),
+  //                 3: FixedColumnWidth(80.0),
+  //                 4: FixedColumnWidth(80.0),
+  //                 5: FixedColumnWidth(20.0),
+  //                 6: FlexColumnWidth(),
+  //               },
+  //               children: [
+  //                 TableRow(
+  //                   children: [
+  //                     _buildFittedText(variable.name),
+  //                     _buildRoleChips(
+  //                       variable.name,
+  //                       currentRoles,
+  //                     ), // Role chip updates based on currentRoles
+
+  //                     Text(
+  //                       variable.type,
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                     Text(
+  //                       formatter.format(uniqueCount),
+  //                       textAlign: TextAlign.right,
+  //                     ),
+  //                     Text(
+  //                       formatter.format(missingCount),
+  //                       textAlign: TextAlign.right,
+  //                     ),
+  //                     SizedBox.shrink(),
+  //                     SelectableText(
+  //                       content,
+  //                       textAlign: TextAlign.left,
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  Widget _buildDataTable(List<VariableInfo> vars) {
     Map<String, Role> currentRoles = ref.watch(rolesProvider);
-
-    // Check if the row is selected
-
     final selectedRows = ref.watch(selectedRowIndicesProvider);
-    bool isSelected = selectedRows.contains(rowIndex);
-    String content = _truncateContent(variable.details);
 
     Map<String, dynamic> metaData = ref.watch(metaDataProvider);
-    int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
-    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
 
     var formatter = NumberFormat('#,###');
 
-    return Column(
-      children: [
-        if (showHeader)
-          // Only render the header once, without selection logic
-
-          Table(
-            columnWidths: const {
-              0: FixedColumnWidth(150.0),
-              1: FixedColumnWidth(400.0),
-              2: FixedColumnWidth(40.0),
-              3: FixedColumnWidth(80.0),
-              4: FixedColumnWidth(80.0),
-              5: FixedColumnWidth(20.0),
-              6: FlexColumnWidth(),
-            },
-            children: const [
-              TableRow(
-                children: [
-                  Text(
-                    'Variable',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    'Role',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Type',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Unique',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.right,
-                  ),
-                  Text(
-                    'Missing',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.right,
-                  ),
-                  SizedBox.shrink(),
-                  Text(
-                    'Sample',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  SizedBox(height: 10), // Spacer row for header
-
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                ],
-              ),
-            ],
+    return DataTable(
+      columns: [
+        DataColumn(
+          label: Text(
+            'Variable',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-
-        // Apply selection only to data rows
-
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              if (_isShiftPressed) {
-                selectedRows.add(rowIndex); // Shift to multi-select
-              } else {
-                selectedRows.clear();
-                selectedRows.add(rowIndex); // Single-select
-              }
-            });
-          },
-          onLongPressMoveUpdate: (details) {
-            setState(() {
-              selectedRows.add(rowIndex); // Select multiple on drag
-            });
-          },
-          child: Container(
-            color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Table(
-                columnWidths: const {
-                  0: FixedColumnWidth(150.0),
-                  1: FixedColumnWidth(400.0),
-                  2: FixedColumnWidth(40.0),
-                  3: FixedColumnWidth(80.0),
-                  4: FixedColumnWidth(80.0),
-                  5: FixedColumnWidth(20.0),
-                  6: FlexColumnWidth(),
-                },
-                children: [
-                  TableRow(
-                    children: [
-                      _buildFittedText(variable.name),
-                      _buildRoleChips(
-                        variable.name,
-                        currentRoles,
-                      ), // Role chip updates based on currentRoles
-
-                      Text(
-                        variable.type,
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        formatter.format(uniqueCount),
-                        textAlign: TextAlign.right,
-                      ),
-                      Text(
-                        formatter.format(missingCount),
-                        textAlign: TextAlign.right,
-                      ),
-                      SizedBox.shrink(),
-                      SelectableText(
-                        content,
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+        ),
+        DataColumn(
+          label: Text(
+            'Role',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            'Type',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            'Unique',
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.right,
+          ),
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text(
+            'Missing',
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.right,
+          ),
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text(
+            'Sample',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],
+      rows: vars.map((variable) {
+        int rowIndex = vars.indexOf(variable);
+        bool isSelected = selectedRows.contains(rowIndex);
+
+        return DataRow(
+          selected: isSelected,
+          onSelectChanged: (bool? selected) {
+            setState(() {
+              if (selected == true) {
+                if (_isShiftPressed) {
+                  selectedRows
+                      .add(rowIndex); // Add multiple selections with shift
+                } else {
+                  selectedRows.clear();
+                  selectedRows.add(rowIndex); // Single-select
+                }
+              } else {
+                selectedRows.remove(rowIndex);
+              }
+            });
+          },
+          cells: [
+            DataCell(Text(variable.name)),
+            DataCell(_buildRoleChips(variable.name, currentRoles)),
+            DataCell(Text(variable.type)),
+            DataCell(Text(formatter.format(
+                ref.watch(metaDataProvider)[variable.name]?['unique']?[0] ??
+                    0))),
+            DataCell(Text(formatter.format(
+                ref.watch(metaDataProvider)[variable.name]?['missing']?[0] ??
+                    0))),
+            DataCell(SelectableText(_truncateContent(variable.details))),
+          ],
+        );
+      }).toList(),
     );
   }
 
