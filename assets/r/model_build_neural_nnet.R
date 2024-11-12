@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-29 15:18:38 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:43:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,7 +34,7 @@ library(NeuralNetTools)  # For neural network plotting
 mtype <- "neuralnet"
 mdesc <- "Neural Network"
 
-# Conditional logic to handle categorical variables based on 'neural_ignore_categoric'.
+# Conditional logic to handle categoric variables based on 'neural_ignore_categoric'.
 
 if (neural_ignore_categoric) {
   tds <- ds[tr, ignore_categoric_vars]  
@@ -47,7 +47,7 @@ if (neural_ignore_categoric) {
 model_nn <- nnet(
   form,
   data    = tds,
-  size    = NNET_HIDDEN_LAYERS,        # Number of units in the hidden layer
+  size    = NNET_HIDDEN_LAYERS,
   skip    = TRUE,
   MaxNWts = NEURAL_MAX_NWTS,
   trace   = FALSE,

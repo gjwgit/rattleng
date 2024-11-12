@@ -40,6 +40,7 @@ import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/complexity.dart';
+import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
@@ -60,6 +61,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/summary_crosstab.dart';
+import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
@@ -161,6 +163,13 @@ Future<void> rSource(
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
 
+  // FOREST
+
+  int forestTrees = ref.read(treeNumForestProvider);
+  int forestPredictorNum = ref.read(predictorNumForestProvider);
+  int forestNo = ref.read(treeNoForestProvider);
+  bool forestImpute = ref.read(imputeForestProvider);
+
   // LINEAR
 
   String linearFamily = ref.read(familyLinearProvider).toLowerCase();
@@ -173,6 +182,16 @@ Future<void> rSource(
   double neuralThreshold = ref.read(thresholdNeuralProvider);
   String neuralErrorFct = ref.read(errorFctNeuralProvider);
   String neuralActionFct = ref.read(actionFctNeuralProvider);
+
+  // SVM
+
+  RegExp regex = RegExp(r'\(([^)]+)\)');
+  String svmKernelItem = ref.read(kernelSVMProvider);
+  final match = regex.firstMatch(svmKernelItem);
+  String svmKernel = match != null ? match.group(1)! : '';
+
+  int svmDegree = ref.read(degreeSVMProvider);
+
   String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
 
   int interval = ref.read(intervalProvider);
@@ -447,6 +466,16 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_LINK', '"${clusterLink.toString()}"');
   code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
 
+  // FOREST
+
+  code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
+  code = code.replaceAll('RF_MTRY', forestPredictorNum.toString());
+  code = code.replaceAll('RF_NO_TREE', forestNo.toString());
+  code = code.replaceAll(
+    'RF_NA_ACTION',
+    forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
+  );
+
   ////////////////////////////////////////////////////////////////////////
 
   // NEURAL
@@ -465,6 +494,11 @@ Future<void> rSource(
     'NEURAL_IGNORE_CATEGORIC',
     neuralIgnoreCategoric.toString().toUpperCase(),
   );
+
+  // SVM
+
+  code = code.replaceAll('SVM_KERNEL', '"${svmKernel.toString()}"');
+  code = code.replaceAll('SVM_DEGREE', svmDegree.toString());
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -488,12 +522,6 @@ Future<void> rSource(
   code =
       code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
   code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
-
-  // TODO if (script == 'model_build_random_forest')) {
-
-  code = code.replaceAll('RF_NUM_TREES', '500');
-  code = code.replaceAll('RF_MTRY', '4');
-  code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
 
   ////////////////////////////////////////////////////////////////////////
 

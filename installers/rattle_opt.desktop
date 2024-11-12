@@ -3,6 +3,6 @@
 Version=1.0
 Terminal=false
 Type=Application
-Name=RattleNG
+Name=Rattle
 Exec=/usr/local/bin/rattle
 Icon=/opt/rattleng/rattle.png

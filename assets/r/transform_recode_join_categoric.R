@@ -32,3 +32,5 @@ ds[, "TJN_SELECTED_VAR_SELECTED_2_VAR"] <- interaction(paste(ds[["SELECTED_VAR"]
 ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]][grepl("^NA_|_NA$", ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]])] <- NA
 ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]] <- as.factor(as.character(ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]]))
 
+glimpse(ds)
+summary(ds)

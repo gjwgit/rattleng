@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 
 library;
 
@@ -28,12 +28,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_empty.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/page_viewer.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -47,23 +48,29 @@ class SvmDisplay extends ConsumerStatefulWidget {
 class _SvmDisplayState extends ConsumerState<SvmDisplay> {
   @override
   Widget build(BuildContext context) {
+    final pageController = ref.watch(
+      svmPageControllerProvider,
+    );
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractEmpty(stdout);
+    String content = '';
 
-    return content == ''
-        ? showMarkdownFile(svmIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
-              ),
-            ),
-          );
+    List<Widget> pages = [showMarkdownFile(svmIntroFile, context)];
+
+    content = rExtract(stdout, 'print(svm_model)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# SVM Model\n\n'
+              'Built using `kernlab::ksvm()`.\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
+    );
   }
 }

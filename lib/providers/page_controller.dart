@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Zheyuan Xu
 library;
 
 import 'package:flutter/material.dart';
@@ -99,5 +99,9 @@ final treePageControllerProvider = StateProvider<PageController>((ref) {
 });
 
 final wordcloudPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final svmPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });

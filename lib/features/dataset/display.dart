@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-11-07 17:06:27 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-11-12 14:02:19 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -155,7 +155,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               
               Viewer: Tap here to open a separate window to view the current
               dataset. The default and quite simple data viewer in R will be
-              used. It is invoked as `view(ds)`.
+              used. It is invoked as `View(ds)`.
 
               ''',
                 child: IconButton(
