@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-29 15:17:21 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:26:53 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,10 +32,10 @@ library(NeuralNetTools)  # For neural network plotting
 
 if (neural_ignore_categoric) {
 
-  # Only use numerical variables when ignoring categorical.
+  # Only use numeric variables when ignoring categoric.
 
-  vars_to_use <- numerical_vars
-  tds <- ds[tr, c(numerical_vars, target)]
+  vars_to_use <- numeric_vars
+  tds <- ds[tr, c(numeric_vars, target)]
 
 } else {
 
@@ -54,25 +54,25 @@ predictors_combined <- data.frame()
 
 # Handle numerical variables scaling.
 
-if (length(numerical_vars) > 0) {
-  predictors_numeric_scaled <- scale(tds[numerical_vars])
+if (length(numeric_vars) > 0) {
+  predictors_numeric_scaled <- scale(tds[numeric_vars])
   predictors_combined <- as.data.frame(predictors_numeric_scaled)
 }
 
-# Handle categorical variables only if not ignoring them.
+# Handle categoric variables only if not ignoring them.
 
-if (!neural_ignore_categoric && length(categorical_vars) > 0) {
-  # Create dummy variables for categorical predictors.
+if (!neural_ignore_categoric && length(categoric_vars) > 0) {
+  # Create dummy variables for categoric predictors.
 
-  dmy_predictors <- dummyVars(~ ., data = tds[categorical_vars])
-  predictors_categorical <- as.data.frame(predict(dmy_predictors, newdata = tds[categorical_vars]))
+  dmy_predictors <- dummyVars(~ ., data = tds[categoric_vars])
+  predictors_categoric <- as.data.frame(predict(dmy_predictors, newdata = tds[categoric_vars]))
 
   # Combine with numeric predictors if they exist.
 
   predictors_combined <- if (ncol(predictors_combined) > 0) {
-    cbind(predictors_combined, predictors_categorical)
+    cbind(predictors_combined, predictors_categoric)
   } else {
-    predictors_categorical
+    predictors_categoric
   }
 }
 
@@ -99,14 +99,14 @@ if (length(target_levels) == 2) {
   # Train neural network.
 
   model_neuralnet <- neuralnet(
-    formula = formula_nn,
-    data = ds_final,
-    hidden = NEURAL_HIDDEN_LAYERS,
-    act.fct = NEURAL_ACT_FCT,
-    err.fct = NEURAL_ERROR_FCT,
+    formula       = formula_nn,
+    data          = ds_final,
+    hidden        = NEURAL_HIDDEN_LAYERS,
+    act.fct       = NEURAL_ACT_FCT,
+    err.fct       = NEURAL_ERROR_FCT,
     linear.output = FALSE,
-    threshold = NEURAL_THRESHOLD,
-    stepmax = NEURAL_STEP_MAX,
+    threshold     = NEURAL_THRESHOLD,
+    stepmax       = NEURAL_STEP_MAX,
   )
 } else {
   # Multiclass Classification
@@ -122,8 +122,8 @@ if (length(target_levels) == 2) {
   # Create formula.
 
   predictor_vars <- names(predictors_combined)
-  target_vars <- names(target_onehot)
-  formula_nn <- as.formula(paste(
+  target_vars    <- names(target_onehot)
+  formula_nn     <- as.formula(paste(
     paste(target_vars, collapse = ' + '),
     '~',
     paste(predictor_vars, collapse = ' + ')
