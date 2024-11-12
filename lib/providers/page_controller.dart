@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Zheyuan Xu
 library;
 
 import 'package:flutter/material.dart';
