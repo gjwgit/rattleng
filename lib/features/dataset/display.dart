@@ -173,8 +173,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ''',
     };
 
-    String? selectedRole; // No default selection
-
     // Function to update the role for multiple selected rows.
 
     void _updateRoleForSelectedRows(String newRole) {
@@ -250,9 +248,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                               } else {
                                 // Proceed to update the role if rows are selected.
 
-                                setState(() {
-                                  selectedRole = roleKey;
-                                });
                                 _updateRoleForSelectedRows(roleKey);
                               }
                             },
