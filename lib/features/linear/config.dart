@@ -104,14 +104,14 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
             Text('Target: ${getTarget(ref)}'),
 
             configWidgetGap,
-            
+
             const Text(
               'Family:',
               style: normalTextStyle,
             ),
 
             configWidgetGap,
-            
+
             ChoiceChipTip<String>(
               options: linearFamily.keys.toList(),
               selectedOption: family,
