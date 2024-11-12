@@ -88,13 +88,13 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configBotGap,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftGap,
 
             // The BUILD button.
             ActivityButton(
@@ -148,7 +148,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftGap,
 
             NumberField(
               label: 'Trees:',
