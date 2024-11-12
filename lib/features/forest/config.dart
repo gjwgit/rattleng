@@ -105,7 +105,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             configLeftGap,
 
             // The BUILD button.
-            
+
             ActivityButton(
               pageControllerProvider:
                   forestPageControllerProvider, // Optional navigation
