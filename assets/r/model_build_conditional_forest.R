@@ -45,11 +45,9 @@ mdesc <- "Forest"
 
 model_conditionalForest <- cforest(
   form,
-  data=tds,
-  controls=cforest_unbiased(
-    ntree=RF_NUM_TREES,
-    mtry=RF_MTRY,
-  )
+  data    = tds,
+  controls= cforest_unbiased(ntree = RF_NUM_TREES,
+                             mtry  = RF_MTRY,)
 )
 
 # Generate textual output of the 'Conditional Random Forest' model.
@@ -60,9 +58,9 @@ print(model_conditionalForest)
 
 importance_values <- party::varimp(model_conditionalForest)
 importance_df <- data.frame(
-  Variable=names(importance_values),
-  Importance=importance_values
-)
+  Variable    = names(importance_values),
+  Importance  = importance_values)
+
 importance_df <- importance_df[order(importance_df$Importance, decreasing = TRUE), ]
 
 print(importance_df)
@@ -77,9 +75,9 @@ ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
   labs(
-    title="Variable Importance from Conditional Forest",
-    x="Variable",
-    y="Importance"
+    title = "Variable Importance from Conditional Forest",
+    x     = "Variable",
+    y     = "Importance"
   ) +
   theme_minimal()
 
