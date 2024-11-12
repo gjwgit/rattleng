@@ -43,19 +43,9 @@ library(reshape2)
 mtype <- "conditionalForest"
 mdesc <- "Forest"
 
-# Extract the response variable name from the formula.
-
-response_variable <- all.vars(form)[1]
-
-# Remove observations with missing values in the response variable.
-
-tds_clean <- tds[!is.na(tds[[response_variable]]), ]
-
-# Build the conditional random forest model using tds_clean.
-
 model_conditionalForest <- cforest(
   form,
-  data=tds_clean,
+  data=tds,
   controls=cforest_unbiased(
     ntree=RF_NUM_TREES,
     mtry=RF_MTRY,
