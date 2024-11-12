@@ -15,6 +15,7 @@ ARCHIVE
 TMP*
 *.tmp
 qtest*.txt
+REMOVE
 
 installers/*.exe
 installers/*.snap
