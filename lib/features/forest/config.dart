@@ -45,10 +45,18 @@ import 'package:rattle/widgets/vector_number_field.dart';
 /// explaining the splitting method and potential biases.
 
 Map forestTooltips = {
-  AlgorithmType.conditional:
-      'Build multiple decision trees using random samples of data and features, then aggregate their predictions.',
-  AlgorithmType.traditional:
-      'Adjust for covariate distributions during tree construction to provide unbiased variable importance measures.',
+  AlgorithmType.conditional: '''
+
+      Build multiple decision trees using random samples of 
+      data and features, then aggregate their predictions.
+
+      ''',
+  AlgorithmType.traditional: '''
+      
+      Adjust for covariate distributions during tree construction 
+      to provide unbiased variable importance measures.
+      
+      ''',
 };
 
 /// The FOREST tab config currently consists of just a BUILD button.
