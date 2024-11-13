@@ -1,6 +1,6 @@
 /// A widget to build the common image based pages.
 //
-// Time-stamp: <Friday 2024-11-01 10:19:56 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-14 09:15:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -44,8 +45,6 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
-import 'package:rattle/utils/word_wrap.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class ImagePage extends StatelessWidget {
   final String title;
@@ -205,10 +204,10 @@ class ImagePage extends StatelessWidget {
                         },
                       ),
                       const Spacer(),
-                      DelayedTooltip(
+                      MarkdownTooltip(
                         message: '''
 
-                        Enlarge: Tap here to view the plot enlarged to the
+                        **Enlarge.** Tap here to view the plot enlarged to the
                         maximimum size within the app.
 
                         ''',
@@ -222,14 +221,15 @@ class ImagePage extends StatelessWidget {
                           },
                         ),
                       ),
-                      DelayedTooltip(
+                      MarkdownTooltip(
                         message: '''
 
-                        Open: Tap here to open the plot in a separate window to
-                        the Rattle app itself. This allows you to retain a view
-                        of the plot while you navigate through other plots and
-                        analyses. If you choose the external app to be Inkscape,
-                        for example, then you can edit the details of the plot.
+                        **Open.** Tap here to open the plot in a separate window
+                        to the Rattle app itself. This allows you to retain a
+                        view of the plot while you navigate through other plots
+                        and analyses. If you choose the external app to be
+                        Inkscape, for example, then you can edit the details of
+                        the plot.
 
                         ''',
                         child: IconButton(
@@ -261,15 +261,15 @@ class ImagePage extends StatelessWidget {
                           },
                         ),
                       ),
-                      DelayedTooltip(
+                      MarkdownTooltip(
                         message: '''
 
-                        Save: Tap here to save the plot in your preferred format
-                        (SVG, PDF, or PNG). You can directly choose your desired
-                        format by replacing the default SVG filename extension
-                        with either PDF or PNG. The file is saved to your local
-                        storage. Perfect for including in reports or keeping for
-                        future reference.
+                        **Save.** Tap here to save the plot in your preferred
+                        format (**svg**, **pdf**, or **png**). You can directly
+                        choose your desired format by replacing the default
+                        *svg* filename extension with either *pdf* or *png*. The
+                        file is saved to your local storage. Perfect for
+                        including in reports or keeping for future reference.
 
                         ''',
                         child: IconButton(

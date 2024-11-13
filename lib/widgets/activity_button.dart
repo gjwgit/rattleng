@@ -34,7 +34,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/show_ok.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class ActivityButton extends ConsumerWidget {
   final StateProvider<PageController>? pageControllerProvider;
@@ -56,7 +56,7 @@ class ActivityButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugText('  BUILD', 'ActivityButton');
 
-    return DelayedTooltip(
+    return MarkdownTooltip(
       message: tooltip ??
           '''
 

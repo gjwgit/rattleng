@@ -1,6 +1,6 @@
 /// A dialog to prompte user on closing app with SAVE and CANCEL options
 ///
-/// Time-stamp: <Monday 2024-09-23 13:08:05 +1000 Graham Williams>
+/// Time-stamp: <Thursday 2024-11-14 09:22:33 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -37,7 +37,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/utils/debug_text.dart';
-import 'package:rattle/utils/word_wrap.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 const double widthSpace = 10;
 
@@ -50,9 +50,13 @@ class CloseDialog extends ConsumerStatefulWidget {
 
 class _CloseDialogState extends ConsumerState<CloseDialog> {
   String _title = 'Close Rattle?';
-  String _content = wordWrap('Are you sure you want to close Rattle? '
-      'Unsaved changes will be lost. '
-      'You can save the script now before closing.');
+  String _content = wordWrap('''
+
+    Are you sure you want to close Rattle?
+    Unsaved changes will be lost. 
+    You can save the script now before closing.
+
+    ''');
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +114,14 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
     } else {
       setState(() {
         _title = 'Error';
-        _content = wordWrap('No file selected. '
-            'You can still close the app or try saving the script again.');
+        _content = wordWrap(
+          '''
+
+          No file selected.  You can still close the app or try saving the
+          script again.
+
+            ''',
+        );
       });
     }
   }
@@ -130,8 +140,12 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
 
     setState(() {
       _title = 'Script saved';
-      _content = wordWrap('The script has been saved to the following R file '
-          '$fileName.\nYou can now close the app.');
+      _content = wordWrap('''
+
+        The script has been saved to the following R file
+        $fileName.\nYou can now close the app.
+
+        ''');
     });
   }
 

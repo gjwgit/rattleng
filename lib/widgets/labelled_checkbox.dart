@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// Custom LabelledCheckbox widget
 
@@ -55,7 +55,7 @@ class LabelledCheckbox extends ConsumerWidget {
 
     final bool isChecked = ref.watch(provider);
 
-    return DelayedTooltip(
+    return MarkdownTooltip(
       message: tooltip,
       child: Row(
         children: [
