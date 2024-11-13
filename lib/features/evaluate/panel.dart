@@ -34,8 +34,8 @@ import 'package:rattle/features/forest/display.dart';
 
 /// The FOREST tab supports building decision tree models.
 
-class ForestPanel extends StatelessWidget {
-  const ForestPanel({super.key});
+class EvaluatePanel extends StatelessWidget {
+  const EvaluatePanel({super.key});
 
   @override
   Widget build(BuildContext context) {
