@@ -104,33 +104,23 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
             configLeftGap,
 
-            // The BUILD button.
+            LabelledCheckbox(
+              key: const Key('treeEvaluate'),
+              tooltip: '''
 
-            ActivityButton(
-              pageControllerProvider:
-                  forestPageControllerProvider, // Optional navigation
+              
 
-              onPressed: () async {
-                selectedAlgorithm == AlgorithmType.traditional
-                    ? await rSource(
-                        context,
-                        ref,
-                        ['model_template', 'model_build_random_forest'],
-                      )
-                    : await rSource(
-                        context,
-                        ref,
-                        ['model_template', 'model_build_conditional_forest'],
-                      );
-
-                await ref.read(forestPageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+              ''',
+              label: 'Tree',
+              provider: basketsAssociationProvider,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(basketsAssociationProvider.notifier).state =
+                        ticked;
+                  }
+                });
               },
-              child: const Text('Build Random Forest'),
             ),
 
             configWidgetGap,
