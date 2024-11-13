@@ -1,4 +1,4 @@
-/// A provider for the parameters for cluster.
+/// A provider for the parameters for evaluate.
 ///
 /// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
 ///
@@ -23,15 +23,9 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final linkClusterProvider = StateProvider<String>((ref) => 'ward');
-final numberClusterProvider = StateProvider<int>((ref) => 10);
-final processorClusterProvider = StateProvider<int>((ref) => 1);
-final reScaleClusterProvider = StateProvider<bool>((ref) => true);
-final runClusterProvider = StateProvider<int>((ref) => 1);
-final seedClusterProvider = StateProvider<int>((ref) => 42);
-final typeClusterProvider = StateProvider<String>((ref) => 'KMeans');
-final distanceClusterProvider = StateProvider<String>((ref) => 'euclidean');
+final treeEvaluateProvider = StateProvider<bool>((ref) => false);

@@ -25,21 +25,12 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/providers/forest.dart';
-import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
-
-import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/get_target.dart';
-import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
-import 'package:rattle/widgets/number_field.dart';
-import 'package:rattle/widgets/vector_number_field.dart';
 
 /// Descriptive tooltips for different algorithm types,
 /// explaining the splitting method and potential biases.
@@ -87,11 +78,6 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
   @override
   Widget build(BuildContext context) {
-    int treeNum = ref.watch(treeNumForestProvider);
-
-    AlgorithmType selectedAlgorithm =
-        ref.read(algorithmForestProvider.notifier).state;
-
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -112,116 +98,22 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
               ''',
               label: 'Tree',
-              provider: basketsAssociationProvider,
+              provider: treeEvaluateProvider,
+              enabled: false,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
-                    ref.read(basketsAssociationProvider.notifier).state =
-                        ticked;
+                    ref.read(treeEvaluateProvider.notifier).state = ticked;
                   }
                 });
               },
             ),
 
             configWidgetGap,
-
-            Text('Target: ${getTarget(ref)}'),
-
-            configWidgetGap,
-
-            ChoiceChipTip<AlgorithmType>(
-              options: AlgorithmType.values,
-              getLabel: (AlgorithmType type) => type.displayName,
-              selectedOption: selectedAlgorithm,
-              tooltips: forestTooltips,
-              onSelected: (AlgorithmType? selected) {
-                setState(() {
-                  if (selected != null) {
-                    selectedAlgorithm = selected;
-                    ref.read(algorithmForestProvider.notifier).state = selected;
-                  }
-                });
-              },
-            ),
           ],
         ),
 
         configRowGap,
-
-        Row(
-          children: [
-            // Space to the left of the configs.
-
-            configLeftGap,
-
-            NumberField(
-              label: 'Trees:',
-              key: const Key('treeForest'),
-              controller: _treesController,
-              tooltip: '''
-
-                The ntree parameter specifies the number of trees to grow in the forest.
-
-                ''',
-              inputFormatter: FilteringTextInputFormatter.allow(
-                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
-              ),
-              validator: (value) => validateInteger(value, min: 10),
-              stateProvider: treeNumForestProvider,
-              interval: 10,
-            ),
-
-            configWidgetGap,
-
-            NumberField(
-              label: 'Variables:',
-              key: const Key('variablesForest'),
-              controller: _variablesController,
-              tooltip: '''
-
-                The mtry parameter defines the number of variables 
-                randomly selected as candidates at each split in the trees.
-
-                ''',
-              validator: validateVector,
-              inputFormatter:
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
-              stateProvider: predictorNumForestProvider,
-            ),
-
-            configWidgetGap,
-
-            NumberField(
-              label: 'NO. Tree:',
-              key: const Key('treeNoForest'),
-              controller: _treeNoController,
-              tooltip: '''
-
-                Which tree to display.
-
-                ''',
-              max: treeNum,
-              validator: validateVector,
-              inputFormatter:
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
-              stateProvider: treeNoForestProvider,
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('imputeForest'),
-              tooltip: '''
-
-              Impute the median (numerical) or most frequent (categoric) value 
-              for missing data using na.roughfix() from randomForest.
-
-              ''',
-              label: 'Impute',
-              provider: imputeForestProvider,
-            ),
-          ],
-        ),
       ],
     );
   }
