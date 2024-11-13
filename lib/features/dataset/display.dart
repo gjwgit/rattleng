@@ -388,106 +388,120 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     var formatter = NumberFormat('#,###');
 
-    return DataTable(
-      columns: [
-        DataColumn(
-          label: Text(
-            'Variable',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-        DataColumn(
-          label: Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
-        DataColumn(
-          label: Text('Type', style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
-        DataColumn(
-          label: Text('Unique', style: TextStyle(fontWeight: FontWeight.bold)),
-          numeric: true,
-        ),
-        DataColumn(
-          label: Text('Missing', style: TextStyle(fontWeight: FontWeight.bold)),
-          numeric: true,
-        ),
-        DataColumn(
-          label: Text('Sample', style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
-      ],
-      rows: vars.map((variable) {
-        int rowIndex = vars.indexOf(variable);
-        bool isSelected = selectedRows.contains(rowIndex);
-
-        return DataRow(
-          selected: isSelected,
-          onSelectChanged: (bool? selected) {
-            setState(() {
-              if (selected == true) {
-                if (_isShiftPressed) {
-                  // Shift-click: Add multiple selections from the last selected row.
-
-                  selectedRows.add(rowIndex);
-                } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
-                  // Ctrl-click: Auto-select range between the first selected row and this row.
-
-                  int firstSelectedRow = selectedRows.first;
-                  int lastSelectedRow = rowIndex;
-
-                  // Ensure that we have a start and end point correctly ordered.
-
-                  if (lastSelectedRow < firstSelectedRow) {
-                    int temp = firstSelectedRow;
-                    firstSelectedRow = lastSelectedRow;
-                    lastSelectedRow = temp;
-                  }
-
-                  // Select all rows in the range between first and last selected rows.
-
-                  for (int i = firstSelectedRow; i <= lastSelectedRow; i++) {
-                    selectedRows.add(i);
-                  }
-                } else {
-                  // Single click: Clear previous selection and select only the current row.
-
-                  selectedRows.clear();
-                  selectedRows.add(rowIndex);
-                }
-              } else {
-                // Deselect the row if it was previously selected.
-
-                selectedRows.remove(rowIndex);
-              }
-            });
-          },
-          cells: [
-            DataCell(Text(variable.name)),
-            DataCell(
-              SizedBox(
-                width: 400, // Adjust width as needed to fit 5 ChoiceChips
-                child: _buildRoleChips(variable.name, currentRoles),
+    return Container(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: DataTable(
+          columns: [
+            DataColumn(
+              label: Text(
+                'Variable',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            DataCell(Text(variable.type)),
-            DataCell(
-              Text(
-                formatter.format(
-                  ref.watch(metaDataProvider)[variable.name]?['unique']?[0] ??
-                      0,
-                ),
-              ),
+            DataColumn(
+              label:
+                  Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-            DataCell(
-              Text(
-                formatter.format(
-                  ref.watch(metaDataProvider)[variable.name]?['missing']?[0] ??
-                      0,
-                ),
-              ),
+            DataColumn(
+              label:
+                  Text('Type', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-            DataCell(SelectableText(_truncateContent(variable.details))),
+            DataColumn(
+              label:
+                  Text('Unique', style: TextStyle(fontWeight: FontWeight.bold)),
+              numeric: true,
+            ),
+            DataColumn(
+              label: Text('Missing',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              numeric: true,
+            ),
+            DataColumn(
+              label:
+                  Text('Sample', style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
           ],
-        );
-      }).toList(),
+          rows: vars.map((variable) {
+            int rowIndex = vars.indexOf(variable);
+            bool isSelected = selectedRows.contains(rowIndex);
+
+            return DataRow(
+              selected: isSelected,
+              onSelectChanged: (bool? selected) {
+                setState(() {
+                  if (selected == true) {
+                    if (_isShiftPressed) {
+                      // Shift-click: Add multiple selections from the last selected row.
+
+                      selectedRows.add(rowIndex);
+                    } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
+                      // Ctrl-click: Auto-select range between the first selected row and this row.
+
+                      int firstSelectedRow = selectedRows.first;
+                      int lastSelectedRow = rowIndex;
+
+                      // Ensure that we have a start and end point correctly ordered.
+
+                      if (lastSelectedRow < firstSelectedRow) {
+                        int temp = firstSelectedRow;
+                        firstSelectedRow = lastSelectedRow;
+                        lastSelectedRow = temp;
+                      }
+
+                      // Select all rows in the range between first and last selected rows.
+
+                      for (int i = firstSelectedRow;
+                          i <= lastSelectedRow;
+                          i++) {
+                        selectedRows.add(i);
+                      }
+                    } else {
+                      // Single click: Clear previous selection and select only the current row.
+
+                      selectedRows.clear();
+                      selectedRows.add(rowIndex);
+                    }
+                  } else {
+                    // Deselect the row if it was previously selected.
+
+                    selectedRows.remove(rowIndex);
+                  }
+                });
+              },
+              cells: [
+                DataCell(Text(variable.name)),
+                DataCell(
+                  SizedBox(
+                    width: 400, // Adjust width as needed to fit 5 ChoiceChips
+                    child: _buildRoleChips(variable.name, currentRoles),
+                  ),
+                ),
+                DataCell(Text(variable.type)),
+                DataCell(
+                  Text(
+                    formatter.format(
+                      ref.watch(metaDataProvider)[variable.name]?['unique']
+                              ?[0] ??
+                          0,
+                    ),
+                  ),
+                ),
+                DataCell(
+                  Text(
+                    formatter.format(
+                      ref.watch(metaDataProvider)[variable.name]?['missing']
+                              ?[0] ??
+                          0,
+                    ),
+                  ),
+                ),
+                DataCell(SelectableText(_truncateContent(variable.details))),
+              ],
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 
