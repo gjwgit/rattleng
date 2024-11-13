@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Tuesday 2024-10-15 08:53:45 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-14 09:01:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,6 +30,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
@@ -45,7 +46,6 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class WordCloudConfig extends ConsumerStatefulWidget {
@@ -202,7 +202,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             configWidgetGap,
 
             Expanded(
-              child: DelayedTooltip(
+              child: MarkdownTooltip(
                 message: '''
                 
                 Select the language to filter out common stopwords from the word
@@ -240,7 +240,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               // max word text field
               SizedBox(
                 width: 150.0,
-                child: DelayedTooltip(
+                child: MarkdownTooltip(
                   message: '''
 
                   Maximum number of words plotted.  Drop least frequent words.
@@ -260,7 +260,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               configWidgetGap,
               SizedBox(
                 width: 150.0,
-                child: DelayedTooltip(
+                child: MarkdownTooltip(
                   message: '''
 
                   Filter out less frequent words.  If this results in all words

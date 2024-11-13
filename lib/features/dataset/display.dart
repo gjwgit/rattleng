@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-11-13 09:42:03 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-14 09:56:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -54,7 +54,7 @@ import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/debug_text.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -217,7 +217,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ...rolesOption.keys.map(
-                      (roleKey) => DelayedTooltip(
+                      (roleKey) => MarkdownTooltip(
                         message: rolesOption[roleKey]!,
                         wait: const Duration(
                           seconds: 1,
@@ -265,12 +265,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   ],
                 ),
               ),
-              DelayedTooltip(
+              MarkdownTooltip(
                 message: '''
               
-              Viewer: Tap here to open a separate window to view the current
-              dataset. The default and quite simple data viewer in R will be
-              used. It is invoked as `View(ds)`.
+                **Viewer.** Tap here to open a separate window to view the
+                current dataset. The default and quite simple data viewer in R
+                will be used. It is invoked as `View(ds)`.
 
               ''',
                 child: IconButton(

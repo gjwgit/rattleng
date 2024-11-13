@@ -28,13 +28,12 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/utils/reset.dart';
-import 'package:rattle/utils/word_wrap.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends ConsumerWidget {
   const DatasetButton({super.key});
@@ -49,7 +48,7 @@ class DatasetButton extends ConsumerWidget {
           _showOptionPopup(context, ref);
         }
       },
-      child: const DelayedTooltip(
+      child: const MarkdownTooltip(
         message: '''
 
         Tap here to view a popup with the option to load data from a CSV or TXT

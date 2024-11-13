@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-10-15 17:06:38 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-11-14 07:50:02 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -37,6 +37,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
@@ -54,9 +55,7 @@ import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_ok.dart';
-import 'package:rattle/utils/word_wrap.dart';
 import 'package:rattle/utils/show_settings_dialog.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 // Define the [NavigationRail] tabs for the home page.
@@ -299,10 +298,10 @@ Xu, Yixiang Yin, Bo Zhang.
 
           // Reset.
 
-          DelayedTooltip(
+          MarkdownTooltip(
             message: '''
 
-            Reset: Tap here to clear the current project and so start a new
+            **Reset** Tap here to clear the current project and so start a new
             project with a new dataset. You will be prompted to confirm since
             you will lose all of the current pages and analyses.
 
@@ -343,13 +342,14 @@ Xu, Yixiang Yin, Bo Zhang.
 
           // Install R Packages
 
-          DelayedTooltip(
+          MarkdownTooltip(
             message: '''
 
-            R Package Installation: Tap here to check for any R packages that
+            **R Package Installation** Tap here to check for any R packages that
             need to be installed. If any are missing locally they will be
-            installed. All packages will also then be loaded into R. Check the
-            CONSOLE tab for details.
+            installed. This could take some time, *upwards of 5 minutes,* for
+            example. All packages will also then be loaded into R. After
+            starting check the **CONSOLE** tab for details.
 
             ''',
             child: IconButton(
@@ -380,14 +380,14 @@ Xu, Yixiang Yin, Bo Zhang.
 
           // Settings.
 
-          DelayedTooltip(
+          MarkdownTooltip(
             message: '''
 
-            Settings: Tap here to update your default settings. At present we
+            **Settings** Tap here to update your default settings. At present we
             have just one setting: ggplot theme. The default theme is the simple
-            and clean Rattle theme but there are many themes to choose from. Your
-            settings will be saved for the future and you have the option to
-            reset to the Rattle defaults.
+            and clean Rattle theme but there are many themes to choose
+            from. Your settings will be saved for this session and you have the
+            option to reset to the Rattle defaults.
 
             ''',
             child: IconButton(
@@ -397,20 +397,20 @@ Xu, Yixiang Yin, Bo Zhang.
               ),
               onPressed: () async {
                 showSettingsDialog(context);
-                // showUnderConstruction(context);
               },
             ),
           ),
 
           // Info - about.
 
-          DelayedTooltip(
+          MarkdownTooltip(
             message: '''
 
-            About: Tap here to view information about the Rattle project. This
-            include a list of those who have contributed to the latest version
-            of the software, Verison 6. It also includes the extensive list of
-            open-source packages that Rattle is built on and their licences.
+            **About** Tap here to view information about the Rattle
+            project. This include a list of those who have contributed to the
+            latest version of the software, *Verison 6.* It also includes the
+            extensive list of open-source packages that Rattle is built on and
+            their licences.
             
             ''',
             child: IconButton(

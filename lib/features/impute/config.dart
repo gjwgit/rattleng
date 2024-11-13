@@ -40,7 +40,7 @@ import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// A [StatefulWidget] (rather than [Stateless]) to pass `ref` across to
 /// `rSource()` as well as to monitor the SELECTED variable to transform.
@@ -190,7 +190,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   Widget constantEntry() {
     return SizedBox(
       width: 150,
-      child: DelayedTooltip(
+      child: MarkdownTooltip(
         message: '''
         
         Enter a constant value for the imputation. Typically this might be 0 or
