@@ -77,14 +77,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   final int typeFlex = 4;
   final int contentFlex = 3;
 
-  // Track pressed keys for shift selection
+  // Track pressed keys for shift and control selection.
 
   bool _isShiftPressed = false;
+  bool _isCtrlPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    final pageController = ref
-        .watch(pageControllerProvider); // Get the PageController from Riverpod
+    // Get the PageController from Riverpod.
+
+    final pageController = ref.watch(pageControllerProvider);
 
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
@@ -93,13 +95,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     ref.watch(rebuildTriggerProvider);
 
-    // FIRST PAGE: Welcome Message
+    // FIRST PAGE: Welcome Message.
 
     List<Widget> pages = [
       showMarkdownFile2(welcomeIntroFile1, welcomeIntroFile2, context),
     ];
 
-    // Handle different file types
+    // Handle different file types.
 
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
@@ -111,7 +113,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       _addDatasetPage(stdout, pages);
     }
 
-    // Listen for shift key events
+    // Listen for shift and control key events.
 
     HardwareKeyboard.instance.addHandler((event) {
       setState(() {
@@ -119,7 +121,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 .contains(LogicalKeyboardKey.shiftLeft) ||
             HardwareKeyboard.instance.logicalKeysPressed
                 .contains(LogicalKeyboardKey.shiftRight);
+
+        _isCtrlPressed = HardwareKeyboard.instance.logicalKeysPressed
+                .contains(LogicalKeyboardKey.controlLeft) ||
+            HardwareKeyboard.instance.logicalKeysPressed
+                .contains(LogicalKeyboardKey.controlRight);
       });
+
       // Return a boolean value.
 
       return false;
@@ -130,7 +138,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       pages: pages,
     );
   }
-
   ////////////////////////////////////////////////////////////////////////
 
   // Add a page for text file (a .txt file) content for Word Cloud.
@@ -165,7 +172,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // update the role of the old variable.
 
     updateVariablesProvider(ref);
-
     Map<String, String> rolesOption = {
       'Ignore': ''' Ignore this dataset during analysis.
       ''',
@@ -295,7 +301,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ),
 
           // Main ListView for displaying data table.
-
           Padding(
             padding: const EdgeInsets.only(top: 56.0),
             child: _buildDataTable(vars),
@@ -304,6 +309,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       ),
     );
   }
+
+  // Build data table with row selection logic.
 
   // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
   // IDENTS. Also record variable types.
@@ -390,38 +397,21 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ),
         ),
         DataColumn(
-          label: Text(
-            'Role',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          label: Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         DataColumn(
-          label: Text(
-            'Type',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          label: Text('Type', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         DataColumn(
-          label: Text(
-            'Unique',
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.right,
-          ),
+          label: Text('Unique', style: TextStyle(fontWeight: FontWeight.bold)),
           numeric: true,
         ),
         DataColumn(
-          label: Text(
-            'Missing',
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.right,
-          ),
+          label: Text('Missing', style: TextStyle(fontWeight: FontWeight.bold)),
           numeric: true,
         ),
         DataColumn(
-          label: Text(
-            'Sample',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          label: Text('Sample', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
       ],
       rows: vars.map((variable) {
@@ -434,13 +424,37 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             setState(() {
               if (selected == true) {
                 if (_isShiftPressed) {
-                  selectedRows
-                      .add(rowIndex); // Add multiple selections with shift
+                  // Shift-click: Add multiple selections from the last selected row.
+
+                  selectedRows.add(rowIndex);
+                } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
+                  // Ctrl-click: Auto-select range between the first selected row and this row.
+
+                  int firstSelectedRow = selectedRows.first;
+                  int lastSelectedRow = rowIndex;
+
+                  // Ensure that we have a start and end point correctly ordered.
+
+                  if (lastSelectedRow < firstSelectedRow) {
+                    int temp = firstSelectedRow;
+                    firstSelectedRow = lastSelectedRow;
+                    lastSelectedRow = temp;
+                  }
+
+                  // Select all rows in the range between first and last selected rows.
+
+                  for (int i = firstSelectedRow; i <= lastSelectedRow; i++) {
+                    selectedRows.add(i);
+                  }
                 } else {
+                  // Single click: Clear previous selection and select only the current row.
+
                   selectedRows.clear();
-                  selectedRows.add(rowIndex); // Single-select
+                  selectedRows.add(rowIndex);
                 }
               } else {
+                // Deselect the row if it was previously selected.
+
                 selectedRows.remove(rowIndex);
               }
             });
@@ -481,28 +495,33 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
     return Center(
-      child: Wrap(
-        spacing: 5.0,
-        runSpacing: choiceChipRowSpace,
-        children: choices.map((choice) {
-          return ChoiceChip(
-            label: Text(choice.displayString),
-            disabledColor: Colors.grey,
-            selectedColor: Colors.lightBlue[200],
-            backgroundColor: Colors.lightBlue[50],
-            showCheckmark: false,
-            shadowColor: Colors.grey,
-            pressElevation: 8.0,
-            elevation: 2.0,
-            selected: remap(currentRoles[columnName]!, choice),
-            onSelected: (bool selected) => _handleRoleSelection(
-              selected,
-              choice,
-              columnName,
-              currentRoles,
-            ),
-          );
-        }).toList(),
+      // Set width to fit 5 ChoiceChips in a row.
+
+      child: SizedBox(
+        width: 400,
+        child: Wrap(
+          spacing: 5.0,
+          runSpacing: choiceChipRowSpace,
+          children: choices.map((choice) {
+            return ChoiceChip(
+              label: Text(choice.displayString),
+              disabledColor: Colors.grey,
+              selectedColor: Colors.lightBlue[200],
+              backgroundColor: Colors.lightBlue[50],
+              showCheckmark: false,
+              shadowColor: Colors.grey,
+              pressElevation: 8.0,
+              elevation: 2.0,
+              selected: remap(currentRoles[columnName]!, choice),
+              onSelected: (bool selected) => _handleRoleSelection(
+                selected,
+                choice,
+                columnName,
+                currentRoles,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -516,15 +535,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     Map<String, Role> currentRoles,
   ) {
     // The parameter selected can be false when a chip
-    // is tapped when it is already selected.  In our
-    // case we need do nothing else. That could be
-    // useful as a toggle button!
+    // is tapped when it is already selected. That could
+    // be useful as a toggle button.
 
     setState(() {
       if (selected) {
-        // Only one variable can be TARGET, RISK and
-        // WEIGHT so any previous variable with that
-        // role shold become INPUT.
+        // Only one variable can be TARGET, RISK, or WEIGHT, so any previous
+        // variable with that role should become INPUT.
 
         if (choice == Role.target ||
             choice == Role.risk ||
