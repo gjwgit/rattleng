@@ -447,7 +447,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           },
           cells: [
             DataCell(Text(variable.name)),
-            DataCell(_buildRoleChips(variable.name, currentRoles)),
+            DataCell(
+              SizedBox(
+                width: 400, // Adjust width as needed to fit 5 ChoiceChips
+                child: _buildRoleChips(variable.name, currentRoles),
+              ),
+            ),
             DataCell(Text(variable.type)),
             DataCell(
               Text(
@@ -469,21 +474,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ],
         );
       }).toList(),
-    );
-  }
-
-  // Build fitted text for variable name.
-
-  Widget _buildFittedText(String text) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      alignment: Alignment.topLeft,
-      child: Text(
-        text,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.left,
-      ),
     );
   }
 
