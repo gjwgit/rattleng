@@ -110,6 +110,151 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             ),
 
             configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('boostEvaluate'),
+              tooltip: '''
+
+              
+
+              ''',
+              label: 'Boost',
+              provider: boostEvaluateProvider,
+              enabled: false,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(boostEvaluateProvider.notifier).state = ticked;
+                  }
+                });
+              },
+            ),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('forestEvaluate'),
+              tooltip: '''
+
+              
+
+              ''',
+              label: 'Forest',
+              provider: forestEvaluateProvider,
+              enabled: false,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(forestEvaluateProvider.notifier).state = ticked;
+                  }
+                });
+              },
+            ),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('svmEvaluate'),
+              tooltip: '''
+
+              
+
+              ''',
+              label: 'SVM',
+              provider: svmEvaluateProvider,
+              enabled: false,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(svmEvaluateProvider.notifier).state = ticked;
+                  }
+                });
+              },
+            ),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('linearEvaluate'),
+              tooltip: '''
+
+              
+
+              ''',
+              label: 'Linear',
+              provider: linearEvaluateProvider,
+              enabled: false,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(linearEvaluateProvider.notifier).state = ticked;
+                  }
+                });
+              },
+            ),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('neuralNetEvaluate'),
+              tooltip: '''
+
+              
+
+              ''',
+              label: 'Neural Net',
+              provider: neuralNetEvaluateProvider,
+              enabled: false,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(neuralNetEvaluateProvider.notifier).state = ticked;
+                  }
+                });
+              },
+            ),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('KMeansEvaluate'),
+              tooltip: '''
+
+              
+
+              ''',
+              label: 'KMeans',
+              provider: kMeansEvaluateProvider,
+              enabled: false,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(kMeansEvaluateProvider.notifier).state = ticked;
+                  }
+                });
+              },
+            ),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('HClustEvaluate'),
+              tooltip: '''
+
+              
+
+              ''',
+              label: 'HClust',
+              provider: hClusterEvaluateProvider,
+              enabled: false,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(hClusterEvaluateProvider.notifier).state = ticked;
+                  }
+                });
+              },
+            ),
           ],
         ),
 
