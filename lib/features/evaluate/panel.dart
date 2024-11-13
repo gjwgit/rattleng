@@ -1,4 +1,4 @@
-/// FOREST Tab
+/// EVALUATE Tab
 //
 // Time-stamp: <Friday 2024-06-14 10:02:22 +1000 Graham Williams>
 //
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Zheyuan Xu
 
 library;
 
@@ -29,10 +29,10 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/features/forest/config.dart';
+import 'package:rattle/features/evaluate/config.dart';
 import 'package:rattle/features/forest/display.dart';
 
-/// The FOREST tab supports building decision tree models.
+/// The Evaluate tab supports building decision tree models.
 
 class EvaluatePanel extends StatelessWidget {
   const EvaluatePanel({super.key});
@@ -45,7 +45,7 @@ class EvaluatePanel extends StatelessWidget {
     return const Scaffold(
       body: Column(
         children: [
-          ForestConfig(),
+          EvaluateConfig(),
 
           // Add a little space blow the config widgets so that things like any
           // underline is not lost not buttons,looking chopped off. We include

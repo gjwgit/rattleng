@@ -1,4 +1,4 @@
-/// Widget to configure the FOREST tab: button.
+/// Widget to configure the EVALUATE tab: button.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -59,18 +59,18 @@ Map forestTooltips = {
       ''',
 };
 
-/// The FOREST tab config currently consists of just a BUILD button.
+/// The EVALUATE tab config currently consists of just a BUILD button.
 ///
-/// This is a StatefulWidget to pass the ref across to the rSouorce.
+/// This is a StatefulWidget to pass the ref across to the rSource.
 
-class ForestConfig extends ConsumerStatefulWidget {
-  const ForestConfig({super.key});
+class EvaluateConfig extends ConsumerStatefulWidget {
+  const EvaluateConfig({super.key});
 
   @override
-  ConsumerState<ForestConfig> createState() => ForestConfigState();
+  ConsumerState<EvaluateConfig> createState() => EvaluateConfigState();
 }
 
-class ForestConfigState extends ConsumerState<ForestConfig> {
+class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   final TextEditingController _treesController = TextEditingController();
   final TextEditingController _variablesController = TextEditingController();
   final TextEditingController _treeNoController = TextEditingController();
