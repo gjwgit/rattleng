@@ -394,9 +394,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         child: DataTable(
           columns: [
             DataColumn(
-              label: Text(
-                'Variable',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              label: MarkdownTooltip(
+                message: '''
+
+                You could shift-click the first checkbox to select all variables
+
+                ''',
+                child: Text(
+                  'Variable',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             DataColumn(
