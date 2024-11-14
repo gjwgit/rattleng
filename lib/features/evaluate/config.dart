@@ -82,7 +82,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           'model_random_forest_varimp.svg',
           'model_random_forest_error_rate.svg',
           'model_random_forest_oob_roc_curve.svg',
-        ]
+        ],
       ],
       provider: forestEvaluateProvider,
     ),
@@ -156,6 +156,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         return true;
       }
     }
+
     return false;
   }
 
@@ -170,6 +171,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
               bool enabled = _isEvaluationEnabled(config);
+
               return Row(
                 children: [
                   LabelledCheckbox(
