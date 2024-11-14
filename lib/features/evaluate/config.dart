@@ -143,6 +143,22 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           ],
         );
 
+    bool kMeansEvaluateEnabled = checkFunctionExecuted(
+      ref,
+      [
+        'print(colMeans(tds))',
+      ],
+      ['model_cluster_discriminant.svg'],
+    );
+
+    bool hClustEvaluateEnabled = checkFunctionExecuted(
+      ref,
+      [
+        'print("Within-Cluster Sum of Squares:")',
+      ],
+      ['model_cluster_hierarchical.svg'],
+    );
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -290,7 +306,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'KMeans',
               provider: kMeansEvaluateProvider,
-              enabled: false,
+              enabled: kMeansEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
@@ -311,7 +327,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'HClust',
               provider: hClusterEvaluateProvider,
-              enabled: false,
+              enabled: hClustEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
