@@ -76,3 +76,7 @@ const popupTitleGap = Gap(40);
 /// Gap before the bottom divider in the display pages.
 
 const textPageBottomGap = Gap(20);
+
+/// Width to fit 5 ChoiceChips in a Row.
+
+const choiceChipRowWidth = 400.0;
