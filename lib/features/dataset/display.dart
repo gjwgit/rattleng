@@ -310,8 +310,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     );
   }
 
-  // Build data table with row selection logic.
-
   // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
   // IDENTS. Also record variable types.
 
@@ -382,6 +380,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
+  // Build data table with row selection logic.
+
   Widget _buildDataTable(List<VariableInfo> vars) {
     Map<String, Role> currentRoles = ref.watch(rolesProvider);
     final selectedRows = ref.watch(selectedRowIndicesProvider);
@@ -420,8 +420,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               numeric: true,
             ),
             DataColumn(
-              label: Text('Missing',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              label: Text(
+                'Missing',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               numeric: true,
             ),
             DataColumn(
@@ -479,10 +481,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               cells: [
                 DataCell(Text(variable.name)),
                 DataCell(
-                  SizedBox(
-                    width: 400, // Adjust width as needed to fit 5 ChoiceChips
-                    child: _buildRoleChips(variable.name, currentRoles),
-                  ),
+                  _buildRoleChips(variable.name, currentRoles),
                 ),
                 DataCell(Text(variable.type)),
                 DataCell(
@@ -519,7 +518,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       // Set width to fit 5 ChoiceChips in a row.
 
       child: SizedBox(
-        width: 400,
+        width: choiceChipRowWidth,
         child: Wrap(
           spacing: 5.0,
           runSpacing: choiceChipRowSpace,
