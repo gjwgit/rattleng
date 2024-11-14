@@ -29,6 +29,8 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:rattle/constants/spacing.dart';
+
 import 'package:rattle/features/dataset/config.dart';
 import 'package:rattle/features/dataset/display.dart';
 
@@ -52,7 +54,7 @@ class DatasetPanel extends StatelessWidget {
           // I would need an extra Column widget(). Seems okay logically to add
           // the spacer here as part of the tab.
 
-          SizedBox(height: 10),
+          panelGap,
 
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
