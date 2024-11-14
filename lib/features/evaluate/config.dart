@@ -110,6 +110,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           ],
         );
 
+    bool svmEvaluateEnabled = checkFunctionExecuted(
+      ref,
+      [
+        'print(svm_model)',
+      ],
+      [],
+    );
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -194,7 +202,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'SVM',
               provider: svmEvaluateProvider,
-              enabled: false,
+              enabled: svmEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
