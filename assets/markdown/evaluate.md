@@ -1,21 +1,21 @@
 # Rattle - Evaluate Tab
 
 The **Evaluate** tab in Rattle is essential for assessing the
-performance and accuracy of machine learning models. This tab 
-provides various evaluation metrics and visualization options 
-to help you understand how well your model is performing on the 
-selected dataset. Below are key components and functions within 
+performance and accuracy of machine learning models. This tab
+provides various evaluation metrics and visualization options
+to help you understand how well your model is performing on the
+selected dataset. Below are key components and functions within
 the **Evaluate** tab:
 
 ### 1. **Evaluation Type Selection**
 
-   - **Error Matrix**: This provides a confusion matrix, showing 
-   the counts or proportions of correct and incorrect predictions. 
+   - **Error Matrix**: This provides a confusion matrix, showing
+   the counts or proportions of correct and incorrect predictions.
    The error matrix helps in understanding model performance on
    each class.
-   - **ROC (Receiver Operating Characteristic)**: Allows you to 
-   view the ROC curve, which plots the true positive rate against 
-   the false positive rate, providing insight into the model’s ability 
+   - **ROC (Receiver Operating Characteristic)**: Allows you to
+   view the ROC curve, which plots the true positive rate against
+   the false positive rate, providing insight into the model’s ability
    to differentiate between classes.
    - **Precision, Sensitivity, and Other Metrics**: You can select
    different metrics to gain a comprehensive understanding of your
