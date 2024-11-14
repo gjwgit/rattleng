@@ -61,15 +61,25 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   @override
   Widget build(BuildContext context) {
     bool treeEvaluateEnabled = checkFunctionExecuted(
-      ref,
-      [
-        'print(model_rpart)',
-        'printcp(model_rpart)',
-      ],
-      [
-        'model_tree_rpart.svg',
-      ],
-    );
+          ref,
+          [
+            'print(model_rpart)',
+            'printcp(model_rpart)',
+          ],
+          [
+            'model_tree_rpart.svg',
+          ],
+        ) ||
+        checkFunctionExecuted(
+          ref,
+          [
+            'print(model_ctree)',
+            'summary(model_ctree)',
+          ],
+          [
+            'model_tree_ctree.svg',
+          ],
+        );
     return Column(
       children: [
         // Space above the beginning of the configs.
