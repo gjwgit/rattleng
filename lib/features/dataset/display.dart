@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-11-14 12:30:10 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-14 12:39:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -399,7 +399,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               label: MarkdownTooltip(
                 message: '''
 
-                You could shift-click the first checkbox to select all variables
+                To select or deselect all variables shift-click the checkbox to
+                the left here in the header row.
 
                 ''',
                 child: Text(
