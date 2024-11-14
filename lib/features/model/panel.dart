@@ -28,6 +28,7 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
+import 'package:rattle/constants/spacing.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/utils/show_markdown_file.dart';

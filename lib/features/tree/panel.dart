@@ -1,6 +1,6 @@
 /// TREE tab
 //
-// Time-stamp: <Sunday 2024-06-09 06:10:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-15 09:41:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,7 +28,9 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
+import 'package:rattle/constants/spacing.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/tree/display.dart';
 import 'package:rattle/features/tree/config.dart';
 
@@ -53,7 +55,7 @@ class TreePanel extends StatelessWidget {
           // this here rather than within config to avoid an extra Column
           // widget().  Logically we add the spacer here as part of the tab.
 
-          SizedBox(height: 10),
+          panelGap,
 
           // We add the Display() which may be a text view that takes up the
           // remaining space to introduce this particular tab's functionality
