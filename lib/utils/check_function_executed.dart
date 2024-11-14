@@ -32,7 +32,10 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/utils/image_exists.dart';
 
 bool checkFunctionExecuted(
-    WidgetRef ref, List checkCommands, List checkImages,) {
+  WidgetRef ref,
+  List checkCommands,
+  List checkImages,
+) {
   String stdout = ref.watch(stdoutProvider);
 
   for (String item in checkCommands) {

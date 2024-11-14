@@ -99,7 +99,10 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       key: 'linearEvaluate',
       label: 'Linear',
       checkCommands: [
-        ['print(summary(model_glm))', 'print(anova(model_glm, test = "Chisq"))'],
+        [
+          'print(summary(model_glm))',
+          'print(anova(model_glm, test = "Chisq"))',
+        ],
       ],
       checkFiles: [
         ['model_glm_diagnostic_plots.svg'],
@@ -146,7 +149,10 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   bool _isEvaluationEnabled(_ModelConfig config) {
     for (var i = 0; i < config.checkCommands.length; i++) {
       if (checkFunctionExecuted(
-          ref, config.checkCommands[i], config.checkFiles[i],)) {
+        ref,
+        config.checkCommands[i],
+        config.checkFiles[i],
+      )) {
         return true;
       }
     }
@@ -157,14 +163,10 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         configBotGap,
-
         Row(
           children: [
-
             configLeftGap,
-
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
               bool enabled = _isEvaluationEnabled(config);
@@ -184,17 +186,13 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       });
                     },
                   ),
-
                   configWidgetGap,
-
                 ],
               );
             }).toList(),
           ],
         ),
-
         configRowGap,
-        
       ],
     );
   }
