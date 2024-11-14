@@ -91,7 +91,25 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           ['print(model_xgb)', 'summary(model_xgb)'],
           ['model_xgb_importance.svg'],
         );
-        
+
+    bool forestEvaluateEnabled = checkFunctionExecuted(
+          ref,
+          ['print(model_conditionalForest)', 'print(importance_df)'],
+          ['model_conditional_forest.svg'],
+        ) ||
+        checkFunctionExecuted(
+          ref,
+          [
+            'print(model_randomForest)',
+            'printRandomForests',
+          ],
+          [
+            'model_random_forest_varimp.svg',
+            'model_random_forest_error_rate.svg',
+            'model_random_forest_oob_roc_curve.svg',
+          ],
+        );
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -155,7 +173,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'Forest',
               provider: forestEvaluateProvider,
-              enabled: false,
+              enabled: forestEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
