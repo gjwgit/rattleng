@@ -127,6 +127,22 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ['model_glm_diagnostic_plots.svg'],
     );
 
+    bool neuralEvaluateEnabled = checkFunctionExecuted(
+          ref,
+          ['print(model_neuralnet)', 'summary(model_neuralnet)'],
+          ['model_neuralnet.svg'],
+        ) ||
+        checkFunctionExecuted(
+          ref,
+          [
+            'print(model_nn)',
+            'summary(model_nn)',
+          ],
+          [
+            'model_nn_nnet.svg',
+          ],
+        );
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -253,7 +269,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'Neural Net',
               provider: neuralNetEvaluateProvider,
-              enabled: false,
+              enabled: neuralEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
