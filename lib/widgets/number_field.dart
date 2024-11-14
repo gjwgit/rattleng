@@ -32,7 +32,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class NumberField extends ConsumerStatefulWidget {
   final String label;
@@ -179,7 +179,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
   @override
   Widget build(BuildContext context) {
-    return DelayedTooltip(
+    return MarkdownTooltip(
       message: widget.tooltip,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

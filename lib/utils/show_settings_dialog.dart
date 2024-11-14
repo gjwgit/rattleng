@@ -31,7 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// List of available ggplot themes for the user to choose from.
 
@@ -260,7 +260,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       spacing: 8.0,
                       runSpacing: 8.0,
                       children: themeOptions.map((option) {
-                        return DelayedTooltip(
+                        return MarkdownTooltip(
                           message: option['tooltip']!, // Tooltip for each chip
                           child: ChoiceChip(
                             label: Text(option['label']!),

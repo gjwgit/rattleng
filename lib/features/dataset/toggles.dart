@@ -25,9 +25,9 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/data.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
@@ -67,14 +67,15 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
       children: <Widget>[
         // CLEANSE
 
-        DelayedTooltip(
+        MarkdownTooltip(
           message: '''
 
-          Cleanse is currently ${cleanse ? "" : "not "}enabled: When enabled a
-          dataset will be cleansed by removing any columns with a single
-          constant value and converting character columns with $charToFactor or
-          fewer unique values to factors (categoric).  If you do not require
-          this automated cleansing of the dataset, disable this option.
+          **Cleanse** Currently **${cleanse ? "" : "not "}enabled**. When
+          enabled a dataset will be cleansed by removing any columns with a
+          single constant value and converting character columns with
+          $charToFactor or fewer unique values to factors (categoric).  If you
+          do not require this automated cleansing of the dataset, disable this
+          option.
 
               ''',
           child: const Icon(Icons.cleaning_services),
@@ -82,14 +83,14 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
         // UNIFY
 
-        DelayedTooltip(
+        MarkdownTooltip(
           message: '''
 
-          Unify is currently ${normalise ? "" : "not "}enabled: When enabled the
-          names of columns (variables) of the dataset are unified by converting
-          them to lowercase and separating words by underscore.  If you do not
-          require this automated unifying of the variable names, disable this
-          option.
+          **Unify** Currently **${normalise ? "" : "not "}enabled**. When
+          enabled the names of columns (variables) of the dataset are unified by
+          converting them to lowercase and separating words by underscore.  If
+          you do not require this automated unifying of the variable names,
+          disable this option.
 
           ''',
           child: const Icon(Icons.auto_fix_high_outlined),
@@ -99,20 +100,21 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
         // PARTITION
 
-        DelayedTooltip(
+        MarkdownTooltip(
           message: '''
 
-          Partition is currently ${partition ? "" : "not "}enabled: When
+          **Partition** Currently **${partition ? "" : "not "}enabled**. When
           enabled, for the purposes of predictive modelling, a dataset will be
           randomly split into three smaller datasets. The three-way split is
-          commonly 70/15/15 percent. Respectively, this creates a training
-          dataset (to build the model), a tuning dataset (to assist in tuning
-          the model during build), and a testing dataset (as a hold-out dataset
-          for an unbiased estimate of the expected performance of the
-          model). For exploring up to reasonably large datasets (tens of
-          thousands of observations) you can turn partitioning off so all data
-          is included in the exploration. For larger datasets the partitioning
-          is also useful to explore a random subset of the full dataset.
+          commonly 70/15/15 percent. Respectively, this creates a **training**
+          dataset (to build the model), a **tuning** dataset (to assist in
+          tuning the model during build and sometimes called a validation
+          dataset), and a **testing** dataset (as a hold-out dataset for an
+          unbiased estimate of the expected performance of the model). For
+          exploring reasonably large datasets (tens of thousands of
+          observations) you can turn partitioning off so all data is included in
+          the exploration. For larger datasets the partitioning is useful to
+          explore a random subset of the full dataset.
 
           ''',
           child: const Icon(Icons.horizontal_split),

@@ -28,7 +28,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class ChoiceChipTip<T> extends StatelessWidget {
   final List<T> options;
@@ -57,7 +57,7 @@ class ChoiceChipTip<T> extends StatelessWidget {
       children: options.map((option) {
         final label = getLabel(option);
 
-        return DelayedTooltip(
+        return MarkdownTooltip(
           message: tooltips == null ? '' : tooltips![option] ?? '',
           child: ChoiceChip(
             label: Text(label),

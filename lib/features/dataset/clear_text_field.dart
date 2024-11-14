@@ -28,14 +28,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class DatasetClearTextField extends ConsumerWidget {
   const DatasetClearTextField({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return DelayedTooltip(
+    return MarkdownTooltip(
       message: '''
 
         Tap here to clear the path entry.

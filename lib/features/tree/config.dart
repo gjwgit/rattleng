@@ -46,7 +46,7 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -435,7 +435,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     required Key key,
   }) {
     return Expanded(
-      child: DelayedTooltip(
+      child: MarkdownTooltip(
         message: tooltip,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

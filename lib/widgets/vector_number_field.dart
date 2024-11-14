@@ -31,7 +31,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/style.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class VectorNumberField extends ConsumerStatefulWidget {
   final String label;
@@ -110,7 +110,7 @@ class VectorNumberFieldState extends ConsumerState<VectorNumberField> {
 
   @override
   Widget build(BuildContext context) {
-    return DelayedTooltip(
+    return MarkdownTooltip(
       message: widget.tooltip,
       child: SizedBox(
         width: widget.maxWidth * 30.0,

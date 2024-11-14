@@ -31,7 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'package:rattle/utils/word_wrap.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 showOk({
   required BuildContext context,

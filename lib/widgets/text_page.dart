@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Friday 2024-10-25 08:27:22 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-14 09:16:41 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,7 +40,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
-import 'package:rattle/utils/word_wrap.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class TextPage extends StatelessWidget {
   final String title;
@@ -88,11 +88,21 @@ class TextPage extends StatelessWidget {
                 children: [
                   // Button to generate and open PDF.
 
-                  IconButton(
-                    onPressed: () => _generateAndOpenPdf(context),
-                    icon: Icon(
-                      Icons.open_in_new,
-                      color: Colors.blue,
+                  MarkdownTooltip(
+                    message: '''
+
+                        **Open.** Tap here to open the data of this page in a
+                          separate window to the Rattle app itself. This allows
+                          you to retain a view of the information while you
+                          navigate through other data and analyses.
+
+                        ''',
+                    child: IconButton(
+                      onPressed: () => _generateAndOpenPdf(context),
+                      icon: Icon(
+                        Icons.open_in_new,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
 
@@ -101,11 +111,19 @@ class TextPage extends StatelessWidget {
 
                   // Button to save as PDF.
 
-                  IconButton(
-                    onPressed: () => _saveAsPdf(context),
-                    icon: Icon(
-                      Icons.save,
-                      color: Colors.blue,
+                  MarkdownTooltip(
+                    message: '''
+
+                        **Save.** Tap here to save the information in this text
+                          page to a **pdf** document.
+
+                        ''',
+                    child: IconButton(
+                      onPressed: () => _saveAsPdf(context),
+                      icon: Icon(
+                        Icons.save,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 ],
@@ -345,7 +363,7 @@ class TextPage extends StatelessWidget {
 
     String? filePath = await FilePicker.platform.saveFile(
       dialogTitle: 'Save PDF',
-      fileName: 'rattle_text_.pdf',
+      fileName: 'rattle_text_${Random().nextInt(100)}.pdf',
     );
 
     // Check if a file path was provided.
