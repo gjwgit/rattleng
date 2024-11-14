@@ -80,3 +80,7 @@ const textPageBottomGap = Gap(20);
 /// Gap in height between widgets.
 
 const panelGap = Gap(10);
+
+/// Width to fit 5 ChoiceChips in a Row.
+
+const choiceChipRowWidth = 400.0;
