@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-11-14 12:39:21 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-15 09:32:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -175,9 +175,20 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     updateVariablesProvider(ref);
     Map<String, String> rolesOption = {
-      'Ignore': ''' Ignore this dataset during analysis.
+      'Ignore': '''
+
+      For the selected variables in the data table below set their role to
+      **Ignore**. Ignored variables will not be used in any analysis and can be
+      removed from the dataset using the **Cleanup** feature under the
+      **Transform** tab.
+
       ''',
-      'Input': '''Include this dataset for input during analysis.
+      'Input': '''
+
+      For the slected variables in the data table below set their role to
+      **Input**. Input variables are used for predictive modelling in the
+      **Model** tab, for example, to predict a **Target** variable.
+
       ''',
     };
 
