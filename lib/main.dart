@@ -28,7 +28,6 @@ library;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
@@ -38,11 +37,60 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
 
-void main() async {
-  // The `main` entry point into any dart app.  This is required to be [async]
-  // since we use [await] below to initalise the window manager.
+Future<bool> checkRInstallation() async {
+  // Try to run the R command to check its availability.
 
-  // In production do not display [debguPrint] messages.
+  try {
+    final result = await Process.run('R', ['--version']);
+    return result.exitCode == 0;
+  } catch (e) {
+    // R is not installed or not in PATH.
+
+    return false;
+  }
+}
+
+void showErrorAndExit(BuildContext context) {
+  // Show an error popup if R is not installed and then exit the app.
+
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Error'),
+      content: const Text(
+          'R is not installed or not in the system PATH. Please install it before using this app.'),
+      actions: [
+        TextButton(
+          onPressed: () => exit(0),
+          child: const Text('Exit'),
+        ),
+      ],
+    ),
+  );
+}
+
+void main() async {
+  // The `main` entry point into any dart app.
+  // This is required to be [async] since we use [await] below to initalise the window manager.
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  bool isRInstalled = await checkRInstallation();
+  if (!isRInstalled) {
+    runApp(
+      MaterialApp(
+        home: Builder(
+          builder: (context) {
+            Future.delayed(Duration.zero, () => showErrorAndExit(context));
+            return Scaffold();
+          },
+        ),
+      ),
+    );
+    return;
+  }
+
+  // In production do not display [debugPrint] messages.
 
   if (isProduction) {
     debugPrint = (String? message, {int? wrapWidth}) {
@@ -50,8 +98,8 @@ void main() async {
     };
   }
 
-  // Tune the window manager before runApp() to avoid a lag in the UI. For
-  // desktop (non-web) versions re-size to a comfortable initial window.
+  // Tune the window manager before runApp() to avoid a lag in the UI.
+  // For desktop (non-web) versions re-size to a comfortable initial window.
 
   if (isDesktop) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -60,16 +108,16 @@ void main() async {
 
     WindowOptions windowOptions = const WindowOptions(
       // Setting [alwaysOnTop] here will ensure the desktop app starts on top of
-      // other apps on the desktop so that it is visible. We later turn it off
-      // as we don't want to force it always on top.
+      // other apps on the desktop so that it is visible.
+      // We later turn it off as we don't want to force it always on top.
 
       alwaysOnTop: true,
 
       // We can override the size in the first instance by, for example in
-      // Linux, editting linux/my_application.cc. Setting it here has effect
-      // when Restarting the app whil debugging
+      // Linux, editing linux/my_application.cc.
+      // Setting it here has effect when Restarting the app while debugging.
 
-      // Hoever, since Windows has 1280x720 by default in the windows-specific
+      // However, since Windows has 1280x720 by default in the windows-specific
       // windows/runner/main.cpp, line 29, it is best not to override it here
       // since under Windows 950x600 is too small.
 
@@ -92,26 +140,25 @@ void main() async {
 
   // Initialise a global temporary directory where generated files, such as
   // charts, are saved and can be removed on exit from rattleng or on loading a
-  // new dataset. Notice on Windows the path is of the form
-  // `C:\AppDir\Users\...` which is not acceptable by R (which requires `\\`) so
-  // map them to `/` which is accepted by R on Windows.
+  // new dataset.
+  //
+  // Notice on Windows the path is of the form `C:\AppDir\Users\...` which is
+  // not acceptable by R (which requires `\\`) so map them to `/` which is
+  // accepted by R on Windows.
 
   final rattleDir = await Directory.systemTemp.createTemp('rattle');
   tempDir = rattleDir.path.replaceAll(r'\', '/');
 
-  // Set up the app's color scheme
-  // final ColorScheme colorScheme = ColorScheme.fromSeed(
-  //   brightness: MediaQuery.platformBrightnessOf(context),
-  //   seedColor: Colors.indigo,
-  // );
-
+  // Set up the app's color scheme.
   Flavor flavor = catppuccin.latte;
 
   // The runApp() function takes the given Widget and makes it the root of the
-  // widget tree. Here we wrap the app within RiverPod's ProviderScope() to
-  // support state management. We also sets up the app's theme through it being
-  // a [MaterialApp] and returns the [MaterialApp] widget that serves as the
-  // root of the app.
+  // widget tree.
+  // Here we wrap the app within RiverPod's ProviderScope() to support state
+  // management.
+  //
+  // We also set up the app's theme through it being a [MaterialApp] and return
+  // the [MaterialApp] widget that serves as the root of the app.
 
   runApp(
     ProviderScope(
@@ -119,10 +166,7 @@ void main() async {
       // the close dialog, since it needs a MaterialLocalizations to be in the
       // parentage which MaterialApp ensures, and it makes sense for it to be
       // the root.
-
       child: MaterialApp(
-        //      theme: catppuccinTheme(catppuccin.latte),
-
         theme: ThemeData(
           // Material 3 is the current (2024) flutter default theme for colours
           // and Google fonts. We can stay with this as the default for now
@@ -131,13 +175,9 @@ void main() async {
           // We could turn the new material theme off to get the older look.
           //
           // useMaterial3: false,
-
           colorScheme: ColorScheme.fromSeed(
             seedColor: flavor.mantle,
-
-            // seedColor: flavor.text,
           ),
-
           // primarySwatch: createMaterialColor(Colors.black),
           // The default font size seems rather small. So increase it here.
           // textTheme: Theme.of(context).textTheme.apply(
