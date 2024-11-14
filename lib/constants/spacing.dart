@@ -76,3 +76,7 @@ const popupTitleGap = Gap(40);
 /// Gap before the bottom divider in the display pages.
 
 const textPageBottomGap = Gap(20);
+
+/// Gap in height between widgets.
+
+const widgetsHeightGap = Gap(10);

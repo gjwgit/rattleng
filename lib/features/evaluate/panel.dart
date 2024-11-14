@@ -29,10 +29,9 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/evaluate/config.dart';
 import 'package:rattle/features/evaluate/display.dart';
-
-/// The Evaluate tab supports building decision tree models.
 
 class EvaluatePanel extends StatelessWidget {
   const EvaluatePanel({super.key});
@@ -52,7 +51,7 @@ class EvaluatePanel extends StatelessWidget {
           // this here rather than within config to avoid an extra Column
           // widget().  Logically we add the spacer here as part of the tab.
 
-          SizedBox(height: 10),
+          widgetsHeightGap,
 
           // We add the Display() which may be a text view that takes up the
           // remaining space to introduce this particular tab's functionality
