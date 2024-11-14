@@ -1,4 +1,4 @@
-/// Widget to display the Forest introduction or built tree.
+/// Widget to display the Evaluate introduction or built tree.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -33,7 +33,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
 
-/// The FOREST panel displays the instructions and then the build output.
+/// The EVALUATE panel displays the instructions and then the build output.
 
 class EvaluateDisplay extends ConsumerStatefulWidget {
   const EvaluateDisplay({super.key});
