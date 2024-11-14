@@ -44,18 +44,18 @@ import 'package:rattle/widgets/text_page.dart';
 
 /// The FOREST panel displays the instructions and then the build output.
 
-class ForestDisplay extends ConsumerStatefulWidget {
-  const ForestDisplay({super.key});
+class EvaluateDisplay extends ConsumerStatefulWidget {
+  const EvaluateDisplay({super.key});
 
   @override
-  ConsumerState<ForestDisplay> createState() => _ForestDisplayState();
+  ConsumerState<EvaluateDisplay> createState() => _EvaluateDisplayState();
 }
 
-class _ForestDisplayState extends ConsumerState<ForestDisplay> {
+class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
   @override
   Widget build(BuildContext context) {
     final pageController = ref.watch(
-      forestPageControllerProvider,
+      evaluatePageControllerProvider,
     ); // Get the PageController from Riverpod
     String stdout = ref.watch(stdoutProvider);
     int forestNo = ref.watch(treeNoForestProvider);

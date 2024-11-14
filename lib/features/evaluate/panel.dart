@@ -30,7 +30,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:rattle/features/evaluate/config.dart';
-import 'package:rattle/features/forest/display.dart';
+import 'package:rattle/features/evaluate/display.dart';
 
 /// The Evaluate tab supports building decision tree models.
 
@@ -58,7 +58,7 @@ class EvaluatePanel extends StatelessWidget {
           // remaining space to introduce this particular tab's functionality
           // which is then replaced with the output of the build.
 
-          Expanded(child: ForestDisplay()),
+          Expanded(child: EvaluateDisplay()),
         ],
       ),
     );
