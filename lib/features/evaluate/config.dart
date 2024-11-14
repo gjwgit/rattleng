@@ -80,6 +80,18 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             'model_tree_ctree.svg',
           ],
         );
+
+    bool boostEvaluateEnabled = checkFunctionExecuted(
+          ref,
+          ['print(model_ada)', 'summary(model_ada)'],
+          ['model_ada_boost.svg'],
+        ) ||
+        checkFunctionExecuted(
+          ref,
+          ['print(model_xgb)', 'summary(model_xgb)'],
+          ['model_xgb_importance.svg'],
+        );
+        
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -122,7 +134,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'Boost',
               provider: boostEvaluateProvider,
-              enabled: false,
+              enabled: boostEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
