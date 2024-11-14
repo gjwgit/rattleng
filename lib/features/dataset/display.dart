@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-11-14 09:56:17 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-14 12:30:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
@@ -59,7 +60,7 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-const smallSpace = SizedBox(height: 10);
+const smallSpace = Gap(10);
 
 /// The dataset panel displays the RattleNG welcome on the first page and the
 /// ROLES as the second page.
@@ -138,6 +139,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       pages: pages,
     );
   }
+
   ////////////////////////////////////////////////////////////////////////
 
   // Add a page for text file (a .txt file) content for Word Cloud.
