@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
@@ -170,6 +171,11 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             // Space to the left of the configs.
 
             configLeftGap,
+
+            const Text(
+              'Model:',
+              style: normalTextStyle,
+            ),
 
             LabelledCheckbox(
               key: const Key('treeEvaluate'),
