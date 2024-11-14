@@ -1,4 +1,3 @@
-
 # Rattle - Evaluate Tab
 
 The **Evaluate** tab in Rattle is essential for assessing the 
