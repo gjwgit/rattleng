@@ -1,4 +1,4 @@
-/// Check if the path to a file exists and popup if not.
+/// Check if the function has been executed.
 //
 // Time-stamp: <Friday 2024-10-25 08:27:46 +1100 Graham Williams>
 //
@@ -21,40 +21,31 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Zheyuan Xu
 
 library;
 
-import 'dart:io';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:flutter/material.dart';
+import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/utils/image_exists.dart';
 
-bool checkFileExists(BuildContext context, String path) {
-  var file = File(path);
-  if (!file.existsSync()) {
-    // Show a popup message if the file does not exist
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('File Not Found'),
-          content: Text('The file you specified does not exist\n\n'
-              '        $path\n\n'
-              'Please correct the filename path and try again.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
+bool checkFunctionExecuted(
+    WidgetRef ref, List checkCommands, List checkImages,) {
+  String stdout = ref.watch(stdoutProvider);
 
-    return false;
-  } else {
-    return true;
+  for (String item in checkCommands) {
+    if (!stdout.contains(item)) {
+      return false;
+    }
   }
+  for (String imagePath in checkImages) {
+    String image = '$tempDir/$imagePath';
+    if (!imageExists(image)) {
+      return false;
+    }
+  }
+
+  return true;
 }

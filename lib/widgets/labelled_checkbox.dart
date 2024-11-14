@@ -80,7 +80,10 @@ class LabelledCheckbox extends ConsumerWidget {
                 onSelected!(!isChecked);
               }
             },
-            child: Text(label),
+            child: Text(
+              label,
+              style: TextStyle(color: enabled ? Colors.black : Colors.grey),
+            ),
           ),
         ],
       ),

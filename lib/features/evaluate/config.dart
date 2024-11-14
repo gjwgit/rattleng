@@ -29,26 +29,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/evaluate.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
+import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
-
-/// Descriptive tooltips for different algorithm types,
-/// explaining the splitting method and potential biases.
-
-Map forestTooltips = {
-  AlgorithmType.conditional: '''
-
-      Build multiple decision trees using random samples of 
-      data and features, then aggregate their predictions.
-
-      ''',
-  AlgorithmType.traditional: '''
-      
-      Adjust for covariate distributions during tree construction 
-      to provide unbiased variable importance measures.
-      
-      ''',
-};
 
 /// The EVALUATE tab config currently consists of just a BUILD button.
 ///
@@ -78,6 +60,16 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
   @override
   Widget build(BuildContext context) {
+    bool treeEvaluateEnabled = checkFunctionExecuted(
+      ref,
+      [
+        'print(model_rpart)',
+        'printcp(model_rpart)',
+      ],
+      [
+        'model_tree_rpart.svg',
+      ],
+    );
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -99,7 +91,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'Tree',
               provider: treeEvaluateProvider,
-              enabled: false,
+              enabled: treeEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
