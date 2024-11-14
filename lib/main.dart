@@ -42,6 +42,8 @@ Future<bool> checkRInstallation() async {
 
   try {
     final result = await Process.run('R', ['--version']);
+    print("R version: ${result.stdout}");
+    print("result.exitCode: ${result}");
     return result.exitCode == 0;
   } catch (e) {
     // R is not installed or not in PATH.
@@ -58,7 +60,8 @@ void showErrorAndExit(BuildContext context) {
     builder: (context) => AlertDialog(
       title: const Text('Error'),
       content: const Text(
-          'R is not installed or not in the system PATH. Please install it before using this app.'),
+        'R is not installed or not in the system PATH. Please install it before using Rattle.',
+      ),
       actions: [
         TextButton(
           onPressed: () => exit(0),
