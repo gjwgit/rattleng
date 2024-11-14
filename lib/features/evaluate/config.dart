@@ -118,6 +118,15 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       [],
     );
 
+    bool linearEvaluateEnabled = checkFunctionExecuted(
+      ref,
+      [
+        'print(summary(model_glm))',
+        'print(anova(model_glm, test = "Chisq"))',
+      ],
+      ['model_glm_diagnostic_plots.svg'],
+    );
+
     return Column(
       children: [
         // Space above the beginning of the configs.
@@ -223,7 +232,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ''',
               label: 'Linear',
               provider: linearEvaluateProvider,
-              enabled: false,
+              enabled: linearEvaluateEnabled,
               onSelected: (ticked) {
                 setState(() {
                   if (ticked != null) {
