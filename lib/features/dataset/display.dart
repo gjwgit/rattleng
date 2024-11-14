@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2024-11-14 09:56:17 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-14 12:39:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
@@ -59,7 +60,7 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-const smallSpace = SizedBox(height: 10);
+const smallSpace = Gap(10);
 
 /// The dataset panel displays the RattleNG welcome on the first page and the
 /// ROLES as the second page.
@@ -77,14 +78,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   final int typeFlex = 4;
   final int contentFlex = 3;
 
-  // Track pressed keys for shift selection
+  // Track pressed keys for shift and control selection.
 
   bool _isShiftPressed = false;
+  bool _isCtrlPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    final pageController = ref
-        .watch(pageControllerProvider); // Get the PageController from Riverpod
+    // Get the PageController from Riverpod.
+
+    final pageController = ref.watch(pageControllerProvider);
 
     String path = ref.watch(pathProvider);
     String stdout = ref.watch(stdoutProvider);
@@ -111,7 +114,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       _addDatasetPage(stdout, pages);
     }
 
-    // Listen for shift key events
+    // Listen for shift and control key events.
 
     HardwareKeyboard.instance.addHandler((event) {
       setState(() {
@@ -119,7 +122,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 .contains(LogicalKeyboardKey.shiftLeft) ||
             HardwareKeyboard.instance.logicalKeysPressed
                 .contains(LogicalKeyboardKey.shiftRight);
+
+        _isCtrlPressed = HardwareKeyboard.instance.logicalKeysPressed
+                .contains(LogicalKeyboardKey.controlLeft) ||
+            HardwareKeyboard.instance.logicalKeysPressed
+                .contains(LogicalKeyboardKey.controlRight);
       });
+
       // Return a boolean value.
 
       return false;
@@ -165,7 +174,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // update the role of the old variable.
 
     updateVariablesProvider(ref);
-
     Map<String, String> rolesOption = {
       'Ignore': ''' Ignore this dataset during analysis.
       ''',
@@ -295,28 +303,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ),
 
           // Main ListView for displaying data table.
-
           Padding(
             padding: const EdgeInsets.only(top: 56.0),
-            child: ListView.builder(
-              key: const Key('roles_list_view'),
-
-              // Item count is the same as the number of variables.
-
-              itemCount: vars.length,
-
-              itemBuilder: (context, index) {
-                // Show header only for the first row.
-
-                return _buildDataTable(
-                  variable: vars[index],
-                  showHeader: index == 0,
-                  // Pass the index to _buildDataTable for selection tracking
-
-                  rowIndex: index,
-                );
-              },
-            ),
+            child: _buildDataTable(vars),
           ),
         ],
       ),
@@ -393,175 +382,134 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
-  // Build data line for each variable, including the table header if specified.
+  // Build data table with row selection logic.
 
-  Widget _buildDataTable({
-    required VariableInfo variable,
-    required bool showHeader,
-    required int rowIndex,
-  }) {
-    // Watch the latest roles directly from rolesProvider
-
+  Widget _buildDataTable(List<VariableInfo> vars) {
     Map<String, Role> currentRoles = ref.watch(rolesProvider);
-
-    // Check if the row is selected
-
     final selectedRows = ref.watch(selectedRowIndicesProvider);
-    bool isSelected = selectedRows.contains(rowIndex);
-    String content = _truncateContent(variable.details);
-
-    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
-    int uniqueCount = metaData[variable.name]?['unique']?[0] ?? 0;
-    int missingCount = metaData[variable.name]?['missing']?[0] ?? 0;
 
     var formatter = NumberFormat('#,###');
 
-    return Column(
-      children: [
-        if (showHeader)
-          // Only render the header once, without selection logic
+    return Container(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: DataTable(
+          columns: [
+            DataColumn(
+              label: MarkdownTooltip(
+                message: '''
 
-          Table(
-            columnWidths: const {
-              0: FixedColumnWidth(150.0),
-              1: FixedColumnWidth(400.0),
-              2: FixedColumnWidth(40.0),
-              3: FixedColumnWidth(80.0),
-              4: FixedColumnWidth(80.0),
-              5: FixedColumnWidth(20.0),
-              6: FlexColumnWidth(),
-            },
-            children: const [
-              TableRow(
-                children: [
-                  Text(
-                    'Variable',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    'Role',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Type',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Unique',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.right,
-                  ),
-                  Text(
-                    'Missing',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.right,
-                  ),
-                  SizedBox.shrink(),
-                  Text(
-                    'Sample',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  SizedBox(height: 10), // Spacer row for header
+                To select or deselect all variables shift-click the checkbox to
+                the left here in the header row.
 
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                  SizedBox(height: 10),
-                ],
-              ),
-            ],
-          ),
-
-        // Apply selection only to data rows
-
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              if (_isShiftPressed) {
-                selectedRows.add(rowIndex); // Shift to multi-select
-              } else {
-                selectedRows.clear();
-                selectedRows.add(rowIndex); // Single-select
-              }
-            });
-          },
-          onLongPressMoveUpdate: (details) {
-            setState(() {
-              selectedRows.add(rowIndex); // Select multiple on drag
-            });
-          },
-          child: Container(
-            color: isSelected ? Colors.lightBlue[50] : Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Table(
-                columnWidths: const {
-                  0: FixedColumnWidth(150.0),
-                  1: FixedColumnWidth(400.0),
-                  2: FixedColumnWidth(40.0),
-                  3: FixedColumnWidth(80.0),
-                  4: FixedColumnWidth(80.0),
-                  5: FixedColumnWidth(20.0),
-                  6: FlexColumnWidth(),
-                },
-                children: [
-                  TableRow(
-                    children: [
-                      _buildFittedText(variable.name),
-                      _buildRoleChips(
-                        variable.name,
-                        currentRoles,
-                      ), // Role chip updates based on currentRoles
-
-                      Text(
-                        variable.type,
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        formatter.format(uniqueCount),
-                        textAlign: TextAlign.right,
-                      ),
-                      Text(
-                        formatter.format(missingCount),
-                        textAlign: TextAlign.right,
-                      ),
-                      SizedBox.shrink(),
-                      SelectableText(
-                        content,
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
-                  ),
-                ],
+                ''',
+                child: Text(
+                  'Variable',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
+            DataColumn(
+              label:
+                  Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            DataColumn(
+              label:
+                  Text('Type', style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            DataColumn(
+              label:
+                  Text('Unique', style: TextStyle(fontWeight: FontWeight.bold)),
+              numeric: true,
+            ),
+            DataColumn(
+              label: Text(
+                'Missing',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              numeric: true,
+            ),
+            DataColumn(
+              label:
+                  Text('Sample', style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+          ],
+          rows: vars.map((variable) {
+            int rowIndex = vars.indexOf(variable);
+            bool isSelected = selectedRows.contains(rowIndex);
+
+            return DataRow(
+              selected: isSelected,
+              onSelectChanged: (bool? selected) {
+                setState(() {
+                  if (selected == true) {
+                    if (_isShiftPressed) {
+                      // Shift-click: Add multiple selections from the last selected row.
+
+                      selectedRows.add(rowIndex);
+                    } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
+                      // Ctrl-click: Auto-select range between the first selected row and this row.
+
+                      int firstSelectedRow = selectedRows.first;
+                      int lastSelectedRow = rowIndex;
+
+                      // Ensure that we have a start and end point correctly ordered.
+
+                      if (lastSelectedRow < firstSelectedRow) {
+                        int temp = firstSelectedRow;
+                        firstSelectedRow = lastSelectedRow;
+                        lastSelectedRow = temp;
+                      }
+
+                      // Select all rows in the range between first and last selected rows.
+
+                      for (int i = firstSelectedRow;
+                          i <= lastSelectedRow;
+                          i++) {
+                        selectedRows.add(i);
+                      }
+                    } else {
+                      // Single click: Clear previous selection and select only the current row.
+
+                      selectedRows.clear();
+                      selectedRows.add(rowIndex);
+                    }
+                  } else {
+                    // Deselect the row if it was previously selected.
+
+                    selectedRows.remove(rowIndex);
+                  }
+                });
+              },
+              cells: [
+                DataCell(Text(variable.name)),
+                DataCell(
+                  _buildRoleChips(variable.name, currentRoles),
+                ),
+                DataCell(Text(variable.type)),
+                DataCell(
+                  Text(
+                    formatter.format(
+                      ref.watch(metaDataProvider)[variable.name]?['unique']
+                              ?[0] ??
+                          0,
+                    ),
+                  ),
+                ),
+                DataCell(
+                  Text(
+                    formatter.format(
+                      ref.watch(metaDataProvider)[variable.name]?['missing']
+                              ?[0] ??
+                          0,
+                    ),
+                  ),
+                ),
+                DataCell(SelectableText(_truncateContent(variable.details))),
+              ],
+            );
+          }).toList(),
         ),
-      ],
-    );
-  }
-
-  // Build fitted text for variable name.
-
-  Widget _buildFittedText(String text) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      alignment: Alignment.topLeft,
-      child: Text(
-        text,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.left,
       ),
     );
   }
@@ -570,28 +518,33 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
     return Center(
-      child: Wrap(
-        spacing: 5.0,
-        runSpacing: choiceChipRowSpace,
-        children: choices.map((choice) {
-          return ChoiceChip(
-            label: Text(choice.displayString),
-            disabledColor: Colors.grey,
-            selectedColor: Colors.lightBlue[200],
-            backgroundColor: Colors.lightBlue[50],
-            showCheckmark: false,
-            shadowColor: Colors.grey,
-            pressElevation: 8.0,
-            elevation: 2.0,
-            selected: remap(currentRoles[columnName]!, choice),
-            onSelected: (bool selected) => _handleRoleSelection(
-              selected,
-              choice,
-              columnName,
-              currentRoles,
-            ),
-          );
-        }).toList(),
+      // Set width to fit 5 ChoiceChips in a row.
+
+      child: SizedBox(
+        width: choiceChipRowWidth,
+        child: Wrap(
+          spacing: 5.0,
+          runSpacing: choiceChipRowSpace,
+          children: choices.map((choice) {
+            return ChoiceChip(
+              label: Text(choice.displayString),
+              disabledColor: Colors.grey,
+              selectedColor: Colors.lightBlue[200],
+              backgroundColor: Colors.lightBlue[50],
+              showCheckmark: false,
+              shadowColor: Colors.grey,
+              pressElevation: 8.0,
+              elevation: 2.0,
+              selected: remap(currentRoles[columnName]!, choice),
+              onSelected: (bool selected) => _handleRoleSelection(
+                selected,
+                choice,
+                columnName,
+                currentRoles,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -605,15 +558,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     Map<String, Role> currentRoles,
   ) {
     // The parameter selected can be false when a chip
-    // is tapped when it is already selected.  In our
-    // case we need do nothing else. That could be
-    // useful as a toggle button!
+    // is tapped when it is already selected. That could
+    // be useful as a toggle button.
 
     setState(() {
       if (selected) {
-        // Only one variable can be TARGET, RISK and
-        // WEIGHT so any previous variable with that
-        // role shold become INPUT.
+        // Only one variable can be TARGET, RISK, or WEIGHT, so any previous
+        // variable with that role should become INPUT.
 
         if (choice == Role.target ||
             choice == Role.risk ||
