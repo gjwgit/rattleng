@@ -157,10 +157,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+
         configBotGap,
+
         Row(
           children: [
+
             configLeftGap,
+
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
               bool enabled = _isEvaluationEnabled(config);
@@ -180,13 +184,17 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       });
                     },
                   ),
+
                   configWidgetGap,
+
                 ],
               );
             }).toList(),
           ],
         ),
+
         configRowGap,
+        
       ],
     );
   }
