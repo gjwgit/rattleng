@@ -29,6 +29,8 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:rattle/constants/spacing.dart';
+
 import 'package:rattle/features/wordcloud/config.dart';
 import 'package:rattle/features/wordcloud/display.dart';
 
@@ -54,7 +56,7 @@ class WordCloudPanel extends StatelessWidget {
           // I would need an extra Column widget(). Seems okay logically to add
           // the spacer here as part of the tab.
 
-          SizedBox(height: 10),
+          panelGap,
           // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
           // BUTTON TOP RIGHT. KEEP HERE AS A COMMENT UNTIL IMPLEMENTED.
           //

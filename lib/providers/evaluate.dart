@@ -1,12 +1,13 @@
-/// SVM tab made up of config and panel widgets.
-//
-// Time-stamp: <Friday 2024-11-15 10:00:20 +1100 Graham Williams>
-//
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// A provider for the parameters for evaluate.
+///
+/// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
+///
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,27 +22,17 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Zheyuan Xu
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:flutter/material.dart';
-
-import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
-
-/// The SVM feature supports Svm rule analysis.
-
-class TransformPanel extends StatelessWidget {
-  const TransformPanel({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // As per the RattleNG pattern, a Tab consists of a Config bar and the
-    // results Display().
-
-    return showMarkdownFile(transformIntroFile, context);
-  }
-}
+final boostEvaluateProvider = StateProvider<bool>((ref) => false);
+final forestEvaluateProvider = StateProvider<bool>((ref) => false);
+final hClusterEvaluateProvider = StateProvider<bool>((ref) => false);
+final kMeansEvaluateProvider = StateProvider<bool>((ref) => false);
+final linearEvaluateProvider = StateProvider<bool>((ref) => false);
+final neuralNetEvaluateProvider = StateProvider<bool>((ref) => false);
+final svmEvaluateProvider = StateProvider<bool>((ref) => false);
+final treeEvaluateProvider = StateProvider<bool>((ref) => false);

@@ -42,6 +42,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/features/evaluate/panel.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/console.dart';
@@ -177,7 +178,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
       const ExploreTabs(),
       const TransformTabs(),
       const ModelTabs(),
-      const Center(child: Text('COMING SOON: EVALUATION')),
+      const EvaluatePanel(),
       const RConsole(),
       const ScriptTab(),
       const DebugTab(),

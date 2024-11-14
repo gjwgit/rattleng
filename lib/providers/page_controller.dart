@@ -54,6 +54,10 @@ final correlationPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
 
+final evaluatePageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
 final testsPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
