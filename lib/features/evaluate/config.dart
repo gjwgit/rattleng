@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
@@ -41,294 +42,168 @@ class EvaluateConfig extends ConsumerStatefulWidget {
 }
 
 class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
+  final List<_ModelConfig> modelConfigs = [
+    _ModelConfig(
+      key: 'treeEvaluate',
+      label: 'Tree',
+      checkCommands: [
+        ['print(model_rpart)', 'printcp(model_rpart)'],
+        ['print(model_ctree)', 'summary(model_ctree)'],
+      ],
+      checkFiles: [
+        ['model_tree_rpart.svg'],
+        ['model_tree_ctree.svg'],
+      ],
+      provider: treeEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'boostEvaluate',
+      label: 'Boost',
+      checkCommands: [
+        ['print(model_ada)', 'summary(model_ada)'],
+        ['print(model_xgb)', 'summary(model_xgb)'],
+      ],
+      checkFiles: [
+        ['model_ada_boost.svg'],
+        ['model_xgb_importance.svg'],
+      ],
+      provider: boostEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'forestEvaluate',
+      label: 'Forest',
+      checkCommands: [
+        ['print(model_conditionalForest)', 'print(importance_df)'],
+        ['print(model_randomForest)', 'printRandomForests'],
+      ],
+      checkFiles: [
+        ['model_conditional_forest.svg'],
+        [
+          'model_random_forest_varimp.svg',
+          'model_random_forest_error_rate.svg',
+          'model_random_forest_oob_roc_curve.svg',
+        ]
+      ],
+      provider: forestEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'svmEvaluate',
+      label: 'SVM',
+      checkCommands: [
+        ['print(svm_model)'],
+      ],
+      checkFiles: [[]],
+      provider: svmEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'linearEvaluate',
+      label: 'Linear',
+      checkCommands: [
+        ['print(summary(model_glm))', 'print(anova(model_glm, test = "Chisq"))'],
+      ],
+      checkFiles: [
+        ['model_glm_diagnostic_plots.svg'],
+      ],
+      provider: linearEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'neuralNetEvaluate',
+      label: 'Neural Net',
+      checkCommands: [
+        ['print(model_neuralnet)', 'summary(model_neuralnet)'],
+        ['print(model_nn)', 'summary(model_nn)'],
+      ],
+      checkFiles: [
+        ['model_neuralnet.svg'],
+        ['model_nn_nnet.svg'],
+      ],
+      provider: neuralNetEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'KMeansEvaluate',
+      label: 'KMeans',
+      checkCommands: [
+        ['print(colMeans(tds))'],
+      ],
+      checkFiles: [
+        ['model_cluster_discriminant.svg'],
+      ],
+      provider: kMeansEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'HClustEvaluate',
+      label: 'HClust',
+      checkCommands: [
+        ['print("Within-Cluster Sum of Squares:")'],
+      ],
+      checkFiles: [
+        ['model_cluster_hierarchical.svg'],
+      ],
+      provider: hClusterEvaluateProvider,
+    ),
+  ];
+
+  bool _isEvaluationEnabled(_ModelConfig config) {
+    for (var i = 0; i < config.checkCommands.length; i++) {
+      if (checkFunctionExecuted(
+          ref, config.checkCommands[i], config.checkFiles[i],)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool treeEvaluateEnabled = checkFunctionExecuted(
-          ref,
-          [
-            'print(model_rpart)',
-            'printcp(model_rpart)',
-          ],
-          [
-            'model_tree_rpart.svg',
-          ],
-        ) ||
-        checkFunctionExecuted(
-          ref,
-          [
-            'print(model_ctree)',
-            'summary(model_ctree)',
-          ],
-          [
-            'model_tree_ctree.svg',
-          ],
-        );
-
-    bool boostEvaluateEnabled = checkFunctionExecuted(
-          ref,
-          ['print(model_ada)', 'summary(model_ada)'],
-          ['model_ada_boost.svg'],
-        ) ||
-        checkFunctionExecuted(
-          ref,
-          ['print(model_xgb)', 'summary(model_xgb)'],
-          ['model_xgb_importance.svg'],
-        );
-
-    bool forestEvaluateEnabled = checkFunctionExecuted(
-          ref,
-          ['print(model_conditionalForest)', 'print(importance_df)'],
-          ['model_conditional_forest.svg'],
-        ) ||
-        checkFunctionExecuted(
-          ref,
-          [
-            'print(model_randomForest)',
-            'printRandomForests',
-          ],
-          [
-            'model_random_forest_varimp.svg',
-            'model_random_forest_error_rate.svg',
-            'model_random_forest_oob_roc_curve.svg',
-          ],
-        );
-
-    bool svmEvaluateEnabled = checkFunctionExecuted(
-      ref,
-      [
-        'print(svm_model)',
-      ],
-      [],
-    );
-
-    bool linearEvaluateEnabled = checkFunctionExecuted(
-      ref,
-      [
-        'print(summary(model_glm))',
-        'print(anova(model_glm, test = "Chisq"))',
-      ],
-      ['model_glm_diagnostic_plots.svg'],
-    );
-
-    bool neuralEvaluateEnabled = checkFunctionExecuted(
-          ref,
-          ['print(model_neuralnet)', 'summary(model_neuralnet)'],
-          ['model_neuralnet.svg'],
-        ) ||
-        checkFunctionExecuted(
-          ref,
-          [
-            'print(model_nn)',
-            'summary(model_nn)',
-          ],
-          [
-            'model_nn_nnet.svg',
-          ],
-        );
-
-    bool kMeansEvaluateEnabled = checkFunctionExecuted(
-      ref,
-      [
-        'print(colMeans(tds))',
-      ],
-      ['model_cluster_discriminant.svg'],
-    );
-
-    bool hClustEvaluateEnabled = checkFunctionExecuted(
-      ref,
-      [
-        'print("Within-Cluster Sum of Squares:")',
-      ],
-      ['model_cluster_hierarchical.svg'],
-    );
-
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
         configBotGap,
-
         Row(
           children: [
-            // Space to the left of the configs.
-
             configLeftGap,
-
-            const Text(
-              'Model:',
-              style: normalTextStyle,
-            ),
-
-            LabelledCheckbox(
-              key: const Key('treeEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'Tree',
-              provider: treeEvaluateProvider,
-              enabled: treeEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(treeEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('boostEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'Boost',
-              provider: boostEvaluateProvider,
-              enabled: boostEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(boostEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('forestEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'Forest',
-              provider: forestEvaluateProvider,
-              enabled: forestEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(forestEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('svmEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'SVM',
-              provider: svmEvaluateProvider,
-              enabled: svmEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(svmEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('linearEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'Linear',
-              provider: linearEvaluateProvider,
-              enabled: linearEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(linearEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('neuralNetEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'Neural Net',
-              provider: neuralNetEvaluateProvider,
-              enabled: neuralEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(neuralNetEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('KMeansEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'KMeans',
-              provider: kMeansEvaluateProvider,
-              enabled: kMeansEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(kMeansEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
-
-            configWidgetGap,
-
-            LabelledCheckbox(
-              key: const Key('HClustEvaluate'),
-              tooltip: '''
-
-              
-
-              ''',
-              label: 'HClust',
-              provider: hClusterEvaluateProvider,
-              enabled: hClustEvaluateEnabled,
-              onSelected: (ticked) {
-                setState(() {
-                  if (ticked != null) {
-                    ref.read(hClusterEvaluateProvider.notifier).state = ticked;
-                  }
-                });
-              },
-            ),
+            const Text('Model:', style: normalTextStyle),
+            ...modelConfigs.map((config) {
+              bool enabled = _isEvaluationEnabled(config);
+              return Row(
+                children: [
+                  LabelledCheckbox(
+                    key: Key(config.key),
+                    tooltip: '',
+                    label: config.label,
+                    provider: config.provider,
+                    enabled: enabled,
+                    onSelected: (ticked) {
+                      setState(() {
+                        if (ticked != null) {
+                          ref.read(config.provider.notifier).state = ticked;
+                        }
+                      });
+                    },
+                  ),
+                  configWidgetGap,
+                ],
+              );
+            }).toList(),
           ],
         ),
-
         configRowGap,
       ],
     );
   }
+}
+
+class _ModelConfig {
+  final String key;
+  final String label;
+  final List<List<String>> checkCommands;
+  final List<List<String>> checkFiles;
+  final StateProvider<bool> provider;
+
+  const _ModelConfig({
+    required this.key,
+    required this.label,
+    required this.checkCommands,
+    required this.checkFiles,
+    required this.provider,
+  });
 }
