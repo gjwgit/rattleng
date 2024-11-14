@@ -1,4 +1,4 @@
-/// Widget to configure the EVALUATE tab: button.
+/// Widget to configure the EVALUATE tab.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Zheyuan Xu
 
 library;
 
@@ -33,10 +33,6 @@ import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
-/// The EVALUATE tab config currently consists of just a BUILD button.
-///
-/// This is a StatefulWidget to pass the ref across to the rSource.
-
 class EvaluateConfig extends ConsumerStatefulWidget {
   const EvaluateConfig({super.key});
 
@@ -45,20 +41,6 @@ class EvaluateConfig extends ConsumerStatefulWidget {
 }
 
 class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
-  final TextEditingController _treesController = TextEditingController();
-  final TextEditingController _variablesController = TextEditingController();
-  final TextEditingController _treeNoController = TextEditingController();
-
-  @override
-  void dispose() {
-    // Dispose the controllers to free up resources.
-
-    _treesController.dispose();
-    _variablesController.dispose();
-    _treeNoController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     bool treeEvaluateEnabled = checkFunctionExecuted(

@@ -29,18 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/temp_dir.dart';
-import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
-import 'package:rattle/r/extract.dart';
-import 'package:rattle/r/extract_forest.dart';
-import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/image_page.dart';
-import 'package:rattle/widgets/text_page.dart';
 
 /// The FOREST panel displays the instructions and then the build output.
 
@@ -57,149 +48,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     final pageController = ref.watch(
       evaluatePageControllerProvider,
     ); // Get the PageController from Riverpod
-    String stdout = ref.watch(stdoutProvider);
-    int forestNo = ref.watch(treeNoForestProvider);
-    AlgorithmType forestAlgorithm =
-        ref.watch(algorithmForestProvider.notifier).state;
 
     List<Widget> pages = [showMarkdownFile(forestIntroFile, context)];
-
-    String content = '';
-
-    ////////////////////////////////////////////////////////////////////////
-
-    if (forestAlgorithm == AlgorithmType.traditional) {
-      content = rExtractForest(stdout, ref);
-
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Random Forest Model\n\n'
-                'Built using `randomForest()`.\n\n',
-            content: '\n$content',
-          ),
-        );
-      }
-
-      ////////////////////////////////////////////////////////////////////////
-
-      content = rExtract(stdout, 'rn[order(rn[,3], decreasing=TRUE),]');
-
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Variable Importance\n\n'
-                'Built using `randomForest::importance()`.\n\n',
-            content: '\n$content',
-          ),
-        );
-      }
-
-      ////////////////////////////////////////////////////////////////////////
-
-      content = rExtract(
-        stdout,
-        'printRandomForests(model_randomForest, ${forestNo})',
-      );
-
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Sample Rules\n\n'
-                'Built using `rattle::printRandomForest()`.\n\n',
-            content: '\n$content',
-          ),
-        );
-      }
-
-      ////////////////////////////////////////////////////////////////////////
-
-      String image = '$tempDir/model_random_forest_varimp.svg';
-
-      if (imageExists(image)) {
-        pages.add(
-          ImagePage(
-            title: 'VAR IMPORTANCE',
-            path: image,
-          ),
-        );
-      }
-
-      String errorRatesImage = '$tempDir/model_random_forest_error_rate.svg';
-
-      if (imageExists(errorRatesImage)) {
-        pages.add(
-          ImagePage(
-            title: 'ERROR RATE',
-            path: errorRatesImage,
-          ),
-        );
-      }
-
-      String oobRocImage = '$tempDir/model_random_forest_oob_roc_curve.svg';
-
-      if (imageExists(oobRocImage)) {
-        pages.add(
-          ImagePage(
-            title: 'OOB ROC Curve',
-            path: oobRocImage,
-          ),
-        );
-      }
-    } else if (forestAlgorithm == AlgorithmType.conditional) {
-      content = rExtractForest(stdout, ref);
-
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Random Forest Model\n\n'
-                'Built using `cforest()`.\n\n',
-            content: '\n$content',
-          ),
-        );
-      }
-
-      content = rExtract(
-        stdout,
-        'print(importance_df)',
-      );
-
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Variable Importance\n\n'
-                'Built using `verification::cforest()`.\n\n',
-            content: '\n$content',
-          ),
-        );
-      }
-
-      String rulesContent = rExtract(
-        stdout,
-        'prettytree(model_conditionalForest@ensemble[[${forestNo}]], names(model_conditionalForest@data@get("input")))',
-      );
-
-      if (rulesContent.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Sample Rules\n\n'
-                'Built using `party::prettytree()`.\n\n',
-            content: '\n$rulesContent',
-          ),
-        );
-      }
-
-      String varImportanceImage = '$tempDir/model_conditional_forest.svg';
-
-      if (imageExists(varImportanceImage)) {
-        pages.add(
-          ImagePage(
-            title: 'VAR IMPORTANCE',
-            path: varImportanceImage,
-          ),
-        );
-      }
-    }
 
     return PageViewer(
       pageController: pageController,
