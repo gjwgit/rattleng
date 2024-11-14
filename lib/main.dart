@@ -42,9 +42,16 @@ Future<bool> checkRInstallation() async {
 
   try {
     final result = await Process.run('R', ['--version']);
-    print("R version: ${result.stdout}");
-    print("result.exitCode: ${result}");
-    return result.exitCode == 0;
+
+    // Check if "R version" is present in the output.
+
+    if (result.exitCode == 0 && result.stdout.contains('R version')) {
+      print("R version: ${result.stdout}");
+      return true;
+    } else {
+      print("R command executed but did not return expected output.");
+      return false;
+    }
   } catch (e) {
     // R is not installed or not in PATH.
 
@@ -52,16 +59,14 @@ Future<bool> checkRInstallation() async {
   }
 }
 
-void showErrorAndExit(BuildContext context) {
+void showErrorAndExit(BuildContext context, String message) {
   // Show an error popup if R is not installed and then exit the app.
 
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
       title: const Text('Error'),
-      content: const Text(
-        'R is not installed or not in the system PATH. Please install it before using Rattle.',
-      ),
+      content: Text(message),
       actions: [
         TextButton(
           onPressed: () => exit(0),
@@ -74,17 +79,27 @@ void showErrorAndExit(BuildContext context) {
 
 void main() async {
   // The `main` entry point into any dart app.
+  //
   // This is required to be [async] since we use [await] below to initalise the window manager.
 
   WidgetsFlutterBinding.ensureInitialized();
 
   bool isRInstalled = await checkRInstallation();
+
+  // If R is not installed, show an error and exit the app.
+
   if (!isRInstalled) {
     runApp(
       MaterialApp(
         home: Builder(
           builder: (context) {
-            Future.delayed(Duration.zero, () => showErrorAndExit(context));
+            Future.delayed(
+              Duration.zero,
+              () => showErrorAndExit(
+                context,
+                'R is not installed or not in the system PATH. Please install it before using Rattle.',
+              ),
+            );
             return Scaffold();
           },
         ),
@@ -102,6 +117,7 @@ void main() async {
   }
 
   // Tune the window manager before runApp() to avoid a lag in the UI.
+  //
   // For desktop (non-web) versions re-size to a comfortable initial window.
 
   if (isDesktop) {
@@ -112,12 +128,14 @@ void main() async {
     WindowOptions windowOptions = const WindowOptions(
       // Setting [alwaysOnTop] here will ensure the desktop app starts on top of
       // other apps on the desktop so that it is visible.
+      //
       // We later turn it off as we don't want to force it always on top.
 
       alwaysOnTop: true,
 
       // We can override the size in the first instance by, for example in
       // Linux, editing linux/my_application.cc.
+      //
       // Setting it here has effect when Restarting the app while debugging.
 
       // However, since Windows has 1280x720 by default in the windows-specific
@@ -157,6 +175,7 @@ void main() async {
 
   // The runApp() function takes the given Widget and makes it the root of the
   // widget tree.
+  //
   // Here we wrap the app within RiverPod's ProviderScope() to support state
   // management.
   //
@@ -169,6 +188,7 @@ void main() async {
       // the close dialog, since it needs a MaterialLocalizations to be in the
       // parentage which MaterialApp ensures, and it makes sense for it to be
       // the root.
+
       child: MaterialApp(
         theme: ThemeData(
           // Material 3 is the current (2024) flutter default theme for colours
@@ -178,10 +198,13 @@ void main() async {
           // We could turn the new material theme off to get the older look.
           //
           // useMaterial3: false,
+
           colorScheme: ColorScheme.fromSeed(
             seedColor: flavor.mantle,
           ),
+
           // primarySwatch: createMaterialColor(Colors.black),
+
           // The default font size seems rather small. So increase it here.
           // textTheme: Theme.of(context).textTheme.apply(
           //       fontSizeFactor: 1.1,
