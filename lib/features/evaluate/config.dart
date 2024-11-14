@@ -1,6 +1,6 @@
 /// Widget to configure the EVALUATE tab.
 ///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
