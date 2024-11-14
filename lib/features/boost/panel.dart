@@ -1,6 +1,6 @@
 /// BOOST tab made up of config and panel widgets.
 //
-// Time-stamp: <Friday 2024-06-14 09:52:51 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-15 10:06:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,11 +25,9 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
-import 'package:rattle/constants/spacing.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/boost/config.dart';
 import 'package:rattle/features/boost/display.dart';
 

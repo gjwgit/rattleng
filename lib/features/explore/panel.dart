@@ -1,6 +1,6 @@
 /// SVM tab made up of config and panel widgets.
 //
-// Time-stamp: <Friday 2024-07-19 09:34:36 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-15 09:59:52 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,7 +28,6 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
-import 'package:rattle/constants/spacing.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/utils/show_markdown_file.dart';

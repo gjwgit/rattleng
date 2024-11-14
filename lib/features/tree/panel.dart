@@ -1,6 +1,6 @@
 /// TREE tab
 //
-// Time-stamp: <Friday 2024-11-15 09:41:33 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-15 10:00:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,7 +28,6 @@ library;
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
-import 'package:rattle/constants/spacing.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/tree/display.dart';
