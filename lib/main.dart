@@ -30,6 +30,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
@@ -77,7 +78,7 @@ void showErrorAndExit(BuildContext context, String message) {
   );
 }
 
-void main() async {
+Future<void> main() async {
   // The `main` entry point into any dart app.
   //
   // This is required to be [async] since we use [await] below to initalise the window manager.
@@ -107,6 +108,24 @@ void main() async {
     );
     return;
   }
+  runApp(
+    ProviderScope(
+      child: Consumer(
+        builder: (context, ref, child) {
+          String stdout = ref.watch(stdoutProvider);
+          print(stdout);
+          return MaterialApp(
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: catppuccin.latte.mantle,
+              ),
+            ),
+            home: const RattleApp(),
+          );
+        },
+      ),
+    ),
+  );
 
   // In production do not display [debugPrint] messages.
 
