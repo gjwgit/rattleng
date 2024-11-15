@@ -46,13 +46,15 @@ Future<bool> checkRInstallation() async {
 
     // Check if "R version" is present in the output.
 
-    if (result.exitCode == 0 && result.stdout.contains('R version')) {
+    if (result.exitCode == 0) {
       print("R version: ${result.stdout}");
       return true;
     } else {
       print(result.exitCode == 0);
       print(result.stdout.contains('R version'));
+      print(result.stdout);
       print("R command executed but did not return expected output.");
+
       return false;
     }
   } catch (e) {
