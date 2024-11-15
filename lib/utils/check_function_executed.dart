@@ -1,6 +1,6 @@
-/// SVM tab made up of config and panel widgets.
+/// Check if the function has been executed.
 //
-// Time-stamp: <Friday 2024-11-15 10:00:20 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-10-25 08:27:46 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,27 +21,34 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Zheyuan Xu
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:flutter/material.dart';
+import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/utils/image_exists.dart';
 
-import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+bool checkFunctionExecuted(
+  WidgetRef ref,
+  List checkCommands,
+  List checkImages,
+) {
+  String stdout = ref.watch(stdoutProvider);
 
-/// The SVM feature supports Svm rule analysis.
-
-class TransformPanel extends StatelessWidget {
-  const TransformPanel({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // As per the RattleNG pattern, a Tab consists of a Config bar and the
-    // results Display().
-
-    return showMarkdownFile(transformIntroFile, context);
+  for (String item in checkCommands) {
+    if (!stdout.contains(item)) {
+      return false;
+    }
   }
+  for (String imagePath in checkImages) {
+    String image = '$tempDir/$imagePath';
+    if (!imageExists(image)) {
+      return false;
+    }
+  }
+
+  return true;
 }

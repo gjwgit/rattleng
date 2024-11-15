@@ -54,6 +54,10 @@ const String correlationIntroFile = '$assetsPath/markdown/correlation.md';
 
 const String exploreIntroFile = '$assetsPath/markdown/explore.md';
 
+/// EVALUATE tab markdown file welcome message.
+
+const String evaluateIntroFile = '$assetsPath/markdown/evaluate.md';
+
 /// FOREST tab markdown file welcome message.
 
 const String forestIntroFile = '$assetsPath/markdown/forest.md';

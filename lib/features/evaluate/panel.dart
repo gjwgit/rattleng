@@ -1,6 +1,6 @@
-/// CLUSTER Tab entry into config and panel.
+/// EVALUATE Tab
 //
-// Time-stamp: <Friday 2024-06-14 09:53:31 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-15 09:59:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,33 +21,28 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Zheyuan Xu
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/features/evaluate/config.dart';
+import 'package:rattle/features/evaluate/display.dart';
 
-import 'package:rattle/features/cluster/config.dart';
-import 'package:rattle/features/cluster/display.dart';
-
-/// The CLUSTER tab supports building decision tree models.
-
-class ClusterPanel extends StatelessWidget {
-  const ClusterPanel({super.key});
+class EvaluatePanel extends StatelessWidget {
+  const EvaluatePanel({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // As per the RattleNG pattern, a Tab consists of a Config bar and the
+    // A per the RattleNG pattern, a Tab consists of a Config bar and the
     // results Display().
 
     return const Scaffold(
       body: Column(
         children: [
-          ClusterConfig(),
+          EvaluateConfig(),
 
           // Add a little space blow the config widgets so that things like any
           // underline is not lost not buttons,looking chopped off. We include
@@ -60,7 +55,7 @@ class ClusterPanel extends StatelessWidget {
           // remaining space to introduce this particular tab's functionality
           // which is then replaced with the output of the build.
 
-          Expanded(child: ClusterDisplay()),
+          Expanded(child: EvaluateDisplay()),
         ],
       ),
     );
