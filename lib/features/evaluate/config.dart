@@ -31,7 +31,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
+import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
+import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class EvaluateConfig extends ConsumerStatefulWidget {
@@ -167,6 +170,25 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         configBotGap,
         Row(
           children: [
+            configLeftGap,
+            ActivityButton(
+              pageControllerProvider: evaluatePageControllerProvider,
+              onPressed: () async {
+                await rSource(
+                  context,
+                  ref,
+                  ['model_build_evaluate'],
+                );
+
+                await ref.read(evaluatePageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+              },
+              child: const Text('Execute'),
+            ),
             configLeftGap,
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {

@@ -1,6 +1,6 @@
-# Rattle Scripts: From dataset ds build a conditional inference tree.
+# Rattle Scripts: Evaluate executed models.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -22,44 +22,28 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Zheyuan Xu
 
-# Load required packages for conditional inference trees
+if(TREE_EXECUTED_EVALUATE){
+  trds$pr <- predict(model_rpart, newdata=trds, type="class")
 
-library(party)       # Conditional inference trees
-library(partykit)    # Enhanced visualization and interpretation
+  # Generate the confusion matrix showing counts.
 
-# Define model type and description
-mtype <- "ctree"
-mdesc <- "Conditional Inference Tree"
+  print('Error matrix for the Decision Tree model (counts)')
 
-# Determine what type of model to build based on the number of values of the target variable
-# Not needed for ctree as it automatically handles the data type
+  print(rattle::errorMatrix(trds[[target]], trds$pr, count=TRUE))
 
-# Define the formula for the model
+  # Generate the confusion matrix showing proportions.
 
-# TODO 20240930 gjw SHOULDN'T THIS BE FRO `model_template.r`
+  print('Error matrix for the Decision Tree model (proportions)')
 
-form <- as.formula(paste(target, "~ ."))
+  print(per <- rattle::errorMatrix(trds[[target]], trds$pr))
 
-control <- ctree_control(
-  MINSPLIT, MINBUCKET, MAXDEPTH
-)
+  # Calculate the overall error percentage.
 
-# Train a Conditional Inference Tree model using ctree
-model_ctree <- ctree(
-  formula   = form,
-  data      = ds[tr, vars],
-  na.action = na.exclude,
-  control   = control
-)
+  cat(100-sum(diag(per), na.rm=TRUE))
 
-# Generate a textual view of the Conditional Inference Tree model
-print(model_ctree)
-summary(model_ctree)
-cat("\n")
+  # Calculate the averaged class error percentage.
 
-# Plot the resulting Conditional Inference Tree
-svg("TEMPDIR/model_tree_ctree.svg")
-plot(model_ctree, main = paste("Conditional Inference Tree", target))
-dev.off()
+  cat(mean(per[,"Error"], na.rm=TRUE))
+}
