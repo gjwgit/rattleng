@@ -31,13 +31,17 @@ if(TREE_EXECUTED_EVALUATE){
 
   print('Error matrix for the Decision Tree model (counts)')
 
-  print(rattle::errorMatrix(trds[[target]], trds$pr, count=TRUE))
+  cem <- rattle::errorMatrix(trds[[target]], trds$pr, count=TRUE)
+
+  print(cem)
 
   # Generate the confusion matrix showing proportions.
 
   print('Error matrix for the Decision Tree model (proportions)')
 
-  print(per <- rattle::errorMatrix(trds[[target]], trds$pr))
+  per <- rattle::errorMatrix(trds[[target]], trds$pr)
+
+  print(per)
 
   # Calculate the overall error percentage.
 

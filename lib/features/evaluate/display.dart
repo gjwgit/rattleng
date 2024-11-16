@@ -30,8 +30,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract_evaluate.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/page_viewer.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The EVALUATE panel displays the instructions and then the build output.
 
@@ -49,7 +52,22 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       evaluatePageControllerProvider,
     ); // Get the PageController from Riverpod
 
+    String stdout = ref.watch(stdoutProvider);
+
     List<Widget> pages = [showMarkdownFile(evaluateIntroFile, context)];
+
+    String content = '';
+
+    content = rExtractEvaluate(stdout, 'Tree', ref);
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Error Matrix\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
 
     return PageViewer(
       pageController: pageController,
