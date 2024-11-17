@@ -24,6 +24,9 @@
 #
 # Author: Zheyuan Xu
 
+library(hmeasure)
+
+
 if(TREE_EXECUTED_EVALUATE){
   trds$pr <- predict(model_rpart, newdata=trds, type="class")
 
@@ -50,4 +53,26 @@ if(TREE_EXECUTED_EVALUATE){
   # Calculate the averaged class error percentage.
 
   cat(mean(per[,"Error"], na.rm=TRUE))
+
+  # Handle Target Variable Encoding.
+
+  target_levels <- unique(trds[[target]])
+  target_levels <- target_levels[!is.na(target_levels)]  # Remove NA if present
+
+  
+  # Get predicted probabilities for the positive class.
+
+  predicted_probs <- predict(model_rpart, newdata = trds, type = "prob")[,2]
+
+  actual_labels <- ifelse(trds[[target]] == target_levels[1], 0, 1)
+
+  # Evaluate the model using HMeasure.
+
+  results <- HMeasure(true.class = actual_labels, scores = predicted_probs)
+  
+  svg("TEMPDIR/model_evaluate_hand.svg")
+
+  plotROC(results)
+
+  dev.off()
 }

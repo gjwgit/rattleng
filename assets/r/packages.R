@@ -92,6 +92,7 @@ pkgs <- c(
   'descr',
   'fBasics',
   'ggthemes',
+  'hmeasure',
   'janitor',
   'lubridate',
   'magrittr',
