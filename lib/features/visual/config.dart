@@ -121,6 +121,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
                     ''',
         );
+
         return;
       }
 
