@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-11-14 07:50:02 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-11-19 08:38:44 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -364,12 +364,12 @@ Xu, Yixiang Yin, Bo Zhang.
                   title: 'Install R Packages',
                   content: '''
 
-                  Rattle is now checking each of the requisite R packages and if
-                  not available on your local installation it will be downloaded
-                  and installed. This can take some time (five or more minutes)
-                  depending on how many packages need to be instaleld. Please
-                  check the CONSOLE tab to monitor progress. Type Ctrl-C in the
-                  CONSOLE to abort.
+                  Rattle is now checking each of the requisite **R Packages**
+                  and if not available on your local installation it will be
+                  downloaded and installed. This can take some time (**five
+                  minutes** or more) depending on how many packages need to be
+                  installed. Please check the **CONSOLE** tab to monitor
+                  progress. Type *Ctrl-C* in the **CONSOLE** to abort.
 
                   ''',
                 );

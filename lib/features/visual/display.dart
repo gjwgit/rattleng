@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-09-07 06:39:56 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-11-19 09:24:25 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -189,27 +189,6 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       ////////////////////////////////////////////////////////////////////////
 
-      image = '$tempDir/explore_visual_dots.svg';
-
-      if (imageExists(image)) {
-        pages.add(
-          ImagePage(
-            title: '''
-
-          # Dot Plot
-
-          Visit the [Survival
-          Guide](https://survivor.togaware.com/datascience/dot-plot.html) and
-          [graphics::dotchart()](https://www.rdocumentation.org/packages/graphics/topics/dotchart).
-
-          ''',
-            path: image,
-          ),
-        );
-      }
-
-      ////////////////////////////////////////////////////////////////////////
-
       image = '$tempDir/explore_visual_mosaic.svg';
 
       if (imageExists(image)) {
@@ -222,6 +201,27 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/mosaic-plot.html) and
           [graphics::mosaicplot()](https://www.rdocumentation.org/packages/graphics/topics/mosaicplot).
+
+          ''',
+            path: image,
+          ),
+        );
+      }
+
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_dots.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
+
+          # Dot Plot
+
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/dot-plot.html) and
+          [graphics::dotchart()](https://www.rdocumentation.org/packages/graphics/topics/dotchart).
 
           ''',
             path: image,
