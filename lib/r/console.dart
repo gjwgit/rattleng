@@ -25,8 +25,11 @@
 
 library;
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rattle/providers/stdout.dart';
 
 import 'package:xterm/xterm.dart';
 
@@ -89,6 +92,39 @@ class _RConsoleState extends ConsumerState<RConsole> {
   Widget build(BuildContext context) {
     // Retrieve the Terminal instance from the provider.
     final terminal = ref.watch(terminalProvider);
+
+    String stdout = ref.watch(stdoutProvider);
+
+    // wait for 3 seconds and then show popup if R is not started.
+
+    Future.delayed(Duration(seconds: 3), () {
+      if (stdout.contains('R version')) {
+        final rVersion =
+            RegExp(r'R version ([\d\.]+)').firstMatch(stdout)?.group(1) ??
+                'Unknown Version';
+
+        if (rVersion == 'Unknown Version') {
+          Future.delayed(
+            Duration(seconds: 3),
+            () => showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('R Version Error'),
+                content: const Text(
+                  'R was not started. Please check the Console tab for errors. Do not exit but we will not be able to do anything else.',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      }
+    });
 
     return Scaffold(
       body: SafeArea(

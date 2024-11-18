@@ -30,7 +30,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
@@ -110,55 +109,6 @@ Future<void> main() async {
     ProviderScope(
       child: Consumer(
         builder: (context, ref, child) {
-          String stdout = ref.watch(stdoutProvider);
-          print("stdout: $stdout");
-
-          // Extract R version from stdout and show it in a popup window.
-
-          if (stdout.contains('R version')) {
-            final rVersion =
-                RegExp(r'R version ([\d\.]+)').firstMatch(stdout)?.group(1) ??
-                    'Unknown Version';
-
-            Future.delayed(
-              Duration.zero,
-              () => showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('R Version Detected'),
-                  content: Text(
-                      'R version $rVersion has been successfully detected.'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('OK'),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          } else {
-            // Handle cases where R version is not found in stdout.
-
-            Future.delayed(
-              Duration.zero,
-              () => showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('R Version Error'),
-                  content: const Text(
-                      'Could not detect R version. Please check your installation.'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('OK'),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-
           return MaterialApp(
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
