@@ -30,6 +30,9 @@ conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
 
 if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
+    echo 'Uploads are going to ${DEST}.'
+    echo
+
     # Determine the latest version from pubspec.yaml. Assumes the
     # latest Bump Version push is the same version.
     
