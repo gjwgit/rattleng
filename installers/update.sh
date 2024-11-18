@@ -57,6 +57,8 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     gh run download ${bumpId} --name ${APP}-windows-zip
     rsync -avzh ${APP}-dev-windows.zip ${DEST}
     mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}-${version}-windows.zip
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
+
     
     echo ""
 
@@ -65,7 +67,6 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     gh run download ${bumpId} --name ${APP}-macos-zip
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
     mv ${APP}-dev-macos.zip ARCHIVE/${APP}-${version}-macos.zip
-
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
     
 else
