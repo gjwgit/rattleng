@@ -38,7 +38,7 @@ The right-hand plot of the **Visual** presentation records combination
 of missing values across different variables, again showing the
 proportion of missing values in each pattern.
 
-## Missing data can result in:
+## Missing data can result in
 
 + Bias and Misguided Conclusions: Missing data can introduce bias,
   leading to incorrect conclusions. If not handled properly, it may
