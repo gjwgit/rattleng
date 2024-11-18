@@ -1,6 +1,6 @@
 # Cleanup the Dataset
 
-It is quite easy to get our dataset variable count up to significant
+It is quite easy to get the dataset variable count up to significant
 numbers through the use of the **Transform** tab features **Impute**,
 **Rescale**, and **Recode**. The **Cleanup** option supports the
 deletion of rows (observations) and columns (variables) from the

@@ -28,4 +28,4 @@ classifier.
 
 R's
 [randomForest](https://www.rdocumentation.org/packages/randomForest)
-package is used to build our Random Forests.
+package is used to build Random Forests.
