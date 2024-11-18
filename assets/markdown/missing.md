@@ -8,7 +8,7 @@ analyses.
 The missing data analysis performed here presents both textual and
 visual analyses.
 
-**Pattern of Missing Data**
+## Pattern of Missing Data
 
 For both the **Textual** and **Visual** presentation of the pattern of
 missing data (the first pair of pages) each row represents a unique
@@ -26,7 +26,7 @@ missing values together.
 The final row shows the number of observations of each of the
 variables in the dataset having missing values.
 
-**Aggregation of Missing Values**
+**Aggregation of Missing Values
 
 The aggregation analysis (second pair of pages) simply reports on the
 proportion of values missing (rather than the count).
@@ -38,7 +38,7 @@ The right-hand plot of the **Visual** presentation records combination
 of missing values across different variables, again showing the
 proportion of missing values in each pattern.
 
-**Missing data can result in:**
+## Missing data can result in:
 
 + Bias and Misguided Conclusions: Missing data can introduce bias,
   leading to incorrect conclusions. If not handled properly, it may
