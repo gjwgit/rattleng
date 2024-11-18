@@ -45,11 +45,7 @@ Future<bool> checkRInstallation() async {
 
     // Check if "R version" is present in the output.
 
-    if (result.exitCode == 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return result.exitCode == 0;
   } catch (e) {
     // R is not installed or not in PATH.
 
@@ -98,11 +94,13 @@ Future<void> main() async {
                 'R is not installed or not in the system PATH. Please install it before using Rattle.',
               ),
             );
+
             return Scaffold();
           },
         ),
       ),
     );
+
     return;
   }
   runApp(
