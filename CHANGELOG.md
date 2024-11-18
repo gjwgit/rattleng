@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Add Sherlock dataset for Word Cloud demo [6.3.21 20241118 gjw]
 + ROLES selection in table [6.3.20 20241113 kev]
 + FOREST and SVM implementation [6.3.20 20241113 zy]
 + ASSOCIATE implementation [6.3.19 20241102 zy]
