@@ -26,7 +26,7 @@ missing values together.
 The final row shows the number of observations of each of the
 variables in the dataset having missing values.
 
-**Aggregation of Missing Values
+## Aggregation of Missing Values
 
 The aggregation analysis (second pair of pages) simply reports on the
 proportion of values missing (rather than the count).
