@@ -94,7 +94,9 @@ Future<void> main() async {
                 context,
                 '''
 
-                R is **not installed** or it was not found in the **PATH** environment variable. Please install R and ensure it is in the PATH before using Rattle. See the [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) for details.
+                R is **not installed** or it was not found in the **PATH** environment variable. 
+                Please install R and ensure it is in the PATH before using Rattle. 
+                See the [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) for details.
 
                 ''',
               ),
