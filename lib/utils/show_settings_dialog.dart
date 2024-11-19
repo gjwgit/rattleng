@@ -261,7 +261,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       runSpacing: 8.0,
                       children: themeOptions.map((option) {
                         return MarkdownTooltip(
-                          message: option['tooltip']!, // Tooltip for each chip
+                          message: option['tooltip']!, // Tooltip for each chip.
+
                           child: ChoiceChip(
                             label: Text(option['label']!),
                             selected: _selectedTheme == option['value'],
@@ -269,30 +270,20 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               setState(() {
                                 _selectedTheme = option['value'];
                               });
+
+                              // Automatically update the theme in Riverpod.
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
                             },
                           ),
                         );
                       }).toList(),
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Save the selected theme to the Riverpod provider
-                            if (_selectedTheme != null) {
-                              ref
-                                  .read(settingsGraphicThemeProvider.notifier)
-                                  .setGraphicTheme(_selectedTheme!);
-                              rSource(context, ref, ['settings']);
-                            }
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('USE'),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
