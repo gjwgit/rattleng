@@ -44,7 +44,7 @@ jobs:
         with:
           node-version: 18
       - run: npm install -g markdownlint-cli
-      - run: markdownlint --disable MD032 -- assets/markdown
+      - run: markdownlint --disable MD036 -- assets/markdown
         # -p .markdownlintignore -c .markdownlint.yaml
 
   dcm:
