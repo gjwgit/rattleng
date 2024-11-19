@@ -29,6 +29,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -59,8 +60,8 @@ void showErrorAndExit(BuildContext context, String message) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Error'),
-      content: Text(message),
+      title: Text('Error'),
+      content: MarkdownBody(data: message),
       actions: [
         TextButton(
           onPressed: () => exit(0),
@@ -91,7 +92,11 @@ Future<void> main() async {
               Duration.zero,
               () => showErrorAndExit(
                 context,
-                'R is not installed or not in the system PATH. Please install it before using Rattle.',
+                '''
+
+                R is not installed or not in the system PATH. Please install it before using Rattle.
+
+                ''',
               ),
             );
 
@@ -103,22 +108,6 @@ Future<void> main() async {
 
     return;
   }
-  runApp(
-    ProviderScope(
-      child: Consumer(
-        builder: (context, ref, child) {
-          return MaterialApp(
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: catppuccin.latte.mantle,
-              ),
-            ),
-            home: const RattleApp(),
-          );
-        },
-      ),
-    ),
-  );
 
   // In production do not display [debugPrint] messages.
 

@@ -27,7 +27,9 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/utils/show_ok.dart';
 
 import 'package:xterm/xterm.dart';
 
@@ -104,20 +106,16 @@ class _RConsoleState extends ConsumerState<RConsole> {
         if (rVersion == 'Unknown Version') {
           Future.delayed(
             Duration(seconds: 3),
-            () => showDialog(
+            () => showOk(
               context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('R Version Error'),
-                content: const Text(
-                  'R was not started. Please check the Console tab for errors. Do not exit but we will not be able to do anything else.',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('OK'),
-                  ),
-                ],
-              ),
+              title: 'R Version Error',
+              content: '''
+
+              R was not started. Please check the **Console** tab for errors.
+
+              Do not exit, but we will not be able to do anything else.
+              
+              ''',
             ),
           );
         }
