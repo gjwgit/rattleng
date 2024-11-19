@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Friday 2024-11-01 09:10:12 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-11-19 11:33:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -94,7 +94,7 @@ Future<void> main() async {
                 context,
                 '''
 
-                R is not installed or not in the system PATH. Please install it before using Rattle.
+                R is **not installed** or it was not found in the **PATH** environment variable. Please install R and ensure it is in the PATH before using Rattle. See the [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) for details.',
 
                 ''',
               ),
