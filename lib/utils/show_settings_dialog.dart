@@ -214,34 +214,36 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   @override
   void initState() {
     super.initState();
-    // Get the current theme from the Riverpod provider
+
+    // Get the current theme from the Riverpod provider.
+
     _selectedTheme = ref.read(settingsGraphicThemeProvider);
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size; // Get screen size
+    final Size size = MediaQuery.of(context).size; // Get screen size.
 
     return Material(
-      color: Colors.transparent, // Set the material color to transparent
+      color: Colors.transparent, // Set the material color to transparent.
       child: Padding(
         padding: const EdgeInsets.all(
           40.0,
-        ), // Add padding to create the border effect
+        ), // Add padding to create the border effect.
         child: Stack(
           children: [
             Container(
-              width: size.width, // Full screen width
-              height: size.height, // Full screen height
+              width: size.width, // Full screen width.
+              height: size.height, // Full screen height.
 
               decoration: BoxDecoration(
-                color: Colors.white, // Dialog background color
-                borderRadius: BorderRadius.circular(15), // Rounded corners
+                color: Colors.white, // Dialog background color.
+                borderRadius: BorderRadius.circular(15), // Rounded corners.
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.3),
                     blurRadius: 10,
-                    offset: const Offset(0, 5), // Shadow for elevation
+                    offset: const Offset(0, 5), // Shadow for elevation.
                   ),
                 ],
               ),
@@ -284,11 +286,30 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       }).toList(),
                     ),
                     const SizedBox(height: 20),
+
+                    // Add the RESTORE button to reset to factory default theme.
+
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _selectedTheme = 'theme_rattle'; // Factory default.
+                        });
+
+                        // Update the Riverpod provider with the default theme.
+
+                        ref
+                            .read(settingsGraphicThemeProvider.notifier)
+                            .setGraphicTheme(_selectedTheme!);
+
+                        rSource(context, ref, ['settings']);
+                      },
+                      child: const Text('RESTORE'),
+                    ),
                   ],
                 ),
               ),
             ),
-            // Positioned Cancel button at the top right
+            // Positioned Cancel button at the top right.
             Positioned(
               top: 16,
               right: 16,
