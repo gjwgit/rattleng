@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Tuesday 2024-10-15 17:06:22 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-11-19 11:58:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,12 +43,12 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Base',
-    'value': 'theme_base',
+    'value': 'ggthemes::theme_base',
     'tooltip': "A theme based on R's Base plotting system.",
   },
   {
     'label': 'Black and White',
-    'value': 'theme_bw',
+    'value': 'ggplot2::theme_bw',
     'tooltip': '''
 
         A theme with a white background and black grid lines, often used for
@@ -58,12 +58,12 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Calc',
-    'value': 'theme_calc',
+    'value': 'ggthemes::theme_calc',
     'tooltip': 'A theme based on the Calc spreadsheet.',
   },
   {
     'label': 'Classic',
-    'value': 'theme_classic',
+    'value': 'ggplot2::theme_classic',
     'tooltip': '''
 
         A theme resembling base R graphics, with a white background and no
@@ -73,7 +73,7 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Dark',
-    'value': 'theme_dark',
+    'value': 'ggplot2::theme_dark',
     'tooltip': '''
 
         A theme with a dark background and white grid lines, useful for dark
@@ -83,89 +83,89 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Economist',
-    'value': 'theme_economist',
+    'value': 'ggthemes::theme_economist',
     'tooltip': 'A theme inspired by The Economist journal.',
   },
   {
     'label': 'Excel',
-    'value': 'theme_excel',
+    'value': 'ggthemes::theme_excel',
     'tooltip': 'A theme inspired by the Excel spreadsheet.',
   },
   {
     'label': 'Few',
-    'value': 'theme_few',
+    'value': 'ggthemes::theme_few',
     'tooltip': "A theme based on Few's work.",
   },
   {
     'label': 'Fivethirtyeight',
-    'value': 'theme_fivethirtyeight',
+    'value': 'ggthemes::theme_fivethirtyeight',
     'tooltip': 'A theme inspired by the FiveThirtyEight website.',
   },
   {
     'label': 'Foundation',
-    'value': 'theme_foundation',
+    'value': 'ggthemes::theme_foundation',
     'tooltip': "A theme based on Zurb's Foundation.",
   },
   {
     'label': 'Gdocs',
-    'value': 'theme_gdocs',
+    'value': 'ggthemes::theme_gdocs',
     'tooltip': 'A theme inspired by Google Docs.',
   },
   {
     'label': 'Grey',
-    'value': 'theme_grey',
+    'value': 'ggplot2::theme_grey',
     'tooltip': 'The default theme of ggplot2, with a grey background.',
   },
   {
     'label': 'Highcharts',
-    'value': 'theme_hc',
+    'value': 'ggthemes::theme_hc',
     'tooltip': 'A theme inspired by Highcharts.',
   },
   {
     'label': 'IGray',
-    'value': 'theme_igray',
+    'value': 'ggthemes::theme_igray',
     'tooltip': 'A minimalist grayscale theme.',
   },
   {
     'label': 'Light',
-    'value': 'theme_light',
+    'value': 'ggplot2::theme_light',
     'tooltip': 'A theme with a light grey background and white grid lines.',
   },
   {
     'label': 'Linedraw',
-    'value': 'theme_linedraw',
+    'value': 'ggplot2::theme_linedraw',
     'tooltip':
         'A theme with black and white line drawings, without color shading.',
   },
   {
     'label': 'Minimal',
-    'value': 'theme_minimal',
+    'value': 'ggplot2::theme_minimal',
     'tooltip':
         'A minimalistic theme with no background annotations and grid lines.',
   },
   {
     'label': 'Pander',
-    'value': 'theme_pander',
+    'value': 'ggthemes::theme_pander',
     'tooltip': "A theme inspired by Pandoc's pander package.",
   },
   {
     'label': 'Solarized',
-    'value': 'theme_solarized',
+    'value': 'ggthemes::theme_solarized',
     'tooltip': 'a theme based on the Solarized color scheme.',
   },
   {
     'label': 'Stata',
-    'value': 'theme_stata',
+    'value': 'ggthemes::theme_stata',
     'tooltip': 'A theme inspired by the Stata software.',
   },
   {
     'label': 'Tufte',
-    'value': 'theme_tufte',
+    'value': 'ggthemes::theme_tufte',
     'tooltip': 'A theme inspired by Edward Tufte.',
   },
   {
     'label': 'Void',
-    'value': 'theme_void',
+    'value': 'ggplot2::theme_void',
     'tooltip': '''
 
         A completely blank theme, useful for creating annotations or background-less plots
@@ -174,7 +174,7 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Wall Street Journal',
-    'value': 'theme_wsj',
+    'value': 'ggthemes::theme_wsj',
     'tooltip': 'A theme inspired by the Wall Street Journal.',
   },
 ];
