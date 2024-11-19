@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Friday 2024-11-01 09:10:12 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-11-19 11:32:44 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -41,8 +41,9 @@ Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
   try {
-    final result = await Process.run('R', ['--version']);
-
+    print('Check R exit code');
+    final result = await Process.run('jjkk', ['--version']);
+    print('R exit code is ${result.exitCode}');
     // Check if "R version" is present in the output.
 
     return result.exitCode == 0;
@@ -91,7 +92,7 @@ Future<void> main() async {
               Duration.zero,
               () => showErrorAndExit(
                 context,
-                'R is not installed or not in the system PATH. Please install it before using Rattle.',
+                'R is **not installed** or it was not found in the **PATH** environment variable. Please install R and ensure it is in the PATH before using Rattle. See the [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) for details.',
               ),
             );
 
