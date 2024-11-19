@@ -27,7 +27,6 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/utils/show_ok.dart';
 
