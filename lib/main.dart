@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Tuesday 2024-11-19 11:32:44 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-11-19 11:33:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -41,9 +41,8 @@ Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
   try {
-    print('Check R exit code');
-    final result = await Process.run('jjkk', ['--version']);
-    print('R exit code is ${result.exitCode}');
+    final result = await Process.run('R', ['--version']);
+
     // Check if "R version" is present in the output.
 
     return result.exitCode == 0;
