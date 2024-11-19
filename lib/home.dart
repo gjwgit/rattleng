@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-11-19 08:38:44 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-11-19 11:44:58 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -350,7 +350,7 @@ Xu, Yixiang Yin, Bo Zhang.
             need to be installed. If any are missing locally they will be
             installed. This could take some time, *upwards of 5 minutes,* for
             example. All packages will also then be loaded into R. After
-            starting check the **CONSOLE** tab for details.
+            starting check the **Console** tab for details.
 
             ''',
             child: IconButton(
@@ -368,8 +368,8 @@ Xu, Yixiang Yin, Bo Zhang.
                   and if not available on your local installation it will be
                   downloaded and installed. This can take some time (**five
                   minutes** or more) depending on how many packages need to be
-                  installed. Please check the **CONSOLE** tab to monitor
-                  progress. Type *Ctrl-C* in the **CONSOLE** to abort.
+                  installed. Please check the **Console** tab to monitor
+                  progress. Type *Ctrl-C* in the **Console** to abort.
 
                   ''',
                 );
