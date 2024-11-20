@@ -28,10 +28,14 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/normalise.dart';
+import 'package:rattle/providers/partition.dart';
 
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// List of available ggplot themes for the user to choose from.
 
@@ -211,6 +215,10 @@ class SettingsDialog extends ConsumerStatefulWidget {
 class SettingsDialogState extends ConsumerState<SettingsDialog> {
   String? _selectedTheme;
 
+  bool _cleanse = false;
+  bool _normalise = false;
+  bool _partition = false;
+
   @override
   void initState() {
     super.initState();
@@ -225,14 +233,68 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         .read(settingsGraphicThemeProvider.notifier)
         .setGraphicTheme(_selectedTheme!);
 
-    // 20241121 gjw Moved to using SETTINGS_GGPLOT_THEME
-    // EVENTUALLY REMOVE
-    // rSource(context, ref, ['settings']);
+    // Initialize toggle states from providers.
+
+    _cleanse = ref.read(cleanseProvider);
+    _normalise = ref.read(normaliseProvider);
+    _partition = ref.read(partitionProvider);
+
+    // Load toggle states from shared preferences.
+
+    _loadToggleStates();
+  }
+
+  Future<void> _loadToggleStates() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Load cleanse toggle state from preferences.
+
+    setState(() {
+      _cleanse = prefs.getBool('cleanse') ?? false;
+      _normalise = prefs.getBool('normalise') ?? false;
+      _partition = prefs.getBool('partition') ?? false;
+    });
+
+    // Update the providers with loaded values.
+
+    ref.read(cleanseProvider.notifier).state = _cleanse;
+    ref.read(normaliseProvider.notifier).state = _normalise;
+    ref.read(partitionProvider.notifier).state = _partition;
+  }
+
+  Future<void> _saveToggleStates() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save cleanse toggle state to preferences.
+
+    await prefs.setBool('cleanse', _cleanse);
+    await prefs.setBool('normalise', _normalise);
+    await prefs.setBool('partition', _partition);
+  }
+
+  void _resetToggleStates() {
+    // Reset all toggles to default values.
+
+    setState(() {
+      _cleanse = false;
+      _normalise = false;
+      _partition = false;
+    });
+
+    // Update providers and save default states.
+
+    ref.read(cleanseProvider.notifier).state = _cleanse;
+    ref.read(normaliseProvider.notifier).state = _normalise;
+    ref.read(partitionProvider.notifier).state = _partition;
+
+    _saveToggleStates();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size; // Get screen size.
+    final Size size = MediaQuery.of(context).size;
+
+    // Main settings dialog layout.
 
     return Material(
       color: Colors.transparent,
@@ -241,11 +303,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         child: Stack(
           children: [
             Container(
-              // Full screen width.
-
               width: size.width,
-              // Full screen height.
-
               height: size.height,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -268,16 +326,17 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
+
                     const SizedBox(height: 20),
+
+                    // Theme selection chips.
+
                     Wrap(
                       spacing: 8.0,
                       runSpacing: 8.0,
                       children: themeOptions.map((option) {
                         return MarkdownTooltip(
-                          // Tooltip for each chip.
-
                           message: option['tooltip']!,
-
                           child: ChoiceChip(
                             label: Text(option['label']!),
                             selected: _selectedTheme == option['value'],
@@ -285,8 +344,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               setState(() {
                                 _selectedTheme = option['value'];
                               });
-
-                              // Automatically update the theme in Riverpod.
 
                               ref
                                   .read(settingsGraphicThemeProvider.notifier)
@@ -298,16 +355,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         );
                       }).toList(),
                     ),
+
                     const SizedBox(height: 20),
-                    // Add the RESTORE button to reset to factory default theme.
+
+                    // Restore default theme button.
 
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
                           _selectedTheme = 'theme_rattle';
                         });
-
-                        // Reset to default theme in provider and persist it.
 
                         ref
                             .read(settingsGraphicThemeProvider.notifier)
@@ -317,10 +374,64 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       },
                       child: const Text('RESTORE'),
                     ),
+
+                    const SizedBox(height: 40),
+
+                    // Dataset Toggles section.
+
+                    const Text(
+                      'Dataset Toggles',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    _buildToggleRow('Cleanse', _cleanse, (value) {
+                      setState(() {
+                        _cleanse = value;
+                      });
+
+                      ref.read(cleanseProvider.notifier).state = value;
+
+                      _saveToggleStates();
+                    }),
+
+                    _buildToggleRow('Unify', _normalise, (value) {
+                      setState(() {
+                        _normalise = value;
+                      });
+
+                      ref.read(normaliseProvider.notifier).state = value;
+
+                      _saveToggleStates();
+                    }),
+
+                    _buildToggleRow('Partition', _partition, (value) {
+                      setState(() {
+                        _partition = value;
+                      });
+
+                      ref.read(partitionProvider.notifier).state = value;
+
+                      _saveToggleStates();
+                    }),
+
+                    const SizedBox(height: 20),
+
+                    // Reset Dataset Toggles to default button.
+
+                    ElevatedButton(
+                      onPressed: _resetToggleStates,
+                      child: const Text('Reset to default'),
+                    ),
                   ],
                 ),
               ),
             ),
+
+            // Close button for the dialog.
+
             Positioned(
               top: 16,
               right: 16,
@@ -333,6 +444,22 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           ],
         ),
       ),
+    );
+  }
+
+  // Build a toggle row with a label and a switch.
+
+  Widget _buildToggleRow(
+      String label, bool value, ValueChanged<bool> onChanged) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 16)),
+        Switch(
+          value: value,
+          onChanged: onChanged,
+        ),
+      ],
     );
   }
 }

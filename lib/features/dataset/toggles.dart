@@ -46,10 +46,11 @@ class DatasetToggles extends ConsumerStatefulWidget {
 class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   @override
   Widget build(BuildContext context) {
-    bool cleanse = ref.read(cleanseProvider);
-    bool normalise = ref.read(normaliseProvider);
-    bool partition = ref.read(partitionProvider);
+    // Watch providers to ensure UI updates when the state changes.
 
+    bool cleanse = ref.watch(cleanseProvider);
+    bool normalise = ref.watch(normaliseProvider);
+    bool partition = ref.watch(partitionProvider);
     return ToggleButtons(
       isSelected: [cleanse, normalise, partition],
       onPressed: (int index) {
