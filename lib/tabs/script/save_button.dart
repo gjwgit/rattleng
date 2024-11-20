@@ -32,7 +32,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:rattle/constants/spacing.dart';
 
 import 'package:rattle/providers/script.dart';
 
@@ -80,15 +79,7 @@ class ScriptSaveButton extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Row(
-            children: [
-              // Error icon.
-
-              const Icon(Icons.error, color: Colors.red),
-              rowGap,
-              const Text('Error'),
-            ],
-          ),
+          title: const Text('Error'),
           content: Text(message),
           actions: <Widget>[
             TextButton(

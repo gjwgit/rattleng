@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 16:59:41 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-20 16:30:11 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,6 +42,8 @@ library(rattle)
 # BOX PLOT
 ########################################################################
 
+# TODO 20241120 gjw ADD ALL TO LEGEND
+
 # Display box plot for the selected variable.
 
 svg("TEMPDIR/explore_visual_boxplot.svg", width=10)
@@ -63,6 +65,8 @@ dev.off()
 ########################################################################
 # DENSITY
 ########################################################################
+
+# TODO 20241120 gjw ADD ALL TO LEGEND
 
 svg("TEMPDIR/explore_visual_density.svg", width=10)
 
@@ -112,22 +116,53 @@ len    <- 1
 # Build the dataset
 
 tds <- merge(rattle::benfordDistr(digit, len),
-             rattle::digitDistr(ds$SELECTED_VAR, digit, len, "All"))
+             rattle::digitDistr(ds$min_temp, digit, len, "All"))
 
-for (i in unique(ds$GROUP_BY_VAR))
-  tds <- merge(tds, rattle::digitDistr(ds[ds$GROUP_BY_VAR==i, "SELECTED_VAR"], digit, len, i))
+for (i in unique(ds$rain_tomorrow))
+  tds <- merge(tds, rattle::digitDistr(ds[ds$rain_tomorrow==i, "min_temp"], digit, len, i))
 
-# Remove the NA column if it exists. A bug in the rattle fucntion.
+# 20241120 gjw Replicate the rattle function here to ensure we are in
+# harmony with the theme/colours of the other plots.
+#
+# TODO 20241120 gjw STILL NOT THERE YET WITH COLOURS
+
+# Remove the NA column if it exists. A bug in the rattle
+# function.
 
 tds <- tds[,which(colnames(tds) != "NA")]
+
+# Reorder the columns to have the colours correspdong the other plots.
+
+tds %<>% relocate(c(All, Benford), .after=last_col())
+
+dsm <- reshape::melt(tds, id.vars = "digit")
+len <- nchar(as.character(tds[1, 1]))
 
 # Plot the digital distribution
 
 svg("TEMPDIR/explore_visual_benford.svg", width=10)
 
-tds %>% plotDigitFreq() +
-  ggtitle("Digital Analysis of First Digit of SELECTED_VAR by GROUP_BY_VAR") +
-  ggplot2::xlab(paste("Digits\n\n", paste("TIMESTAMP", username), sep="")) +
+p <- ggplot2::ggplot(dsm,
+                     ggplot2::aes_string(x      = "digit", 
+                                         y      = "value",
+                                         colour = "variable",
+                                         shape  = "variable")) +
+  ggplot2::geom_line()
+
+if (len < 3)
+  p <- p + ggplot2::geom_point()
+if (substr(as.character(tds[1, 1]), 1, 1) == "1") {
+  p <- p + ggplot2::scale_x_continuous(breaks = seq(10^(len - 1),
+  (10^len) - 1,
+  10^(len - 1)))
+  } else {p <- p + ggplot2::scale_x_continuous(breaks = seq(0, 9, 1))}
+
+p +
+  ggplot2::ylab("Frequency (%)") +
+  ggplot2::xlab("Digits") +
+  ggplot2::theme(legend.title = ggplot2::element_blank()) +
+  ggtitle("Digital Analysis of First Digit of min_temp by rain_tomorrow") +
+  ggplot2::xlab(paste("Digits\n\n", paste("RattleNG 2024-11-20 15:35:27", username), sep="")) +
   theme_default()
 
 dev.off()

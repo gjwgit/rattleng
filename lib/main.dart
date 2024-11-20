@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Tuesday 2024-11-19 11:33:55 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-11-20 16:35:07 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -29,8 +29,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/utils/show_error.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
@@ -54,24 +54,6 @@ Future<bool> checkRInstallation() async {
   }
 }
 
-void showErrorAndExit(BuildContext context, String message) {
-  // Show an error popup if R is not installed and then exit the app.
-
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text('Error'),
-      content: MarkdownBody(data: message),
-      actions: [
-        TextButton(
-          onPressed: () => exit(0),
-          child: const Text('Exit'),
-        ),
-      ],
-    ),
-  );
-}
-
 Future<void> main() async {
   // The `main` entry point into any dart app.
   //
@@ -90,15 +72,25 @@ Future<void> main() async {
           builder: (context) {
             Future.delayed(
               Duration.zero,
-              () => showErrorAndExit(
-                context,
-                '''
+              () => showError(
+                content: '''
 
                 R is **not installed** or it was not found in the **PATH** environment variable. 
+
                 Please install R and ensure it is in the PATH before using Rattle. 
-                See the [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) for details.
+
+                See the 
+                
+                [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) 
+                
+                for details.
 
                 ''',
+                context: context,
+                title: 'R Installation Error',
+                onOkPressed: () {
+                  exit(0);
+                },
               ),
             );
 

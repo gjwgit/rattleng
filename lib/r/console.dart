@@ -27,6 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rattle/providers/check_version.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/utils/show_ok.dart';
 
@@ -52,8 +53,48 @@ class _RConsoleState extends ConsumerState<RConsole> {
   @override
   void initState() {
     super.initState();
-    // Initialize the pseudo terminal via the provider.
-    ref.read(ptyProvider);
+
+    // Try initializing the pseudo terminal and catch any errors for Windows.
+
+    try {
+      ref.read(ptyProvider);
+    } catch (e) {
+      // If there is an error on Windows machine then show a popup message.
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showOk(
+          context: context,
+          title: 'R Error',
+          content: '''
+              R was not started. Please check the **Console** tab for errors.
+              ''',
+        );
+      });
+    }
+
+    // Check R version logic using the provider for MacOS and Linux.
+
+    Future.delayed(Duration(milliseconds: 3000), () {
+      // Only proceed if `hasCheckedRVersionProvider` is false.
+
+      final hasCheckedRVersion = ref.read(hasCheckedRVersionProvider);
+      if (!hasCheckedRVersion) {
+        // Update the provider state to prevent repeated execution.
+
+        ref.read(hasCheckedRVersionProvider.notifier).state = true;
+
+        final stdout = ref.watch(stdoutProvider);
+        if (stdout.isNotEmpty && !stdout.contains('R version')) {
+          showOk(
+            context: context,
+            title: 'R Version Error',
+            content: '''
+              R was not started. Please check the **Console** tab for errors.
+              ''',
+          );
+        }
+      }
+    });
   }
 
   // There is no TerminalThemes for the black on white that I prefer and am
@@ -91,35 +132,6 @@ class _RConsoleState extends ConsumerState<RConsole> {
   Widget build(BuildContext context) {
     // Retrieve the Terminal instance from the provider.
     final terminal = ref.watch(terminalProvider);
-
-    String stdout = ref.watch(stdoutProvider);
-
-    // wait for 3 seconds and then show popup if R is not started.
-
-    Future.delayed(Duration(seconds: 3), () {
-      if (stdout.contains('R version')) {
-        final rVersion =
-            RegExp(r'R version ([\d\.]+)').firstMatch(stdout)?.group(1) ??
-                'Unknown Version';
-
-        if (rVersion == 'Unknown Version') {
-          Future.delayed(
-            Duration(seconds: 3),
-            () => showOk(
-              context: context,
-              title: 'R Version Error',
-              content: '''
-
-              R was not started. Please check the **Console** tab for errors.
-
-              Do not exit, but we will not be able to do anything else.
-              
-              ''',
-            ),
-          );
-        }
-      }
-    });
 
     return Scaffold(
       body: SafeArea(
