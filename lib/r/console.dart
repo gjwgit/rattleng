@@ -27,6 +27,9 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rattle/providers/check_version.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/utils/show_ok.dart';
 
 import 'package:xterm/xterm.dart';
 
@@ -50,8 +53,48 @@ class _RConsoleState extends ConsumerState<RConsole> {
   @override
   void initState() {
     super.initState();
-    // Initialize the pseudo terminal via the provider.
-    ref.read(ptyProvider);
+
+    // Try initializing the pseudo terminal and catch any errors for Windows.
+
+    try {
+      ref.read(ptyProvider);
+    } catch (e) {
+      // If there is an error on Windows machine then show a popup message.
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showOk(
+          context: context,
+          title: 'R Error',
+          content: '''
+              R was not started. Please check the **Console** tab for errors.
+              ''',
+        );
+      });
+    }
+
+    // Check R version logic using the provider for MacOS and Linux.
+
+    Future.delayed(Duration(milliseconds: 3000), () {
+      // Only proceed if `hasCheckedRVersionProvider` is false.
+
+      final hasCheckedRVersion = ref.read(hasCheckedRVersionProvider);
+      if (!hasCheckedRVersion) {
+        // Update the provider state to prevent repeated execution.
+
+        ref.read(hasCheckedRVersionProvider.notifier).state = true;
+
+        final stdout = ref.watch(stdoutProvider);
+        if (stdout.isNotEmpty && !stdout.contains('R version')) {
+          showOk(
+            context: context,
+            title: 'R Version Error',
+            content: '''
+              R was not started. Please check the **Console** tab for errors.
+              ''',
+          );
+        }
+      }
+    });
   }
 
   // There is no TerminalThemes for the black on white that I prefer and am
