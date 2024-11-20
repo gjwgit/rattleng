@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Friday 2024-08-09 20:09:22 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-11-20 11:41:36 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -94,30 +94,23 @@ class _RConsoleState extends ConsumerState<RConsole> {
 
     String stdout = ref.watch(stdoutProvider);
 
-    // wait for 3 seconds and then show popup if R is not started.
+    // Wait for a duration and if `R version` is not appearing in the Console
+    // then popup a message. We ONLY want to do this on starting up the console
+    // the first time, not every time the console is rebuilt.
 
-    Future.delayed(Duration(seconds: 3), () {
-      if (stdout.contains('R version')) {
-        final rVersion =
-            RegExp(r'R version ([\d\.]+)').firstMatch(stdout)?.group(1) ??
-                'Unknown Version';
-
-        if (rVersion == 'Unknown Version') {
-          Future.delayed(
-            Duration(seconds: 3),
-            () => showOk(
-              context: context,
-              title: 'R Version Error',
-              content: '''
+    Future.delayed(Duration(milliseconds: 3000), () {
+      debugPrint('XXXX $stdout YYYY');
+      if (stdout.isNotEmpty && !stdout.contains('R version')) {
+        debugPrint('ZZZ');
+        showOk(
+          context: context,
+          title: 'R Version Error',
+          content: '''
 
               R was not started. Please check the **Console** tab for errors.
-
-              Do not exit, but we will not be able to do anything else.
               
               ''',
-            ),
-          );
-        }
+        );
       }
     });
 
