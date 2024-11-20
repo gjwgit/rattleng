@@ -52,8 +52,24 @@ class _RConsoleState extends ConsumerState<RConsole> {
   @override
   void initState() {
     super.initState();
-    // Initialize the pseudo terminal via the provider.
-    ref.read(ptyProvider);
+
+    // Try initializing the pseudo terminal and catch any errors.
+
+    try {
+      ref.read(ptyProvider);
+    } catch (e) {
+      // If there is an error on Windows machine then show a popup message.
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showOk(
+          context: context,
+          title: 'R Error',
+          content: '''
+              R was not started. Please check the **Console** tab for errors.
+              ''',
+        );
+      });
+    }
   }
 
   // There is no TerminalThemes for the black on white that I prefer and am
