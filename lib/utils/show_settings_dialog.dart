@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Tuesday 2024-11-19 11:58:45 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-21 08:02:26 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -225,7 +225,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         .read(settingsGraphicThemeProvider.notifier)
         .setGraphicTheme(_selectedTheme!);
 
-    rSource(context, ref, ['settings']);
+    // 20241121 gjw Moved to using SETTINGS_GGPLOT_THEME
+    // EVENTUALLY REMOVE
+    // rSource(context, ref, ['settings']);
   }
 
   @override
