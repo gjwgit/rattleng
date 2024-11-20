@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Tuesday 2024-11-19 11:33:55 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-11-20 16:35:07 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -42,7 +42,7 @@ Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
   try {
-    final result = await Process.run('1R', ['--version']);
+    final result = await Process.run('R', ['--version']);
 
     // Check if "R version" is present in the output.
 
