@@ -54,7 +54,7 @@ class _RConsoleState extends ConsumerState<RConsole> {
   void initState() {
     super.initState();
 
-    // Try initializing the pseudo terminal and catch any errors.
+    // Try initializing the pseudo terminal and catch any errors for Windows.
 
     try {
       ref.read(ptyProvider);
@@ -72,7 +72,7 @@ class _RConsoleState extends ConsumerState<RConsole> {
       });
     }
 
-    // Check R version logic using the provider
+    // Check R version logic using the provider for MacOS and Linux.
 
     Future.delayed(Duration(milliseconds: 3000), () {
       // Only proceed if `hasCheckedRVersionProvider` is false.

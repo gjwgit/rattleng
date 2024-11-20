@@ -42,7 +42,7 @@ Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
   try {
-    final result = await Process.run('R', ['--version']);
+    final result = await Process.run('1R', ['--version']);
 
     // Check if "R version" is present in the output.
 
