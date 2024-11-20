@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-20 16:30:11 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-11-21 08:46:12 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,23 +42,49 @@ library(rattle)
 # BOX PLOT
 ########################################################################
 
-# TODO 20241120 gjw ADD ALL TO LEGEND
+# TODO 20241120 gjw ADD ALL TO LEGEND - ACTUALLY REMOVE LEGEND AS ADDS NO VALUE
+
+# Preprocess the dataset for the plot.
+
+tds <- dplyr::mutate(ds, GROUP_BY_VAR=as.factor(GROUP_BY_VAR))
+
+# When the confidence interval for the notch of the boxplot extends
+# beyond the hinges (upper or lower limits of the boxplot) the notches
+# go outside the hinges. To avoid this precompute the values for the
+# notches and compare them to the hinges. The following does it for
+# one variable. Need for all. For now 20241121 add an option to turn
+# the notch on and off.
+
+## is_notch_safe <- function(data, x, y) {
+##   summary_data <- data %>%
+##     group_by({{ x }}) %>%
+##     summarise(
+##       ymin = quantile({{ y }}, 0.25),
+##       ymax = quantile({{ y }}, 0.75),
+##       notch_lower = median({{ y }}) - 1.58 * IQR({{ y }}) / sqrt(n()),
+##       notch_upper = median({{ y }}) + 1.58 * IQR({{ y }}) / sqrt(n())
+##     )
+##   any(summary_data$notch_lower < summary_data$ymin | summary_data$notch_upper > summary_data$ymax)
+## }
+
+## # Check if the notch is safe.
+
+## notch_safe <- is_notch_safe(tds, , hwy)
+
 
 # Display box plot for the selected variable.
 
 svg("TEMPDIR/explore_visual_boxplot.svg", width=10)
 
-ds %>%
-  dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
+tds %>%
   ggplot2::ggplot(ggplot2::aes(y=SELECTED_VAR)) +
-  ggplot2::geom_boxplot(ggplot2::aes(x="All"), notch=TRUE, fill="grey") +
+  ggplot2::geom_boxplot(ggplot2::aes(x="All"), notch=BOXPLOT_NOTCH, fill="grey") +
   ggplot2::stat_summary(ggplot2::aes(x="All"), fun=mean, geom="point", shape=8) +
-  ggplot2::geom_boxplot(ggplot2::aes(x=GROUP_BY_VAR, fill=GROUP_BY_VAR), notch=TRUE) +
+  ggplot2::geom_boxplot(ggplot2::aes(x=GROUP_BY_VAR, fill=GROUP_BY_VAR), notch=BOXPLOT_NOTCH, show.legend=FALSE) +
   ggplot2::stat_summary(ggplot2::aes(x=GROUP_BY_VAR), fun=mean, geom="point", shape=8) +
   ggplot2::xlab(paste("GROUP_BY_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
-  ggplot2::theme(legend.position="none") +
-  theme_default()
+  SETTINGS_GRAPHIC_THEME()
 
 dev.off()
 
@@ -79,7 +105,7 @@ ds %>%
   ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::labs(fill="GROUP_BY_VAR", y="Density") +
-  theme_default()
+  SETTINGS_GRAPHIC_THEME()
 
 dev.off()
 
@@ -100,7 +126,7 @@ ds %>%
   ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
   ggplot2::ggtitle("Empirical Cumulative Distribution of SELECTED_VAR by GROUP_BY_VAR") +
   ggplot2::labs(fill="GROUP_BY_VAR", y=expression("ECDF - Proportion <= x")) +
-  theme_default()
+  SETTINGS_GRAPHIC_THEME()
 
 dev.off()
 
@@ -163,7 +189,7 @@ p +
   ggplot2::theme(legend.title = ggplot2::element_blank()) +
   ggtitle("Digital Analysis of First Digit of min_temp by rain_tomorrow") +
   ggplot2::xlab(paste("Digits\n\n", paste("RattleNG 2024-11-20 15:35:27", username), sep="")) +
-  theme_default()
+  SETTINGS_GRAPHIC_THEME()
 
 dev.off()
 

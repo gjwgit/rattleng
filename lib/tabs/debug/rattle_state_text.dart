@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Sunday 2024-10-13 11:06:20 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-11-21 08:19:17 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -42,6 +42,7 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -68,6 +69,8 @@ class RattleStateText extends ConsumerWidget {
     String selected = ref.watch(selectedProvider);
     String selected2 = ref.watch(selected2Provider);
     String imputed = ref.watch(imputedProvider);
+    String theme = ref.watch(settingsGraphicThemeProvider);
+
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
     bool partition = ref.watch(partitionProvider);
@@ -108,6 +111,7 @@ class RattleStateText extends ConsumerWidget {
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
+            'THEME:       $theme\n'
             'META DATA:   $meta\n'
             '\n**DEPRECATED** ROLES AND TYPES ARE BEING DEPRECATED.\n\n'
             'ROLES:       $role\n'

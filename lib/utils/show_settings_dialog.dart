@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Tuesday 2024-11-19 11:58:45 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-11-21 08:02:26 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -214,34 +214,47 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   @override
   void initState() {
     super.initState();
-    // Get the current theme from the Riverpod provider
+
+    // Get the current theme from the Riverpod provider.
+
     _selectedTheme = ref.read(settingsGraphicThemeProvider);
+
+    // Automatically update the theme in Riverpod when the dialog is opened.
+
+    ref
+        .read(settingsGraphicThemeProvider.notifier)
+        .setGraphicTheme(_selectedTheme!);
+
+    // 20241121 gjw Moved to using SETTINGS_GGPLOT_THEME
+    // EVENTUALLY REMOVE
+    // rSource(context, ref, ['settings']);
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size; // Get screen size
+    final Size size = MediaQuery.of(context).size; // Get screen size.
 
     return Material(
-      color: Colors.transparent, // Set the material color to transparent
+      color: Colors.transparent,
       child: Padding(
-        padding: const EdgeInsets.all(
-          40.0,
-        ), // Add padding to create the border effect
+        padding: const EdgeInsets.all(40.0),
         child: Stack(
           children: [
             Container(
-              width: size.width, // Full screen width
-              height: size.height, // Full screen height
+              // Full screen width.
 
+              width: size.width,
+              // Full screen height.
+
+              height: size.height,
               decoration: BoxDecoration(
-                color: Colors.white, // Dialog background color
-                borderRadius: BorderRadius.circular(15), // Rounded corners
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.3),
                     blurRadius: 10,
-                    offset: const Offset(0, 5), // Shadow for elevation
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
@@ -261,7 +274,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       runSpacing: 8.0,
                       children: themeOptions.map((option) {
                         return MarkdownTooltip(
-                          message: option['tooltip']!, // Tooltip for each chip
+                          // Tooltip for each chip.
+
+                          message: option['tooltip']!,
+
                           child: ChoiceChip(
                             label: Text(option['label']!),
                             selected: _selectedTheme == option['value'],
@@ -269,43 +285,48 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               setState(() {
                                 _selectedTheme = option['value'];
                               });
+
+                              // Automatically update the theme in Riverpod.
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
                             },
                           ),
                         );
                       }).toList(),
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Save the selected theme to the Riverpod provider
-                            if (_selectedTheme != null) {
-                              ref
-                                  .read(settingsGraphicThemeProvider.notifier)
-                                  .setGraphicTheme(_selectedTheme!);
-                              rSource(context, ref, ['settings']);
-                            }
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('USE'),
-                        ),
-                      ],
+                    // Add the RESTORE button to reset to factory default theme.
+
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _selectedTheme = 'theme_rattle';
+                        });
+
+                        // Reset to default theme in provider and persist it.
+
+                        ref
+                            .read(settingsGraphicThemeProvider.notifier)
+                            .setGraphicTheme(_selectedTheme!);
+
+                        rSource(context, ref, ['settings']);
+                      },
+                      child: const Text('RESTORE'),
                     ),
                   ],
                 ),
               ),
             ),
-            // Positioned Cancel button at the top right
             Positioned(
               top: 16,
               right: 16,
               child: IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+                onPressed: () => Navigator.of(context).pop(),
                 tooltip: 'Cancel',
               ),
             ),
@@ -315,111 +336,3 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     );
   }
 }
-
-// // List of available themes
-// const List<Map<String, String>> themeOptions = [
-//   {'label': 'Rattle', 'value': 'theme_default_rattle'},
-//   {'label': 'Economist', 'value': 'theme_economist'},
-//   {'label': 'Default', 'value': 'theme_grey'},
-//   // Add more themes here...
-// ];
-
-// void showSettingsDialog(BuildContext context) {
-//   showGeneralDialog(
-//     context: context,
-//     barrierLabel: "Settings",
-//     barrierDismissible: true,
-//     barrierColor: Colors.black54,
-//     transitionDuration: Duration(milliseconds: 300),
-//     pageBuilder: (context, anim1, anim2) {
-//       return Align(
-//         alignment: Alignment.center,
-//         child: SettingsDialog(),
-//       );
-//     },
-//     transitionBuilder: (context, anim1, anim2, child) {
-//       return FadeTransition(
-//         opacity: CurvedAnimation(parent: anim1, curve: Curves.easeOut),
-//         child: child,
-//       );
-//     },
-//   );
-// }
-
-// class SettingsDialog extends ConsumerStatefulWidget {
-//   @override
-//   _SettingsDialogState createState() => _SettingsDialogState();
-// }
-
-// class _SettingsDialogState extends ConsumerState<SettingsDialog> {
-//   String? _selectedTheme;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Get the current theme from the Riverpod provider
-//     _selectedTheme = ref.read(settingsGraphicThemeProvider);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Material(
-//       color: Colors.transparent, // Set the material color to transparent
-// //      color: Colors.white,
-//       borderRadius: BorderRadius.circular(10),
-//       child: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             Text(
-//               'Select Graphic Theme',
-//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//             ),
-//             SizedBox(height: 20),
-//             Wrap(
-//               spacing: 8.0,
-//               runSpacing: 8.0,
-//               children: themeOptions.map((option) {
-//                 return ChoiceChip(
-//                   label: Text(option['label']!),
-//                   selected: _selectedTheme == option['value'],
-//                   onSelected: (bool selected) {
-//                     setState(() {
-//                       _selectedTheme = option['value'];
-//                     });
-//                   },
-//                 );
-//               }).toList(),
-//             ),
-//             SizedBox(height: 20),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               children: [
-//                 TextButton(
-//                   onPressed: () {
-//                     Navigator.of(context).pop();
-//                   },
-//                   child: Text('CANCEL'),
-//                 ),
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     // Save the selected theme to the Riverpod provider
-//                     if (_selectedTheme != null) {
-//                       ref
-//                           .read(settingsGraphicThemeProvider.notifier)
-//                           .setGraphicTheme(_selectedTheme!);
-//                       rSource(context, ref, ['settings']);
-//                     }
-//                     Navigator.of(context).pop();
-//                   },
-//                   child: Text('SAVE'),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
