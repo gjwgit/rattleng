@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/utils/show_error.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
@@ -42,7 +43,7 @@ Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
   try {
-    final result = await Process.run('R', ['--version']);
+    final result = await Process.run('aaaR', ['--version']);
 
     // Check if "R version" is present in the output.
 
@@ -90,15 +91,25 @@ Future<void> main() async {
           builder: (context) {
             Future.delayed(
               Duration.zero,
-              () => showErrorAndExit(
-                context,
-                '''
+              () => showError(
+                content: '''
 
                 R is **not installed** or it was not found in the **PATH** environment variable. 
+
                 Please install R and ensure it is in the PATH before using Rattle. 
-                See the [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) for details.
+
+                See the 
+                
+                [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) 
+                
+                for details.
 
                 ''',
+                context: context,
+                title: 'R Installation Error',
+                onOkPressed: () {
+                  exit(0);
+                },
               ),
             );
 

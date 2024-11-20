@@ -99,9 +99,9 @@ class _RConsoleState extends ConsumerState<RConsole> {
     // the first time, not every time the console is rebuilt.
 
     Future.delayed(Duration(milliseconds: 3000), () {
-      debugPrint('XXXX $stdout YYYY');
+      // debugPrint('XXXX $stdout YYYY');
       if (stdout.isNotEmpty && !stdout.contains('R version')) {
-        debugPrint('ZZZ');
+        // debugPrint('ZZZ');
         showOk(
           context: context,
           title: 'R Version Error',
