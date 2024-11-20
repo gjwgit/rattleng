@@ -27,6 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rattle/providers/check_version.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/utils/show_ok.dart';
 
@@ -70,6 +71,30 @@ class _RConsoleState extends ConsumerState<RConsole> {
         );
       });
     }
+
+    // Check R version logic using the provider
+
+    Future.delayed(Duration(milliseconds: 3000), () {
+      // Only proceed if `hasCheckedRVersionProvider` is false.
+
+      final hasCheckedRVersion = ref.read(hasCheckedRVersionProvider);
+      if (!hasCheckedRVersion) {
+        // Update the provider state to prevent repeated execution.
+
+        ref.read(hasCheckedRVersionProvider.notifier).state = true;
+
+        final stdout = ref.watch(stdoutProvider);
+        if (stdout.isNotEmpty && !stdout.contains('R version')) {
+          showOk(
+            context: context,
+            title: 'R Version Error',
+            content: '''
+              R was not started. Please check the **Console** tab for errors.
+              ''',
+          );
+        }
+      }
+    });
   }
 
   // There is no TerminalThemes for the black on white that I prefer and am
@@ -108,26 +133,6 @@ class _RConsoleState extends ConsumerState<RConsole> {
     // Retrieve the Terminal instance from the provider.
     final terminal = ref.watch(terminalProvider);
 
-    String stdout = ref.watch(stdoutProvider);
-
-    // Wait for a duration and if `R version` is not appearing in the Console
-    // then popup a message. We ONLY want to do this on starting up the console
-    // the first time, not every time the console is rebuilt.
-
-    Future.delayed(Duration(milliseconds: 3000), () {
-      // debugPrint('XXXX $stdout YYYY');
-      if (stdout.isNotEmpty && !stdout.contains('R version')) {
-        // debugPrint('ZZZ');
-        showOk(
-          context: context,
-          title: 'R Version Error',
-          content: '''
-              R was not started. Please check the **Console** tab for errors.
-              
-              ''',
-        );
-      }
-    });
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
