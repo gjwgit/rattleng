@@ -51,7 +51,7 @@ ds %>%
        x = "SELECTED_VAR",
        y = "Frequency",
        fill = "GROUP_BY_VAR") +
-  theme_default()
+  SETTINGS_GRAPHIC_THEME()
 
 dev.off()
 
@@ -81,7 +81,7 @@ ggplot(combined_data, aes(y = SELECTED_VAR, x = Frequency, fill = GROUP_BY_VAR))
        y = "SELECTED_VAR",
        x = "Frequency",
        fill = "Legend") +
-  theme_default()
+  SETTINGS_GRAPHIC_THEME()
 
 ## # Generate the summary data for the plot.
 

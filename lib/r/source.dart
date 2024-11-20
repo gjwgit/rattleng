@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Tuesday 2024-10-29 15:23:05 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-11-21 08:52:48 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -217,17 +217,14 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // GLOBAL
+  // Replace Global template patterns with their values. These are not specific
+  // to any particular feature,
 
   code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
-
-  // VERSION.
 
   PackageInfo info = await PackageInfo.fromPlatform();
 
   code = code.replaceAll('VERSION', info.version);
-
-  // FILENAME
 
   // 20240825 lutra Fix the path to the dataset to ensure that the Windows path
   // has been correctly converted to a Unix path for R.
@@ -236,8 +233,6 @@ Future<void> rSource(
     path = path.replaceAll(r'\', '/');
   }
   code = code.replaceAll('FILENAME', path);
-
-  // TEMPDIR
 
   code = code.replaceAll('TEMPDIR', tempDir);
 
@@ -414,7 +409,6 @@ Future<void> rSource(
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
 
   ////////////////////////////////////////////////////////////////////////
-
   // ASSOCIATE
 
   code = code.replaceAll(
@@ -442,6 +436,8 @@ Future<void> rSource(
   code =
       code.replaceAll('ASSOCIATION_RULES_SORT_BY', '"$associationRulesSortBy"');
 
+  ////////////////////////////////////////////////////////////////////////
+
   // BOOST
 
   code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
@@ -454,7 +450,6 @@ Future<void> rSource(
   code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
-
   // CLUSTER
 
   code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
@@ -466,6 +461,12 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_LINK', '"${clusterLink.toString()}"');
   code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
 
+  ////////////////////////////////////////////////////////////////////////
+  // EXPLORE - VISUAL - BOXPLOT
+
+  code = code.replaceAll('BOXPLOT_NOTCH', 'FALSE');
+
+  ////////////////////////////////////////////////////////////////////////
   // FOREST
 
   code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
@@ -477,7 +478,6 @@ Future<void> rSource(
   );
 
   ////////////////////////////////////////////////////////////////////////
-
   // NEURAL
 
   code = code.replaceAll('NNET_HIDDEN_LAYERS', hiddenLayerSizes.toString());
@@ -495,13 +495,13 @@ Future<void> rSource(
     neuralIgnoreCategoric.toString().toUpperCase(),
   );
 
+  ////////////////////////////////////////////////////////////////////////
   // SVM
 
   code = code.replaceAll('SVM_KERNEL', '"${svmKernel.toString()}"');
   code = code.replaceAll('SVM_DEGREE', svmDegree.toString());
 
   ////////////////////////////////////////////////////////////////////////
-
   // WORD CLOUD
 
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
