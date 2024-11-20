@@ -1,6 +1,6 @@
-/// Providers for bool value to check if R version is installed.
+/// A bool provider to check if R loaded correctly
 ///
-/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-11-20 16:50:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -21,10 +21,10 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final hasCheckedRVersionProvider = StateProvider<bool>((ref) => false);
+final checkedRProvider = StateProvider<bool>((ref) => false);

@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Friday 2024-08-09 20:09:22 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-11-20 17:08:38 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rattle/providers/check_version.dart';
+import 'package:rattle/providers/checked_r.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/utils/show_ok.dart';
 
@@ -64,32 +64,39 @@ class _RConsoleState extends ConsumerState<RConsole> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showOk(
           context: context,
-          title: 'R Error',
+          title: 'Console Error',
           content: '''
-              R was not started. Please check the **Console** tab for errors.
+
+              R failed to start. Please check the **Console** tab for errors.
+
               ''',
         );
       });
     }
 
-    // Check R version logic using the provider for MacOS and Linux.
+    // Check `R Version` is found in the Console (stdout) and only check it once
+    // rather than every build by keeping track with a provider.
 
     Future.delayed(Duration(milliseconds: 3000), () {
-      // Only proceed if `hasCheckedRVersionProvider` is false.
+      // Only proceed if `checkedRProvider` is false. We only want to check it
+      // once, rather than every time we re-build the Console.
 
-      final hasCheckedRVersion = ref.read(hasCheckedRVersionProvider);
-      if (!hasCheckedRVersion) {
+      if (!ref.read(checkedRProvider)) {
         // Update the provider state to prevent repeated execution.
 
-        ref.read(hasCheckedRVersionProvider.notifier).state = true;
+        ref.read(checkedRProvider.notifier).state = true;
 
         final stdout = ref.watch(stdoutProvider);
+
         if (stdout.isNotEmpty && !stdout.contains('R version')) {
           showOk(
             context: context,
-            title: 'R Version Error',
+            title: 'R Error',
             content: '''
-              R was not started. Please check the **Console** tab for errors.
+
+              R does not appear to have started. Please check the **Console**
+              tab for errors.
+
               ''',
           );
         }
