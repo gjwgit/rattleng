@@ -217,6 +217,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     // Get the current theme from the Riverpod provider.
     _selectedTheme = ref.read(settingsGraphicThemeProvider);
+
+    // Automatically update the theme in Riverpod.
+
+    ref
+        .read(settingsGraphicThemeProvider.notifier)
+        .setGraphicTheme(_selectedTheme!);
+
+    rSource(context, ref, ['settings']);
   }
 
   @override
