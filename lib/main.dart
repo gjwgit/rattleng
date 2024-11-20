@@ -29,7 +29,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/utils/show_error.dart';
 import 'package:window_manager/window_manager.dart';
