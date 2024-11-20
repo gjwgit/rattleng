@@ -43,7 +43,7 @@ Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
   try {
-    final result = await Process.run('aaaR', ['--version']);
+    final result = await Process.run('R', ['--version']);
 
     // Check if "R version" is present in the output.
 
@@ -53,24 +53,6 @@ Future<bool> checkRInstallation() async {
 
     return false;
   }
-}
-
-void showErrorAndExit(BuildContext context, String message) {
-  // Show an error popup if R is not installed and then exit the app.
-
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text('Error'),
-      content: MarkdownBody(data: message),
-      actions: [
-        TextButton(
-          onPressed: () => exit(0),
-          child: const Text('Exit'),
-        ),
-      ],
-    ),
-  );
 }
 
 Future<void> main() async {
