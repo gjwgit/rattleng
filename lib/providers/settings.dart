@@ -53,12 +53,14 @@ class SettingsGraphicThemeNotifier extends StateNotifier<String> {
     state = theme;
 
     // Save the theme to shared_preferences.
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_themeKey, theme);
   }
 
   Future<void> _loadTheme() async {
     // Load the theme from shared_preferences.
+
     final prefs = await SharedPreferences.getInstance();
     state = prefs.getString(_themeKey) ?? 'theme_rattle';
   }

@@ -216,6 +216,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     super.initState();
 
     // Get the current theme from the Riverpod provider.
+
     _selectedTheme = ref.read(settingsGraphicThemeProvider);
 
     // Automatically update the theme in Riverpod when the dialog is opened.
@@ -238,8 +239,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         child: Stack(
           children: [
             Container(
-              width: size.width, // Full screen width.
-              height: size.height, // Full screen height.
+              // Full screen width.
+
+              width: size.width,
+              // Full screen height.
+
+              height: size.height,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -267,7 +272,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       runSpacing: 8.0,
                       children: themeOptions.map((option) {
                         return MarkdownTooltip(
-                          message: option['tooltip']!, // Tooltip for each chip.
+                          // Tooltip for each chip.
+
+                          message: option['tooltip']!,
 
                           child: ChoiceChip(
                             label: Text(option['label']!),
@@ -291,6 +298,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
                     const SizedBox(height: 20),
                     // Add the RESTORE button to reset to factory default theme.
+
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -298,6 +306,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         });
 
                         // Reset to default theme in provider and persist it.
+
                         ref
                             .read(settingsGraphicThemeProvider.notifier)
                             .setGraphicTheme(_selectedTheme!);
