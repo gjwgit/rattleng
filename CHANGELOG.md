@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Improve inbuilt R package downloader. [6.3.26 20241121 gjw]
 + Update Version with a tooltip to explain CHANGELOG link [6.3.25 20241121 gjw]
 + Save SETTINGS between sessions [6.3.24 20241121 kev]
 + Check that R is installed and starts up properly on app startup [6.3.23 20241121 kev]
