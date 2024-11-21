@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-11-21 15:41:21 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-11-21 17:08:23 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -359,11 +359,14 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **R Package Installation:** Tap here to check for any R packages that
-            need to be installed. If any are missing locally they will be
-            installed. This could take some time, *upwards of 5 minutes,* for
-            example. All packages will also then be loaded into R. After
-            starting check the **Console** tab for details.
+            **R Package Installation:** Tap here to load all required R pacakges
+            now rather than when they are needed. It can be useful to do this
+            before you load a dataset so as to ensure everything is ready. This
+            can avoid some issues on startup. Rattle will check for any R
+            packages that need to be installed and will install them. This could
+            take some time, *upwards of 5 minutes,* for example. After starting
+            this installation do check the **Console** tab for details and
+            progress.
 
             ''',
             child: IconButton(
