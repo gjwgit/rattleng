@@ -6,8 +6,9 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.3.n series are heading
 toward a 6.4 release.
 
-## 6.4 FUTURE Using JSON to communicate meta data
+## 6.4 LATEST UPDATES
 
++ Update Version with a tooltip to explain CHANGELOG link [6.3.25 20241121 gjw]
 + Save SETTINGS between sessions [6.3.24 20241121 kev]
 + Check that R is installed and starts up properly on app startup [6.3.23 20241121 kev]
 + Bug fix for changing plot themes. Bob Muenchen updates. [6.3.22 20241119 gjw]
@@ -39,7 +40,7 @@ toward a 6.4 release.
 + Update NEURAL. [6.3.1 20240923 gjw]
 + Remove unused Android/iOS/Web support. [6.3.1 20240923 lutra]
 
-## 6.3 FUTURE Wrangle tab implementation, interface updates, extensive testing.
+## 6.3 Wrangle tab implementation, interface updates, extensive testing.
 
 + DATASET updated weather.csv to 2023-2024 [6.3.0 20240921 gjw]
 + INSTALL update windows build using Inno. Bug fixes for Windows [6.2.78 20240919 gjw]

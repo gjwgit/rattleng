@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-11-19 11:44:58 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-11-21 15:41:21 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -275,22 +275,35 @@ Xu, Yixiang Yin, Bo Zhang.
           // visiable at all times, particularly for a screenshot, so place it
           // on the title bar for now.
 
-          GestureDetector(
-            onTap: () async {
-              final Uri url = Uri.parse(_changelogUrl);
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url);
-              } else {
-                debugPrint('Could not launch $_changelogUrl');
-              }
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Text(
-                'Version $_appVersion',
-                style: const TextStyle(
-                  color: Colors.blue,
-                  fontSize: 10,
+          MarkdownTooltip(
+            message: '''
+
+            **Version:** *Rattle* is regularly updated to bring you the best
+            experience for Data Science, AI and Machine Learning. The latest
+            version is always available from the
+            [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
+            the **Version** text here in the title bar to visit the *CHANGELOG*
+            in your browser and so see a list of all changes to Rattle. This
+            will help decide whether you want to update now.
+
+            ''',
+            child: GestureDetector(
+              onTap: () async {
+                final Uri url = Uri.parse(_changelogUrl);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                } else {
+                  debugPrint('Could not launch $_changelogUrl');
+                }
+              },
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Text(
+                  'Version $_appVersion',
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    fontSize: 10,
+                  ),
                 ),
               ),
             ),
@@ -302,7 +315,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Reset** Tap here to clear the current project and so start a new
+            **Reset:** Tap here to clear the current project and so start a new
             project with a new dataset. You will be prompted to confirm since
             you will lose all of the current pages and analyses.
 
@@ -346,7 +359,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **R Package Installation** Tap here to check for any R packages that
+            **R Package Installation:** Tap here to check for any R packages that
             need to be installed. If any are missing locally they will be
             installed. This could take some time, *upwards of 5 minutes,* for
             example. All packages will also then be loaded into R. After
@@ -384,7 +397,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Settings** Tap here to update your default settings. At present we
+            **Settings:** Tap here to update your default settings. At present we
             have just one setting: ggplot theme. The default theme is the simple
             and clean Rattle theme but there are many themes to choose
             from. Your settings will be saved for this session and you have the
@@ -407,7 +420,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **About** Tap here to view information about the Rattle
+            **About:** Tap here to view information about the Rattle
             project. This include a list of those who have contributed to the
             latest version of the software, *Verison 6.* It also includes the
             extensive list of open-source packages that Rattle is built on and
