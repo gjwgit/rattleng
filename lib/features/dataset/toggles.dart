@@ -31,11 +31,11 @@ import 'package:rattle/constants/data.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // This has to be a stateful widget otherwise the buttons don't visually toggle
 // i.e., the widget does not seem to get updated even though the values get
 // updated.
-
 class DatasetToggles extends ConsumerStatefulWidget {
   const DatasetToggles({super.key});
 
@@ -45,12 +45,37 @@ class DatasetToggles extends ConsumerStatefulWidget {
 
 class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   @override
+  void initState() {
+    super.initState();
+
+    // Load initial toggle states from SharedPreferences into providers.
+    _loadInitialStates();
+  }
+
+  Future<void> _loadInitialStates() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Read and update providers from SharedPreferences.
+    ref.read(cleanseProvider.notifier).state =
+        prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+    ref.read(normaliseProvider.notifier).state =
+        prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+    ref.read(partitionProvider.notifier).state =
+        prefs.getBool('partition') ?? ref.read(partitionProvider);
+  }
+
+  Future<void> _updateSharedPreferences(String key, bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, value);
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Watch providers to ensure UI updates when the state changes.
-
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
     bool partition = ref.watch(partitionProvider);
+
     return ToggleButtons(
       isSelected: [cleanse, normalise, partition],
       onPressed: (int index) {
@@ -58,10 +83,18 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           switch (index) {
             case 0:
               ref.read(cleanseProvider.notifier).state = !cleanse;
+              _updateSharedPreferences('cleanse', !cleanse);
+              break;
+
             case 1:
               ref.read(normaliseProvider.notifier).state = !normalise;
+              _updateSharedPreferences('normalise', !normalise);
+              break;
+
             case 2:
               ref.read(partitionProvider.notifier).state = !partition;
+              _updateSharedPreferences('partition', !partition);
+              break;
           }
         });
       },
@@ -95,8 +128,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
           ''',
           child: const Icon(Icons.auto_fix_high_outlined),
-          // child: Icon(Icons.art_track),
-          // child: Icon(Icons.ac_unit),
         ),
 
         // PARTITION
@@ -119,7 +150,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
           ''',
           child: const Icon(Icons.horizontal_split),
-          // child: Icon(Icons.assessment_outlined),
         ),
       ],
     );

@@ -215,10 +215,6 @@ class SettingsDialog extends ConsumerStatefulWidget {
 class SettingsDialogState extends ConsumerState<SettingsDialog> {
   String? _selectedTheme;
 
-  bool _cleanse = false;
-  bool _normalise = false;
-  bool _partition = false;
-
   @override
   void initState() {
     super.initState();
@@ -233,13 +229,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         .read(settingsGraphicThemeProvider.notifier)
         .setGraphicTheme(_selectedTheme!);
 
-    // Initialize toggle states from providers.
-
-    _cleanse = ref.read(cleanseProvider);
-    _normalise = ref.read(normaliseProvider);
-    _partition = ref.read(partitionProvider);
-
-    // Load toggle states from shared preferences.
+    // Load toggle states from shared preferences to ensure persistence.
 
     _loadToggleStates();
   }
@@ -247,45 +237,34 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   Future<void> _loadToggleStates() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Load cleanse toggle state from preferences.
+    // Update providers with saved toggle states.
 
-    setState(() {
-      _cleanse = prefs.getBool('cleanse') ?? false;
-      _normalise = prefs.getBool('normalise') ?? false;
-      _partition = prefs.getBool('partition') ?? false;
-    });
-
-    // Update the providers with loaded values.
-
-    ref.read(cleanseProvider.notifier).state = _cleanse;
-    ref.read(normaliseProvider.notifier).state = _normalise;
-    ref.read(partitionProvider.notifier).state = _partition;
+    ref.read(cleanseProvider.notifier).state =
+        prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+    ref.read(normaliseProvider.notifier).state =
+        prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+    ref.read(partitionProvider.notifier).state =
+        prefs.getBool('partition') ?? ref.read(partitionProvider);
   }
 
   Future<void> _saveToggleStates() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Save cleanse toggle state to preferences.
+    // Save the latest provider states to preferences.
 
-    await prefs.setBool('cleanse', _cleanse);
-    await prefs.setBool('normalise', _normalise);
-    await prefs.setBool('partition', _partition);
+    await prefs.setBool('cleanse', ref.read(cleanseProvider));
+    await prefs.setBool('normalise', ref.read(normaliseProvider));
+    await prefs.setBool('partition', ref.read(partitionProvider));
   }
 
   void _resetToggleStates() {
-    // Reset all toggles to default values.
+    // Reset all toggles to default (off).
 
-    setState(() {
-      _cleanse = false;
-      _normalise = false;
-      _partition = false;
-    });
+    ref.read(cleanseProvider.notifier).state = false;
+    ref.read(normaliseProvider.notifier).state = false;
+    ref.read(partitionProvider.notifier).state = false;
 
-    // Update providers and save default states.
-
-    ref.read(cleanseProvider.notifier).state = _cleanse;
-    ref.read(normaliseProvider.notifier).state = _normalise;
-    ref.read(partitionProvider.notifier).state = _partition;
+    // Save the reset states to preferences.
 
     _saveToggleStates();
   }
@@ -294,7 +273,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    // Main settings dialog layout.
+    // Watch provider values to ensure UI stays in sync.
+
+    final cleanse = ref.watch(cleanseProvider);
+    final normalise = ref.watch(normaliseProvider);
+    final partition = ref.watch(partitionProvider);
 
     return Material(
       color: Colors.transparent,
@@ -387,31 +370,21 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                     const SizedBox(height: 20),
 
-                    _buildToggleRow('Cleanse', _cleanse, (value) {
-                      setState(() {
-                        _cleanse = value;
-                      });
+                    // Build toggle rows synced with providers.
 
+                    _buildToggleRow('Cleanse', cleanse, (value) {
                       ref.read(cleanseProvider.notifier).state = value;
 
                       _saveToggleStates();
                     }),
 
-                    _buildToggleRow('Unify', _normalise, (value) {
-                      setState(() {
-                        _normalise = value;
-                      });
-
+                    _buildToggleRow('Unify', normalise, (value) {
                       ref.read(normaliseProvider.notifier).state = value;
 
                       _saveToggleStates();
                     }),
 
-                    _buildToggleRow('Partition', _partition, (value) {
-                      setState(() {
-                        _partition = value;
-                      });
-
+                    _buildToggleRow('Partition', partition, (value) {
                       ref.read(partitionProvider.notifier).state = value;
 
                       _saveToggleStates();
@@ -452,9 +425,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   Widget _buildToggleRow(
       String label, bool value, ValueChanged<bool> onChanged) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start, // Align items to the start.
       children: [
-        Text(label, style: const TextStyle(fontSize: 16)),
+        Expanded(
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
         Switch(
           value: value,
           onChanged: onChanged,
