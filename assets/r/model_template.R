@@ -86,6 +86,15 @@ trds <- ds[tr, setdiff(vars, ignore)]
 
 trds <- trds[!is.na(trds[[target]]), ]
 
+# Subset the tuning data.
+
+tuds <- ds[tu, setdiff(vars, ignore)]
+
+# Remove rows with missing values for the target variable.
+
+tuds <- tuds[!is.na(tuds[[target]]), ]
+
+
 # TODO 20241112 gjw The tr, tu, te, indicies are now out od sync FIX THIS!!!!
 
 # Identify predictor variables (excluding the target variable).
