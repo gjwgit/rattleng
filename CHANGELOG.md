@@ -8,6 +8,8 @@ toward a 6.4 release.
 
 ## 6.4 FUTURE Using JSON to communicate meta data
 
++ Save SETTINGS between sessions [6.3.24 20241121 kev]
++ Check that R is installed and starts up properly on app startup [6.3.23 20241121 kev]
 + Bug fix for changing plot themes. Bob Muenchen updates. [6.3.22 20241119 gjw]
 + Add Sherlock dataset for Word Cloud demo [6.3.21 20241118 gjw]
 + ROLES selection in table [6.3.20 20241113 kev]
