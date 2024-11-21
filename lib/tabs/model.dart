@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-09-21 06:48:05 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-11-21 14:30:37 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -79,12 +79,12 @@ final List<Map<String, dynamic>> modelPanels = [
     'widget': const BoostPanel(),
   },
   {
-    'title': 'Word Cloud',
-    'widget': const WordCloudPanel(),
-  },
-  {
     'title': 'SVM',
     'widget': const SvmPanel(),
+  },
+  {
+    'title': 'Word Cloud',
+    'widget': const WordCloudPanel(),
   },
 ];
 
