@@ -123,7 +123,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     treeAlgorithm == AlgorithmType.traditional
         ? riskImage = '$tempDir/model_rpart_risk.svg'
-        : riskImage = '$tempDir/model_rpart_risk.svg';
+        : riskImage = '$tempDir/model_ctree_risk.svg';
 
     if (imageExists(riskImage)) {
       pages.add(

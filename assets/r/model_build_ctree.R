@@ -28,6 +28,7 @@
 
 library(party)       # Conditional inference trees
 library(partykit)    # Enhanced visualization and interpretation
+library(rattle)  
 
 # Define model type and description
 mtype <- "ctree"
@@ -59,7 +60,43 @@ print(model_ctree)
 summary(model_ctree)
 cat("\n")
 
-# Plot the resulting Conditional Inference Tree
+# Plot the resulting Conditional Inference Tree.
+
 svg("TEMPDIR/model_tree_ctree.svg")
 plot(model_ctree, main = paste("Conditional Inference Tree", target))
+dev.off()
+
+# Prepare probabilities for predictions.
+
+predicted_probs <- predict(model_ctree, newdata = tuds, type = "prob")
+predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
+  
+actual <- as.character(tuds[[target]])
+  
+# Create numeric risks vector.
+
+risks <- rep(1, length(actual))
+  
+# Use rattle's evaluateRisk.
+
+risk_results <- rattle::evaluateRisk(
+  predicted = as.numeric(as.factor(predicted)), 
+  actual = as.numeric(as.factor(actual)), 
+  risks = as.numeric(risks),
+)
+
+# Get unique levels of predicted.
+
+levels_predicted <- unique(predicted)
+levels_actual <- unique(actual)
+predicted <- as.character(predicted)
+predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
+actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_ctree_risk.svg")
+rattle::riskchart(predicted_numeric, actual_numeric, risks) +
+  labs(title="Risk Chart - Tuning Dataset") +
+  theme(plot.title=element_text(size=14))
 dev.off()
