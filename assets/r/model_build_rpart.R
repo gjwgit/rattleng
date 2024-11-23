@@ -35,6 +35,7 @@
 
 # Load required packages from the local library into the R session.
 
+library(rattle)
 library(rpart)        # ML: decision tree rpart().
 
 mtype <- "rpart"
@@ -103,15 +104,20 @@ risk_results <- rattle::evaluateRisk(
   risks = as.numeric(risks)
 )
 
-# Generate risk chart.
 
-svg("TEMPDIR/model_rpart_risk.svg")
 
 # Get unique levels of predicted.
 
 levels_predicted <- unique(predicted)
 levels_actual <- unique(actual)
+predicted <- as.character(predicted)
 predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
 actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
-rattle::riskchart(predicted_numeric, actual_numeric, risks)
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_rpart_risk.svg")
+rattle::riskchart(predicted_numeric, actual_numeric, risks) +
+  labs(title="Risk Chart - Tuning Dataset") +
+  theme(plot.title=element_text(size=14))
 dev.off()

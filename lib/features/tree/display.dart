@@ -119,6 +119,21 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
       );
     }
 
+    String riskImage = '';
+
+    treeAlgorithm == AlgorithmType.traditional
+        ? riskImage = '$tempDir/model_rpart_risk.svg'
+        : riskImage = '$tempDir/model_rpart_risk.svg';
+
+    if (imageExists(riskImage)) {
+      pages.add(
+        ImagePage(
+          title: 'RISK CHART',
+          path: riskImage,
+        ),
+      );
+    }
+
     return PageViewer(
       pageController: pageController,
       pages: pages,
