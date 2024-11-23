@@ -73,8 +73,8 @@ cat("\n")
 
 svg("TEMPDIR/model_tree_rpart.svg")
 rattle::fancyRpartPlot(model_rpart,
-                       main = "Decision Tree weather.csv $ TARGET_VAR",
-                       sub  = paste("TIMESTAMP", username))
+                       main         = "Decision Tree weather.csv $ TARGET_VAR",
+                       sub          = paste("TIMESTAMP", username))
 dev.off()
 
 # Output the rules from the tree.
@@ -87,7 +87,8 @@ rules <- rattle::asRules(model_rpart)
   
 # Prepare probabilities for predictions.
 
-predicted_probs <- predict(model_rpart, type = "prob")
+predicted_probs <- predict(model_rpart, 
+                           type         = "prob")
 predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
   
 actual <- as.character(tuds[[target]])
@@ -100,11 +101,9 @@ risks <- rep(1, length(actual))
 
 risk_results <- rattle::evaluateRisk(
   predicted = as.numeric(as.factor(predicted)), 
-  actual = as.numeric(as.factor(actual)), 
-  risks = as.numeric(risks)
+  actual    = as.numeric(as.factor(actual)), 
+  risks     = as.numeric(risks)
 )
-
-
 
 # Get unique levels of predicted.
 
@@ -119,5 +118,5 @@ actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 svg("TEMPDIR/model_rpart_risk.svg")
 rattle::riskchart(predicted_numeric, actual_numeric, risks) +
   labs(title="Risk Chart - Tuning Dataset") +
-  theme(plot.title=element_text(size=14))
+  theme(plot.title = element_text(size=14))
 dev.off()

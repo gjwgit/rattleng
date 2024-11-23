@@ -68,7 +68,9 @@ dev.off()
 
 # Prepare probabilities for predictions.
 
-predicted_probs <- predict(model_ctree, newdata = tuds, type = "prob")
+predicted_probs <- predict(model_ctree, 
+                           newdata      = tuds, 
+                           type         = "prob")
 predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
   
 actual <- as.character(tuds[[target]])
@@ -79,11 +81,9 @@ risks <- rep(1, length(actual))
   
 # Use rattle's evaluateRisk.
 
-risk_results <- rattle::evaluateRisk(
-  predicted = as.numeric(as.factor(predicted)), 
-  actual = as.numeric(as.factor(actual)), 
-  risks = as.numeric(risks),
-)
+risk_results <- rattle::evaluateRisk(predicted = as.numeric(as.factor(predicted)), 
+                                     actual    = as.numeric(as.factor(actual)), 
+                                     risks     = as.numeric(risks),)
 
 # Get unique levels of predicted.
 
@@ -97,6 +97,6 @@ actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 svg("TEMPDIR/model_ctree_risk.svg")
 rattle::riskchart(predicted_numeric, actual_numeric, risks) +
-  labs(title="Risk Chart - Tuning Dataset") +
-  theme(plot.title=element_text(size=14))
+  labs(title       = "Risk Chart - Tuning Dataset") +
+  theme(plot.title = element_text(size=14))
 dev.off()
