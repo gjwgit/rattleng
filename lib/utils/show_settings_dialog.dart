@@ -260,9 +260,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   void _resetToggleStates() {
     // Reset all toggles to default (off).
 
-    ref.read(cleanseProvider.notifier).state = false;
-    ref.read(normaliseProvider.notifier).state = false;
-    ref.read(partitionProvider.notifier).state = false;
+    ref.read(cleanseProvider.notifier).state = true;
+    ref.read(normaliseProvider.notifier).state = true;
+    ref.read(partitionProvider.notifier).state = true;
 
     // Save the reset states to preferences.
 
