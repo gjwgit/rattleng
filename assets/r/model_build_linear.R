@@ -24,6 +24,8 @@
 #
 # Author: Zheyuan Xu
 
+library(rattle)
+
 # Define model type and description.
 
 mtype <- "linear"
@@ -67,4 +69,42 @@ cat("\n")
 svg("TEMPDIR/model_glm_diagnostic_plots.svg")
 par(mfrow = c(2, 2))
 plot(model_glm)
+dev.off()
+
+# Prepare probabilities for predictions.
+
+predicted <- predict(model_glm, 
+                     newdata    = tuds, 
+                     type       = "response")
+  
+actual <- as.character(tuds[[target]])
+  
+# Create numeric risks vector.
+
+risks <- rep(1, length(actual))
+  
+# Use rattle's evaluateRisk.
+
+risk_results <- rattle::evaluateRisk(
+  predicted = as.numeric(as.factor(predicted)), 
+  actual    = as.numeric(as.factor(actual)), 
+  risks     = as.numeric(risks)
+)
+
+# Get unique levels of predicted.
+
+levels_predicted <- unique(predicted)
+levels_actual <- unique(actual)
+actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
+
+# Convert `predicted` to numeric, handling NA values.
+
+predicted_numeric <- suppressWarnings(as.numeric(predicted))
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_glm_risk.svg")
+rattle::riskchart(predicted_numeric, actual_numeric, risks) +
+  labs(title="Risk Chart - Tuning Dataset") +
+  theme(plot.title = element_text(size=14))
 dev.off()
