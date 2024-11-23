@@ -79,3 +79,39 @@ dev.off()
 # Output the rules from the tree.
 
 rattle::asRules(model_rpart)
+
+# Extract and print rules.
+
+rules <- rattle::asRules(model_rpart)
+  
+# Prepare probabilities for predictions.
+
+predicted_probs <- predict(model_rpart, type = "prob")
+predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
+  
+actual <- as.character(tuds[[target]])
+  
+# Create numeric risks vector.
+
+risks <- rep(1, length(actual))
+  
+# Use rattle's evaluateRisk.
+
+risk_results <- rattle::evaluateRisk(
+  predicted = as.numeric(as.factor(predicted)), 
+  actual = as.numeric(as.factor(actual)), 
+  risks = as.numeric(risks)
+)
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_risk_chart.svg")
+
+# Get unique levels of predicted.
+
+levels_predicted <- unique(predicted)
+levels_actual <- unique(actual)
+predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
+actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
+rattle::riskchart(predicted_numeric, actual_numeric, risks)
+dev.off()
