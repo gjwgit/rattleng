@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Tune WORDCLOUD handling. Disable features for txt [6.3.27 20241124 gjw]
 + Improve inbuilt R package downloader. [6.3.26 20241121 gjw]
 + Update Version with a tooltip to explain CHANGELOG link [6.3.25 20241121 gjw]
 + Save SETTINGS between sessions [6.3.24 20241121 kev]
