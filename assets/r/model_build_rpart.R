@@ -105,7 +105,7 @@ risk_results <- rattle::evaluateRisk(
 
 # Generate risk chart.
 
-svg("TEMPDIR/model_risk_chart.svg")
+svg("TEMPDIR/model_rpart_risk.svg")
 
 # Get unique levels of predicted.
 
