@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-11-23 16:55:39 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-11-23 21:14:32 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -45,7 +45,6 @@ import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/features/evaluate/panel.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/datatype.dart';
-import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/features/dataset/button.dart';
@@ -196,8 +195,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Index 2 is the TRANSFORM tab.
         if (_tabController.previousIndex == 0 ||
             _tabController.previousIndex == 2) {
-          String path = ref.read(pathProvider);
-
           // 20241123 gjw For a table type dataset we want to run the
           // dataset_template script.
 
