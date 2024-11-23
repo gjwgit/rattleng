@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Thursday 2024-11-21 21:52:06 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-11-23 21:10:40 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -41,6 +41,7 @@ import 'package:rattle/features/svm/panel.dart';
 import 'package:rattle/features/linear/panel.dart';
 import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/features/wordcloud/panel.dart';
+import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/utils/debug_text.dart';
@@ -150,6 +151,23 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
         TabBar(
           unselectedLabelColor: Colors.grey,
           controller: _tabController,
+          onTap: (int index) {
+            // 20241123 gjw Ignore the features except for Word Cloud if the
+            // data type of the loaded dataset is 'text' (i.e., not
+            // 'table'). The features are implemented assuming a table as the
+            // dataset except for Word Cloud which can handle text. So if the
+            // data type is not 'table' or the default '' then disable the other
+            // features by moving to the Overview feature. I tried wrapping Tab
+            // with an IgnorePointer but the ignore would not take. In fact I
+            // want to ignore Word Cloud if the data type is table.
+
+            final wcIndex =
+                modelPanels.indexWhere((item) => item['title'] == 'Word Cloud');
+            if (!['', 'table'].contains(ref.watch(datatypeProvider)) &&
+                index != wcIndex) {
+              _tabController.index = 0;
+            }
+          },
           tabs: filteredModelPanels.map((tab) {
             return Tab(
               text: tab['title'],

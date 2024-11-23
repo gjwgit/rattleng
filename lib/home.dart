@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2024-11-21 17:08:23 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-11-23 16:55:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -44,6 +44,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/features/evaluate/panel.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/source.dart';
@@ -197,9 +198,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
             _tabController.previousIndex == 2) {
           String path = ref.read(pathProvider);
 
-          // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
+          // 20241123 gjw For a table type dataset we want to run the
+          // dataset_template script.
 
-          if (path.isNotEmpty) {
+          if (ref.read(datatypeProvider) == 'table') {
             // 20241008 gjw On leaving the DATASET tab we run the data template
             // if there is a dataset loaded, as indicated by the path having a
             // value. We need to run the template here after we have loaded and
@@ -211,6 +213,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
             // `features/dataset/display.dart` after the dataset is loaded and
             // we need to wait until the roles are set before we run the
             // template.
+            //
+            // 20241123 gjw Only perform a dataset template if the path is not a
+            // text file.
 
             rSource(context, ref, ['dataset_template']);
           }

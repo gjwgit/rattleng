@@ -1,6 +1,6 @@
 // Reset the app.
 //
-// Time-stamp: <Wednesday 2024-10-09 09:13:30 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-11-23 16:44:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -49,6 +49,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/datatype.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/script.dart';
@@ -105,11 +107,13 @@ Future<void> reset(BuildContext context, WidgetRef ref) async {
   // Note that we do not reset the toggles - they need to remain as they are.
 
   ref.invalidate(datasetLoaded);
+  ref.invalidate(datatypeProvider);
   ref.invalidate(pathProvider);
   ref.invalidate(rolesProvider);
   ref.invalidate(typesProvider);
   ref.invalidate(scriptProvider);
   ref.invalidate(typesProvider);
+  ref.invalidate(metaDataProvider);
 
   // MODEL TAB
 
