@@ -26,10 +26,10 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/utils/reset.dart';
-import 'package:rattle/utils/word_wrap.dart';
 
 void showDatasetAlertDialog(
   BuildContext context,

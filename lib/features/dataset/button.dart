@@ -87,12 +87,17 @@ void showAlertPopup(
         content: Text(
           wordWrap('''
 
-//             Please note that if you load a new dataset it will reset the
-//             app. You will lose all the work already completed. Consider saving
-//             your R script from the Script tab before continuing.  Otherwise, are
-//             you sure you would like to reset?
+             Please note that if you load a new dataset it will reset the
+             app. You will lose all the work already completed. Consider saving
+             your R script from the Script tab before continuing.  Otherwise, are
+             you sure you would like to reset?
 
-//             '''),
+             '''),
+        ),
+      );
+    },
+  );
+}
 //         ),
 //         actions: <Widget>[
 //           TextButton(
