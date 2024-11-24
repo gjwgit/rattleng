@@ -31,7 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
-import 'package:rattle/utils/show_dataset_alert_dialog.dart.~1~';
+import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends ConsumerWidget {
