@@ -210,6 +210,17 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
           ),
         );
       }
+
+      String riskImage = '$tempDir/model_cforest_risk.svg';
+
+      if (imageExists(riskImage)) {
+        pages.add(
+          ImagePage(
+            title: 'RISK CHART',
+            path: riskImage,
+          ),
+        );
+      }
     }
 
     return PageViewer(
