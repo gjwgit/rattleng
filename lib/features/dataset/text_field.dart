@@ -66,9 +66,9 @@ class DatasetTextField extends ConsumerWidget {
       child: MarkdownTooltip(
         message: '''
 
-        You can type the actual path to a file containing
-        your dataset, perhaps as a CSV file, or the name of a
-        package dataset, like rattle::wattle.
+        **Filename:** You can paste or type the path to a file containing your
+        dataset. It is expected to be a **csv** or **txt** file, or the name of
+        a package dataset, like rattle::wattle.
 
         ''',
         child: TextField(
