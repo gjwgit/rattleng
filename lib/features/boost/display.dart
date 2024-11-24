@@ -103,6 +103,17 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           ),
         );
       }
+
+      String riskImage = '$tempDir/model_xgboost_risk.svg';
+
+      if (imageExists(riskImage)) {
+        pages.add(
+          ImagePage(
+            title: 'RISK CHART',
+            path: riskImage,
+          ),
+        );
+      }
     } else if (algorithm == 'Adaptive') {
       String content = rExtract(stdout, 'print(model_ada)');
 

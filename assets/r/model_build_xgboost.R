@@ -87,3 +87,67 @@ importance_plot <- importance_plot + expand_limits(y = max(importance_matrix$Imp
 print(importance_plot)
 
 dev.off()
+
+# Prepare probabilities for predictions.
+
+predicted <- predict(model_xgb, 
+                     newdata    = tuds,)
+  
+actual <- as.character(tuds[[target]])
+  
+# Create numeric risks vector.
+
+risks <- rep(1, length(actual))
+
+# Get unique levels of predicted.
+
+levels_predicted <- unique(predicted)
+levels_actual <- unique(actual)
+actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
+
+# Convert `predicted` to numeric, handling NA values.
+
+predicted_numeric <- suppressWarnings(as.numeric(predicted))
+
+# Replace NA or NaN in predicted_numeric.
+
+predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+
+# Replace NA or NaN in actual_numeric.
+
+actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
+
+# Replace NA or NaN in risks.
+
+risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
+
+# Step 1: Ensure predicted_numeric has valid probabilities (0 to 1).
+
+predicted_numeric <- ifelse(predicted_numeric < 0 | is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+
+# Step 2: Ensure actual_numeric is binary (0 or 1).
+
+actual_numeric <- ifelse(actual_numeric < 0 | actual_numeric > 1 | is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
+
+# Step 3: Ensure risks are valid and non-negative.
+
+risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
+
+# Step 4: Ensure all vectors have the same length.
+
+min_length <- min(length(predicted_numeric), length(actual_numeric), length(risks))
+predicted_numeric <- predicted_numeric[1:min_length]
+actual_numeric <- actual_numeric[1:min_length]
+risks <- risks[1:min_length]
+
+# Step 5: Ensure predicted_numeric has valid probabilities (0 to 1).
+
+predicted_numeric <- pmin(pmax(predicted_numeric, 0), 1)
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_xgboost_risk.svg")
+rattle::riskchart(predicted_numeric, actual_numeric, risks) +
+  labs(title = "Risk Chart - Tuning Dataset") +
+  theme(plot.title = element_text(size=14))
+dev.off()
