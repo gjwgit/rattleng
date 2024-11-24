@@ -433,23 +433,48 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                     // Build toggle rows synced with providers.
 
-                    _buildToggleRow('Cleanse', cleanse, (value) {
-                      ref.read(cleanseProvider.notifier).state = value;
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment
+                          .spaceBetween, // Distribute items evenly.
 
-                      _saveToggleStates();
-                    }),
+                      children: [
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Cleanse',
+                            cleanse,
+                            (value) {
+                              ref.read(cleanseProvider.notifier).state = value;
 
-                    _buildToggleRow('Unify', normalise, (value) {
-                      ref.read(normaliseProvider.notifier).state = value;
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Unify',
+                            normalise,
+                            (value) {
+                              ref.read(normaliseProvider.notifier).state =
+                                  value;
 
-                      _saveToggleStates();
-                    }),
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Partition',
+                            partition,
+                            (value) {
+                              ref.read(partitionProvider.notifier).state =
+                                  value;
 
-                    _buildToggleRow('Partition', partition, (value) {
-                      ref.read(partitionProvider.notifier).state = value;
-
-                      _saveToggleStates();
-                    }),
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -482,11 +507,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start, // Align items to the start.
       children: [
-        Expanded(
-          child: Text(
-            label,
-            style: const TextStyle(fontSize: 16),
-          ),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 16),
         ),
         Switch(
           value: value,
