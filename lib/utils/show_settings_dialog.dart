@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Thursday 2024-11-21 08:02:26 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-11-24 12:29:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,14 +28,15 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
-
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// List of available ggplot themes for the user to choose from.
 
@@ -304,13 +305,57 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      'Select Graphic Theme',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Graphic Theme Setting:** The graphic theme is used
+                          by many (but not all) of the plots in Rattle, and
+                          specifically by those plots using the ggplot2
+                          package. Hover over each theme for more details. The
+                          default is the Rattle theme.
+
+                          ''',
+                          child: Text(
+                            'Graphic Theme',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Restore default theme button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Theme:** Tap here to reset the Graphic Theme
+                            setting to the default theme for Rattle.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectedTheme = 'theme_rattle';
+                              });
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
                     ),
 
-                    const SizedBox(height: 20),
+                    configRowGap,
 
                     // Theme selection chips.
 
@@ -339,36 +384,52 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       }).toList(),
                     ),
 
-                    const SizedBox(height: 20),
-
-                    // Restore default theme button.
-
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _selectedTheme = 'theme_rattle';
-                        });
-
-                        ref
-                            .read(settingsGraphicThemeProvider.notifier)
-                            .setGraphicTheme(_selectedTheme!);
-
-                        rSource(context, ref, ['settings']);
-                      },
-                      child: const Text('RESTORE'),
-                    ),
-
-                    const SizedBox(height: 40),
+                    settingsGroupGap,
 
                     // Dataset Toggles section.
 
-                    const Text(
-                      'Dataset Toggles',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Dataset Toggles Setting:** The default setting of
+                          the dataset toggles, on starting up Rattle, is set
+                          here. During a session with Rattle the toggles may be
+                          changed by the user. If the *Sync* option is set, then
+                          the changes made by the user are tracked and restored
+                          on the next time Rattle is run.
+
+                          ''',
+                          child: const Text(
+                            'Dataset Toggles',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Reset Dataset Toggles to default button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Toggles:** Tap here to reset the Dataset Toggles
+                            setting to the default for Rattle.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: _resetToggleStates,
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
                     ),
 
-                    const SizedBox(height: 20),
+                    configRowGap,
 
                     // Build toggle rows synced with providers.
 
@@ -389,15 +450,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       _saveToggleStates();
                     }),
-
-                    const SizedBox(height: 20),
-
-                    // Reset Dataset Toggles to default button.
-
-                    ElevatedButton(
-                      onPressed: _resetToggleStates,
-                      child: const Text('Reset to default'),
-                    ),
                   ],
                 ),
               ),
