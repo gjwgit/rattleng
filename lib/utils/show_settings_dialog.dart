@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Sunday 2024-11-24 12:29:04 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-11-24 13:00:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -475,7 +475,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   // Build a toggle row with a label and a switch.
 
   Widget _buildToggleRow(
-      String label, bool value, ValueChanged<bool> onChanged) {
+    String label,
+    bool value,
+    ValueChanged<bool> onChanged,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start, // Align items to the start.
       children: [
