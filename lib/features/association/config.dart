@@ -25,11 +25,28 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/association.dart';
+import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/labelled_checkbox.dart';
+import 'package:rattle/widgets/number_field.dart';
+import 'package:rattle/widgets/vector_number_field.dart';
+
+/// Sort by methods of ASSOCIATION rules.
+
+List<String> associationRulesSortBy = [
+  'Support',
+  'Confidence',
+  'Lift',
+];
 
 /// The ASSOCIATION tab config currently consists of just an ACTIVITY button.
 ///
@@ -43,14 +60,33 @@ class AssociationConfig extends ConsumerStatefulWidget {
 }
 
 class AssociationConfigState extends ConsumerState<AssociationConfig> {
+  final TextEditingController _supportController = TextEditingController();
+  final TextEditingController _confidenceController = TextEditingController();
+  final TextEditingController _minLengthController = TextEditingController();
+  final TextEditingController _limitNumberMeasureController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose the controllers to free up resources.
+
+    _supportController.dispose();
+    _confidenceController.dispose();
+    _minLengthController.dispose();
+    _limitNumberMeasureController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    String sortByAssociation =
+        ref.read(sortByAssociationProvider.notifier).state;
+    bool basketsTicked = ref.read(basketsAssociationProvider.notifier).state;
+
     return Column(
       children: [
-        // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
-
+        configRowGap,
         Row(
           children: [
             // Space to the left of the configs.
@@ -60,10 +96,146 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              onPressed: () async {
+                if (context.mounted)
+                  await rSource(
+                    context,
+                    ref,
+                    ['model_template', 'model_build_association'],
+                  );
+                await ref.read(associationControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Association Rules'),
+            ),
+
+            configWidgetGap,
+
+            Text('Target: ${getTarget(ref)}'),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              key: const Key('basketsAssociationField'),
+              tooltip: '''
+
+              If checked, baskets are identified by the ident variable and items
+              in the basket by the target variable. Otherwise a basket is the 
+              collection of input variables.
+
+              ''',
+              label: 'Baskets',
+              provider: basketsAssociationProvider,
+              onSelected: (ticked) {
+                setState(() {
+                  if (ticked != null) {
+                    ref.read(basketsAssociationProvider.notifier).state =
+                        ticked;
+                  }
+                });
+              },
+            ),
+          ],
+        ),
+        configRowGap,
+        Row(
+          children: [
+            configLeftGap,
+            NumberField(
+              label: 'Support:',
+              key: const Key('supportAssociationField'),
+              controller: _supportController,
+              tooltip: '''
+
+                Support measures how frequently an item or itemset appears 
+                in a dataset, indicating its ove.
+
+                ''',
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+              ),
+              validator: (value) => validateDecimal(value),
+              stateProvider: supportAssociationProvider,
+              interval: 0.005,
+              decimalPlaces: 4,
+            ),
+            configWidgetGap,
+            NumberField(
+              label: 'Confidence:',
+              key: const Key('confidenceAssociationField'),
+              controller: _confidenceController,
+              tooltip: '''
+
+                Confidence measures the likelihood that an item appears in transactions 
+                containing another item, indicating the strength of the rule.
+
+                ''',
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+              ),
+              validator: (value) => validateDecimal(value),
+              stateProvider: confidenceAssociationProvider,
+              interval: 0.005,
+              decimalPlaces: 4,
+            ),
+            configWidgetGap,
+            NumberField(
+              label: 'Min Length:',
+              key: const Key('minLengthAssociationField'),
+              controller: _minLengthController,
+              tooltip: '''
+
+                Min length sets the minimum number of items in the itemsets or 
+                rules generated, controlling the complexity of the rules.
+
+                ''',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: validateVector,
+              stateProvider: minLengthAssociationProvider,
+            ),
+            configWidgetGap,
+            NumberField(
+              label: 'Limit Number:',
+              key: const Key('measuresLimitAssociationField'),
+              controller: _limitNumberMeasureController,
+              tooltip: '''
+
+                Limit the number of rules for calculating interest measures.
+
+                ''',
+              inputFormatter:
+                  FilteringTextInputFormatter.digitsOnly, // Integers only
+              validator: (value) => validateInteger(
+                value,
+                min: 2,
+              ),
+              stateProvider: interestMeasuresAssociationProvider,
+              enabled: !basketsTicked,
+            ),
+            configWidgetGap,
+            variableChooser(
+              'Sort by:',
+              associationRulesSortBy,
+              sortByAssociation,
+              ref,
+              sortByAssociationProvider,
+              tooltip: '''
+
+              Refer to ranking rules based on metrics such as support, confidence, 
+              or lift to prioritize the most significant and relevant patterns.
+
+              ''',
+              onChanged: (String? value) {
+                if (value != null) {
+                  ref.read(sortByAssociationProvider.notifier).state = value;
+                }
+              },
+              enabled: !basketsTicked,
             ),
           ],
         ),

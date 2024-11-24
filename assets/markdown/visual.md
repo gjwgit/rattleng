@@ -3,12 +3,12 @@
 Visual data analysis presents datasets through visual representations
 that include graphs, charts, plots and even animations. Typically they
 provide an understanding of how the values of a variable are
-distributed&mdash; the **distribution** of the data. You will identify
+distributed &mdash; the **distribution** of the data. You will identify
 patterns in the data that in themselves can provide insights, and even
 actionable understandings, from the data.
 
 Rattle provides some of the visualisations commonly used by data
-scientist to gain initial insights into the data. The R code used to
+scientists to gain initial insights into the data. The R code used to
 generate the examples here is captured and can be reviewed and saved
 to file via the **Script** tab. This will allow the code to be edited
 and extended to suit the data and to present the visualisations more
@@ -32,7 +32,7 @@ Charts](https://survivor.togaware.com/datascience/bar-chart.html),
 and the [Mosaic
 Plot](https://survivor.togaware.com/datascience/mosaic-plot.html).
 
-Different themes (colour ans style) for your plots can be chosen for
+Different themes (colour and style) for your plots can be chosen for
 all of the *ggplot2* based plots. See the [Data Science Desktop
 Survival
 Guide](https://survivor.togaware.com/datascience/themes-in-rattle.html)

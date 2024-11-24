@@ -22,13 +22,17 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Zheyuan Xu
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Define a provider for PageController.
+
+final associationControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
 
 final pageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
@@ -47,6 +51,10 @@ final missingPageControllerProvider = StateProvider<PageController>((ref) {
 });
 
 final correlationPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final evaluatePageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
 
@@ -78,6 +86,10 @@ final forestPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
 
+final linearPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
 final neuralPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });
@@ -91,5 +103,9 @@ final treePageControllerProvider = StateProvider<PageController>((ref) {
 });
 
 final wordcloudPageControllerProvider = StateProvider<PageController>((ref) {
+  return PageController();
+});
+
+final svmPageControllerProvider = StateProvider<PageController>((ref) {
   return PageController();
 });

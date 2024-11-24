@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-16 10:01:53 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 16:20:03 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,6 +35,7 @@ import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
@@ -207,14 +208,19 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               },
               child: const Text('Build Neural Network'),
             ),
-            configWidgetSpace,
+
+            configWidgetGap,
+
+            Text('Target: ${getTarget(ref)}'),
+
+            configWidgetGap,
 
             const Text(
               'Algorithm:',
               style: normalTextStyle,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: neuralAlgorithm.keys.toList(),
@@ -230,14 +236,14 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               },
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('NNET Trace'),
               tooltip: '''
 
-              Enable tracing optimization for the single layer neural
-              network. The prediction error is provided after every 10 training
+              Enable tracing optimization for the **single layer neural
+              network**. The prediction error is provided after every 10 training
               iterations in the Console.
 
               ''',
@@ -246,23 +252,38 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               enabled: algorithm == 'nnet',
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               tooltip: '''
 
-              Add skip-layer connections from input to output for the single
-              layer neural network.
+              Add skip-layer connections from input to output for the **single
+              layer neural network**.
 
               ''',
               label: 'Skip',
               provider: skipNeuralProvider,
               enabled: algorithm == 'nnet',
             ),
+            configWidgetGap,
+            LabelledCheckbox(
+              key: const Key('Neural Ignore Categoric'),
+              tooltip: '''
+
+              Build the model ignoring the categoric variables. Categoric
+              variables are handled by the neural net models by enumerating
+              their levels across the other variables. Because this can result
+              in many introduced variables we enable Ignore Categoric by
+              default.
+
+              ''',
+              label: 'Ignore Categoric',
+              provider: ignoreCategoricNeuralProvider,
+            ),
           ],
         ),
 
-        configRowSpace,
+        configRowGap,
 
         Row(
           children: [
@@ -274,10 +295,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                     tooltip: '''
 
-                    The Hidden Layer parameter here is used as the size
-                    parameter in the nnet() model call which specifies the
-                    number of units (neurons) in the single hidden layer of the
-                    neural network.
+                    The Hidden Layer parameter is used as the size parameter in
+                    the nnet() model which specifies the number of units
+                    (neurons) in the single hidden layer of the neural
+                    network. It is a simple integer.
               
                     ''',
                     inputFormatter:
@@ -291,17 +312,19 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     label: 'Hidden Layers',
                     tooltip: '''
 
-                    The Hidden Layers parameter here is a vector of comma
-                    separated integers specifying the number of hidden neurons
-                    (vertices) in each of the layers. The number of layers is
-                    the number of integers supplied.
+                    The Hidden Layers parameter is a vector of comma separated
+                    integers specifying the number of hidden neurons (vertices)
+                    in each of the layers. The number of layers is the number of
+                    integers supplied. For example, to specify a network
+                    architecture with 10 neurons in the first layer, 5 int he
+                    next, and 2 in the penultimate layer, we specify "10,5,2".
 
                     ''',
                     validator: validateVector,
                     inputFormatter:
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
                   ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Max Iterations:',
               key: const Key('maxit'),
@@ -319,10 +342,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxitNeuralProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Max Weights:',
-              key: const Key('max_NWts'),
+              key: const Key('max_nwts'),
               controller: _maxNWtsController,
               enabled: algorithm == 'nnet',
 
@@ -336,7 +359,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxNWtsProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Threshold:',
               key: const Key('thresholdNeuralField'),
@@ -356,7 +379,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               interval: 0.0005,
               decimalPlaces: 4,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Max Steps:',
               key: const Key('neuralMaxStepField'),
@@ -375,7 +398,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
           ],
         ),
-        configRowSpace,
+        configRowGap,
         Row(
           children: [
             variableChooser(
@@ -398,7 +421,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                 }
               },
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Action Function',
               actionFunction,
@@ -422,7 +445,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
           ],
         ),
-        configBotSpace,
+        configBotGap,
       ],
     );
   }

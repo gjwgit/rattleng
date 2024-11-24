@@ -28,11 +28,12 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 class DatasetButton extends ConsumerWidget {
   const DatasetButton({super.key});
@@ -52,7 +53,7 @@ class DatasetButton extends ConsumerWidget {
           );
         }
       },
-      child: const DelayedTooltip(
+      child: const MarkdownTooltip(
         message: '''
 
         Tap here to choose a dataset to load.  A popup provides options to load
@@ -66,25 +67,25 @@ class DatasetButton extends ConsumerWidget {
   }
 }
 
-// void showAlertPopup(
-//   BuildContext context,
-//   WidgetRef ref,
-//   bool loadNewDataset,
-// ) {
-//   // Show Alert Window and then reset the app after confirmation.
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return AlertDialog(
-//         title: const Row(
-//           children: [
-//             Icon(Icons.warning, color: Colors.red),
-//             SizedBox(width: 20),
-//             Text('Warning'),
-//           ],
-//         ),
-//         content: Text(
-//           wordWrap('''
+void showAlertPopup(
+  BuildContext context,
+  WidgetRef ref,
+  bool loadNewDataset,
+) {
+  // Show Alert Window and then reset the app after confirmation.
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.warning, color: Colors.red),
+            configWidgetGap,
+            Text('Warning'),
+          ],
+        ),
+        content: Text(
+          wordWrap('''
 
 //             Please note that if you load a new dataset it will reset the
 //             app. You will lose all the work already completed. Consider saving

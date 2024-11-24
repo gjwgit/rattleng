@@ -25,11 +25,31 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/svm.dart';
+import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
+import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/number_field.dart';
+
+/// Kernel setting of SVM.
+
+List<String> svmKernel = [
+  'Radial Basis (rbfdot)',
+  'Polynomial (polydot)',
+  'Linear (vanilladot)',
+  'Hyperbolic Tangent (tanhdot)',
+  'Laplacian (laplacedot)',
+  'Bessel (besseldot)',
+  'ANOVA RBF (anovadot)',
+  'Spline (splinedot)',
+];
 
 /// The SVM tab config currently consists of just an ACTIVITY button.
 ///
@@ -43,27 +63,97 @@ class SvmConfig extends ConsumerStatefulWidget {
 }
 
 class SvmConfigState extends ConsumerState<SvmConfig> {
+  final TextEditingController _svmDegreeController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose the controllers to free up resources.
+
+    _svmDegreeController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    String kernel = ref.read(kernelSVMProvider.notifier).state;
+
     return Column(
       children: [
         // Space above the beginning of the configs.
 
-        const SizedBox(height: 5),
+        configTopGap,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            const SizedBox(width: 5),
+            configLeftGap,
 
             // The BUILD button.
 
             ActivityButton(
-              onPressed: () {
-                showUnderConstruction(context);
+              onPressed: () async {
+                await rSource(
+                  context,
+                  ref,
+                  ['model_template', 'model_build_svm'],
+                );
+
+                await ref.read(svmPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build SVM Model'),
+            ),
+
+            configWidgetGap,
+
+            Text('Target: ${getTarget(ref)}'),
+
+            configWidgetGap,
+
+            variableChooser(
+              'Kernel:',
+              svmKernel,
+              kernel,
+              ref,
+              kernelSVMProvider,
+              tooltip: '''
+
+              A mathematical function that transforms data into a higher-dimensional space, 
+              enabling the model to find a more effective boundary between classes.
+
+              ''',
+              enabled: true,
+              onChanged: (String? value) {
+                setState(() {
+                  if (value != null) {
+                    ref.read(kernelSVMProvider.notifier).state = value;
+                  }
+                });
+              },
+            ),
+
+            configWidgetGap,
+
+            NumberField(
+              label: 'Degree:',
+              key: const Key('svm_degree'),
+              tooltip: '''
+
+              Controls the complexity of the polynomial decision boundary, 
+              with higher degrees allowing more complex relationships.
+
+              ''',
+              enabled: kernel == svmKernel[1],
+              controller: _svmDegreeController,
+              inputFormatter: FilteringTextInputFormatter.digitsOnly,
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: degreeSVMProvider,
             ),
           ],
         ),

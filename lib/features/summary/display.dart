@@ -1,11 +1,11 @@
-/// Widget to display the SUMMARY introduction and display output.
+/// Widget to display the SUMMARY introduction and R summary output.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-27 20:18:55 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-21 13:41:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,8 +64,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
+
     // BASIC R SUMMARY
-    ////////////////////////////////////////////////////////////////////////
 
     content = rExtractSummary(stdout);
 
@@ -96,17 +96,6 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           [base::summary(ds)](https://www.rdocumentation.org/packages/base/topics/summary).
 
           This is the most basic R command for summarising the dataset.
-
-          For **numeric data** the minimum, and maximum values are listed.
-          Between these we can see listed the first and third quartiles as well
-          as the median (the second quartile) and the mean.
-
-          For **categoric data** a frequency table is provided, showing the
-          frequency of the categoric values from the most frequent to the least
-          frequent.  Only the top few categoric values will be listed.
-
-          A count of **missing values** is shown for variables with
-          missing values.
 
           ''',
           content: content,
@@ -317,19 +306,18 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
-    // CROSSTAB<
-    ////////////////////////////////////////////////////////////////////////
+
+    // CROSSTAB
 
     content = rExtract(stdout, 'descr::CrossTable(ds');
 
-    // Remove any line beginning with +.
+    // When no CrossTab is generated the content will be empty. In R we output
+    // an empty line.
+
+    // Remove any line beginning with + by iterating over the lines and modify
+    // them.
 
     lines = content.split('\n');
-
-    // Iterate over the lines and modify them.
-
-    // Remove lines starting with '+'
-
     lines = lines.where((line) => !line.trimLeft().startsWith('+')).toList();
 
     // Join the lines back into a single string.

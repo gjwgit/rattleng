@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-15 06:48:05 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-11-21 16:05:24 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -42,7 +42,12 @@ options(install.packages.ask = FALSE)
 
 install_if_missing <- function(pkg) {
 
-  if (!requireNamespace(pkg, character.only=TRUE)) {
+  # 20241121 gjw When using `requireNamespace(p, character.only=TRUE)`
+  # here the `character.only` seemed to be giving an error `unused
+  # argument (character.only = TRUE)`. But from command line it did
+  # not. Odd. Removed it anyhow.
+
+  if (!requireNamespace(pkg)) {
 
     # Specify a directory for the library. Tested this on Ubuntu
     # (/home/fred/R/x86_64-pc-linux-gnu-library/4.4), Windows11
@@ -50,7 +55,7 @@ install_if_missing <- function(pkg) {
 
     lib_dir <- Sys.getenv("R_LIBS_USER")
 
-    # Make sure the directory already exists so we won;t be prompted
+    # Make sure the directory already exists so we won't be prompted
     # to create it.
     
     if (!dir.exists(lib_dir)) {
@@ -58,7 +63,7 @@ install_if_missing <- function(pkg) {
       message("Package Library Created: ", lib_dir)
     }
 
-    # Install the package without prompting for library creation
+    # Install the package without prompting for library creation.
 
     install.packages(pkg, lib=lib_dir, dependencies=TRUE, ask=FALSE)
   }
@@ -85,6 +90,9 @@ pkgs <- c(
   'VIM',
   'ada',
   'amap',
+  'arules',
+  'arulesViz',
+  'biclust',
   'corrplot',
   'descr',
   'fBasics',
@@ -110,15 +118,19 @@ pkgs <- c(
   'wskm',
   'xgboost')
 
-# Check if the package is instaleld and if not, install it.
+# Check if the package is installed and if not, install it.
 
 for (p in pkgs) {
   cat('Checking:', p, '\n')
   install_if_missing(p)
 }
 
-# As a separate process, load each of the packages from the library.
+# As a separate process, load each of the packages from the
+# library. 20241121 gjw Using `library(p)` will fail because the
+# argument `p` is not evaluated to a string so we wrap it in an
+# `eval()`.
 
 for (p in pkgs) {
-  require(p, character.only=TRUE)
+  eval(parse(text=sprintf('library(%s)', p)))
+  # require(p, character.only=TRUE)
 }

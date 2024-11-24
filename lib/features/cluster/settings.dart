@@ -98,7 +98,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
         Row(
           children: [
             NumberField(
@@ -116,7 +116,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: numberClusterProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Seed:',
               key: const Key('cluster_seed'),
@@ -133,7 +133,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: seedClusterProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Runs:',
               key: const Key('cluster_run'),
@@ -144,12 +144,12 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _runController,
-              enabled: type != 'Hierarchical',
+              enabled: type != 'Hierarchical' && type != 'BiCluster',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: runClusterProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             NumberField(
               label: 'Processors:',
               key: const Key('cluster_processor'),
@@ -164,7 +164,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: processorClusterProvider,
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Distance',
               distance,
@@ -184,7 +184,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
                 }
               },
             ),
-            configWidgetSpace,
+            configWidgetGap,
             variableChooser(
               'Link',
               link,

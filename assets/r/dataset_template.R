@@ -73,6 +73,7 @@ library(magrittr)
 # Identify variable roles.
 
 target <- "TARGET_VAR"
+ident <- "IDENT_VAR"
 risk   <- "RISK_VAR"
 id     <- c(ID_VARS)
 
@@ -162,8 +163,8 @@ nmobs
 
 # 20241008 gjw I don't think these are required here now.
 
-#glimpse(ds)
-#summary(ds)
+# glimpse(ds)
+# summary(ds)
 
 # 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
 

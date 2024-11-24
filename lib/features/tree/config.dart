@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Tuesday 2024-10-15 08:50:14 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 16:20:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -46,7 +46,7 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -226,7 +226,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 },
                 child: const Text('Build Decision Tree'),
               ),
-              configWidgetSpace,
+              configWidgetGap,
+              Text('Target: ${getTarget(ref)}'),
+              configWidgetGap,
               ChoiceChipTip<AlgorithmType>(
                 options: AlgorithmType.values,
                 getLabel: (AlgorithmType type) => type.displayName,
@@ -241,7 +243,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   });
                 },
               ),
-              configWidgetSpace,
+              configWidgetGap,
               LabelledCheckbox(
                 key: const Key('include_missing'),
                 tooltip: '''
@@ -254,7 +256,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               ),
             ],
           ),
-          configRowSpace,
+          configRowGap,
           // Min Split, Max Depth, and Min Bucket.
           Row(
             children: [
@@ -274,7 +276,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 0),
                 stateProvider: minSplitProvider,
               ),
-              configWidgetSpace,
+              configWidgetGap,
               NumberField(
                 label: 'Max Depth:',
                 key: const Key('maxDepthField'),
@@ -290,7 +292,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: maxDepthProvider,
               ),
-              configWidgetSpace,
+              configWidgetGap,
               NumberField(
                 label: 'Min Bucket:',
                 key: const Key('minBucketField'),
@@ -305,7 +307,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: minBucketProvider,
               ),
-              configWidgetSpace,
+              configWidgetGap,
               NumberField(
                 label: 'Complexity:',
                 key: const Key('complexityField'),
@@ -325,7 +327,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),
-              configWidgetSpace,
+              configWidgetGap,
               _buildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
@@ -346,7 +348,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ),
                 maxWidth: 10,
               ),
-              configWidgetSpace,
+              configWidgetGap,
               _buildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,
@@ -433,7 +435,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     required Key key,
   }) {
     return Expanded(
-      child: DelayedTooltip(
+      child: MarkdownTooltip(
         message: tooltip,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,6 @@
 /// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Tuesday 2024-10-08 08:32:22 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-11-23 16:46:54 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/debug_text.dart';
@@ -82,12 +83,16 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
     // dataset template is run in `home.dart` on leaving the DATASET tab.
 
     if (context.mounted) await rSource(context, ref, [ss, dc, dp]);
+
+    ref.read(datatypeProvider.notifier).state = 'table';
   } else if (path.endsWith('.txt')) {
     // 20241007 gjw We can also load a text file for the word cloud
     // functionality as a stop gap toward implementing more complete text mining
     // and language capabilities.
 
     if (context.mounted) await rSource(context, ref, [ss, dx]);
+
+    ref.read(datatypeProvider.notifier).state = 'text';
   } else {
     // 20241007 gjw Through the GUI we don't expect to be able to reach here.
 

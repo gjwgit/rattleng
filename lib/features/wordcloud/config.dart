@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Tuesday 2024-10-15 08:53:45 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-11-24 05:44:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,6 +30,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
@@ -45,7 +46,6 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart' show DelayedTooltip;
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class WordCloudConfig extends ConsumerStatefulWidget {
@@ -86,13 +86,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
     return Column(
       children: [
-        configTopSpace,
+        configTopGap,
 
         // BUILD button.
 
         Row(
           children: [
-            configLeftSpace,
+            configLeftGap,
             ActivityButton(
               pageControllerProvider:
                   wordcloudPageControllerProvider, // Optional navigation
@@ -138,7 +138,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ],
         ),
 
-        configRowSpace,
+        configRowGap,
 
         // Options for the current functionality.
 
@@ -158,7 +158,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: checkboxProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('stem'),
@@ -173,7 +173,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stemProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('remove_punctuation'),
@@ -186,7 +186,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: punctuationProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('remove_stopwords'),
@@ -199,14 +199,14 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stopwordProvider,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             Expanded(
-              child: DelayedTooltip(
+              child: MarkdownTooltip(
                 message: '''
                 
                 Select the language to filter out common stopwords from the word
-                cloud.  'SMART' means English stopwords from the SMART
+                cloud.  'SMART' covers English stopwords from the SMART
                 information retrieval system (as documented in Appendix 11 of
                 https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
 
@@ -227,7 +227,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ],
         ),
 
-        configRowSpace,
+        configRowGap,
 
         // Parameters for the current functionality.
 
@@ -236,11 +236,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           child: Row(
             children: [
               const Text('Tuning Parameters:  '),
-              configLabelSpace,
+              configLabelGap,
               // max word text field
               SizedBox(
                 width: 150.0,
-                child: DelayedTooltip(
+                child: MarkdownTooltip(
                   message: '''
 
                   Maximum number of words plotted.  Drop least frequent words.
@@ -257,10 +257,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ),
                 ),
               ),
-              configWidgetSpace,
+              configWidgetGap,
               SizedBox(
                 width: 150.0,
-                child: DelayedTooltip(
+                child: MarkdownTooltip(
                   message: '''
 
                   Filter out less frequent words.  If this results in all words
@@ -282,7 +282,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ),
         ),
 
-        configBotSpace,
+        configBotGap,
       ],
     );
   }

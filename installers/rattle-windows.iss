@@ -3,14 +3,16 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rattle"
-#define MyAppVersion "0.0.0"
+#define MyAppVersion "dev-windows-inno"
 #define MyAppPublisher "Togaware"
 #define MyAppURL "https://rattle.togaware.com/"
 #define MyAppExeName "rattle.exe"
 
 [Setup]
-; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
+; NOTE: The value of AppId uniquely identifies this application.
+; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+; (On Ubunut run `uuidgen` to generate a unique AppId.)
 AppId={{2C2A7757-EE3A-456D-ABCA-045C3C411AF2}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
@@ -38,13 +40,11 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+; Check the DIR command in the workflow to see what DLLs get generated.
+
 [Files]
 Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\flutter_pty.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\flutter_windows.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\screen_retriever_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\url_launcher_windows_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\window_manager_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\a\rattleng\rattleng\build\windows\x64\runner\Release\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:52:02 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 16:21:12 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -34,6 +34,7 @@ import 'package:rattle/features/boost/settings.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 
@@ -72,13 +73,13 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
       children: [
         // Space above the beginning of the configs.
 
-        configTopSpace,
+        configTopGap,
 
         Row(
           children: [
             // Space to the left of the configs.
 
-            configLeftSpace,
+            configLeftGap,
 
             // The BUILD button.
 
@@ -105,14 +106,18 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
               child: const Text('Build Boosted Trees'),
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
+
+            Text('Target: ${getTarget(ref)}'),
+
+            configWidgetGap,
 
             const Text(
               'Algorithm:',
               style: normalTextStyle,
             ),
 
-            configWidgetSpace,
+            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: boostAlgorithm.keys.toList(),
@@ -129,9 +134,9 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             ),
           ],
         ),
-        configRowSpace,
+        configRowGap,
         BoostSettings(algorithm: algorithm),
-        configBotSpace,
+        configBotGap,
       ],
     );
   }

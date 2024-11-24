@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Zheyuan Xu
 
 library;
 
@@ -29,11 +29,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/style.dart';
-import 'package:rattle/constants/sunken_box_decoration.dart';
+import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/association.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_empty.dart';
+import 'package:rattle/r/extract_association.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/page_viewer.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -48,22 +53,67 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
   @override
   Widget build(BuildContext context) {
     String stdout = ref.watch(stdoutProvider);
-    String content = rExtractEmpty(stdout);
+    bool associationBaskets = ref.read(basketsAssociationProvider);
 
-    return content == ''
-        ? showMarkdownFile(associationIntroFile, context)
-        : Expanded(
-            child: Container(
-              decoration: sunkenBoxDecoration,
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10),
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
-              ),
-            ),
-          );
+    final pageController = ref.watch(
+      associationControllerProvider,
+    );
+
+    List<Widget> pages = [showMarkdownFile(associationIntroFile, context)];
+    String content = '';
+    String measuresContent = '';
+
+    content = rExtractAssociation(stdout, true);
+    measuresContent = rExtractAssociation(stdout, false);
+
+    if (measuresContent.isNotEmpty && !associationBaskets) {
+      pages.add(
+        TextPage(
+          title: '# Interestingness Measures\n\n'
+              'Built using `apriori()`.\n\n',
+          content: '\n$measuresContent',
+        ),
+      );
+    }
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '# Association Rules\n\n'
+              'Built using `apriori()`.\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    if (!associationBaskets) {
+      String plotImage = '$tempDir/model_arules_item_plot.png';
+
+      if (imageExists(plotImage)) {
+        pages.add(
+          ImagePage(
+            title: 'ASSOCIATION RULES',
+            path: plotImage,
+            svgImage: false,
+          ),
+        );
+      }
+    }
+
+    String frequencyImage = '$tempDir/model_arules_item_frequency.svg';
+
+    if (imageExists(frequencyImage)) {
+      pages.add(
+        ImagePage(
+          title: 'ASSOCIATION FREQUENCY',
+          path: frequencyImage,
+        ),
+      );
+    }
+
+    return PageViewer(
+      pageController: pageController,
+      pages: pages,
+    );
   }
 }

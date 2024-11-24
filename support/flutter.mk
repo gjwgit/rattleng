@@ -123,7 +123,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix format ignore license todo
+prep: analyze fix format dcm ignore license todo
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -206,7 +206,7 @@ todo:
 .PHONY: license
 license:
 	@echo "Files without a LICENSE:\n"
-	@-find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
+	@-find lib -type f -name '*.dart' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
 	@echo $(SEPARATOR)
 
 .PHONY: riverpod
@@ -284,7 +284,7 @@ qtest:
 		echo "========================================"; \
 		echo $$t; /bin/echo -n $$t >&2; \
 		echo "========================================"; \
-		flutter test --dart-define=INTERACT=0 --device-id $$device_id $$t 2>/dev/null; \
+		flutter test --dart-define=INTERACT=0 --device-id $$device_id --reporter failures-only  $$t 2>/dev/null; \
 		if [ "$$?" -eq 0 ]; then /bin/echo ' YES' >&2; else /bin/echo ' NO *****' >&2; fi; \
 	done
 	@echo $(SEPARATOR)
@@ -296,7 +296,7 @@ qtest:
 		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
 		exit 1; \
 	fi; \
-	flutter test --dart-define=INTERACT=0 --device-id $$device_id integration_test/$*.dart 2>/dev/null
+	flutter test --dart-define=INTERACT=0 --device-id $$device_id --reporter failures-only integration_test/$*.dart 2>/dev/null
 
 
 .PHONY: qtest.tmp

@@ -26,6 +26,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/constants/status.dart';
@@ -37,7 +38,6 @@ import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/check_file_exists.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
-import 'package:rattle/widgets/delayed_tooltip.dart';
 
 class DatasetTextField extends ConsumerWidget {
   const DatasetTextField({super.key});
@@ -63,7 +63,7 @@ class DatasetTextField extends ConsumerWidget {
     return Expanded(
       // Use [Expanded] to fill the remainder of the row.
 
-      child: DelayedTooltip(
+      child: MarkdownTooltip(
         message: '''
 
         You can type the actual path to a file containing

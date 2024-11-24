@@ -1,6 +1,6 @@
 /// Settings provider.
 //
-// Time-stamp: <Sunday 2024-09-08 12:15:34 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-11-21 08:05:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Define a provider for managing settings.
 
@@ -41,7 +42,31 @@ class SettingsNotifier extends StateNotifier<String> {
 
 // The provider we will use in the app.
 
+class SettingsGraphicThemeNotifier extends StateNotifier<String> {
+  static const _themeKey = 'graphic_theme';
+
+  SettingsGraphicThemeNotifier() : super('theme_rattle') {
+    _loadTheme();
+  }
+
+  void setGraphicTheme(String theme) async {
+    state = theme;
+
+    // Save the theme to shared_preferences.
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_themeKey, theme);
+  }
+
+  Future<void> _loadTheme() async {
+    // Load the theme from shared_preferences.
+
+    final prefs = await SharedPreferences.getInstance();
+    state = prefs.getString(_themeKey) ?? 'theme_rattle';
+  }
+}
+
 final settingsGraphicThemeProvider =
-    StateNotifierProvider<SettingsNotifier, String>((ref) {
-  return SettingsNotifier();
-});
+    StateNotifierProvider<SettingsGraphicThemeNotifier, String>(
+  (ref) => SettingsGraphicThemeNotifier(),
+);

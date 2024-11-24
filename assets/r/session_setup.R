@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 17:24:37 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-11-21 08:01:00 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -164,17 +164,17 @@ if (username == "") {
 # more than 20 levels.
 
 is_large_factor <- function(x, maxfactor = 20) {
-  is_categorical <- is.factor(x) || is.ordered(x) || is.character(x)
+  is_cat <- is.factor(x) || is.ordered(x) || is.character(x)
   
   if (is.factor(x) || is.ordered(x)) {
     num_levels <- length(levels(x))
   } else if (is.character(x)) {
     num_levels <- length(unique(x))
   } else {
-    num_levels <- NA  # For non-categorical variables
+    num_levels <- NA  # For non-categoric variables
   }
   
-  if (is_categorical) {
+  if (is_cat) {
     return(num_levels > maxfactor)
   }
 
@@ -196,17 +196,17 @@ unique_columns <- function(df) {
 }
 
 find_fewest_levels <- function(df) {
-  # Select only the categorical (factor) columns from the data frame
-  categoric_vars <- df[, sapply(df, is.factor), drop = FALSE]
+  # Select only the categoric (factor) columns from the data frame
+  cat_vars <- df[, sapply(df, is.factor), drop = FALSE]
   
-  # Check if there are any categorical variables
-  if (ncol(categoric_vars) > 0) {
+  # Check if there are any categoric variables
+  if (ncol(cat_vars) > 0) {
     # Find the variable with the fewest levels
-    fewest_levels_var <- names(categoric_vars)[which.min(sapply(categoric_vars, nlevels))]
+    fewest_levels_var <- names(cat_vars)[which.min(sapply(cat_vars, nlevels))]
     
     # Find all variables that have the fewest levels
-    min_levels <- min(sapply(categoric_vars, nlevels))
-    fewest_levels_vars <- names(categoric_vars)[sapply(categoric_vars, nlevels) == min_levels]
+    min_levels <- min(sapply(cat_vars, nlevels))
+    fewest_levels_vars <- names(cat_vars)[sapply(cat_vars, nlevels) == min_levels]
     
     # Select the last variable in case of ties
     fewest_levels_var <- fewest_levels_vars[length(fewest_levels_vars)]
@@ -214,7 +214,7 @@ find_fewest_levels <- function(df) {
     # Return the variable with the fewest levels
     return(fewest_levels_var)
   } else {
-    # If no categorical variables are found, return a message
+    # If no categoric variables are found, return a message
     return("")
   }
 }
@@ -251,4 +251,5 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 
 # theme_rattle <- theme_economist
 
-theme_default <- theme_rattle
+## MOVED TO USING SETTINGS_GRAPHIC_THEME IN SCRIPTS
+## theme_default <- theme_rattle

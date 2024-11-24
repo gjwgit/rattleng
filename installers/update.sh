@@ -1,75 +1,82 @@
 #!/bin/bash
 
-# Assume the latest is a Bump version - we only run the actions on a bump version.
+# 20241024 gjw After a github action has built the bundles and stored
+# them as artefacts on github, we can upload them to togaware.com for
+# distribution.
 
-if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "completed" ]; then
-    rm -f rattle-dev-linux.zip
+APP=rattle
 
-    # Identify the latest Bump Version but one. The latest is now the
-    # integration test, and the one before it is the installer build.
+HOST=togaware.com
+FLDR=apps/access/
+DEST=${HOST}:${FLDR}
 
-    bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
-		 | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' | head -n 1)
+# From the recent 'Build Installers' workflows, identify the 'Bump
+# version' pushes to the repositroy and get the latest one as the one
+# we want to download the artefacts.
 
-    # Determine the latest version. Assumes the latest action is a
-    # Bump veriosn push.
+bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
+	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+	     | head -n 1)
+
+if [[ -z "${bumpId}" ]]; then
+    echo "No workflow found."
+    exit 1
+fi
+
+status=$(gh run view ${bumpId} --json status --jq '.status')
+conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
+
+# Only proceed if the latest action hase been completed successfully
+
+if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
+
+    echo 'Uploads are going to ${DEST}.'
+    echo
+
+    # Determine the latest version from pubspec.yaml. Assumes the
+    # latest Bump Version push is the same version.
     
-    version=$(gh run list --limit 100 --json databaseId,displayTitle \
-		  | jq -r '.[] | select(.displayTitle | startswith("Bump version")) | .displayTitle' \
-		  | head -n 1 \
-	          | cut -d' ' -f3)
+    version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
 
-    # Ubuntu 20.04 20240801
-    
-    # gh run download ${bumpId} --name rattle-ubuntu
-    # mv rattle-dev-ubuntu.zip rattleng-dev-ubuntu.zip
-    # cp rattleng-dev-ubuntu.zip rattleng-${version}-ubuntu.zip
-    # chmod a+r rattleng*.zip
-    # rsync -avzh rattleng-dev-ubuntu.zip rattleng-${version}-ubuntu.zip togaware.com:apps/access/
+    echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
 
-    # Linux Ubuntu 20.04 20240801 moved from 22.04
-
-    gh run download ${bumpId} --name rattle-linux-zip
-    mv rattle-dev-linux.zip rattleng-dev-linux.zip
-    cp rattleng-dev-linux.zip rattleng-${version}-linux.zip
-    chmod a+r rattleng*.zip
-    rsync -avzh rattleng-${version}-linux.zip togaware.com:apps/access/
-    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-linux.zip rattleng-dev-linux.zip"
+    gh run download ${bumpId} --name ${APP}-linux-zip
+    rsync -avzh ${APP}-dev-linux.zip ${DEST}
+    unzip -oq ${APP}-dev-linux.zip -d ${HOME}/.local/share/${APP}/
+    mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
 
     echo ""
 
-    # Windows Inno
+    echo '***** UPLOAD WINDOWS INNO'
 
-    gh run download ${bumpId} --name rattle-windows-inno
-    mv rattle-0.0.0.exe rattleng-${version}-windows-inno.exe
-    cp rattleng-${version}-windows-inno.exe rattleng-dev-windows-inno.exe
-    chmod a+r rattleng*-inno.exe
-    rsync -avzh rattleng-${version}-windows-inno.exe togaware.com:apps/access/
-    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-windows-inno.exe rattleng-dev-windows-inno.exe"
+    gh run download ${bumpId} --name ${APP}-windows-inno
+    rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
+    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}-${version}-windows-inno.exe
 
     echo ""
 
-    # Windows Zip
+    echo '***** UPLOAD WINDOWS ZIP'
 
-    gh run download ${bumpId} --name rattle-windows-zip
-    mv rattle-dev-windows.zip rattleng-dev-windows.zip
-    cp rattleng-dev-windows.zip rattleng-${version}-windows.zip
-    chmod a+r rattleng*.zip
-    rsync -avzh rattleng-${version}-windows.zip togaware.com:apps/access/
-    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-windows.zip rattleng-dev-windows.zip"
+    gh run download ${bumpId} --name ${APP}-windows-zip
+    rsync -avzh ${APP}-dev-windows.zip ${DEST}
+    mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}-${version}-windows.zip
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
+
     
     echo ""
 
-    # MacOS
+    echo '***** UPLOAD MACOS'
 
-    gh run download ${bumpId} --name rattle-macos-zip
-    mv rattle-dev-macos.zip rattleng-dev-macos.zip
-    cp rattleng-dev-macos.zip rattleng-${version}-macos.zip
-    chmod a+r rattleng*.zip
-    rsync -avzh rattleng-${version}-macos.zip togaware.com:apps/access/
-    ssh togaware.com "cd apps/access; cp -f rattleng-${version}-macos.zip rattleng-dev-macos.zip"
-
+    gh run download ${bumpId} --name ${APP}-macos-zip
+    rsync -avzh ${APP}-dev-macos.zip ${DEST}
+    mv ${APP}-dev-macos.zip ARCHIVE/${APP}-${version}-macos.zip
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
+    
 else
-    echo "Latest github actions has not completed. Exiting."
+    gh run view ${bumpId}
+    gh run view ${bumpId} --json status,conclusion
+    echo ''
+    echo "***** Latest github actions has not successfully completed. Exiting."
+    echo ''
     exit 1
 fi

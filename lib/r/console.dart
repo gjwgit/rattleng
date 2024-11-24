@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Friday 2024-08-09 20:09:22 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-11-20 17:08:38 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -27,6 +27,9 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rattle/providers/checked_r.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/utils/show_ok.dart';
 
 import 'package:xterm/xterm.dart';
 
@@ -50,8 +53,55 @@ class _RConsoleState extends ConsumerState<RConsole> {
   @override
   void initState() {
     super.initState();
-    // Initialize the pseudo terminal via the provider.
-    ref.read(ptyProvider);
+
+    // Try initializing the pseudo terminal and catch any errors for Windows.
+
+    try {
+      ref.read(ptyProvider);
+    } catch (e) {
+      // If there is an error on Windows machine then show a popup message.
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showOk(
+          context: context,
+          title: 'Console Error',
+          content: '''
+
+              R failed to start. Please check the **Console** tab for errors.
+
+              ''',
+        );
+      });
+    }
+
+    // Check `R Version` is found in the Console (stdout) and only check it once
+    // rather than every build by keeping track with a provider.
+
+    Future.delayed(Duration(milliseconds: 3000), () {
+      // Only proceed if `checkedRProvider` is false. We only want to check it
+      // once, rather than every time we re-build the Console.
+
+      if (!ref.read(checkedRProvider)) {
+        // Update the provider state to prevent repeated execution.
+
+        ref.read(checkedRProvider.notifier).state = true;
+
+        final stdout = ref.watch(stdoutProvider);
+
+        if (stdout.isNotEmpty && !stdout.contains('R version')) {
+          showOk(
+            context: context,
+            title: 'R Error',
+            content: '''
+
+              R does not appear to have started. Please check the **Console**
+              tab for errors.
+
+              ''',
+          );
+        }
+      }
+    });
   }
 
   // There is no TerminalThemes for the black on white that I prefer and am

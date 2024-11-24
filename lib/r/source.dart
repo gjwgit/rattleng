@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-10-17 05:42:58 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-11-21 08:52:48 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -35,13 +35,16 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/association.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/complexity.dart';
+import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
+import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/max_nwts.dart';
@@ -57,6 +60,8 @@ import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/summary_crosstab.dart';
+import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
@@ -86,6 +91,7 @@ import 'package:rattle/utils/update_script.dart';
 /// rattleNG. So decided to remove the angle brackets. The scripts still can not
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
+///
 
 Future<void> rSource(
   BuildContext context,
@@ -119,9 +125,21 @@ Future<void> rSource(
   bool includingMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
   bool nnetSkip = ref.read(skipNeuralProvider);
+  bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
+
+  // ASSOCIATION
+
+  bool associationBaskets = ref.read(basketsAssociationProvider);
+  double associationSupport = ref.read(supportAssociationProvider);
+  double associationConfidence = ref.read(confidenceAssociationProvider);
+  int associationMinLength = ref.read(minLengthAssociationProvider);
+  int associationInterestMeasureLimit =
+      ref.read(interestMeasuresAssociationProvider);
+  String associationRulesSortBy =
+      ref.read(sortByAssociationProvider).toLowerCase();
 
   // BOOST
 
@@ -145,6 +163,17 @@ Future<void> rSource(
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
 
+  // FOREST
+
+  int forestTrees = ref.read(treeNumForestProvider);
+  int forestPredictorNum = ref.read(predictorNumForestProvider);
+  int forestNo = ref.read(treeNoForestProvider);
+  bool forestImpute = ref.read(imputeForestProvider);
+
+  // LINEAR
+
+  String linearFamily = ref.read(familyLinearProvider).toLowerCase();
+
   // NEURAL
 
   int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
@@ -153,6 +182,16 @@ Future<void> rSource(
   double neuralThreshold = ref.read(thresholdNeuralProvider);
   String neuralErrorFct = ref.read(errorFctNeuralProvider);
   String neuralActionFct = ref.read(actionFctNeuralProvider);
+
+  // SVM
+
+  RegExp regex = RegExp(r'\(([^)]+)\)');
+  String svmKernelItem = ref.read(kernelSVMProvider);
+  final match = regex.firstMatch(svmKernelItem);
+  String svmKernel = match != null ? match.group(1)! : '';
+
+  int svmDegree = ref.read(degreeSVMProvider);
+
   String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
 
   int interval = ref.read(intervalProvider);
@@ -178,17 +217,14 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // GLOBAL
+  // Replace Global template patterns with their values. These are not specific
+  // to any particular feature,
 
   code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
-
-  // VERSION.
 
   PackageInfo info = await PackageInfo.fromPlatform();
 
   code = code.replaceAll('VERSION', info.version);
-
-  // FILENAME
 
   // 20240825 lutra Fix the path to the dataset to ensure that the Windows path
   // has been correctly converted to a Unix path for R.
@@ -197,8 +233,6 @@ Future<void> rSource(
     path = path.replaceAll(r'\', '/');
   }
   code = code.replaceAll('FILENAME', path);
-
-  // TEMPDIR
 
   code = code.replaceAll('TEMPDIR', tempDir);
 
@@ -214,7 +248,22 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  // CLEANUP
+  // BOOST
+
+  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
+  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
+  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
+  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
+  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
+  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
+  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
+  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // LINEAR
+
+  code = code.replaceAll('LINEAR_FAMILY', '"$linearFamily"');
 
   // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
 
@@ -271,9 +320,12 @@ Future<void> rSource(
   // Extract the target variable from the rolesProvider.
 
   String target = 'NULL';
+  String ident = 'NULL';
   roles.forEach((key, value) {
     if (value == Role.target) {
       target = key;
+    } else if (value == Role.ident) {
+      ident = key;
     }
   });
 
@@ -293,6 +345,11 @@ Future<void> rSource(
     code = code.replaceAll('"TARGET_VAR"', target);
   }
   code = code.replaceAll('TARGET_VAR', target);
+
+  if (ident == 'NULL') {
+    code = code.replaceAll('"IDENT_VAR"', ident);
+  }
+  code = code.replaceAll('IDENT_VAR', ident);
 
   //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
 
@@ -352,6 +409,34 @@ Future<void> rSource(
   code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
 
   ////////////////////////////////////////////////////////////////////////
+  // ASSOCIATE
+
+  code = code.replaceAll(
+    'ASSOCIATION_BASKETS',
+    associationBaskets ? 'TRUE' : 'FALSE',
+  );
+  code = code.replaceAll(
+    'ASSOCIATION_SUPPORT',
+    associationSupport.toString(),
+  );
+  code = code.replaceAll(
+    'ASSOCIATION_CONFIDENCE',
+    associationConfidence.toString(),
+  );
+  code = code.replaceAll(
+    'ASSOCIATION_MIN_LENGTH',
+    associationMinLength.toString(),
+  );
+
+  code = code.replaceAll(
+    'ASSOCIATION_INTEREST_MEASURE',
+    associationInterestMeasureLimit.toString(),
+  );
+
+  code =
+      code.replaceAll('ASSOCIATION_RULES_SORT_BY', '"$associationRulesSortBy"');
+
+  ////////////////////////////////////////////////////////////////////////
 
   // BOOST
 
@@ -365,7 +450,6 @@ Future<void> rSource(
   code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
-
   // CLUSTER
 
   code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
@@ -378,10 +462,26 @@ Future<void> rSource(
   code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
 
   ////////////////////////////////////////////////////////////////////////
+  // EXPLORE - VISUAL - BOXPLOT
 
+  code = code.replaceAll('BOXPLOT_NOTCH', 'FALSE');
+
+  ////////////////////////////////////////////////////////////////////////
+  // FOREST
+
+  code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
+  code = code.replaceAll('RF_MTRY', forestPredictorNum.toString());
+  code = code.replaceAll('RF_NO_TREE', forestNo.toString());
+  code = code.replaceAll(
+    'RF_NA_ACTION',
+    forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
+  );
+
+  ////////////////////////////////////////////////////////////////////////
   // NEURAL
 
   code = code.replaceAll('NNET_HIDDEN_LAYERS', hiddenLayerSizes.toString());
+
   code = code.replaceAll('NEURAL_HIDDEN_LAYERS', 'c($hiddenNeurons)');
   code = code.replaceAll('NEURAL_MAXIT', nnetMaxit.toString());
   code = code.replaceAll('NEURAL_MAX_NWTS', nnetMaxNWts.toString());
@@ -390,8 +490,18 @@ Future<void> rSource(
   code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
   code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
 
-  ////////////////////////////////////////////////////////////////////////
+  code = code.replaceAll(
+    'NEURAL_IGNORE_CATEGORIC',
+    neuralIgnoreCategoric.toString().toUpperCase(),
+  );
 
+  ////////////////////////////////////////////////////////////////////////
+  // SVM
+
+  code = code.replaceAll('SVM_KERNEL', '"${svmKernel.toString()}"');
+  code = code.replaceAll('SVM_DEGREE', svmDegree.toString());
+
+  ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD
 
   code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
@@ -413,11 +523,16 @@ Future<void> rSource(
       code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
   code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
 
-  // TODO if (script == 'model_build_random_forest')) {
+  ////////////////////////////////////////////////////////////////////////
 
-  code = code.replaceAll('RF_NUM_TREES', '500');
-  code = code.replaceAll('RF_MTRY', '4');
-  code = code.replaceAll('RF_NA_ACTION', 'randomForest::na.roughfix');
+  // read the boolean value from the provider.
+
+  bool includeCrossTab = ref.watch(crossTabSummaryProvider);
+
+  // Cross tabulation summary.
+
+  code =
+      code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 

@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Tuesday 2024-10-15 20:12:33 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-10-20 17:29:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -36,6 +36,7 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/ignore_variables.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/open_demo_dataset.dart';
 
@@ -51,218 +52,91 @@ final List<String> demoVariablesToIgnore = [
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Neural NNet Params:', () {
-    testWidgets('Load, Ignore, Navigate, Settings, Build.', (
-      WidgetTester tester,
-    ) async {
-      app.main();
-      await tester.pumpAndSettle();
+  testWidgets('Demo Model Neural NNet Config:', (
+    WidgetTester tester,
+  ) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-      await tester.pump(interact);
+    await openDemoDataset(tester);
 
-      await openDemoDataset(tester);
+    await ignoreVariables(tester, demoVariablesToIgnore);
 
-      await tester.pumpAndSettle();
+    final modelTabFinder = find.byIcon(Icons.model_training);
+    expect(modelTabFinder, findsOneWidget);
 
-      await tester.pump(longHack);
+    // Tap the MODEL tab button.
 
-      // Tap the right arrow button to go to Variable page.
+    await tester.tap(modelTabFinder);
+    await tester.pumpAndSettle();
 
-      // await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-      await tester.pump(interact);
+    // Navigate to the NEURAL feature.
 
-      // Find the scrollable ListView.
+    await navigateToFeature(tester, 'Neural', NeuralPanel);
+    await tester.pumpAndSettle();
 
-      final scrollableFinder = find.byKey(const Key('roles listView'));
+    // Find and tap the 'Trace' checkbox.
 
-      // Iterate over each variable in the list and find its corresponding row in the ListView.
+    final Finder traceCheckbox = find.byKey(const Key('NNET Trace'));
+    await tester.tap(traceCheckbox);
+    await tester.pumpAndSettle();
 
-      for (final variable in demoVariablesToIgnore) {
-        bool foundVariable = false;
+    // Find the text fields by their keys and enter new values.
 
-        // Scroll in steps and search for the variable until it's found.
+    await tester.enterText(find.byKey(const Key('hidden_layers')), '5');
+    await tester.pumpAndSettle();
 
-        while (!foundVariable) {
-          // Find the row where the variable name is displayed.
+    await tester.enterText(find.byKey(const Key('max_nwts')), '100');
+    await tester.pumpAndSettle();
 
-          final variableFinder = find.text(variable);
+    await tester.enterText(find.byKey(const Key('maxit')), '20');
+    await tester.pumpAndSettle();
 
-          if (tester.any(variableFinder)) {
-            foundVariable = true;
+    // Tap the BUILD button.
 
-            // Find the parent widget that contains the variable and its associated ChoiceChip.
+    final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
+    await tester.tap(neuralNetworkButton);
+    await tester.pumpAndSettle();
 
-            final parentFinder = find.ancestor(
-              of: variableFinder,
-              matching: find.byType(
-                Row,
-              ),
-            );
+    // 20241020 gjw Tap the BUILD button again while we wait for the bug of
+    // not goinh to the next page is fixed.
 
-            // Select the first Row in the list.
+    await tester.tap(neuralNetworkButton);
+    await tester.pumpAndSettle();
 
-            final firstRowFinder = parentFinder.first;
+    await tester.pump(interact);
 
-            // Tap the correct ChoiceChip to change the role to 'Ignore'.
+    // Check the right arrow exists.
 
-            final ignoreChipFinder = find.descendant(
-              of: firstRowFinder,
-              matching: find.text('Ignore'),
-            );
+    final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
+    expect(rightArrowButton, findsOneWidget);
+    await tester.pumpAndSettle();
 
-            await tester.tap(ignoreChipFinder);
+    // Ensure the DISPLAY has expected content.
 
-            await tester.pumpAndSettle();
+    final modelDescriptionFinder = find.byWidgetPredicate(
+      (widget) =>
+          widget is SelectableText &&
+          widget.data?.contains('A 15-5-1 network with 86 weights') == true,
+    );
+    expect(modelDescriptionFinder, findsOneWidget);
 
-            // Verify that the role is now set to 'Ignore'.
+    final summaryDecisionTreeFinder = find.byType(TextPage);
+    expect(summaryDecisionTreeFinder, findsOneWidget);
 
-            expect(ignoreChipFinder, findsOneWidget);
-          } else {
-            final currentScrollableFinder = scrollableFinder.first;
+    await tester.pump(interact);
 
-            // Fling (or swipe) down by a small amount.
+    // Tap the right arrow to go to the VISUAL page.
 
-            await tester.fling(
-              currentScrollableFinder,
-              const Offset(0, -300), // Scroll down
-              1000,
-            );
-            await tester.pumpAndSettle();
-            await tester.pump(delay);
+    await tester.tap(rightArrowButton);
+    await tester.pumpAndSettle();
 
-            // Tab the previous variable to avoid missing tab it.
-            // Missing tab happens if Ignore button overlaps the rightArrow icon.
+    final pageTitleFinder = find.text('Neural Net Model - Visual');
+    expect(pageTitleFinder, findsOneWidget);
 
-            int index = demoVariablesToIgnore.indexOf(variable);
-            if (index > 0) {
-              String preVariable = demoVariablesToIgnore[index - 1];
+    final imageFinder = find.byType(ImagePage);
+    expect(imageFinder, findsOneWidget);
 
-              // Find the row where the variable name is displayed.
-
-              final preVariableFinder = find.text(preVariable);
-
-              if (tester.any(preVariableFinder)) {
-                // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-                final preParentFinder = find.ancestor(
-                  of: preVariableFinder,
-                  matching: find.byType(
-                    Row,
-                  ),
-                );
-
-                // Select the first Row in the list.
-
-                final firstRowFinder = preParentFinder.first;
-
-                // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-                final ignoreChipFinder = find.descendant(
-                  of: firstRowFinder,
-                  matching: find.text('Ignore'),
-                );
-
-                await tester.tap(ignoreChipFinder);
-
-                await tester.pumpAndSettle();
-
-                // Verify that the role is now set to 'Ignore'.
-
-                expect(ignoreChipFinder, findsOneWidget);
-              }
-            }
-          }
-        }
-      }
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
-      expect(modelTabFinder, findsOneWidget);
-
-      // Tap the model Tab button.
-
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
-
-      // Navigate to the Neural feature.
-
-      await navigateToFeature(tester, 'Neural', NeuralPanel);
-
-      await tester.pumpAndSettle();
-
-      // Find and tap the 'Trace' checkbox.
-
-      final Finder traceCheckbox = find.byKey(const Key('NNET Trace'));
-      await tester.tap(traceCheckbox);
-      await tester.pumpAndSettle(); // Wait for UI to settle.
-
-      // Find the text fields by their keys and enter the new values.
-
-      await tester.enterText(find.byKey(const Key('hidden_layers')), '11');
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.byKey(const Key('max_NWts')), '10001');
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.byKey(const Key('maxit')), '101');
-      await tester.pumpAndSettle();
-
-      // Simulate the presence of a decision tree being built.
-
-      final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
-
-      await tester.tap(neuralNetworkButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-      await tester.pump(interact);
-
-      // Tap the right arrow to go to the second page.
-
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-      // await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(delay);
-      await tester.pump(interact);
-
-      // Check if SelectableText contains the expected content.
-
-      final modelDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains('A 15-11-1 network with 188 weights') == true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      // TODO 20241001 kev the underneath code is not working as expected
-
-      expect(modelDescriptionFinder, findsOneWidget);
-
-      final summaryDecisionTreeFinder = find.byType(TextPage);
-      expect(summaryDecisionTreeFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      // Tap the right arrow to go to the forth page.
-
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-      await tester.pump(interact);
-
-      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
-      expect(forthPageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-      expect(imageFinder, findsOneWidget);
-
-      await tester.pump(interact);
-    });
+    await tester.pump(interact);
   });
 }

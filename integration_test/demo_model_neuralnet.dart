@@ -208,7 +208,7 @@ void main() {
       final modelDescriptionFinder = find.byWidgetPredicate(
         (widget) =>
             widget is SelectableText &&
-            widget.data?.contains('target_num.') == true,
+            widget.data?.contains('data = ds_onehot,') == true,
       );
 
       // Ensure the SelectableText widget with the expected content exists.

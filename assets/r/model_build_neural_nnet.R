@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-15 15:33:36 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 15:43:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,16 +34,24 @@ library(NeuralNetTools)  # For neural network plotting
 mtype <- "neuralnet"
 mdesc <- "Neural Network"
 
+# Conditional logic to handle categoric variables based on 'neural_ignore_categoric'.
+
+if (neural_ignore_categoric) {
+  tds <- ds[tr, ignore_categoric_vars]  
+} else {
+  tds <- ds[tr, vars]  
+}
+
 # Train a Neural Network model using nnet.
 
 model_nn <- nnet(
   form,
-  data = ds[tr, vars],
-  size = NNET_HIDDEN_LAYERS,        # Number of units in the hidden layer
-  skip=TRUE,
-  MaxNWts=NEURAL_MAX_NWTS,
-  trace=FALSE,
-  maxit=NEURAL_MAXIT
+  data    = tds,
+  size    = NNET_HIDDEN_LAYERS,
+  skip    = TRUE,
+  MaxNWts = NEURAL_MAX_NWTS,
+  trace   = FALSE,
+  maxit   = NEURAL_MAXIT
 )
 
 # Generate a textual view of the Neural Network model.
@@ -56,10 +64,10 @@ summary(model_nn)
 
 svg("TEMPDIR/model_nn_nnet.svg")
 NeuralNetTools::plotnet(model_nn,
-                        cex_val=0.5,
-                        circle_cex=2,
-                        rel_rsc = c(1, 3),
-                        pos_col="orange",
-                        neg_col="grey",
-                        node_labs=TRUE)
+                        cex_val    = 0.5,
+                        circle_cex = 2,
+                        rel_rsc    = c(1, 3),
+                        pos_col    = "orange",
+                        neg_col    = "grey",
+                        node_labs  = TRUE)
 dev.off()

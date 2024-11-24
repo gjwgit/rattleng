@@ -73,6 +73,7 @@ class ScriptSaveButton extends ConsumerWidget {
   }
 
   // Function to display an error dialog.
+
   void _showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,

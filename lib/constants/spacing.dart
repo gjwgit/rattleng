@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Thursday 2024-10-17 08:22:05 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-15 09:41:12 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,45 +25,62 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
+import 'package:gap/gap.dart';
 
-import 'package:flutter/material.dart';
+/// A general gap used between buttons, like in the dataset popup.
 
-// TODO 20240901 gjw CONSIDER THE gap PACKAGE FOR SLIGHTLY SIMPLER GAPs.
+const buttonGap = Gap(10);
 
-/// Spacing between rows in a ChoiceChip.
+/// Width between rows in a ChoiceChip.
 
 const choiceChipRowSpace = 10.0;
 
-/// Space above the beginning of the configs Row.
+/// Gap above the beginning of the configs Row.
 
-const configTopSpace = SizedBox(height: 10);
+const configTopGap = Gap(10);
 
-/// Space below the last row of configs often to ensure the underline of numeric
+/// Gap below the last row of configs often to ensure the underline of numeric
 /// paramaters is not lost.
 
-const configBotSpace = SizedBox(height: 5);
+const configBotGap = Gap(5);
 
-/// Space between the config Rows.
+/// Gap between the config Rows.
 
-const configRowSpace = SizedBox(height: 20);
+const configRowGap = Gap(20);
 
-/// Space to the left of the configs within a Row.
+/// Gap to the left of the configs within a Row.
 
-const configLeftSpace = SizedBox(width: 5);
+const configLeftGap = Gap(5);
 
-/// Space between widgets in a Row in the config.
+/// Gap between widgets in a Row in the config.
 
-const configWidgetSpace = SizedBox(width: 20.0); // Gap(20);
+const configWidgetGap = Gap(20);
 
-/// Space between widgets in a Row in the the config.
+/// Gap between widgets in a Row in the the config.
 
-const configChooserSpace = SizedBox(width: 10.0); // Gap(20);
+const configChooserGap = Gap(10);
 
-/// Space between a label and the field.
+/// Gap between a label and the field.
 
-const configLabelSpace = SizedBox(width: 5);
+const configLabelGap = Gap(5);
 
-/// Space before the bottom divider in the display pages.
+/// Gap between the title row of a popup between the icon and the text of the
+/// title.
 
-const textPageBottomSpace = SizedBox(height: 20.0); //Gap(20);
+const popupIconGap = Gap(20);
+
+/// Gap between a popup's title row and content.
+
+const popupTitleGap = Gap(40);
+
+/// Gap before the bottom divider in the display pages.
+
+const textPageBottomGap = Gap(20);
+
+/// Gap in height between widgets.
+
+const panelGap = Gap(10);
+
+/// Width to fit 5 ChoiceChips in a Row.
+
+const choiceChipRowWidth = 400.0;
