@@ -94,10 +94,6 @@ predicted <- predict(model_xgb,
                      newdata    = tuds,)
   
 actual <- as.character(tuds[[target]])
-  
-# Create numeric risks vector.
-
-risks <- rep(1, length(actual))
 
 # Get unique levels of predicted.
 
@@ -117,9 +113,6 @@ predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric)
 
 actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
 
-# Replace NA or NaN in risks.
-
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
 # Step 1: Ensure predicted_numeric has valid probabilities (0 to 1).
 
@@ -130,6 +123,12 @@ predicted_numeric <- ifelse(predicted_numeric < 0 | is.na(predicted_numeric) | i
 actual_numeric <- ifelse(actual_numeric < 0 | actual_numeric > 1 | is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
 
 # Step 3: Ensure risks are valid and non-negative.
+
+risks <- as.character(ds[[risk]])
+
+risks <- risks[!is.na(risks)]
+
+risks <- as.numeric(risks)
 
 risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
