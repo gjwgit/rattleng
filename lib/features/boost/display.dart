@@ -152,6 +152,17 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           ),
         );
       }
+
+      String riskImage = '$tempDir/model_adaboost_risk.svg';
+
+      if (imageExists(riskImage)) {
+        pages.add(
+          ImagePage(
+            title: 'RISK CHART',
+            path: riskImage,
+          ),
+        );
+      }
     }
 
     return PageViewer(
