@@ -51,10 +51,10 @@ void showDatasetAlertDialog(
         content: Text(
           wordWrap('''
 
-            Please note that if you load a new dataset it will reset the
-            app. You will lose all the work already completed. Consider saving
-            your R script from the Script tab before continuing.  Otherwise, are
-            you sure you would like to reset?
+            Please note that if you load a new dataset it will reset the app by
+            clearing out all of the current data. You will lose any work already
+            completed. Consider saving your R script from the Script tab before
+            continuing.  Otherwise, are you sure you would like to reset?
 
             '''),
         ),
