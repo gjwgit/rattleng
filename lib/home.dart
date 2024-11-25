@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2024-11-23 21:14:32 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-11-24 20:09:35 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -47,7 +47,6 @@ import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/tabs/debug/tab.dart';
 import 'package:rattle/tabs/explore.dart';
@@ -55,6 +54,7 @@ import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
+import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_settings_dialog.dart';
 import 'package:rattle/widgets/status_bar.dart';
@@ -330,7 +330,7 @@ Xu, Yixiang Yin, Bo Zhang.
               onPressed: () async {
                 // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
                 if (ref.read(datasetLoaded)) {
-                  showAlertPopup(context, ref, false);
+                  showDatasetAlertDialog(context, ref, false);
                 } else {
                   await reset(context, ref);
                 }
