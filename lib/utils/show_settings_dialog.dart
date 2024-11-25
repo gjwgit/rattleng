@@ -267,11 +267,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   }
 
   void _resetToggleStates() {
-    // Reset all toggles to default (off).
+    // Reset all toggles to default.
 
     ref.read(cleanseProvider.notifier).state = true;
     ref.read(normaliseProvider.notifier).state = true;
     ref.read(partitionProvider.notifier).state = true;
+
+    ref.read(keepInSyncProvider.notifier).state = false;
 
     // Save the reset states to preferences.
 
@@ -373,7 +375,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     configRowGap,
-
                     // Theme selection chips.
 
                     Wrap(
@@ -507,6 +508,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         ),
                       ],
                     ),
+
+                    settingsGroupGap,
                   ],
                 ),
               ),

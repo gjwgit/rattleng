@@ -25,4 +25,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final keepInSyncProvider = StateProvider<bool>((ref) => true);
+final keepInSyncProvider = StateProvider<bool>((ref) => false);
