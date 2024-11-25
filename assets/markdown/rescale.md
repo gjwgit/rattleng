@@ -9,10 +9,10 @@ in age may be more significant than a distance of 10,000 dollars in
 income, yet, 10,000 swamps 10 when they are added together, as would
 be the case when calculating distances.
 
-In these situations we will want to Normalise our data. The types of
+In these situations we will want to Normalise the data. The types of
 normalisations (available through the Normalise function of the
-Wrangle tab) include re-centering and rescaling our data to be around
-zero, rescaling our data to be in the range from 0 to 1 (Scale [0,1]),
+Wrangle tab) include re-centering and rescaling the data to be around
+zero, rescaling the data to be in the range from 0 to 1 (Scale [0,1]),
 covert the numbers into a rank ordering (Rank), and finally, to do a
 robust rescaling around zero using the median (-Median/MAD).
 
@@ -28,7 +28,7 @@ transformation.
   [base::scale](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale).
 
 + **Scale [0,1]** function supports another common requirement to
-  remap our data to the [0,1] range.
+  remap the data to the [0,1] range.
 
 + [Rank](https://survivor.togaware.com/datascience/rescale-data-using-rank.html)
   will convert the values of a numeric variable into a rank using

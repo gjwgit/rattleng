@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2024-11-13 09:09:18 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-11-24 20:08:02 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -171,6 +171,9 @@ class DatasetPopup extends ConsumerWidget {
                     case 'movies':
                       asset = 'data/movies.csv';
                       break;
+                    case 'sherlock':
+                      asset = 'data/sherlock.txt';
+                      break;
                     case 'weather':
                     default:
                       asset = 'data/weather.csv';
@@ -216,6 +219,8 @@ class DatasetPopup extends ConsumerWidget {
 
           configRowGap,
 
+          Text('Choose one of the available demo datasets:'),
+
           // Radio buttons for selecting the demo dataset.
 
           Consumer(
@@ -250,9 +255,10 @@ class DatasetPopup extends ConsumerWidget {
 
                       ''',
                       child: RadioListTile(
-                        title: const Text('Weather'),
+                        title: const Text('Weather  '),
                         value: 'weather',
                         groupValue: selectedDataset,
+                        contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
                           ref.read(demoDatasetProvider.notifier).state = value!;
                         },
@@ -287,6 +293,7 @@ class DatasetPopup extends ConsumerWidget {
                         title: const Text('Audit'),
                         value: 'audit',
                         groupValue: selectedDataset,
+                        contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
                           ref.read(demoDatasetProvider.notifier).state = value!;
                         },
@@ -313,6 +320,30 @@ class DatasetPopup extends ConsumerWidget {
                         title: const Text('Movies'),
                         value: 'movies',
                         groupValue: selectedDataset,
+                        contentPadding: EdgeInsets.zero,
+                        onChanged: (value) {
+                          ref.read(demoDatasetProvider.notifier).state = value!;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Option for Sherlock text file.
+
+                  Expanded(
+                    child: MarkdownTooltip(
+                      message: '''
+
+                      The **Sherlock** data file is a text file for
+                      demonstrating the **Word Cloud** feature of the **Model**
+                      tab. It is a snippet from a Sherlock Holmes novel.
+  
+                      ''',
+                      child: RadioListTile(
+                        title: const Text('Sherlock'),
+                        value: 'sherlock',
+                        groupValue: selectedDataset,
+                        contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
                           ref.read(demoDatasetProvider.notifier).state = value!;
                         },

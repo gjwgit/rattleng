@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.20+142
+version: 6.3.29+146
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -18,10 +18,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  catppuccin_flutter: ^1.0.0
-  file_picker: ^8.0.6
-  flutter_gen: ^5.3.1
-  flutter_markdown: ^0.7.1
   # flutter_pty: ^0.4.0
   #
   # The following git source fixes the problem with R not being able
@@ -41,28 +37,28 @@ dependencies:
     git:
       url: https://github.com/Lutra-Fs/flutter_pty.git
       ref: main
+
+  catppuccin_flutter: ^1.0.0
+  file_picker: ^8.0.6
+  flutter_markdown: ^0.7.1
   flutter_riverpod: ^2.4.4
   flutter_svg: ^2.0.7
   gap: ^3.0.1
   intl: ^0.19.0
   markdown_tooltip: ^0.0.2
-    # path: ../markdown_tooltip
-    # git:
-    #   url: https://github.com/gjwgit/markdown_tooltip
-    #   ref: dev
   package_info_plus: ^8.0.0
   path: ^1.8.3
   path_provider: ^2.1.3
+  pdf: ^3.11.1
   provider: ^6.0.5
   riverpod_annotation: ^2.2.1
+  shared_preferences: ^2.3.3
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   window_manager: ^0.4.3
   xterm: ^4.0.0
-  pdf: ^3.11.1
 
 dev_dependencies:
-  flutter_launcher_icons: '^0.13.1'
   flutter_test:
     sdk: flutter
   integration_test:
@@ -70,20 +66,11 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
 
-  # integration_test:
-  #   sdk: flutter
-
   build_runner: ^2.4.6
   custom_lint: ^0.6.4
-
-  # The original `dart-code-metrics` is end of live and has migrated to
-  # a paid service. This fork maintains it's compatibility with the
-  # latest flutter.
-
-  dart_code_metrics:
-    git:
-      url: https://github.com/anusii/dart-code-metrics.git
-      ref: dev
+  dependency_validator: ^4.1.1
+  flutter_gen: ^5.3.1
+  flutter_launcher_icons: '^0.13.1'
 
   # The `flutter_lints` package contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the
@@ -100,20 +87,19 @@ dev_dependencies:
 
   # riverpod_lint: ^2.3.2
 
+  # The original `dart-code-metrics` is end of live and has migrated to
+  # a paid service. This fork maintains it's compatibility with the
+  # latest flutter.
+
+  dart_code_metrics:
+    git:
+      url: https://github.com/anusii/dart-code-metrics.git
+      ref: dev
+
 dependency_overrides:
-  # Required for dart-code-metrics.
-  collection: ^1.19.0
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
+  collection: ^1.19.0  # Required for dart-code-metrics.
 
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
-
   uses-material-design: true
 
   # Note the full image path is required for the resource: image use
@@ -122,36 +108,15 @@ flutter:
   assets:
     - assets/data/audit.csv
     - assets/data/movies.csv
+    - assets/data/sherlock.txt
     - assets/data/weather.csv
     - assets/images/favicon_small.png
     - assets/icons/icon.png
     - assets/markdown/
     - assets/r/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-
   # Use a fixed width Ubuntu font for the Log tab.
+
   fonts:
     - family: UbuntuMono
       fonts:

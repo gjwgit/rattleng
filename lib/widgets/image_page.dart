@@ -1,6 +1,6 @@
 /// A widget to build the common image based pages.
 //
-// Time-stamp: <Thursday 2024-11-14 09:15:13 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-11-19 09:18:00 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -228,8 +228,11 @@ class ImagePage extends StatelessWidget {
                         to the Rattle app itself. This allows you to retain a
                         view of the plot while you navigate through other plots
                         and analyses. If you choose the external app to be
-                        Inkscape, for example, then you can edit the details of
-                        the plot.
+                        **Inkscape**, for example, then you can edit the plot,
+                        including the text, colours, etc. Note that Inkscape can
+                        be a little slow to startup. The choice of app depends
+                        on your operating system settings and can be overriden
+                        in the Rattle **Settings**.
 
                         ''',
                         child: IconButton(
@@ -269,7 +272,10 @@ class ImagePage extends StatelessWidget {
                         choose your desired format by replacing the default
                         *svg* filename extension with either *pdf* or *png*. The
                         file is saved to your local storage. Perfect for
-                        including in reports or keeping for future reference.
+                        including in reports or keeping for future
+                        reference. The **svg** format is particularly convenient
+                        as you can edit all details of the plot with an
+                        application like **Inkscape**.
 
                         ''',
                         child: IconButton(

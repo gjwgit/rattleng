@@ -2,23 +2,23 @@
 
 The concept of a neural network in artificial intelligence has been
 circulating since the very beginning of the discussions of artificial
-intelligence. The neural network model is based on our understanding
-of the structure of our own brains, with neurons connected to many
+intelligence. The neural network model is based on an understanding
+of the structure of the human brain, with neurons connected to many
 other neurons in a complex network.
 
-Our conceptualisation of the neural network model is based on the idea
+The conceptualisation of the neural network model is based on the idea
 of multiple layers of neurons connected to neurons in other layers,
-feeding numeric data through the network, combining the numbers,
-to produce a final answer.
+feeding numeric data through the network, combining the numbers, to
+produce a final answer.
 
 The advent of large language models and generative models has neural
 networks at their foundation.
 
 Rattle supports single layer and multiple layer networks, with the
-first layer being our input data and the final layer being the out,
+first layer being the input data and the final layer being the output,
 the prediction, and generating what comes next. Feed forward and back
-propagation are basic concepts for training our networks to reflect
-the provided training datasets.
+propagation are basic concepts for training networks to reflect the
+provided training datasets.
 
 Within Rattle you have a choice of using the **nnet** function for a
 single layer network or the **neuralnet** function for a multi layer

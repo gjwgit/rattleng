@@ -65,9 +65,9 @@ from the resulting models.
 
 The **Constant** function ([Survival
 Guide](https://survivor.togaware.com/datascience/impute-constant.html))
-allows us to provide our own default value to fill in the gaps. This
-might be an integer or real number for numeric variables, or else a
-special marker or the choice of something other than the majority
-category for Categoric variables.
+provides a default value to fill in the gaps. This might be an integer
+or real number for numeric variables, or else a special marker or the
+choice of something other than the majority category for Categoric
+variables.
 
 >

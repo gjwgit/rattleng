@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Tuesday 2024-10-15 17:06:22 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-11-24 18:03:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,10 +28,16 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:rattle/providers/keep_in_sync.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/normalise.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// List of available ggplot themes for the user to choose from.
 
@@ -43,12 +49,12 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Base',
-    'value': 'theme_base',
+    'value': 'ggthemes::theme_base',
     'tooltip': "A theme based on R's Base plotting system.",
   },
   {
     'label': 'Black and White',
-    'value': 'theme_bw',
+    'value': 'ggplot2::theme_bw',
     'tooltip': '''
 
         A theme with a white background and black grid lines, often used for
@@ -58,12 +64,12 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Calc',
-    'value': 'theme_calc',
+    'value': 'ggthemes::theme_calc',
     'tooltip': 'A theme based on the Calc spreadsheet.',
   },
   {
     'label': 'Classic',
-    'value': 'theme_classic',
+    'value': 'ggplot2::theme_classic',
     'tooltip': '''
 
         A theme resembling base R graphics, with a white background and no
@@ -73,7 +79,7 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Dark',
-    'value': 'theme_dark',
+    'value': 'ggplot2::theme_dark',
     'tooltip': '''
 
         A theme with a dark background and white grid lines, useful for dark
@@ -83,89 +89,89 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Economist',
-    'value': 'theme_economist',
+    'value': 'ggthemes::theme_economist',
     'tooltip': 'A theme inspired by The Economist journal.',
   },
   {
     'label': 'Excel',
-    'value': 'theme_excel',
+    'value': 'ggthemes::theme_excel',
     'tooltip': 'A theme inspired by the Excel spreadsheet.',
   },
   {
     'label': 'Few',
-    'value': 'theme_few',
+    'value': 'ggthemes::theme_few',
     'tooltip': "A theme based on Few's work.",
   },
   {
     'label': 'Fivethirtyeight',
-    'value': 'theme_fivethirtyeight',
+    'value': 'ggthemes::theme_fivethirtyeight',
     'tooltip': 'A theme inspired by the FiveThirtyEight website.',
   },
   {
     'label': 'Foundation',
-    'value': 'theme_foundation',
+    'value': 'ggthemes::theme_foundation',
     'tooltip': "A theme based on Zurb's Foundation.",
   },
   {
     'label': 'Gdocs',
-    'value': 'theme_gdocs',
+    'value': 'ggthemes::theme_gdocs',
     'tooltip': 'A theme inspired by Google Docs.',
   },
   {
     'label': 'Grey',
-    'value': 'theme_grey',
+    'value': 'ggplot2::theme_grey',
     'tooltip': 'The default theme of ggplot2, with a grey background.',
   },
   {
     'label': 'Highcharts',
-    'value': 'theme_hc',
+    'value': 'ggthemes::theme_hc',
     'tooltip': 'A theme inspired by Highcharts.',
   },
   {
     'label': 'IGray',
-    'value': 'theme_igray',
+    'value': 'ggthemes::theme_igray',
     'tooltip': 'A minimalist grayscale theme.',
   },
   {
     'label': 'Light',
-    'value': 'theme_light',
+    'value': 'ggplot2::theme_light',
     'tooltip': 'A theme with a light grey background and white grid lines.',
   },
   {
     'label': 'Linedraw',
-    'value': 'theme_linedraw',
+    'value': 'ggplot2::theme_linedraw',
     'tooltip':
         'A theme with black and white line drawings, without color shading.',
   },
   {
     'label': 'Minimal',
-    'value': 'theme_minimal',
+    'value': 'ggplot2::theme_minimal',
     'tooltip':
         'A minimalistic theme with no background annotations and grid lines.',
   },
   {
     'label': 'Pander',
-    'value': 'theme_pander',
+    'value': 'ggthemes::theme_pander',
     'tooltip': "A theme inspired by Pandoc's pander package.",
   },
   {
     'label': 'Solarized',
-    'value': 'theme_solarized',
+    'value': 'ggthemes::theme_solarized',
     'tooltip': 'a theme based on the Solarized color scheme.',
   },
   {
     'label': 'Stata',
-    'value': 'theme_stata',
+    'value': 'ggthemes::theme_stata',
     'tooltip': 'A theme inspired by the Stata software.',
   },
   {
     'label': 'Tufte',
-    'value': 'theme_tufte',
+    'value': 'ggthemes::theme_tufte',
     'tooltip': 'A theme inspired by Edward Tufte.',
   },
   {
     'label': 'Void',
-    'value': 'theme_void',
+    'value': 'ggplot2::theme_void',
     'tooltip': '''
 
         A completely blank theme, useful for creating annotations or background-less plots
@@ -174,7 +180,7 @@ const List<Map<String, String>> themeOptions = [
   },
   {
     'label': 'Wall Street Journal',
-    'value': 'theme_wsj',
+    'value': 'ggthemes::theme_wsj',
     'tooltip': 'A theme inspired by the Wall Street Journal.',
   },
 ];
@@ -214,34 +220,102 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   @override
   void initState() {
     super.initState();
-    // Get the current theme from the Riverpod provider
+
+    // Get the current theme from the Riverpod provider.
+
     _selectedTheme = ref.read(settingsGraphicThemeProvider);
+
+    // Automatically update the theme in Riverpod when the dialog is opened.
+
+    ref
+        .read(settingsGraphicThemeProvider.notifier)
+        .setGraphicTheme(_selectedTheme!);
+
+    // Load toggle states and "Keep in Sync" state from shared preferences.
+
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Update providers with saved toggle states.
+
+    ref.read(cleanseProvider.notifier).state =
+        prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+
+    ref.read(normaliseProvider.notifier).state =
+        prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+
+    ref.read(partitionProvider.notifier).state =
+        prefs.getBool('partition') ?? ref.read(partitionProvider);
+
+    // Update "Keep in Sync" state.
+
+    ref.read(keepInSyncProvider.notifier).state =
+        prefs.getBool('keepInSync') ?? true;
+  }
+
+  Future<void> _saveToggleStates() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save the latest provider states to preferences.
+
+    await prefs.setBool('cleanse', ref.read(cleanseProvider));
+    await prefs.setBool('normalise', ref.read(normaliseProvider));
+    await prefs.setBool('partition', ref.read(partitionProvider));
+  }
+
+  void _resetToggleStates() {
+    // Reset all toggles to default.
+
+    ref.read(cleanseProvider.notifier).state = true;
+    ref.read(normaliseProvider.notifier).state = true;
+    ref.read(partitionProvider.notifier).state = true;
+
+    ref.read(keepInSyncProvider.notifier).state = false;
+
+    // Save the reset states to preferences.
+
+    _saveToggleStates();
+  }
+
+  Future<void> _saveKeepInSync(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "Keep in Sync" state to preferences.
+
+    await prefs.setBool('keepInSync', value);
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size; // Get screen size
+    final Size size = MediaQuery.of(context).size;
+
+    // Watch provider values to ensure UI stays in sync.
+
+    final cleanse = ref.watch(cleanseProvider);
+    final normalise = ref.watch(normaliseProvider);
+    final partition = ref.watch(partitionProvider);
+    final keepInSync = ref.watch(keepInSyncProvider);
 
     return Material(
-      color: Colors.transparent, // Set the material color to transparent
+      color: Colors.transparent,
       child: Padding(
-        padding: const EdgeInsets.all(
-          40.0,
-        ), // Add padding to create the border effect
+        padding: const EdgeInsets.all(40.0),
         child: Stack(
           children: [
             Container(
-              width: size.width, // Full screen width
-              height: size.height, // Full screen height
-
+              width: size.width,
+              height: size.height,
               decoration: BoxDecoration(
-                color: Colors.white, // Dialog background color
-                borderRadius: BorderRadius.circular(15), // Rounded corners
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.3),
                     blurRadius: 10,
-                    offset: const Offset(0, 5), // Shadow for elevation
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
@@ -250,18 +324,170 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      'Select Graphic Theme',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    // Dataset Toggles section.
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Dataset Toggles Setting:** The default setting of
+                          the dataset toggles, on starting up Rattle, is set
+                          here. During a session with Rattle the toggles may be
+                          changed by the user. If the *Sync* option is set, then
+                          the changes made by the user are tracked and restored
+                          on the next time Rattle is run.
+
+                          ''',
+                          child: const Text(
+                            'Dataset Toggles',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Reset Dataset Toggles to default button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Toggles:** Tap here to reset the Dataset Toggles
+                            setting to the default for Rattle.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: _resetToggleStates,
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
+
+                    configRowGap,
+
+                    // Build toggle rows synced with providers.
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Cleanse',
+                            cleanse,
+                            (value) {
+                              ref.read(cleanseProvider.notifier).state = value;
+
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Unify',
+                            normalise,
+                            (value) {
+                              ref.read(normaliseProvider.notifier).state =
+                                  value;
+
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Partition',
+                            partition,
+                            (value) {
+                              ref.read(partitionProvider.notifier).state =
+                                  value;
+
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        const Text(
+                          'Keep in Sync',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Switch(
+                          value: keepInSync,
+                          onChanged: (value) {
+                            ref.read(keepInSyncProvider.notifier).state = value;
+
+                            _saveKeepInSync(value);
+                          },
+                        ),
+                      ],
+                    ),
+
+                    settingsGroupGap,
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Graphic Theme Setting:** The graphic theme is used
+                          by many (but not all) of the plots in Rattle, and
+                          specifically by those plots using the ggplot2
+                          package. Hover over each theme for more details. The
+                          default is the Rattle theme.
+
+                          ''',
+                          child: Text(
+                            'Graphic Theme',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Restore default theme button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Theme:** Tap here to reset the Graphic Theme
+                            setting to the default theme for Rattle.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectedTheme = 'theme_rattle';
+                              });
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+                    // Theme selection chips.
+
                     Wrap(
                       spacing: 8.0,
                       runSpacing: 8.0,
                       children: themeOptions.map((option) {
                         return MarkdownTooltip(
-                          message: option['tooltip']!, // Tooltip for each chip
+                          message: option['tooltip']!,
                           child: ChoiceChip(
                             label: Text(option['label']!),
                             selected: _selectedTheme == option['value'],
@@ -269,43 +495,30 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               setState(() {
                                 _selectedTheme = option['value'];
                               });
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
                             },
                           ),
                         );
                       }).toList(),
                     ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Save the selected theme to the Riverpod provider
-                            if (_selectedTheme != null) {
-                              ref
-                                  .read(settingsGraphicThemeProvider.notifier)
-                                  .setGraphicTheme(_selectedTheme!);
-                              rSource(context, ref, ['settings']);
-                            }
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('USE'),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
             ),
-            // Positioned Cancel button at the top right
+
+            // Close button for the dialog.
+
             Positioned(
               top: 16,
               right: 16,
               child: IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+                onPressed: () => Navigator.of(context).pop(),
                 tooltip: 'Cancel',
               ),
             ),
@@ -314,112 +527,28 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
       ),
     );
   }
+
+  // Build a toggle row with a label and a switch.
+
+  Widget _buildToggleRow(
+    String label,
+    bool value,
+    ValueChanged<bool> onChanged,
+  ) {
+    return Row(
+      // Align items to the start.
+
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontSize: 16),
+        ),
+        Switch(
+          value: value,
+          onChanged: onChanged,
+        ),
+      ],
+    );
+  }
 }
-
-// // List of available themes
-// const List<Map<String, String>> themeOptions = [
-//   {'label': 'Rattle', 'value': 'theme_default_rattle'},
-//   {'label': 'Economist', 'value': 'theme_economist'},
-//   {'label': 'Default', 'value': 'theme_grey'},
-//   // Add more themes here...
-// ];
-
-// void showSettingsDialog(BuildContext context) {
-//   showGeneralDialog(
-//     context: context,
-//     barrierLabel: "Settings",
-//     barrierDismissible: true,
-//     barrierColor: Colors.black54,
-//     transitionDuration: Duration(milliseconds: 300),
-//     pageBuilder: (context, anim1, anim2) {
-//       return Align(
-//         alignment: Alignment.center,
-//         child: SettingsDialog(),
-//       );
-//     },
-//     transitionBuilder: (context, anim1, anim2, child) {
-//       return FadeTransition(
-//         opacity: CurvedAnimation(parent: anim1, curve: Curves.easeOut),
-//         child: child,
-//       );
-//     },
-//   );
-// }
-
-// class SettingsDialog extends ConsumerStatefulWidget {
-//   @override
-//   _SettingsDialogState createState() => _SettingsDialogState();
-// }
-
-// class _SettingsDialogState extends ConsumerState<SettingsDialog> {
-//   String? _selectedTheme;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Get the current theme from the Riverpod provider
-//     _selectedTheme = ref.read(settingsGraphicThemeProvider);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Material(
-//       color: Colors.transparent, // Set the material color to transparent
-// //      color: Colors.white,
-//       borderRadius: BorderRadius.circular(10),
-//       child: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             Text(
-//               'Select Graphic Theme',
-//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//             ),
-//             SizedBox(height: 20),
-//             Wrap(
-//               spacing: 8.0,
-//               runSpacing: 8.0,
-//               children: themeOptions.map((option) {
-//                 return ChoiceChip(
-//                   label: Text(option['label']!),
-//                   selected: _selectedTheme == option['value'],
-//                   onSelected: (bool selected) {
-//                     setState(() {
-//                       _selectedTheme = option['value'];
-//                     });
-//                   },
-//                 );
-//               }).toList(),
-//             ),
-//             SizedBox(height: 20),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               children: [
-//                 TextButton(
-//                   onPressed: () {
-//                     Navigator.of(context).pop();
-//                   },
-//                   child: Text('CANCEL'),
-//                 ),
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     // Save the selected theme to the Riverpod provider
-//                     if (_selectedTheme != null) {
-//                       ref
-//                           .read(settingsGraphicThemeProvider.notifier)
-//                           .setGraphicTheme(_selectedTheme!);
-//                       rSource(context, ref, ['settings']);
-//                     }
-//                     Navigator.of(context).pop();
-//                   },
-//                   child: Text('SAVE'),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Friday 2024-11-15 09:41:12 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-11-24 12:14:38 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -72,6 +72,10 @@ const popupIconGap = Gap(20);
 /// Gap between a popup's title row and content.
 
 const popupTitleGap = Gap(40);
+
+/// Gap between a popup's title row and content.
+
+const settingsGroupGap = Gap(40);
 
 /// Gap before the bottom divider in the display pages.
 

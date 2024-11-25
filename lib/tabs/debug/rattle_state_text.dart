@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Sunday 2024-10-13 11:06:20 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-11-23 16:45:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/meta_data.dart';
@@ -42,6 +43,7 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
@@ -58,6 +60,7 @@ class RattleStateText extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialise the state variables used here.
 
+    String dataType = ref.watch(datatypeProvider);
     String groupBy = ref.watch(groupByProvider);
     String path = ref.watch(pathProvider);
     String status = ref.watch(statusProvider);
@@ -68,6 +71,8 @@ class RattleStateText extends ConsumerWidget {
     String selected = ref.watch(selectedProvider);
     String selected2 = ref.watch(selected2Provider);
     String imputed = ref.watch(imputedProvider);
+    String theme = ref.watch(settingsGraphicThemeProvider);
+
     bool cleanse = ref.watch(cleanseProvider);
     bool normalise = ref.watch(normaliseProvider);
     bool partition = ref.watch(partitionProvider);
@@ -105,9 +110,11 @@ class RattleStateText extends ConsumerWidget {
             'STDOUT:      ${countLines(stdout)} lines\n'
             'STDERR:      ${countLines(stderr)} lines\n'
             'PATH:        $path\n'
+            'DATA TYPE:   $dataType\n'
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'
+            'THEME:       $theme\n'
             'META DATA:   $meta\n'
             '\n**DEPRECATED** ROLES AND TYPES ARE BEING DEPRECATED.\n\n'
             'ROLES:       $role\n'
