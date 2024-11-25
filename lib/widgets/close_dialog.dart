@@ -70,6 +70,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
       // If session control is OFF, close the app directly.
 
       _closeApp();
+
       return const SizedBox.shrink();
     }
 
