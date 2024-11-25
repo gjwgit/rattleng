@@ -37,7 +37,6 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/check_file_exists.dart';
 import 'package:rattle/utils/set_status.dart';
-import 'package:rattle/utils/show_error.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 
 class DatasetTextField extends ConsumerStatefulWidget {
