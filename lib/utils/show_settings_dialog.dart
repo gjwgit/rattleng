@@ -412,7 +412,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         const Text(
                           'Keep in Sync',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Switch(
                           value: keepInSync,
