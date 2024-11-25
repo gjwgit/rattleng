@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
+import 'package:rattle/providers/session_control.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -298,6 +299,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final normalise = ref.watch(normaliseProvider);
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
+    final sessionControl = ref.watch(sessionControlProvider);
 
     return Material(
       color: Colors.transparent,
@@ -505,6 +507,57 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           ),
                         );
                       }).toList(),
+                    ),
+
+                    settingsGroupGap,
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Session Control:** This setting determines whether a confirmation popup 
+                          appears when the user tries to quit the application. 
+
+                          - **ON**: A popup will appear asking the user to confirm quitting. 
+                          - **OFF**: The application will exit immediately without a confirmation popup.
+
+                          The default setting is **ON**.
+
+                          ''',
+                          child: const Text(
+                            'Session Control',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Switch for Session Control with a tooltip.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Toggle Session Control:**
+
+                          - Slide to **ON** to enable a confirmation popup when exiting the application.
+                          - Slide to **OFF** to disable the popup, allowing the app to exit directly.
+
+                          ''',
+                          child: Switch(
+                            value: sessionControl,
+                            onChanged: (value) {
+                              ref.read(sessionControlProvider.notifier).state =
+                                  value;
+
+                              // Save the new state to shared preferences or other storage as needed.
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
