@@ -452,9 +452,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     // Build toggle rows synced with providers.
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment
-                          .spaceBetween, // Distribute items evenly.
-
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: _buildToggleRow(
@@ -540,7 +538,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ValueChanged<bool> onChanged,
   ) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Align items to the start.
+      // Align items to the start.
+
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           label,
