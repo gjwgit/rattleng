@@ -95,7 +95,10 @@ actual <- as.character(tuds[[target]])
   
 # Create numeric risks vector.
 
-risks <- rep(1, length(actual))
+risks <- as.character(ds[[risk]])
+risks <- risks[!is.na(risks)]
+risks <- as.numeric(risks)
+risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
   
 # Use rattle's evaluateRisk.
 
