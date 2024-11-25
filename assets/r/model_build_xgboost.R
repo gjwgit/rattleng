@@ -125,11 +125,8 @@ actual_numeric <- ifelse(actual_numeric < 0 | actual_numeric > 1 | is.na(actual_
 # Step 3: Ensure risks are valid and non-negative.
 
 risks <- as.character(ds[[risk]])
-
 risks <- risks[!is.na(risks)]
-
 risks <- as.numeric(risks)
-
 risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
 # Step 4: Ensure all vectors have the same length.
