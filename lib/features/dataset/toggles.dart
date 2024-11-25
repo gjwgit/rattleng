@@ -59,7 +59,10 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     final keepInSync = prefs.getBool('keepInSync') ?? true;
 
+    print('keepInSync: $keepInSync');
+
     if (keepInSync) {
+      print('Loading initial states...');
       ref.read(cleanseProvider.notifier).state =
           prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
 
