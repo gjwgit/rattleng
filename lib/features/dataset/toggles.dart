@@ -22,6 +22,8 @@
 /// Authors: Graham Williams
 library;
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,6 +31,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/data.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/first_start.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
@@ -59,18 +62,30 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     final keepInSync = prefs.getBool('keepInSync') ?? true;
 
-    print('keepInSync: $keepInSync');
+    final firstStart = ref.read(firstStartProvider);
 
-    if (keepInSync) {
-      print('Loading initial states...');
+    if (firstStart) {
+      ref.read(firstStartProvider.notifier).state = false;
+
       ref.read(cleanseProvider.notifier).state =
-          prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+          prefs.getBool('cleanse') ?? true;
 
       ref.read(normaliseProvider.notifier).state =
-          prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+          prefs.getBool('normalise') ?? true;
 
       ref.read(partitionProvider.notifier).state =
-          prefs.getBool('partition') ?? ref.read(partitionProvider);
+          prefs.getBool('partition') ?? false;
+    } else {
+      if (keepInSync) {
+        ref.read(cleanseProvider.notifier).state =
+            prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+
+        ref.read(normaliseProvider.notifier).state =
+            prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+
+        ref.read(partitionProvider.notifier).state =
+            prefs.getBool('partition') ?? ref.read(partitionProvider);
+      }
     }
   }
 
@@ -84,17 +99,26 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   Widget build(BuildContext context) {
     // Watch providers to ensure UI updates.
 
-    final cleanse = ref.watch(cleanseProvider);
-
-    final normalise = ref.watch(normaliseProvider);
-
-    final partition = ref.watch(partitionProvider);
-
     final keepInSync = ref.watch(keepInSyncProvider);
+
+    final cleanse;
+    final normalise;
+    final partition;
+
+    if (keepInSync) {
+      cleanse = ref.watch(cleanseProvider);
+      normalise = ref.watch(normaliseProvider);
+      partition = ref.watch(partitionProvider);
+    } else {
+      cleanse = ref.read(cleanseProvider);
+      normalise = ref.read(normaliseProvider);
+      partition = ref.read(partitionProvider);
+    }
 
     return ToggleButtons(
       isSelected: [cleanse, normalise, partition],
       onPressed: (int index) {
+        print('keepInSync1: $keepInSync');
         if (keepInSync) {
           setState(() {
             switch (index) {
