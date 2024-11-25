@@ -241,10 +241,9 @@ actual <- as.character(tuds[[target]])
 # Create numeric risks vector.
 
 risks <- as.character(ds[[risk]])
-
 risks <- risks[!is.na(risks)]
-
 risks <- as.numeric(risks)
+risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
 # Get unique levels of predicted.
 
@@ -261,7 +260,6 @@ predicted_numeric <- suppressWarnings(as.numeric(predicted))
 # Replace NA or NaN in predicted_numeric.
 
 predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
-
 actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Align vectors (ensure all are of the same length).
@@ -280,10 +278,6 @@ predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric)
 # Replace NA or NaN in actual_numeric with a default value (e.g., 0).
 
 actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
-
-# Replace NA or NaN in risks with a default value (e.g., 1).
-
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
 # Generate risk chart.
 
