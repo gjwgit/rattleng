@@ -37,28 +37,55 @@ import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/check_file_exists.dart';
 import 'package:rattle/utils/set_status.dart';
+import 'package:rattle/utils/show_error.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 
-class DatasetTextField extends ConsumerWidget {
-  const DatasetTextField({super.key});
+class DatasetTextField extends ConsumerStatefulWidget {
+  @override
+  _DatasetTextFieldState createState() => _DatasetTextFieldState();
+}
+
+class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
+  late TextEditingController _textController;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    // Initialize the controller with the provider's initial value.
+
+    final initialText = ref.read(pathProvider);
+    _textController = TextEditingController(text: initialText);
+
+    // Update the provider's value when the text changes.
+
+    _textController.addListener(() {
+      ref.read(pathProvider.notifier).state = _textController.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final path = ref.watch(pathProvider);
 
-    // Introduce a text controller that ensures the cursor is always on the
-    // right after an update to the text field. Otherwise, because it is rebuilt
-    // each time, the cursor is set to the left position and so the characters
-    // are effectively captured right to left rather then left to right.
+    // Introduce a text controller that ensures the cursor remains where it is
+    // when we have some text, rather than it being moved the left after a
+    // rebuild.  The widget is rebuilt each time and so the cursor is set to the
+    // left position and so the characters are effectively captured right to
+    // left rather then left to right.  Update the controller's text only if it
+    // differs from the provider's state.
 
-    final txtController = TextEditingController.fromValue(
-      TextEditingValue(
-        text: path,
-        selection: TextSelection.collapsed(
-          offset: path.length,
-        ),
-      ),
-    );
+    if (_textController.text != path) {
+      _textController.text = path;
+      _textController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _textController.text.length),
+      );
+    }
 
     return Expanded(
       // Use [Expanded] to fill the remainder of the row.
@@ -79,30 +106,38 @@ class DatasetTextField extends ConsumerWidget {
           // If the user updates the text then we need to send the new value
           // off to the DatabaseModel.
 
-          onChanged: (newPath) {
-            ref.watch(pathProvider.notifier).state = newPath;
-          },
+          //          onChanged: (newPath) {
+          //            ref.watch(pathProvider.notifier).state = newPath;
+          //          },
+
+          // Waht to do when the user presses ENTER.
+
           onSubmitted: (newPath) async {
-            if (checkFileExists(context, newPath)) {
-              if (ref.read(datasetLoaded)) {
-                showDatasetAlertDialog(context, ref, false);
-              }
-              ref.read(pathProvider.notifier).state = newPath;
-              await rLoadDataset(context, ref);
-              setStatus(ref, statusChooseVariableRoles);
+            // Simply ignore if the path is empty.
 
-              datasetLoadedUpdate(ref);
+            if (newPath.isEmpty) return;
 
-              // Access the PageController via Riverpod and move to the second page.
+            if (!checkFileExists(context, newPath)) return;
 
-              ref.read(pageControllerProvider).animateToPage(
-                    // Index of the second page.
-
-                    1,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
+            if (ref.read(datasetLoaded)) {
+              showDatasetAlertDialog(context, ref, false);
             }
+
+            ref.read(pathProvider.notifier).state = newPath;
+            await rLoadDataset(context, ref);
+            setStatus(ref, statusChooseVariableRoles);
+
+            datasetLoadedUpdate(ref);
+
+            // Access the PageController via Riverpod and move to the second page.
+
+            ref.read(pageControllerProvider).animateToPage(
+                  // Index of the second page.
+
+                  1,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
           },
 
           // For an empty value we show a helpful message.
@@ -114,7 +149,7 @@ class DatasetTextField extends ConsumerWidget {
           // The controller displays the current path and accessing it from the
           // path provider ensures it is always the latest value displayed.
 
-          controller: txtController,
+          controller: _textController,
         ),
       ),
     );
