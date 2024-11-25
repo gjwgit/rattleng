@@ -118,7 +118,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
     return ToggleButtons(
       isSelected: [cleanse, normalise, partition],
       onPressed: (int index) {
-        print('keepInSync1: $keepInSync');
         if (keepInSync) {
           setState(() {
             switch (index) {
@@ -140,6 +139,25 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 ref.read(partitionProvider.notifier).state = !partition;
 
                 _updateSharedPreferences('partition', !partition);
+
+                break;
+            }
+          });
+        } else {
+          setState(() {
+            switch (index) {
+              case 0:
+                ref.read(cleanseProvider.notifier).state = !cleanse;
+
+                break;
+
+              case 1:
+                ref.read(normaliseProvider.notifier).state = !normalise;
+
+                break;
+
+              case 2:
+                ref.read(partitionProvider.notifier).state = !partition;
 
                 break;
             }
