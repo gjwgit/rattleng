@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Thursday 2024-11-21 08:19:17 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-11-23 16:45:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/meta_data.dart';
@@ -59,6 +60,7 @@ class RattleStateText extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialise the state variables used here.
 
+    String dataType = ref.watch(datatypeProvider);
     String groupBy = ref.watch(groupByProvider);
     String path = ref.watch(pathProvider);
     String status = ref.watch(statusProvider);
@@ -108,6 +110,7 @@ class RattleStateText extends ConsumerWidget {
             'STDOUT:      ${countLines(stdout)} lines\n'
             'STDERR:      ${countLines(stderr)} lines\n'
             'PATH:        $path\n'
+            'DATA TYPE:   $dataType\n'
             'CLEANSE:     $cleanse\n'
             'NORMALISE:   $normalise\n'
             'PARTITION:   $partition\n'

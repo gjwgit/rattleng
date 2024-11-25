@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-11-13 09:12:16 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-11-25 11:06:58 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -55,7 +55,7 @@ class _DatasetConfigState extends State<DatasetConfig> {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
         // Some fixed space so the widgets aren't crowded.
 
