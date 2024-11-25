@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -230,22 +231,29 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         .read(settingsGraphicThemeProvider.notifier)
         .setGraphicTheme(_selectedTheme!);
 
-    // Load toggle states from shared preferences to ensure persistence.
+    // Load toggle states and "Keep in Sync" state from shared preferences.
 
-    _loadToggleStates();
+    _loadSettings();
   }
 
-  Future<void> _loadToggleStates() async {
+  Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
 
     // Update providers with saved toggle states.
 
     ref.read(cleanseProvider.notifier).state =
         prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+
     ref.read(normaliseProvider.notifier).state =
         prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+
     ref.read(partitionProvider.notifier).state =
         prefs.getBool('partition') ?? ref.read(partitionProvider);
+
+    // Update "Keep in Sync" state.
+
+    ref.read(keepInSyncProvider.notifier).state =
+        prefs.getBool('keepInSync') ?? true;
   }
 
   Future<void> _saveToggleStates() async {
@@ -270,6 +278,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _saveToggleStates();
   }
 
+  Future<void> _saveKeepInSync(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "Keep in Sync" state to preferences.
+
+    await prefs.setBool('keepInSync', value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -279,6 +295,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final cleanse = ref.watch(cleanseProvider);
     final normalise = ref.watch(normaliseProvider);
     final partition = ref.watch(partitionProvider);
+    final keepInSync = ref.watch(keepInSyncProvider);
 
     return Material(
       color: Colors.transparent,
@@ -391,6 +408,19 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               _saveToggleStates();
                             },
                           ),
+                        ),
+                        const Text(
+                          'Keep in Sync',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Switch(
+                          value: keepInSync,
+                          onChanged: (value) {
+                            ref.read(keepInSyncProvider.notifier).state = value;
+
+                            _saveKeepInSync(value);
+                          },
                         ),
                       ],
                     ),

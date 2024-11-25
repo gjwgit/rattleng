@@ -29,6 +29,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/data.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,55 +49,75 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   void initState() {
     super.initState();
 
-    // Load initial toggle states from SharedPreferences into providers.
+    // Load initial toggle states from SharedPreferences.
+
     _loadInitialStates();
   }
 
   Future<void> _loadInitialStates() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Read and update providers from SharedPreferences.
-    ref.read(cleanseProvider.notifier).state =
-        prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
-    ref.read(normaliseProvider.notifier).state =
-        prefs.getBool('normalise') ?? ref.read(normaliseProvider);
-    ref.read(partitionProvider.notifier).state =
-        prefs.getBool('partition') ?? ref.read(partitionProvider);
+    final keepInSync = prefs.getBool('keepInSync') ?? true;
+
+    if (keepInSync) {
+      ref.read(cleanseProvider.notifier).state =
+          prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+
+      ref.read(normaliseProvider.notifier).state =
+          prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+
+      ref.read(partitionProvider.notifier).state =
+          prefs.getBool('partition') ?? ref.read(partitionProvider);
+    }
   }
 
   Future<void> _updateSharedPreferences(String key, bool value) async {
     final prefs = await SharedPreferences.getInstance();
+
     await prefs.setBool(key, value);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Watch providers to ensure UI updates when the state changes.
-    bool cleanse = ref.watch(cleanseProvider);
-    bool normalise = ref.watch(normaliseProvider);
-    bool partition = ref.watch(partitionProvider);
+    // Watch providers to ensure UI updates.
+
+    final cleanse = ref.watch(cleanseProvider);
+
+    final normalise = ref.watch(normaliseProvider);
+
+    final partition = ref.watch(partitionProvider);
+
+    final keepInSync = ref.watch(keepInSyncProvider);
 
     return ToggleButtons(
       isSelected: [cleanse, normalise, partition],
       onPressed: (int index) {
-        setState(() {
-          switch (index) {
-            case 0:
-              ref.read(cleanseProvider.notifier).state = !cleanse;
-              _updateSharedPreferences('cleanse', !cleanse);
-              break;
+        if (keepInSync) {
+          setState(() {
+            switch (index) {
+              case 0:
+                ref.read(cleanseProvider.notifier).state = !cleanse;
 
-            case 1:
-              ref.read(normaliseProvider.notifier).state = !normalise;
-              _updateSharedPreferences('normalise', !normalise);
-              break;
+                _updateSharedPreferences('cleanse', !cleanse);
 
-            case 2:
-              ref.read(partitionProvider.notifier).state = !partition;
-              _updateSharedPreferences('partition', !partition);
-              break;
-          }
-        });
+                break;
+
+              case 1:
+                ref.read(normaliseProvider.notifier).state = !normalise;
+
+                _updateSharedPreferences('normalise', !normalise);
+
+                break;
+
+              case 2:
+                ref.read(partitionProvider.notifier).state = !partition;
+
+                _updateSharedPreferences('partition', !partition);
+
+                break;
+            }
+          });
+        }
       },
       children: <Widget>[
         // CLEANSE
