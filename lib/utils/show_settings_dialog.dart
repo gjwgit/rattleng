@@ -324,86 +324,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      children: [
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Graphic Theme Setting:** The graphic theme is used
-                          by many (but not all) of the plots in Rattle, and
-                          specifically by those plots using the ggplot2
-                          package. Hover over each theme for more details. The
-                          default is the Rattle theme.
-
-                          ''',
-                          child: Text(
-                            'Graphic Theme',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-
-                        configRowGap,
-
-                        // Restore default theme button.
-
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Reset Theme:** Tap here to reset the Graphic Theme
-                            setting to the default theme for Rattle.
-                          
-                          ''',
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                _selectedTheme = 'theme_rattle';
-                              });
-
-                              ref
-                                  .read(settingsGraphicThemeProvider.notifier)
-                                  .setGraphicTheme(_selectedTheme!);
-
-                              rSource(context, ref, ['settings']);
-                            },
-                            child: const Text('Reset'),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    configRowGap,
-                    // Theme selection chips.
-
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: themeOptions.map((option) {
-                        return MarkdownTooltip(
-                          message: option['tooltip']!,
-                          child: ChoiceChip(
-                            label: Text(option['label']!),
-                            selected: _selectedTheme == option['value'],
-                            onSelected: (bool selected) {
-                              setState(() {
-                                _selectedTheme = option['value'];
-                              });
-
-                              ref
-                                  .read(settingsGraphicThemeProvider.notifier)
-                                  .setGraphicTheme(_selectedTheme!);
-
-                              rSource(context, ref, ['settings']);
-                            },
-                          ),
-                        );
-                      }).toList(),
-                    ),
-
-                    settingsGroupGap,
-
                     // Dataset Toggles section.
 
                     Row(
@@ -508,6 +428,84 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     settingsGroupGap,
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Graphic Theme Setting:** The graphic theme is used
+                          by many (but not all) of the plots in Rattle, and
+                          specifically by those plots using the ggplot2
+                          package. Hover over each theme for more details. The
+                          default is the Rattle theme.
+
+                          ''',
+                          child: Text(
+                            'Graphic Theme',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Restore default theme button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Theme:** Tap here to reset the Graphic Theme
+                            setting to the default theme for Rattle.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectedTheme = 'theme_rattle';
+                              });
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+                    // Theme selection chips.
+
+                    Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: themeOptions.map((option) {
+                        return MarkdownTooltip(
+                          message: option['tooltip']!,
+                          child: ChoiceChip(
+                            label: Text(option['label']!),
+                            selected: _selectedTheme == option['value'],
+                            onSelected: (bool selected) {
+                              setState(() {
+                                _selectedTheme = option['value'];
+                              });
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
               ),
