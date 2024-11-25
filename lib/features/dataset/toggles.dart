@@ -29,13 +29,15 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/data.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/first_start.dart';
+import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // This has to be a stateful widget otherwise the buttons don't visually toggle
 // i.e., the widget does not seem to get updated even though the values get
 // updated.
-
 class DatasetToggles extends ConsumerStatefulWidget {
   const DatasetToggles({super.key});
 
@@ -45,25 +47,199 @@ class DatasetToggles extends ConsumerStatefulWidget {
 
 class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   @override
+  void initState() {
+    super.initState();
+
+    // Load initial toggle states from SharedPreferences.
+
+    _loadInitialStates();
+  }
+
+  Future<void> _loadInitialStates() async {
+    // Access the shared preferences instance to load saved settings.
+
+    final prefs = await SharedPreferences.getInstance();
+
+    // Retrieve the "Keep in Sync" setting from shared preferences.
+    // Default to `true` if no value is found.
+
+    final keepInSync = prefs.getBool('keepInSync') ?? true;
+
+    // Retrieve the "First Start" state from the provider to determine
+    // if this is the first time the app is being initialized.
+
+    final firstStart = ref.read(firstStartProvider);
+
+    // Check if the app is starting for the first time.
+
+    if (firstStart) {
+      // Mark the "First Start" as false to prevent this block from
+      // executing in subsequent launches.
+
+      ref.read(firstStartProvider.notifier).state = false;
+
+      // Set the initial state of the "Cleanse" toggle based on shared preferences,
+      // defaulting to `true` if no value is found.
+
+      ref.read(cleanseProvider.notifier).state =
+          prefs.getBool('cleanse') ?? true;
+
+      // Set the initial state of the "Normalise" toggle based on shared preferences,
+      // defaulting to `true` if no value is found.
+
+      ref.read(normaliseProvider.notifier).state =
+          prefs.getBool('normalise') ?? true;
+
+      // Set the initial state of the "Partition" toggle based on shared preferences,
+      // defaulting to `false` if no value is found.
+
+      ref.read(partitionProvider.notifier).state =
+          prefs.getBool('partition') ?? false;
+    } else {
+      // If this is not the first start and "Keep in Sync" is enabled.
+
+      if (keepInSync) {
+        // Update the "Cleanse" toggle state to match the value in shared preferences,
+        // falling back to the current provider state if no value is found.
+
+        ref.read(cleanseProvider.notifier).state =
+            prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+
+        // Update the "Normalise" toggle state to match the value in shared preferences,
+        // falling back to the current provider state if no value is found.
+
+        ref.read(normaliseProvider.notifier).state =
+            prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+
+        // Update the "Partition" toggle state to match the value in shared preferences,
+        // falling back to the current provider state if no value is found.
+
+        ref.read(partitionProvider.notifier).state =
+            prefs.getBool('partition') ?? ref.read(partitionProvider);
+      }
+    }
+  }
+
+  Future<void> _updateSharedPreferences(String key, bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setBool(key, value);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool cleanse = ref.read(cleanseProvider);
-    bool normalise = ref.read(normaliseProvider);
-    bool partition = ref.read(partitionProvider);
+    // Watch the "Keep in Sync" state to determine the synchronization behavior.
+
+    final keepInSync = ref.watch(keepInSyncProvider);
+
+    // Declare variables to store the states of the toggles.
+
+    final cleanse;
+
+    final normalise;
+
+    final partition;
+
+    // Check if "Keep in Sync" is enabled.
+
+    if (keepInSync) {
+      // If "Keep in Sync" is enabled, use `watch` to ensure
+      // the UI is updated whenever the provider states change.
+
+      cleanse = ref.watch(cleanseProvider);
+
+      normalise = ref.watch(normaliseProvider);
+
+      partition = ref.watch(partitionProvider);
+    } else {
+      // If "Keep in Sync" is disabled, use `read` to access
+      // the current values of the providers without subscribing
+      // to state changes.
+
+      cleanse = ref.read(cleanseProvider);
+
+      normalise = ref.read(normaliseProvider);
+
+      partition = ref.read(partitionProvider);
+    }
+
+    // Return the ToggleButtons widget to display the toggle switches.
 
     return ToggleButtons(
+      // Set the selection states for the toggles based on the provider values.
+
       isSelected: [cleanse, normalise, partition],
+
+      // Define the behavior when a toggle is pressed.
+
       onPressed: (int index) {
-        setState(() {
-          switch (index) {
-            case 0:
-              ref.read(cleanseProvider.notifier).state = !cleanse;
-            case 1:
-              ref.read(normaliseProvider.notifier).state = !normalise;
-            case 2:
-              ref.read(partitionProvider.notifier).state = !partition;
-          }
-        });
+        // Check if "Keep in Sync" is enabled to determine how to handle state changes.
+
+        if (keepInSync) {
+          // If "Keep in Sync" is enabled, update both the provider state
+          // and save the changes to shared preferences.
+
+          setState(() {
+            switch (index) {
+              case 0:
+                // Toggle the "Cleanse" state and update shared preferences.
+
+                ref.read(cleanseProvider.notifier).state = !cleanse;
+
+                _updateSharedPreferences('cleanse', !cleanse);
+
+                break;
+
+              case 1:
+                // Toggle the "Normalise" state and update shared preferences.
+
+                ref.read(normaliseProvider.notifier).state = !normalise;
+
+                _updateSharedPreferences('normalise', !normalise);
+
+                break;
+
+              case 2:
+                // Toggle the "Partition" state and update shared preferences.
+
+                ref.read(partitionProvider.notifier).state = !partition;
+
+                _updateSharedPreferences('partition', !partition);
+
+                break;
+            }
+          });
+        } else {
+          // If "Keep in Sync" is disabled, update only the provider state
+          // without saving changes to shared preferences.
+
+          setState(() {
+            switch (index) {
+              case 0:
+                // Toggle the "Cleanse" state.
+
+                ref.read(cleanseProvider.notifier).state = !cleanse;
+
+                break;
+
+              case 1:
+                // Toggle the "Normalise" state.
+
+                ref.read(normaliseProvider.notifier).state = !normalise;
+
+                break;
+
+              case 2:
+                // Toggle the "Partition" state.
+
+                ref.read(partitionProvider.notifier).state = !partition;
+
+                break;
+            }
+          });
+        }
       },
+
       children: <Widget>[
         // CLEANSE
 
@@ -94,8 +270,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
           ''',
           child: const Icon(Icons.auto_fix_high_outlined),
-          // child: Icon(Icons.art_track),
-          // child: Icon(Icons.ac_unit),
         ),
 
         // PARTITION
@@ -118,7 +292,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
           ''',
           child: const Icon(Icons.horizontal_split),
-          // child: Icon(Icons.assessment_outlined),
         ),
       ],
     );
