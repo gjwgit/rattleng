@@ -50,7 +50,7 @@ control <- ctree_control(
 # Train a Conditional Inference Tree model using ctree
 model_ctree <- ctree(
   formula   = form,
-  data      = ds[tr, vars],
+  data      = trds,
   na.action = na.exclude,
   control   = control
 )
