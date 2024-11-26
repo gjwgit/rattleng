@@ -167,13 +167,10 @@ dev.off()
 predicted <- predict(model_neuralnet, 
                      newdata = tuds,)
   
-actual <- as.character(tuds[[target]])
 
 # Get unique levels of predicted.
 
 levels_predicted <- unique(predicted)
-levels_actual <- unique(actual)
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
 
