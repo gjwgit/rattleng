@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Friday 2024-11-15 09:32:33 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-11-23 10:00:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -145,13 +145,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Add a page for text file (a .txt file) content for Word Cloud.
 
   void _addTextFilePage(String stdout, List<Widget> pages) {
-    String content = rExtract(stdout, '> cat(ds,');
+    String content = rExtract(stdout, '> cat(txt,');
     String title = '''
 
         # Text Content
 
         Generated using
-        [base::cat(ds)](https://www.rdocumentation.org/packages/base/topics/cat).
+        [base::cat(txt)](https://www.rdocumentation.org/packages/base/topics/cat).
 
         ''';
 

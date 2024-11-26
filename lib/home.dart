@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2024-11-19 11:44:58 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2024-11-24 20:09:35 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -44,10 +44,9 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/features/evaluate/panel.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
-import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/tabs/debug/tab.dart';
 import 'package:rattle/tabs/explore.dart';
@@ -55,6 +54,7 @@ import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
 import 'package:rattle/utils/reset.dart';
+import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_settings_dialog.dart';
 import 'package:rattle/widgets/status_bar.dart';
@@ -195,11 +195,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Index 2 is the TRANSFORM tab.
         if (_tabController.previousIndex == 0 ||
             _tabController.previousIndex == 2) {
-          String path = ref.read(pathProvider);
+          // 20241123 gjw For a table type dataset we want to run the
+          // dataset_template script.
 
-          // TODO 20240613 WE PROBABLY ONLY DO THIS FOR THE CSV FILES.
-
-          if (path.isNotEmpty) {
+          if (ref.read(datatypeProvider) == 'table') {
             // 20241008 gjw On leaving the DATASET tab we run the data template
             // if there is a dataset loaded, as indicated by the path having a
             // value. We need to run the template here after we have loaded and
@@ -211,6 +210,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
             // `features/dataset/display.dart` after the dataset is loaded and
             // we need to wait until the roles are set before we run the
             // template.
+            //
+            // 20241123 gjw Only perform a dataset template if the path is not a
+            // text file.
 
             rSource(context, ref, ['dataset_template']);
           }
@@ -275,22 +277,35 @@ Xu, Yixiang Yin, Bo Zhang.
           // visiable at all times, particularly for a screenshot, so place it
           // on the title bar for now.
 
-          GestureDetector(
-            onTap: () async {
-              final Uri url = Uri.parse(_changelogUrl);
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url);
-              } else {
-                debugPrint('Could not launch $_changelogUrl');
-              }
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Text(
-                'Version $_appVersion',
-                style: const TextStyle(
-                  color: Colors.blue,
-                  fontSize: 10,
+          MarkdownTooltip(
+            message: '''
+
+            **Version:** *Rattle* is regularly updated to bring you the best
+            experience for Data Science, AI and Machine Learning. The latest
+            version is always available from the
+            [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
+            the **Version** text here in the title bar to visit the *CHANGELOG*
+            in your browser and so see a list of all changes to Rattle. This
+            will help decide whether you want to update now.
+
+            ''',
+            child: GestureDetector(
+              onTap: () async {
+                final Uri url = Uri.parse(_changelogUrl);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                } else {
+                  debugPrint('Could not launch $_changelogUrl');
+                }
+              },
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Text(
+                  'Version $_appVersion',
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    fontSize: 10,
+                  ),
                 ),
               ),
             ),
@@ -302,7 +317,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Reset** Tap here to clear the current project and so start a new
+            **Reset:** Tap here to clear the current project and so start a new
             project with a new dataset. You will be prompted to confirm since
             you will lose all of the current pages and analyses.
 
@@ -315,7 +330,7 @@ Xu, Yixiang Yin, Bo Zhang.
               onPressed: () async {
                 // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
                 if (ref.read(datasetLoaded)) {
-                  showAlertPopup(context, ref, false);
+                  showDatasetAlertDialog(context, ref, false);
                 } else {
                   await reset(context, ref);
                 }
@@ -346,11 +361,14 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **R Package Installation** Tap here to check for any R packages that
-            need to be installed. If any are missing locally they will be
-            installed. This could take some time, *upwards of 5 minutes,* for
-            example. All packages will also then be loaded into R. After
-            starting check the **Console** tab for details.
+            **R Package Installation:** Tap here to load all required R pacakges
+            now rather than when they are needed. It can be useful to do this
+            before you load a dataset so as to ensure everything is ready. This
+            can avoid some issues on startup. Rattle will check for any R
+            packages that need to be installed and will install them. This could
+            take some time, *upwards of 5 minutes,* for example. After starting
+            this installation do check the **Console** tab for details and
+            progress.
 
             ''',
             child: IconButton(
@@ -384,7 +402,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Settings** Tap here to update your default settings. At present we
+            **Settings:** Tap here to update your default settings. At present we
             have just one setting: ggplot theme. The default theme is the simple
             and clean Rattle theme but there are many themes to choose
             from. Your settings will be saved for this session and you have the
@@ -407,7 +425,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **About** Tap here to view information about the Rattle
+            **About:** Tap here to view information about the Rattle
             project. This include a list of those who have contributed to the
             latest version of the software, *Verison 6.* It also includes the
             extensive list of open-source packages that Rattle is built on and

@@ -1,6 +1,6 @@
-# Rattle Scripts: generate a trimmed wordcloud png
+# Rattle Scripts: Generate a Word Cloud image.
 # 
-# Time-stamp: <Friday 2024-08-02 08:40:25 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-11-24 05:33:19 +1100 Graham Williams>
 # 
 # Copyright (C) 2024, Togaware Pty Ltd
 # 
@@ -27,17 +27,26 @@
 
 # Load required libraries.
 
+library(dplyr)
+library(readr)
 library(tm)
 library(wordcloud)
 
-# Load the text data.
+# The text data will have been loaded into the `txt` variable. If that
+# does not exist then convert ds into txt.
 
-text_data <- readLines("FILENAME")
+if (! exists('txt')) {
+  txt <- readr::format_delim(ds, delim=' ')
+}
 
-docs <- Corpus(VectorSource(text_data))
+# Convert the data data to a single character string rather than a
+# list of strings, if required.
+#
+# txt <- paste(txt, collapse = " ")
 
-# Preprocessing.
-# the order matters!
+docs <- Corpus(VectorSource(txt))
+
+# Preprocessing.  Note that the order matters!
 
 if (PUNCTUATION) {
   docs <- tm_map(docs, removePunctuation, ucp = TRUE)
@@ -50,11 +59,6 @@ if (STOPWORD) {
 if (STEM) {
   docs <- tm_map(docs, stemDocument)
 }
-
-
-# Convert text data to a single character string
-#
-# text <- paste(text_data, collapse = " ")
 
 dtm <- TermDocumentMatrix(docs)
 m <- as.matrix(dtm)
@@ -95,4 +99,4 @@ dev.off()
 
 # Show the top words
 
-d %>% filter(freq >= MINFREQ) %>%  slice_head(n = MAXWORD) %>%  print(row.names = FALSE)  
+d %>% filter(freq >= MINFREQ) %>%  dplyr::slice_head(n = MAXWORD) %>%  print(row.names = FALSE)  

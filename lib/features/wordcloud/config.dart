@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2024-11-14 09:01:42 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-11-24 05:44:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -206,7 +206,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 message: '''
                 
                 Select the language to filter out common stopwords from the word
-                cloud.  'SMART' means English stopwords from the SMART
+                cloud.  'SMART' covers English stopwords from the SMART
                 information retrieval system (as documented in Appendix 11 of
                 https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
 

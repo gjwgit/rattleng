@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Thursday 2024-11-21 08:02:26 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-11-24 18:03:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,10 +28,17 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:rattle/providers/keep_in_sync.dart';
+import 'package:rattle/providers/session_control.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/normalise.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// List of available ggplot themes for the user to choose from.
 
@@ -225,14 +232,97 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         .read(settingsGraphicThemeProvider.notifier)
         .setGraphicTheme(_selectedTheme!);
 
-    // 20241121 gjw Moved to using SETTINGS_GGPLOT_THEME
-    // EVENTUALLY REMOVE
-    // rSource(context, ref, ['settings']);
+    // Load toggle states and "Keep in Sync" state from shared preferences.
+
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Update providers with saved toggle states.
+
+    ref.read(cleanseProvider.notifier).state =
+        prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
+
+    ref.read(normaliseProvider.notifier).state =
+        prefs.getBool('normalise') ?? ref.read(normaliseProvider);
+
+    ref.read(partitionProvider.notifier).state =
+        prefs.getBool('partition') ?? ref.read(partitionProvider);
+
+    // Update "Keep in Sync" state.
+
+    ref.read(keepInSyncProvider.notifier).state =
+        prefs.getBool('keepInSync') ?? true;
+
+    // Update "Session Control" state.
+
+    ref.read(askOnExitProvider.notifier).state =
+        prefs.getBool('askOnExit') ?? true;
+  }
+
+  Future<void> _saveToggleStates() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save the latest provider states to preferences.
+
+    await prefs.setBool('cleanse', ref.read(cleanseProvider));
+    await prefs.setBool('normalise', ref.read(normaliseProvider));
+    await prefs.setBool('partition', ref.read(partitionProvider));
+  }
+
+  void _resetToggleStates() {
+    // Reset all toggles to default.
+
+    ref.read(cleanseProvider.notifier).state = true;
+    ref.read(normaliseProvider.notifier).state = true;
+    ref.read(partitionProvider.notifier).state = true;
+
+    ref.read(keepInSyncProvider.notifier).state = false;
+
+    // Save the reset states to preferences.
+
+    _saveToggleStates();
+  }
+
+  void resetSessionControl() {
+    // Reset session control to default.
+
+    ref.read(askOnExitProvider.notifier).state = true;
+
+    // Save the reset state to preferences.
+
+    _saveAskOnExit(true);
+  }
+
+  Future<void> _saveKeepInSync(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "Keep in Sync" state to preferences.
+
+    await prefs.setBool('keepInSync', value);
+  }
+
+  Future<void> _saveAskOnExit(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "askOnExit" state to preferences.
+
+    await prefs.setBool('askOnExit', value);
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size; // Get screen size.
+    final Size size = MediaQuery.of(context).size;
+
+    // Watch provider values to ensure UI stays in sync.
+
+    final cleanse = ref.watch(cleanseProvider);
+    final normalise = ref.watch(normaliseProvider);
+    final partition = ref.watch(partitionProvider);
+    final keepInSync = ref.watch(keepInSyncProvider);
+    final askOnExit = ref.watch(askOnExitProvider);
 
     return Material(
       color: Colors.transparent,
@@ -241,11 +331,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         child: Stack(
           children: [
             Container(
-              // Full screen width.
-
               width: size.width,
-              // Full screen height.
-
               height: size.height,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -263,21 +349,170 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      'Select Graphic Theme',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    // Dataset Toggles section.
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Dataset Toggles Setting:** The default setting of
+                          the dataset toggles, on starting up Rattle, is set
+                          here. During a session with Rattle the toggles may be
+                          changed by the user. If the *Sync* option is set, then
+                          the changes made by the user are tracked and restored
+                          on the next time Rattle is run.
+
+                          ''',
+                          child: const Text(
+                            'Dataset Toggles',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Reset Dataset Toggles to default button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Toggles:** Tap here to reset the Dataset Toggles
+                            setting to the default for Rattle.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: _resetToggleStates,
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
+
+                    configRowGap,
+
+                    // Build toggle rows synced with providers.
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Cleanse',
+                            cleanse,
+                            (value) {
+                              ref.read(cleanseProvider.notifier).state = value;
+
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Unify',
+                            normalise,
+                            (value) {
+                              ref.read(normaliseProvider.notifier).state =
+                                  value;
+
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildToggleRow(
+                            'Partition',
+                            partition,
+                            (value) {
+                              ref.read(partitionProvider.notifier).state =
+                                  value;
+
+                              _saveToggleStates();
+                            },
+                          ),
+                        ),
+                        const Text(
+                          'Keep in Sync',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Switch(
+                          value: keepInSync,
+                          onChanged: (value) {
+                            ref.read(keepInSyncProvider.notifier).state = value;
+
+                            _saveKeepInSync(value);
+                          },
+                        ),
+                      ],
+                    ),
+
+                    settingsGroupGap,
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Graphic Theme Setting:** The graphic theme is used
+                          by many (but not all) of the plots in Rattle, and
+                          specifically by those plots using the ggplot2
+                          package. Hover over each theme for more details. The
+                          default is the Rattle theme.
+
+                          ''',
+                          child: Text(
+                            'Graphic Theme',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Restore default theme button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Theme:** Tap here to reset the Graphic Theme
+                            setting to the default theme for Rattle.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectedTheme = 'theme_rattle';
+                              });
+
+                              ref
+                                  .read(settingsGraphicThemeProvider.notifier)
+                                  .setGraphicTheme(_selectedTheme!);
+
+                              rSource(context, ref, ['settings']);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+                    // Theme selection chips.
+
                     Wrap(
                       spacing: 8.0,
                       runSpacing: 8.0,
                       children: themeOptions.map((option) {
                         return MarkdownTooltip(
-                          // Tooltip for each chip.
-
                           message: option['tooltip']!,
-
                           child: ChoiceChip(
                             label: Text(option['label']!),
                             selected: _selectedTheme == option['value'],
@@ -285,8 +520,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               setState(() {
                                 _selectedTheme = option['value'];
                               });
-
-                              // Automatically update the theme in Riverpod.
 
                               ref
                                   .read(settingsGraphicThemeProvider.notifier)
@@ -298,29 +531,99 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         );
                       }).toList(),
                     ),
-                    const SizedBox(height: 20),
-                    // Add the RESTORE button to reset to factory default theme.
 
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _selectedTheme = 'theme_rattle';
-                        });
+                    settingsGroupGap,
 
-                        // Reset to default theme in provider and persist it.
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
 
-                        ref
-                            .read(settingsGraphicThemeProvider.notifier)
-                            .setGraphicTheme(_selectedTheme!);
+                          **Session Control:** This setting determines whether a confirmation popup 
+                          appears when the user tries to quit the application. 
 
-                        rSource(context, ref, ['settings']);
-                      },
-                      child: const Text('RESTORE'),
+                          - **ON**: A popup will appear asking the user to confirm quitting.\n
+
+                          - **OFF**: The application will exit immediately without a confirmation popup.
+
+                          The default setting is **ON**.
+
+                          ''',
+                          child: const Text(
+                            'Session Control',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Restore  button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Session Control:** Tap here to reset to enable a confirmation 
+                          popup when exiting the application.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: resetSessionControl,
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Ask before exit',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Switch for Session Control with a tooltip.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Toggle Session Control:**
+
+                          - Slide to **ON** to enable a confirmation popup when exiting the application.\n
+
+                          - Slide to **OFF** to disable the popup, allowing the app to exit directly.
+
+                          ''',
+                          child: Switch(
+                            value: askOnExit,
+                            onChanged: (value) {
+                              ref.read(askOnExitProvider.notifier).state =
+                                  value;
+
+                              // Save the new state to shared preferences or other storage as needed.
+
+                              _saveAskOnExit(value);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
+
+            // Close button for the dialog.
+
             Positioned(
               top: 16,
               right: 16,
@@ -333,6 +636,30 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           ],
         ),
       ),
+    );
+  }
+
+  // Build a toggle row with a label and a switch.
+
+  Widget _buildToggleRow(
+    String label,
+    bool value,
+    ValueChanged<bool> onChanged,
+  ) {
+    return Row(
+      // Align items to the start.
+
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontSize: 16),
+        ),
+        Switch(
+          value: value,
+          onChanged: onChanged,
+        ),
+      ],
     );
   }
 }

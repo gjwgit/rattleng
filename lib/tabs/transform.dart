@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-08-23 17:54:07 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-11-23 17:35:25 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -35,6 +35,7 @@ import 'package:rattle/features/rescale/panel.dart';
 import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/features/recode/panel.dart';
 import 'package:rattle/features/cleanup/panel.dart';
+import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/transform.dart';
 import 'package:rattle/utils/debug_text.dart';
 
@@ -96,14 +97,21 @@ class _TransformTabsState extends ConsumerState<TransformTabs>
 
     return Column(
       children: [
-        TabBar(
-          unselectedLabelColor: Colors.grey,
-          controller: _tabController,
-          tabs: transformPanels.map((tab) {
-            return Tab(
-              text: tab['title'],
-            );
-          }).toList(),
+        // 20241123 gjw Ignore the features if the data type of the loaded
+        // dataset is not 'table'. The features are implemented assuming a table
+        // as the dataset.
+
+        IgnorePointer(
+          ignoring: !['', 'table'].contains(ref.watch(datatypeProvider)),
+          child: TabBar(
+            unselectedLabelColor: Colors.grey,
+            controller: _tabController,
+            tabs: transformPanels.map((tab) {
+              return Tab(
+                text: tab['title'],
+              );
+            }).toList(),
+          ),
         ),
         Expanded(
           child: TabBarView(

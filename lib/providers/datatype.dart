@@ -1,12 +1,13 @@
-/// Gloabl variable [partition].
+/// A provider of the path that identifies the dataset to load.
+///
+/// Time-stamp: <Saturday 2024-11-23 16:44:25 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
-/// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Monday 2024-11-25 21:12:44 +1100 Graham Williams>
-//
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -21,11 +22,9 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// For COMP3430 2024 S2 set the default off since that is what they are asked to
-// do. Perhaps default off is good in general?
-
-final partitionProvider = StateProvider<bool>((ref) => true);
+final datatypeProvider = StateProvider<String>((ref) => '');
