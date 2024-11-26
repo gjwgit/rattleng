@@ -59,15 +59,6 @@ dev.off()
 predicted <- kernlab::predict(svm_model, 
                               newdata    = tuds,
                               type       = "probabilities")[,2]
-  
-actual <- as.character(tuds[[target]])
-  
-# Create numeric risks vector.
-
-risks <- as.character(ds[[risk]])
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
 # Get unique levels of predicted.
 
@@ -75,7 +66,6 @@ levels_predicted <- unique(predicted)
 levels_actual <- unique(actual)
 predicted <- as.character(predicted)
 predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
 
@@ -84,8 +74,6 @@ predicted_numeric <- suppressWarnings(as.numeric(predicted))
 # Replace NA or NaN in predicted_numeric.
 
 predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
-
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Align vectors (ensure all are of the same length).
 # Use the minimum length of the vectors.
