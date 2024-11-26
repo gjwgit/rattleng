@@ -8,6 +8,8 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Add SETTINGS support for Dataset toggles [6.3.29 20241125 kev]
++ Review and debug DATASET path entry handling [6.3.30 20241125 gjw]
 + Tune WORDCLOUD handling. Disable features for txt [6.3.27 20241124 gjw]
 + Improve inbuilt R package downloader. [6.3.26 20241121 gjw]
 + Update Version with a tooltip to explain CHANGELOG link [6.3.25 20241121 gjw]
