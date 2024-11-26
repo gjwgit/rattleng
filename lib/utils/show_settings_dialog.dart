@@ -259,7 +259,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Update "Session Control" state.
 
     ref.read(sessionControlProvider.notifier).state =
-        prefs.getBool('sessionControl') ?? true;
+        prefs.getBool('askOnExit') ?? true;
   }
 
   Future<void> _saveToggleStates() async {
@@ -299,7 +299,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     // Save "Session Control" state to preferences.
 
-    await prefs.setBool('sessionControl', value);
+    await prefs.setBool('askOnExit', value);
   }
 
   @override
