@@ -716,6 +716,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   .read(settingsImageViewerProvider.notifier)
                                   .state = value;
 
+                              print(
+                                  "ref.read(settingsImageViewerProvider.notifier).state: ${ref.read(settingsImageViewerProvider.notifier).state}");
+
                               // Save the new state to shared preferences or other storage as needed.
 
                               _saveImageViewer(value);

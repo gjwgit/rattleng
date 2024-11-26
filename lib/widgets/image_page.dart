@@ -37,6 +37,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/sunken_box_decoration.dart';
@@ -240,7 +241,7 @@ class ImagePage extends StatelessWidget {
                             Icons.open_in_new,
                             color: Colors.blue,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             // Generate a unique file name for the new file in the
                             // temporary directory.
 
@@ -256,13 +257,43 @@ class ImagePage extends StatelessWidget {
 
                             //TODO kevin
 
-                            Platform.isWindows
-                                ? Process.run(
-                                    'start',
-                                    [tempFile.path],
-                                    runInShell: true,
-                                  )
-                                : Process.run('open', [tempFile.path]);
+                            // Update "Image Viewer" state.
+
+                            final prefs = await SharedPreferences.getInstance();
+
+                            final imageViewer =
+                                prefs.getBool('imageViewer') ?? false;
+
+                            print("imageViewer: $imageViewer");
+
+                            if (imageViewer) {
+                              print("11imageViewer: $imageViewer");
+                              // If the image viewer is enabled, open the image in the inkscape
+
+                              if (Platform.isWindows) {
+                                Process.run(
+                                  'inkscape',
+                                  [tempFile.path],
+                                  runInShell:
+                                      true, // Ensures the command runs properly in a shell environment
+                                );
+                              } else {
+                                Process.run(
+                                  'inkscape',
+                                  [tempFile.path],
+                                );
+                              }
+                            } else {
+                              print("22imageViewer: $imageViewer");
+
+                              Platform.isWindows
+                                  ? Process.run(
+                                      'start',
+                                      [tempFile.path],
+                                      runInShell: true,
+                                    )
+                                  : Process.run('open', [tempFile.path]);
+                            }
                           },
                         ),
                       ),
