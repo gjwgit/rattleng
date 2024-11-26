@@ -87,17 +87,11 @@ dev.off()
 # Prepare probabilities for predictions.
 
 predicted <- kernlab::predict(model_conditionalForest, 
-                              newdata                  = tuds,
-                              type                     = "prob")[,2]
+                              newdata = tuds,
+                              type    = "prob")[,2]
   
 actual <- as.character(tuds[[target]])
   
-# Create numeric risks vector.
-
-risks <- as.character(ds[[risk]])
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
 # Get unique levels of predicted.
 

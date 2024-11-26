@@ -165,16 +165,9 @@ dev.off()
 # Prepare probabilities for predictions.
 
 predicted <- predict(model_neuralnet, 
-                     newdata          = tuds,)
+                     newdata = tuds,)
   
 actual <- as.character(tuds[[target]])
-  
-# Create numeric risks vector.
-
-risks <- as.character(ds[[risk]])
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
 
 # Get unique levels of predicted.
 

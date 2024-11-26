@@ -233,8 +233,8 @@ dev.off()
 # Prepare probabilities for predictions.
 
 predicted <- kernlab::predict(model_randomForest, 
-                              newdata             = tuds,
-                              type                = "prob")[,2]
+                              newdata = tuds,
+                              type    = "prob")[,2]
   
 actual <- as.character(tuds[[target]])
   

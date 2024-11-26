@@ -74,8 +74,8 @@ dev.off()
 # Prepare probabilities for predictions.
 
 predicted <- predict(model_glm, 
-                     newdata    = tuds, 
-                     type       = "response")
+                     newdata = tuds, 
+                     type    = "response")
   
 actual <- as.character(tuds[[target]])
   
