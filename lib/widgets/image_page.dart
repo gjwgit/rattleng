@@ -254,6 +254,8 @@ class ImagePage extends StatelessWidget {
                             // Pop out a window to display the plot separate
                             // to the Rattle app.
 
+                            //TODO kevin
+
                             Platform.isWindows
                                 ? Process.run(
                                     'start',
