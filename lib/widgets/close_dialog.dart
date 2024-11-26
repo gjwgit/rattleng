@@ -62,11 +62,11 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // Check the sessionControlProvider state.
+    // Check the askOnExitProvider state.
 
-    final sessionControl = ref.watch(sessionControlProvider);
+    final askOnExit = ref.watch(askOnExitProvider);
 
-    if (!sessionControl) {
+    if (!askOnExit) {
       // If session control is OFF, close the app directly.
 
       _closeApp();

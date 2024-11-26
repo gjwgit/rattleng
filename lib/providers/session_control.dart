@@ -1,4 +1,4 @@
-/// Gloabl variable [sessionControl].
+/// Gloabl variable [askOnExit].
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -25,4 +25,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final sessionControlProvider = StateProvider<bool>((ref) => true);
+final askOnExitProvider = StateProvider<bool>((ref) => true);

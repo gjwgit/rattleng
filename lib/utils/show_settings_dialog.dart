@@ -258,7 +258,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     // Update "Session Control" state.
 
-    ref.read(sessionControlProvider.notifier).state =
+    ref.read(askOnExitProvider.notifier).state =
         prefs.getBool('askOnExit') ?? true;
   }
 
@@ -294,10 +294,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('keepInSync', value);
   }
 
-  Future<void> _saveSessionControl(bool value) async {
+  Future<void> _saveAskOnExit(bool value) async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Save "Session Control" state to preferences.
+    // Save "askOnExit" state to preferences.
 
     await prefs.setBool('askOnExit', value);
   }
@@ -312,7 +312,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final normalise = ref.watch(normaliseProvider);
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
-    final sessionControl = ref.watch(sessionControlProvider);
+    final askOnExit = ref.watch(askOnExitProvider);
 
     return Material(
       color: Colors.transparent,
@@ -577,14 +577,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           ''',
                           child: Switch(
-                            value: sessionControl,
+                            value: askOnExit,
                             onChanged: (value) {
-                              ref.read(sessionControlProvider.notifier).state =
+                              ref.read(askOnExitProvider.notifier).state =
                                   value;
 
                               // Save the new state to shared preferences or other storage as needed.
 
-                              _saveSessionControl(value);
+                              _saveAskOnExit(value);
                             },
                           ),
                         ),
