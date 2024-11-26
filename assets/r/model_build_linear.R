@@ -76,29 +76,11 @@ dev.off()
 predicted <- predict(model_glm, 
                      newdata = tuds, 
                      type    = "response")
-  
-actual <- as.character(tuds[[target]])
-  
-# Create numeric risks vector.
-
-risks <- as.character(ds[[risk]])
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
-  
-# Use rattle's evaluateRisk.
-
-risk_results <- rattle::evaluateRisk(
-  predicted = as.numeric(as.factor(predicted)), 
-  actual    = as.numeric(as.factor(actual)), 
-  risks     = as.numeric(risks)
-)
 
 # Get unique levels of predicted.
 
 levels_predicted <- unique(predicted)
 levels_actual <- unique(actual)
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
 
