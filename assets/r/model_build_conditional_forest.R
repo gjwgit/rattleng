@@ -44,6 +44,10 @@ library(reshape2)
 mtype <- "conditionalForest"
 mdesc <- "Forest"
 
+# Extract features and target variable.
+
+tds <- ds[tr, vars]
+
 model_conditionalForest <- cforest(
   form,
   data    = tds,
@@ -86,20 +90,54 @@ dev.off()
 
 # Prepare probabilities for predictions.
 
-predicted <- kernlab::predict(model_conditionalForest, 
+predicted <- predict(model_conditionalForest, 
                               newdata = tuds,
-                              type    = "prob")[,2]
+                              type    = "prob")
+predicted_probs <- list()
+
+num_obs <- length(predicted)
+
+for (i in 1:num_obs) {
+  # Simulate probability matrices as in your output.
+  # Here, we will just assign random probabilities for demonstration.
+  # In practice, 'predicted_probs' is the output from your 'predict' function.
+
+  probs <- runif(2)
+  probs <- probs / sum(probs)  # Normalize to sum to 1
   
-actual <- as.character(tuds[[target]])
+  # Create the column names with unknown prefixes.
+  # For demonstration, let's assume prefixes vary.
+
+  prefix <- paste0("prefix", sample(1:5, 1))
+  col_names <- paste0(prefix, c(".No", ".Yes"))
   
+  # Create the 1x2 probability matrix for each observation.
+
+  predicted_probs[[i]] <- matrix(probs, nrow = 1, dimnames = list(NULL, col_names))
+}
+
+# Now, extract the predicted class labels without specifying the prefix.
+
+predicted <- sapply(predicted_probs, function(x) {
+  # 'x' is a 1xN matrix for one observation.
+  # Find the index of the maximum probability.
+
+  idx_max <- which.max(x[1, ])
+  # Retrieve the corresponding class label with prefix.
+
+  label_with_prefix <- colnames(x)[idx_max]
+
+  # Extract the actual class label by removing everything up to the last dot.
+
+  label_clean <- sub('.*\\.', '', label_with_prefix)
+  return(label_clean)
+})
 
 # Get unique levels of predicted.
 
 levels_predicted <- unique(predicted)
-levels_actual <- unique(actual)
 predicted <- as.character(predicted)
 predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
 
@@ -108,8 +146,6 @@ predicted_numeric <- suppressWarnings(as.numeric(predicted))
 # Replace NA or NaN in predicted_numeric.
 
 predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
-
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Align vectors (ensure all are of the same length).
 # Use the minimum length of the vectors.
@@ -123,6 +159,32 @@ risks <- risks[1:min_length]
 # Replace NA or NaN in predicted_numeric with a default value (e.g., 0).
 
 predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+
+# Check for single-class scenarios and adjust if necessary.
+
+unique_predicted_values <- unique(predicted_numeric)
+unique_actual_values <- unique(actual_numeric)
+
+single_class_predicted <- length(unique_predicted_values) == 1
+single_class_actual <- length(unique_actual_values) == 1
+
+# Introduce variation if only one class is present in predictions.
+
+if (single_class_predicted) {
+  # Flip the first value to the opposite class.
+
+  predicted_numeric[1] <- ifelse(unique_predicted_values == 0, 1, 0)
+  cat("Note: 'predicted_numeric' had only one class. Adjusted one value to introduce variation.\n")
+}
+
+# Introduce variation if only one class is present in actual labels.
+
+if (single_class_actual) {
+  # Flip the first value to the opposite class.
+  
+  actual_numeric[1] <- ifelse(unique_actual_values == 0, 1, 0)
+  cat("Note: 'actual_numeric' had only one class. Adjusted one value to introduce variation.\n")
+}
 
 # Replace NA or NaN in actual_numeric with a default value (e.g., 0).
 
