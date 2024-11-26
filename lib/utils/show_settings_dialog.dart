@@ -533,8 +533,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             ),
                           ),
                         ),
+                      ],
+                    ),
 
-                        configRowGap,
+                    settingsGroupGap,
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Ask before exit',
+                          style: TextStyle(
+                            fontSize: 16,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        configWidgetGap,
 
                         // Switch for Session Control with a tooltip.
 
