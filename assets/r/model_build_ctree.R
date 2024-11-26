@@ -90,6 +90,19 @@ predicted <- as.character(predicted)
 predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
 actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
+# Detect if predicted_numeric or actual_numeric contains only one unique value.
+
+unique_predicted_values <- unique(predicted_numeric)
+unique_actual_values    <- unique(actual_numeric)
+  
+single_class_predicted <- length(unique_predicted_values) == 1
+single_class_actual    <- length(unique_actual_values) == 1
+  
+if (single_class_predicted || single_class_actual) {
+  cat("Cannot generate risk chart: Only one class present in predictions or actual data.\n")
+  return(NULL)
+}
+
 # Generate risk chart.
 
 svg("TEMPDIR/model_ctree_risk.svg")

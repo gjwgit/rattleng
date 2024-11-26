@@ -111,10 +111,3 @@ num_vars <- setdiff(inputs, cat_vars)
 ignore_categoric_vars <- c(num_vars, target)
 
 neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
-
-# Create numeric risks vector.
-
-risks <- as.character(ds[[risk]])
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)

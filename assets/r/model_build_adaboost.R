@@ -113,15 +113,24 @@ dev.off()
 # Prepare probabilities for predictions.
 
 predicted <- predict(model_ada, 
-                     newdata    = tuds,
-                     type       = "prob")[,2]
+                     newdata = tuds,
+                     type    = "prob")[,2]
   
-actual <- as.character(tuds[[target]])
+actual <- as.character(actual_tu)
+actual <- actual[!is.na(actual)]
+
+# Create numeric risks vector.
+
+risks <- as.character(risk_tu)
+risks <- risks[!is.na(risks)]
+risks <- as.numeric(risks)
 
 # Get unique levels of predicted.
 
 levels_predicted <- unique(predicted)
 levels_actual <- unique(actual)
+predicted <- as.character(predicted)
+predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
 actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
@@ -144,24 +153,14 @@ predicted_numeric <- ifelse(predicted_numeric < 0 | is.na(predicted_numeric) | i
 
 actual_numeric <- ifelse(actual_numeric < 0 | actual_numeric > 1 | is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
 
-# Step 3: Ensure risks are valid and non-negative.
-
-risks <- as.character(ds[[risk]])
-
-risks <- risks[!is.na(risks)]
-
-risks <- as.numeric(risks)
-
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
-
-# Step 4: Ensure all vectors have the same length.
+# Step 3: Ensure all vectors have the same length.
 
 min_length <- min(length(predicted_numeric), length(actual_numeric), length(risks))
 predicted_numeric <- predicted_numeric[1:min_length]
 actual_numeric <- actual_numeric[1:min_length]
 risks <- risks[1:min_length]
 
-# Step 5: Ensure predicted_numeric has valid probabilities (0 to 1).
+# Step 4: Ensure predicted_numeric has valid probabilities (0 to 1).
 
 predicted_numeric <- pmin(pmax(predicted_numeric, 0), 1)
 
@@ -172,4 +171,3 @@ rattle::riskchart(predicted_numeric, actual_numeric, risks) +
   labs(title = "Risk Chart - Tuning Dataset") +
   theme(plot.title = element_text(size=14))
 dev.off()
-
