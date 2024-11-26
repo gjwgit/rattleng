@@ -260,6 +260,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(askOnExitProvider.notifier).state =
         prefs.getBool('askOnExit') ?? true;
+
+    // Update "Image Viewer" state.
+
+    ref.read(settingsImageViewerProvider.notifier).state =
+        prefs.getBool('imageViewer') ?? true;
   }
 
   Future<void> _saveToggleStates() async {
@@ -296,6 +301,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _saveAskOnExit(true);
   }
 
+  void resetImageViewer() {
+    // Reset session control to default.
+
+    ref.read(settingsImageViewerProvider.notifier).state = true;
+
+    // Save the reset state to preferences.
+
+    _saveImageViewer(true);
+  }
+
   Future<void> _saveKeepInSync(bool value) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -312,6 +327,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('askOnExit', value);
   }
 
+  Future<void> _saveImageViewer(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "imageViewer" state to preferences.
+
+    await prefs.setBool('imageViewer', value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -323,6 +346,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final askOnExit = ref.watch(askOnExitProvider);
+    final imageViewer = ref.watch(settingsImageViewerProvider);
 
     return Material(
       color: Colors.transparent,
@@ -612,6 +636,89 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               // Save the new state to shared preferences or other storage as needed.
 
                               _saveAskOnExit(value);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Session Control:** This setting determines whether a confirmation popup 
+                          appears when the user tries to quit the application. 
+
+                          - **ON**: A popup will appear asking the user to confirm quitting.\n
+
+                          - **OFF**: The application will exit immediately without a confirmation popup.
+
+                          The default setting is **ON**.
+
+                          ''',
+                          child: const Text(
+                            'Image Viewer',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Restore  button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Session Control:** Tap here to reset to enable a confirmation 
+                          popup when exiting the application.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: resetImageViewer,
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'inkscape',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Switch for Session Control with a tooltip.
+
+                        MarkdownTooltip(
+                          message: '''
+
+   
+
+                          ''',
+                          child: Switch(
+                            value: imageViewer,
+                            onChanged: (value) {
+                              ref
+                                  .read(settingsImageViewerProvider.notifier)
+                                  .state = value;
+
+                              // Save the new state to shared preferences or other storage as needed.
+
+                              _saveImageViewer(value);
                             },
                           ),
                         ),
