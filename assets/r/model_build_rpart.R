@@ -123,6 +123,6 @@ actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 svg("TEMPDIR/model_rpart_risk.svg")
 rattle::riskchart(predicted_numeric, actual_numeric, risks) +
-  labs(title="Risk Chart - Tuning Dataset") +
+  labs(title       = "Risk Chart - Tuning Dataset") +
   theme(plot.title = element_text(size=14))
 dev.off()
