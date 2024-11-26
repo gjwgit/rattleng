@@ -255,6 +255,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(keepInSyncProvider.notifier).state =
         prefs.getBool('keepInSync') ?? true;
+
+    // Update "Session Control" state.
+
+    ref.read(sessionControlProvider.notifier).state =
+        prefs.getBool('sessionControl') ?? true;
   }
 
   Future<void> _saveToggleStates() async {
@@ -287,6 +292,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save "Keep in Sync" state to preferences.
 
     await prefs.setBool('keepInSync', value);
+  }
+
+  Future<void> _saveSessionControl(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "Session Control" state to preferences.
+
+    await prefs.setBool('sessionControl', value);
   }
 
   @override
@@ -570,6 +583,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   value;
 
                               // Save the new state to shared preferences or other storage as needed.
+
+                              _saveSessionControl(value);
                             },
                           ),
                         ),
