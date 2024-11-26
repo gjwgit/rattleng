@@ -84,22 +84,12 @@ rattle::asRules(model_rpart)
 # Extract and print rules.
 
 rules <- rattle::asRules(model_rpart)
-
-model_rpart_tu <- rpart(
-  form,
-  data    = tuds,
-  method  = method,
-  parms   = list(split="information" PRIORS LOSS),
-  control = rpart.control(usesurrogate = 0,
-                          maxsurrogate = 0, 
-                          MINSPLIT, MINBUCKET, MAXDEPTH, CP),
-  model   = TRUE)
   
 # Prepare probabilities for predictions.
 
-predicted_probs <- predict(model_rpart_tu, 
-                           newdata         = tuds, 
-                           type            = "prob")
+predicted_probs <- predict(model_rpart, 
+                           newdata = tuds, 
+                           type    = "prob")
 predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
   
 actual <- as.character(actual_tu)
