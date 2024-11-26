@@ -519,7 +519,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           **Session Control:** This setting determines whether a confirmation popup 
                           appears when the user tries to quit the application. 
 
-                          - **ON**: A popup will appear asking the user to confirm quitting. 
+                          - **ON**: A popup will appear asking the user to confirm quitting.\n
+
                           - **OFF**: The application will exit immediately without a confirmation popup.
 
                           The default setting is **ON**.
@@ -545,7 +546,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           'Ask before exit',
                           style: TextStyle(
                             fontSize: 16,
-                            // fontWeight: FontWeight.bold,
                           ),
                         ),
 
@@ -558,7 +558,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           **Toggle Session Control:**
 
-                          - Slide to **ON** to enable a confirmation popup when exiting the application.
+                          - Slide to **ON** to enable a confirmation popup when exiting the application.\n
+
                           - Slide to **OFF** to disable the popup, allowing the app to exit directly.
 
                           ''',
