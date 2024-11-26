@@ -73,22 +73,11 @@ predicted_probs <- predict(model_ctree,
                            type         = "prob")
 predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
   
-actual <- as.character(actual_tu)
-actual <- actual[!is.na(actual)]
-  
-# Create numeric risks vector.
-
-risks <- as.character(risk_tu)
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
-
 # Get unique levels of predicted.
 
 levels_predicted <- unique(predicted)
-levels_actual <- unique(actual)
 predicted <- as.character(predicted)
 predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Detect if predicted_numeric or actual_numeric contains only one unique value.
 

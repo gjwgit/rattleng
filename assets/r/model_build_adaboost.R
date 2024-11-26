@@ -115,23 +115,12 @@ dev.off()
 predicted <- predict(model_ada, 
                      newdata = tuds,
                      type    = "prob")[,2]
-  
-actual <- as.character(actual_tu)
-actual <- actual[!is.na(actual)]
-
-# Create numeric risks vector.
-
-risks <- as.character(risk_tu)
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
 
 # Get unique levels of predicted.
 
 levels_predicted <- unique(predicted)
-levels_actual <- unique(actual)
 predicted <- as.character(predicted)
 predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
 

@@ -111,3 +111,16 @@ num_vars <- setdiff(inputs, cat_vars)
 ignore_categoric_vars <- c(num_vars, target)
 
 neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
+
+# Create numeric risks vector.
+
+risks <- as.character(risk_tu)
+risks <- risks[!is.na(risks)]
+risks <- as.numeric(risks)
+
+# Create numeric actual vector.
+
+actual <- as.character(actual_tu)
+actual <- actual[!is.na(actual)]
+levels_actual <- unique(actual)
+actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
