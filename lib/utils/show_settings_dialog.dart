@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
+import 'package:rattle/providers/session_control.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -254,6 +255,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(keepInSyncProvider.notifier).state =
         prefs.getBool('keepInSync') ?? true;
+
+    // Update "Session Control" state.
+
+    ref.read(askOnExitProvider.notifier).state =
+        prefs.getBool('askOnExit') ?? true;
   }
 
   Future<void> _saveToggleStates() async {
@@ -288,6 +294,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('keepInSync', value);
   }
 
+  Future<void> _saveAskOnExit(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "askOnExit" state to preferences.
+
+    await prefs.setBool('askOnExit', value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -298,6 +312,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final normalise = ref.watch(normaliseProvider);
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
+    final askOnExit = ref.watch(askOnExitProvider);
 
     return Material(
       color: Colors.transparent,
@@ -505,6 +520,75 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           ),
                         );
                       }).toList(),
+                    ),
+
+                    settingsGroupGap,
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Session Control:** This setting determines whether a confirmation popup 
+                          appears when the user tries to quit the application. 
+
+                          - **ON**: A popup will appear asking the user to confirm quitting.\n
+
+                          - **OFF**: The application will exit immediately without a confirmation popup.
+
+                          The default setting is **ON**.
+
+                          ''',
+                          child: const Text(
+                            'Session Control',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    settingsGroupGap,
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Ask before exit',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+
+                        configWidgetGap,
+
+                        // Switch for Session Control with a tooltip.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Toggle Session Control:**
+
+                          - Slide to **ON** to enable a confirmation popup when exiting the application.\n
+
+                          - Slide to **OFF** to disable the popup, allowing the app to exit directly.
+
+                          ''',
+                          child: Switch(
+                            value: askOnExit,
+                            onChanged: (value) {
+                              ref.read(askOnExitProvider.notifier).state =
+                                  value;
+
+                              // Save the new state to shared preferences or other storage as needed.
+
+                              _saveAskOnExit(value);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
