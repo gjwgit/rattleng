@@ -54,7 +54,7 @@ method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
 
 model_rpart <- rpart(
   form,
-  data    = trds,
+  data    = tuds,
   method  = method,
   parms   = list(split="information" PRIORS LOSS),
   control = rpart.control(usesurrogate = 0,
@@ -91,22 +91,14 @@ predicted_probs <- predict(model_rpart,
                            type         = "prob")
 predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
   
-actual <- as.character(tuds[[target]])
+actual <- as.character(actual_tu)
+actual <- actual[!is.na(actual)]
   
 # Create numeric risks vector.
 
-risks <- as.character(ds[[risk]])
+risks <- as.character(risk_tu)
 risks <- risks[!is.na(risks)]
 risks <- as.numeric(risks)
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
-  
-# Use rattle's evaluateRisk.
-
-risk_results <- rattle::evaluateRisk(
-  predicted = as.numeric(as.factor(predicted)), 
-  actual    = as.numeric(as.factor(actual)), 
-  risks     = as.numeric(risks)
-)
 
 # Get unique levels of predicted.
 
