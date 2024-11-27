@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 11:41:35 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 17:48:09 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -83,35 +83,22 @@ rattle::asRules(model_rpart)
 
 rules <- rattle::asRules(model_rpart)
   
-# Prepare probabilities for predictions.
+# Prepare probabilities for predictions as the number of columns as
+# there are target values.
 
-probs <- predict(model_rpart, type = "prob")
+probs_tu <- predict(model_rpart, newdata = tuds, type = "prob")
 
-# CLEANUP
+predicted_tu <- apply(probs_tu, 1, function(x) colnames(probs)[which.max(x)])
 
-
-predicted <- apply(probs, 1, function(x) colnames(probs)[which.max(x)])
-
-# USE actual_tu??????????????????????????????????
-
-actual <- as.character(tuds[[target]])
-  
-# Create numeric risks vector.
-
-# USE risk_tu ????????????????????????????????????
-
-risks <- as.character(ds[[risk]])
-risks <- risks[!is.na(risks)]
-risks <- as.numeric(risks)
-risks <- ifelse(is.na(risks) | is.nan(risks), 1, risks)
-  
 # Use rattle's evaluateRisk.
 
 risk_results <- rattle::evaluateRisk(
-  predicted = as.numeric(as.factor(predicted)), 
-  actual    = as.numeric(as.factor(actual)), 
-  risks     = as.numeric(risks)
+  predicted = as.numeric(as.factor(predicted_tu)), 
+  actual    = as.numeric(as.factor(actual_tu)), 
+  risks     = as.numeric(risk_tu)
 )
+
+# CONTINUE TO FIX UP FROM HERE 20241127 gjw
 
 # Get unique levels of predicted.
 
