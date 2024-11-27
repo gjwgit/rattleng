@@ -55,20 +55,17 @@ dev.off()
 
 # Prepare probabilities for predictions.
 
-predicted <- kernlab::predict(svm_model, 
-                              newdata    = tuds,
-                              type       = "probabilities")[,2]
+pr_tu <- predict(svm_model, newdata = tuds, type = "probabilities")[,2]
 
-# Get unique levels of predicted.
+# Get unique levels of pr_tu.
 
-levels_predicted <- unique(predicted)
+levels_predicted <- unique(pr_tu)
 levels_actual <- unique(actual)
-predicted <- as.character(predicted)
-predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
+predicted_numeric <- ifelse(pr_tu == levels_predicted[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
 
-predicted_numeric <- suppressWarnings(as.numeric(predicted))
+predicted_numeric <- suppressWarnings(as.numeric(pr_tu))
 
 # Replace NA or NaN in predicted_numeric.
 
@@ -94,7 +91,12 @@ actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actu
 # Generate risk chart.
 
 svg("TEMPDIR/model_svm_risk.svg")
-rattle::riskchart(predicted_numeric, actual_numeric, risks) +
-  labs(title       = "Risk Chart - Tuning Dataset") +
-  theme(plot.title = element_text(size=14))
+rattle::riskchart(predicted_numeric, actual_numeric, risks,
+                  title          = "Risk Chart SVM FILENAME [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()
