@@ -82,7 +82,7 @@ predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
 svg("TEMPDIR/model_ctree_risk.svg")
 rattle::riskchart(predicted_numeric, actual_numeric, risks,
                   title          = "Risk Chart Conditional Tree FILENAME [tuning] TARGET_VAR ",
-                  risk.name      = "RISK_MM",
+                  risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,

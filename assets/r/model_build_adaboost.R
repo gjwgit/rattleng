@@ -115,7 +115,7 @@ pr_tu <- predict(model_ada, newdata = tuds, type = "prob")[,2]
 svg("TEMPDIR/model_adaboost_risk.svg")
 rattle::riskchart(pr_tu, actual_tu, risk_tu,
                   title          = "Risk Chart Ada Boost FILENAME [tuning] TARGET_VAR ",
-                  risk.name      = "RISK_MM",
+                  risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,

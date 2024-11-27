@@ -89,7 +89,7 @@ predicted_numeric <- suppressWarnings(as.numeric(pr_tu))
 svg("TEMPDIR/model_glm_risk.svg")
 rattle::riskchart(predicted_numeric, actual_numeric, risks,
                   title          = "Risk Chart Linear FILENAME [tuning] TARGET_VAR ",
-                  risk.name      = "RISK_MM",
+                  risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,

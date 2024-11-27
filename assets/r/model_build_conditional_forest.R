@@ -189,7 +189,7 @@ actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actu
 svg("TEMPDIR/model_cforest_risk.svg")
 rattle::riskchart(predicted_numeric, actual_numeric, risks,
                   title          = "Risk Chart Conditional Forest FILENAME [tuning] TARGET_VAR ",
-                  risk.name      = "RISK_MM",
+                  risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,
