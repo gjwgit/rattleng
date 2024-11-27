@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 18:02:25 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 22:21:00 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -101,5 +101,6 @@ rattle::riskchart(pr_tu, actual_tu, risk_tu,
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,
-                  legend.horiz   = FALSE)
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()
