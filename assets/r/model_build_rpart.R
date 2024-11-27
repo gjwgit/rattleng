@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 17:48:09 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 18:02:25 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -86,32 +86,20 @@ rules <- rattle::asRules(model_rpart)
 # Prepare probabilities for predictions as the number of columns as
 # there are target values.
 
-probs_tu <- predict(model_rpart, newdata = tuds, type = "prob")
-
-predicted_tu <- apply(probs_tu, 1, function(x) colnames(probs)[which.max(x)])
+pr_tu <- predict(model_rpart, newdata = tuds)[,2]
 
 # Use rattle's evaluateRisk.
 
-risk_results <- rattle::evaluateRisk(
-  predicted = as.numeric(as.factor(predicted_tu)), 
-  actual    = as.numeric(as.factor(actual_tu)), 
-  risks     = as.numeric(risk_tu)
-)
+eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
 
-# CONTINUE TO FIX UP FROM HERE 20241127 gjw
-
-# Get unique levels of predicted.
-
-levels_predicted <- unique(predicted)
-levels_actual <- unique(actual)
-predicted <- as.character(predicted)
-predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
-actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
-
-# Generate risk chart.
+# Generate the risk chart.
 
 svg("TEMPDIR/model_rpart_risk.svg")
-rattle::riskchart(predicted_numeric, actual_numeric, risks) +
-  labs(title="Risk Chart - Tuning Dataset") +
-  theme(plot.title = element_text(size=14))
+rattle::riskchart(pr_tu, actual_tu, risk_tu,
+                  title          = "Risk Chart Decision Tree XXX weather.csv [tuning] XXX RainTomorrow ", 
+                  risk.name      = "XXX TODO RISK_MM",
+                  recall.name    = "XXX TODO RainTomorrow",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE)
 dev.off()
