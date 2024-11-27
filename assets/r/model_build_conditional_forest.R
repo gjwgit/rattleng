@@ -86,9 +86,7 @@ dev.off()
 
 # Prepare probabilities for predictions.
 
-predicted <- predict(model_conditionalForest, 
-                              newdata = tuds,
-                              type    = "prob")
+predicted <- predict(model_conditionalForest, newdata = tuds, type = "prob")
 predicted_probs <- list()
 
 num_obs <- length(predicted)
@@ -189,7 +187,11 @@ actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actu
 # Generate risk chart.
 
 svg("TEMPDIR/model_cforest_risk.svg")
-rattle::riskchart(predicted_numeric, actual_numeric, risks) +
-  labs(title       = "Risk Chart - Tuning Dataset") +
-  theme(plot.title = element_text(size=14))
+rattle::riskchart(predicted_numeric, actual_numeric, risks,
+                  title          = "Risk Chart Conditional Forest weather.csv [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_MM",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE)
 dev.off()
