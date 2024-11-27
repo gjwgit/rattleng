@@ -68,9 +68,7 @@ dev.off()
 
 # Prepare probabilities for predictions.
 
-pr_tu <- predict(model_ctree, 
-                  newdata = tuds, 
-                  type    = "prob")
+pr_tu <- predict(model_ctree, newdata = tuds, type = "prob")
 predicted <- apply(pr_tu, 1, function(x) colnames(pr_tu)[which.max(x)])
   
 # Get unique levels of predicted.
