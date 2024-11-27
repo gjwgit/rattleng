@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:28:28 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 18:02:25 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,7 +39,7 @@ library(rattle)
 library(rpart)        # ML: decision tree rpart().
 
 mtype <- "rpart"
-mdesc <- "Tree"
+mdesc <- "Traditional Decision Tree through Recursive Partitioning"
 
 # Determine what type of model to build, based on the number of values
 # of the target variable.
@@ -47,8 +47,6 @@ mdesc <- "Tree"
 method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
                  "anova",
                  "class")
-
-# Handle ignored variables.
 
 # Train a decision tree model.
 
@@ -73,8 +71,8 @@ cat("\n")
 
 svg("TEMPDIR/model_tree_rpart.svg")
 rattle::fancyRpartPlot(model_rpart,
-                       main         = "Decision Tree weather.csv $ TARGET_VAR",
-                       sub          = paste("TIMESTAMP", username))
+                       main = "Decision Tree weather.csv $ TARGET_VAR",
+                       sub  = paste("TIMESTAMP", username))
 dev.off()
 
 # Output the rules from the tree.
@@ -85,23 +83,23 @@ rattle::asRules(model_rpart)
 
 rules <- rattle::asRules(model_rpart)
   
-# Prepare probabilities for predictions.
+# Prepare probabilities for predictions as the number of columns as
+# there are target values.
 
-predicted_probs <- predict(model_rpart, 
-                           newdata = tuds, 
-                           type    = "prob")
-predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
+pr_tu <- predict(model_rpart, newdata = tuds)[,2]
 
-# Get unique levels of predicted.
+# Use rattle's evaluateRisk.
 
-levels_predicted <- unique(predicted)
-predicted <- as.character(predicted)
-predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
+eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
 
-# Generate risk chart.
+# Generate the risk chart.
 
 svg("TEMPDIR/model_rpart_risk.svg")
-rattle::riskchart(predicted_numeric, actual_numeric, risks) +
-  labs(title       = "Risk Chart - Tuning Dataset") +
-  theme(plot.title = element_text(size=14))
+rattle::riskchart(pr_tu, actual_tu, risk_tu,
+                  title          = "Risk Chart Decision Tree weather.csv [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_MM",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE)
 dev.off()
