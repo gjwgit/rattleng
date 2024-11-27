@@ -96,9 +96,9 @@ eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
 
 svg("TEMPDIR/model_rpart_risk.svg")
 rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = "Risk Chart Decision Tree XXX weather.csv [tuning] XXX RainTomorrow ", 
-                  risk.name      = "XXX TODO RISK_MM",
-                  recall.name    = "XXX TODO RainTomorrow",
+                  title          = "Risk Chart Decision Tree weather.csv [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_MM",
+                  recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,
                   legend.horiz   = FALSE)
