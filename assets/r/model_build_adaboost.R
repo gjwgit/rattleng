@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 15:58:47 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 11:20:57 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,10 +36,6 @@ library(ggplot2)
 mtype <- "adaboost"
 mdesc <- "Adaptive Boosting (AdaBoost)"
 
-# Extract features and target variable.
-
-tds <- ds[tr, vars]
-
 # Set parameters for the AdaBoost model.
 
 ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
@@ -50,7 +46,7 @@ ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
 # Train the AdaBoost model.
 
 model_ada <- ada(form,
-                 data    = tds, 
+                 data    = trds, 
                  iter    = BOOST_ITERATIONS,
                  type    = "gentle", # Type of boosting.
                  control = ada_control)
