@@ -35,12 +35,8 @@ library(data.table)     # Display data as a nicely formatted table
 mtype <- "xgboost"
 mdesc <- "Extreme Gradient Boosting (XGBoost)"
 
-# Extract features and target variable.
-
-tds <- ds[tr, vars]
-
 model_xgb <- rattle::xgboost(form,
-                     data              = tds, 
+                     data              = trds, 
                      max_depth         = BOOST_MAX_DEPTH,     # Maximum depth of a tree
                      eta               = BOOST_LEARNING_RATE, # Learning rate
                      nthread           = BOOST_THREADS,       # Set the number of threads
