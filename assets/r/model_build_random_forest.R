@@ -46,13 +46,9 @@ library(verification)
 mtype <- "randomForest"
 mdesc <- "Forest"
 
-# Typically we use na.roughfix() for na.action.
-
-tds <- ds[tr, vars]
-
 model_randomForest <- randomForest(
   form,
-  data       = tds, 
+  data       = trds, 
   ntree      = RF_NUM_TREES,
   mtry       = RF_MTRY,
   importance = TRUE,
