@@ -29,21 +29,20 @@ library(rattle)
 
 # Define the dataset, input, and target.
 
-tds <- ds[tr, vars]
 svm_kernel <- SVM_KERNEL
 
 if (svm_kernel == "polydot") {
   svm_model <- ksvm(
-    as.factor(tds[[target]]) ~ .,
-    data       = tds,
+    as.factor(trds[[target]]) ~ .,
+    data       = trds,
     kernel     = SVM_KERNEL,
     kpar       = list("degree" = SVM_DEGREE),
     prob.model = TRUE
   )
 } else {
   svm_model <- ksvm(
-    as.factor(tds[[target]]) ~ .,
-    data       = tds,
+    as.factor(trds[[target]]) ~ .,
+    data       = trds,
     kernel     = SVM_KERNEL,
     prob.model = TRUE
   )
