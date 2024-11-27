@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 18:02:25 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 22:34:23 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -66,23 +66,19 @@ print(model_rpart)
 printcp(model_rpart)
 cat("\n")
 
+# Output the rules from the tree.
+
+rattle::asRules(model_rpart)
+
 # Plot the resulting Decision Tree using the rpart.plot package via
 # Rattle's fancyRpartPlot().
 
 svg("TEMPDIR/model_tree_rpart.svg")
 rattle::fancyRpartPlot(model_rpart,
-                       main = "Decision Tree weather.csv $ TARGET_VAR",
+                       main = "Decision Tree FILENAME $ TARGET_VAR",
                        sub  = paste("TIMESTAMP", username))
 dev.off()
 
-# Output the rules from the tree.
-
-rattle::asRules(model_rpart)
-
-# Extract and print rules.
-
-rules <- rattle::asRules(model_rpart)
-  
 # Prepare probabilities for predictions as the number of columns as
 # there are target values.
 
@@ -94,12 +90,13 @@ eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
 
 # Generate the risk chart.
 
-svg("TEMPDIR/model_rpart_risk.svg")
+svg("TEMPDIR/model_rpart_risk.svg", width=11)
 rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = "Risk Chart Decision Tree weather.csv [tuning] TARGET_VAR ", 
-                  risk.name      = "RISK_MM",
+                  title          = "Risk Chart Decision Tree FILENAME [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,
-                  legend.horiz   = FALSE)
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()
