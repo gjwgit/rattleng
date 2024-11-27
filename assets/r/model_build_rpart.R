@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 11:20:29 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 11:41:35 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -86,11 +86,19 @@ rules <- rattle::asRules(model_rpart)
 # Prepare probabilities for predictions.
 
 probs <- predict(model_rpart, type = "prob")
+
+# CLEANUP
+
+
 predicted <- apply(probs, 1, function(x) colnames(probs)[which.max(x)])
-  
+
+# USE actual_tu??????????????????????????????????
+
 actual <- as.character(tuds[[target]])
   
 # Create numeric risks vector.
+
+# USE risk_tu ????????????????????????????????????
 
 risks <- as.character(ds[[risk]])
 risks <- risks[!is.na(risks)]

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 11:20:57 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 11:39:42 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -67,7 +67,7 @@ importance <- varplot(model_ada, type = "scores", main = "", plot = FALSE)
 # Convert the named vector into a data frame.
 
 importance_df <- data.frame(
-  Feature = names(importance),
+  Feature    = names(importance),
   Importance = importance
 )
 
@@ -91,7 +91,7 @@ ada_plot <- ggplot(importance_df, aes(x = reorder(Feature, Importance), y = Impo
 ada_plot <- ada_plot +
   geom_text(aes(label = sprintf("%.4f", Importance), y = Importance),
             hjust = -0.1,
-            size = 3,
+            size  = 3,
             color = "darkblue")
 
 # Increase plot limits to make space for the labels.
@@ -108,21 +108,23 @@ dev.off()
 
 # Prepare probabilities for predictions.
 
-predicted <- predict(model_ada, 
-                     newdata    = tuds,
-                     type       = "prob")[,2]
-  
+probs <- predict(model_ada, 
+                 newdata = tuds,
+                 type    = "prob")[,2]
+
+# TODO 20241127 gjw MIGRATE TO USING actual_tu?
+
 actual <- as.character(tuds[[target]])
 
 # Get unique levels of predicted.
 
-levels_predicted <- unique(predicted)
+levels_predicted <- unique(probs)
 levels_actual <- unique(actual)
 actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 
 # Convert `predicted` to numeric, handling NA values.
 
-predicted_numeric <- suppressWarnings(as.numeric(predicted))
+predicted_numeric <- suppressWarnings(as.numeric(probs))
 
 # Replace NA or NaN in predicted_numeric.
 
