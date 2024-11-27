@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:28:28 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 11:20:29 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,7 +39,7 @@ library(rattle)
 library(rpart)        # ML: decision tree rpart().
 
 mtype <- "rpart"
-mdesc <- "Tree"
+mdesc <- "Traditional Decision Tree through Recursive Partitioning"
 
 # Determine what type of model to build, based on the number of values
 # of the target variable.
@@ -47,8 +47,6 @@ mdesc <- "Tree"
 method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
                  "anova",
                  "class")
-
-# Handle ignored variables.
 
 # Train a decision tree model.
 
@@ -73,8 +71,8 @@ cat("\n")
 
 svg("TEMPDIR/model_tree_rpart.svg")
 rattle::fancyRpartPlot(model_rpart,
-                       main         = "Decision Tree weather.csv $ TARGET_VAR",
-                       sub          = paste("TIMESTAMP", username))
+                       main = "Decision Tree weather.csv $ TARGET_VAR",
+                       sub  = paste("TIMESTAMP", username))
 dev.off()
 
 # Output the rules from the tree.
@@ -87,9 +85,8 @@ rules <- rattle::asRules(model_rpart)
   
 # Prepare probabilities for predictions.
 
-predicted_probs <- predict(model_rpart, 
-                           type         = "prob")
-predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
+probs <- predict(model_rpart, type = "prob")
+predicted <- apply(probs, 1, function(x) colnames(probs)[which.max(x)])
   
 actual <- as.character(tuds[[target]])
   
