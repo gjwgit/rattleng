@@ -68,10 +68,10 @@ dev.off()
 
 # Prepare probabilities for predictions.
 
-predicted_probs <- predict(model_ctree, 
-                           newdata      = tuds, 
-                           type         = "prob")
-predicted <- apply(predicted_probs, 1, function(x) colnames(predicted_probs)[which.max(x)])
+pr_tu <- predict(model_ctree, 
+                  newdata = tuds, 
+                  type    = "prob")
+predicted <- apply(pr_tu, 1, function(x) colnames(pr_tu)[which.max(x)])
   
 # Get unique levels of predicted.
 
@@ -79,23 +79,14 @@ levels_predicted <- unique(predicted)
 predicted <- as.character(predicted)
 predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
 
-# Detect if predicted_numeric or actual_numeric contains only one unique value.
-
-unique_predicted_values <- unique(predicted_numeric)
-unique_actual_values    <- unique(actual_numeric)
-  
-single_class_predicted <- length(unique_predicted_values) == 1
-single_class_actual    <- length(unique_actual_values) == 1
-  
-if (single_class_predicted || single_class_actual) {
-  cat("Cannot generate risk chart: Only one class present in predictions or actual data.\n")
-  return(NULL)
-}
-
 # Generate risk chart.
 
 svg("TEMPDIR/model_ctree_risk.svg")
-rattle::riskchart(predicted_numeric, actual_numeric, risks) +
-  labs(title       = "Risk Chart - Tuning Dataset") +
-  theme(plot.title = element_text(size=14))
+rattle::riskchart(predicted_numeric, actual_numeric, risks,
+                  title          = "Risk Chart Conditional Tree weather.csv [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_MM",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE)
 dev.off()
