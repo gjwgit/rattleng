@@ -44,13 +44,9 @@ library(reshape2)
 mtype <- "conditionalForest"
 mdesc <- "Forest"
 
-# Extract features and target variable.
-
-tds <- ds[tr, vars]
-
 model_conditionalForest <- cforest(
   form,
-  data    = tds,
+  data    = trds,
   controls= cforest_unbiased(ntree = RF_NUM_TREES,
                              mtry  = RF_MTRY,)
 )
