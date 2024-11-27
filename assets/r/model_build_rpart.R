@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 22:26:19 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 22:34:23 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -75,7 +75,7 @@ rattle::asRules(model_rpart)
 
 svg("TEMPDIR/model_tree_rpart.svg")
 rattle::fancyRpartPlot(model_rpart,
-                       main = "Decision Tree weather.csv $ TARGET_VAR",
+                       main = "Decision Tree FILENAME $ TARGET_VAR",
                        sub  = paste("TIMESTAMP", username))
 dev.off()
 
@@ -92,8 +92,8 @@ eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
 
 svg("TEMPDIR/model_rpart_risk.svg", width=11)
 rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = "Risk Chart Decision Tree weather.csv [tuning] TARGET_VAR ", 
-                  risk.name      = "RISK_MM",
+                  title          = "Risk Chart Decision Tree FILENAME [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
                   show.precision = TRUE,
