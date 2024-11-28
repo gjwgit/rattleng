@@ -190,8 +190,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(groupByProvider.notifier).state = groupBy;
 
-                print("Group by: ${ref.read(groupByProvider)}");
-
                 if (ref.read(groupByProvider) == 'None') {
                   ref.read(groupByProvider.notifier).state = 'NULL';
                 }
