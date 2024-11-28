@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-11-29 07:28:12 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-11-29 08:38:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,9 +44,9 @@ library(rattle)
 
 # TODO 20241120 gjw ADD ALL TO LEGEND - ACTUALLY REMOVE LEGEND AS ADDS NO VALUE
 
-# Preprocess the dataset for the plot.
+# Take a copy of ds to be able to manipulate it.
 
-tds <- dplyr::mutate(ds, GROUP_BY_VAR=as.factor(GROUP_BY_VAR))
+tds <- ds
 
 # When the confidence interval for the notch of the boxplot extends
 # beyond the hinges (upper or lower limits of the boxplot) the notches
@@ -80,10 +80,10 @@ tds %>%
   ggplot2::ggplot(ggplot2::aes(y=SELECTED_VAR)) +
   ggplot2::geom_boxplot(ggplot2::aes(x="All"), notch=BOXPLOT_NOTCH, fill="grey") +
   ggplot2::stat_summary(ggplot2::aes(x="All"), fun=mean, geom="point", shape=8) +
-  ggplot2::geom_boxplot(ggplot2::aes(x=GROUP_BY_VAR, fill=GROUP_BY_VAR), notch=BOXPLOT_NOTCH, show.legend=FALSE) +
-  ggplot2::stat_summary(ggplot2::aes(x=GROUP_BY_VAR), fun=mean, geom="point", shape=8) +
-  ggplot2::xlab(paste("GROUP_BY_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
-  ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
+#  ggplot2::geom_boxplot(ggplot2::aes(x=GROUP_BY_VAR, fill=GROUP_BY_VAR), notch=BOXPLOT_NOTCH, show.legend=FALSE) +
+#  ggplot2::stat_summary(ggplot2::aes(x=GROUP_BY_VAR), fun=mean, geom="point", shape=8) +
+  ggplot2::xlab(paste("TIMESTAMP", username)) +
+  ggplot2::ggtitle("Distribution of SELECTED_VAR") +
   SETTINGS_GRAPHIC_THEME()
 
 dev.off()
@@ -97,14 +97,12 @@ dev.off()
 svg("TEMPDIR/explore_visual_density.svg", width=10)
 
 ds %>%
-  dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
-  dplyr::select(SELECTED_VAR, GROUP_BY_VAR) %>%
+  dplyr::select(SELECTED_VAR) %>%
   ggplot2::ggplot(ggplot2::aes(x=SELECTED_VAR)) +
   ggplot2::geom_density(lty=3) +
-  ggplot2::geom_density(ggplot2::aes(fill=GROUP_BY_VAR, colour=GROUP_BY_VAR), alpha=0.55) +
   ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
-  ggplot2::ggtitle("Distribution of SELECTED_VAR by GROUP_BY_VAR") +
-  ggplot2::labs(fill="GROUP_BY_VAR", y="Density") +
+  ggplot2::ggtitle("Distribution of SELECTED_VAR") +
+  ggplot2::labs(y="Density") +
   SETTINGS_GRAPHIC_THEME()
 
 dev.off()
@@ -116,16 +114,13 @@ dev.off()
 svg("TEMPDIR/explore_visual_ecdf.svg", width=10)
 
 ds %>%
-  dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
-  dplyr::select(SELECTED_VAR, GROUP_BY_VAR) %>%
+  dplyr::select(SELECTED_VAR) %>%
   ggplot2::ggplot() +
   # Overall ECDF
   ggplot2::stat_ecdf(aes(x = SELECTED_VAR), geom = "step", color = "black", size = 1) +
-  # Group ECDFs
-  ggplot2::stat_ecdf(aes(x = SELECTED_VAR, color = GROUP_BY_VAR), geom = "step") +
   ggplot2::xlab(paste("SELECTED_VAR\n\n", paste("TIMESTAMP", username), sep="")) +
-  ggplot2::ggtitle("Empirical Cumulative Distribution of SELECTED_VAR by GROUP_BY_VAR") +
-  ggplot2::labs(fill="GROUP_BY_VAR", y=expression("ECDF - Proportion <= x")) +
+  ggplot2::ggtitle("Empirical Cumulative Distribution of SELECTED_VAR") +
+  ggplot2::labs(y=expression("ECDF - Proportion <= x")) +
   SETTINGS_GRAPHIC_THEME()
 
 dev.off()
@@ -142,10 +137,7 @@ len    <- 1
 # Build the dataset
 
 tds <- merge(rattle::benfordDistr(digit, len),
-             rattle::digitDistr(ds$SELECTED_VAR, digit, len, "All"))
-
-for (i in unique(ds$GROUP_BY_VAR))
-  tds <- merge(tds, rattle::digitDistr(ds[ds$GROUP_BY_VAR==i, "SELECTED_VAR"], digit, len, i))
+             rattle::digitDistr(ds$SELECTED_VAR, digit, len, "SELECTED_VAR"))
 
 # 20241120 gjw Replicate the rattle function here to ensure we are in
 # harmony with the theme/colours of the other plots.
@@ -187,7 +179,7 @@ p +
   ggplot2::ylab("Frequency (%)") +
   ggplot2::xlab("Digits") +
   ggplot2::theme(legend.title = ggplot2::element_blank()) +
-  ggtitle("Digital Analysis of First Digit of SELECTED_VAR by GROUP_BY_VAR") +
+  ggtitle("Digital Analysis of First Digit of SELECTED_VAR") +
   ggplot2::xlab(paste("Digits\n\n", paste("TIMESTAMP", username), sep="")) +
   SETTINGS_GRAPHIC_THEME()
 

@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-11-21 08:52:48 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-11-29 06:00:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -371,7 +371,7 @@ Future<void> rSource(
 
   //TODO kevin
 
-  code = code.replaceAll('GROUP_BY_VAR', groupBy);
+  code = code.replaceAll('GROUP_BY_VAR', groupBy == 'None' ? 'NULL' : groupBy);
 
   code = code.replaceAll('IMPUTED_VALUE', imputed);
 
