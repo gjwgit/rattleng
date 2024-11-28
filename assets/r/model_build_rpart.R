@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 22:34:23 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-11-28 10:53:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,11 +35,12 @@
 
 # Load required packages from the local library into the R session.
 
+library(glue)         # Format strings: glue().
 library(rattle)
 library(rpart)        # ML: decision tree rpart().
 
 mtype <- "rpart"
-mdesc <- "Traditional Decision Tree through Recursive Partitioning"
+mdesc <- "Traditional Decision Tree (Recursive Partitioning)"
 
 # Determine what type of model to build, based on the number of values
 # of the target variable.
@@ -79,6 +80,32 @@ rattle::fancyRpartPlot(model_rpart,
                        sub  = paste("TIMESTAMP", username))
 dev.off()
 
+########################################################################
+
+# Prepare probabilities for predictions as the number of columns as
+# there are target values.
+
+pr_tr <- predict(model_rpart, newdata = trds)[,2]
+
+# Use rattle's evaluateRisk.
+
+eval <- rattle::evaluateRisk(pr_tr, actual_tr, risk_tr)
+
+# Generate the risk chart.
+
+svg("TEMPDIR/model_rpart_risk_tr.svg", width=11)
+rattle::riskchart(pr_tr, actual_tr, risk_tr,
+                  title          = glue("Risk Chart - {mdesc} - FILENAME *training* TARGET_VAR "),
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
+dev.off()
+
+########################################################################
+
 # Prepare probabilities for predictions as the number of columns as
 # there are target values.
 
@@ -90,9 +117,9 @@ eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
 
 # Generate the risk chart.
 
-svg("TEMPDIR/model_rpart_risk.svg", width=11)
+svg("TEMPDIR/model_rpart_risk_tu.svg", width=11)
 rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = "Risk Chart Decision Tree FILENAME [tuning] TARGET_VAR ", 
+                  title          = glue("Risk Chart - {mdesc} - FILENAME [tuning] TARGET_VAR "),
                   risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
