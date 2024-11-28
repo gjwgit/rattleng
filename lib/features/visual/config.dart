@@ -108,23 +108,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     void buildAction() {
       // Business logic for building a tree.
 
-      // If "None" is selected, show a popup message and exit the action.
-
-      if (groupBy == 'None') {
-        showOk(
-          context: context,
-          title: 'No Grouping Selected',
-          content: '''
-
-                    Please select a valid grouping variable or ensure "None" is
-                    not selected before generating plots.
-
-                    ''',
-        );
-
-        return;
-      }
-
       // Require a target variable which is used to categorise the plots.
 
       String target = getTarget(ref);
@@ -199,6 +182,12 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(groupByProvider.notifier).state = groupBy;
 
+                print("Group by: ${ref.read(groupByProvider)}");
+
+                if (ref.read(groupByProvider) == 'None') {
+                  ref.read(groupByProvider.notifier).state = 'NULL';
+                }
+
                 buildAction();
               },
               child: const Text('Generate Plots'),
@@ -238,6 +227,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               onSelected: (String? value) {
                 ref.read(groupByProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
+
                 // NOT YET WORKING FIRST TIME buildAction();
               },
             ),
