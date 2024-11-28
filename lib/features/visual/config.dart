@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-09-22 05:58:34 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-29 05:57:23 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -110,20 +110,20 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
       // If "None" is selected, show a popup message and exit the action.
 
-      if (groupBy == 'None') {
-        showOk(
-          context: context,
-          title: 'No Grouping Selected',
-          content: '''
+      // if (groupBy == 'None') {
+      //   showOk(
+      //     context: context,
+      //     title: 'No Grouping Selected',
+      //     content: '''
 
-                    Please select a valid grouping variable or ensure "None" is
-                    not selected before generating plots.
+      //               Please select a valid grouping variable or ensure "None" is
+      //               not selected before generating plots.
 
-                    ''',
-        );
+      //               ''',
+      //   );
 
-        return;
-      }
+      //   return;
+      // }
 
       // Require a target variable which is used to categorise the plots.
 
@@ -152,9 +152,17 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
         // selected variable.
 
         if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
-          rSource(context, ref, ['explore_visual_numeric']);
+          if (groupBy == 'None') {
+            rSource(context, ref, ['explore_visual_numeric_nogroupby']);
+          } else {
+            rSource(context, ref, ['explore_visual_numeric']);
+          }
         } else {
-          rSource(context, ref, ['explore_visual_categoric']);
+          if (groupBy == 'None') {
+            rSource(context, ref, ['explore_visual_categoric_nogroupby']);
+          } else {
+            rSource(context, ref, ['explore_visual_categoric']);
+          }
         }
       }
     }
