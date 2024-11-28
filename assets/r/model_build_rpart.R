@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-11-28 10:53:39 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-11-28 14:11:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -40,7 +40,7 @@ library(rattle)
 library(rpart)        # ML: decision tree rpart().
 
 mtype <- "rpart"
-mdesc <- "Traditional Decision Tree (Recursive Partitioning)"
+mdesc <- "Decision Tree"
 
 # Determine what type of model to build, based on the number of values
 # of the target variable.
@@ -95,7 +95,7 @@ eval <- rattle::evaluateRisk(pr_tr, actual_tr, risk_tr)
 
 svg("TEMPDIR/model_rpart_risk_tr.svg", width=11)
 rattle::riskchart(pr_tr, actual_tr, risk_tr,
-                  title          = glue("Risk Chart - {mdesc} - FILENAME *training* TARGET_VAR "),
+                  title          = glue("Risk Chart - {mdesc} - {basename('FILENAME')} *training* - TARGET_VAR "),
                   risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
@@ -119,7 +119,7 @@ eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
 
 svg("TEMPDIR/model_rpart_risk_tu.svg", width=11)
 rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = glue("Risk Chart - {mdesc} - FILENAME [tuning] TARGET_VAR "),
+                  title          = glue("Risk Chart - {mdesc} - {basename('FILENAME')} *tuning* - TARGET_VAR "),
                   risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",
                   show.lift      = TRUE,
