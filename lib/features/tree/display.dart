@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-09-07 06:06:45 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-11-28 11:36:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -113,26 +113,65 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: 'TREE',
+          title: 'Visualising the Tree',
           path: image,
         ),
       );
     }
 
-    String riskImage = '';
+    ////////////////////////////////////////////////////////////////////////
+
+    image = '';
 
     treeAlgorithm == AlgorithmType.traditional
-        ? riskImage = '$tempDir/model_rpart_risk.svg'
-        : riskImage = '$tempDir/model_ctree_risk.svg';
+        ? image = '$tempDir/model_rpart_risk_tr.svg'
+        : image = '$tempDir/model_ctree_risk_tr.svg';
 
-    if (imageExists(riskImage)) {
+    if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: 'RISK CHART',
-          path: riskImage,
+          title: '''
+
+          # Risk Chart --- Optimistic Performance
+
+          Training Dataset
+
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
+          [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
+          path: image,
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    image = '';
+
+    treeAlgorithm == AlgorithmType.traditional
+        ? image = '$tempDir/model_rpart_risk_tu.svg'
+        : image = '$tempDir/model_ctree_risk_tu.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Risk Chart --- Unbiased Estimate of Performance
+
+          Tuning Dataset
+
+          Visit the [Survival
+          Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
+          [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
+          path: image,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(
       pageController: pageController,
