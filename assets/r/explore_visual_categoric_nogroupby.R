@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-11-29 07:55:30 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-11-29 10:48:54 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -64,11 +64,11 @@ overall_freq <- as.data.frame(table(ds$SELECTED_VAR))
 colnames(overall_freq) <- c("SELECTED_VAR", "Frequency")
 
 # Calculate grouped frequencies
-grouped_freq <- as.data.frame(table(ds$SELECTED_VAR))
-colnames(grouped_freq) <- c("SELECTED_VAR", "Frequency")
+#grouped_freq <- as.data.frame(table(ds$SELECTED_VAR))
+#colnames(grouped_freq) <- c("SELECTED_VAR", "Frequency")
 
 # Combine datasets
-combined_data <- rbind(overall_freq, grouped_freq)
+combined_data <- overall_freq
 
 # Create the dot plot
 ggplot(combined_data, aes(y = SELECTED_VAR, x = Frequency)) +
@@ -110,27 +110,29 @@ dev.off()
 # Mosaic Plot 
 ########################################################################
 
-library(ggplot2)
-library(vcd)
-library(ggplotify)
+## # 20241129 gjw A mosaic plot does not make sense for a single variable.
 
-svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
+## library(ggplot2)
+## library(vcd)
+## library(ggplotify)
 
-# Generate the table data for plotting.
+## svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
 
-tds <- table(ds$SELECTED_VAR)
+## # Generate the table data for plotting.
 
-# Sort the entries.
+## tds <- table(ds$SELECTED_VAR)
 
-ord <- order(apply(tds, 1, sum), decreasing=TRUE)
+## # Sort the entries.
 
-# Plot the data.
+## ord <- order(apply(tds, 1, sum), decreasing=TRUE)
 
-mosaicplot(tds[ord,],
-           main  = "Mosaic of SELECTED_VAR",
-           sub   = paste("TIMESTAMP", username),
-           color = colorspace::rainbow_hcl(3)[-1],
-           cex   = 0.7,
-           xlab  = "SELECTED_VAR")
+## # Plot the data.
 
-dev.off()
+## mosaicplot(tds[ord,],
+##            main  = "Mosaic of SELECTED_VAR",
+##            sub   = paste("TIMESTAMP", username),
+##            color = colorspace::rainbow_hcl(3)[-1],
+##            cex   = 0.7,
+##            xlab  = "SELECTED_VAR")
+
+## dev.off()
