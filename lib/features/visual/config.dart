@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-09-22 05:58:34 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-11-29 05:57:23 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -55,16 +55,18 @@ class VisualConfig extends ConsumerStatefulWidget {
 class VisualConfigState extends ConsumerState<VisualConfig> {
   @override
   Widget build(BuildContext context) {
-    // update the rolesProvider to get the latest inputs
+    // Update the rolesProvider to get the latest inputs.
+
     updateVariablesProvider(ref);
 
-    // Retireve the list of inputs as the label and value of the dropdown menu.
+    // Retrieve the list of inputs as the label and value of the dropdown menu.
 
     List<String> inputs = getInputs(ref);
 
     Map typeState = ref.read(typesProvider.notifier).state;
 
     // Sort the inputs list with numerical types first.
+
     inputs.sort((a, b) {
       final aType = typeState[a];
       final bType = typeState[b];
@@ -88,9 +90,10 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     }
 
     // Retrieve the categoric variables that will be used to group the
-    // visualisations by. Be sure to also include the Target,
+    // visualisations by. Be sure to also include the Target.
 
     List<String> cats = getCategoric(ref);
+    cats.insert(0, 'None'); // Add the "None" option at the top.
 
     String groupBy = ref.watch(groupByProvider);
 
@@ -103,10 +106,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     // BUILD Action.
 
     void buildAction() {
-      // Business Logic for Building a Tree
+      // Business logic for building a tree.
 
-      // Require a target variable which is used to categorise the
-      // plots.
+      // Require a target variable which is used to categorise the plots.
 
       String target = getTarget(ref);
 
@@ -131,10 +133,19 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
         // Choose which visualisations to run depending on the
         // selected variable.
+
         if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
-          rSource(context, ref, ['explore_visual_numeric']);
+          if (groupBy == 'None') {
+            rSource(context, ref, ['explore_visual_numeric_nogroupby']);
+          } else {
+            rSource(context, ref, ['explore_visual_numeric']);
+          }
         } else {
-          rSource(context, ref, ['explore_visual_categoric']);
+          if (groupBy == 'None') {
+            rSource(context, ref, ['explore_visual_categoric_nogroupby']);
+          } else {
+            rSource(context, ref, ['explore_visual_categoric']);
+          }
         }
       }
     }
@@ -147,10 +158,12 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             configLeftGap,
 
             // The BUILD button.
+
             ActivityButton(
               pageControllerProvider:
                   visualPageControllerProvider, // Optional navigation
               onPressed: () {
+                // Update the providers before building.
                 // Had to update here because
                 // Unhandled Exception: Tried to modify a provider while the widget tree was building.
                 // If you are encountering this error, chances are you tried to modify a provider
@@ -173,8 +186,13 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 // - Delay your modification, such as by encapsulating the modification
                 //   in a `Future(() {...})`.
                 //   This will perform your update after the widget tree is done building
+
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(groupByProvider.notifier).state = groupBy;
+
+                if (ref.read(groupByProvider) == 'None') {
+                  ref.read(groupByProvider.notifier).state = 'NULL';
+                }
 
                 buildAction();
               },
@@ -190,8 +208,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               dropdownMenuEntries: inputs.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
-              // On selection we record the variable that was selected AND we
-              // rebuild the visualisations.
+              // On selection, record the variable that was selected AND rebuild
+              // the visualisations.
+
               onSelected: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
@@ -208,11 +227,13 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               dropdownMenuEntries: cats.map((s) {
                 return DropdownMenuEntry(value: s, label: s);
               }).toList(),
-              // On selection we record the variable that was selected AND we
-              // rebuild the visualisations.
+              // On selection, record the variable that was selected AND rebuild
+              // the visualisations.
+
               onSelected: (String? value) {
                 ref.read(groupByProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
+
                 // NOT YET WORKING FIRST TIME buildAction();
               },
             ),
