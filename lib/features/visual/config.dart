@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-11-29 05:57:23 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-29 15:52:35 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -189,10 +189,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
                 ref.read(selectedProvider.notifier).state = selected;
                 ref.read(groupByProvider.notifier).state = groupBy;
-
-                if (ref.read(groupByProvider) == 'None') {
-                  ref.read(groupByProvider.notifier).state = 'NULL';
-                }
 
                 buildAction();
               },
