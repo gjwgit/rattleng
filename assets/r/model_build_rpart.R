@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:30:32 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-11-30 21:50:22 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -68,19 +68,19 @@ model <- model_rpart
 
 # Output a textual view of the Decision Tree model.
 
-print(model)
-printcp(model)
+print(model_rpart)
+printcp(model_rpart)
 cat("\n")
 
 # Output the rules from the tree.
 
-rattle::asRules(model)
+rattle::asRules(model_rpart)
 
 # Plot the resulting Decision Tree using the rpart.plot package via
 # Rattle's fancyRpartPlot().
 
 svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
-rattle::fancyRpartPlot(model,
+rattle::fancyRpartPlot(model_rpart,
                        main = "Decision Tree FILENAME $ TARGET_VAR",
                        sub  = paste("TIMESTAMP", username))
 dev.off()
