@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-11-28 11:36:18 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-11-30 10:00:01 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -132,7 +132,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
         ImagePage(
           title: '''
 
-          # Risk Chart --- Optimistic Performance
+          # Risk Chart &#8212; Optimistic Estimate of Performance
 
           Training Dataset
 
@@ -158,7 +158,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
         ImagePage(
           title: '''
 
-          # Risk Chart --- Unbiased Estimate of Performance
+          # Risk Chart &#8212; Unbiased Estimate of Performance
 
           Tuning Dataset
 
