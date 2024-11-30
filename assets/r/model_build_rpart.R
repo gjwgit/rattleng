@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 10:39:16 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-11-30 21:30:32 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -62,76 +62,25 @@ model_rpart <- rpart(
                           MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model   = TRUE)
 
+# Save the model to the TEMPLATE variable `model`
+
+model <- model_rpart
+
 # Output a textual view of the Decision Tree model.
 
-print(model_rpart)
-printcp(model_rpart)
+print(model)
+printcp(model)
 cat("\n")
 
 # Output the rules from the tree.
 
-rattle::asRules(model_rpart)
+rattle::asRules(model)
 
 # Plot the resulting Decision Tree using the rpart.plot package via
 # Rattle's fancyRpartPlot().
 
-svg("TEMPDIR/model_tree_rpart.svg")
-rattle::fancyRpartPlot(model_rpart,
+svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
+rattle::fancyRpartPlot(model,
                        main = "Decision Tree FILENAME $ TARGET_VAR",
                        sub  = paste("TIMESTAMP", username))
-dev.off()
-
-########################################################################
-
-# Prepare probabilities for predictions as the number of columns as
-# there are target values.
-
-pr_tr <- predict(model_rpart, newdata = trds)[,2]
-
-# Use rattle's evaluateRisk.
-
-eval <- rattle::evaluateRisk(pr_tr, actual_tr, risk_tr)
-
-# Generate the risk chart.
-
-svg("TEMPDIR/model_rpart_risk_tr.svg", width=11)
-title <- glue("Risk Chart &#8212; {mdesc} &#8212; {basename('FILENAME')} *training* TARGET_VAR")
-rattle::riskchart(pr_tr, actual_tr, risk_tr,
-                  title          = title,
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
-                  show.lift      = TRUE,
-                  show.precision = TRUE,
-                  legend.horiz   = FALSE) +
-  SETTINGS_GRAPHIC_THEME() +
-  theme(plot.title = element_markdown())
-
-dev.off()
-
-########################################################################
-
-# Prepare probabilities for predictions as the number of columns as
-# there are target values.
-
-pr_tu <- predict(model_rpart, newdata = tuds)[,2]
-
-# Use rattle's evaluateRisk.
-
-eval <- rattle::evaluateRisk(pr_tu, actual_tu, risk_tu)
-
-# Generate the risk chart.
-
-svg("TEMPDIR/model_rpart_risk_tu.svg", width=11)
-# TODO 20241130 gjw fix the handling/stripiing of # if not
-# immeditately preceded by "
-title <- glue("Risk Chart &#8212; {mdesc} &#8212; {basename('FILENAME')} *tuning* TARGET_VAR")
-rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = title,
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
-                  show.lift      = TRUE,
-                  show.precision = TRUE,
-                  legend.horiz   = FALSE) +
-  SETTINGS_GRAPHIC_THEME() +
-  theme(plot.title = element_markdown())
 dev.off()

@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Friday 2024-11-01 16:20:45 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-11-30 21:31:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -220,7 +220,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     if (selectedAlgorithm == AlgorithmType.conditional) {
                       rSource(context, ref, ['model_build_ctree']);
                     } else {
-                      rSource(context, ref, ['model_build_rpart']);
+                      rSource(context, ref,
+                          ['model_build_rpart', 'model_build_riskchart']);
                     }
                   }
                 },
