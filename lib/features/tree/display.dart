@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-01 20:22:40 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-01 20:44:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -77,8 +77,13 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Decision Tree Model\n\n'
-              'Built using `rpart()`.\n\n',
+          title: '''
+
+          # Decision Tree Model
+          
+          Built using [rpart::rpart()](https://www.rdocumentation.org/packages/rpart/topics/rpart).
+
+          ''',
           content: '\n$content',
         ),
       );
@@ -94,8 +99,13 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
       if (content.isNotEmpty) {
         pages.add(
           TextPage(
-            title: '# Decision Tree as Rules\n\n'
-                'Built using `rattle::asRules()`.\n\n',
+            title: '''
+
+            # Decision Tree as Rules
+
+            Built using [rattle::asRules()](https://www.rdocumentation.org/packages/rattle/topics/asRules).
+
+            ''',
             content: '\n$content',
           ),
         );
@@ -113,7 +123,13 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: 'Visualising the Tree',
+          title: '''
+
+          # A visualisation of the Tree
+
+          Built using [rattle::fancyRpartPlot()](https://www.rdocumentation.org/packages/rattle/topics/fancyRpartPlot).
+
+          ''',
           path: image,
         ),
       );
@@ -124,7 +140,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     image = '';
 
     treeAlgorithm == AlgorithmType.traditional
-        ? image = '$tempDir/model_rpart_risk_training.svg'
+        ? image = '$tempDir/model_rpart_riskchart_training.svg'
         : image = '$tempDir/model_ctree_risk_tr.svg';
 
     if (imageExists(image)) {
@@ -150,7 +166,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     image = '';
 
     treeAlgorithm == AlgorithmType.traditional
-        ? image = '$tempDir/model_rpart_risk_tuning.svg'
+        ? image = '$tempDir/model_rpart_riskchart_tuning.svg'
         : image = '$tempDir/model_ctree_risk_tu.svg';
 
     if (imageExists(image)) {
