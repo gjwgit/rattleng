@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Sunday 2024-12-01 20:08:28 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-02 06:03:06 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -225,7 +225,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     String erc = 'evaluate_riskchart';
 
                     if (selectedAlgorithm == AlgorithmType.conditional) {
-                      rSource(context, ref, [mt, mbc]);
+                      rSource(context, ref, [mt, mbc, etr, erc, etu, erc]);
                     } else {
                       rSource(context, ref, [mt, mbr, etr, erc, etu, erc]);
                     }

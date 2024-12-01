@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-12-01 20:39:49 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-02 08:48:27 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,17 +41,19 @@ library(rattle)
 
 ########################################################################
 
-# Use rattle's evaluateRisk.
+# Use rattle's evaluateRisk to generate data required for a Risk Chart.
 
 eval <- rattle::evaluateRisk(predicted, actual, risk)
 
-# Generate the risk chart.
+# Build filename and title strings.
 
 fname <- glue("TEMPDIR/model_{mtype}_riskchart_{dtype}.svg")
 fname
 
-title <- glue("Risk Chart &#8212; {mdesc} &#8212; {basename('FILENAME')} *{dtype}* TARGET_VAR")
+title <- glue("Risk Chart &#8212; {mdesc} &#8212; {mtype} {basename('FILENAME')} *{dtype}* TARGET_VAR")
 title
+
+# Generate the risk chart.
 
 svg(fname, width=11)
 rattle::riskchart(predicted, actual, risk,

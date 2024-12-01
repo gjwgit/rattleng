@@ -1,11 +1,11 @@
-# Using the dataset ds build an rpart decision tree.
+# Using the dataset `ds` build an `rpart()` decision tree.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:50:22 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-02 09:16:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -37,8 +37,10 @@
 
 library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
-library(rattle)
+library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
+
+# Define the model type and description for file paths and titles
 
 mtype <- "rpart"
 mdesc <- "Decision Tree"
@@ -62,9 +64,14 @@ model_rpart <- rpart(
                           MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model   = TRUE)
 
-# Save the model to the TEMPLATE variable `model`
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
 
 model <- model_rpart
+
+predicted_tr <- predict(model, newdata = trds)[,2]
+predicted_tu <- predict(model, newdata = tuds)[,2]
+predicted_te <- predict(model, newdata = teds)[,2]
 
 # Output a textual view of the Decision Tree model.
 

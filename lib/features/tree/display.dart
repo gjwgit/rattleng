@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-01 20:44:59 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-02 05:45:55 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -141,7 +141,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     treeAlgorithm == AlgorithmType.traditional
         ? image = '$tempDir/model_rpart_riskchart_training.svg'
-        : image = '$tempDir/model_ctree_risk_tr.svg';
+        : image = '$tempDir/model_ctree_riskchart_training.svg';
 
     if (imageExists(image)) {
       pages.add(
@@ -167,7 +167,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     treeAlgorithm == AlgorithmType.traditional
         ? image = '$tempDir/model_rpart_riskchart_tuning.svg'
-        : image = '$tempDir/model_ctree_risk_tu.svg';
+        : image = '$tempDir/model_ctree_riskchart_tuning.svg';
 
     if (imageExists(image)) {
       pages.add(

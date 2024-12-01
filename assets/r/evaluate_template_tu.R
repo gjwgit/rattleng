@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-12-01 20:12:12 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-02 08:32:46 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,13 +39,9 @@
 
 dtype <- 'tuning'
 
-# Obtain the probabilities for the predictions, one columns for each
-# of the target values/levels.
+# Store into the TEMPLATE variables the correcponding predicted,
+# actual and risk values for later processing.
 
-predicted <- predict(model, newdata = tuds)[,2]
-
-# Store into the TEMPLATE variables the correcponding actual and risk
-# values for later processing.
-
+predicted <- predicted_tu
 actual <- actual_tu
 risk <- risk_tu
