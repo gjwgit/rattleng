@@ -35,12 +35,8 @@ library(data.table)     # Display data as a nicely formatted table
 mtype <- "xgboost"
 mdesc <- "Extreme Gradient Boosting (XGBoost)"
 
-# Extract features and target variable.
-
-tds <- ds[tr, vars]
-
 model_xgb <- rattle::xgboost(form,
-                     data              = tds, 
+                     data              = trds, 
                      max_depth         = BOOST_MAX_DEPTH,     # Maximum depth of a tree
                      eta               = BOOST_LEARNING_RATE, # Learning rate
                      nthread           = BOOST_THREADS,       # Set the number of threads
@@ -86,4 +82,21 @@ importance_plot <- importance_plot + expand_limits(y = max(importance_matrix$Imp
 
 print(importance_plot)
 
+dev.off()
+
+# Prepare probabilities for predictions.
+
+pr_tu <- predict(model_xgb, newdata = tuds,)
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_xgboost_risk.svg")
+rattle::riskchart(pr_tu, actual_tu, risk_tu,
+                  title          = "Risk Chart XGBoost FILENAME [tuning] TARGET_VAR ", 
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()

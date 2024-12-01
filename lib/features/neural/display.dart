@@ -255,6 +255,17 @@ $weights
       );
     }
 
+    String riskImage = '$tempDir/model_neural_neuralnet_risk.svg';
+
+    if (imageExists(riskImage)) {
+      pages.add(
+        ImagePage(
+          title: 'RISK CHART',
+          path: riskImage,
+        ),
+      );
+    }
+
     ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(

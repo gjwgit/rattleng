@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build a conditional inference tree.
+# Using the dataset `ds` build a `ctree()` decision tree.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 17:03:05 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-02 08:42:13 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,12 +24,22 @@
 #
 # Author: Graham Williams
 
-# Load required packages for conditional inference trees
+# Rattle timestamp: TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/dtrees.html
+# https://survivor.togaware.com/datascience/rpart.html
+# https://survivor.togaware.com/datascience/ for further details.
 
-library(party)       # Conditional inference trees
-library(partykit)    # Enhanced visualization and interpretation
+# Load required packages from the local library into the R session.
 
-# Define model type and description
+library(party)        # Conditional inference trees
+library(partykit)     # Enhanced visualization and interpretation
+
+# Define the model type and description for file paths and titles
+
 mtype <- "ctree"
 mdesc <- "Conditional Inference Tree"
 
@@ -46,20 +56,55 @@ control <- ctree_control(
   MINSPLIT, MINBUCKET, MAXDEPTH
 )
 
-# Train a Conditional Inference Tree model using ctree
+# Train a Conditional Inference Tree model using ctree.
+
 model_ctree <- ctree(
   formula   = form,
-  data      = ds[tr, vars],
+  data      = trds,
   na.action = na.exclude,
   control   = control
 )
 
-# Generate a textual view of the Conditional Inference Tree model
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- model_ctree
+
+predicted_tr <- predict(model_ctree, newdata = trds, type = "prob")
+predicted_tu <- predict(model_ctree, newdata = tuds, type = "prob")
+predicted_te <- predict(model_ctree, newdata = teds, type = "prob")
+
+# Output a textual view of the Conditional Inference Tree model.
+
 print(model_ctree)
 summary(model_ctree)
 cat("\n")
 
-# Plot the resulting Conditional Inference Tree
+# Plot the resulting Conditional Inference Tree.
+
 svg("TEMPDIR/model_tree_ctree.svg")
 plot(model_ctree, main = paste("Conditional Inference Tree", target))
 dev.off()
+
+## # Prepare probabilities for predictions.
+
+## pr_tu <- predict(model_ctree, newdata = tuds, type = "prob")
+## predicted <- apply(pr_tu, 1, function(x) colnames(pr_tu)[which.max(x)])
+  
+## # Get unique levels of predicted.
+
+## levels_predicted <- unique(predicted)
+## predicted <- as.character(predicted)
+## predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
+
+
+## svg("TEMPDIR/model_ctree_risk.svg")
+## rattle::riskchart(predicted_numeric, actual_numeric, risks,
+##                   title          = "Risk Chart Conditional Tree FILENAME [tuning] TARGET_VAR ",
+##                   risk.name      = "RISK_VAR",
+##                   recall.name    = "TARGET_VAR",
+##                   show.lift      = TRUE,
+##                   show.precision = TRUE,
+##                   legend.horiz   = FALSE) +
+##     SETTINGS_GRAPHIC_THEME()
+## dev.off()

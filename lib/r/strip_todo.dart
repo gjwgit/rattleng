@@ -1,6 +1,6 @@
-/// A provider for the parameters for cluster.
+/// Utility to strip TODO lines from an R script file.
 ///
-/// Time-stamp: <Monday 2024-12-02 09:32:57 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-12-02 09:21:13 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -22,20 +22,27 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Graham Williams
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+/// From the supplied [code] (an R script file contents) strip any line that
+/// begins with `# TODO` so as not to expose such lines to the final script
+/// file.
 
-final linkClusterProvider = StateProvider<String>((ref) => 'ward');
-final numberClusterProvider = StateProvider<int>((ref) => 10);
-final processorClusterProvider = StateProvider<int>((ref) => 1);
-final reScaleClusterProvider = StateProvider<bool>((ref) => true);
-final runClusterProvider = StateProvider<int>((ref) => 1);
-final typeClusterProvider = StateProvider<String>((ref) => 'KMeans');
-final distanceClusterProvider = StateProvider<String>((ref) => 'euclidean');
+String rStripTodo(String code) {
+  // Split the string into lines.
 
-// TODO 20241202 gjw REPLACE WITH RANDOM_SEED as in #622
+  List<String> lines = code.split('\n');
 
-final seedClusterProvider = StateProvider<int>((ref) => 42);
+  // Filter out lines that start with optional whitespace followed by '# TODO'.
+
+  List<String> filteredLines =
+      lines.where((line) => !RegExp(r'^\s*# TODO').hasMatch(line)).toList();
+
+  // Join the filtered lines back into a single string.
+
+  String result = filteredLines.join('\n');
+
+  return result;
+}

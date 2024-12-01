@@ -1,6 +1,6 @@
 /// TREE tab
 //
-// Time-stamp: <Friday 2024-11-15 10:00:33 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-02 05:41:53 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,7 +44,7 @@ class TreePanel extends StatelessWidget {
     // A per the RattleNG pattern, a Tab consists of a Config bar and the
     // results Display().
 
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           TreeModelConfig(),

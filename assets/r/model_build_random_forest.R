@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-09-07 15:38:57 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-11-28 16:30:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -38,19 +38,18 @@
 library(rattle)
 library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 library(ggplot2)
+library(glue)         # Format strings: glue().
+library(kernlab)
+library(rattle)
 library(reshape2)
 library(verification)
 
 mtype <- "randomForest"
-mdesc <- "Forest"
-
-# Typically we use na.roughfix() for na.action.
-
-tds <- ds[tr, vars]
+mdesc <- "Random Forest"
 
 model_randomForest <- randomForest(
   form,
-  data       = tds, 
+  data       = trds, 
   ntree      = RF_NUM_TREES,
   mtry       = RF_MTRY,
   importance = TRUE,
@@ -226,4 +225,47 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
        cex = 1.2)
 }
 
+dev.off()
+
+########################################################################
+
+# Prepare probabilities for predictions as the number of columns as
+# there are target values.
+
+pr_tr <- predict(model_randomForest, newdata = trds)[,2]
+
+# Use rattle's evaluateRisk.
+
+eval <- rattle::evaluateRisk(pr_tr, actual_tr, risk_tr)
+
+# Generate the risk chart.
+
+svg("TEMPDIR/model_rforest_risk_tr.svg", width=11)
+rattle::riskchart(pr_tr, actual_tr, risk_tr,
+                  title          = glue("Risk Chart - {mdesc} - {basename('FILENAME')} *training* - TARGET_VAR "),
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
+dev.off()
+
+########################################################################
+
+# Prepare probabilities for predictions.
+
+pr_tu <- predict(model_randomForest, newdata = tuds, type = "prob")[,2]
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_rforest_risk_tu.svg", width=11)
+rattle::riskchart(pr_tu, actual_tu, risk_tu,
+                  title          = glue("Risk Chart - {mdesc} - {basename('FILENAME')} *tuning* - TARGET_VAR "),
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()
