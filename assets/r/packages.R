@@ -97,6 +97,7 @@ pkgs <- c(
   'descr',
   'fBasics',
   'ggtext',
+  'ggplotify',
   'ggthemes',
   'janitor',
   'lubridate',

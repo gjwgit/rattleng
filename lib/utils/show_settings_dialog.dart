@@ -286,6 +286,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _saveToggleStates();
   }
 
+  void resetSessionControl() {
+    // Reset session control to default.
+
+    ref.read(askOnExitProvider.notifier).state = true;
+
+    // Save the reset state to preferences.
+
+    _saveAskOnExit(true);
+  }
+
   Future<void> _saveKeepInSync(bool value) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -547,10 +557,27 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             ),
                           ),
                         ),
+
+                        configRowGap,
+
+                        // Restore  button.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Session Control:** Tap here to reset to enable a confirmation 
+                          popup when exiting the application.
+                          
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: resetSessionControl,
+                            child: const Text('Reset'),
+                          ),
+                        ),
                       ],
                     ),
 
-                    settingsGroupGap,
+                    configRowGap,
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -562,7 +589,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           ),
                         ),
 
-                        configWidgetGap,
+                        configRowGap,
 
                         // Switch for Session Control with a tooltip.
 
