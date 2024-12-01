@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:59:50 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 11:20:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -48,45 +48,60 @@ form   <- formula(target %s+% " ~ .")
 
 print(form)
 
-# Split the dataset into train, tune, and test, recording the indicies
-# of the observations to be associated with each dataset. If the
-# dataset is not to be partitioned, simply have the train, tune and
-# test datasets as the whole dataset.
+# Identify a subset of the full dataset that has values for the
+# target variable, rmoving those rows that do not have a target. We
+# will only use such data, the target complete dataset (tcds), for the
+# predictive modelling.
+
+tcds <- ds[!is.na(ds[[target]]),]
+
+# Update the number of `obs` appropriately
+
+tcnobs <- nrow(tcds)
 
 if (SPLIT_DATASET) {
 
+  # Split the dataset into train, tune, and test, recording the indicies
+  # of the observations to be associated with each dataset. If the
+  # dataset is not to be partitioned, simply have the train, tune and
+  # test datasets as the whole dataset.
+
+  # Specify the three way split for the dataset: training (tr) and
+  # tuning (tu) and testing (te).
+  
   split <- c(DATA_SPLIT_TR_TU_TE)
 
-  tr <- nobs %>% sample(split[1]*nobs)
-  tu <- nobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*nobs)
-  te <- nobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
+  
+  tr <- tcnobs %>% sample(split[1]*tcnobs)
+  tu <- tcnobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*tcnobs)
+  te <- tcnobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
 
 } else {
-  tr <- tu <- te <- seq_len(nobs)
+
+  # If the user has decided not to partition the data we will build
+  # the model and tune/test the model on the same dataset.
+  
+  tr <- tu <- te <- seq_len(tcnobs)
 }
 
 # Note the actual target values and the risk values.
 
-actual_tr <- ds %>% slice(tr) %>% pull(target)
-actual_tu <- ds %>% slice(tu) %>% pull(target)
-actual_te <- ds %>% slice(te) %>% pull(target)
+actual_tr <- tcds %>% slice(tr) %>% pull(target)
+actual_tu <- tcds %>% slice(tu) %>% pull(target)
+actual_te <- tcds %>% slice(te) %>% pull(target)
   
 if (!is.null(risk))
 {
-  risk_tr <- ds %>% slice(tr) %>% pull(risk)
-  risk_tu <- ds %>% slice(tu) %>% pull(risk)
-  risk_te <- ds %>% slice(te) %>% pull(risk)
+  risk_tr <- tcds %>% slice(tr) %>% pull(risk)
+  risk_tu <- tcds %>% slice(tu) %>% pull(risk)
+  risk_te <- tcds %>% slice(te) %>% pull(risk)
 }
 
-# Subset the training data.
+# Subset the training, tuning, and testing datasets.
 
-trds <- ds[tr, setdiff(vars, ignore)]
-
-# Remove rows with missing values for the target variable.
-
-trds <- trds[!is.na(trds[[target]]), ]
-
-# TODO 20241112 gjw The tr, tu, te, indicies are now out od sync FIX THIS!!!!
+trds <- tcds[tr, setdiff(vars, ignore)]
+tuds <- tcds[tu, setdiff(vars, ignore)]
+teds <- tcds[te, setdiff(vars, ignore)]
 
 # Identify predictor variables (excluding the target variable).
 
@@ -101,5 +116,19 @@ num_vars <- setdiff(inputs, cat_vars)
 
 ignore_categoric_vars <- c(num_vars, target)
 
+# 
+
 neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
 
+# Create numeric risks vector.
+
+risks <- as.character(risk_tu)
+risks <- risks[!is.na(risks)]
+risks <- as.numeric(risks)
+
+# Create numeric actual vector.
+
+actual <- as.character(actual_tu)
+actual <- actual[!is.na(actual)]
+levels_actual <- unique(actual)
+actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)

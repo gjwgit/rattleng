@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 10:40:46 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-11-28 14:05:58 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,13 +42,13 @@ library(dplyr)        # Wrangling: select() sample_frac().
 library(janitor)      # Cleanup: clean_names().
 library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
-# Index the original variable names by the new names.
+## # Index the original variable names by the new names.
 
-names(vnames) <- names(ds)
+## names(vnames) <- names(ds)
 
-# Display the list of vars.
+## # Display the list of vars.
 
-names(ds)
+## names(ds)
 
 # Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
 

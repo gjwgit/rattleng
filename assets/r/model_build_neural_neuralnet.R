@@ -27,6 +27,8 @@
 library(neuralnet)
 library(caret)
 library(NeuralNetTools)  # For neural network plotting
+library(rattle)
+
 
 # Subset the training data.
 
@@ -158,4 +160,37 @@ NeuralNetTools::plotnet(model_neuralnet,
                         pos_col    = "orange",
                         neg_col    = "grey",
                         node_labs  = TRUE)
+dev.off()
+
+# Prepare probabilities for predictions.
+
+pr_tu <- predict(model_neuralnet, newdata = tuds,)
+  
+# Get unique levels of pr_tu.
+
+levels_predicted <- unique(pr_tu)
+
+# Convert `pr_tu` to numeric, handling NA values.
+
+predicted_numeric <- suppressWarnings(as.numeric(pr_tu))
+
+# Replace NA or NaN in predicted_numeric.
+
+predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+
+# Replace NA or NaN in actual_numeric.
+
+actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_neural_neuralnet_risk.svg")
+rattle::riskchart(predicted_numeric, actual_numeric, risks,
+                  title          = "Risk Chart Neural Net FILENAME [tuning] TARGET_VAR ",
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()

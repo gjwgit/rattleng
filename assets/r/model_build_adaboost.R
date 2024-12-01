@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 15:58:47 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-11-27 11:39:42 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,6 +26,7 @@
 # Load required libraries.
 
 library(ada)
+library(rattle) 
 library(rpart)
 library(caret)
 library(ggplot2)
@@ -34,10 +35,6 @@ library(ggplot2)
 
 mtype <- "adaboost"
 mdesc <- "Adaptive Boosting (AdaBoost)"
-
-# Extract features and target variable.
-
-tds <- ds[tr, vars]
 
 # Set parameters for the AdaBoost model.
 
@@ -49,7 +46,7 @@ ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
 # Train the AdaBoost model.
 
 model_ada <- ada(form,
-                 data    = tds, 
+                 data    = trds, 
                  iter    = BOOST_ITERATIONS,
                  type    = "gentle", # Type of boosting.
                  control = ada_control)
@@ -70,7 +67,7 @@ importance <- varplot(model_ada, type = "scores", main = "", plot = FALSE)
 # Convert the named vector into a data frame.
 
 importance_df <- data.frame(
-  Feature = names(importance),
+  Feature    = names(importance),
   Importance = importance
 )
 
@@ -94,7 +91,7 @@ ada_plot <- ggplot(importance_df, aes(x = reorder(Feature, Importance), y = Impo
 ada_plot <- ada_plot +
   geom_text(aes(label = sprintf("%.4f", Importance), y = Importance),
             hjust = -0.1,
-            size = 3,
+            size  = 3,
             color = "darkblue")
 
 # Increase plot limits to make space for the labels.
@@ -107,4 +104,21 @@ ada_plot <- ada_plot +
 
 svg("TEMPDIR/model_ada_boost.svg")
 print(ada_plot)
+dev.off()
+
+# Prepare probabilities for predictions.
+
+pr_tu <- predict(model_ada, newdata = tuds, type = "prob")[,2]
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_adaboost_risk.svg")
+rattle::riskchart(pr_tu, actual_tu, risk_tu,
+                  title          = "Risk Chart Ada Boost FILENAME [tuning] TARGET_VAR ",
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()

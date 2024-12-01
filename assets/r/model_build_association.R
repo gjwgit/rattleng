@@ -44,14 +44,12 @@ mdesc <- "Association Rules"
 
 isBaskets <- ASSOCIATION_BASKETS
 
-tds <- ds[tr, vars]
-
 # Generate transactions from the dataset.
 
 if(isBaskets){
-  transactions <- as(split(tds$TARGET_VAR, ds$IDENT_VAR), "transactions")
+  transactions <- as(split(trds$TARGET_VAR, ds$IDENT_VAR), "transactions")
 }else{
-  transactions <- as(tds, "transactions")
+  transactions <- as(trds, "transactions")
 }
 
 # Build the association model using the Apriori algorithm.

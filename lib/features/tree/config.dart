@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Friday 2024-11-01 16:20:45 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-01 06:05:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -216,11 +216,16 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                         selectedAlgorithm;
 
                     // Run the R scripts.
-                    rSource(context, ref, ['model_template']);
+
+                    String mt = 'model_template';
+                    String mbc = 'model_build_ctree';
+                    String mbr = 'model_build_rpart';
+                    String mbrc = 'model_build_riskchart';
+
                     if (selectedAlgorithm == AlgorithmType.conditional) {
-                      rSource(context, ref, ['model_build_ctree']);
+                      rSource(context, ref, [mt, mbc]);
                     } else {
-                      rSource(context, ref, ['model_build_rpart']);
+                      rSource(context, ref, [mt, mbr, mbrc]);
                     }
                   }
                 },

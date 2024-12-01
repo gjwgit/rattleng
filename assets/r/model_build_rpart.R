@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:28:28 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-11-30 21:50:22 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,10 +35,13 @@
 
 # Load required packages from the local library into the R session.
 
+library(ggtext)       # Support markdown in ggplot titles.
+library(glue)         # Format strings: glue().
+library(rattle)
 library(rpart)        # ML: decision tree rpart().
 
 mtype <- "rpart"
-mdesc <- "Tree"
+mdesc <- "Decision Tree"
 
 # Determine what type of model to build, based on the number of values
 # of the target variable.
@@ -46,8 +49,6 @@ mdesc <- "Tree"
 method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
                  "anova",
                  "class")
-
-# Handle ignored variables.
 
 # Train a decision tree model.
 
@@ -61,21 +62,25 @@ model_rpart <- rpart(
                           MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model   = TRUE)
 
+# Save the model to the TEMPLATE variable `model`
+
+model <- model_rpart
+
 # Output a textual view of the Decision Tree model.
 
 print(model_rpart)
 printcp(model_rpart)
 cat("\n")
 
-# Plot the resulting Decision Tree using the rpart.plot package via
-# Rattle's fancyRpartPlot().
-
-svg("TEMPDIR/model_tree_rpart.svg")
-rattle::fancyRpartPlot(model_rpart,
-                       main = "Decision Tree weather.csv $ TARGET_VAR",
-                       sub  = paste("TIMESTAMP", username))
-dev.off()
-
 # Output the rules from the tree.
 
 rattle::asRules(model_rpart)
+
+# Plot the resulting Decision Tree using the rpart.plot package via
+# Rattle's fancyRpartPlot().
+
+svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
+rattle::fancyRpartPlot(model_rpart,
+                       main = "Decision Tree FILENAME $ TARGET_VAR",
+                       sub  = paste("TIMESTAMP", username))
+dev.off()

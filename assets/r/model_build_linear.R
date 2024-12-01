@@ -24,6 +24,8 @@
 #
 # Author: Zheyuan Xu
 
+library(rattle)
+
 # Define model type and description.
 
 mtype <- "linear"
@@ -67,4 +69,30 @@ cat("\n")
 svg("TEMPDIR/model_glm_diagnostic_plots.svg")
 par(mfrow = c(2, 2))
 plot(model_glm)
+dev.off()
+
+# Prepare probabilities for predictions.
+
+pr_tu <- predict(model_glm, newdata = tuds, type = "response")
+
+# Get unique levels of pr_tu.
+
+levels_predicted <- unique(pr_tu)
+levels_actual <- unique(actual)
+
+# Convert `pr_tu` to numeric, handling NA values.
+
+predicted_numeric <- suppressWarnings(as.numeric(pr_tu))
+
+# Generate risk chart.
+
+svg("TEMPDIR/model_glm_risk.svg")
+rattle::riskchart(predicted_numeric, actual_numeric, risks,
+                  title          = "Risk Chart Linear FILENAME [tuning] TARGET_VAR ",
+                  risk.name      = "RISK_VAR",
+                  recall.name    = "TARGET_VAR",
+                  show.lift      = TRUE,
+                  show.precision = TRUE,
+                  legend.horiz   = FALSE) +
+    SETTINGS_GRAPHIC_THEME()
 dev.off()
