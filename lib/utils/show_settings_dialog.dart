@@ -330,6 +330,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final prefs = await SharedPreferences.getInstance();
 
     // Save the "imageViewerApp" state to preferences.
+
     await prefs.setString('imageViewerApp', value);
   }
 
@@ -340,7 +341,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const Text(
-          'Image Viewer App',
+          'Image Viewer',
           style: TextStyle(
             fontSize: 16,
           ),
