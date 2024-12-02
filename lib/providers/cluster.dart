@@ -35,7 +35,3 @@ final reScaleClusterProvider = StateProvider<bool>((ref) => true);
 final runClusterProvider = StateProvider<int>((ref) => 1);
 final typeClusterProvider = StateProvider<String>((ref) => 'KMeans');
 final distanceClusterProvider = StateProvider<String>((ref) => 'euclidean');
-
-// TODO 20241202 gjw REPLACE WITH RANDOM_SEED as in #622
-
-final seedClusterProvider = StateProvider<int>((ref) => 42);
