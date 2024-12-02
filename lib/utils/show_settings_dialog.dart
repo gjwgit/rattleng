@@ -342,7 +342,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           ),
         ),
         const SizedBox(width: 16),
-        Expanded(
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth:
+                150, // Adjust the width based on your font and expected character size
+          ),
           child: TextField(
             controller: TextEditingController(text: imageViewerApp)
               ..selection =
@@ -351,7 +355,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               ref.read(settingsImageViewerAppProvider.notifier).state = value;
 
               // Save the new state to shared preferences or other storage as needed.
-
               _saveImageViewerApp(value);
             },
             decoration: const InputDecoration(
