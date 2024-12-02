@@ -229,43 +229,10 @@ dev.off()
 
 ########################################################################
 
-# Prepare probabilities for predictions as the number of columns as
-# there are target values.
+model <- model_randomForest
 
-pr_tr <- predict(model_randomForest, newdata = trds)[,2]
+predicted_tr <- predict(model, newdata = trds)[,2]
+predicted_tu <- predict(model, newdata = tuds)[,2]
+predicted_te <- predict(model, newdata = teds)[,2]
 
-# Use rattle's evaluateRisk.
-
-eval <- rattle::evaluateRisk(pr_tr, actual_tr, risk_tr)
-
-# Generate the risk chart.
-
-svg("TEMPDIR/model_rforest_risk_tr.svg", width=11)
-rattle::riskchart(pr_tr, actual_tr, risk_tr,
-                  title          = glue("Risk Chart - {mdesc} - {basename('FILENAME')} *training* - TARGET_VAR "),
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
-                  show.lift      = TRUE,
-                  show.precision = TRUE,
-                  legend.horiz   = FALSE) +
-    SETTINGS_GRAPHIC_THEME()
-dev.off()
-
-########################################################################
-
-# Prepare probabilities for predictions.
-
-pr_tu <- predict(model_randomForest, newdata = tuds, type = "prob")[,2]
-
-# Generate risk chart.
-
-svg("TEMPDIR/model_rforest_risk_tu.svg", width=11)
-rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = glue("Risk Chart - {mdesc} - {basename('FILENAME')} *tuning* - TARGET_VAR "),
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
-                  show.lift      = TRUE,
-                  show.precision = TRUE,
-                  legend.horiz   = FALSE) +
-    SETTINGS_GRAPHIC_THEME()
 dev.off()
