@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cluster.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/number_field.dart';
 
