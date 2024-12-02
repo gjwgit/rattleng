@@ -62,14 +62,6 @@ large_factor_vars <- names(large_factors)[large_factors]
 
 large_factor_vars
 
-# PREREQUISITE
-#
-# This is expected to be completed after a dataset_load and then the
-# dataset_prep.
-
-library(dplyr)
-library(magrittr)
-
 # Identify variable roles.
 
 target <- "TARGET_VAR"
