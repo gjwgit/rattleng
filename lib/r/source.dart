@@ -155,7 +155,7 @@ Future<void> rSource(
 
   // CLUSTER
 
-  int clusterSeed = ref.read(seedClusterProvider);
+  int clusterSeed = ref.read(randomSeedProvider);
   int clusterNum = ref.read(numberClusterProvider);
   int clusterRun = ref.read(runClusterProvider);
   int clusterProcessor = ref.read(processorClusterProvider);
@@ -461,7 +461,7 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // CLUSTER
 
-  code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
+  code = code.replaceAll('RANDOM_SEED', clusterSeed.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');

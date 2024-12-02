@@ -38,4 +38,4 @@ final distanceClusterProvider = StateProvider<String>((ref) => 'euclidean');
 
 // TODO 20241202 gjw REPLACE WITH RANDOM_SEED as in #622
 
-final seedClusterProvider = StateProvider<int>((ref) => 42);
+final randomSeedProvider = StateProvider<int>((ref) => 42);

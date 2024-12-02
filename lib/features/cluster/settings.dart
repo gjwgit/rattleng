@@ -66,7 +66,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     _clusterController.text =
         ref.read(numberClusterProvider.notifier).state.toString();
     _seedController.text =
-        ref.read(seedClusterProvider.notifier).state.toString();
+        ref.read(randomSeedProvider.notifier).state.toString();
     _runController.text =
         ref.read(runClusterProvider.notifier).state.toString();
 
@@ -119,7 +119,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
             configWidgetGap,
             NumberField(
               label: 'Seed:',
-              key: const Key('cluster_seed'),
+              key: const Key('random_seed'),
               tooltip: '''
 
               The seed is used to re-initiate the random number
@@ -131,7 +131,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               controller: _seedController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: seedClusterProvider,
+              stateProvider: randomSeedProvider,
             ),
             configWidgetGap,
             NumberField(
