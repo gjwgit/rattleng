@@ -351,6 +351,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               ref.read(settingsImageViewerAppProvider.notifier).state = value;
 
               // Save the new state to shared preferences or other storage as needed.
+
               _saveImageViewerApp(value);
             },
             decoration: const InputDecoration(
@@ -586,18 +587,17 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     settingsGroupGap,
 
                     configRowGap,
-// Replace the Switch with the TextField in your dialog's build method:
 
                     Row(
                       children: [
                         MarkdownTooltip(
                           message: '''
 
-      **Image Viewer Application Setting:** This setting determines the default
-      command to open image files. The default is "open" on Linux/MacOS and "start"
-      on Windows. You can customize it to match your preferred image viewer.
+                          **Image Viewer Application Setting:** This setting determines the default
+                          command to open image files. The default is "open" on Linux/MacOS and "start"
+                          on Windows. You can customize it to match your preferred image viewer.
 
-      ''',
+                          ''',
                           child: const Text(
                             'Image Viewer App',
                             style: TextStyle(
@@ -613,10 +613,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         MarkdownTooltip(
                           message: '''
 
-      **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-      to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+                          **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                          to the platform's default ("open" on Linux/MacOS, "start" on Windows).
 
-      ''',
+                          ''',
                           child: ElevatedButton(
                             onPressed: () {
                               final defaultApp =
