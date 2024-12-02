@@ -70,3 +70,5 @@ final settingsGraphicThemeProvider =
     StateNotifierProvider<SettingsGraphicThemeNotifier, String>(
   (ref) => SettingsGraphicThemeNotifier(),
 );
+
+final randomSeedProvider = StateProvider<int>((ref) => 42);
