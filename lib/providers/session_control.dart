@@ -26,5 +26,3 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final askOnExitProvider = StateProvider<bool>((ref) => true);
-
-final settingsImageViewerAppProvider = StateProvider<String>((ref) => '');
