@@ -42,7 +42,7 @@ library(rattle)
 library(reshape2)
 
 mtype <- "conditionalForest"
-mdesc <- "Forest"
+mdesc <- "Random Forest"
 
 model_conditionalForest <- cforest(
   form,
