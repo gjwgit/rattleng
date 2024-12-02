@@ -451,7 +451,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: const Text(
                             'Dataset Toggles',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -553,7 +553,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: Text(
                             'Graphic Theme',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -674,6 +674,68 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                     settingsGroupGap,
                     Divider(),
+                    // Random Seed Section.
+
+                    Row(
+                      children: [
+                        const Text(
+                          'Random Seed',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        configRowGap,
+                        ElevatedButton(
+                          onPressed: () {
+                            ref.read(randomSeedProvider.notifier).state = 42;
+                            _saveRandomSeed(42);
+                          },
+                          child: const Text('Reset'),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove),
+                          onPressed: () {
+                            final newSeed = max(0, randomSeed - 1);
+                            ref.read(randomSeedProvider.notifier).state =
+                                newSeed;
+                            _saveRandomSeed(newSeed);
+                          },
+                        ),
+                        Text(
+                          randomSeed.toString(),
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            final newSeed = randomSeed + 1;
+                            ref.read(randomSeedProvider.notifier).state =
+                                newSeed;
+                            _saveRandomSeed(newSeed);
+                          },
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            final randomValue = Random().nextInt(1000);
+                            ref.read(randomSeedProvider.notifier).state =
+                                randomValue;
+                            _saveRandomSeed(randomValue);
+                          },
+                          child: const Text('Random'),
+                        ),
+                      ],
+                    ),
+
+                    settingsGroupGap,
+                    Divider(),
                     Row(
                       children: [
                         MarkdownTooltip(
@@ -692,7 +754,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: const Text(
                             'Session Control',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -759,68 +821,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     settingsGroupGap,
-                    Divider(),
-
-                    settingsGroupGap,
-
-                    // Random Seed Section
-                    Row(
-                      children: [
-                        const Text(
-                          'Random Seed',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        configRowGap,
-                        ElevatedButton(
-                          onPressed: () {
-                            ref.read(randomSeedProvider.notifier).state = 42;
-                            _saveRandomSeed(42);
-                          },
-                          child: const Text('Reset'),
-                        ),
-                      ],
-                    ),
-
-                    configRowGap,
-
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.remove),
-                          onPressed: () {
-                            final newSeed = max(0, randomSeed - 1);
-                            ref.read(randomSeedProvider.notifier).state =
-                                newSeed;
-                            _saveRandomSeed(newSeed);
-                          },
-                        ),
-                        Text(
-                          randomSeed.toString(),
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            final newSeed = randomSeed + 1;
-                            ref.read(randomSeedProvider.notifier).state =
-                                newSeed;
-                            _saveRandomSeed(newSeed);
-                          },
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            final randomValue = Random().nextInt(1000);
-                            ref.read(randomSeedProvider.notifier).state =
-                                randomValue;
-                            _saveRandomSeed(randomValue);
-                          },
-                          child: const Text('Random'),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
