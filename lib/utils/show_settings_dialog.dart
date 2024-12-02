@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Sunday 2024-11-24 18:03:40 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-02 16:54:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -349,7 +349,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Text(
+                      'Settings',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     // Dataset Toggles section.
+
+                    Divider(),
 
                     Row(
                       children: [
@@ -367,7 +376,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: const Text(
                             'Dataset Toggles',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -437,8 +446,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         const Text(
                           'Keep in Sync',
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                         Switch(
@@ -453,6 +461,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     settingsGroupGap,
+                    Divider(),
 
                     Row(
                       children: [
@@ -469,7 +478,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: Text(
                             'Graphic Theme',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -533,6 +542,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     settingsGroupGap,
+                    Divider(),
 
                     Row(
                       children: [
@@ -552,7 +562,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: const Text(
                             'Session Control',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -617,6 +627,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         ),
                       ],
                     ),
+
+                    settingsGroupGap,
+                    Divider(),
                   ],
                 ),
               ),
