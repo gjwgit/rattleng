@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Sunday 2024-11-24 18:03:40 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-02 16:54:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,6 +26,8 @@
 library;
 
 import 'dart:math';
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -265,6 +267,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(askOnExitProvider.notifier).state =
         prefs.getBool('askOnExit') ?? true;
+
+    final platformDefault = Platform.isWindows ? 'start' : 'open';
+
+    // Set initial value if the provider state is empty.
+
+    ref.read(settingsImageViewerAppProvider.notifier).state =
+        prefs.getString('imageViewerApp') ?? platformDefault;
   }
 
   Future<void> _saveToggleStates() async {
@@ -328,6 +337,54 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setInt('randomSeed', value);
   }
 
+  Future<void> _saveImageViewerApp(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save the "imageViewerApp" state to preferences.
+
+    await prefs.setString('imageViewerApp', value);
+  }
+
+  Widget _buildImageViewerTextField(BuildContext context, WidgetRef ref) {
+    final imageViewerApp = ref.watch(settingsImageViewerAppProvider);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text(
+          'Image Viewer',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(width: 16),
+        // Adjust the width based on font and expected character size
+
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 150,
+          ),
+          child: TextField(
+            controller: TextEditingController(text: imageViewerApp)
+              ..selection =
+                  TextSelection.collapsed(offset: imageViewerApp.length),
+            onChanged: (value) {
+              ref.read(settingsImageViewerAppProvider.notifier).state = value;
+
+              // Save the new state to shared preferences or other storage as needed.
+
+              _saveImageViewerApp(value);
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter image viewer command',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -367,7 +424,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Text(
+                      'Settings',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     // Dataset Toggles section.
+
+                    Divider(),
 
                     Row(
                       children: [
@@ -385,7 +451,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: const Text(
                             'Dataset Toggles',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -455,8 +521,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         const Text(
                           'Keep in Sync',
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                         Switch(
@@ -471,6 +536,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     settingsGroupGap,
+                    Divider(),
 
                     Row(
                       children: [
@@ -487,7 +553,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: Text(
                             'Graphic Theme',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -551,7 +617,63 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     settingsGroupGap,
+                    Divider(),
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
 
+                          **Image Viewer Application Setting:** This setting determines the default
+                          command to open image files. The default is "open" on Linux/MacOS and "start"
+                          on Windows. You can customise it to match your preferred image viewer.
+
+                          ''',
+                          child: const Text(
+                            'Image Viewer App',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Reset button to restore the default value.
+
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                          to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: () {
+                              final defaultApp =
+                                  Platform.isWindows ? 'start' : 'open';
+                              ref
+                                  .read(settingsImageViewerAppProvider.notifier)
+                                  .state = defaultApp;
+
+                              // Save the reset value.
+
+                              _saveImageViewerApp(defaultApp);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+
+                    // Add the new TextField widget for the Image Viewer App.
+
+                    _buildImageViewerTextField(context, ref),
+
+                    settingsGroupGap,
+                    Divider(),
                     Row(
                       children: [
                         MarkdownTooltip(
@@ -570,7 +692,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           child: const Text(
                             'Session Control',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -635,6 +757,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         ),
                       ],
                     ),
+
+                    settingsGroupGap,
+                    Divider(),
 
                     settingsGroupGap,
 
