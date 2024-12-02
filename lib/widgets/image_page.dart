@@ -255,45 +255,20 @@ class ImagePage extends StatelessWidget {
                             // Pop out a window to display the plot separate
                             // to the Rattle app.
 
-                            //TODO kevin
-
                             // Update "Image Viewer" state.
 
                             final prefs = await SharedPreferences.getInstance();
 
-                            final imageViewer =
-                                prefs.getBool('imageViewer') ?? false;
+                            final imageViewerApp =
+                                prefs.getString('imageViewerApp');
 
-                            print("imageViewer: $imageViewer");
-
-                            if (imageViewer) {
-                              print("11imageViewer: $imageViewer");
-                              // If the image viewer is enabled, open the image in the inkscape
-
-                              if (Platform.isWindows) {
-                                Process.run(
-                                  'inkscape',
-                                  [tempFile.path],
-                                  runInShell:
-                                      true, // Ensures the command runs properly in a shell environment
-                                );
-                              } else {
-                                Process.run(
-                                  'inkscape',
-                                  [tempFile.path],
-                                );
-                              }
-                            } else {
-                              print("22imageViewer: $imageViewer");
-
-                              Platform.isWindows
-                                  ? Process.run(
-                                      'start',
-                                      [tempFile.path],
-                                      runInShell: true,
-                                    )
-                                  : Process.run('open', [tempFile.path]);
-                            }
+                            Platform.isWindows
+                                ? Process.run(
+                                    imageViewerApp!,
+                                    [tempFile.path],
+                                    runInShell: true,
+                                  )
+                                : Process.run(imageViewerApp!, [tempFile.path]);
                           },
                         ),
                       ),

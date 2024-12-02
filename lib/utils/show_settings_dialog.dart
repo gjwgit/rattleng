@@ -263,11 +263,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(askOnExitProvider.notifier).state =
         prefs.getBool('askOnExit') ?? true;
 
-    // Update "Image Viewer" state.
-
-    ref.read(settingsImageViewerProvider.notifier).state =
-        prefs.getBool('imageViewer') ?? true;
-
     final platformDefault = Platform.isWindows ? 'start' : 'open';
 
     // Set initial value if the provider state is empty.
