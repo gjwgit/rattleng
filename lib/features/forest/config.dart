@@ -122,7 +122,10 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
                 selectedAlgorithm == AlgorithmType.traditional
                     ? await rSource(
-                        context, ref, [mt, mbrf, etr, erc, etu, erc],)
+                        context,
+                        ref,
+                        [mt, mbrf, etr, erc, etu, erc],
+                      )
                     : await rSource(
                         context,
                         ref,
