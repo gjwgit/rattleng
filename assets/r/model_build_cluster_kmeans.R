@@ -39,7 +39,7 @@
 # demonstrate that each time we get a different random start and then
 # a different model.
 
-# set.seed(CLUSTER_SEED)
+# set.seed(RANDOM_SEED)
 
 # Load required packages from the local library into the R session.
 
