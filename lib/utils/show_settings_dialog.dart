@@ -597,9 +597,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     settingsGroupGap,
-
-                    configRowGap,
-
+                    Divider(),
                     Row(
                       children: [
                         MarkdownTooltip(
@@ -648,11 +646,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                     configRowGap,
 
-// Add the new TextField widget for the Image Viewer App.
+                    // Add the new TextField widget for the Image Viewer App.
+
                     _buildImageViewerTextField(context, ref),
 
-                    configRowGap,
-
+                    settingsGroupGap,
+                    Divider(),
                     Row(
                       children: [
                         MarkdownTooltip(
