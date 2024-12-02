@@ -231,8 +231,8 @@ dev.off()
 
 model <- model_randomForest
 
-predicted_tr <- predict(model, newdata = trds)[,2]
-predicted_tu <- predict(model, newdata = tuds)[,2]
-predicted_te <- predict(model, newdata = teds)[,2]
+predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
+predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
+predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
 
 dev.off()
