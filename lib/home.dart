@@ -473,8 +473,11 @@ Xu, Yixiang Yin, Bo Zhang.
       body: Row(
         children: [
           SingleChildScrollView(
-            child: IntrinsicHeight(
-              // Because the height constraint is unbounded, we need to provide a height limit
+            child: SizedBox(
+              // Constrain height to the height of the screen.
+              // To place the NavigationRail on top of the Column.
+
+              height: MediaQuery.of(context).size.height,
               child: NavigationRail(
                 selectedIndex: _tabController.index,
                 onDestinationSelected: (int index) {
