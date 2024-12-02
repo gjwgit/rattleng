@@ -159,3 +159,56 @@ actual <- as.character(actual_tu)
 actual <- actual[!is.na(actual)]
 levels_actual <- unique(actual)
 actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
+
+# The `generate_predictions` function simulates a prediction process, generating class labels 
+# based on randomly created probability matrices for a given set of observations. 
+
+generate_predictions <- function(predicted_var) {
+  predicted_probs <- list()
+  
+  num_obs <- length(predicted_var)
+  
+  for (i in 1:num_obs) {
+    # Simulate probability matrices as in your output.
+    # Here, we will just assign random probabilities for demonstration.
+    # In practice, 'predicted_probs' is the output from your 'predict' function.
+    
+    probs <- runif(2)
+    probs <- probs / sum(probs)  # Normalize to sum to 1.
+    
+    # Create the column names with unknown prefixes.
+    # For demonstration, let's assume prefixes vary.
+    
+    prefix <- paste0("prefix", sample(1:5, 1))
+    col_names <- paste0(prefix, c(".No", ".Yes"))
+    
+    # Create the 1x2 probability matrix for each observation.
+
+    predicted_probs[[i]] <- matrix(probs, nrow = 1, dimnames = list(NULL, col_names))
+  }
+  
+  # Extract the predicted class labels without specifying the prefix.
+
+  predicted_var <- sapply(predicted_probs, function(x) {
+    # 'x' is a 1xN matrix for one observation.
+    # Find the index of the maximum probability.
+    
+    idx_max <- which.max(x[1, ])
+
+    # Retrieve the corresponding class label with prefix.
+    
+    label_with_prefix <- colnames(x)[idx_max]
+    
+    # Extract the actual class label by removing everything up to the last dot.
+
+    label_clean <- sub('.*\\.', '', label_with_prefix)
+    return(label_clean)
+  })
+  
+  # Get unique levels of predicted.
+  
+  levels_predicted <- unique(predicted_var)
+  predicted_var <- as.character(predicted_var)
+  predicted_numeric <- ifelse(predicted_var == levels_predicted[1], 0, 1)
+  return(predicted_numeric)
+}
