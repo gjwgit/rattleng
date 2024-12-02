@@ -342,10 +342,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           ),
         ),
         const SizedBox(width: 16),
+        // Adjust the width based on font and expected character size
+
         ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth:
-                150, // Adjust the width based on your font and expected character size
+            maxWidth: 150,
           ),
           child: TextField(
             controller: TextEditingController(text: imageViewerApp)
@@ -355,6 +356,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               ref.read(settingsImageViewerAppProvider.notifier).state = value;
 
               // Save the new state to shared preferences or other storage as needed.
+
               _saveImageViewerApp(value);
             },
             decoration: const InputDecoration(
@@ -605,7 +607,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           **Image Viewer Application Setting:** This setting determines the default
                           command to open image files. The default is "open" on Linux/MacOS and "start"
-                          on Windows. You can customize it to match your preferred image viewer.
+                          on Windows. You can customise it to match your preferred image viewer.
 
                           ''',
                           child: const Text(
@@ -620,6 +622,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         configRowGap,
 
                         // Reset button to restore the default value.
+
                         MarkdownTooltip(
                           message: '''
 
@@ -636,6 +639,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   .state = defaultApp;
 
                               // Save the reset value.
+
                               _saveImageViewerApp(defaultApp);
                             },
                             child: const Text('Reset'),
