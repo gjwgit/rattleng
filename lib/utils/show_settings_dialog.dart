@@ -25,6 +25,8 @@
 
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -265,6 +267,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(settingsImageViewerProvider.notifier).state =
         prefs.getBool('imageViewer') ?? true;
+
+    final platformDefault = Platform.isWindows ? 'start' : 'open';
+
+    // Set initial value if the provider state is empty.
+
+    ref.read(settingsImageViewerAppProvider.notifier).state =
+        prefs.getString('imageViewerApp') ?? platformDefault;
   }
 
   Future<void> _saveToggleStates() async {
@@ -301,16 +310,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _saveAskOnExit(true);
   }
 
-  void resetImageViewer() {
-    // Reset session control to default.
-
-    ref.read(settingsImageViewerProvider.notifier).state = true;
-
-    // Save the reset state to preferences.
-
-    _saveImageViewer(true);
-  }
-
   Future<void> _saveKeepInSync(bool value) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -327,12 +326,45 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('askOnExit', value);
   }
 
-  Future<void> _saveImageViewer(bool value) async {
+  Future<void> _saveImageViewerApp(String value) async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Save "imageViewer" state to preferences.
+    // Save the "imageViewerApp" state to preferences.
+    await prefs.setString('imageViewerApp', value);
+  }
 
-    await prefs.setBool('imageViewer', value);
+  Widget _buildImageViewerTextField(BuildContext context, WidgetRef ref) {
+    final imageViewerApp = ref.watch(settingsImageViewerAppProvider);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text(
+          'Image Viewer App',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: TextField(
+            controller: TextEditingController(text: imageViewerApp)
+              ..selection =
+                  TextSelection.collapsed(offset: imageViewerApp.length),
+            onChanged: (value) {
+              ref.read(settingsImageViewerAppProvider.notifier).state = value;
+
+              // Save the new state to shared preferences or other storage as needed.
+              _saveImageViewerApp(value);
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter image viewer command',
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -346,7 +378,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final askOnExit = ref.watch(askOnExitProvider);
-    final imageViewer = ref.watch(settingsImageViewerProvider);
 
     return Material(
       color: Colors.transparent,
@@ -558,6 +589,62 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                     settingsGroupGap,
 
+                    configRowGap,
+// Replace the Switch with the TextField in your dialog's build method:
+
+                    Row(
+                      children: [
+                        MarkdownTooltip(
+                          message: '''
+
+      **Image Viewer Application Setting:** This setting determines the default
+      command to open image files. The default is "open" on Linux/MacOS and "start"
+      on Windows. You can customize it to match your preferred image viewer.
+
+      ''',
+                          child: const Text(
+                            'Image Viewer App',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        configRowGap,
+
+                        // Reset button to restore the default value.
+                        MarkdownTooltip(
+                          message: '''
+
+      **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+      to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+
+      ''',
+                          child: ElevatedButton(
+                            onPressed: () {
+                              final defaultApp =
+                                  Platform.isWindows ? 'start' : 'open';
+                              ref
+                                  .read(settingsImageViewerAppProvider.notifier)
+                                  .state = defaultApp;
+
+                              // Save the reset value.
+                              _saveImageViewerApp(defaultApp);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+
+// Add the new TextField widget for the Image Viewer App.
+                    _buildImageViewerTextField(context, ref),
+
+                    configRowGap,
+
                     Row(
                       children: [
                         MarkdownTooltip(
@@ -643,90 +730,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
 
                     configRowGap,
-
-                    Row(
-                      children: [
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Session Control:** This setting determines whether a confirmation popup 
-                          appears when the user tries to quit the application. 
-
-                          - **ON**: A popup will appear asking the user to confirm quitting.\n
-
-                          - **OFF**: The application will exit immediately without a confirmation popup.
-
-                          The default setting is **ON**.
-
-                          ''',
-                          child: const Text(
-                            'Image Viewer',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-
-                        configRowGap,
-
-                        // Restore  button.
-
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Reset Session Control:** Tap here to reset to enable a confirmation 
-                          popup when exiting the application.
-                          
-                          ''',
-                          child: ElevatedButton(
-                            onPressed: resetImageViewer,
-                            child: const Text('Reset'),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    configRowGap,
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'inkscape',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-
-                        configRowGap,
-
-                        // Switch for Session Control with a tooltip.
-
-                        MarkdownTooltip(
-                          message: '''
-
-   
-
-                          ''',
-                          child: Switch(
-                            value: imageViewer,
-                            onChanged: (value) {
-                              ref
-                                  .read(settingsImageViewerProvider.notifier)
-                                  .state = value;
-
-                              print(
-                                  "ref.read(settingsImageViewerProvider.notifier).state: ${ref.read(settingsImageViewerProvider.notifier).state}");
-
-                              // Save the new state to shared preferences or other storage as needed.
-
-                              _saveImageViewer(value);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
