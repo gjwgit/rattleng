@@ -25,10 +25,13 @@
 
 library;
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/session_control.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -235,6 +238,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Load toggle states and "Keep in Sync" state from shared preferences.
 
     _loadSettings();
+
+    _loadRandomSeed();
   }
 
   Future<void> _loadSettings() async {
@@ -312,6 +317,17 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('askOnExit', value);
   }
 
+  Future<void> _loadRandomSeed() async {
+    final prefs = await SharedPreferences.getInstance();
+    final seed = prefs.getInt('randomSeed') ?? 42;
+    ref.read(randomSeedProvider.notifier).state = seed;
+  }
+
+  Future<void> _saveRandomSeed(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('randomSeed', value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -323,6 +339,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final askOnExit = ref.watch(askOnExitProvider);
+
+    final randomSeed = ref.watch(randomSeedProvider);
 
     return Material(
       color: Colors.transparent,
@@ -614,6 +632,67 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               _saveAskOnExit(value);
                             },
                           ),
+                        ),
+                      ],
+                    ),
+
+                    settingsGroupGap,
+
+                    // Random Seed Section
+                    Row(
+                      children: [
+                        const Text(
+                          'Random Seed',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        configRowGap,
+                        ElevatedButton(
+                          onPressed: () {
+                            ref.read(randomSeedProvider.notifier).state = 42;
+                            _saveRandomSeed(42);
+                          },
+                          child: const Text('Reset'),
+                        ),
+                      ],
+                    ),
+
+                    configRowGap,
+
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove),
+                          onPressed: () {
+                            final newSeed = max(0, randomSeed - 1);
+                            ref.read(randomSeedProvider.notifier).state =
+                                newSeed;
+                            _saveRandomSeed(newSeed);
+                          },
+                        ),
+                        Text(
+                          randomSeed.toString(),
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            final newSeed = randomSeed + 1;
+                            ref.read(randomSeedProvider.notifier).state =
+                                newSeed;
+                            _saveRandomSeed(newSeed);
+                          },
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            final randomValue = Random().nextInt(1000);
+                            ref.read(randomSeedProvider.notifier).state =
+                                randomValue;
+                            _saveRandomSeed(randomValue);
+                          },
+                          child: const Text('Random'),
                         ),
                       ],
                     ),
