@@ -472,35 +472,39 @@ Xu, Yixiang Yin, Bo Zhang.
 
       body: Row(
         children: [
-          SingleChildScrollView(
-            child: SizedBox(
-              // Constrain height to the height of the screen.
-              // To place the NavigationRail on top of the Column.
+          ScrollConfiguration(
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              child: SizedBox(
+                // Constrain height to the height of the screen.
+                // To place the NavigationRail on top of the Column.
 
-              height: MediaQuery.of(context).size.height,
-              child: NavigationRail(
-                selectedIndex: _tabController.index,
-                onDestinationSelected: (int index) {
-                  setState(() {
-                    _tabController.index = index;
-                  });
-                },
-                labelType: NavigationRailLabelType.all,
-                destinations: homeTabs.map((tab) {
-                  return NavigationRailDestination(
-                    icon: Icon(tab['icon']),
-                    label: Text(
-                      tab['title'],
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  );
-                }).toList(),
-                selectedLabelTextStyle: const TextStyle(
-                  color: Colors.deepPurple,
-                  fontWeight: FontWeight.bold,
+                height: MediaQuery.of(context).size.height,
+                child: NavigationRail(
+                  selectedIndex: _tabController.index,
+                  onDestinationSelected: (int index) {
+                    setState(() {
+                      _tabController.index = index;
+                    });
+                  },
+                  labelType: NavigationRailLabelType.all,
+                  destinations: homeTabs.map((tab) {
+                    return NavigationRailDestination(
+                      icon: Icon(tab['icon']),
+                      label: Text(
+                        tab['title'],
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    );
+                  }).toList(),
+                  selectedLabelTextStyle: const TextStyle(
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
                 ),
-                unselectedLabelTextStyle: TextStyle(color: Colors.grey[500]),
               ),
             ),
           ),
