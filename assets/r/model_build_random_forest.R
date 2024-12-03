@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-11-28 16:30:50 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-12-03 12:41:27 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -55,6 +55,17 @@ model_randomForest <- randomForest(
   importance = TRUE,
   na.action  = RF_NA_ACTION,
   replace    = FALSE)
+
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- model_randomForest
+
+predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
+predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
+predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
+
+########################################################################
 
 # Generate textual output of the 'Random Forest' model.
 
@@ -224,15 +235,4 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
              length(unique(predicted_probs))),
        cex = 1.2)
 }
-
-dev.off()
-
-########################################################################
-
-model <- model_randomForest
-
-predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
-predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
-predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
-
 dev.off()
