@@ -31,6 +31,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:rattle/constants/spacing.dart';
 
 class RepeatButton extends StatefulWidget {
