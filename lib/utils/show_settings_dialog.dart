@@ -724,7 +724,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            final randomValue = Random().nextInt(1000);
+                            final randomValue = Random().nextInt(100000);
                             ref.read(randomSeedProvider.notifier).state =
                                 randomValue;
                             _saveRandomSeed(randomValue);
