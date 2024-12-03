@@ -28,14 +28,15 @@ library;
 import 'dart:math';
 
 import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/session_control.dart';
+import 'package:rattle/widgets/repeat_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -703,40 +704,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              final newSeed = max(0, randomSeed - 1);
-                              ref.read(randomSeedProvider.notifier).state =
-                                  newSeed;
-                              _saveRandomSeed(newSeed);
-                            },
-                          ),
-                          Text(
-                            randomSeed.toString(),
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              final newSeed = randomSeed + 1;
-                              ref.read(randomSeedProvider.notifier).state =
-                                  newSeed;
-                              _saveRandomSeed(newSeed);
-                            },
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              final randomValue = Random().nextInt(100000);
-                              ref.read(randomSeedProvider.notifier).state =
-                                  randomValue;
-                              _saveRandomSeed(randomValue);
-                            },
-                            child: const Text('Random'),
-                          ),
-                        ],
+                      RandomSeedRow(
+                        randomSeed: randomSeed,
+                        updateSeed: (newSeed) {
+                          ref.read(randomSeedProvider.notifier).state = newSeed;
+                          _saveRandomSeed(newSeed);
+                        },
                       ),
 
                       settingsGroupGap,
