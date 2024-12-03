@@ -10,7 +10,7 @@ on:
     types: [opened, reopened, synchronize]
 
 env:
-  FLUTTER_VERSION: '3.24.4'
+  FLUTTER_VERSION: '3.24.5'
 
 jobs:
 
@@ -34,7 +34,7 @@ jobs:
           channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
       - run: flutter pub get
-      - run: dart format --set-exit-if-changed .
+      - run: dart format --output=none --set-exit-if-changed .
 
   markdown:
     runs-on: ubuntu-latest
