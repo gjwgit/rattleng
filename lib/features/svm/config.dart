@@ -94,11 +94,15 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
 
             ActivityButton(
               onPressed: () async {
-                await rSource(
-                  context,
-                  ref,
-                  ['model_template', 'model_build_svm'],
-                );
+                // Run the R scripts.
+
+                String mt = 'model_template';
+                String mbs = 'model_build_svm';
+                String etr = 'evaluate_template_tr';
+                String etu = 'evaluate_template_tu';
+                String erc = 'evaluate_riskchart';
+
+                await rSource(context, ref, [mt, mbs, etr, erc, etu, erc]);
 
                 await ref.read(svmPageControllerProvider).animateToPage(
                       // Index of the second page.

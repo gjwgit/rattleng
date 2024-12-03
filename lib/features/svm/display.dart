@@ -71,12 +71,39 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
       );
     }
 
-    String riskImage = '$tempDir/model_svm_risk.svg';
+    String riskImage = '';
+
+    riskImage = '$tempDir/model_svm_riskchart_tuning.svg';
 
     if (imageExists(riskImage)) {
       pages.add(
         ImagePage(
-          title: 'RISK CHART',
+          title: '''
+
+          # Risk Chart &#8212; Unbiased Estimate of Performance
+
+          Using the **tuning** dataset to evaluate the model performance.
+
+          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
+          path: riskImage,
+        ),
+      );
+    }
+
+    riskImage = '$tempDir/model_svm_riskchart_training.svg';
+
+    if (imageExists(riskImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Risk Chart &#8212; Unbiased Estimate of Performance
+
+          Using the **training** dataset to evaluate the model performance.
+
+          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
           path: riskImage,
         ),
       );

@@ -212,3 +212,39 @@ generate_predictions <- function(predicted_var) {
   predicted_numeric <- ifelse(predicted_var == levels_predicted[1], 0, 1)
   return(predicted_numeric)
 }
+
+# A data preprocessing function for prediction tasks.
+# Handles prediction and actual value preprocessing.
+# Converts inputs to numeric format. Handles NA and NaN values. 
+# Aligns input vectors to same length. Uses minimum length to truncate vectors
+
+prepare_predictions <- function(pr_tu, actual, risks) {
+  # Get unique levels of predictions and actual values.
+
+  levels_predicted <- unique(pr_tu)
+  levels_actual <- unique(actual)
+  
+  # Convert predictions to numeric, handling NA or invalid values.
+
+  predicted_numeric <- suppressWarnings(as.numeric(pr_tu))
+  predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+  
+  # Align vectors to the same length by using the minimum length.
+
+  min_length <- min(length(predicted_numeric), length(actual), length(risks))
+  predicted_numeric <- predicted_numeric[1:min_length]
+  actual_numeric <- as.numeric(as.factor(actual))[1:min_length] # Ensure actual is numeric.
+  risks <- risks[1:min_length]
+  
+  # Replace remaining NA or NaN values in `predicted_numeric` with a default value.
+
+  predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+  
+  # Return the processed vectors as a list.
+
+  list(
+    predicted_numeric = predicted_numeric,
+    actual_numeric = actual_numeric,
+    risks = risks
+  )
+}
