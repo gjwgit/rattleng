@@ -133,15 +133,28 @@ class TextPage extends StatelessWidget {
 
           Expanded(
             child: Scrollbar(
-              controller: horizontalScrollController,
               thumbVisibility: true,
+              // Attach the horizontal controller.
+
+              controller: horizontalScrollController,
               child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                controller: horizontalScrollController,
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                  textAlign: TextAlign.left,
+                // Attach a vertical controller for independent scrolling.
+
+                controller: ScrollController(),
+                scrollDirection: Axis.vertical,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  controller: horizontalScrollController,
+                  child: Container(
+                    // Ensure width matches the full container.
+
+                    width: MediaQuery.of(context).size.width,
+                    child: SelectableText(
+                      content,
+                      style: monoTextStyle,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
                 ),
               ),
             ),
