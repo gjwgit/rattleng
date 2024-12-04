@@ -31,6 +31,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 
@@ -84,41 +85,71 @@ class RandomSeedRow extends StatelessWidget {
   final int randomSeed;
   final Function(int) updateSeed;
 
-  const RandomSeedRow(
-      {Key? key, required this.randomSeed, required this.updateSeed})
-      : super(key: key);
+  const RandomSeedRow({
+    Key? key,
+    required this.randomSeed,
+    required this.updateSeed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        RepeatButton(
-          child: const Icon(Icons.remove),
-          onPressed: () {
-            final newSeed = randomSeed - 1;
-            if (newSeed >= 0) updateSeed(newSeed);
-          },
+        MarkdownTooltip(
+          message: '''
+          **Decrease Random Seed:**
+          Tap to decrease the random seed value by 1.
+          
+          **Hold:** Hold the button to continuously decrease the value.
+          ''',
+          child: RepeatButton(
+            child: const Icon(Icons.remove),
+            onPressed: () {
+              final newSeed = randomSeed - 1;
+              if (newSeed >= 0) updateSeed(newSeed);
+            },
+          ),
         ),
         buttonGap,
-        Text(
-          randomSeed.toString(),
-          style: const TextStyle(fontSize: 18),
+        MarkdownTooltip(
+          message: '''
+          **Current Random Seed:**
+          Displays the current random seed value being used.
+          ''',
+          child: Text(
+            randomSeed.toString(),
+            style: const TextStyle(fontSize: 18),
+          ),
         ),
         buttonGap,
-        RepeatButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            final newSeed = randomSeed + 1;
-            updateSeed(newSeed);
-          },
+        MarkdownTooltip(
+          message: '''
+          **Increase Random Seed:**
+          Tap to increase the random seed value by 1.
+          
+          **Hold:** Hold the button to continuously increase the value.
+          ''',
+          child: RepeatButton(
+            child: const Icon(Icons.add),
+            onPressed: () {
+              final newSeed = randomSeed + 1;
+              updateSeed(newSeed);
+            },
+          ),
         ),
         buttonGap,
-        ElevatedButton(
-          onPressed: () {
-            final randomValue = Random().nextInt(100000);
-            updateSeed(randomValue);
-          },
-          child: const Text('Random'),
+        MarkdownTooltip(
+          message: '''
+          **Generate New Random Seed:**
+          Tap this button to generate a completely new random seed value.
+          ''',
+          child: ElevatedButton(
+            onPressed: () {
+              final randomValue = Random().nextInt(100000);
+              updateSeed(randomValue);
+            },
+            child: const Text('Random'),
+          ),
         ),
       ],
     );

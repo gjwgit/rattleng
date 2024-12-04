@@ -702,20 +702,38 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       Row(
                         children: [
-                          const Text(
-                            'Random Seed',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          MarkdownTooltip(
+                            message: '''
+                            **Random Seed Setting:** 
+                            The random seed is used to control the randomness. 
+                            Setting a specific seed ensures that results are reproducible.
+
+                            - **Default Seed:** The default seed is 42.
+                            - **Reset:** Use the "Reset" button to restore the default seed.
+                            ''',
+                            child: const Text(
+                              'Random Seed',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           configRowGap,
-                          ElevatedButton(
-                            onPressed: () {
-                              ref.read(randomSeedProvider.notifier).state = 42;
-                              _saveRandomSeed(42);
-                            },
-                            child: const Text('Reset'),
+                          MarkdownTooltip(
+                            message: '''
+                            **Reset Random Seed:** 
+                            Clicking this button resets the random seed to the default value of 42.
+                            This is useful if you want to restore the initial random state.
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: () {
+                                ref.read(randomSeedProvider.notifier).state =
+                                    42;
+                                _saveRandomSeed(42);
+                              },
+                              child: const Text('Reset'),
+                            ),
                           ),
                         ],
                       ),
