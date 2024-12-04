@@ -471,9 +471,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             cleanse,
                             (value) {
                               ref.read(cleanseProvider.notifier).state = value;
-
                               _saveToggleStates();
                             },
+                            '''
+                            This will apply data cleaning steps to the dataset.
+                            ''',
+                            '''
+                            **Cleanse Toggle:** \n
+                            - **On:** Cleansing steps will be applied. \n
+                            - **Off:** No cleansing steps will be applied.
+                            ''',
                           ),
                         ),
                         Expanded(
@@ -483,9 +490,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             (value) {
                               ref.read(normaliseProvider.notifier).state =
                                   value;
-
                               _saveToggleStates();
                             },
+                            '''
+                            This will normalise the dataset.
+                            ''',
+                            '''
+                            **Unify Toggle:** \n
+                            - **On:** Data will be normalised (e.g., scaled to a common range). \n
+                            - **Off:** Data remains in its original form.
+                            ''',
                           ),
                         ),
                         Expanded(
@@ -495,27 +509,46 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             (value) {
                               ref.read(partitionProvider.notifier).state =
                                   value;
-
                               _saveToggleStates();
+                            },
+                            '''
+                            This will split your data into training, validation, and test sets.
+                            ''',
+                            '''
+                            **Partition Toggle:** \n
+                            - **On:** Data will be partitioned. \n
+                            - **Off:** No partitioning will be performed.
+                            ''',
+                          ),
+                        ),
+                        MarkdownTooltip(
+                          message: '''
+                           Changes to toggles will be tracked and saved or not.
+                          ''',
+                          child: const Text(
+                            'Keep in Sync',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        MarkdownTooltip(
+                          message: '''
+                          **Keep in Sync Toggle:** \n
+                          - **On:** Changes to toggles will be tracked and saved. \n
+                          - **Off:** Changes to toggles will not persist across sessions.
+                          ''',
+                          child: Switch(
+                            value: keepInSync,
+                            onChanged: (value) {
+                              ref.read(keepInSyncProvider.notifier).state =
+                                  value;
+                              _saveKeepInSync(value);
                             },
                           ),
                         ),
-                        const Text(
-                          'Keep in Sync',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Switch(
-                          value: keepInSync,
-                          onChanged: (value) {
-                            ref.read(keepInSyncProvider.notifier).state = value;
-
-                            _saveKeepInSync(value);
-                          },
-                        ),
                       ],
                     ),
+
+                    //
 
                     settingsGroupGap,
                     Divider(),
@@ -770,19 +803,25 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     String label,
     bool value,
     ValueChanged<bool> onChanged,
+    String textTooltipMessage, // Tooltip message for the label
+    String switchTooltipMessage, // Tooltip message for the switch
   ) {
     return Row(
-      // Align items to the start.
-
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 16),
+        MarkdownTooltip(
+          message: textTooltipMessage,
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: 16),
+          ),
         ),
-        Switch(
-          value: value,
-          onChanged: onChanged,
+        MarkdownTooltip(
+          message: switchTooltipMessage,
+          child: Switch(
+            value: value,
+            onChanged: onChanged,
+          ),
         ),
       ],
     );
