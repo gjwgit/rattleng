@@ -658,23 +658,27 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 final defaultApp =
                                     Platform.isWindows ? 'start' : 'open';
                                 ref
-                                    .read(
-                                        settingsImageViewerAppProvider.notifier)
+                                    .read(imageViewerSettingProvider.notifier)
                                     .state = defaultApp;
-                        MarkdownTooltip(
-                          message: '''
+                              },
+                              child: null,
+                            ),
+                          ),
+
+                          MarkdownTooltip(
+                            message: '''
 
                           **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
                           to the platform's default ("open" on Linux/MacOS, "start" on Windows).
 
                           ''',
-                          child: ElevatedButton(
-                            onPressed: () {
-                              final defaultApp =
-                                  Platform.isWindows ? 'start' : 'open';
-                              ref
-                                  .read(imageViewerSettingProvider.notifier)
-                                  .state = defaultApp;
+                            child: ElevatedButton(
+                              onPressed: () {
+                                final defaultApp =
+                                    Platform.isWindows ? 'start' : 'open';
+                                ref
+                                    .read(imageViewerSettingProvider.notifier)
+                                    .state = defaultApp;
 
                                 // Save the reset value.
 
