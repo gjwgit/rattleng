@@ -273,7 +273,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     // Set initial value if the provider state is empty.
 
-    ref.read(settingsImageViewerAppProvider.notifier).state =
+    ref.read(imageViewerSettingProvider.notifier).state =
         prefs.getString('imageViewerApp') ?? platformDefault;
   }
 
@@ -347,7 +347,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   }
 
   Widget _buildImageViewerTextField(BuildContext context, WidgetRef ref) {
-    final imageViewerApp = ref.watch(settingsImageViewerAppProvider);
+    final imageViewerApp = ref.watch(imageViewerSettingProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -370,7 +370,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               ..selection =
                   TextSelection.collapsed(offset: imageViewerApp.length),
             onChanged: (value) {
-              ref.read(settingsImageViewerAppProvider.notifier).state = value;
+              ref.read(imageViewerSettingProvider.notifier).state = value;
 
               // Save the new state to shared preferences or other storage as needed.
 
@@ -661,6 +661,20 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                     .read(
                                         settingsImageViewerAppProvider.notifier)
                                     .state = defaultApp;
+                        MarkdownTooltip(
+                          message: '''
+
+                          **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                          to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+
+                          ''',
+                          child: ElevatedButton(
+                            onPressed: () {
+                              final defaultApp =
+                                  Platform.isWindows ? 'start' : 'open';
+                              ref
+                                  .read(imageViewerSettingProvider.notifier)
+                                  .state = defaultApp;
 
                                 // Save the reset value.
 
