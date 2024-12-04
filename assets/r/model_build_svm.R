@@ -27,6 +27,11 @@
 library(kernlab)
 library(rattle)
 
+# Define the model type and description for file paths and titles.
+
+mtype <- "svm"
+mdesc <- "Support Vector Machine"
+
 # Define the dataset, input, and target.
 
 svm_kernel <- SVM_KERNEL
@@ -48,10 +53,18 @@ if (svm_kernel == "polydot") {
   )
 }
 
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- svm_model
+
+predicted_tr <- predict(model, newdata = trds, type = "probabilities")[,2]
+predicted_tu <- predict(model, newdata = tuds, type = "probabilities")[,2]
+predicted_te <- predict(model, newdata = teds, type = "probabilities")[,2]
+
 # Print a summary of the trained SVM model.
 
 print(svm_model)
-dev.off()
 
 # Prepare probabilities for predictions.
 
