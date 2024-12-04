@@ -350,8 +350,9 @@ class ImagePage extends StatelessWidget {
                       // Decode the image bytes for calculating dimensions.
 
                       if (svgImage) {
-                        aspectRatio =
-                            1.0; // SVG images are vector-based and scalable.
+                        // SVG images are vector-based and scalable.
+
+                        aspectRatio = 1.0;
                       } else {
                         decodedImage =
                             ui.instantiateImageCodec(bytes).then((codec) async {
@@ -381,27 +382,31 @@ class ImagePage extends StatelessWidget {
                         height: maxHeight,
                         width: maxWidth,
                         child: Align(
-                          alignment: Alignment
-                              .center, // Center the image within the container.
+                          // Center the image within the container.
+
+                          alignment: Alignment.center,
 
                           child: SizedBox(
                             height: newHeight.clamp(0, maxHeight),
                             width: newWidth.clamp(0, maxWidth),
                             child: InteractiveViewer(
                               maxScale: 5,
-                              alignment: Alignment
-                                  .topCenter, // Align the interactive viewer.
+                              // Align the interactive viewer.
+
+                              alignment: Alignment.topCenter,
 
                               child: svgImage
+                                  // Ensure the SVG fits within bounds.
+
                                   ? SvgPicture.memory(
                                       bytes,
-                                      fit: BoxFit
-                                          .contain, // Ensure the SVG fits within bounds.
+                                      fit: BoxFit.contain,
                                     )
+                                  // Ensure the image fits within bounds.
+
                                   : Image.memory(
                                       bytes,
-                                      fit: BoxFit
-                                          .contain, // Ensure the image fits within bounds.
+                                      fit: BoxFit.contain,
                                     ),
                             ),
                           ),
