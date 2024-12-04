@@ -73,4 +73,4 @@ final settingsGraphicThemeProvider =
 
 final randomSeedProvider = StateProvider<int>((ref) => 42);
 
-final settingsImageViewerAppProvider = StateProvider<String>((ref) => '');
+final imageViewerSettingProvider = StateProvider<String>((ref) => '');
