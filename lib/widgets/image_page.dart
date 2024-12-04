@@ -339,21 +339,72 @@ class ImagePage extends StatelessWidget {
 
                       // Apply a bounded height to avoid infinite height error.
 
-                      final double maxHeight =
+                      final maxHeight =
                           MediaQuery.of(context).size.height * 0.6;
+
+                      // Calculate aspect ratio of the image bytes.
+
+                      ui.Image? decodedImage;
+                      double aspectRatio = 1.0;
+
+                      // Decode the image bytes for calculating dimensions.
+
+                      if (svgImage) {
+                        aspectRatio =
+                            1.0; // SVG images are vector-based and scalable.
+                      } else {
+                        decodedImage =
+                            ui.instantiateImageCodec(bytes).then((codec) async {
+                          return (await codec.getNextFrame()).image;
+                        }) as ui.Image?;
+
+                        if (decodedImage != null) {
+                          aspectRatio =
+                              decodedImage.width / decodedImage.height;
+                        }
+                      }
+
+                      // Calculate new dimensions while maintaining aspect ratio.
+
+                      double newWidth = maxWidth;
+                      double newHeight = maxHeight;
+
+                      if (aspectRatio > 1) {
+                        newHeight = newWidth / aspectRatio;
+                      } else {
+                        newWidth = newHeight * aspectRatio;
+                      }
+
+                      // Return the SizedBox containing the centered image.
 
                       return SizedBox(
                         height: maxHeight,
                         width: maxWidth,
-                        child: InteractiveViewer(
-                          maxScale: 5,
-                          alignment: Alignment.topCenter,
-                          child: svgImage
-                              ? SvgPicture.memory(
-                                  bytes,
-                                  fit: BoxFit.scaleDown,
-                                )
-                              : Image.memory(bytes),
+                        child: Align(
+                          alignment: Alignment
+                              .center, // Center the image within the container.
+
+                          child: SizedBox(
+                            height: newHeight.clamp(0, maxHeight),
+                            width: newWidth.clamp(0, maxWidth),
+                            child: InteractiveViewer(
+                              maxScale: 5,
+                              alignment: Alignment
+                                  .topCenter, // Align the interactive viewer.
+
+                              child: svgImage
+                                  ? SvgPicture.memory(
+                                      bytes,
+                                      fit: BoxFit
+                                          .contain, // Ensure the SVG fits within bounds.
+                                    )
+                                  : Image.memory(
+                                      bytes,
+                                      fit: BoxFit
+                                          .contain, // Ensure the image fits within bounds.
+                                    ),
+                            ),
+                          ),
                         ),
                       );
                     },
