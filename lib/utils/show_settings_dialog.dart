@@ -474,12 +474,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               _saveToggleStates();
                             },
                             '''
-                            This will apply data cleaning steps to the dataset.
+                            Cleansing ensures the dataset is ready for analysis by:\n
+                            - Removing columns with a single constant value.\n
+                            - Converting character columns with limited unique values into factors (categoric). \n
+                            Enable this option for automated cleansing, or disable if not required.
                             ''',
                             '''
                             **Cleanse Toggle:** \n
-                            - **On:** Cleansing steps will be applied. \n
-                            - **Off:** No cleansing steps will be applied.
+                            - **On:** Cleansing steps (e.g., removing constant columns, converting categoric values) will be applied.\n
+                            - **Off:** No data cleansing will be applied to the dataset.
                             ''',
                           ),
                         ),
@@ -493,12 +496,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               _saveToggleStates();
                             },
                             '''
-                            This will normalise the dataset.
+                            Unification standardizes dataset column names by:\n
+                            - Converting all names to lowercase.\n
+                            - Replacing spaces with underscores. \n
+                            Enable this option to apply consistent formatting to column names.
                             ''',
                             '''
                             **Unify Toggle:** \n
-                            - **On:** Data will be normalised (e.g., scaled to a common range). \n
-                            - **Off:** Data remains in its original form.
+                            - **On:** Column names will be unified for consistency. \n
+                            - **Off:** Column names remain in their original form.
                             ''',
                           ),
                         ),
@@ -512,18 +518,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               _saveToggleStates();
                             },
                             '''
-                            This will split your data into training, validation, and test sets.
+                            Splits the dataset into three parts for predictive modeling:\n
+                            - **Training**: Build the model (e.g., 70% of data).\n
+                            - **Validation**: Tune the model during training (e.g., 15% of data).\n
+                            - **Testing**: Hold-out set to estimate performance (e.g., 15% of data). \n
+                            Disable this for smaller datasets or exploratory analysis.
                             ''',
                             '''
                             **Partition Toggle:** \n
-                            - **On:** Data will be partitioned. \n
-                            - **Off:** No partitioning will be performed.
+                            - **On:** The dataset will be partitioned into training, validation, and testing subsets. \n
+                            - **Off:** No partitioning will occur, and all data will be used as is.
                             ''',
                           ),
                         ),
                         MarkdownTooltip(
                           message: '''
-                           Changes to toggles will be tracked and saved or not.
+                          Tracks changes to toggles and persists them across sessions.\n
+                          If disabled, toggles revert to saved settings at the start of each session.
                           ''',
                           child: const Text(
                             'Keep in Sync',
@@ -533,8 +544,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         MarkdownTooltip(
                           message: '''
                           **Keep in Sync Toggle:** \n
-                          - **On:** Changes to toggles will be tracked and saved. \n
-                          - **Off:** Changes to toggles will not persist across sessions.
+                          - **On:** Saves toggle changes for current session. \n
+                          - **Off:** Changes are only for next session.
                           ''',
                           child: Switch(
                             value: keepInSync,
