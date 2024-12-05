@@ -203,10 +203,18 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                       await rSource(context, ref, ['model_template']);
                       await rSource(context, ref, ['model_build_neural_nnet']);
                     } else if (algorithm == 'neuralnet') {
-                      await rSource(context, ref, [mt, mbn, etr, erc, etu, erc]);
+                      await rSource(
+                          context, ref, [mt, mbn, etr, erc, etu, erc],);
                     }
                   }
                 }
+
+                await ref.read(neuralPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Neural Network'),
             ),
