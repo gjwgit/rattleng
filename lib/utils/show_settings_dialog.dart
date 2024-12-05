@@ -495,10 +495,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               },
                               '''
 
-                              **Cleanse Toggle:** \n
-                              Cleansing prepares the dataset by: \n
-                              - Removing columns with a single constant value.\n
-                              - Converting character columns with limited unique values to categoric factors. \n
+                              **Cleanse Toggle:** 
+
+                              Cleansing prepares the dataset by: 
+
+                              - Removing columns with a single constant value.
+
+                              - Converting character columns with limited unique values to categoric factors. 
+
                               Enable for automated cleansing, or disable if not required.
 
                               ''',
@@ -515,10 +519,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               },
                               '''
 
-                              **Unify Toggle:** \n
-                              Unifies dataset column names by:\n
-                              - Converting names to lowercase.\n
-                              - Replacing spaces with underscores. \n
+                              **Unify Toggle:** 
+
+                              Unifies dataset column names by:
+
+                              - Converting names to lowercase.
+
+                              - Replacing spaces with underscores. 
+
                               Enable for consistent formatting, or disable if original names are preferred.
 
                               ''',
@@ -535,11 +543,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               },
                               '''
 
-                              **Partition Toggle:** \n
-                              Splits the dataset into subsets for predictive modeling:\n
-                              - **Training:** Builds the model.\n
-                              - **Validation:** Tunes the model.\n
-                              - **Testing:** Evaluates model performance. \n
+                              **Partition Toggle:** 
+
+                              Splits the dataset into subsets for predictive modeling:
+
+                              - **Training:** Builds the model.
+
+                              - **Validation:** Tunes the model.
+
+                              - **Testing:** Evaluates model performance. 
+
                               Enable for larger datasets, or disable for exploratory analysis.
 
                               ''',
@@ -548,8 +561,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Keep in Sync Toggle:** \n
-                            - **On:** Saves toggle changes for current sessions. \n
+                            **Keep in Sync Toggle:** 
+
+                            - **On:** Saves toggle changes for current sessions. 
+
                             - **Off:** Changes are only recovered on restart.
 
                             ''',
@@ -561,8 +576,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Keep in Sync Toggle:** \n
-                            - **On:** Saves toggle changes for current sessions. \n
+                            **Keep in Sync Toggle:** 
+
+                            - **On:** Saves toggle changes for current sessions. 
+
                             - **Off:** Changes are only recovered on restart.
 
                             ''',
@@ -799,7 +816,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             **Session Control:** This setting determines whether a confirmation popup 
                             appears when the user tries to quit the application. 
                   
-                            - **ON**: A popup will appear asking the user to confirm quitting.\n
+                            - **ON**: A popup will appear asking the user to confirm quitting.
                   
                             - **OFF**: The application will exit immediately without a confirmation popup.
                   
@@ -855,7 +872,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                   
                             **Toggle Session Control:**
                   
-                            - Slide to **ON** to enable a confirmation popup when exiting the application.\n
+                            - Slide to **ON** to enable a confirmation popup when exiting the application.
                   
                             - Slide to **OFF** to disable the popup, allowing the app to exit directly.
                   
