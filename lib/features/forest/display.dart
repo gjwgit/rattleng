@@ -1,11 +1,11 @@
-/// Widget to display the Forest introduction or built tree.
+/// Widget to display the Forest introduction and results.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-03 12:32:43 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-05 17:22:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,7 +42,8 @@ import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-/// The FOREST panel displays the instructions and then the build output.
+/// The Forest panel displays the instructions and then the model build output
+/// and evaluations.
 
 class ForestDisplay extends ConsumerStatefulWidget {
   const ForestDisplay({super.key});
@@ -54,9 +55,12 @@ class ForestDisplay extends ConsumerStatefulWidget {
 class _ForestDisplayState extends ConsumerState<ForestDisplay> {
   @override
   Widget build(BuildContext context) {
+    // Get the PageController from Riverpod.
+
     final pageController = ref.watch(
       forestPageControllerProvider,
-    ); // Get the PageController from Riverpod
+    );
+
     String stdout = ref.watch(stdoutProvider);
     int forestNo = ref.watch(treeNoForestProvider);
     AlgorithmType forestAlgorithm =
@@ -68,14 +72,61 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
+    // Default Forest text.
+
+    forestAlgorithm == AlgorithmType.traditional
+        ? content = rExtract(stdout, 'print(model_randomForest')
+        : content = rExtract(stdout, 'print(model_cforest)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Random Forest Model
+
+          Built using `randomForest()`.
+
+          ''',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
     if (forestAlgorithm == AlgorithmType.traditional) {
-      content = rExtractForest(stdout, ref);
+      // rExtractForest does not seem to work.
+
+      // content = rExtractForest(stdout, ref);
+
+      // if (content.isNotEmpty) {
+      //   pages.add(
+      //     TextPage(
+      //       title: '# Random Forest Model\n\n'
+      //           'Built using `randomForest()`.\n\n',
+      //       content: '\n$content',
+      //     ),
+      //   );
+      // }
+
+      ////////////////////////////////////////////////////////////////////////
+
+      content = rExtract(
+        stdout,
+        'printRandomForests(model_randomForest, ${forestNo})',
+      );
 
       if (content.isNotEmpty) {
         pages.add(
           TextPage(
-            title: '# Random Forest Model\n\n'
-                'Built using `randomForest()`.\n\n',
+            title: '''
+
+            # Sample Rules
+
+            Built using `rattle::printRandomForest()`.
+
+            ''',
             content: '\n$content',
           ),
         );
@@ -88,25 +139,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       if (content.isNotEmpty) {
         pages.add(
           TextPage(
-            title: '# Variable Importance\n\n'
-                'Built using `randomForest::importance()`.\n\n',
-            content: '\n$content',
-          ),
-        );
-      }
+            title: '''
 
-      ////////////////////////////////////////////////////////////////////////
+            # Variable Importance &#8212; Numeric
 
-      content = rExtract(
-        stdout,
-        'printRandomForests(model_randomForest, ${forestNo})',
-      );
+            Built using `randomForest::importance()`
 
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Sample Rules\n\n'
-                'Built using `rattle::printRandomForest()`.\n\n',
+            ''',
             content: '\n$content',
           ),
         );
@@ -119,60 +158,70 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: 'VAR IMPORTANCE',
+            title: '''
+
+            # Variable Importance &#8212; Plot
+
+            ''',
             path: image,
           ),
         );
       }
+
+      ////////////////////////////////////////////////////////////////////////
 
       String errorRatesImage = '$tempDir/model_random_forest_error_rate.svg';
 
       if (imageExists(errorRatesImage)) {
         pages.add(
           ImagePage(
-            title: 'ERROR RATE',
+            title: '''
+
+            # Error Rate Plot
+
+            ''',
             path: errorRatesImage,
           ),
         );
       }
+
+      ////////////////////////////////////////////////////////////////////////
 
       String oobRocImage = '$tempDir/model_random_forest_oob_roc_curve.svg';
 
       if (imageExists(oobRocImage)) {
         pages.add(
           ImagePage(
-            title: 'OOB ROC Curve',
+            title: '''
+
+            # Out of Bag ROC Curve
+
+            ''',
             path: oobRocImage,
           ),
         );
       }
     } else if (forestAlgorithm == AlgorithmType.conditional) {
+      ////////////////////////////////////////////////////////////////////////
+
       content = rExtractForest(stdout, ref);
 
       if (content.isNotEmpty) {
         pages.add(
           TextPage(
-            title: '# Random Forest Model\n\n'
-                'Built using `cforest()`.\n\n',
+            title: '''
+
+            # Random Forest Model
+
+            Built using `cforest()`.
+
+            ''',
             content: '\n$content',
           ),
         );
       }
 
-      content = rExtract(
-        stdout,
-        'print(importance_df)',
-      );
-
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '# Variable Importance\n\n'
-                'Built using `verification::cforest()`.\n\n',
-            content: '\n$content',
-          ),
-        );
-      }
+      ////////////////////////////////////////////////////////////////////////
 
       String rulesContent = rExtract(
         stdout,
@@ -182,24 +231,59 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       if (rulesContent.isNotEmpty) {
         pages.add(
           TextPage(
-            title: '# Sample Rules\n\n'
-                'Built using `party::prettytree()`.\n\n',
+            title: '''
+
+            # Sample Rules
+
+            Built using `party::prettytree()`.
+
+            ''',
             content: '\n$rulesContent',
           ),
         );
       }
+
+      ////////////////////////////////////////////////////////////////////////
+
+      content = rExtract(
+        stdout,
+        'print(importance_df)',
+      );
+
+      if (content.isNotEmpty) {
+        pages.add(
+          TextPage(
+            title: '''
+
+            # Variable Importance &#8212; Numeric
+
+            Built using `verification::cforest()`.
+
+            ''',
+            content: '\n$content',
+          ),
+        );
+      }
+
+      ////////////////////////////////////////////////////////////////////////
 
       String varImportanceImage = '$tempDir/model_conditional_forest.svg';
 
       if (imageExists(varImportanceImage)) {
         pages.add(
           ImagePage(
-            title: 'VAR IMPORTANCE',
+            title: '''
+
+            # Variable Importance &#8212; Plot
+
+            ''',
             path: varImportanceImage,
           ),
         );
       }
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     String image = '';
 
@@ -223,6 +307,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       );
     }
 
+    ////////////////////////////////////////////////////////////////////////
+
     image = '';
 
     forestAlgorithm == AlgorithmType.traditional
@@ -244,6 +330,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(
       pageController: pageController,
