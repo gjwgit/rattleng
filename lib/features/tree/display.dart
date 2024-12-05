@@ -1,11 +1,11 @@
-/// Widget to display the Tree introduction or built tree.
+/// Widget to display the Tree introduction, the built tree, and evaluation.
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-12-02 05:45:55 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-05 15:25:00 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -41,7 +41,8 @@ import 'package:rattle/utils/show_markdown_file.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-/// The TREE panel displays the tree instructions and then build output.
+/// The Tree panel displays the tree instructions and then output for the built
+/// model, and basic evaluation information.
 
 class TreeDisplay extends ConsumerStatefulWidget {
   const TreeDisplay({super.key});
@@ -53,9 +54,12 @@ class TreeDisplay extends ConsumerStatefulWidget {
 class TreeDisplayState extends ConsumerState<TreeDisplay> {
   @override
   Widget build(BuildContext context) {
+    // Get the PageController from Riverpod
+
     final pageController = ref.watch(
       treePageControllerProvider,
-    ); // Get the PageController from Riverpod
+    );
+
     String stdout = ref.watch(stdoutProvider);
 
     AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
