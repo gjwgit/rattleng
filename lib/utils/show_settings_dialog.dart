@@ -500,7 +500,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               - Removing columns with a single constant value.\n
                               - Converting character columns with limited unique values to categoric factors. \n
                               Enable for automated cleansing, or disable if not required.
-                              
+
                               ''',
                             ),
                           ),
@@ -608,10 +608,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                           **Reset Theme:** Tap here to reset the Graphic Theme
-                            setting to the default theme for Rattle.
-                          
-                          ''',
+                            **Reset Theme:** Tap here to reset the Graphic Theme
+                              setting to the default theme for Rattle.
+                            
+                            ''',
                             child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
