@@ -491,9 +491,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               (value) {
                                 ref.read(cleanseProvider.notifier).state =
                                     value;
-
                                 _saveToggleStates();
                               },
+                              '''
+                              **Cleanse Toggle:** \n
+                              Cleansing prepares the dataset by: \n
+                              - Removing columns with a single constant value.\n
+                              - Converting character columns with limited unique values to categoric factors. \n
+                              Enable for automated cleansing, or disable if not required.
+                              ''',
                             ),
                           ),
                           Expanded(
@@ -503,9 +509,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               (value) {
                                 ref.read(normaliseProvider.notifier).state =
                                     value;
-
                                 _saveToggleStates();
                               },
+                              '''
+                              **Unify Toggle:** \n
+                              Unifies dataset column names by:\n
+                              - Converting names to lowercase.\n
+                              - Replacing spaces with underscores. \n
+                              Enable for consistent formatting, or disable if original names are preferred.
+                              ''',
                             ),
                           ),
                           Expanded(
@@ -515,29 +527,46 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               (value) {
                                 ref.read(partitionProvider.notifier).state =
                                     value;
-
                                 _saveToggleStates();
+                              },
+                              '''
+                              **Partition Toggle:** \n
+                              Splits the dataset into subsets for predictive modeling:\n
+                              - **Training:** Builds the model.\n
+                              - **Validation:** Tunes the model.\n
+                              - **Testing:** Evaluates model performance. \n
+                              Enable for larger datasets, or disable for exploratory analysis.
+                              ''',
+                            ),
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+                            **Keep in Sync Toggle:** \n
+                            - **On:** Saves toggle changes for current sessions. \n
+                            - **Off:** Changes are only recovered on restart.
+                            ''',
+                            child: const Text(
+                              'Keep in Sync',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+                            **Keep in Sync Toggle:** \n
+                            - **On:** Saves toggle changes for current sessions. \n
+                            - **Off:** Changes are only recovered on restart.
+                            ''',
+                            child: Switch(
+                              value: keepInSync,
+                              onChanged: (value) {
+                                ref.read(keepInSyncProvider.notifier).state =
+                                    value;
+                                _saveKeepInSync(value);
                               },
                             ),
                           ),
-                          const Text(
-                            'Keep in Sync',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          Switch(
-                            value: keepInSync,
-                            onChanged: (value) {
-                              ref.read(keepInSyncProvider.notifier).state =
-                                  value;
-
-                              _saveKeepInSync(value);
-                            },
-                          ),
                         ],
                       ),
-
                       settingsGroupGap,
                       Divider(),
 
@@ -568,11 +597,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           MarkdownTooltip(
                             message: '''
-                  
-                            **Reset Theme:** Tap here to reset the Graphic Theme
-                              setting to the default theme for Rattle.
-                            
-                            ''',
+
+                           **Reset Theme:** Tap here to reset the Graphic Theme
+                            setting to the default theme for Rattle.
+                          
+                          ''',
                             child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
@@ -862,21 +891,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     String label,
     bool value,
     ValueChanged<bool> onChanged,
+    String tooltipMessage, // Tooltip message for the entire row
   ) {
-    return Row(
-      // Align items to the start.
-
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 16),
-        ),
-        Switch(
-          value: value,
-          onChanged: onChanged,
-        ),
-      ],
+    return MarkdownTooltip(
+      message: tooltipMessage,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16),
+          ),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+          ),
+        ],
+      ),
     );
   }
 }
