@@ -266,6 +266,44 @@ $weights
       );
     }
 
+    String neuralRiskImage = '';
+
+    neuralRiskImage = '$tempDir/model_neuralnet_riskchart_tuning.svg';
+
+    if (imageExists(neuralRiskImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Risk Chart &#8212; Unbiased Estimate of Performance
+
+          Using the **tuning** dataset to evaluate the model performance.
+
+          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
+          path: neuralRiskImage,
+        ),
+      );
+    }
+
+    neuralRiskImage = '$tempDir/model_neuralnet_riskchart_training.svg';
+
+    if (imageExists(neuralRiskImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Risk Chart &#8212; Unbiased Estimate of Performance
+
+          Using the **training** dataset to evaluate the model performance.
+
+          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
+          path: neuralRiskImage,
+        ),
+      );
+    }
+
     ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(
