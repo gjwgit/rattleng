@@ -494,11 +494,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 _saveToggleStates();
                               },
                               '''
+
                               **Cleanse Toggle:** \n
                               Cleansing prepares the dataset by: \n
                               - Removing columns with a single constant value.\n
                               - Converting character columns with limited unique values to categoric factors. \n
                               Enable for automated cleansing, or disable if not required.
+                              
                               ''',
                             ),
                           ),
@@ -512,11 +514,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 _saveToggleStates();
                               },
                               '''
+
                               **Unify Toggle:** \n
                               Unifies dataset column names by:\n
                               - Converting names to lowercase.\n
                               - Replacing spaces with underscores. \n
                               Enable for consistent formatting, or disable if original names are preferred.
+
                               ''',
                             ),
                           ),
@@ -530,20 +534,24 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 _saveToggleStates();
                               },
                               '''
+
                               **Partition Toggle:** \n
                               Splits the dataset into subsets for predictive modeling:\n
                               - **Training:** Builds the model.\n
                               - **Validation:** Tunes the model.\n
                               - **Testing:** Evaluates model performance. \n
                               Enable for larger datasets, or disable for exploratory analysis.
+
                               ''',
                             ),
                           ),
                           MarkdownTooltip(
                             message: '''
+
                             **Keep in Sync Toggle:** \n
                             - **On:** Saves toggle changes for current sessions. \n
                             - **Off:** Changes are only recovered on restart.
+
                             ''',
                             child: const Text(
                               'Keep in Sync',
@@ -552,9 +560,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           ),
                           MarkdownTooltip(
                             message: '''
+
                             **Keep in Sync Toggle:** \n
                             - **On:** Saves toggle changes for current sessions. \n
                             - **Off:** Changes are only recovered on restart.
+
                             ''',
                             child: Switch(
                               value: keepInSync,
@@ -695,10 +705,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                          **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-                          to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
 
-                          ''',
+                            ''',
                             child: ElevatedButton(
                               onPressed: () {
                                 final defaultApp =
@@ -731,12 +741,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         children: [
                           MarkdownTooltip(
                             message: '''
+
                             **Random Seed Setting:** 
                             The random seed is used to control the randomness. 
                             Setting a specific seed ensures that results are reproducible.
 
                             - **Default Seed:** The default seed is 42.
                             - **Reset:** Use the "Reset" button to restore the default seed.
+
                             ''',
                             child: const Text(
                               'Random Seed',
@@ -749,9 +761,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           configRowGap,
                           MarkdownTooltip(
                             message: '''
+
                             **Reset Random Seed:** 
                             Clicking this button resets the random seed to the default value of 42.
                             This is useful if you want to restore the initial random state.
+
                             ''',
                             child: ElevatedButton(
                               onPressed: () {
