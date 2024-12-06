@@ -25,12 +25,16 @@
 
 library;
 
+import 'dart:io';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/session_control.dart';
+import 'package:rattle/widgets/repeat_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -235,6 +239,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Load toggle states and "Keep in Sync" state from shared preferences.
 
     _loadSettings();
+
+    _loadRandomSeed();
   }
 
   Future<void> _loadSettings() async {
@@ -260,6 +266,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(askOnExitProvider.notifier).state =
         prefs.getBool('askOnExit') ?? true;
+
+    final platformDefault = Platform.isWindows ? 'start' : 'open';
+
+    // Set initial value if the provider state is empty.
+
+    ref.read(imageViewerSettingProvider.notifier).state =
+        prefs.getString('imageViewerApp') ?? platformDefault;
   }
 
   Future<void> _saveToggleStates() async {
@@ -312,6 +325,65 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('askOnExit', value);
   }
 
+  Future<void> _loadRandomSeed() async {
+    final prefs = await SharedPreferences.getInstance();
+    final seed = prefs.getInt('randomSeed') ?? 42;
+    ref.read(randomSeedProvider.notifier).state = seed;
+  }
+
+  Future<void> _saveRandomSeed(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('randomSeed', value);
+  }
+
+  Future<void> _saveImageViewerApp(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save the "imageViewerApp" state to preferences.
+
+    await prefs.setString('imageViewerApp', value);
+  }
+
+  Widget _buildImageViewerTextField(BuildContext context, WidgetRef ref) {
+    final imageViewerApp = ref.watch(imageViewerSettingProvider);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text(
+          'Image Viewer',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(width: 16),
+        // Adjust the width based on font and expected character size
+
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 150,
+          ),
+          child: TextField(
+            controller: TextEditingController(text: imageViewerApp)
+              ..selection =
+                  TextSelection.collapsed(offset: imageViewerApp.length),
+            onChanged: (value) {
+              ref.read(imageViewerSettingProvider.notifier).state = value;
+
+              // Save the new state to shared preferences or other storage as needed.
+
+              _saveImageViewerApp(value);
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter image viewer command',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -323,6 +395,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final askOnExit = ref.watch(askOnExitProvider);
+
+    final randomSeed = ref.watch(randomSeedProvider);
 
     return Material(
       color: Colors.transparent,
@@ -346,291 +420,481 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Settings',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    // Dataset Toggles section.
+                      // Dataset Toggles section.
 
-                    Divider(),
+                      Divider(),
 
-                    Row(
-                      children: [
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Dataset Toggles Setting:** The default setting of
-                          the dataset toggles, on starting up Rattle, is set
-                          here. During a session with Rattle the toggles may be
-                          changed by the user. If the *Sync* option is set, then
-                          the changes made by the user are tracked and restored
-                          on the next time Rattle is run.
-
-                          ''',
-                          child: const Text(
-                            'Dataset Toggles',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                      Row(
+                        children: [
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Dataset Toggles Setting:** The default setting of
+                            the dataset toggles, on starting up Rattle, is set
+                            here. During a session with Rattle the toggles may be
+                            changed by the user. If the *Sync* option is set, then
+                            the changes made by the user are tracked and restored
+                            on the next time Rattle is run.
+                  
+                            ''',
+                            child: const Text(
+                              'Dataset Toggles',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
 
-                        configRowGap,
+                          configRowGap,
 
-                        // Reset Dataset Toggles to default button.
+                          // Reset Dataset Toggles to default button.
 
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Reset Toggles:** Tap here to reset the Dataset Toggles
-                            setting to the default for Rattle.
-                          
-                          ''',
-                          child: ElevatedButton(
-                            onPressed: _resetToggleStates,
-                            child: const Text('Reset'),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    configRowGap,
-
-                    // Build toggle rows synced with providers.
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: _buildToggleRow(
-                            'Cleanse',
-                            cleanse,
-                            (value) {
-                              ref.read(cleanseProvider.notifier).state = value;
-
-                              _saveToggleStates();
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: _buildToggleRow(
-                            'Unify',
-                            normalise,
-                            (value) {
-                              ref.read(normaliseProvider.notifier).state =
-                                  value;
-
-                              _saveToggleStates();
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: _buildToggleRow(
-                            'Partition',
-                            partition,
-                            (value) {
-                              ref.read(partitionProvider.notifier).state =
-                                  value;
-
-                              _saveToggleStates();
-                            },
-                          ),
-                        ),
-                        const Text(
-                          'Keep in Sync',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Switch(
-                          value: keepInSync,
-                          onChanged: (value) {
-                            ref.read(keepInSyncProvider.notifier).state = value;
-
-                            _saveKeepInSync(value);
-                          },
-                        ),
-                      ],
-                    ),
-
-                    settingsGroupGap,
-                    Divider(),
-
-                    Row(
-                      children: [
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Graphic Theme Setting:** The graphic theme is used
-                          by many (but not all) of the plots in Rattle, and
-                          specifically by those plots using the ggplot2
-                          package. Hover over each theme for more details. The
-                          default is the Rattle theme.
-
-                          ''',
-                          child: Text(
-                            'Graphic Theme',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Reset Toggles:** Tap here to reset the Dataset Toggles
+                              setting to the default for Rattle.
+                            
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: _resetToggleStates,
+                              child: const Text('Reset'),
                             ),
                           ),
-                        ),
+                        ],
+                      ),
 
-                        configRowGap,
+                      configRowGap,
 
-                        // Restore default theme button.
+                      // Build toggle rows synced with providers.
 
-                        MarkdownTooltip(
-                          message: '''
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: _buildToggleRow(
+                              'Cleanse',
+                              cleanse,
+                              (value) {
+                                ref.read(cleanseProvider.notifier).state =
+                                    value;
+                                _saveToggleStates();
+                              },
+                              '''
 
-                          **Reset Theme:** Tap here to reset the Graphic Theme
-                            setting to the default theme for Rattle.
-                          
-                          ''',
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                _selectedTheme = 'theme_rattle';
-                              });
+                              **Cleanse Toggle:** 
 
-                              ref
-                                  .read(settingsGraphicThemeProvider.notifier)
-                                  .setGraphicTheme(_selectedTheme!);
+                              Cleansing prepares the dataset by: 
 
-                              rSource(context, ref, ['settings']);
-                            },
-                            child: const Text('Reset'),
-                          ),
-                        ),
-                      ],
-                    ),
+                              - Removing columns with a single constant value.
 
-                    configRowGap,
-                    // Theme selection chips.
+                              - Converting character columns with limited unique values to categoric factors. 
 
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: themeOptions.map((option) {
-                        return MarkdownTooltip(
-                          message: option['tooltip']!,
-                          child: ChoiceChip(
-                            label: Text(option['label']!),
-                            selected: _selectedTheme == option['value'],
-                            onSelected: (bool selected) {
-                              setState(() {
-                                _selectedTheme = option['value'];
-                              });
+                              Enable for automated cleansing, or disable if not required.
 
-                              ref
-                                  .read(settingsGraphicThemeProvider.notifier)
-                                  .setGraphicTheme(_selectedTheme!);
-
-                              rSource(context, ref, ['settings']);
-                            },
-                          ),
-                        );
-                      }).toList(),
-                    ),
-
-                    settingsGroupGap,
-                    Divider(),
-
-                    Row(
-                      children: [
-                        MarkdownTooltip(
-                          message: '''
-
-                          **Session Control:** This setting determines whether a confirmation popup 
-                          appears when the user tries to quit the application. 
-
-                          - **ON**: A popup will appear asking the user to confirm quitting.\n
-
-                          - **OFF**: The application will exit immediately without a confirmation popup.
-
-                          The default setting is **ON**.
-
-                          ''',
-                          child: const Text(
-                            'Session Control',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              ''',
                             ),
                           ),
-                        ),
+                          Expanded(
+                            child: _buildToggleRow(
+                              'Unify',
+                              normalise,
+                              (value) {
+                                ref.read(normaliseProvider.notifier).state =
+                                    value;
+                                _saveToggleStates();
+                              },
+                              '''
 
-                        configRowGap,
+                              **Unify Toggle:** 
 
-                        // Restore  button.
+                              Unifies dataset column names by:
 
-                        MarkdownTooltip(
-                          message: '''
+                              - Converting names to lowercase.
 
-                          **Reset Session Control:** Tap here to reset to enable a confirmation 
-                          popup when exiting the application.
-                          
-                          ''',
-                          child: ElevatedButton(
-                            onPressed: resetSessionControl,
-                            child: const Text('Reset'),
+                              - Replacing spaces with underscores. 
+
+                              Enable for consistent formatting, or disable if original names are preferred.
+
+                              ''',
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                          Expanded(
+                            child: _buildToggleRow(
+                              'Partition',
+                              partition,
+                              (value) {
+                                ref.read(partitionProvider.notifier).state =
+                                    value;
+                                _saveToggleStates();
+                              },
+                              '''
 
-                    configRowGap,
+                              **Partition Toggle:** 
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Ask before exit',
-                          style: TextStyle(
-                            fontSize: 16,
+                              Splits the dataset into subsets for predictive modeling:
+
+                              - **Training:** Builds the model.
+
+                              - **Validation:** Tunes the model.
+
+                              - **Testing:** Evaluates model performance. 
+
+                              Enable for larger datasets, or disable for exploratory analysis.
+
+                              ''',
+                            ),
                           ),
-                        ),
+                          MarkdownTooltip(
+                            message: '''
 
-                        configRowGap,
+                            **Keep in Sync Toggle:** 
 
-                        // Switch for Session Control with a tooltip.
+                            - **On:** Saves toggle changes for current sessions. 
 
-                        MarkdownTooltip(
-                          message: '''
+                            - **Off:** Changes are only recovered on restart.
 
-                          **Toggle Session Control:**
-
-                          - Slide to **ON** to enable a confirmation popup when exiting the application.\n
-
-                          - Slide to **OFF** to disable the popup, allowing the app to exit directly.
-
-                          ''',
-                          child: Switch(
-                            value: askOnExit,
-                            onChanged: (value) {
-                              ref.read(askOnExitProvider.notifier).state =
-                                  value;
-
-                              // Save the new state to shared preferences or other storage as needed.
-
-                              _saveAskOnExit(value);
-                            },
+                            ''',
+                            child: const Text(
+                              'Keep in Sync',
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                          MarkdownTooltip(
+                            message: '''
 
-                    settingsGroupGap,
-                    Divider(),
-                  ],
+                            **Keep in Sync Toggle:** 
+
+                            - **On:** Saves toggle changes for current sessions. 
+
+                            - **Off:** Changes are only recovered on restart.
+
+                            ''',
+                            child: Switch(
+                              value: keepInSync,
+                              onChanged: (value) {
+                                ref.read(keepInSyncProvider.notifier).state =
+                                    value;
+                                _saveKeepInSync(value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      settingsGroupGap,
+                      Divider(),
+
+                      Row(
+                        children: [
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Graphic Theme Setting:** The graphic theme is used
+                            by many (but not all) of the plots in Rattle, and
+                            specifically by those plots using the ggplot2
+                            package. Hover over each theme for more details. The
+                            default is the Rattle theme.
+                  
+                            ''',
+                            child: Text(
+                              'Graphic Theme',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+
+                          configRowGap,
+
+                          // Restore default theme button.
+
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Reset Theme:** Tap here to reset the Graphic Theme
+                              setting to the default theme for Rattle.
+                            
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _selectedTheme = 'theme_rattle';
+                                });
+
+                                ref
+                                    .read(settingsGraphicThemeProvider.notifier)
+                                    .setGraphicTheme(_selectedTheme!);
+
+                                rSource(context, ref, ['settings']);
+                              },
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      configRowGap,
+                      // Theme selection chips.
+
+                      Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: themeOptions.map((option) {
+                          return MarkdownTooltip(
+                            message: option['tooltip']!,
+                            child: ChoiceChip(
+                              label: Text(option['label']!),
+                              selected: _selectedTheme == option['value'],
+                              onSelected: (bool selected) {
+                                setState(() {
+                                  _selectedTheme = option['value'];
+                                });
+
+                                ref
+                                    .read(settingsGraphicThemeProvider.notifier)
+                                    .setGraphicTheme(_selectedTheme!);
+
+                                rSource(context, ref, ['settings']);
+                              },
+                            ),
+                          );
+                        }).toList(),
+                      ),
+
+                      settingsGroupGap,
+                      Divider(),
+                      Row(
+                        children: [
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Image Viewer Application Setting:** This setting determines the default
+                            command to open image files. The default is "open" on Linux/MacOS and "start"
+                            on Windows. You can customise it to match your preferred image viewer.
+                  
+                            ''',
+                            child: const Text(
+                              'Image Viewer App',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+
+                          configRowGap,
+
+                          // Reset button to restore the default value.
+
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+                  
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: () {
+                                final defaultApp =
+                                    Platform.isWindows ? 'start' : 'open';
+                                ref
+                                    .read(imageViewerSettingProvider.notifier)
+                                    .state = defaultApp;
+                              },
+                              child: null,
+                            ),
+                          ),
+
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: () {
+                                final defaultApp =
+                                    Platform.isWindows ? 'start' : 'open';
+                                ref
+                                    .read(imageViewerSettingProvider.notifier)
+                                    .state = defaultApp;
+
+                                // Save the reset value.
+
+                                _saveImageViewerApp(defaultApp);
+                              },
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      configRowGap,
+
+                      // Add the new TextField widget for the Image Viewer App.
+
+                      _buildImageViewerTextField(context, ref),
+
+                      settingsGroupGap,
+                      Divider(),
+                      // Random Seed Section.
+
+                      Row(
+                        children: [
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Random Seed Setting:** 
+                            The random seed is used to control the randomness. 
+                            Setting a specific seed ensures that results are reproducible.
+
+                            - **Default Seed:** The default seed is 42.
+                            - **Reset:** Use the "Reset" button to restore the default seed.
+
+                            ''',
+                            child: const Text(
+                              'Random Seed',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          configRowGap,
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Reset Random Seed:** 
+                            Clicking this button resets the random seed to the default value of 42.
+                            This is useful if you want to restore the initial random state.
+
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: () {
+                                ref.read(randomSeedProvider.notifier).state =
+                                    42;
+                                _saveRandomSeed(42);
+                              },
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      configRowGap,
+
+                      RandomSeedRow(
+                        randomSeed: randomSeed,
+                        updateSeed: (newSeed) {
+                          ref.read(randomSeedProvider.notifier).state = newSeed;
+                          _saveRandomSeed(newSeed);
+                        },
+                      ),
+
+                      settingsGroupGap,
+                      Divider(),
+                      Row(
+                        children: [
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Session Control:** This setting determines whether a confirmation popup 
+                            appears when the user tries to quit the application. 
+                  
+                            - **ON**: A popup will appear asking the user to confirm quitting.
+                  
+                            - **OFF**: The application will exit immediately without a confirmation popup.
+                  
+                            The default setting is **ON**.
+                  
+                            ''',
+                            child: const Text(
+                              'Session Control',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+
+                          configRowGap,
+
+                          // Restore  button.
+
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Reset Session Control:** Tap here to reset to enable a confirmation 
+                            popup when exiting the application.
+                            
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: resetSessionControl,
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      configRowGap,
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Ask before exit',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+
+                          configRowGap,
+
+                          // Switch for Session Control with a tooltip.
+
+                          MarkdownTooltip(
+                            message: '''
+                  
+                            **Toggle Session Control:**
+                  
+                            - Slide to **ON** to enable a confirmation popup when exiting the application.
+                  
+                            - Slide to **OFF** to disable the popup, allowing the app to exit directly.
+                  
+                            ''',
+                            child: Switch(
+                              value: askOnExit,
+                              onChanged: (value) {
+                                ref.read(askOnExitProvider.notifier).state =
+                                    value;
+
+                                // Save the new state to shared preferences or other storage as needed.
+
+                                _saveAskOnExit(value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      settingsGroupGap,
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -658,21 +922,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     String label,
     bool value,
     ValueChanged<bool> onChanged,
+    String tooltipMessage, // Tooltip message for the entire row
   ) {
-    return Row(
-      // Align items to the start.
-
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 16),
-        ),
-        Switch(
-          value: value,
-          onChanged: onChanged,
-        ),
-      ],
+    return MarkdownTooltip(
+      message: tooltipMessage,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16),
+          ),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+          ),
+        ],
+      ),
     );
   }
 }
