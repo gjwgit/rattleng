@@ -51,6 +51,16 @@ model_ada <- ada(form,
                  type    = "gentle", # Type of boosting.
                  control = ada_control)
 
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- model_ada
+
+predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
+predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
+predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
+
+
 # Print the summary of the trained model.
 
 print(model_ada)
@@ -104,21 +114,4 @@ ada_plot <- ada_plot +
 
 svg("TEMPDIR/model_ada_boost.svg")
 print(ada_plot)
-dev.off()
-
-# Prepare probabilities for predictions.
-
-pr_tu <- predict(model_ada, newdata = tuds, type = "prob")[,2]
-
-# Generate risk chart.
-
-svg("TEMPDIR/model_adaboost_risk.svg")
-rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = "Risk Chart Ada Boost FILENAME [tuning] TARGET_VAR ",
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
-                  show.lift      = TRUE,
-                  show.precision = TRUE,
-                  legend.horiz   = FALSE) +
-    SETTINGS_GRAPHIC_THEME()
 dev.off()

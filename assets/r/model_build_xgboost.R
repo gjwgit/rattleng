@@ -33,7 +33,7 @@ library(data.table)     # Display data as a nicely formatted table
 # Define model type and description.
 
 mtype <- "xgboost"
-mdesc <- "Extreme Gradient Boosting (XGBoost)"
+mdesc <- "XGBoost"
 
 model_xgb <- rattle::xgboost(form,
                      data              = trds, 
@@ -44,6 +44,15 @@ model_xgb <- rattle::xgboost(form,
                      nrounds           = BOOST_ITERATIONS,
                      metrics           = 'error',
                      objective         = BOOST_OBJECTIVE, )
+
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- model_xgb
+
+predicted_tr <- predict(model, newdata = trds)
+predicted_tu <- predict(model, newdata = tuds)
+predicted_te <- predict(model, newdata = teds)
 
 # Print the summary of the trained model.
 
@@ -82,21 +91,4 @@ importance_plot <- importance_plot + expand_limits(y = max(importance_matrix$Imp
 
 print(importance_plot)
 
-dev.off()
-
-# Prepare probabilities for predictions.
-
-pr_tu <- predict(model_xgb, newdata = tuds,)
-
-# Generate risk chart.
-
-svg("TEMPDIR/model_xgboost_risk.svg")
-rattle::riskchart(pr_tu, actual_tu, risk_tu,
-                  title          = "Risk Chart XGBoost FILENAME [tuning] TARGET_VAR ", 
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
-                  show.lift      = TRUE,
-                  show.precision = TRUE,
-                  legend.horiz   = FALSE) +
-    SETTINGS_GRAPHIC_THEME()
 dev.off()
