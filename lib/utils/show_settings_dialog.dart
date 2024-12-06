@@ -491,9 +491,21 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               (value) {
                                 ref.read(cleanseProvider.notifier).state =
                                     value;
-
                                 _saveToggleStates();
                               },
+                              '''
+
+                              **Cleanse Toggle:** 
+
+                              Cleansing prepares the dataset by: 
+
+                              - Removing columns with a single constant value.
+
+                              - Converting character columns with limited unique values to categoric factors. 
+
+                              Enable for automated cleansing, or disable if not required.
+
+                              ''',
                             ),
                           ),
                           Expanded(
@@ -503,9 +515,21 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               (value) {
                                 ref.read(normaliseProvider.notifier).state =
                                     value;
-
                                 _saveToggleStates();
                               },
+                              '''
+
+                              **Unify Toggle:** 
+
+                              Unifies dataset column names by:
+
+                              - Converting names to lowercase.
+
+                              - Replacing spaces with underscores. 
+
+                              Enable for consistent formatting, or disable if original names are preferred.
+
+                              ''',
                             ),
                           ),
                           Expanded(
@@ -515,29 +539,61 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               (value) {
                                 ref.read(partitionProvider.notifier).state =
                                     value;
-
                                 _saveToggleStates();
+                              },
+                              '''
+
+                              **Partition Toggle:** 
+
+                              Splits the dataset into subsets for predictive modeling:
+
+                              - **Training:** Builds the model.
+
+                              - **Validation:** Tunes the model.
+
+                              - **Testing:** Evaluates model performance. 
+
+                              Enable for larger datasets, or disable for exploratory analysis.
+
+                              ''',
+                            ),
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Keep in Sync Toggle:** 
+
+                            - **On:** Saves toggle changes for current sessions. 
+
+                            - **Off:** Changes are only recovered on restart.
+
+                            ''',
+                            child: const Text(
+                              'Keep in Sync',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Keep in Sync Toggle:** 
+
+                            - **On:** Saves toggle changes for current sessions. 
+
+                            - **Off:** Changes are only recovered on restart.
+
+                            ''',
+                            child: Switch(
+                              value: keepInSync,
+                              onChanged: (value) {
+                                ref.read(keepInSyncProvider.notifier).state =
+                                    value;
+                                _saveKeepInSync(value);
                               },
                             ),
                           ),
-                          const Text(
-                            'Keep in Sync',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          Switch(
-                            value: keepInSync,
-                            onChanged: (value) {
-                              ref.read(keepInSyncProvider.notifier).state =
-                                  value;
-
-                              _saveKeepInSync(value);
-                            },
-                          ),
                         ],
                       ),
-
                       settingsGroupGap,
                       Divider(),
 
@@ -568,7 +624,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           MarkdownTooltip(
                             message: '''
-                  
+
                             **Reset Theme:** Tap here to reset the Graphic Theme
                               setting to the default theme for Rattle.
                             
@@ -666,10 +722,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                          **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-                          to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
 
-                          ''',
+                            ''',
                             child: ElevatedButton(
                               onPressed: () {
                                 final defaultApp =
@@ -702,12 +758,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         children: [
                           MarkdownTooltip(
                             message: '''
+
                             **Random Seed Setting:** 
                             The random seed is used to control the randomness. 
                             Setting a specific seed ensures that results are reproducible.
 
                             - **Default Seed:** The default seed is 42.
                             - **Reset:** Use the "Reset" button to restore the default seed.
+
                             ''',
                             child: const Text(
                               'Random Seed',
@@ -720,9 +778,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           configRowGap,
                           MarkdownTooltip(
                             message: '''
+
                             **Reset Random Seed:** 
                             Clicking this button resets the random seed to the default value of 42.
                             This is useful if you want to restore the initial random state.
+
                             ''',
                             child: ElevatedButton(
                               onPressed: () {
@@ -756,7 +816,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             **Session Control:** This setting determines whether a confirmation popup 
                             appears when the user tries to quit the application. 
                   
-                            - **ON**: A popup will appear asking the user to confirm quitting.\n
+                            - **ON**: A popup will appear asking the user to confirm quitting.
                   
                             - **OFF**: The application will exit immediately without a confirmation popup.
                   
@@ -812,7 +872,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                   
                             **Toggle Session Control:**
                   
-                            - Slide to **ON** to enable a confirmation popup when exiting the application.\n
+                            - Slide to **ON** to enable a confirmation popup when exiting the application.
                   
                             - Slide to **OFF** to disable the popup, allowing the app to exit directly.
                   
@@ -862,21 +922,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     String label,
     bool value,
     ValueChanged<bool> onChanged,
+    String tooltipMessage, // Tooltip message for the entire row
   ) {
-    return Row(
-      // Align items to the start.
-
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 16),
-        ),
-        Switch(
-          value: value,
-          onChanged: onChanged,
-        ),
-      ],
+    return MarkdownTooltip(
+      message: tooltipMessage,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16),
+          ),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+          ),
+        ],
+      ),
     );
   }
 }
