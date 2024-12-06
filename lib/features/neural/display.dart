@@ -266,14 +266,15 @@ $weights
       );
     }
 
-    String neuralRiskImage = '';
+    if (algorithm == 'neuralnet') {
+      String neuralRiskImage = '';
 
-    neuralRiskImage = '$tempDir/model_neuralnet_riskchart_tuning.svg';
+      neuralRiskImage = '$tempDir/model_neuralnet_riskchart_tuning.svg';
 
-    if (imageExists(neuralRiskImage)) {
-      pages.add(
-        ImagePage(
-          title: '''
+      if (imageExists(neuralRiskImage)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
@@ -281,17 +282,17 @@ $weights
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
-          path: neuralRiskImage,
-        ),
-      );
-    }
+            path: neuralRiskImage,
+          ),
+        );
+      }
 
-    neuralRiskImage = '$tempDir/model_neuralnet_riskchart_training.svg';
+      neuralRiskImage = '$tempDir/model_neuralnet_riskchart_training.svg';
 
-    if (imageExists(neuralRiskImage)) {
-      pages.add(
-        ImagePage(
-          title: '''
+      if (imageExists(neuralRiskImage)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
@@ -299,9 +300,10 @@ $weights
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
-          path: neuralRiskImage,
-        ),
-      );
+            path: neuralRiskImage,
+          ),
+        );
+      }
     }
 
     ////////////////////////////////////////////////////////////////////////

@@ -31,8 +31,8 @@ library(NeuralNetTools)  # For neural network plotting
 
 # Define model type and description.
 
-mtype <- "neuralnet"
-mdesc <- "Neural Network"
+mtype <- "nnet"
+mdesc <- "Neural NNET"
 
 # Conditional logic to handle categoric variables based on 'neural_ignore_categoric'.
 
