@@ -1,6 +1,6 @@
 /// A provider for the parameters for cluster.
 ///
-/// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-12-02 09:32:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -23,6 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,6 +33,5 @@ final numberClusterProvider = StateProvider<int>((ref) => 10);
 final processorClusterProvider = StateProvider<int>((ref) => 1);
 final reScaleClusterProvider = StateProvider<bool>((ref) => true);
 final runClusterProvider = StateProvider<int>((ref) => 1);
-final seedClusterProvider = StateProvider<int>((ref) => 42);
 final typeClusterProvider = StateProvider<String>((ref) => 'KMeans');
 final distanceClusterProvider = StateProvider<String>((ref) => 'euclidean');

@@ -92,15 +92,19 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
 
               ''',
               onPressed: () async {
-                await rSource(context, ref, ['model_template']);
+                // Run the R scripts.
+
+                String mt = 'model_template';
+                String mbx = 'model_build_xgboost';
+                String mba = 'model_build_adaboost';
+                String etr = 'evaluate_template_tr';
+                String etu = 'evaluate_template_tu';
+                String erc = 'evaluate_riskchart';
+
                 if (algorithm == 'Extreme') {
-                  if (context.mounted) {
-                    await rSource(context, ref, ['model_build_xgboost']);
-                  }
-                } else if (algorithm == 'Adaptive') {
-                  if (context.mounted) {
-                    await rSource(context, ref, ['model_build_adaboost']);
-                  }
+                  await rSource(context, ref, [mt, mbx, etr, erc, etu, erc]);
+                } else {
+                  await rSource(context, ref, [mt, mba, etr, erc, etu, erc]);
                 }
               },
               child: const Text('Build Boosted Trees'),

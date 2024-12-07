@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-09-07 15:38:57 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-12-03 12:41:27 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -38,24 +38,34 @@
 library(rattle)
 library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 library(ggplot2)
+library(glue)         # Format strings: glue().
+library(kernlab)
+library(rattle)
 library(reshape2)
 library(verification)
 
 mtype <- "randomForest"
-mdesc <- "Forest"
-
-# Typically we use na.roughfix() for na.action.
-
-tds <- ds[tr, vars]
+mdesc <- "Random Forest"
 
 model_randomForest <- randomForest(
   form,
-  data       = tds, 
+  data       = trds, 
   ntree      = RF_NUM_TREES,
   mtry       = RF_MTRY,
   importance = TRUE,
   na.action  = RF_NA_ACTION,
   replace    = FALSE)
+
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- model_randomForest
+
+predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
+predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
+predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
+
+########################################################################
 
 # Generate textual output of the 'Random Forest' model.
 
@@ -225,5 +235,4 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
              length(unique(predicted_probs))),
        cex = 1.2)
 }
-
 dev.off()

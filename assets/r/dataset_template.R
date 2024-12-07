@@ -1,11 +1,11 @@
-# Setup the dataset template variables after the dataset has been prepared.
+# Rattle Scripts: Dataset template variables are initialised after dataset prep.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 10:40:46 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-12-03 12:28:42 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,13 +42,13 @@ library(dplyr)        # Wrangling: select() sample_frac().
 library(janitor)      # Cleanup: clean_names().
 library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
-# Index the original variable names by the new names.
+## # Index the original variable names by the new names.
 
-names(vnames) <- names(ds)
+## names(vnames) <- names(ds)
 
-# Display the list of vars.
+## # Display the list of vars.
 
-names(ds)
+## names(ds)
 
 # Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
 
@@ -62,18 +62,10 @@ large_factor_vars <- names(large_factors)[large_factors]
 
 large_factor_vars
 
-# PREREQUISITE
-#
-# This is expected to be completed after a dataset_load and then the
-# dataset_prep.
-
-library(dplyr)
-library(magrittr)
-
 # Identify variable roles.
 
 target <- "TARGET_VAR"
-ident <- "IDENT_VAR"
+ident  <- "IDENT_VAR"
 risk   <- "RISK_VAR"
 id     <- c(ID_VARS)
 

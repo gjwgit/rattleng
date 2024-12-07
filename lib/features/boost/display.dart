@@ -143,6 +143,50 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////
+
+    String riskImage = '';
+
+    algorithm == 'Extreme'
+        ? riskImage = '$tempDir/model_xgboost_riskchart_training.svg'
+        : riskImage = '$tempDir/model_adaboost_riskchart_training.svg';
+
+    if (imageExists(riskImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Risk Chart &#8212; Unbiased Estimate of Performance
+
+          Using the **training** dataset to evaluate the model performance.
+
+          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
+          path: riskImage,
+        ),
+      );
+    }
+
+    algorithm == 'Extreme'
+        ? riskImage = '$tempDir/model_xgboost_riskchart_tuning.svg'
+        : riskImage = '$tempDir/model_adaboost_riskchart_tuning.svg';
+
+    if (imageExists(riskImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Risk Chart &#8212; Unbiased Estimate of Performance
+
+          Using the **tuning** dataset to evaluate the model performance.
+
+          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
+            ''',
+          path: riskImage,
+        ),
+      );
+    }
+
     return PageViewer(
       pageController: pageController,
       pages: pages,

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-11-21 08:01:00 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-02 09:28:21 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -81,7 +81,7 @@ options(width=120)
 # different random seed each time R starts up we get different
 # results, like different partitioning, differe trees, etc.
 
-set.seed(42)
+set.seed(RANDOM_SEED)
 
 ####################################
 # Support Functions

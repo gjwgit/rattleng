@@ -8,6 +8,8 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Initial risk charts for evaluation [6.3.30 20241206 zy]
++ Further settings [6.3.30 20241206 kev]
 + Add SETTINGS support for Dataset toggles [6.3.29 20241125 kev]
 + Review and debug DATASET path entry handling [6.3.30 20241125 gjw]
 + Tune WORDCLOUD handling. Disable features for txt [6.3.27 20241124 gjw]
@@ -32,7 +34,7 @@ toward a 6.4 release.
 + Add SAVE button for TextPage widgets [6.3.10 20241022 kev]
 + ROLES and status bar data size updates [6.3.9 20241018 gjw kev]
 + Fix a Windows json parse exception [6.3.8 20241017 gjw]
-+ Add hierarchical cluster plus app tuning [6.3.7 20241017 zy] 
++ Add hierarchical cluster plus app tuning [6.3.7 20241017 zy]
 + Add neuralnet() support [6.3.6 20241016 zy]
 + Unify config styles [6.3.5 20241015 gjw]
 + Implement Boost. Cleanup and review and bug fixes [6.3.4 20241013]
@@ -86,7 +88,7 @@ toward a 6.4 release.
 + Fix Windows version display. [6.2.46 20240810 bz]
 + Add CLEANUP. [6.2.46 20240810 yyx]
 + Implement image popout [6.2.45 20240810 gjw]
-+ Move main.R conditional for Windows only [6.2.44 20240810 gjw] 
++ Move main.R conditional for Windows only [6.2.44 20240810 gjw]
 + Move main.R into dataset_prep.R to fix Windows loading [6.2.43 20240809 gjw]
 + Fix Windows R console connectivity issue [6.2.41 20240809 Lutra-Fs]
 + Rearrange RESCALE interface [6.2.40 20240808 gjw]
@@ -142,7 +144,7 @@ toward a 6.4 release.
 + Update TREE and FOREST display [6.1.24 20240630 gjw]
 + Add word frequency to WORDCLOUD [6.1.23 gjw]
 + Add MISSING and CORRELATION features [6.1.22 gjw]
-+ Update tree/cluster/forest to use TextPage() [6.1.21 gjw] 
++ Update tree/cluster/forest to use TextPage() [6.1.21 gjw]
 + Complete SUMMARY text features [6.1.20 gjw]
 + New Pages() widget for multiple page display [6.1.19 yyx]
 + Rename `panels` to `features` as a standard [6.1.18 gjw]

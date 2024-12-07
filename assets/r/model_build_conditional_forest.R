@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build a conditional forest model.
+# Rattle Scripts: From dataset `ds` build a conditional forest model.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-09-07 15:38:57 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-12-03 12:39:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,22 +33,38 @@
 # @williams:2017:essentials Chapter 8.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages
+# Load required packages.
 
 library(ggplot2)
-library(rattle)
+library(kernlab)
 library(party)
+library(rattle)
 library(reshape2)
 
-mtype <- "conditionalForest"
-mdesc <- "Forest"
+mtype <- "cforest"
+mdesc <- "Random Forest"
 
 model_conditionalForest <- cforest(
   form,
-  data    = tds,
+  data    = trds,
   controls= cforest_unbiased(ntree = RF_NUM_TREES,
                              mtry  = RF_MTRY,)
 )
+
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- model_conditionalForest
+
+predicted_tr <- predict(model, newdata = trds, type = "prob")
+predicted_tu <- predict(model, newdata = tuds, type = "prob")
+predicted_te <- predict(model, newdata = teds, type = "prob")
+
+# The predictions need to be converted to percentages/probabilities.
+
+predicted_tr <- generate_predictions(predicted_tr)
+predicted_tu <- generate_predictions(predicted_tu)
+predicted_te <- generate_predictions(predicted_te)
 
 # Generate textual output of the 'Conditional Random Forest' model.
 
@@ -70,7 +86,6 @@ print(importance_df)
 prettytree(model_conditionalForest@ensemble[[RF_NO_TREE]], names(model_conditionalForest@data@get("input")))
 
 svg("TEMPDIR/model_conditional_forest.svg")
-
 ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
@@ -80,5 +95,4 @@ ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
     y     = "Importance"
   ) +
   theme_minimal()
-
 dev.off()

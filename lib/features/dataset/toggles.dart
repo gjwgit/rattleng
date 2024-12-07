@@ -91,10 +91,10 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           prefs.getBool('normalise') ?? true;
 
       // Set the initial state of the "Partition" toggle based on shared preferences,
-      // defaulting to `false` if no value is found.
+      // defaulting to `true` if no value is found.
 
       ref.read(partitionProvider.notifier).state =
-          prefs.getBool('partition') ?? false;
+          prefs.getBool('partition') ?? true;
     } else {
       // If this is not the first start and "Keep in Sync" is enabled.
 

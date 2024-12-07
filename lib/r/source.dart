@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-11-21 08:52:48 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-12-02 09:41:01 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -74,6 +74,7 @@ import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
+import 'package:rattle/r/strip_todo.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_missing.dart';
@@ -155,7 +156,7 @@ Future<void> rSource(
 
   // CLUSTER
 
-  int clusterSeed = ref.read(seedClusterProvider);
+  int clusterSeed = ref.read(randomSeedProvider);
   int clusterNum = ref.read(numberClusterProvider);
   int clusterRun = ref.read(runClusterProvider);
   int clusterProcessor = ref.read(processorClusterProvider);
@@ -223,13 +224,15 @@ Future<void> rSource(
 
     newCode = await DefaultAssetBundle.of(context).loadString(asset);
     newCode = rStripHeader(newCode);
+    newCode = rStripTodo(newCode);
     newCode = "\n${'#' * 72}\n## -- $script.R --\n${'#' * 72}\n$newCode";
 
     code += newCode;
   }
 
   ////////////////////////////////////////////////////////////////////////
-
+  // GLOBAL
+  //
   // Replace Global template patterns with their values. These are not specific
   // to any particular feature,
 
@@ -250,14 +253,18 @@ Future<void> rSource(
   code = code.replaceAll('TEMPDIR', tempDir);
 
   ////////////////////////////////////////////////////////////////////////
-
   // SETTINGS
-
-  code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
 
   code = code.replaceAll('MAXFACTOR', '20');
+
+  // TODO 20241202 gjw VALUE OF RANDOM_SEED NEEDS TO COME FROM SETTINGS.
+
+  code = code.replaceAll('RANDOM_PARTITION', 'FALSE');
+  code = code.replaceAll('RANDOM_SEED', '42');
+
+  code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -389,7 +396,9 @@ Future<void> rSource(
 
   code = code.replaceAll('SELECTED_2_VAR', selected2);
 
-  code = code.replaceAll('GROUP_BY_VAR', groupBy);
+  //TODO kevin
+
+  code = code.replaceAll('GROUP_BY_VAR', groupBy == 'None' ? 'NULL' : groupBy);
 
   code = code.replaceAll('IMPUTED_VALUE', imputed);
 
@@ -472,7 +481,7 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // CLUSTER
 
-  code = code.replaceAll('CLUSTER_SEED', clusterSeed.toString());
+  code = code.replaceAll('RANDOM_SEED', clusterSeed.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');

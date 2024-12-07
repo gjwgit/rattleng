@@ -32,6 +32,8 @@ import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/session_control.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -50,6 +52,7 @@ class CloseDialog extends ConsumerStatefulWidget {
 
 class _CloseDialogState extends ConsumerState<CloseDialog> {
   String _title = 'Close Rattle?';
+
   String _content = wordWrap('''
 
     Are you sure you want to close Rattle?
@@ -59,7 +62,37 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
     ''');
 
   @override
+  void initState() {
+    super.initState();
+
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Update "Session Control" state.
+
+    ref.read(askOnExitProvider.notifier).state =
+        prefs.getBool('askOnExit') ?? true;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Check the askOnExitProvider state.
+
+    final askOnExit = ref.watch(askOnExitProvider);
+
+    if (!askOnExit) {
+      // If askOnExitProvider is OFF, close the app directly.
+
+      _closeApp();
+
+      return const SizedBox.shrink();
+    }
+
+    // If askOnExitProvider is ON, show the confirmation dialog.
+
     return AlertDialog(
       title: Row(
         children: [
@@ -79,6 +112,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
           child: const Text('Cancel'),
         ),
         // Conditionally display the Save button
+
         if (_title != 'Script saved')
           TextButton(
             onPressed: () => _showFileNameDialog(context),
@@ -163,8 +197,10 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
 
 Future<void> cleanUpTempDirs() async {
   final rattleTempDir = Directory(tempDir);
+
   if (await rattleTempDir.exists()) {
     await rattleTempDir.delete(recursive: true);
+
     debugText('  DELETED', tempDir);
   }
 }

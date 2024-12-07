@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 05:27:48 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-11-28 14:00:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -50,7 +50,15 @@ library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 # normalise the variable names on loading the data. It is set on by
 # default.
 
-if (NORMALISE_NAMES) ds %<>% janitor::clean_names(numerals="right")
+if (NORMALISE_NAMES) {
+  ds %<>% janitor::clean_names(numerals="right")
+
+  # TODO 20241008 gjw MIGRATE TO META DATA
+
+  # Index the original variable names by the new names.
+
+  names(vnames) <- names(ds)
+}
 
 # Cleanse the dataset of constant value columns and convert char to
 # factor.
@@ -104,12 +112,6 @@ unique_columns(ds)
 # and used in identifying the TARGET varaible.
 
 find_fewest_levels(ds)
-
-# TODO 20241008 gjw MIGRATE TO META DATA
-
-# Index the original variable names by the new names.
-
-names(vnames) <- names(ds)
 
 # Display the list of vars.
 

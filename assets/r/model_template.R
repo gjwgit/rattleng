@@ -1,11 +1,11 @@
 # Rattle Scripts: Setup the model template variables.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:59:50 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-02 09:40:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -27,8 +27,9 @@
 # Rattle timestamp: TIMESTAMP
 #
 # Run this script after the variable `ds` (dataset) and other data
-# template variables have been defined as in `data_template.R`. this
-# script will initialise the model template variables.
+# template variables have been defined as in `data_template.R`. This
+# script will initialise the model template variables including
+# performing any partitioning.
 #
 # References:
 #
@@ -48,49 +49,86 @@ form   <- formula(target %s+% " ~ .")
 
 print(form)
 
-# Split the dataset into train, tune, and test, recording the indicies
-# of the observations to be associated with each dataset. If the
-# dataset is not to be partitioned, simply have the train, tune and
-# test datasets as the whole dataset.
+# Identify a subset of the full dataset that has values for the target
+# variable, removing those rows that do not have a target. For
+# predictive modelling we will only use data that has a target value.
+# This will be refered to as the TARGET COMPLETE dataset (tcds).
+
+tcds <- ds[!is.na(ds[[target]]),]
+
+# Update the number of `obs` which is needed for the partitioning.
+
+tcnobs <- nrow(tcds)
 
 if (SPLIT_DATASET) {
 
-  split <- c(DATA_SPLIT_TR_TU_TE)
+  # Split the dataset into train, tune, and test, recording the indicies
+  # of the observations to be associated with each dataset. If the
+  # dataset is not to be partitioned, simply have the train, tune and
+  # test datasets as the whole dataset.
 
-  tr <- nobs %>% sample(split[1]*nobs)
-  tu <- nobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*nobs)
-  te <- nobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
+  # To get the same model each time we partitin the dataset the same
+  # way each time based on a fixed seed that the user can override to
+  # explore the impact of different dataset paritioning on the
+  # resulting model.
+
+  # TODO 20241202 gjw REPLACE THE FIXED 42 WITH A SETTINGS VALUE FOR THE SEED.
+
+  # TODO 20241202 gjw ADD PROVIDER FOR RANDOM_PARTITION TO RANDOMISE EACH TIME.
+
+  # TODO 20241202 gjw MAYBE IF RANDOM_SEED IS EMPTY WE RANDOMISE EACH TIME HERE.
+  
+  if (! RANDOM_PARTITION) {
+    set.seed(RANDOM_SEED)
+  }
+
+  # Specify the three way split for the dataset: TRAINING (tr) and
+  # TUNING (tu) and TESTING (te).
+  
+  split <- c(DATA_SPLIT_TR_TU_TE)
+  
+  tr <- tcnobs %>% sample(split[1]*tcnobs)
+  tu <- tcnobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*tcnobs)
+  te <- tcnobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
 
 } else {
-  tr <- tu <- te <- seq_len(nobs)
+
+  # If the user has decided not to partition the data we will build
+  # the model and tune/test the model on the same dataset. This is not
+  # good practice as the tuning and testing will deliver very
+  # optimistic estimates of the model performance.
+  
+  tr <- tu <- te <- seq_len(tcnobs)
 }
 
-# Note the actual target values and the risk values.
+# Note the actual values of the TARGET variable and the RISK variable
+# for use in model training and evaluation later on.
 
-actual_tr <- ds %>% slice(tr) %>% pull(target)
-actual_tu <- ds %>% slice(tu) %>% pull(target)
-actual_te <- ds %>% slice(te) %>% pull(target)
+actual_tr <- tcds %>% slice(tr) %>% pull(target)
+actual_tu <- tcds %>% slice(tu) %>% pull(target)
+actual_te <- tcds %>% slice(te) %>% pull(target)
   
 if (!is.null(risk))
 {
-  risk_tr <- ds %>% slice(tr) %>% pull(risk)
-  risk_tu <- ds %>% slice(tu) %>% pull(risk)
-  risk_te <- ds %>% slice(te) %>% pull(risk)
+  risk_tr <- tcds %>% slice(tr) %>% pull(risk)
+  risk_tu <- tcds %>% slice(tu) %>% pull(risk)
+  risk_te <- tcds %>% slice(te) %>% pull(risk)
 }
 
-# Subset the training data.
+# Retain only the columns that we need for the predictive modelling.
 
-trds <- ds[tr, setdiff(vars, ignore)]
+trds <- tcds[tr, setdiff(vars, ignore)]
+tuds <- tcds[tu, setdiff(vars, ignore)]
+teds <- tcds[te, setdiff(vars, ignore)]
 
-# Remove rows with missing values for the target variable.
-
-trds <- trds[!is.na(trds[[target]]), ]
-
-# TODO 20241112 gjw The tr, tu, te, indicies are now out od sync FIX THIS!!!!
+########################################################################
+# TODO 20241202 gjw REVIEW ALL OF THE FOLLOWING - WHY HERE OR WHY NEEDED
 
 # Identify predictor variables (excluding the target variable).
 
-# WHY IS THIS NEEDED - USE INPUTS predictor_vars <- setdiff(vars, target)
+# TODO 20241202 gjw WHY IS THIS NEEDED - USE INPUTS
+
+# predictor_vars <- setdiff(vars, target)
 
 # Identify categoric and numeric input variables.
 
@@ -101,5 +139,117 @@ num_vars <- setdiff(inputs, cat_vars)
 
 ignore_categoric_vars <- c(num_vars, target)
 
+# TODO 20241202 gjw THIS SEEMS OUT OF PLACE HERE 
+
 neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
 
+# Create numeric risks vector.
+
+# TODO 20241202 gjw WHAT IS THIS USED FOR? CAN NOW BE REMOVED?
+
+risks <- as.character(risk_tu)
+risks <- risks[!is.na(risks)]
+risks <- as.numeric(risks)
+
+# Create numeric actual vector.
+
+# TODO 20241202 gjw WHAT IS THIS USED FOR? CAN NOW BE REMOVED?
+
+actual <- as.character(actual_tu)
+actual <- actual[!is.na(actual)]
+levels_actual <- unique(actual)
+actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
+
+# The `generate_predictions` function simulates a prediction process, generating class labels 
+# based on randomly created probability matrices for a given set of observations. 
+
+generate_predictions <- function(predicted_var) {
+  predicted_probs <- list()
+  
+  num_obs <- length(predicted_var)
+  
+  for (i in 1:num_obs) {
+    # Simulate probability matrices as in your output.
+    # Here, we will just assign random probabilities for demonstration.
+    # In practice, 'predicted_probs' is the output from your 'predict' function.
+    
+    probs <- runif(2)
+    probs <- probs / sum(probs)  # Normalize to sum to 1.
+    
+    # Create the column names with unknown prefixes.
+    # For demonstration, let's assume prefixes vary.
+    
+    prefix <- paste0("prefix", sample(1:5, 1))
+    col_names <- paste0(prefix, c(".No", ".Yes"))
+    
+    # Create the 1x2 probability matrix for each observation.
+
+    predicted_probs[[i]] <- matrix(probs, nrow = 1, dimnames = list(NULL, col_names))
+  }
+  
+  # Extract the predicted class labels without specifying the prefix.
+
+  predicted_var <- sapply(predicted_probs, function(x) {
+    # 'x' is a 1xN matrix for one observation.
+    # Find the index of the maximum probability.
+    
+    idx_max <- which.max(x[1, ])
+
+    # Retrieve the corresponding class label with prefix.
+    
+    label_with_prefix <- colnames(x)[idx_max]
+    
+    # Extract the actual class label by removing everything up to the last dot.
+
+    label_clean <- sub('.*\\.', '', label_with_prefix)
+    return(label_clean)
+  })
+  
+  # Get unique levels of predicted.
+  
+  levels_predicted <- unique(predicted_var)
+  predicted_var <- as.character(predicted_var)
+  predicted_numeric <- ifelse(predicted_var == levels_predicted[1], 0, 1)
+  return(predicted_numeric)
+}
+
+# A data preprocessing function for prediction tasks.
+# Handles prediction and actual value preprocessing.
+# Converts inputs to numeric format. Handles NA and NaN values.
+# Aligns input vectors to same length. Uses minimum length to truncate vectors.
+
+prepare_predictions <- function(pr_tu, actual, risks) {
+  # Get unique levels of predictions and actual values.
+
+  levels_predicted <- unique(pr_tu)
+  
+  # Convert predictions to numeric, handling NA or invalid values.
+
+  predicted_numeric <- ifelse(pr_tu == levels_predicted[1], 0, 1)
+  predicted_numeric <- suppressWarnings(as.numeric(pr_tu))
+  predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+  
+  # Align vectors to the same length by using the minimum length.
+
+  min_length <- min(length(predicted_numeric), length(actual), length(risks))
+  predicted_numeric <- predicted_numeric[1:min_length]
+  actual_numeric <- as.numeric(as.factor(actual))[1:min_length] - 1
+  actual_numeric <- ifelse(actual_numeric < 0, 0, actual_numeric) # Ensure no negative values.
+  risks <- risks[1:min_length]
+  
+  # Replace remaining NA or NaN values in `predicted_numeric` with a default value.
+
+  predicted_numeric <- ifelse(is.na(predicted_numeric) | is.nan(predicted_numeric), 0, predicted_numeric)
+
+  # Replace NA or NaN in actual_numeric with a default value (e.g., 0).
+
+  actual_numeric <- ifelse(is.na(actual_numeric) | is.nan(actual_numeric), 0, actual_numeric)
+  
+  # Return the processed vectors as a list.
+
+  list(
+    predicted_numeric = predicted_numeric,
+    actual_numeric = actual_numeric,
+    risks = risks
+  )
+}

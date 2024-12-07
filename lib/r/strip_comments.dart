@@ -1,6 +1,6 @@
 /// Strip comments from an R console log string.
 //
-// Time-stamp: <Saturday 2024-08-10 09:24:24 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-11-30 10:37:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,10 +39,14 @@ String rStripComments(String txt) {
       //
       // Ecdf(eds[eds$grp=="All",1], col="#E495A5", ...)
       //
+      // Or like in
+      //
+      // title <- glue("Risk Chart &#8212; {mdesc}")
+      //
       // Use a pattern with a negative lookbehind assertion (?<!\") which
       // ensures that the # is not preceded by a ".
 
-      result.add(lines[i].replaceAll(RegExp(r' *(?<!\")#.*'), ''));
+      result.add(lines[i].replaceAll(RegExp(r' *(?<!\".*)#.*'), ''));
     }
   }
 

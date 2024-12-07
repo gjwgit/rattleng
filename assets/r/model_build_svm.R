@@ -25,30 +25,55 @@
 # Author: Zheyuan Xu
 
 library(kernlab)
+library(rattle)
+
+# Define the model type and description for file paths and titles.
+
+mtype <- "svm"
+mdesc <- "Support Vector Machine"
 
 # Define the dataset, input, and target.
 
-tds <- ds[tr, vars]
 svm_kernel <- SVM_KERNEL
 
 if (svm_kernel == "polydot") {
   svm_model <- ksvm(
-    as.factor(tds[[target]]) ~ .,
-    data       = tds,
+    as.factor(trds[[target]]) ~ .,
+    data       = trds,
     kernel     = SVM_KERNEL,
     kpar       = list("degree" = SVM_DEGREE),
     prob.model = TRUE
   )
 } else {
   svm_model <- ksvm(
-    as.factor(tds[[target]]) ~ .,
-    data       = tds,
+    as.factor(trds[[target]]) ~ .,
+    data       = trds,
     kernel     = SVM_KERNEL,
     prob.model = TRUE
   )
 }
 
+# Save the model to the TEMPLATE variable `model` and the predicted
+# values appropriately.
+
+model <- svm_model
+
+predicted_tr <- predict(model, newdata = trds, type = "probabilities")[,2]
+predicted_tu <- predict(model, newdata = tuds, type = "probabilities")[,2]
+predicted_te <- predict(model, newdata = teds, type = "probabilities")[,2]
+
+predicted_tr <- prepare_predictions(predicted_tr, actual, risks)[[1]]
+predicted_tu <- prepare_predictions(predicted_tu, actual, risks)[[1]]
+predicted_te <- prepare_predictions(predicted_te, actual, risks)[[1]]
+
+actual_tr <- prepare_predictions(predicted_tr, actual, risks)[[2]]
+actual_tu <- prepare_predictions(predicted_tu, actual, risks)[[2]]
+actual_te <- prepare_predictions(predicted_te, actual, risks)[[2]]
+
+risk_tr <- prepare_predictions(predicted_tr, actual, risks)[[3]]
+risk_tu <- prepare_predictions(predicted_tu, actual, risks)[[3]]
+risk_te <- prepare_predictions(predicted_te, actual, risks)[[3]]
+
 # Print a summary of the trained SVM model.
 
 print(svm_model)
-dev.off()

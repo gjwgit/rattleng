@@ -1,11 +1,11 @@
-/// An R script text widget for the script tab page.
+/// An R script text widget for the SCRIPT tab page.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-09-26 08:33:28 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-12-02 05:33:57 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software

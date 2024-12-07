@@ -1,6 +1,6 @@
 /// Utility to strip header comments from an R script file.
 ///
-/// Time-stamp: <Monday 2024-10-07 18:59:28 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-12-02 09:08:14 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -26,10 +26,9 @@
 
 library;
 
-/// The intention is to strip the initial copyright message from the script,
-/// though keeping the first line, assumened to be the script title, and then
-/// keeping all other lines from the script file supplied as the [String]
-/// [code].
+/// From the supplied [code] (an R script file contents) strip the initial
+/// copyright message from the script, keeping the first line as the script
+/// title, and keeping all remaining lines of the script file.
 
 String rStripHeader(String code) {
   // Keep the first line then strip everything down to the first line not
