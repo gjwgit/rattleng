@@ -28,37 +28,10 @@ library(hmeasure)
 
 
 if(TREE_EXECUTED_EVALUATE){
-  trds$pr <- predict(model_rpart, newdata=trds, type="class")
-
-  # Generate the confusion matrix showing counts.
-
-  print('Error matrix for the Decision Tree model (counts)')
-
-  cem <- rattle::errorMatrix(trds[[target]], trds$pr, count=TRUE)
-
-  print(cem)
-
-  # Generate the confusion matrix showing proportions.
-
-  print('Error matrix for the Decision Tree model (proportions)')
-
-  per <- rattle::errorMatrix(trds[[target]], trds$pr)
-
-  print(per)
-
-  # Calculate the overall error percentage.
-
-  cat(100-sum(diag(per), na.rm=TRUE))
-
-  # Calculate the averaged class error percentage.
-
-  cat(mean(per[,"Error"], na.rm=TRUE))
-
   # Handle Target Variable Encoding.
 
   target_levels <- unique(trds[[target]])
   target_levels <- target_levels[!is.na(target_levels)]  # Remove NA if present
-
   
   # Get predicted probabilities for the positive class.
 
