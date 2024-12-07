@@ -92,16 +92,16 @@ rattle::fancyRpartPlot(model_rpart,
                        sub  = paste("TIMESTAMP", username))
 dev.off()
 
-print("Error matrix for the Decision Tree model (counts)")
+print("Error matrix for the RPART Decision Tree model (counts)")
 
 error_predic <- predict(model_rpart, newdata = trds, type = "class")
 
-cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+rpart_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
 
-print(cem)
+print(rpart_cem)
 
-print('Error matrix for the Decision Tree model (proportions)')
+print('Error matrix for the RPART Decision Tree model (proportions)')
 
-per <- rattle::errorMatrix(trds[[target]],error_predic)
+rpart_per <- rattle::errorMatrix(trds[[target]],error_predic)
 
-print(per)
+print(rpart_per)

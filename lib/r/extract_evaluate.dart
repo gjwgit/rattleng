@@ -38,8 +38,8 @@ String _basicTemplate(
   String md;
 
   if (modelType == 'Tree') {
-    hd = 'Error matrix for the Decision Tree model (counts)';
-    md = 'Error matrix for the Decision Tree model (proportions)';
+    hd = 'Error matrix for the RPART Decision Tree model (counts)';
+    md = 'Error matrix for the RPART Decision Tree model (proportions)';
   } else {
     // Handle other types or return an empty result.
 
@@ -53,11 +53,11 @@ String _basicTemplate(
   if (modelType == 'Tree') {
     sz = rExtract(
       log,
-      'print(cem)',
+      'print(rpart_cem)',
     );
     cm = rExtract(
       log,
-      'print(per)',
+      'print(rpart_per)',
     );
   }
 
