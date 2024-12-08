@@ -192,19 +192,36 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   // Run the R scripts.
 
-                  await rSource(context, ref, ['model_template']);
+                  String mt = 'model_template';
+                  String mbn = 'model_build_neural_neuralnet';
+                  String mbnn = 'model_build_neural_nnet';
+                  String etr = 'evaluate_template_tr';
+                  String etu = 'evaluate_template_tu';
+                  String erc = 'evaluate_riskchart';
+
                   if (context.mounted) {
                     if (algorithm == 'nnet') {
-                      await rSource(context, ref, ['model_build_neural_nnet']);
+                      await rSource(
+                        context,
+                        ref,
+                        [mt, mbnn],
+                      );
                     } else if (algorithm == 'neuralnet') {
                       await rSource(
                         context,
                         ref,
-                        ['model_build_neural_neuralnet'],
+                        [mt, mbn, etr, erc, etu, erc],
                       );
                     }
                   }
                 }
+
+                await ref.read(neuralPageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
               },
               child: const Text('Build Neural Network'),
             ),
