@@ -37,6 +37,7 @@
 
 library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
+library(hmeasure)
 library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 
@@ -90,6 +91,25 @@ svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
 rattle::fancyRpartPlot(model_rpart,
                        main = "Decision Tree FILENAME $ TARGET_VAR",
                        sub  = paste("TIMESTAMP", username))
+dev.off()
+
+target_rpart_levels <- unique(trds[[target]])
+target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present
+  
+# Get predicted probabilities for the positive class.
+
+predicted_rpart_probs <- predict(model_rpart, newdata = trds, type = "prob")[,2]
+
+actual_rpart_labels <- ifelse(trds[[target]] == target_rpart_levels[1], 0, 1)
+
+# Evaluate the model using HMeasure.
+
+results <- HMeasure(true.class = actual_rpart_labels, scores = predicted_rpart_probs)
+  
+svg("TEMPDIR/model_rpart_evaluate_hand.svg")
+
+plotROC(results)
+
 dev.off()
 
 print("Error matrix for the RPART Decision Tree model (counts)")

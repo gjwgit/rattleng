@@ -72,7 +72,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       );
     }
 
-    String handImage = '$tempDir/model_evaluate_hand.svg';
+    String handImage = '$tempDir/model_rpart_evaluate_hand.svg';
 
     if (imageExists(handImage)) {
       pages.add(
