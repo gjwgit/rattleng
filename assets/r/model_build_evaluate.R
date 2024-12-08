@@ -27,7 +27,7 @@
 library(hmeasure)
 
 
-if(TREE_EXECUTED_EVALUATE){
+if(RPART_TREE_EXECUTED_EVALUATE){
   # Handle Target Variable Encoding.
 
   target_levels <- unique(trds[[target]])

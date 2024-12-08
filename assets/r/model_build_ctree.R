@@ -86,25 +86,20 @@ svg("TEMPDIR/model_tree_ctree.svg")
 plot(model_ctree, main = paste("Conditional Inference Tree", target))
 dev.off()
 
-## # Prepare probabilities for predictions.
+print("Error matrix for the CTREE Decision Tree model (counts)")
 
-## pr_tu <- predict(model_ctree, newdata = tuds, type = "prob")
-## predicted <- apply(pr_tu, 1, function(x) colnames(pr_tu)[which.max(x)])
-  
-## # Get unique levels of predicted.
+error_predic <- predict(model_ctree, newdata = trds, type = "prob")
 
-## levels_predicted <- unique(predicted)
-## predicted <- as.character(predicted)
-## predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
+error_predic <- apply(error_predic, 1, function(x) {
+  colnames(error_predic)[which.max(x)]
+})
 
+ctree_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
 
-## svg("TEMPDIR/model_ctree_risk.svg")
-## rattle::riskchart(predicted_numeric, actual_numeric, risks,
-##                   title          = "Risk Chart Conditional Tree FILENAME [tuning] TARGET_VAR ",
-##                   risk.name      = "RISK_VAR",
-##                   recall.name    = "TARGET_VAR",
-##                   show.lift      = TRUE,
-##                   show.precision = TRUE,
-##                   legend.horiz   = FALSE) +
-##     SETTINGS_GRAPHIC_THEME()
-## dev.off()
+print(ctree_cem)
+
+print('Error matrix for the CTREE Decision Tree model (proportions)')
+
+ctree_per <- rattle::errorMatrix(trds[[target]], error_predic)
+
+print(ctree_per)

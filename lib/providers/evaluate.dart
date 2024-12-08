@@ -35,4 +35,4 @@ final kMeansEvaluateProvider = StateProvider<bool>((ref) => false);
 final linearEvaluateProvider = StateProvider<bool>((ref) => false);
 final neuralNetEvaluateProvider = StateProvider<bool>((ref) => false);
 final svmEvaluateProvider = StateProvider<bool>((ref) => false);
-final treeEvaluateProvider = StateProvider<bool>((ref) => false);
+final rpartTreeEvaluateProvider = StateProvider<bool>((ref) => false);

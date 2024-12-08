@@ -34,12 +34,16 @@ String _basicTemplate(
   String modelType,
   WidgetRef ref,
 ) {
-  String hd;
-  String md;
+  String hdr;
+  String mdr;
+  String hdc;
+  String mdc;
 
   if (modelType == 'Tree') {
-    hd = 'Error matrix for the RPART Decision Tree model (counts)';
-    md = 'Error matrix for the RPART Decision Tree model (proportions)';
+    hdr = 'Error matrix for the RPART Decision Tree model (counts)';
+    mdr = 'Error matrix for the RPART Decision Tree model (proportions)';
+    hdc = 'Error matrix for the CTREE Decision Tree model (counts)';
+    mdc = 'Error matrix for the CTREE Decision Tree model (proportions)';
   } else {
     // Handle other types or return an empty result.
 
@@ -48,7 +52,7 @@ String _basicTemplate(
 
   // Now extract the output from particular commands.
 
-  String sz = '', cm = '';
+  String sz = '', cm = '', cc = '', cp = '';
 
   if (modelType == 'Tree') {
     sz = rExtract(
@@ -58,6 +62,14 @@ String _basicTemplate(
     cm = rExtract(
       log,
       'print(rpart_per)',
+    );
+    cc = rExtract(
+      log,
+      'print(ctree_cem)',
+    );
+    cp = rExtract(
+      log,
+      'print(ctree_per)',
     );
   }
 
@@ -69,13 +81,22 @@ String _basicTemplate(
 
   String result = '';
 
-  if (sz != '') {
-    result = '$hd\n\n'
+  if (sz != '' && cm != '') {
+    result = '$hdr\n\n'
         '\n$sz\n\n'
-        '$md\n\n'
-        '\n$cm\n\n'
-        'Rattle timestamp: $ts';
+        '$mdr\n\n'
+        '\n$cm\n\n';
   }
+
+  if (cc != '' && cp != '') {
+    result = '$result\n'
+        '$hdc\n\n'
+        '$cc\n\n'
+        '$mdc\n\n'
+        '$cp\n\n';
+  }
+  result = '$result\n'
+      'Rattle timestamp: $ts';
 
   return result;
 }

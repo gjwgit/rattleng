@@ -57,7 +57,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         ['model_tree_rpart.svg'],
         ['model_tree_ctree.svg'],
       ],
-      provider: treeEvaluateProvider,
+      provider: rpartTreeEvaluateProvider,
     ),
     _ModelConfig(
       key: 'boostEvaluate',

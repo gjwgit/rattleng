@@ -174,8 +174,8 @@ Future<void> rSource(
   // bool evaluateLinearExecuted = ref.read(linearEvaluateProvider);
   // bool evaluateNeuralNetExecuted = ref.read(neuralNetEvaluateProvider);
   // bool evaluateSVMExecuted = ref.read(svmEvaluateProvider);
-  
-  bool evaluateTreeExecuted = ref.read(treeEvaluateProvider);
+
+  bool evaluateRpartTreeExecuted = ref.read(rpartTreeEvaluateProvider);
 
   // FOREST
 
@@ -282,8 +282,8 @@ Future<void> rSource(
   // EVALUATE
 
   code = code.replaceAll(
-    'TREE_EXECUTED_EVALUATE',
-    evaluateTreeExecuted ? 'TRUE' : 'FALSE',
+    'RPART_TREE_EXECUTED_EVALUATE',
+    evaluateRpartTreeExecuted ? 'TRUE' : 'FALSE',
   );
 
   ////////////////////////////////////////////////////////////////////////
