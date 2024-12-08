@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Riskchart for NERUALNET [6.3.31 20241209 zy]
 + Initial risk charts for evaluation [6.3.30 20241206 zy]
 + Further settings [6.3.30 20241206 kev]
 + Add SETTINGS support for Dataset toggles [6.3.29 20241125 kev]
