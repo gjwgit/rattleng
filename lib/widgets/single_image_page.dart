@@ -1,4 +1,4 @@
-/// A widget to build the common image based pages.
+/// A widget to build the a common single image based pages.
 //
 // Time-stamp: <Tuesday 2024-11-19 09:18:00 +1100 Graham Williams>
 //
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin
+/// Authors: Graham Williams, Yixiang Yin, Zheyuan Xu
 
 library;
 
