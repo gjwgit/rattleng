@@ -115,3 +115,21 @@ ada_plot <- ada_plot +
 svg("TEMPDIR/model_ada_boost.svg")
 print(ada_plot)
 dev.off()
+
+print('Error matrix for the ADABOOST model (counts)')
+
+error_predic <- predict(model_ada, newdata = trds,)
+
+error_predic <- apply(error_predic, 1, function(x) {
+  colnames(error_predic)[which.max(x)]
+})
+
+adaboost_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+
+print(adaboost_cem)
+
+print('Error matrix for the ADABOOST model (proportions)')
+
+adaboost_per <- rattle::errorMatrix(trds[[target]], error_predic)
+
+print(adaboost_per)
