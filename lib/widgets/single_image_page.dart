@@ -47,12 +47,12 @@ import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 
-class ImagePage extends StatelessWidget {
+class SingleImagePage extends StatelessWidget {
   final String title;
   final String path;
   final bool svgImage;
 
-  const ImagePage({
+  const SingleImagePage({
     super.key,
     required this.title,
     required this.path,
