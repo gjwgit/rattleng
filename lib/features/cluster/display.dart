@@ -122,15 +122,17 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
     if (imageExists(discriminantImage)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Cluster Analysis - Visual
 
           Visit
           [$functionPackage::$functionName()]($functionUrl).
 
-          ''',
-          path: discriminantImage,
+          '''
+          ],
+          paths: [discriminantImage],
         ),
       );
     }
@@ -140,15 +142,17 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       if (imageExists(weightImage)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Cluster Analysis - Visual
 
           Visit
           [$functionPackage::$functionName()]($functionUrl).
 
-          ''',
-            path: weightImage,
+          '''
+            ],
+            paths: [weightImage],
           ),
         );
       }

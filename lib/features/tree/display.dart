@@ -127,14 +127,16 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # A visualisation of the Tree
 
           Built using [rattle::fancyRpartPlot()](https://www.rdocumentation.org/packages/rattle/topics/fancyRpartPlot).
 
-          ''',
-          path: image,
+          '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -150,7 +152,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Risk Chart &#8212; Optimistic Estimate of Performance
 
@@ -159,8 +162,9 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
           [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: image,
+            '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -176,7 +180,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
@@ -185,8 +190,9 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
           [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: image,
+            '''
+          ],
+          paths: [image],
         ),
       );
     }

@@ -92,8 +92,8 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
       if (imageExists(plotImage)) {
         pages.add(
           ImagePage(
-            title: 'ASSOCIATION RULES',
-            path: plotImage,
+            titles: ['ASSOCIATION RULES'],
+            paths: [plotImage],
             svgImage: false,
           ),
         );
@@ -105,8 +105,8 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
     if (imageExists(frequencyImage)) {
       pages.add(
         ImagePage(
-          title: 'ASSOCIATION FREQUENCY',
-          path: frequencyImage,
+          titles: ['ASSOCIATION FREQUENCY'],
+          paths: [frequencyImage],
         ),
       );
     }

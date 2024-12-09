@@ -106,15 +106,17 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
         # Patterns of Missing Values - Visual
 
         Generated using
         [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
-        ''',
-          path: image,
+        '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -160,15 +162,17 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
           
         # Aggregation of Missing Values - Visual
           
         Generated using
         [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
         
-        ''',
-          path: image,
+        '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -180,15 +184,17 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
         # Visualisation of Observations with Missing Values
 
         Generated using
         [naniar::vis_miss(ds)](https://www.rdocumentation.org/packages/naniar).
 
-        ''',
-          path: image,
+        '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -202,15 +208,17 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
         # Comparison of Counts of Missing Values
 
         Generated using
         [naniar::gg_miss_var(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_var).
 
-        ''',
-          path: image,
+        '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -224,15 +232,17 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
         # Patterns of Missingness
 
         Generated using
         [naniar::gg_miss_upset(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_upset).
 
-        ''',
-          path: image,
+        '''
+          ],
+          paths: [image],
         ),
       );
     }

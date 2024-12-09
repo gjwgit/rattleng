@@ -35,6 +35,7 @@
 
 # Load required packages from the local library into the R session.
 
+library(hmeasure)
 library(party)        # Conditional inference trees
 library(partykit)     # Enhanced visualization and interpretation
 
@@ -84,6 +85,25 @@ cat("\n")
 
 svg("TEMPDIR/model_tree_ctree.svg")
 plot(model_ctree, main = paste("Conditional Inference Tree", target))
+dev.off()
+
+target_ctree_levels <- unique(trds[[target]])
+target_ctree_levels <- target_ctree_levels[!is.na(target_ctree_levels)]
+  
+# Get predicted probabilities for the positive class.
+
+predicted_ctree_probs <- predict(model_ctree, newdata = trds, type = "prob")[,2]
+
+actual_ctree_labels <- ifelse(trds[[target]] == target_ctree_levels[1], 0, 1)
+
+# Evaluate the model using HMeasure.
+
+results <- HMeasure(true.class = actual_ctree_labels, scores = predicted_ctree_probs)
+  
+svg("TEMPDIR/model_ctree_evaluate_hand.svg")
+
+plotROC(results)
+
 dev.off()
 
 print("Error matrix for the CTREE Decision Tree model (counts)")

@@ -76,7 +76,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Box Plot
 
@@ -84,8 +85,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/box-plot.html) and
           [ggplot2::geom_boxplot()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot).
 
-              ''',
-            path: image,
+              '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -97,7 +99,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Density Plot of Values
 
@@ -105,8 +108,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/density-plot.html) and
           [ggplot2::geom_density()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_density).
 
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -118,7 +122,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Cumulative Plot
 
@@ -126,8 +131,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/cumulative-plot.html) and
           [ggplot2::stat_ecdf()](https://www.rdocumentation.org/packages/ggplot2/topics/stat_ecdf).
 
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -139,7 +145,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Benford Plot
 
@@ -147,8 +154,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/benford-plot.html) and
           [rattle::plotDigitFreq()](https://www.rdocumentation.org/packages/rattle).
 
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -173,7 +181,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Bar Chart
 
@@ -181,8 +190,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/bar-chart.html) and
           [gplots::barplot2()](https://www.rdocumentation.org/packages/gplots/topics/barplot2).
 
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -194,7 +204,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Mosaic Plot
 
@@ -202,8 +213,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/mosaic-plot.html) and
           [graphics::mosaicplot()](https://www.rdocumentation.org/packages/graphics/topics/mosaicplot).
 
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -215,7 +227,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Dot Plot
 
@@ -223,8 +236,9 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/dot-plot.html) and
           [graphics::dotchart()](https://www.rdocumentation.org/packages/graphics/topics/dotchart).
 
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }

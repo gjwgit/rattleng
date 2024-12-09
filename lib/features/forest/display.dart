@@ -158,12 +158,14 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
             # Variable Importance &#8212; Plot
 
-            ''',
-            path: image,
+            '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -175,12 +177,14 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       if (imageExists(errorRatesImage)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
             # Error Rate Plot
 
-            ''',
-            path: errorRatesImage,
+            '''
+            ],
+            paths: [errorRatesImage],
           ),
         );
       }
@@ -192,12 +196,14 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       if (imageExists(oobRocImage)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
             # Out of Bag ROC Curve
 
-            ''',
-            path: oobRocImage,
+            '''
+            ],
+            paths: [oobRocImage],
           ),
         );
       }
@@ -272,12 +278,14 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       if (imageExists(varImportanceImage)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
             # Variable Importance &#8212; Plot
 
-            ''',
-            path: varImportanceImage,
+            '''
+            ],
+            paths: [varImportanceImage],
           ),
         );
       }
@@ -294,15 +302,17 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Risk Chart &#8212; Optimistic Estimate of Performance
 
           Using the **training** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: image,
+            '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -318,15 +328,17 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
           Using the **tuning** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: image,
+            '''
+          ],
+          paths: [image],
         ),
       );
     }

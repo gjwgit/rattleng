@@ -72,13 +72,28 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       );
     }
 
-    String handImage = '$tempDir/model_rpart_evaluate_hand.svg';
+    String handRpartImage = '$tempDir/model_rpart_evaluate_hand.svg';
 
-    if (imageExists(handImage)) {
+    String handCtreeImage = '$tempDir/model_ctree_evaluate_hand.svg';
+
+    List<String> existingImages = [];
+    List<String> imagesTitles = [];
+
+    if (imageExists(handRpartImage)) {
+      existingImages.add(handRpartImage);
+      imagesTitles.add('RPART');
+    }
+
+    if (imageExists(handCtreeImage)) {
+      existingImages.add(handCtreeImage);
+      imagesTitles.add('CTREE');
+    }
+
+    if (existingImages.isNotEmpty) {
       pages.add(
         ImagePage(
-          title: 'EVALUATE HAND',
-          path: handImage,
+          titles: imagesTitles,
+          paths: existingImages,
         ),
       );
     }

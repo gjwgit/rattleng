@@ -78,15 +78,17 @@ class _LinearDisplayState extends ConsumerState<LinearDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Linear Model - Visual
 
           Visit
           [stats::glm()](https://www.rdocumentation.org/packages/stats/topics/glm).
 
-          ''',
-          path: image,
+          '''
+          ],
+          paths: [image],
         ),
       );
     }
@@ -96,8 +98,8 @@ class _LinearDisplayState extends ConsumerState<LinearDisplay> {
     if (imageExists(riskImage)) {
       pages.add(
         ImagePage(
-          title: 'RISK CHART',
-          path: riskImage,
+          titles: ['RISK CHART'],
+          paths: [riskImage],
         ),
       );
     }

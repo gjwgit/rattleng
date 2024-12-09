@@ -103,7 +103,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     if (imageExists(image)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
         # Variable Correlation Plot
         
@@ -112,8 +113,9 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
           and
           [corrplot::corrplot(ds)](https://www.rdocumentation.org/packages/corrplot/topics/corrplot)
 
-        ''',
-          path: image,
+        '''
+          ],
+          paths: [image],
         ),
       );
     }

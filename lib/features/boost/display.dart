@@ -91,15 +91,17 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Variable Importance
 
           Generated using
           [xgb::xgb.importance()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.importance).
           
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -129,15 +131,17 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
       if (imageExists(image)) {
         pages.add(
           ImagePage(
-            title: '''
+            titles: [
+              '''
 
           # Variable Importance
 
           Generated using
           [ada::varplot()](https://www.rdocumentation.org/packages/ada/topics/pairs.ada).
 
-          ''',
-            path: image,
+          '''
+            ],
+            paths: [image],
           ),
         );
       }
@@ -154,15 +158,17 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     if (imageExists(riskImage)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
           Using the **training** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: riskImage,
+            '''
+          ],
+          paths: [riskImage],
         ),
       );
     }
@@ -174,15 +180,17 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     if (imageExists(riskImage)) {
       pages.add(
         ImagePage(
-          title: '''
+          titles: [
+            '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
           Using the **tuning** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: riskImage,
+            '''
+          ],
+          paths: [riskImage],
         ),
       );
     }

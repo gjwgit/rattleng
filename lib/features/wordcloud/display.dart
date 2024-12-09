@@ -81,9 +81,11 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
       pages.add(
         ImagePage(
-          title: '# Word Cloud\n\n'
-              'Generated using `wordcloud::wordcloud()`',
-          path: wordCloudImagePath,
+          titles: [
+            '# Word Cloud\n\n'
+                'Generated using `wordcloud::wordcloud()`'
+          ],
+          paths: [wordCloudImagePath],
         ),
       );
     }
