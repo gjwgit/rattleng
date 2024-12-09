@@ -46,7 +46,12 @@ library(rattle)
 
 # Preprocess the dataset for the plot.
 
-tds <- dplyr::mutate(ds, GROUP_BY_VAR=as.factor(GROUP_BY_VAR))
+tds <- ds
+# intentionally didn't use the name IGNORE_MISSING_GROUP_BY_VAR as it collides with GROUP_BY_VAR
+if (IGNORE_MISSING_GROUP_BY) {
+  tds <- dplyr::filter(tds, !is.na(GROUP_BY_VAR))
+}
+tds <- dplyr::mutate(tds, GROUP_BY_VAR=as.factor(GROUP_BY_VAR))
 
 # When the confidence interval for the notch of the boxplot extends
 # beyond the hinges (upper or lower limits of the boxplot) the notches
