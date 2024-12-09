@@ -26,10 +26,11 @@
 # Load required libraries.
 
 library(ada)
-library(rattle) 
-library(rpart)
 library(caret)
 library(ggplot2)
+library(hmeasure)
+library(rattle) 
+library(rpart)
 
 # Define model type and description.
 
@@ -114,6 +115,25 @@ ada_plot <- ada_plot +
 
 svg("TEMPDIR/model_ada_boost.svg")
 print(ada_plot)
+dev.off()
+
+target_ada_levels <- unique(trds[[target]])
+target_ada_levels <- target_ada_levels[!is.na(target_ada_levels)]
+  
+# Get predicted probabilities for the positive class.
+
+predicted_ada_probs <- predict(model_ada, newdata = trds, type = "prob")[,2]
+
+actual_ada_labels <- ifelse(trds[[target]] == target_ada_levels[1], 0, 1)
+
+# Evaluate the model using HMeasure.
+
+results <- HMeasure(true.class = actual_ada_labels, scores = predicted_ada_probs)
+  
+svg("TEMPDIR/model_ada_evaluate_hand.svg")
+
+plotROC(results)
+
 dev.off()
 
 print('Error matrix for the ADABOOST model (counts)')

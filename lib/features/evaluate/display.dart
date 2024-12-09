@@ -76,6 +76,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String handCtreeImage = '$tempDir/model_ctree_evaluate_hand.svg';
 
+    String handAdaBoostImage = '$tempDir/model_ada_evaluate_hand.svg';
+
     List<String> existingImages = [];
     List<String> imagesTitles = [];
 
@@ -87,6 +89,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     if (imageExists(handCtreeImage)) {
       existingImages.add(handCtreeImage);
       imagesTitles.add('CTREE');
+    }
+
+    if (imageExists(handAdaBoostImage)) {
+      existingImages.add(handAdaBoostImage);
+      imagesTitles.add('ADA BOOST');
     }
 
     if (existingImages.isNotEmpty) {

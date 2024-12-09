@@ -38,12 +38,16 @@ String _basicTemplate(
   String mdr;
   String hdc;
   String mdc;
+  String hda;
+  String mda;
 
   if (modelType == 'Tree') {
     hdr = 'Error matrix for the RPART Decision Tree model (counts)';
     mdr = 'Error matrix for the RPART Decision Tree model (proportions)';
     hdc = 'Error matrix for the CTREE Decision Tree model (counts)';
     mdc = 'Error matrix for the CTREE Decision Tree model (proportions)';
+    hda = 'Error matrix for the ADABOOST Decision Tree model (counts)';
+    mda = 'Error matrix for the ADABOOST Decision Tree model (proportions)';
   } else {
     // Handle other types or return an empty result.
 
@@ -52,7 +56,7 @@ String _basicTemplate(
 
   // Now extract the output from particular commands.
 
-  String sz = '', cm = '', cc = '', cp = '';
+  String sz = '', cm = '', cc = '', cp = '', ca = '', pa = '';
 
   if (modelType == 'Tree') {
     sz = rExtract(
@@ -70,6 +74,14 @@ String _basicTemplate(
     cp = rExtract(
       log,
       'print(ctree_per)',
+    );
+    ca = rExtract(
+      log,
+      'print(adaboost_cem)',
+    );
+    pa = rExtract(
+      log,
+      'print(adaboost_per)',
     );
   }
 
@@ -94,6 +106,13 @@ String _basicTemplate(
         '$cc\n\n'
         '$mdc\n\n'
         '$cp\n\n';
+  }
+  if (ca != '' && pa != '') {
+    result = '$result\n'
+        '$hda\n\n'
+        '$ca\n\n'
+        '$mda\n\n'
+        '$pa\n\n';
   }
   result = '$result\n'
       'Rattle timestamp: $ts';
