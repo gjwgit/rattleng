@@ -1,6 +1,5 @@
 /// App-Wide Constants for RattleNG
 ///
-///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
