@@ -36,6 +36,7 @@ import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -349,23 +350,43 @@ Xu, Yixiang Yin, Bo Zhang.
             A new seed will be automatically generated.
 
             ''',
-            child: IconButton(
-              icon: const Icon(
-                Icons.shuffle,
-                color: Colors.blue,
-              ),
-              onPressed: () async {
-                // Generate a new random seed.
+            child: Consumer(
+              builder: (context, ref, child) {
+                // Listen to the partitionProvider and datasetLoaded.
 
-                final newSeed = DateTime.now().millisecondsSinceEpoch % 100000;
-                ref.read(randomSeedProvider.notifier).state = newSeed;
+                final isPartitionEnabled = ref.watch(partitionProvider);
+                final isDatasetLoaded = ref.watch(datasetLoaded);
 
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setInt('randomSeed', newSeed);
+                // Enable the button only if both conditions are true.
 
-                // Optionally show a confirmation or snack bar
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Random seed changed to: $newSeed')),
+                final isButtonEnabled = isPartitionEnabled && isDatasetLoaded;
+
+                return IconButton(
+                  icon: Icon(
+                    Icons.shuffle,
+                    color: isButtonEnabled ? Colors.blue : Colors.grey,
+                  ),
+                  onPressed: isButtonEnabled
+                      ? () async {
+                          // Generate a new random seed.
+
+                          final newSeed =
+                              DateTime.now().millisecondsSinceEpoch % 100000;
+                          ref.read(randomSeedProvider.notifier).state = newSeed;
+
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setInt('randomSeed', newSeed);
+
+                          // Show a confirmation or snack bar
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Random seed changed to: $newSeed'),
+                            ),
+                          );
+                        }
+                      // Disable the button if conditions are not met.
+
+                      : null,
                 );
               },
             ),
