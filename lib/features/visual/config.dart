@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-11-29 15:52:35 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-12-10 08:55:33 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/group_by.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/ignore_missing_group_by.dart';
@@ -162,6 +163,11 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             // The BUILD button.
 
             ActivityButton(
+              tooltip: '''
+
+              Tap here to generate all of the available plots.
+
+              ''',
               pageControllerProvider:
                   visualPageControllerProvider, // Optional navigation
               onPressed: () {
@@ -199,47 +205,72 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
             configWidgetGap,
 
-            DropdownMenu(
-              label: const Text('Variable'),
-              width: 200,
-              initialSelection: selected,
-              dropdownMenuEntries: inputs.map((s) {
-                return DropdownMenuEntry(value: s, label: s);
-              }).toList(),
-              // On selection, record the variable that was selected AND rebuild
-              // the visualisations.
+            MarkdownTooltip(
+              message: '''
 
-              onSelected: (String? value) {
-                ref.read(selectedProvider.notifier).state =
-                    value ?? 'IMPOSSIBLE';
-                // NOT YET WORKING FIRST TIME buildAction();
-              },
+              A **Variable** (selected from the available **Input** variables)
+              is chosen for this visualisation.
+
+              ''',
+              child: DropdownMenu(
+                label: const Text('Variable'),
+                width: 200,
+                initialSelection: selected,
+                dropdownMenuEntries: inputs.map((s) {
+                  return DropdownMenuEntry(value: s, label: s);
+                }).toList(),
+                // On selection, record the variable that was selected AND rebuild
+                // the visualisations.
+
+                onSelected: (String? value) {
+                  ref.read(selectedProvider.notifier).state =
+                      value ?? 'IMPOSSIBLE';
+                  // NOT YET WORKING FIRST TIME buildAction();
+                },
+              ),
             ),
 
             configWidgetGap,
 
-            DropdownMenu(
-              label: const Text('Group by'),
-              width: 200.0,
-              initialSelection: groupBy,
-              dropdownMenuEntries: cats.map((s) {
-                return DropdownMenuEntry(value: s, label: s);
-              }).toList(),
-              // On selection, record the variable that was selected AND rebuild
-              // the visualisations.
+            MarkdownTooltip(
+              message: '''
 
-              onSelected: (String? value) {
-                ref.read(groupByProvider.notifier).state =
-                    value ?? 'IMPOSSIBLE';
+              If a **Group By** variable (selected from the available
+              **Categoric** variables) is chosen then the data will be grouped
+              by the values of that variable and the distribution of the chosen
+              **Variable** will be displayed. Choose **None** to not perform any
+              grouping.
 
-                // NOT YET WORKING FIRST TIME buildAction();
-              },
+              ''',
+              child: DropdownMenu(
+                label: const Text('Group by'),
+                width: 200.0,
+                initialSelection: groupBy,
+                dropdownMenuEntries: cats.map((s) {
+                  return DropdownMenuEntry(value: s, label: s);
+                }).toList(),
+                // On selection, record the variable that was selected AND rebuild
+                // the visualisations.
+
+                onSelected: (String? value) {
+                  ref.read(groupByProvider.notifier).state =
+                      value ?? 'IMPOSSIBLE';
+
+                  // NOT YET WORKING FIRST TIME buildAction();
+                },
+              ),
             ),
             configWidgetGap,
 
             LabelledCheckbox(
               label: 'Ignore Missing Group by',
-              tooltip: 'Ignore Missing Group by',
+              tooltip: '''
+
+              If the **Group By** variable has missing values then we will
+              ignore them by default. Untick this box to show the missing (*NA*)
+              as another group displayed in the plots.
+
+              ''',
               provider: ignoreMissingGroupByProvider,
             ),
           ],
