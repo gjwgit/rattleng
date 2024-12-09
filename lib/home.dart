@@ -28,29 +28,37 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+// Dart imports
+
 import 'dart:io';
 
+// Flutter imports
+
 import 'package:flutter/material.dart';
+
+// Package imports
 
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/providers/partition.dart';
-import 'package:rattle/providers/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
+
+// Local imports
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/features/evaluate/panel.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/datatype.dart';
+import 'package:rattle/providers/partition.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/tabs/debug/tab.dart';
 import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
@@ -341,8 +349,6 @@ Xu, Yixiang Yin, Bo Zhang.
             ),
           ),
 
-          //TODO kevin add
-
           MarkdownTooltip(
             message: '''
 
@@ -377,7 +383,8 @@ Xu, Yixiang Yin, Bo Zhang.
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.setInt('randomSeed', newSeed);
 
-                          // Show a confirmation or snack bar
+                          // Show a confirmation or snack bar.
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Random seed changed to: $newSeed'),
