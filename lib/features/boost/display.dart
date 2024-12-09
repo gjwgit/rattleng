@@ -38,9 +38,9 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
-import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions and a navigator to the outputs.
@@ -90,18 +90,16 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Variable Importance
 
           Generated using
           [xgb::xgb.importance()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.importance).
           
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }
@@ -130,18 +128,16 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Variable Importance
 
           Generated using
           [ada::varplot()](https://www.rdocumentation.org/packages/ada/topics/pairs.ada).
 
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }
@@ -157,18 +153,16 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
     if (imageExists(riskImage)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
           Using the **training** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            '''
-          ],
-          paths: [riskImage],
+            ''',
+          path: riskImage,
         ),
       );
     }
@@ -179,18 +173,16 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
     if (imageExists(riskImage)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
           Using the **tuning** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            '''
-          ],
-          paths: [riskImage],
+            ''',
+          path: riskImage,
         ),
       );
     }

@@ -35,8 +35,8 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
@@ -105,18 +105,16 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
         # Patterns of Missing Values - Visual
 
         Generated using
         [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
-        '''
-          ],
-          paths: [image],
+        ''',
+          path: image,
         ),
       );
     }
@@ -161,18 +159,16 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
           
         # Aggregation of Missing Values - Visual
           
         Generated using
         [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
         
-        '''
-          ],
-          paths: [image],
+        ''',
+          path: image,
         ),
       );
     }
@@ -183,18 +179,16 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
         # Visualisation of Observations with Missing Values
 
         Generated using
         [naniar::vis_miss(ds)](https://www.rdocumentation.org/packages/naniar).
 
-        '''
-          ],
-          paths: [image],
+        ''',
+          path: image,
         ),
       );
     }
@@ -207,18 +201,16 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
         # Comparison of Counts of Missing Values
 
         Generated using
         [naniar::gg_miss_var(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_var).
 
-        '''
-          ],
-          paths: [image],
+        ''',
+          path: image,
         ),
       );
     }
@@ -231,18 +223,16 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
         # Patterns of Missingness
 
         Generated using
         [naniar::gg_miss_upset(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_upset).
 
-        '''
-          ],
-          paths: [image],
+        ''',
+          path: image,
         ),
       );
     }

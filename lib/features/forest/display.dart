@@ -39,7 +39,7 @@ import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Forest panel displays the instructions and then the model build output
@@ -157,15 +157,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
             # Variable Importance &#8212; Plot
 
-            '''
-            ],
-            paths: [image],
+            ''',
+            path: image,
           ),
         );
       }
@@ -176,15 +174,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(errorRatesImage)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
             # Error Rate Plot
 
-            '''
-            ],
-            paths: [errorRatesImage],
+            ''',
+            path: errorRatesImage,
           ),
         );
       }
@@ -195,15 +191,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(oobRocImage)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
             # Out of Bag ROC Curve
 
-            '''
-            ],
-            paths: [oobRocImage],
+            ''',
+            path: oobRocImage,
           ),
         );
       }
@@ -277,15 +271,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(varImportanceImage)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
             # Variable Importance &#8212; Plot
 
-            '''
-            ],
-            paths: [varImportanceImage],
+            ''',
+            path: varImportanceImage,
           ),
         );
       }
@@ -301,18 +293,16 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
           # Risk Chart &#8212; Optimistic Estimate of Performance
 
           Using the **training** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            '''
-          ],
-          paths: [image],
+            ''',
+          path: image,
         ),
       );
     }
@@ -327,18 +317,16 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
           Using the **tuning** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            '''
-          ],
-          paths: [image],
+            ''',
+          path: image,
         ),
       );
     }

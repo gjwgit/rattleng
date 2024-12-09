@@ -36,9 +36,9 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 class WordCloudDisplay extends ConsumerStatefulWidget {
@@ -80,12 +80,10 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // build button pressed and png file exists
 
       pages.add(
-        ImagePage(
-          titles: [
-            '# Word Cloud\n\n'
-                'Generated using `wordcloud::wordcloud()`'
-          ],
-          paths: [wordCloudImagePath],
+        SingleImagePage(
+          title: '# Word Cloud\n\n'
+              'Generated using `wordcloud::wordcloud()`',
+          path: wordCloudImagePath,
         ),
       );
     }

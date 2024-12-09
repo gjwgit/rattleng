@@ -35,9 +35,9 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/utils/image_exists.dart';
-import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/page_viewer.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 
 /// The panel displays the instructions or the output.
 
@@ -75,9 +75,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Box Plot
 
@@ -85,9 +84,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/box-plot.html) and
           [ggplot2::geom_boxplot()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot).
 
-              '''
-            ],
-            paths: [image],
+              ''',
+            path: image,
           ),
         );
       }
@@ -98,9 +96,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Density Plot of Values
 
@@ -108,9 +105,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/density-plot.html) and
           [ggplot2::geom_density()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_density).
 
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }
@@ -121,9 +117,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Cumulative Plot
 
@@ -131,9 +126,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/cumulative-plot.html) and
           [ggplot2::stat_ecdf()](https://www.rdocumentation.org/packages/ggplot2/topics/stat_ecdf).
 
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }
@@ -144,9 +138,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Benford Plot
 
@@ -154,9 +147,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/benford-plot.html) and
           [rattle::plotDigitFreq()](https://www.rdocumentation.org/packages/rattle).
 
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }
@@ -165,7 +157,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     // If two variables selected then we can do a pairs plot.
 
     // pages.add(
-    //   ImagePage(
+    //   SingleImagePage(
     //     title: 'Pairs Plot\n\n'
     //         'Generated using [GGally::ggpairs()]'
     //         '(https://www.rdocumentation.org/packages/GGally/topics/ggpairs).',
@@ -180,9 +172,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Bar Chart
 
@@ -190,9 +181,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/bar-chart.html) and
           [gplots::barplot2()](https://www.rdocumentation.org/packages/gplots/topics/barplot2).
 
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }
@@ -203,9 +193,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Mosaic Plot
 
@@ -213,9 +202,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/mosaic-plot.html) and
           [graphics::mosaicplot()](https://www.rdocumentation.org/packages/graphics/topics/mosaicplot).
 
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }
@@ -226,9 +214,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
-            titles: [
-              '''
+          SingleImagePage(
+            title: '''
 
           # Dot Plot
 
@@ -236,9 +223,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Guide](https://survivor.togaware.com/datascience/dot-plot.html) and
           [graphics::dotchart()](https://www.rdocumentation.org/packages/graphics/topics/dotchart).
 
-          '''
-            ],
-            paths: [image],
+          ''',
+            path: image,
           ),
         );
       }

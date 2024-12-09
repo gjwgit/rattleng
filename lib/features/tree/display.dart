@@ -38,7 +38,7 @@ import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Tree panel displays the tree instructions and then output for the built
@@ -126,17 +126,15 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
           # A visualisation of the Tree
 
           Built using [rattle::fancyRpartPlot()](https://www.rdocumentation.org/packages/rattle/topics/fancyRpartPlot).
 
-          '''
-          ],
-          paths: [image],
+          ''',
+          path: image,
         ),
       );
     }
@@ -151,9 +149,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
           # Risk Chart &#8212; Optimistic Estimate of Performance
 
@@ -162,9 +159,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
           [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            '''
-          ],
-          paths: [image],
+            ''',
+          path: image,
         ),
       );
     }
@@ -179,9 +175,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
-          titles: [
-            '''
+        SingleImagePage(
+          title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
@@ -190,9 +185,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
           [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            '''
-          ],
-          paths: [image],
+            ''',
+          path: image,
         ),
       );
     }
