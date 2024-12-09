@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Monday 2024-12-02 09:41:01 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-12-10 08:58:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -478,7 +478,10 @@ Future<void> rSource(
   // EXPLORE - VISUAL - BOXPLOT
 
   code = code.replaceAll('BOXPLOT_NOTCH', 'FALSE');
-  code = code.replaceAll('IGNORE_MISSING_GROUP_BY', ignoreMissingGroupBy.toString().toUpperCase());
+  code = code.replaceAll(
+    'IGNORE_MISSING_GROUP_BY',
+    ignoreMissingGroupBy.toString().toUpperCase(),
+  );
 
   ////////////////////////////////////////////////////////////////////////
   // FOREST
