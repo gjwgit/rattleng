@@ -101,7 +101,14 @@ dev.off()
 
 svg("TEMPDIR/explore_visual_density.svg", width=10)
 
-ds %>%
+# If IGNORE_MISSING_GROUP_BY, filter out rows with NA
+density_data <- ds
+
+if (IGNORE_MISSING_GROUP_BY) {
+  density_data <- dplyr::filter(density_data, !is.na(GROUP_BY_VAR))
+}
+
+density_data %>%
   dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
   dplyr::select(SELECTED_VAR, GROUP_BY_VAR) %>%
   ggplot2::ggplot(ggplot2::aes(x=SELECTED_VAR)) +
@@ -120,7 +127,13 @@ dev.off()
 
 svg("TEMPDIR/explore_visual_ecdf.svg", width=10)
 
-ds %>%
+# If IGNORE_MISSING_GROUP_BY, filter out rows with NA
+ecdf_data <- ds
+if (IGNORE_MISSING_GROUP_BY) {
+  ecdf_data <- dplyr::filter(ecdf_data, !is.na(GROUP_BY_VAR))
+}
+
+ecdf_data %>%
   dplyr::mutate(GROUP_BY_VAR=as.factor(GROUP_BY_VAR)) %>%
   dplyr::select(SELECTED_VAR, GROUP_BY_VAR) %>%
   ggplot2::ggplot() +
