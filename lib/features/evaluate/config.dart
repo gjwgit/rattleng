@@ -176,10 +176,15 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               onPressed: () async {
                 bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+                bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
+                bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
+                bool boostTicked = ref.watch(boostEvaluateProvider);
 
                 String mbe = 'model_build_evaluate';
                 String er = 'evaluate_rpart';
                 String ec = 'evaluate_ctree';
+                String ea = 'evaluate_adaboost';
+                String ex = 'evaluate_xgboost';
 
                 await rSource(
                   context,
@@ -200,6 +205,22 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     context,
                     ref,
                     [ec],
+                  );
+                }
+
+                if (adaBoostExecuted && boostTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ea],
+                  );
+                }
+
+                if (xgBoostExecuted && boostTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ex],
                   );
                 }
 

@@ -93,27 +93,3 @@ importance_plot <- importance_plot + expand_limits(y = max(importance_matrix$Imp
 print(importance_plot)
 
 dev.off()
-
-print('Error matrix for the XGBOOST model (counts)')
-
-error_predic <- predict(model_xgb, newdata = trds,)
-
-error_predic_clean <- error_predic[!is.na(error_predic)]
-
-target_clean <- trds[[target]][!is.na(error_predic)]
-
-# Get levels from target_clean.
-
-target_levels <- levels(target_clean)
-
-error_predic_clean <- ifelse(error_predic_clean > 0.5, target_levels[2], target_levels[1])
-
-xgboost_cem <- rattle::errorMatrix(target_clean, error_predic_clean, count = TRUE)
-
-print(xgboost_cem)
-
-print('Error matrix for the XGBOOST model (proportions)')
-
-xgboost_per <- rattle::errorMatrix(target_clean, error_predic_clean)
-
-print(xgboost_per)

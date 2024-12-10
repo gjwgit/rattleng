@@ -26,14 +26,17 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(
   String log,
-  String modelType,
   WidgetRef ref,
 ) {
+  bool treeExecuted = ref.watch(rpartTreeEvaluateProvider);
+  bool boostExecuted = ref.watch(boostEvaluateProvider);
+
   String hdr;
   String mdr;
   String hdc;
@@ -43,59 +46,51 @@ String _basicTemplate(
   String hdx;
   String mdx;
 
-  if (modelType == 'Tree') {
-    hdr = 'Error matrix for the RPART Decision Tree model (counts)';
-    mdr = 'Error matrix for the RPART Decision Tree model (proportions)';
-    hdc = 'Error matrix for the CTREE Decision Tree model (counts)';
-    mdc = 'Error matrix for the CTREE Decision Tree model (proportions)';
-    hda = 'Error matrix for the ADABOOST model (counts)';
-    mda = 'Error matrix for the ADABOOST model (proportions)';
-    hdx = 'Error matrix for the XGBOOST model (counts)';
-    mdx = 'Error matrix for the XGBOOST model (proportions)';
-  } else {
-    // Handle other types or return an empty result.
-
-    return '';
-  }
+  hdr = 'Error matrix for the RPART Decision Tree model (counts)';
+  mdr = 'Error matrix for the RPART Decision Tree model (proportions)';
+  hdc = 'Error matrix for the CTREE Decision Tree model (counts)';
+  mdc = 'Error matrix for the CTREE Decision Tree model (proportions)';
+  hda = 'Error matrix for the ADABOOST model (counts)';
+  mda = 'Error matrix for the ADABOOST model (proportions)';
+  hdx = 'Error matrix for the XGBOOST model (counts)';
+  mdx = 'Error matrix for the XGBOOST model (proportions)';
 
   // Now extract the output from particular commands.
 
   String sz = '', cm = '', cc = '', cp = '', ca = '', pa = '', cx = '', px = '';
 
-  if (modelType == 'Tree') {
-    sz = rExtract(
-      log,
-      'print(rpart_cem)',
-    );
-    cm = rExtract(
-      log,
-      'print(rpart_per)',
-    );
-    cc = rExtract(
-      log,
-      'print(ctree_cem)',
-    );
-    cp = rExtract(
-      log,
-      'print(ctree_per)',
-    );
-    ca = rExtract(
-      log,
-      'print(adaboost_cem)',
-    );
-    pa = rExtract(
-      log,
-      'print(adaboost_per)',
-    );
-    cx = rExtract(
-      log,
-      'print(xgboost_cem)',
-    );
-    px = rExtract(
-      log,
-      'print(xgboost_per)',
-    );
-  }
+  sz = rExtract(
+    log,
+    'print(rpart_cem)',
+  );
+  cm = rExtract(
+    log,
+    'print(rpart_per)',
+  );
+  cc = rExtract(
+    log,
+    'print(ctree_cem)',
+  );
+  cp = rExtract(
+    log,
+    'print(ctree_per)',
+  );
+  ca = rExtract(
+    log,
+    'print(adaboost_cem)',
+  );
+  pa = rExtract(
+    log,
+    'print(adaboost_per)',
+  );
+  cx = rExtract(
+    log,
+    'print(xgboost_cem)',
+  );
+  px = rExtract(
+    log,
+    'print(xgboost_per)',
+  );
 
   // Obtain the current timestamp.
 
@@ -105,21 +100,21 @@ String _basicTemplate(
 
   String result = '';
 
-  if (sz != '' && cm != '') {
+  if (sz != '' && cm != '' && treeExecuted) {
     result = '$hdr\n\n'
         '\n$sz\n\n'
         '$mdr\n\n'
         '\n$cm\n\n';
   }
 
-  if (cc != '' && cp != '') {
+  if (cc != '' && cp != '' && treeExecuted) {
     result = '$result\n'
         '$hdc\n\n'
         '$cc\n\n'
         '$mdc\n\n'
         '$cp\n\n';
   }
-  if (ca != '' && pa != '') {
+  if (ca != '' && pa != '' && boostExecuted) {
     result = '$result\n'
         '$hda\n\n'
         '$ca\n\n'
@@ -127,7 +122,7 @@ String _basicTemplate(
         '$pa\n\n';
   }
 
-  if (cx != '' && px != '') {
+  if (cx != '' && px != '' && boostExecuted) {
     result = '$result\n'
         '$hdx\n\n'
         '$cx\n\n'
@@ -143,14 +138,12 @@ String _basicTemplate(
 
 String rExtractEvaluate(
   String log,
-  String modelType,
   WidgetRef ref,
 ) {
   // Extract from the R log those lines of output from the evaluate.
 
   String extract = _basicTemplate(
     log,
-    modelType,
     ref,
   );
 

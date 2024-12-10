@@ -33,43 +33,32 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+library(Ckmeans.1d.dp)  # For ggplot.
+library(data.table)     # Display data as a nicely formatted table.
 library(hmeasure)
-library(party)        # Conditional inference trees
-library(partykit)     # Enhanced visualization and interpretation
+library(rattle)         # Provides a convenient wrapper for xgboost.
+library(xgboost)        # For XGBoost model.
 
-target_ctree_levels <- unique(trds[[target]])
-target_ctree_levels <- target_ctree_levels[!is.na(target_ctree_levels)]
-  
-# Get predicted probabilities for the positive class.
+print('Error matrix for the XGBOOST model (counts)')
 
-predicted_ctree_probs <- predict(model_ctree, newdata = trds, type = "prob")[,2]
+error_predic <- predict(model_xgb, newdata = trds,)
 
-actual_ctree_labels <- ifelse(trds[[target]] == target_ctree_levels[1], 0, 1)
+error_predic_clean <- error_predic[!is.na(error_predic)]
 
-# Evaluate the model using HMeasure.
+target_clean <- trds[[target]][!is.na(error_predic)]
 
-results <- HMeasure(true.class = actual_ctree_labels, scores = predicted_ctree_probs)
-  
-svg("TEMPDIR/model_ctree_evaluate_hand.svg")
+# Get levels from target_clean.
 
-plotROC(results)
+target_levels <- levels(target_clean)
 
-dev.off()
+error_predic_clean <- ifelse(error_predic_clean > 0.5, target_levels[2], target_levels[1])
 
-print("Error matrix for the CTREE Decision Tree model (counts)")
+xgboost_cem <- rattle::errorMatrix(target_clean, error_predic_clean, count = TRUE)
 
-error_predic <- predict(model_ctree, newdata = trds, type = "prob")
+print(xgboost_cem)
 
-error_predic <- apply(error_predic, 1, function(x) {
-  colnames(error_predic)[which.max(x)]
-})
+print('Error matrix for the XGBOOST model (proportions)')
 
-ctree_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+xgboost_per <- rattle::errorMatrix(target_clean, error_predic_clean)
 
-print(ctree_cem)
-
-print('Error matrix for the CTREE Decision Tree model (proportions)')
-
-ctree_per <- rattle::errorMatrix(trds[[target]], error_predic)
-
-print(ctree_per)
+print(xgboost_per)

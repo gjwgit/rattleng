@@ -1,4 +1,4 @@
-# Generate error matrix and Hand plot of model ctree.
+# Generate error matrix and Hand plot of model adaboost.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -33,43 +33,47 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+library(ada)
+library(caret)
+library(ggplot2)
 library(hmeasure)
-library(party)        # Conditional inference trees
-library(partykit)     # Enhanced visualization and interpretation
+library(rattle)
+library(rpart)
 
-target_ctree_levels <- unique(trds[[target]])
-target_ctree_levels <- target_ctree_levels[!is.na(target_ctree_levels)]
+
+target_ada_levels <- unique(trds[[target]])
+target_ada_levels <- target_ada_levels[!is.na(target_ada_levels)]
   
 # Get predicted probabilities for the positive class.
 
-predicted_ctree_probs <- predict(model_ctree, newdata = trds, type = "prob")[,2]
+predicted_ada_probs <- predict(model_ada, newdata = trds, type = "prob")[,2]
 
-actual_ctree_labels <- ifelse(trds[[target]] == target_ctree_levels[1], 0, 1)
+actual_ada_labels <- ifelse(trds[[target]] == target_ada_levels[1], 0, 1)
 
 # Evaluate the model using HMeasure.
 
-results <- HMeasure(true.class = actual_ctree_labels, scores = predicted_ctree_probs)
+results <- HMeasure(true.class = actual_ada_labels, scores = predicted_ada_probs)
   
-svg("TEMPDIR/model_ctree_evaluate_hand.svg")
+svg("TEMPDIR/model_ada_evaluate_hand.svg")
 
 plotROC(results)
 
 dev.off()
 
-print("Error matrix for the CTREE Decision Tree model (counts)")
+print('Error matrix for the ADABOOST model (counts)')
 
-error_predic <- predict(model_ctree, newdata = trds, type = "prob")
+error_predic <- predict(model_ada, newdata = trds,)
 
 error_predic <- apply(error_predic, 1, function(x) {
   colnames(error_predic)[which.max(x)]
 })
 
-ctree_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+adaboost_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
 
-print(ctree_cem)
+print(adaboost_cem)
 
-print('Error matrix for the CTREE Decision Tree model (proportions)')
+print('Error matrix for the ADABOOST model (proportions)')
 
-ctree_per <- rattle::errorMatrix(trds[[target]], error_predic)
+adaboost_per <- rattle::errorMatrix(trds[[target]], error_predic)
 
-print(ctree_per)
+print(adaboost_per)
