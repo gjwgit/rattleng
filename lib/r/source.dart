@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Monday 2024-12-02 09:41:01 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-12-10 08:58:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -130,6 +131,10 @@ Future<void> rSource(
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
+
+  // VISUAL
+
+  bool ignoreMissingGroupBy = ref.read(ignoreMissingGroupByProvider);
 
   // ASSOCIATION
 
@@ -474,6 +479,10 @@ Future<void> rSource(
   // EXPLORE - VISUAL - BOXPLOT
 
   code = code.replaceAll('BOXPLOT_NOTCH', 'FALSE');
+  code = code.replaceAll(
+    'IGNORE_MISSING_GROUP_BY',
+    ignoreMissingGroupBy.toString().toUpperCase(),
+  );
 
   ////////////////////////////////////////////////////////////////////////
   // FOREST
