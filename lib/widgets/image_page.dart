@@ -1,6 +1,6 @@
 /// A widget to build the common image based pages.
 //
-// Time-stamp: <Tuesday 2024-11-19 09:18:00 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-12-10 16:35:18 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -278,7 +278,7 @@ class ImagePage extends StatelessWidget {
                                         allowedExtensions: [
                                           'svg',
                                           'pdf',
-                                          'png'
+                                          'png',
                                         ],
                                       );
                                       if (pathToSave != null) {
