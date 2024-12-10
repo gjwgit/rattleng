@@ -177,17 +177,21 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
 
+                String mbe = 'model_build_evaluate';
+                String er = 'evaluate_rpart';
+                String ec = 'evaluate_ctree';
+
                 await rSource(
                   context,
                   ref,
-                  ['model_build_evaluate'],
+                  [mbe],
                 );
 
                 if (rpartExecuted) {
                   await rSource(
                     context,
                     ref,
-                    ['evaluate_rpart'],
+                    [er],
                   );
                 }
 
@@ -195,7 +199,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    ['evaluate_ctree'],
+                    [ec],
                   );
                 }
 
