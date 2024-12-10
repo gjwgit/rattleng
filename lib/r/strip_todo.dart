@@ -1,6 +1,6 @@
 /// Utility to strip TODO lines from an R script file.
 ///
-/// Time-stamp: <Monday 2024-12-02 09:21:13 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2024-12-10 17:03:56 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -35,10 +35,15 @@ String rStripTodo(String code) {
 
   List<String> lines = code.split('\n');
 
-  // Filter out lines that start with optional whitespace followed by '# TODO'.
-
-  List<String> filteredLines =
-      lines.where((line) => !RegExp(r'^\s*# TODO').hasMatch(line)).toList();
+  List<String> filteredLines = lines
+      // Filter out lines that start with optional whitespace followed by '#
+      // TODO'.
+      .where((line) => !RegExp(r'^\s*# TODO').hasMatch(line))
+      // Filter out lines that start with optional whitespace followed by '##'
+      // as markerts of things to be done and not included in the user scripts.
+      .where((line) => !RegExp(r'^\s*##[^#]').hasMatch(line))
+      .where((line) => !RegExp(r'^\s*##$').hasMatch(line))
+      .toList();
 
   // Join the filtered lines back into a single string.
 

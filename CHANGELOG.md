@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Support ignoring missing group by in VISUAL [6.3.32 20241210 kev]
 + Riskchart for NERUALNET [6.3.31 20241209 zy]
 + Initial risk charts for evaluation [6.3.30 20241206 zy]
 + Further settings [6.3.30 20241206 kev]
