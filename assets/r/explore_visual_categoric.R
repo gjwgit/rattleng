@@ -43,7 +43,14 @@ library(ggplot2)
 
 svg("TEMPDIR/explore_visual_bars.svg", width=10)
 
-ds %>%
+# intentionally didn't use the name IGNORE_MISSING_GROUP_BY_VAR as it collides with GROUP_BY_VAR
+if (IGNORE_MISSING_GROUP_BY) {
+  dsm <- dplyr::filter(ds, !is.na(GROUP_BY_VAR))
+} else {
+  dsm <- ds
+}
+
+dsm %>%
   ggplot(aes(x = SELECTED_VAR, fill = GROUP_BY_VAR)) +
   geom_bar(position = "dodge") +
   labs(title = "Distribution of SELECTED_VAR by GROUP_BY_VAR",
@@ -61,12 +68,12 @@ dev.off()
 
 svg("TEMPDIR/explore_visual_dots.svg", width=10)
 
-overall_freq <- as.data.frame(table(ds$SELECTED_VAR))
+overall_freq <- as.data.frame(table(dsm$SELECTED_VAR))
 colnames(overall_freq) <- c("SELECTED_VAR", "Frequency")
 overall_freq$GROUP_BY_VAR <- "Overall"
 
 # Calculate grouped frequencies
-grouped_freq <- as.data.frame(table(ds$SELECTED_VAR, ds$GROUP_BY_VAR))
+grouped_freq <- as.data.frame(table(dsm$SELECTED_VAR, dsm$GROUP_BY_VAR))
 colnames(grouped_freq) <- c("SELECTED_VAR", "GROUP_BY_VAR", "Frequency")
 
 # Combine datasets
@@ -122,7 +129,7 @@ svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
 
 # Generate the table data for plotting.
 
-tds <- table(ds$SELECTED_VAR, ds$GROUP_BY_VAR)
+tds <- table(dsm$SELECTED_VAR, dsm$GROUP_BY_VAR)
 
 # Sort the entries.
 
