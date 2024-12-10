@@ -63,7 +63,9 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     content = rExtractEvaluate(stdout, 'Tree', ref);
 
-    if (content.isNotEmpty) {
+    bool showContentMaterial = content.trim().split('\n').length > 1;
+
+    if (showContentMaterial) {
       pages.add(
         TextPage(
           title: '# Error Matrix\n\n',
