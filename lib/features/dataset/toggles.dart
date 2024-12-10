@@ -278,17 +278,18 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           message: '''
 
           **Partition** Currently **${partition ? "" : "not "}enabled**. When
-          enabled, for the purposes of predictive modelling, a dataset will be
-          randomly split into three smaller datasets. The three-way split is
-          commonly 70/15/15 percent. Respectively, this creates a **training**
-          dataset (to build the model), a **tuning** dataset (to assist in
-          tuning the model during build and sometimes called a validation
-          dataset), and a **testing** dataset (as a hold-out dataset for an
-          unbiased estimate of the expected performance of the model). For
-          exploring reasonably large datasets (tens of thousands of
-          observations) you can turn partitioning off so all data is included in
-          the exploration. For larger datasets the partitioning is useful to
-          explore a random subset of the full dataset.
+          enabled, for the purposes of predictive modelling *only*, a dataset
+          will be randomly split into three smaller datasets. The three-way
+          split defaults to 70/15/15 percent and is currently set as
+          70/15/15. Respectively, this creates a **training** dataset (to build
+          the model), a **tuning** or **validation** dataset (to support
+          exploring the model parameters and prevent overfitting), and a
+          **testing** dataset (as a hold-out dataset for an unbiased estimate of
+          the expected performance of the model). For exploring reasonably large
+          datasets (tens of thousands of observations) you can turn partitioning
+          off so all data is included in the exploration. For larger datasets
+          the partitioning is useful to explore a random subset of the full
+          dataset.
 
           ''',
           child: const Icon(Icons.horizontal_split),
