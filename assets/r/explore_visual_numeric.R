@@ -47,10 +47,13 @@ library(rattle)
 # Preprocess the dataset for the plot.
 
 tds <- ds
-# intentionally didn't use the name IGNORE_MISSING_GROUP_BY_VAR as it collides with GROUP_BY_VAR
+
+# If IGNORE_MISSING_GROUP_BY, filter out rows with NA
+
 if (IGNORE_MISSING_GROUP_BY) {
   tds <- dplyr::filter(tds, !is.na(GROUP_BY_VAR))
 }
+
 tds <- dplyr::mutate(tds, GROUP_BY_VAR=as.factor(GROUP_BY_VAR))
 
 # When the confidence interval for the notch of the boxplot extends
@@ -102,6 +105,7 @@ dev.off()
 svg("TEMPDIR/explore_visual_density.svg", width=10)
 
 # If IGNORE_MISSING_GROUP_BY, filter out rows with NA
+
 density_data <- ds
 
 if (IGNORE_MISSING_GROUP_BY) {
@@ -128,6 +132,7 @@ dev.off()
 svg("TEMPDIR/explore_visual_ecdf.svg", width=10)
 
 # If IGNORE_MISSING_GROUP_BY, filter out rows with NA
+
 ecdf_data <- ds
 if (IGNORE_MISSING_GROUP_BY) {
   ecdf_data <- dplyr::filter(ecdf_data, !is.na(GROUP_BY_VAR))
