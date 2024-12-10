@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-02 09:16:21 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-12-10 15:52:56 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -61,7 +61,7 @@ model_rpart <- rpart(
   method  = method,
   parms   = list(split="information" PRIORS LOSS),
   control = rpart.control(usesurrogate = 0,
-                          maxsurrogate = 0, 
+                          maxsurrogate = 0,
                           MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model   = TRUE)
 
@@ -95,7 +95,7 @@ dev.off()
 
 target_rpart_levels <- unique(trds[[target]])
 target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present
-  
+
 # Get predicted probabilities for the positive class.
 
 predicted_rpart_probs <- predict(model_rpart, newdata = trds, type = "prob")[,2]
@@ -105,7 +105,7 @@ actual_rpart_labels <- ifelse(trds[[target]] == target_rpart_levels[1], 0, 1)
 # Evaluate the model using HMeasure.
 
 results <- HMeasure(true.class = actual_rpart_labels, scores = predicted_rpart_probs)
-  
+
 svg("TEMPDIR/model_rpart_evaluate_hand.svg")
 
 plotROC(results)

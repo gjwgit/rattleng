@@ -291,10 +291,14 @@ class ImagePage extends StatelessWidget {
                                               .copy(pathToSave);
                                         } else if (extension == 'pdf') {
                                           await _exportToPdf(
-                                              paths[index], pathToSave,);
+                                            paths[index],
+                                            pathToSave,
+                                          );
                                         } else if (extension == 'png') {
                                           await _exportToPng(
-                                              paths[index], pathToSave,);
+                                            paths[index],
+                                            pathToSave,
+                                          );
                                         } else {
                                           showOk(
                                             title: 'Error',
