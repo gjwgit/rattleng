@@ -174,11 +174,30 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             ActivityButton(
               pageControllerProvider: evaluatePageControllerProvider,
               onPressed: () async {
+                bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
+                bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+
                 await rSource(
                   context,
                   ref,
                   ['model_build_evaluate'],
                 );
+
+                if (rpartExecuted) {
+                  await rSource(
+                    context,
+                    ref,
+                    ['evaluate_rpart'],
+                  );
+                }
+
+                if (ctreeExecuted) {
+                  await rSource(
+                    context,
+                    ref,
+                    ['evaluate_ctree'],
+                  );
+                }
 
                 await ref.read(evaluatePageControllerProvider).animateToPage(
                       // Index of the second page.

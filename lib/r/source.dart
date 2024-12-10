@@ -40,7 +40,6 @@ import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/complexity.dart';
-import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
@@ -175,8 +174,6 @@ Future<void> rSource(
   // bool evaluateNeuralNetExecuted = ref.read(neuralNetEvaluateProvider);
   // bool evaluateSVMExecuted = ref.read(svmEvaluateProvider);
 
-  bool evaluateRpartTreeExecuted = ref.read(rpartTreeEvaluateProvider);
-
   // FOREST
 
   int forestTrees = ref.read(treeNumForestProvider);
@@ -278,13 +275,6 @@ Future<void> rSource(
   code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
   code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
   code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
-
-  // EVALUATE
-
-  code = code.replaceAll(
-    'RPART_TREE_EXECUTED_EVALUATE',
-    evaluateRpartTreeExecuted ? 'TRUE' : 'FALSE',
-  );
 
   ////////////////////////////////////////////////////////////////////////
 

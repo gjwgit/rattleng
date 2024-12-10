@@ -29,6 +29,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final boostEvaluateProvider = StateProvider<bool>((ref) => false);
+final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
 final forestEvaluateProvider = StateProvider<bool>((ref) => false);
 final hClusterEvaluateProvider = StateProvider<bool>((ref) => false);
 final kMeansEvaluateProvider = StateProvider<bool>((ref) => false);
