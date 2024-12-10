@@ -39,6 +39,7 @@ import 'package:rattle/features/tests/panel.dart';
 import 'package:rattle/features/interactive/panel.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/explore.dart';
+import 'package:rattle/providers/reset.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> explorePanels = [
@@ -84,6 +85,8 @@ class ExploreTabs extends ConsumerStatefulWidget {
   ConsumerState<ExploreTabs> createState() => _ExploreTabsState();
 }
 
+//TODO kevin
+
 class _ExploreTabsState extends ConsumerState<ExploreTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
@@ -109,6 +112,19 @@ class _ExploreTabsState extends ConsumerState<ExploreTabs>
   Widget build(BuildContext context) {
     super.build(context);
     debugText('  BUILD', 'ExploreTab');
+
+    // Listen to isResetProvider and reset tabController to index 0 if true.
+
+    final isReset = ref.watch(isResetProvider);
+
+    if (isReset) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _tabController.animateTo(0);
+        // Reset the flag.
+
+        ref.read(isResetProvider.notifier).state = false;
+      });
+    }
 
     return Column(
       children: [
