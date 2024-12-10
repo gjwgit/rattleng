@@ -28,26 +28,37 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
+// Dart imports
+
 import 'dart:io';
 
+// Flutter imports
+
 import 'package:flutter/material.dart';
+
+// Package imports
 
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Local imports
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/features/evaluate/panel.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/datatype.dart';
+import 'package:rattle/providers/partition.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/tabs/debug/tab.dart';
 import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
@@ -334,6 +345,56 @@ Xu, Yixiang Yin, Bo Zhang.
                 } else {
                   await reset(context, ref);
                 }
+              },
+            ),
+          ),
+
+          MarkdownTooltip(
+            message: '''
+
+            **Change Seed:** Tap here to quickly change the random seed. 
+            A new seed will be automatically generated.
+
+            ''',
+            child: Consumer(
+              builder: (context, ref, child) {
+                // Listen to the partitionProvider and datasetLoaded.
+
+                final isPartitionEnabled = ref.watch(partitionProvider);
+                final isDatasetLoaded = ref.watch(datasetLoaded);
+
+                // Enable the button only if both conditions are true.
+
+                final isButtonEnabled = isPartitionEnabled && isDatasetLoaded;
+
+                return IconButton(
+                  icon: Icon(
+                    Icons.shuffle,
+                    color: isButtonEnabled ? Colors.blue : Colors.grey,
+                  ),
+                  onPressed: isButtonEnabled
+                      ? () async {
+                          // Generate a new random seed.
+
+                          final newSeed =
+                              DateTime.now().millisecondsSinceEpoch % 100000;
+                          ref.read(randomSeedProvider.notifier).state = newSeed;
+
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setInt('randomSeed', newSeed);
+
+                          // Show a confirmation or snack bar.
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Random seed changed to: $newSeed'),
+                            ),
+                          );
+                        }
+                      // Disable the button if conditions are not met.
+
+                      : null,
+                );
               },
             ),
           ),
