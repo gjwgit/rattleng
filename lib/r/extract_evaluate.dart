@@ -49,6 +49,8 @@ String _basicTemplate(
   String mdx;
   String hdrf;
   String mdrf;
+  String hdcf;
+  String mdcf;
 
   hdr =
       'Error matrix for the RPART Decision Tree model [$evaluateDataset] (counts)';
@@ -65,6 +67,10 @@ String _basicTemplate(
   hdrf = 'Error matrix for the RANDOM FOREST model [$evaluateDataset] (counts)';
   mdrf =
       'Error matrix for the RANDOM FOREST model [$evaluateDataset] (proportions)';
+  hdcf =
+      'Error matrix for the CONDITIONAL FOREST model [$evaluateDataset] (counts)';
+  mdcf =
+      'Error matrix for the CONDITIONAL FOREST model [$evaluateDataset] (proportions)';
 
   // Now extract the output from particular commands.
 
@@ -77,7 +83,9 @@ String _basicTemplate(
       cx = '',
       px = '',
       crf = '',
-      prf = '';
+      prf = '',
+      ccf = '',
+      pcf = '';
 
   sz = rExtract(
     log,
@@ -116,6 +124,14 @@ String _basicTemplate(
     'print(rforest_cem)',
   );
   prf = rExtract(
+    log,
+    'print(rforest_per)',
+  );
+  ccf = rExtract(
+    log,
+    'print(cforest_cem)',
+  );
+  pcf = rExtract(
     log,
     'print(cforest_per)',
   );
@@ -164,6 +180,14 @@ String _basicTemplate(
         '$crf\n\n'
         '$hdrf\n\n'
         '$prf\n\n';
+  }
+
+  if (ccf != '' && pcf != '' && forestExecuted) {
+    result = '$result\n'
+        '$mdcf\n\n'
+        '$ccf\n\n'
+        '$hdcf\n\n'
+        '$pcf\n\n';
   }
 
   result = '$result\n'

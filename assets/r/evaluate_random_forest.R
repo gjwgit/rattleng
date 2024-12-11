@@ -68,6 +68,6 @@ print(rforest_cem)
 
 print("Error matrix for the Random Forest model (proportions)")
 
-cforest_per <- rattle::errorMatrix(target_clean, error_predic)
+rforest_per <- rattle::errorMatrix(target_clean, error_predic)
 
-print(cforest_per)
+print(rforest_per)

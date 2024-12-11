@@ -135,6 +135,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
                 if (selectedAlgorithm == AlgorithmType.traditional) {
                   ref.read(randomForestEvaluateProvider.notifier).state = true;
+                } else if (selectedAlgorithm == AlgorithmType.conditional) {
+                  ref.read(conditionalForestEvaluateProvider.notifier).state =
+                      true;
                 }
 
                 await ref.read(forestPageControllerProvider).animateToPage(
