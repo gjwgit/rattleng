@@ -1,3 +1,6 @@
+# TODO 20241212 gjw IS THIS USED ANYWHERE NOW?
+#
+#
 # Rattle Scripts: Reset the data variables.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
@@ -5,7 +8,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-09-04 08:38:19 +1000 Graham Williams>
+# Time-stamp: <Thursday 2024-12-12 05:28:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,11 +29,13 @@
 
 vnames <- names(ds)
 
-unique_columns <- function(df) {
-  col_names <- names(df)
-  unique_cols <- col_names[sapply(df, check_unique)]
-  return(unique_cols)
-}
+# TODO 20241212 gjw WHY REDEFINE unique_columns HERE. SEE session_setup.R
+
+## unique_columns <- function(df) {
+##   col_names <- names(df)
+##   unique_cols <- col_names[sapply(df, check_unique)]
+##   return(unique_cols)
+## }
 
 unique_columns(ds)
 
@@ -53,3 +58,7 @@ large_factor_vars <- names(large_factors)[large_factors]
 # Print the variable names.
 
 large_factor_vars
+
+# 20241212 gjw Regenerate the dataset meta data.
+
+meta_data(ds)

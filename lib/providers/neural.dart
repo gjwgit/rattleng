@@ -1,6 +1,6 @@
 /// A provider for the parameters for neural.
 ///
-/// Time-stamp: <Wednesday 2024-10-30 10:59:48 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-12-12 08:01:20 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -30,7 +30,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final actionFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
+final activationFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
 final algorithmNeuralProvider = StateProvider<String>((ref) => 'nnet');
 final errorFctNeuralProvider = StateProvider<String>((ref) => 'sse');
 final hiddenLayersNeuralProvider = StateProvider<String>((ref) => '10');

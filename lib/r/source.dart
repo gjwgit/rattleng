@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Tuesday 2024-12-10 08:58:39 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-12-12 08:01:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rattle/providers/ignore_missing_group_by.dart';
+import 'package:rattle/providers/visualise.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -135,6 +136,7 @@ Future<void> rSource(
   // VISUAL
 
   bool ignoreMissingGroupBy = ref.read(ignoreMissingGroupByProvider);
+  bool exploreVisualBoxplotNotch = ref.read(exploreVisualBoxplotNotchProvider);
 
   // ASSOCIATION
 
@@ -187,7 +189,7 @@ Future<void> rSource(
   int neuralStepMax = ref.read(stepMaxNeuralProvider);
   double neuralThreshold = ref.read(thresholdNeuralProvider);
   String neuralErrorFct = ref.read(errorFctNeuralProvider);
-  String neuralActionFct = ref.read(actionFctNeuralProvider);
+  String neuralActivationFct = ref.read(activationFctNeuralProvider);
 
   // SVM
 
@@ -476,7 +478,11 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // EXPLORE - VISUAL - BOXPLOT
 
-  code = code.replaceAll('BOXPLOT_NOTCH', 'FALSE');
+  code = code.replaceAll(
+    'BOXPLOT_NOTCH',
+    exploreVisualBoxplotNotch.toString().toUpperCase(),
+  );
+
   code = code.replaceAll(
     'IGNORE_MISSING_GROUP_BY',
     ignoreMissingGroupBy.toString().toUpperCase(),
@@ -502,7 +508,8 @@ Future<void> rSource(
   code = code.replaceAll('NEURAL_MAXIT', nnetMaxit.toString());
   code = code.replaceAll('NEURAL_MAX_NWTS', nnetMaxNWts.toString());
   code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
-  code = code.replaceAll('NEURAL_ACT_FCT', '"${neuralActionFct.toString()}"');
+  code =
+      code.replaceAll('NEURAL_ACT_FCT', '"${neuralActivationFct.toString()}"');
   code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
   code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
 
