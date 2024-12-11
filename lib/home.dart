@@ -43,6 +43,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/reset.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -339,6 +340,10 @@ Xu, Yixiang Yin, Bo Zhang.
                 color: Colors.blue,
               ),
               onPressed: () async {
+                // Set isResetProvider to true
+
+                ref.read(isResetProvider.notifier).state = true;
+
                 // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
                 if (ref.read(datasetLoaded)) {
                   showDatasetAlertDialog(context, ref, false);
