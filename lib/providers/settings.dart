@@ -74,3 +74,8 @@ final settingsGraphicThemeProvider =
 final randomSeedProvider = StateProvider<int>((ref) => 42);
 
 final imageViewerSettingProvider = StateProvider<String>((ref) => '');
+
+// Partition setting provider with default values.
+
+final partitionSettingProvider =
+    StateProvider<List<double>>((ref) => [0.7, 0.15, 0.15]);

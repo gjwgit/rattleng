@@ -752,6 +752,154 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       settingsGroupGap,
                       Divider(),
+
+                      //TODO kevin
+
+                      // Adding to the SettingsDialogState
+                      Row(
+                        children: [
+                          MarkdownTooltip(
+                            message: '''
+
+      **Dataset Partition Setting:** 
+      Configure the dataset partitioning ratios for training, validation, and testing datasets. 
+
+      - Default: 70/15/15 (70% training, 15% validation, 15% testing).
+      - Customize to suit your dataset requirements, e.g., 50/25/25.
+      - The values must sum up to 100%.
+
+      ''',
+                            child: const Text(
+                              'Partition',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          configRowGap,
+                          MarkdownTooltip(
+                            message: '''
+
+      **Reset Partition Ratios:** 
+      Reset the dataset partition ratios to the default values of 70/15/15.
+
+      ''',
+                            child: ElevatedButton(
+                              onPressed: () {
+                                ref
+                                    .read(partitionSettingProvider.notifier)
+                                    .state = [0.7, 0.15, 0.15];
+                              },
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      configRowGap,
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: TextEditingController(
+                                  text:
+                                      (ref.watch(partitionSettingProvider)[0] *
+                                              100)
+                                          .toStringAsFixed(0)),
+                              onChanged: (value) {
+                                double? trainingRatio = double.tryParse(value);
+                                if (trainingRatio != null &&
+                                    trainingRatio >= 0 &&
+                                    trainingRatio <= 100) {
+                                  final currentRatios =
+                                      ref.read(partitionSettingProvider);
+                                  ref
+                                      .read(partitionSettingProvider.notifier)
+                                      .state = [
+                                    trainingRatio / 100,
+                                    currentRatios[1],
+                                    currentRatios[2],
+                                  ];
+                                }
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Training %',
+                              ),
+                            ),
+                          ),
+                          configRowGap,
+                          Expanded(
+                            child: TextField(
+                              controller: TextEditingController(
+                                  text:
+                                      (ref.watch(partitionSettingProvider)[1] *
+                                              100)
+                                          .toStringAsFixed(0)),
+                              onChanged: (value) {
+                                double? validationRatio =
+                                    double.tryParse(value);
+                                if (validationRatio != null &&
+                                    validationRatio >= 0 &&
+                                    validationRatio <= 100) {
+                                  final currentRatios =
+                                      ref.read(partitionSettingProvider);
+                                  ref
+                                      .read(partitionSettingProvider.notifier)
+                                      .state = [
+                                    currentRatios[0],
+                                    validationRatio / 100,
+                                    currentRatios[2],
+                                  ];
+                                }
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Validation %',
+                              ),
+                            ),
+                          ),
+                          configRowGap,
+                          Expanded(
+                            child: TextField(
+                              controller: TextEditingController(
+                                  text:
+                                      (ref.watch(partitionSettingProvider)[2] *
+                                              100)
+                                          .toStringAsFixed(0)),
+                              onChanged: (value) {
+                                double? testingRatio = double.tryParse(value);
+                                if (testingRatio != null &&
+                                    testingRatio >= 0 &&
+                                    testingRatio <= 100) {
+                                  final currentRatios =
+                                      ref.read(partitionSettingProvider);
+                                  ref
+                                      .read(partitionSettingProvider.notifier)
+                                      .state = [
+                                    currentRatios[0],
+                                    currentRatios[1],
+                                    testingRatio / 100,
+                                  ];
+                                }
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Testing %',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      settingsGroupGap,
+                      Divider(),
                       // Random Seed Section.
 
                       Row(
