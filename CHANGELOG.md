@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Add PROTEIN demo dataset for cluster analysis [6.3.37 20241212 gjw]
 + Bug fix meta data update each transform [6.3.36 20241212 gjw]
 + Real numbers should not be IDENT [6.3.35 20241211 gjw]
 + Optional notch in box plots [6.3.34 20241211 kev]
