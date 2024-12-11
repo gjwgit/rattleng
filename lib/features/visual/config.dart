@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/providers/box_plot_notch.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
@@ -272,6 +273,19 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
               ''',
               provider: ignoreMissingGroupByProvider,
+            ),
+
+            configWidgetGap,
+
+            LabelledCheckbox(
+              label: 'Box Plot Notch',
+              tooltip: '''
+                
+
+    
+
+              ''',
+              provider: exploreVisualBoxplotNotchProvider,
             ),
           ],
         ),
