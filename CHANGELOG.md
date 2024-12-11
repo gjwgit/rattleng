@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Improve ASSOCIATIONS handling [6.3.33 20241211 gjw]
 + Support ignoring missing group by in VISUAL [6.3.32 20241210 kev]
 + Riskchart for NERUALNET [6.3.31 20241209 zy]
 + Initial risk charts for evaluation [6.3.30 20241206 zy]
