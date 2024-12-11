@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rattle/providers/ignore_missing_group_by.dart';
+import 'package:rattle/providers/visualise.dart';
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -476,7 +477,10 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // EXPLORE - VISUAL - BOXPLOT
 
-  code = code.replaceAll('BOXPLOT_NOTCH', 'FALSE');
+  code = code.replaceAll(
+    'BOXPLOT_NOTCH',
+    exploreVisualBoxplotNotchProvider.toString().toUpperCase(),
+  );
   code = code.replaceAll(
     'IGNORE_MISSING_GROUP_BY',
     ignoreMissingGroupBy.toString().toUpperCase(),

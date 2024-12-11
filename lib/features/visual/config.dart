@@ -27,7 +27,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/box_plot_notch.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
@@ -36,6 +35,7 @@ import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/providers/visualise.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_catergoric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
@@ -280,7 +280,7 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             LabelledCheckbox(
               label: 'Box Plot Notch',
               tooltip: '''
-                
+
 
     
 
