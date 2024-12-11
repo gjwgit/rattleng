@@ -33,41 +33,21 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+library(kernlab)
+library(party)
 library(rattle)
-library(randomForest)
+library(reshape2)
 
-print("Error matrix for the Random Forest model (counts)")
+print("Error matrix for the Conditional Forest model (counts)")
 
-error_predic <- predict(model_randomForest, newdata = trds, type = "prob")
+error_predic <- predict(model_conditionalForest, newdata = trds,)
 
-target_clean <- trds[[target]][!is.na(error_predic)]
+cforest_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
 
-# Remove all <NA> values from the vector.
-
-target_clean <- target_clean[!is.na(target_clean)]
-
-error_predic <- apply(error_predic, 1, function(row) {
-  if (any(is.na(row))) {
-    return(NULL) # Skip rows with NA
-  }
-  # Find the column name of the maximum value.
-
-  max_label <- names(row)[which.max(row)]
-  return(max_label)
-})
-
-# Remove NULL entries from the list.
-
-error_predic <- error_predic[!sapply(error_predic, is.null)]
-
-error_predic <- unlist(error_predic, use.names = FALSE)
-
-rforest_cem <- rattle::errorMatrix(target_clean, error_predic, count = TRUE)
-
-print(rforest_cem)
+print(cforest_cem)
 
 print("Error matrix for the Conditional Forest model (proportions)")
 
-cforest_per <- rattle::errorMatrix(target_clean, error_predic)
+cforest_per <- rattle::errorMatrix(trds[[target]], error_predic)
 
 print(cforest_per)
