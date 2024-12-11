@@ -1,4 +1,4 @@
-# Generate error matrix and Hand plot of model random forest.
+# Generate error matrix of model random forest.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -33,43 +33,41 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(hmeasure)
-library(party)        # Conditional inference trees
-library(partykit)     # Enhanced visualization and interpretation
+library(rattle)
+library(randomForest)
 
-target_ctree_levels <- unique(trds[[target]])
-target_ctree_levels <- target_ctree_levels[!is.na(target_ctree_levels)]
+print("Error matrix for the Random Forest model (counts)")
+
+error_predic <- predict(model_randomForest, newdata = trds, type = "prob")
+
+target_clean <- trds[[target]][!is.na(error_predic)]
+
+# Remove all <NA> values from the vector.
+
+target_clean <- target_clean[!is.na(target_clean)]
+
+error_predic <- apply(error_predic, 1, function(row) {
+  if (any(is.na(row))) {
+    return(NULL) # Skip rows with NA
+  }
+  # Find the column name of the maximum value.
   
-# Get predicted probabilities for the positive class.
-
-predicted_ctree_probs <- predict(model_ctree, newdata = trds, type = "prob")[,2]
-
-actual_ctree_labels <- ifelse(trds[[target]] == target_ctree_levels[1], 0, 1)
-
-# Evaluate the model using HMeasure.
-
-results <- HMeasure(true.class = actual_ctree_labels, scores = predicted_ctree_probs)
-  
-svg("TEMPDIR/model_ctree_evaluate_hand.svg")
-
-plotROC(results)
-
-dev.off()
-
-print("Error matrix for the CTREE Decision Tree model (counts)")
-
-error_predic <- predict(model_ctree, newdata = trds, type = "prob")
-
-error_predic <- apply(error_predic, 1, function(x) {
-  colnames(error_predic)[which.max(x)]
+  max_label <- names(row)[which.max(row)]
+  return(max_label)
 })
 
-ctree_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+# Remove NULL entries from the list.
 
-print(ctree_cem)
+error_predic <- error_predic[!sapply(error_predic, is.null)]
 
-print('Error matrix for the CTREE Decision Tree model (proportions)')
+error_predic <- unlist(error_predic, use.names = FALSE)
 
-ctree_per <- rattle::errorMatrix(trds[[target]], error_predic)
+rforest_cem <- rattle::errorMatrix(target_clean, error_predic, count = TRUE)
 
-print(ctree_per)
+print(rforest_cem)
+
+print('Error matrix for the Random Forest model (proportions)')
+
+cforest_per <- rattle::errorMatrix(trds[[target]], error_predic)
+
+print(cforest_per)
