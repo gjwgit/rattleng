@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2024-11-24 20:09:35 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-12-11 17:09:49 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -47,15 +47,15 @@ import 'package:rattle/providers/reset.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// Local imports
-
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/features/dataset/panel.dart';
 import 'package:rattle/features/evaluate/panel.dart';
+import 'package:rattle/providers/association.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/datatype.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/console.dart';
@@ -227,6 +227,17 @@ class RattleHomeState extends ConsumerState<RattleHome>
             // text file.
 
             rSource(context, ref, ['dataset_template']);
+
+            // 20241211 gjw In lib/features/dataset/display.dart we use a
+            // hueristic for datasets with only two columns, assuming they are
+            // for basket analysis. In such a case we want to set the default
+            // for association analysis to be Baskets. Do that here on moving
+            // from the DATASET tab. We do it here rather than in display.dart
+            // as there it creates an exception to be thrown: "Tried to modify a
+            // provider while the widget tree was building." It works here!
+
+            ref.read(basketsAssociationProvider.notifier).state =
+                ref.read(metaDataProvider).length == 2;
           }
         }
 
@@ -357,7 +368,7 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Change Seed:** Tap here to quickly change the random seed. 
+            **Change Seed:** Tap here to quickly change the random seed.
             A new seed will be automatically generated.
 
             ''',
@@ -496,7 +507,7 @@ Xu, Yixiang Yin, Bo Zhang.
             latest version of the software, *Verison 6.* It also includes the
             extensive list of open-source packages that Rattle is built on and
             their licences.
-            
+
             ''',
             child: IconButton(
               onPressed: () {

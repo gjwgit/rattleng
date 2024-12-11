@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-09-26 08:29:59 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-11 17:24:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,6 +33,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/association.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_association.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
@@ -40,7 +41,8 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-/// The panel displays the instructions or the output.
+/// The Association panel displays the associate instructions and then output
+/// for the bult model.
 
 class AssociationDisplay extends ConsumerStatefulWidget {
   const AssociationDisplay({super.key});
@@ -52,39 +54,88 @@ class AssociationDisplay extends ConsumerStatefulWidget {
 class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
   @override
   Widget build(BuildContext context) {
-    String stdout = ref.watch(stdoutProvider);
-    bool associationBaskets = ref.read(basketsAssociationProvider);
+    // Get the PageController from Riverpod.
 
     final pageController = ref.watch(
       associationControllerProvider,
     );
 
-    List<Widget> pages = [showMarkdownFile(associationIntroFile, context)];
+    String stdout = ref.watch(stdoutProvider);
+
+    bool associationBaskets = ref.read(basketsAssociationProvider);
+
+    // Begin the list of pages to display with the introduction markdown text.
+
+    List<Widget> pages = [
+      showMarkdownFile(associationIntroFile, context),
+    ];
+
     String content = '';
-    String measuresContent = '';
+
+    ////////////////////////////////////////////////////////////////////////
+
+    // Default arules summary output
 
     content = rExtractAssociation(stdout, true);
-    measuresContent = rExtractAssociation(stdout, false);
-
-    if (measuresContent.isNotEmpty && !associationBaskets) {
-      pages.add(
-        TextPage(
-          title: '# Interestingness Measures\n\n'
-              'Built using `apriori()`.\n\n',
-          content: '\n$measuresContent',
-        ),
-      );
-    }
 
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# Association Rules\n\n'
-              'Built using `apriori()`.\n\n',
+          title: '''
+
+          # Association Rules - Meta Summary
+
+          Built using [arules::apriori()](https://www.rdocumentation.org/packages/arules/topics/apriori).
+
+          ''',
           content: '\n$content',
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    // Show the actual rules.
+
+    content = rExtract(stdout, 'inspect(top_rules)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Association Rules - Discovered Rules
+
+          Built using [arules::inspect()](https://www.rdocumentation.org/packages/arules/topics/inspect).
+
+          ''',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    // TODO 20241211 gjw WHAT IS THIS - NOT WORKING?
+
+    content = rExtractAssociation(stdout, false);
+
+    if (content.isNotEmpty && !associationBaskets) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Interestingness Measures
+
+          Built using `apriori()`
+
+          ''',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
 
     if (!associationBaskets) {
       String plotImage = '$tempDir/model_arules_item_plot.png';
@@ -100,6 +151,8 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////
+
     String frequencyImage = '$tempDir/model_arules_item_frequency.svg';
 
     if (imageExists(frequencyImage)) {
@@ -110,6 +163,8 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(
       pageController: pageController,

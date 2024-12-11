@@ -1,6 +1,6 @@
 /// Providers for parameters association settings.
 ///
-/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2024-12-11 17:28:10 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -29,7 +29,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final basketsAssociationProvider = StateProvider<bool>((ref) => false);
 final confidenceAssociationProvider = StateProvider<double>((ref) => 0.1);
-final interestMeasuresAssociationProvider = StateProvider<int>((ref) => 20);
+final interestMeasuresAssociationProvider = StateProvider<int>((ref) => 50);
 final minLengthAssociationProvider = StateProvider<int>((ref) => 2);
 final sortByAssociationProvider = StateProvider<String>((ref) => 'Support');
 final supportAssociationProvider = StateProvider<double>((ref) => 0.1);
