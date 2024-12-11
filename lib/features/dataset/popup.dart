@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2024-12-11 16:00:49 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2024-12-11 17:37:30 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -40,7 +40,6 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
-import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
 void datasetLoadedUpdate(WidgetRef ref) {
@@ -222,7 +221,8 @@ class DatasetPopup extends ConsumerWidget {
           configRowGap,
 
           MarkdownBody(
-              data: 'Choose one of the available datasets then tap **Demo**:'),
+            data: 'Choose one of the available datasets then tap **Demo**:',
+          ),
 
           // Radio buttons for selecting the demo dataset.
 
