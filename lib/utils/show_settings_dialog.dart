@@ -250,12 +250,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   Future<void> _loadRExecutablePath() async {
     final prefs = await SharedPreferences.getInstance();
     _rExecutablePath = prefs.getString('rExecutablePath') ?? "";
+    ref.read(rExecutablePathProvider.notifier).state = _rExecutablePath;
+
     setState(() {}); // Update the UI
   }
 
   Future<void> _saveRExecutablePath(String path) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('rExecutablePath', path);
+    ref.read(rExecutablePathProvider.notifier).state = path;
   }
 
   Future<void> _loadSettings() async {
