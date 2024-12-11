@@ -32,6 +32,7 @@ import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(
   String log,
+  String evaluateDataset,
   WidgetRef ref,
 ) {
   bool treeExecuted = ref.watch(rpartTreeEvaluateProvider);
@@ -46,14 +47,18 @@ String _basicTemplate(
   String hdx;
   String mdx;
 
-  hdr = 'Error matrix for the RPART Decision Tree model (counts)';
-  mdr = 'Error matrix for the RPART Decision Tree model (proportions)';
-  hdc = 'Error matrix for the CTREE Decision Tree model (counts)';
-  mdc = 'Error matrix for the CTREE Decision Tree model (proportions)';
-  hda = 'Error matrix for the ADABOOST model (counts)';
-  mda = 'Error matrix for the ADABOOST model (proportions)';
-  hdx = 'Error matrix for the XGBOOST model (counts)';
-  mdx = 'Error matrix for the XGBOOST model (proportions)';
+  hdr =
+      'Error matrix for the RPART Decision Tree model [$evaluateDataset] (counts)';
+  mdr =
+      'Error matrix for the RPART Decision Tree model [$evaluateDataset] (proportions)';
+  hdc =
+      'Error matrix for the CTREE Decision Tree model [$evaluateDataset] (counts)';
+  mdc =
+      'Error matrix for the CTREE Decision Tree model [$evaluateDataset] (proportions)';
+  hda = 'Error matrix for the ADABOOST model [$evaluateDataset] (counts)';
+  mda = 'Error matrix for the ADABOOST model [$evaluateDataset] (proportions)';
+  hdx = 'Error matrix for the XGBOOST model [$evaluateDataset] (counts)';
+  mdx = 'Error matrix for the XGBOOST model [$evaluateDataset] (proportions)';
 
   // Now extract the output from particular commands.
 
@@ -138,12 +143,14 @@ String _basicTemplate(
 
 String rExtractEvaluate(
   String log,
+  String evaluateDataset,
   WidgetRef ref,
 ) {
   // Extract from the R log those lines of output from the evaluate.
 
   String extract = _basicTemplate(
     log,
+    evaluateDataset,
     ref,
   );
 

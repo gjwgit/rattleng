@@ -61,7 +61,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String content = '';
 
-    content = rExtractEvaluate(stdout, ref);
+    content = rExtractEvaluate(stdout, 'TRAINING', ref);
 
     bool showContentMaterial = content.trim().split('\n').length > 1;
 
