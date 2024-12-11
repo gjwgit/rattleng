@@ -28,6 +28,7 @@ library;
 import 'dart:io';
 import 'dart:async';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -221,6 +222,7 @@ class SettingsDialog extends ConsumerStatefulWidget {
 
 class SettingsDialogState extends ConsumerState<SettingsDialog> {
   String? _selectedTheme;
+  String _rExecutablePath = ""; // Add a new variable for R executable path
 
   @override
   void initState() {
@@ -241,6 +243,19 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _loadSettings();
 
     _loadRandomSeed();
+
+    _loadRExecutablePath();
+  }
+
+  Future<void> _loadRExecutablePath() async {
+    final prefs = await SharedPreferences.getInstance();
+    _rExecutablePath = prefs.getString('rExecutablePath') ?? "";
+    setState(() {}); // Update the UI
+  }
+
+  Future<void> _saveRExecutablePath(String path) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('rExecutablePath', path);
   }
 
   Future<void> _loadSettings() async {
@@ -379,6 +394,68 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               hintText: 'Enter image viewer command',
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRExecutableSetting() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'R Executable Path',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: TextEditingController(text: _rExecutablePath)
+                  ..selection =
+                      TextSelection.collapsed(offset: _rExecutablePath.length),
+                onChanged: (value) {
+                  setState(() {
+                    _rExecutablePath = value;
+                  });
+                  _saveRExecutablePath(value);
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the path to the R executable',
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            ElevatedButton(
+              onPressed: () async {
+                // Open file picker to select the R executable.
+
+                final result = await FilePicker.platform.pickFiles(
+                  dialogTitle: 'Select R Executable',
+                  type: FileType.custom,
+                  allowedExtensions: ['exe', ''],
+                );
+                if (result != null && result.files.single.path != null) {
+                  setState(() {
+                    _rExecutablePath = result.files.single.path!;
+                  });
+                  _saveRExecutablePath(_rExecutablePath);
+                }
+              },
+              child: const Text('Browse'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        const Text(
+          '''
+This setting allows specifying the path to the R executable directly, bypassing the need to set the Windows PATH variable. Rattle will use this executable to initialise the R Console.''',
+          style: TextStyle(fontSize: 14, color: Colors.grey),
         ),
       ],
     );
@@ -893,6 +970,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       ),
 
                       settingsGroupGap,
+
+                      _buildRExecutableSetting(), // Add the new R executable setting
                     ],
                   ),
                 ),
