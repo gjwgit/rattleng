@@ -136,6 +136,7 @@ Future<void> rSource(
   // VISUAL
 
   bool ignoreMissingGroupBy = ref.read(ignoreMissingGroupByProvider);
+  bool exploreVisualBoxplotNotch = ref.read(exploreVisualBoxplotNotchProvider);
 
   // ASSOCIATION
 
@@ -479,8 +480,9 @@ Future<void> rSource(
 
   code = code.replaceAll(
     'BOXPLOT_NOTCH',
-    exploreVisualBoxplotNotchProvider.toString().toUpperCase(),
+    exploreVisualBoxplotNotch.toString().toUpperCase(),
   );
+
   code = code.replaceAll(
     'IGNORE_MISSING_GROUP_BY',
     ignoreMissingGroupBy.toString().toUpperCase(),
