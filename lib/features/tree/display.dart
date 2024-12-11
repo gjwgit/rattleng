@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-12-05 15:25:00 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-11 16:45:20 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,19 +42,19 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Tree panel displays the tree instructions and then output for the built
-/// model, and basic evaluation information.
+/// model.
 
 class TreeDisplay extends ConsumerStatefulWidget {
   const TreeDisplay({super.key});
 
   @override
-  ConsumerState<TreeDisplay> createState() => TreeDisplayState();
+  ConsumerState<TreeDisplay> createState() => _TreeDisplayState();
 }
 
-class TreeDisplayState extends ConsumerState<TreeDisplay> {
+class _TreeDisplayState extends ConsumerState<TreeDisplay> {
   @override
   Widget build(BuildContext context) {
-    // Get the PageController from Riverpod
+    // Get the PageController from Riverpod.
 
     final pageController = ref.watch(
       treePageControllerProvider,
@@ -63,6 +63,8 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
+
+    // Begin the list of pages to display with the introduction markdown text.
 
     List<Widget> pages = [
       showMarkdownFile(treeIntroFile, context),
@@ -84,7 +86,7 @@ class TreeDisplayState extends ConsumerState<TreeDisplay> {
           title: '''
 
           # Decision Tree Model
-          
+
           Built using [rpart::rpart()](https://www.rdocumentation.org/packages/rpart/topics/rpart).
 
           ''',

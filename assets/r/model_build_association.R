@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-09-07 15:38:57 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-12-11 17:32:12 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,7 +33,7 @@
 # @williams:2017:essentials Chapter 8.
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(arules) 
+library(arules)
 
 # Model type and description.
 
@@ -63,9 +63,16 @@ model_arules <- apriori(
 
 print(summary(model_arules))
 
-# Limit the number of rules for calculating interest measures.
+# Limit the number of rules for display and calculating the interest
+# measures. Generally this can be very large and if so the `inspect()`
+# will be very time consuming and it appears the app has frozen.
 
-top_rules <- sort(model_arules, by = ASSOCIATION_RULES_SORT_BY)[1:ASSOCIATION_INTEREST_MEASURE] 
+top_rules <- sort(model_arules, by = ASSOCIATION_RULES_SORT_BY)
+top_rules <- top_rules[1:min(length(top_rules), ASSOCIATION_INTEREST_MEASURE)]
+
+# Show the rules identified.
+
+inspect(top_rules)
 
 # Interestingness Measures.
 
@@ -84,13 +91,9 @@ print(measures)
 library(arulesViz)
 
 svg("TEMPDIR/model_arules_item_frequency.svg")
-
 itemFrequencyPlot(transactions, topN = 10, type = "relative")
-
 dev.off()
 
 png("TEMPDIR/model_arules_item_plot.png")
-
 plot(model_arules, method="graph")
-
 dev.off()
