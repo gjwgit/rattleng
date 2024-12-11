@@ -108,6 +108,7 @@ flutter:
   assets:
     - assets/data/audit.csv
     - assets/data/movies.csv
+    - assets/data/protein.csv
     - assets/data/sherlock.txt
     - assets/data/weather.csv
     - assets/images/favicon_small.png

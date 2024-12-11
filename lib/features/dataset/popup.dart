@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Thursday 2024-12-12 08:13:56 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-12-12 08:46:29 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -172,6 +172,9 @@ class DatasetPopup extends ConsumerWidget {
                     case 'movies':
                       asset = 'data/movies.csv';
                       break;
+                    case 'protein':
+                      asset = 'data/protein.csv';
+                      break;
                     case 'sherlock':
                       asset = 'data/sherlock.txt';
                       break;
@@ -296,6 +299,30 @@ class DatasetPopup extends ConsumerWidget {
                       child: RadioListTile(
                         title: const Text('Audit'),
                         value: 'audit',
+                        groupValue: selectedDataset,
+                        contentPadding: EdgeInsets.zero,
+                        onChanged: (value) {
+                          ref.read(demoDatasetProvider.notifier).state = value!;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Option for Protein dataset.
+
+                  Expanded(
+                    child: MarkdownTooltip(
+                      message: '''
+
+                      The **Protein** dataset comes from the [Tippie College of
+                      Business, The University of
+                      Iowa](http://www.biz.uiowa.edu/faculty/jledolter/DataMining/protein.csv). It
+                      is useful for demonstrating **Cluster** analysis.
+
+                      ''',
+                      child: RadioListTile(
+                        title: const Text('Protein'),
+                        value: 'protein',
                         groupValue: selectedDataset,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
