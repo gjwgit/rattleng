@@ -458,6 +458,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     setState(() {
                       _rExecutablePath = value;
                     });
+
                     _saveRExecutablePath(value);
                   },
                   decoration: const InputDecoration(
@@ -468,23 +469,33 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               ),
             ),
             configRowGap,
-            ElevatedButton(
-              onPressed: () async {
-                // Open file picker to select the R executable.
+            MarkdownTooltip(
+              message: '''
 
-                final result = await FilePicker.platform.pickFiles(
-                  dialogTitle: 'Select R Executable',
-                  type: FileType.custom,
-                  allowedExtensions: ['exe', ''],
-                );
-                if (result != null && result.files.single.path != null) {
-                  setState(() {
-                    _rExecutablePath = result.files.single.path!;
-                  });
-                  _saveRExecutablePath(_rExecutablePath);
-                }
-              },
-              child: const Text('Browse'),
+              Use this button to browse your system and select the R executable file. 
+              This will automatically populate the text field with the selected path.
+              
+              ''',
+              child: ElevatedButton(
+                onPressed: () async {
+                  // Open file picker to select the R executable.
+
+                  final result = await FilePicker.platform.pickFiles(
+                    dialogTitle: 'Select R Executable',
+                    type: FileType.custom,
+                    allowedExtensions: ['exe', ''],
+                  );
+
+                  if (result != null && result.files.single.path != null) {
+                    setState(() {
+                      _rExecutablePath = result.files.single.path!;
+                    });
+
+                    _saveRExecutablePath(_rExecutablePath);
+                  }
+                },
+                child: const Text('Browse'),
+              ),
             ),
           ],
         ),
