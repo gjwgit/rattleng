@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2024-12-11 17:37:30 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-12-12 08:13:56 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -221,7 +221,8 @@ class DatasetPopup extends ConsumerWidget {
           configRowGap,
 
           MarkdownBody(
-            data: 'Choose one of the available datasets then tap **Demo**:',
+            data: '**Demo Datasets** '
+                'Tap to load one of the available demonstration datasets:',
           ),
 
           // Radio buttons for selecting the demo dataset.
