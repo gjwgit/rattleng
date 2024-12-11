@@ -179,12 +179,16 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
                 bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
                 bool boostTicked = ref.watch(boostEvaluateProvider);
+                bool randomForestExecuted =
+                    ref.watch(randomForestEvaluateProvider);
+                bool forestTicked = ref.watch(forestEvaluateProvider);
 
                 String mbe = 'model_build_evaluate';
                 String er = 'evaluate_rpart';
                 String ec = 'evaluate_ctree';
                 String ea = 'evaluate_adaboost';
                 String ex = 'evaluate_xgboost';
+                String erf = 'evaluate_random_forest';
 
                 await rSource(
                   context,
@@ -221,6 +225,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     context,
                     ref,
                     [ex],
+                  );
+                }
+             
+                if (randomForestExecuted && forestTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [erf],
                   );
                 }
 

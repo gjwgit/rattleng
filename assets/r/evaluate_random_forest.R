@@ -51,7 +51,7 @@ error_predic <- apply(error_predic, 1, function(row) {
     return(NULL) # Skip rows with NA
   }
   # Find the column name of the maximum value.
-  
+
   max_label <- names(row)[which.max(row)]
   return(max_label)
 })
@@ -66,8 +66,8 @@ rforest_cem <- rattle::errorMatrix(target_clean, error_predic, count = TRUE)
 
 print(rforest_cem)
 
-print('Error matrix for the Random Forest model (proportions)')
+print("Error matrix for the Random Forest model (proportions)")
 
-cforest_per <- rattle::errorMatrix(trds[[target]], error_predic)
+cforest_per <- rattle::errorMatrix(target_clean, error_predic)
 
 print(cforest_per)

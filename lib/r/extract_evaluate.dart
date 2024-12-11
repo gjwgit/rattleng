@@ -37,6 +37,7 @@ String _basicTemplate(
 ) {
   bool treeExecuted = ref.watch(rpartTreeEvaluateProvider);
   bool boostExecuted = ref.watch(boostEvaluateProvider);
+  bool forestExecuted = ref.watch(forestEvaluateProvider);
 
   String hdr;
   String mdr;
@@ -46,6 +47,8 @@ String _basicTemplate(
   String mda;
   String hdx;
   String mdx;
+  String hdrf;
+  String mdrf;
 
   hdr =
       'Error matrix for the RPART Decision Tree model [$evaluateDataset] (counts)';
@@ -59,10 +62,22 @@ String _basicTemplate(
   mda = 'Error matrix for the ADABOOST model [$evaluateDataset] (proportions)';
   hdx = 'Error matrix for the XGBOOST model [$evaluateDataset] (counts)';
   mdx = 'Error matrix for the XGBOOST model [$evaluateDataset] (proportions)';
+  hdrf = 'Error matrix for the RANDOM FOREST model [$evaluateDataset] (counts)';
+  mdrf =
+      'Error matrix for the RANDOM FOREST model [$evaluateDataset] (proportions)';
 
   // Now extract the output from particular commands.
 
-  String sz = '', cm = '', cc = '', cp = '', ca = '', pa = '', cx = '', px = '';
+  String sz = '',
+      cm = '',
+      cc = '',
+      cp = '',
+      ca = '',
+      pa = '',
+      cx = '',
+      px = '',
+      crf = '',
+      prf = '';
 
   sz = rExtract(
     log,
@@ -95,6 +110,14 @@ String _basicTemplate(
   px = rExtract(
     log,
     'print(xgboost_per)',
+  );
+  crf = rExtract(
+    log,
+    'print(rforest_cem)',
+  );
+  prf = rExtract(
+    log,
+    'print(cforest_per)',
   );
 
   // Obtain the current timestamp.
@@ -133,6 +156,14 @@ String _basicTemplate(
         '$cx\n\n'
         '$mdx\n\n'
         '$px\n\n';
+  }
+
+  if (crf != '' && prf != '' && forestExecuted) {
+    result = '$result\n'
+        '$mdrf\n\n'
+        '$crf\n\n'
+        '$hdrf\n\n'
+        '$prf\n\n';
   }
 
   result = '$result\n'
