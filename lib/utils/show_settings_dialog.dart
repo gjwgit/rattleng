@@ -403,34 +403,71 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'R Executable Path',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        Row(
+          children: [
+            const Text(
+              'R Executable Path',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            configRowGap,
+
+            // Reset button to restore the default value.
+
+            MarkdownTooltip(
+              message: '''
+
+              **Reset R Executable Path:** Tap here to reset the R Executable Path setting to an empty string.
+
+                            ''',
+              child: ElevatedButton(
+                onPressed: () {
+                  // Save the reset value.
+
+                  _saveRExecutablePath("");
+
+                  setState(() {
+                    _rExecutablePath = "";
+                  });
+                },
+                child: const Text('Reset'),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 10),
+        configWidgetGap,
         Row(
           children: [
             Expanded(
-              child: TextField(
-                controller: TextEditingController(text: _rExecutablePath)
-                  ..selection =
-                      TextSelection.collapsed(offset: _rExecutablePath.length),
-                onChanged: (value) {
-                  setState(() {
-                    _rExecutablePath = value;
-                  });
-                  _saveRExecutablePath(value);
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter the path to the R executable',
+              child: MarkdownTooltip(
+                message: '''
+
+                This setting allows specifying the path to the R executable directly, 
+                bypassing the need to set the Windows PATH variable. 
+                Rattle will use this executable to initialise the R Console.
+              
+                ''',
+                child: TextField(
+                  controller: TextEditingController(text: _rExecutablePath)
+                    ..selection = TextSelection.collapsed(
+                        offset: _rExecutablePath.length),
+                  onChanged: (value) {
+                    setState(() {
+                      _rExecutablePath = value;
+                    });
+                    _saveRExecutablePath(value);
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the path to the R executable',
+                  ),
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            configRowGap,
             ElevatedButton(
               onPressed: () async {
                 // Open file picker to select the R executable.
@@ -450,12 +487,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               child: const Text('Browse'),
             ),
           ],
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          '''
-This setting allows specifying the path to the R executable directly, bypassing the need to set the Windows PATH variable. Rattle will use this executable to initialise the R Console.''',
-          style: TextStyle(fontSize: 14, color: Colors.grey),
         ),
       ],
     );
@@ -776,25 +807,6 @@ This setting allows specifying the path to the R executable directly, bypassing 
                           configRowGap,
 
                           // Reset button to restore the default value.
-
-                          MarkdownTooltip(
-                            message: '''
-                  
-                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
-                  
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: () {
-                                final defaultApp =
-                                    Platform.isWindows ? 'start' : 'open';
-                                ref
-                                    .read(imageViewerSettingProvider.notifier)
-                                    .state = defaultApp;
-                              },
-                              child: null,
-                            ),
-                          ),
 
                           MarkdownTooltip(
                             message: '''
