@@ -85,8 +85,6 @@ class ExploreTabs extends ConsumerStatefulWidget {
   ConsumerState<ExploreTabs> createState() => _ExploreTabsState();
 }
 
-//TODO kevin
-
 class _ExploreTabsState extends ConsumerState<ExploreTabs>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
