@@ -131,6 +131,9 @@ Future<void> rSource(
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
+  List<double> partitionRatios = ref.read(partitionSettingProvider);
+  String partitionString =
+      '${partitionRatios[0]}, ${partitionRatios[1]}, ${partitionRatios[2]}';
 
   // VISUAL
 
@@ -400,7 +403,9 @@ Future<void> rSource(
 
   code = code.replaceAll('ID_VARS', ids);
 
-  code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
+  // Replace DATA_SPLIT_TR_TU_TE with the current values from partitionSettingProvider.
+
+  code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
 
   // TODO if (script == 'model_build_rpart')) {
 
