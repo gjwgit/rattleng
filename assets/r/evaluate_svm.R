@@ -33,41 +33,55 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(ggtext)       # Support markdown in ggplot titles.
-library(glue)         # Format strings: glue().
-library(hmeasure)
-library(rattle)       # Support: asRules(), fancyRpartPlot().
-library(rpart)        # ML: decision tree rpart().
+library(kernlab)
+library(rattle)
 
-target_rpart_levels <- unique(trds[[target]])
-target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present
+print("Error matrix for the SVM model (counts)")
+
+error_predic <- predict(svm_model, newdata = trds, type = "probabilities")
+
+# Convert to a list of labels based on maximum values.
+
+error_predic <- apply(error_predic, 1, function(row) {
+  if (any(is.na(row))) {
+      return(NULL)
+  }
   
-# Get predicted probabilities for the positive class.
+  # Identify the column with the maximum value.
 
-predicted_rpart_probs <- predict(model_rpart, newdata = trds, type = "prob")[,2]
+  max_label <- names(row)[which.max(row)]
+  return(max_label)
+})
 
-actual_rpart_labels <- ifelse(trds[[target]] == target_rpart_levels[1], 0, 1)
+# Remove NULL entries and convert to a simple character vector.
 
-# Evaluate the model using HMeasure.
+error_predic <- unlist(error_predic, use.names = FALSE)
 
-results <- HMeasure(true.class = actual_rpart_labels, scores = predicted_rpart_probs)
-  
-svg("TEMPDIR/model_rpart_evaluate_hand.svg")
+# Find the lengths of the two objects.
 
-plotROC(results)
+len_trds_target <- length(trds[[target]])
+len_error_predic <- length(error_predic)
 
-dev.off()
+# Determine the minimum length.
 
-print("Error matrix for the RPART Decision Tree model (counts)")
+min_length <- min(len_trds_target, len_error_predic)
 
-error_predic <- predict(model_rpart, newdata = trds, type = "class")
+# Subset trds[[target]] to match the minimum length.
 
-rpart_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+svm_target <- trds[[target]][seq_len(min_length)]
+
+# Ensure svm_target has the same length as the rows in error_predic.
+
+if (length(error_predic) > min_length) {
+  error_predic <- error_predic[seq_len(min_length), , drop = FALSE]
+}
+
+rpart_cem <- rattle::errorMatrix(svm_target, error_predic, count = TRUE)
 
 print(rpart_cem)
 
-print('Error matrix for the RPART Decision Tree model (proportions)')
+print('Error matrix for the SVM model (proportions)')
 
-rpart_per <- rattle::errorMatrix(trds[[target]],error_predic)
+rpart_per <- rattle::errorMatrix(svm_target, error_predic)
 
 print(rpart_per)
