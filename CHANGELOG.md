@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Real numbers should not be IDENT [6.3.35 20241211 gjw]
 + Optional notch in box plots [6.3.34 20241211 kev]
 + Improve ASSOCIATIONS handling [6.3.33 20241211 gjw]
 + Support ignoring missing group by in VISUAL [6.3.32 20241210 kev]
