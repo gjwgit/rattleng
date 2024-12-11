@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-12-03 12:28:42 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-12-12 05:32:47 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -115,9 +115,9 @@ numi
 
 # Identify the numeric variables by name.
 
-ds %>% 
-  names() %>% 
-  magrittr::extract(numi) %T>% 
+ds %>%
+  names() %>%
+  magrittr::extract(numi) %T>%
   print() ->
 numc
 
@@ -132,9 +132,9 @@ cati
 
 # Identify the categoric variables by name.
 
-ds %>% 
-  names() %>% 
-  magrittr::extract(cati) %T>% 
+ds %>%
+  names() %>%
+  magrittr::extract(cati) %T>%
   print() ->
 catc
 
@@ -160,9 +160,14 @@ nmobs
 
 # 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
 
-# 20241008 gjw I think we now move this to PREP rather than here.
+# 20241008 gjw I think we now move this to PREP rather than
+# here. 20241212 gjw However this is required to update the DATASET
+# view of the data, particularly after a TRANSFORM. So add it back in
+# here. Without this the DATASET will not show that an imputed
+# IMN_rainfull, for example, has 54 unique values (it is 0 when
+# IMN_rainfall does not appear in metaData).
 
-#meta_data(ds)
+meta_data(ds)
 
 # Filter the variables in the dataset that are factors or ordered
 # factors with more than 20 levels.

@@ -1,13 +1,12 @@
-/// Providers for parameters association settings.
-///
-/// Time-stamp: <Wednesday 2024-12-11 17:28:10 +1100 Graham Williams>
+///  This file contains the provider for the reset button.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
+/// License: GNU General Public License, Version 3 (the "License")
+/// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// Time-stamp: <Sunday 2024-06-02 14:56:17 +1000 Graham Williams>
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -21,15 +20,9 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
-
+/// Authors: Kevin Wang
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final basketsAssociationProvider = StateProvider<bool>((ref) => false);
-final confidenceAssociationProvider = StateProvider<double>((ref) => 0.1);
-final interestMeasuresAssociationProvider = StateProvider<int>((ref) => 50);
-final minLengthAssociationProvider = StateProvider<int>((ref) => 2);
-final sortByAssociationProvider = StateProvider<String>((ref) => 'Support');
-final supportAssociationProvider = StateProvider<double>((ref) => 0.1);
+final isResetProvider = StateProvider<bool>((ref) => false);

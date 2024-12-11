@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Monday 2024-12-02 06:03:06 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 08:19:31 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -302,8 +302,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 tooltip: '''
 
                 The maximum depth of any node of the final tree.  The root node
-                is considered to be depth 0.  Note that a depth beyond 30 will
-                give nonsense results on 32-bit machines. The default is 30.
+                is considered to be depth 0.  The maximum allowable depth for
+                rpart() is 30.
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,

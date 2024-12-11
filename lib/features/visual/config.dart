@@ -35,6 +35,7 @@ import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/providers/visualise.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_catergoric.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
@@ -272,6 +273,28 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
               ''',
               provider: ignoreMissingGroupByProvider,
+            ),
+
+            configWidgetGap,
+            LabelledCheckbox(
+              label: 'Box Plot Notch',
+              tooltip: '''
+
+              **Box Plot Notch:**
+
+              Enabling this option adds notches to the box plots. 
+              The notches represent the confidence interval around the median. 
+              This helps in visually assessing if two medians are significantly different. 
+
+              - **On:** Adds notches to the box plot. 
+              
+              - **Off:** Displays box plots without notches.
+
+              Note: If the notch areas of two box plots do not overlap, 
+              their medians are significantly different at approximately a 5% significance level.
+
+              ''',
+              provider: exploreVisualBoxplotNotchProvider,
             ),
           ],
         ),

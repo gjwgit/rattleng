@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.32+147
+version: 6.3.37+150
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -108,6 +108,7 @@ flutter:
   assets:
     - assets/data/audit.csv
     - assets/data/movies.csv
+    - assets/data/protein.csv
     - assets/data/sherlock.txt
     - assets/data/weather.csv
     - assets/images/favicon_small.png

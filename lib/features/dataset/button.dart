@@ -32,6 +32,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/features/dataset/popup.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 
 class DatasetButton extends ConsumerWidget {
@@ -41,6 +42,11 @@ class DatasetButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () async {
+        // Set isResetProvider to true to ensure MODEL/TRANSFORM/EXPLORE
+        // tab reverts to the overview page
+
+        ref.read(isResetProvider.notifier).state = true;
+
         if (ref.read(datasetLoaded)) {
           showDatasetAlertDialog(context, ref, true);
         } else {

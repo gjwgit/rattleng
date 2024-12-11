@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Sunday 2024-11-24 20:08:02 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-12-12 08:46:29 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -27,6 +27,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -39,7 +40,6 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
-import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
 void datasetLoadedUpdate(WidgetRef ref) {
@@ -128,8 +128,8 @@ class DatasetPopup extends ConsumerWidget {
                   message: '''
 
                   **Filename for Dataset** Tap here to popup a window to browse
-                  for the **csv** or txt** file that you would like to load into
-                  Rattle.
+                  to a **csv** or **txt** file that you would like to load
+                  into Rattle.
 
                   ''',
                   child: Text('Filename'),
@@ -139,12 +139,13 @@ class DatasetPopup extends ConsumerWidget {
               buttonGap,
 
               ElevatedButton(
-                onPressed: () {
-                  // TODO 20231018 gjw datasetSelectPackage();
-                  Navigator.pop(context, 'Package');
-                  showUnderConstruction(context);
-                  datasetLoadedUpdate(ref);
-                },
+                onPressed: null,
+                // onPressed: () {
+                //   // TODO 20231018 gjw datasetSelectPackage();
+                //   Navigator.pop(context, 'Package');
+                //   showUnderConstruction(context);
+                //   datasetLoadedUpdate(ref);
+                // },
                 child: const MarkdownTooltip(
                   message: '''
 
@@ -170,6 +171,9 @@ class DatasetPopup extends ConsumerWidget {
                       break;
                     case 'movies':
                       asset = 'data/movies.csv';
+                      break;
+                    case 'protein':
+                      asset = 'data/protein.csv';
                       break;
                     case 'sherlock':
                       asset = 'data/sherlock.txt';
@@ -208,7 +212,7 @@ class DatasetPopup extends ConsumerWidget {
                   *radio buttons* below can be used to choose one of the
                   available datasets. Hover over any of them to see a
                   description of each. The selected dataset will be loaded once
-                  you tap the Demo button.
+                  you tap this **Demo** button.
 
                   ''',
                   child: Text('Demo'),
@@ -219,7 +223,10 @@ class DatasetPopup extends ConsumerWidget {
 
           configRowGap,
 
-          Text('Choose one of the available demo datasets:'),
+          MarkdownBody(
+            data: '**Demo Datasets** '
+                'Tap to load one of the available demonstration datasets:',
+          ),
 
           // Radio buttons for selecting the demo dataset.
 
@@ -287,11 +294,35 @@ class DatasetPopup extends ConsumerWidget {
                       the likelihood of an audit of a tax payer resulting in an
                       adjustment. Auditors can thus not waste their time on
                       non-productive audits.
-  
+
                       ''',
                       child: RadioListTile(
                         title: const Text('Audit'),
                         value: 'audit',
+                        groupValue: selectedDataset,
+                        contentPadding: EdgeInsets.zero,
+                        onChanged: (value) {
+                          ref.read(demoDatasetProvider.notifier).state = value!;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Option for Protein dataset.
+
+                  Expanded(
+                    child: MarkdownTooltip(
+                      message: '''
+
+                      The **Protein** dataset comes from the [Tippie College of
+                      Business, The University of
+                      Iowa](http://www.biz.uiowa.edu/faculty/jledolter/DataMining/protein.csv). It
+                      is useful for demonstrating **Cluster** analysis.
+
+                      ''',
+                      child: RadioListTile(
+                        title: const Text('Protein'),
+                        value: 'protein',
                         groupValue: selectedDataset,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
@@ -314,7 +345,7 @@ class DatasetPopup extends ConsumerWidget {
                       each basket can contain 1 or more items. Running the
                       association rules analysis with *Baskets* enabled will
                       build assoitation rules found in the dataset.
-  
+
                       ''',
                       child: RadioListTile(
                         title: const Text('Movies'),
@@ -337,7 +368,7 @@ class DatasetPopup extends ConsumerWidget {
                       The **Sherlock** data file is a text file for
                       demonstrating the **Word Cloud** feature of the **Model**
                       tab. It is a snippet from a Sherlock Holmes novel.
-  
+
                       ''',
                       child: RadioListTile(
                         title: const Text('Sherlock'),
@@ -373,7 +404,7 @@ class DatasetPopup extends ConsumerWidget {
 
                   **Cancel** Tap here to **not** proceed with loading a new
                     dataset.
-                  
+
                   ''',
                   child: Text('Cancel'),
                 ),

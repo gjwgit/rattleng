@@ -44,6 +44,7 @@ import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/reset.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> modelPanels = [
@@ -145,6 +146,19 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
     super.build(context);
     debugText('  BUILD', 'ModelTabs');
     debugPrint(ref.read(pathProvider));
+
+    // Listen to isResetProvider and reset tabController to index 0 if true.
+
+    final isReset = ref.watch(isResetProvider);
+
+    if (isReset) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _tabController.animateTo(0);
+        // Reset the flag.
+
+        ref.read(isResetProvider.notifier).state = false;
+      });
+    }
 
     return Column(
       children: [

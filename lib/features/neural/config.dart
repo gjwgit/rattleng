@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-11-01 16:20:03 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 08:03:36 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -57,10 +57,10 @@ class NeuralConfig extends ConsumerStatefulWidget {
 class NeuralConfigState extends ConsumerState<NeuralConfig> {
   Map<String, String> neuralAlgorithm = {
     'nnet': '''
-    
+
     A basic neural network with a single hidden layer.
     Suitable for simple tasks and small datasets.
-    
+
     ''',
     'neuralnet': '''
 
@@ -80,7 +80,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   /// Function that is used for smoothing the result of the cross product
   /// of the covariate or neurons and the weights.
 
-  List<String> actionFunction = [
+  List<String> activationFunction = [
     'logistic',
     'tanh',
   ];
@@ -117,7 +117,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
     String algorithm = ref.read(algorithmNeuralProvider.notifier).state;
     String function = ref.read(errorFctNeuralProvider.notifier).state;
-    String action = ref.read(actionFctNeuralProvider.notifier).state;
+    String activation = ref.read(activationFctNeuralProvider.notifier).state;
 
     return Column(
       children: [
@@ -316,7 +316,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     the nnet() model which specifies the number of units
                     (neurons) in the single hidden layer of the neural
                     network. It is a simple integer.
-              
+
                     ''',
                     inputFormatter:
                         FilteringTextInputFormatter.digitsOnly, // Integers only
@@ -369,7 +369,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               tooltip: '''
 
               The maximum number of weights allowed in the neural network model.
-              
+
               ''',
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
@@ -383,7 +383,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               controller: _thresholdController,
               tooltip: '''
 
-                The numeric value specifying the threshold for the partial 
+                The numeric value specifying the threshold for the partial
                 derivatives of the error function as stopping criteria.
 
                 ''',
@@ -403,7 +403,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               controller: _maxStepsController,
               tooltip: '''
 
-                The maximum steps for the training of the neural network. 
+                The maximum steps for the training of the neural network.
                 Reaching this maximum leads to a stop of the neural network's training process.
 
                 ''',
@@ -426,8 +426,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               errorFctNeuralProvider,
               tooltip: '''
 
-              Function that is used for the calculation of the error. 
-              Alternatively, the strings 'sse' and 'ce' which stand for 
+              Function that is used for the calculation of the error.
+              Alternatively, the strings 'sse' and 'ce' which stand for
               the sum of squared errors and the cross-entropy can be used.
 
               ''',
@@ -440,23 +440,23 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             ),
             configWidgetGap,
             variableChooser(
-              'Action Function',
-              actionFunction,
-              action,
+              'Activation Function',
+              activationFunction,
+              activation,
               ref,
-              actionFctNeuralProvider,
+              activationFctNeuralProvider,
               tooltip: '''
 
-              Function that is used for smoothing the result of the cross product 
+              Function that is used for smoothing the result of the cross product
               of the covariate or neurons and the weights. Additionally the strings,
-              'logistic' and 'tanh' are possible for the logistic function and 
+              'logistic' and 'tanh' are possible for the logistic function and
               tangent hyperbolicus.
 
               ''',
               enabled: algorithm == 'neuralnet',
               onChanged: (String? value) {
                 if (value != null) {
-                  ref.read(actionFctNeuralProvider.notifier).state = value;
+                  ref.read(activationFctNeuralProvider.notifier).state = value;
                 }
               },
             ),

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-05 13:34:28 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-11 17:34:50 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -124,7 +124,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               tooltip: '''
 
               If checked, baskets are identified by the ident variable and items
-              in the basket by the target variable. Otherwise a basket is the 
+              in the basket by the target variable. Otherwise a basket is the
               collection of input variables.
 
               ''',
@@ -151,7 +151,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               controller: _supportController,
               tooltip: '''
 
-                Support measures how frequently an item or itemset appears 
+                Support measures how frequently an item or itemset appears
                 in a dataset, indicating its ove.
 
                 ''',
@@ -170,7 +170,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               controller: _confidenceController,
               tooltip: '''
 
-                Confidence measures the likelihood that an item appears in transactions 
+                Confidence measures the likelihood that an item appears in transactions
                 containing another item, indicating the strength of the rule.
 
                 ''',
@@ -189,7 +189,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               controller: _minLengthController,
               tooltip: '''
 
-                Min length sets the minimum number of items in the itemsets or 
+                Min length sets the minimum number of items in the itemsets or
                 rules generated, controlling the complexity of the rules.
 
                 ''',
@@ -200,12 +200,13 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             ),
             configWidgetGap,
             NumberField(
-              label: 'Limit Number:',
+              label: 'Limit Rules:',
               key: const Key('measuresLimitAssociationField'),
               controller: _limitNumberMeasureController,
               tooltip: '''
 
-                Limit the number of rules for calculating interest measures.
+                Limit the number of rules for display and calculating the
+                measures of interest.
 
                 ''',
               inputFormatter:
@@ -226,7 +227,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               sortByAssociationProvider,
               tooltip: '''
 
-              Refer to ranking rules based on metrics such as support, confidence, 
+              Refer to ranking rules based on metrics such as support, confidence,
               or lift to prioritize the most significant and relevant patterns.
 
               ''',
