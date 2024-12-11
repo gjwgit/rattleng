@@ -76,12 +76,12 @@ if (length(error_predic) > min_length) {
   error_predic <- error_predic[seq_len(min_length), , drop = FALSE]
 }
 
-rpart_cem <- rattle::errorMatrix(svm_target, error_predic, count = TRUE)
+svm_cem <- rattle::errorMatrix(svm_target, error_predic, count = TRUE)
 
-print(rpart_cem)
+print(svm_cem)
 
 print('Error matrix for the SVM model (proportions)')
 
-rpart_per <- rattle::errorMatrix(svm_target, error_predic)
+svm_per <- rattle::errorMatrix(svm_target, error_predic)
 
-print(rpart_per)
+print(svm_per)

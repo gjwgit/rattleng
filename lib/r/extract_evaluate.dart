@@ -38,6 +38,7 @@ String _basicTemplate(
   bool treeExecuted = ref.watch(rpartTreeEvaluateProvider);
   bool boostExecuted = ref.watch(boostEvaluateProvider);
   bool forestExecuted = ref.watch(forestEvaluateProvider);
+  bool svmExecuted = ref.watch(svmEvaluateProvider);
 
   String hdr;
   String mdr;
@@ -51,6 +52,8 @@ String _basicTemplate(
   String mdrf;
   String hdcf;
   String mdcf;
+  String ecsvm;
+  String epsvm;
 
   hdr =
       'Error matrix for the RPART Decision Tree model [$evaluateDataset] (counts)';
@@ -72,6 +75,10 @@ String _basicTemplate(
   mdcf =
       'Error matrix for the CONDITIONAL FOREST model [$evaluateDataset] (proportions)';
 
+  ecsvm = 'Error matrix for the SVM model [$evaluateDataset] (counts)';
+
+  epsvm = 'Error matrix for the SVM model [$evaluateDataset] (proportions)';
+
   // Now extract the output from particular commands.
 
   String sz = '',
@@ -85,7 +92,9 @@ String _basicTemplate(
       crf = '',
       prf = '',
       ccf = '',
-      pcf = '';
+      pcf = '',
+      csvm = '',
+      psvm = '';
 
   sz = rExtract(
     log,
@@ -134,6 +143,14 @@ String _basicTemplate(
   pcf = rExtract(
     log,
     'print(cforest_per)',
+  );
+  csvm = rExtract(
+    log,
+    'print(svm_cem)',
+  );
+  psvm = rExtract(
+    log,
+    'print(svm_per)',
   );
 
   // Obtain the current timestamp.
@@ -188,6 +205,14 @@ String _basicTemplate(
         '$ccf\n\n'
         '$hdcf\n\n'
         '$pcf\n\n';
+  }
+
+  if (csvm != '' && psvm != '' && svmExecuted) {
+    result = '$result\n'
+        '$ecsvm\n\n'
+        '$csvm\n\n'
+        '$epsvm\n\n'
+        '$psvm\n\n';
   }
 
   result = '$result\n'

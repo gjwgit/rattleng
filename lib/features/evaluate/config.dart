@@ -184,6 +184,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool conditionalForestExecuted =
                     ref.watch(conditionalForestEvaluateProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
+                bool svmExecuted = ref.watch(svmEvaluateProvider);
 
                 String mbe = 'model_build_evaluate';
                 String er = 'evaluate_rpart';
@@ -192,6 +193,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ex = 'evaluate_xgboost';
                 String erf = 'evaluate_random_forest';
                 String ecf = 'evaluate_conditional_forest';
+                String es = 'evaluate_svm';
 
                 await rSource(
                   context,
@@ -244,6 +246,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     context,
                     ref,
                     [ecf],
+                  );
+                }
+
+                if (svmExecuted) {
+                  await rSource(
+                    context,
+                    ref,
+                    [es],
                   );
                 }
 
