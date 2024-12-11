@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-02 09:28:21 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-12-11 21:00:01 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -146,9 +146,9 @@ meta_data <- function(df) {
   # Name the list elements by the variable names
 
   names(summary_list) <- names(df)
-  
+
   # Convert the list to a JSON string.
-  
+
   json_output <- jsonlite::toJSON(summary_list, pretty = TRUE)
   return(json_output)
 }
@@ -165,7 +165,7 @@ if (username == "") {
 
 is_large_factor <- function(x, maxfactor = 20) {
   is_cat <- is.factor(x) || is.ordered(x) || is.character(x)
-  
+
   if (is.factor(x) || is.ordered(x)) {
     num_levels <- length(levels(x))
   } else if (is.character(x)) {
@@ -173,7 +173,7 @@ is_large_factor <- function(x, maxfactor = 20) {
   } else {
     num_levels <- NA  # For non-categoric variables
   }
-  
+
   if (is_cat) {
     return(num_levels > maxfactor)
   }
@@ -187,30 +187,45 @@ check_unique <- function(x) {
   !any(duplicated(x))
 }
 
-# Then find columns with unique values.
+# Check if the numbers in the column are real numbers and if so return
+# FALSe so they are not included in the potentiasl IDENT.
+
+check_not_real <- function(x) {
+  if (! is.numeric(x)) {
+    return(TRUE)
+  } else {
+    return(! any(x != round(x)))
+  }
+}
+
+# Then find columns with unique values which we will treat as
+# identifiers, but not real number columns.
 
 unique_columns <- function(df) {
   col_names <- names(df)
+  # Get those columns that have only unique values.
   unique_cols <- col_names[sapply(df, check_unique)]
+  # Remove those that are real numbers (more likely to be unique)
+  unique_cols <- unique_cols[sapply(df[unique_cols], check_not_real)]
   return(unique_cols)
 }
 
 find_fewest_levels <- function(df) {
   # Select only the categoric (factor) columns from the data frame
   cat_vars <- df[, sapply(df, is.factor), drop = FALSE]
-  
+
   # Check if there are any categoric variables
   if (ncol(cat_vars) > 0) {
     # Find the variable with the fewest levels
     fewest_levels_var <- names(cat_vars)[which.min(sapply(cat_vars, nlevels))]
-    
+
     # Find all variables that have the fewest levels
     min_levels <- min(sapply(cat_vars, nlevels))
     fewest_levels_vars <- names(cat_vars)[sapply(cat_vars, nlevels) == min_levels]
-    
+
     # Select the last variable in case of ties
     fewest_levels_var <- fewest_levels_vars[length(fewest_levels_vars)]
-    
+
     # Return the variable with the fewest levels
     return(fewest_levels_var)
   } else {
