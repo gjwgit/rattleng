@@ -27,6 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_io/io.dart';
 
 // Define a provider for managing settings.
 
@@ -75,7 +76,20 @@ final randomSeedProvider = StateProvider<int>((ref) => 42);
 
 final imageViewerSettingProvider = StateProvider<String>((ref) => '');
 
+final rExecutablePathProvider = StateProvider<String>((ref) => '');
+
 // Partition setting provider with default values.
 
-final partitionSettingProvider =
-    StateProvider<List<double>>((ref) => [0.7, 0.15, 0.15]);
+final partitionSettingProvider = StateProvider<List<double>>(
+  (ref) => [
+    ref.watch(partitionTrainProvider.notifier).state.toDouble() / 100,
+    ref.watch(partitionValidProvider.notifier).state.toDouble() / 100,
+    ref.watch(partitionTestProvider.notifier).state.toDouble() / 100,
+  ],
+);
+
+final partitionTrainProvider = StateProvider<int>((ref) => 70);
+
+final partitionValidProvider = StateProvider<int>((ref) => 15);
+
+final partitionTestProvider = StateProvider<int>((ref) => 15);

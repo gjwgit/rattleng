@@ -419,6 +419,8 @@ Future<void> rSource(
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
 
+  print("DATA_SPLIT_TR_TU_TE: $partitionString");
+
   // TODO if (script == 'model_build_rpart')) {
 
   // TODO 20231016 gjw THESE SHOULD BE SET IN THE MODEL TAB AND ARE THEN

@@ -29,11 +29,13 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/session_control.dart';
+import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/repeat_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -241,6 +243,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _loadSettings();
 
     _loadRandomSeed();
+
+    _loadPartition();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> _loadSettings() async {
@@ -329,6 +338,40 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final prefs = await SharedPreferences.getInstance();
     final seed = prefs.getInt('randomSeed') ?? 42;
     ref.read(randomSeedProvider.notifier).state = seed;
+  }
+
+  Future<void> _loadPartition() async {
+    final prefs = await SharedPreferences.getInstance();
+    final train = prefs.getInt('train') ?? 70;
+    ref.read(partitionTrainProvider.notifier).state = train;
+
+    final valid = prefs.getInt('valid') ?? 15;
+    ref.read(partitionValidProvider.notifier).state = valid;
+
+    final test = prefs.getInt('test') ?? 15;
+    ref.read(partitionTestProvider.notifier).state = test;
+  }
+
+  // Future<void> _savePartition(List<int> values) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setInt('train', values[0]);
+  //   await prefs.setInt('valid', values[1]);
+  //   await prefs.setInt('test', values[2]);
+  // }
+
+  Future<void> _savePartitionTrain(value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('train', value);
+  }
+
+  Future<void> _savePartitionValid(value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('valid', value);
+  }
+
+  Future<void> _savePartitionTest(value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('test', value);
   }
 
   Future<void> _saveRandomSeed(int value) async {
@@ -788,8 +831,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             child: ElevatedButton(
                               onPressed: () {
                                 ref
-                                    .read(partitionSettingProvider.notifier)
-                                    .state = [0.7, 0.15, 0.15];
+                                    .read(partitionTrainProvider.notifier)
+                                    .state = 70;
+                                ref
+                                    .read(partitionValidProvider.notifier)
+                                    .state = 15;
+                                ref.read(partitionTestProvider.notifier).state =
+                                    15;
                               },
                               child: const Text('Reset'),
                             ),
@@ -799,101 +847,69 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
+                      //TODO kevin
+
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: TextField(
-                              controller: TextEditingController(
-                                  text:
-                                      (ref.watch(partitionSettingProvider)[0] *
-                                              100)
-                                          .toStringAsFixed(0)),
-                              onChanged: (value) {
-                                double? trainingRatio = double.tryParse(value);
-                                if (trainingRatio != null &&
-                                    trainingRatio >= 0 &&
-                                    trainingRatio <= 100) {
-                                  final currentRatios =
-                                      ref.read(partitionSettingProvider);
-                                  ref
-                                      .read(partitionSettingProvider.notifier)
-                                      .state = [
-                                    trainingRatio / 100,
-                                    currentRatios[1],
-                                    currentRatios[2],
-                                  ];
-                                }
-                              },
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Training %',
-                              ),
+                          NumberField(
+                            label: 'Training %:',
+                            key: const Key('trainingField'),
+                            controller: TextEditingController(
+                              text: (ref.watch(partitionTrainProvider))
+                                  .toStringAsFixed(0),
                             ),
+                            tooltip: '''
+      The percentage of data allocated for training the model. Ensure the total 
+      across training, validation, and testing sums to 100%.
+      ''',
+                            inputFormatter:
+                                FilteringTextInputFormatter.digitsOnly,
+                            validator: (value) => validateInteger(
+                              value,
+                              min: 0,
+                            ),
+                            stateProvider:
+                                partitionTrainProvider, // Assuming this is the intended state provider.
                           ),
                           configRowGap,
-                          Expanded(
-                            child: TextField(
-                              controller: TextEditingController(
-                                  text:
-                                      (ref.watch(partitionSettingProvider)[1] *
-                                              100)
-                                          .toStringAsFixed(0)),
-                              onChanged: (value) {
-                                double? validationRatio =
-                                    double.tryParse(value);
-                                if (validationRatio != null &&
-                                    validationRatio >= 0 &&
-                                    validationRatio <= 100) {
-                                  final currentRatios =
-                                      ref.read(partitionSettingProvider);
-                                  ref
-                                      .read(partitionSettingProvider.notifier)
-                                      .state = [
-                                    currentRatios[0],
-                                    validationRatio / 100,
-                                    currentRatios[2],
-                                  ];
-                                }
-                              },
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Validation %',
-                              ),
+                          NumberField(
+                            label: 'Validation %:',
+                            key: const Key('validationField'),
+                            controller: TextEditingController(
+                              text: (ref.watch(partitionValidProvider))
+                                  .toStringAsFixed(0),
                             ),
+                            tooltip: '''
+      The percentage of data allocated for validating the model. Ensure the total 
+      across training, validation, and testing sums to 100%.
+      ''',
+                            inputFormatter:
+                                FilteringTextInputFormatter.digitsOnly,
+                            validator: (value) => validateInteger(
+                              value,
+                              min: 0,
+                            ),
+                            stateProvider: partitionValidProvider,
                           ),
                           configRowGap,
-                          Expanded(
-                            child: TextField(
-                              controller: TextEditingController(
-                                  text:
-                                      (ref.watch(partitionSettingProvider)[2] *
-                                              100)
-                                          .toStringAsFixed(0)),
-                              onChanged: (value) {
-                                double? testingRatio = double.tryParse(value);
-                                if (testingRatio != null &&
-                                    testingRatio >= 0 &&
-                                    testingRatio <= 100) {
-                                  final currentRatios =
-                                      ref.read(partitionSettingProvider);
-                                  ref
-                                      .read(partitionSettingProvider.notifier)
-                                      .state = [
-                                    currentRatios[0],
-                                    currentRatios[1],
-                                    testingRatio / 100,
-                                  ];
-                                }
-                              },
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Testing %',
-                              ),
+                          NumberField(
+                            label: 'Testing %:',
+                            key: const Key('testingField'),
+                            controller: TextEditingController(
+                              text: (ref.watch(partitionTestProvider))
+                                  .toStringAsFixed(0),
                             ),
+                            tooltip: '''
+      The percentage of data allocated for testing the model. Ensure the total 
+      across training, validation, and testing sums to 100%.
+      ''',
+                            inputFormatter:
+                                FilteringTextInputFormatter.digitsOnly,
+                            validator: (value) => validateInteger(
+                              value,
+                              min: 0,
+                            ),
+                            stateProvider: partitionTestProvider,
                           ),
                         ],
                       ),
