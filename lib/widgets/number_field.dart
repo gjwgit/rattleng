@@ -246,7 +246,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   ],
                 ),
                 // Positioned Arrow Buttons.
-                
+
                 Positioned(
                   right: 0,
                   top: 0,
