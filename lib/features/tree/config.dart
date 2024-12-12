@@ -307,7 +307,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                validator: (value) => validateInteger(value, min: 1),
+                validator: (value) => validateInteger(value, min: 1, max: 30),
+                max: 30,
                 stateProvider: maxDepthProvider,
               ),
               configWidgetGap,
