@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
@@ -47,7 +48,6 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -69,6 +69,11 @@ Map decisionTreeTooltips = {
 
       ''',
 };
+
+// Defines the maximum allowable depth for a given operation or process.
+// The value is set to 30 to ensure the process does not exceed practical or safe limits.
+
+final int maxDepthLimit = 30;
 
 class TreeModelConfig extends ConsumerStatefulWidget {
   const TreeModelConfig({super.key});
@@ -313,13 +318,14 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 This is the maximum depth of any node of the final tree. The
                 root node is considered to be depth 0 so a non-trivial tree
                 starts with depth 1.  The maximum allowable depth for rpart() is
-                30 which we retain as the maximum depth allowable for Rattle and
-                the default.
+                ${maxDepthLimit.toString()} which we retain as the maximum 
+                depth allowable for Rattle and the default.
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                validator: (value) => validateInteger(value, min: 1, max: 30),
-                max: 30,
+                validator: (value) =>
+                    validateInteger(value, min: 1, max: maxDepthLimit),
+                max: maxDepthLimit,
                 stateProvider: maxDepthProvider,
               ),
               configWidgetGap,
