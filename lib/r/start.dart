@@ -1,8 +1,8 @@
 /// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Thursday 2024-12-12 16:34:13 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 16:47:25 +1100 Graham Williams>
 //
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -25,6 +25,10 @@
 /// Authors: Graham Williams
 
 library;
+
+// TODO 20241212 gjw FIX LINT ISSUES AFTER TESTING ALL IS STILL OKAY FOR A FEW DAYS
+//
+// Also cleanup this file, remoaving all of the commented out code.
 
 import 'dart:convert';
 
