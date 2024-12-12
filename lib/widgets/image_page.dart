@@ -68,7 +68,6 @@ class ImagePage extends StatelessWidget {
     }
 
     if (!await imageFile.exists()) {
-
       return null;
     }
 
@@ -109,7 +108,6 @@ class ImagePage extends StatelessWidget {
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) {
-
           return pw.Center(
             child: pw.Image(
               pw.MemoryImage(pngBytes.buffer.asUint8List()),
@@ -144,22 +142,18 @@ class ImagePage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: paths.length,
               itemBuilder: (context, index) {
-
                 return FutureBuilder<Uint8List?>(
                   future: _loadImageBytes(paths[index]),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
-                      
                       return Center(
                         child: Text('Error: ${snapshot.error}'),
                       );
                     } else if (snapshot.connectionState ==
                         ConnectionState.waiting) {
-
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.data == null ||
                         snapshot.data!.isEmpty) {
-
                       return const Center(
                         child: Text(
                           'Image not available',
