@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Friday 2024-12-13 09:53:57 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 10:01:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -143,8 +143,8 @@ void updateVariablesProvider(WidgetRef ref) {
     // should actually be IDENT or TARGET.
 
     // 20241213 gjw This is repeated code from dataset/display.dart - we should
-    // avoid repeated code as it is harder to maintain ans I have just
-    // demonstrated - I had to find this in two places to fix!!!!
+    // avoid repeated code as it is harder to maintain as I have just
+    // demonstrated - I had to find this in two places to fix :-)
 
     // for (var highVar in highVars) {
     //   if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
