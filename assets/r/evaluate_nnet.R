@@ -35,7 +35,7 @@
 
 library(rattle)
 
-print("Error matrix for the Linear model (counts)")
+print("Error matrix for the nnet model (counts)")
 
 error_predic <- predict(model_nn, newdata = trds, type = "class")
 
@@ -43,7 +43,7 @@ nnet_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
 
 print(nnet_cem)
 
-print('Error matrix for the Linear model (proportions)')
+print('Error matrix for the nnet model (proportions)')
 
 nnet_per <- rattle::errorMatrix(trds[[target]], error_predic)
 
