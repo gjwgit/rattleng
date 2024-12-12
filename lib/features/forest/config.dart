@@ -29,6 +29,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
@@ -131,6 +132,13 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                         ref,
                         [mt, mbcf, etr, erc, etu, erc],
                       );
+
+                if (selectedAlgorithm == AlgorithmType.traditional) {
+                  ref.read(randomForestEvaluateProvider.notifier).state = true;
+                } else if (selectedAlgorithm == AlgorithmType.conditional) {
+                  ref.read(conditionalForestEvaluateProvider.notifier).state =
+                      true;
+                }
 
                 await ref.read(forestPageControllerProvider).animateToPage(
                       // Index of the second page.

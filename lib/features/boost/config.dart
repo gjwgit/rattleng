@@ -32,6 +32,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/boost/settings.dart';
 import 'package:rattle/providers/boost.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -103,8 +104,10 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
 
                 if (algorithm == 'Extreme') {
                   await rSource(context, ref, [mt, mbx, etr, erc, etu, erc]);
+                  ref.read(xgBoostEvaluateProvider.notifier).state = true;
                 } else {
                   await rSource(context, ref, [mt, mba, etr, erc, etu, erc]);
+                  ref.read(adaBoostEvaluateProvider.notifier).state = true;
                 }
               },
               child: const Text('Build Boosted Trees'),

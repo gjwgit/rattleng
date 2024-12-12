@@ -25,10 +25,11 @@
 
 # Load required libraries.
 
-library(xgboost)        # For XGBoost model.
+library(Ckmeans.1d.dp)  # For ggplot.
+library(data.table)     # Display data as a nicely formatted table.
+library(hmeasure)
 library(rattle)         # Provides a convenient wrapper for xgboost.
-library(Ckmeans.1d.dp)  # For ggplot
-library(data.table)     # Display data as a nicely formatted table
+library(xgboost)        # For XGBoost model.
 
 # Define model type and description.
 

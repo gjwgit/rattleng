@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/complexity.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/min_bucket.dart';
@@ -122,7 +123,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 pageControllerProvider:
                     treePageControllerProvider, // Optional navigation
 
-                onPressed: () {
+                onPressed: () async {
                   // TODO 20240926 gjw SPLIT THIS INTO OWN LOCAL FUNCTION
 
                   // Perform manual validation.
@@ -225,9 +226,19 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     String erc = 'evaluate_riskchart';
 
                     if (selectedAlgorithm == AlgorithmType.conditional) {
-                      rSource(context, ref, [mt, mbc, etr, erc, etu, erc]);
+                      await rSource(
+                        context,
+                        ref,
+                        [mt, mbc, etr, erc, etu, erc],
+                      );
+                      ref.read(cTreeEvaluateProvider.notifier).state = true;
                     } else {
-                      rSource(context, ref, [mt, mbr, etr, erc, etu, erc]);
+                      await rSource(
+                        context,
+                        ref,
+                        [mt, mbr, etr, erc, etu, erc],
+                      );
+                      ref.read(rpartTreeEvaluateProvider.notifier).state = true;
                     }
                   }
                 },

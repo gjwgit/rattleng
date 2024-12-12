@@ -38,7 +38,7 @@ import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Tree panel displays the tree instructions and then output for the built
@@ -128,7 +128,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
+        SingleImagePage(
           title: '''
 
           # A visualisation of the Tree
@@ -151,7 +151,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
+        SingleImagePage(
           title: '''
 
           # Risk Chart &#8212; Optimistic Estimate of Performance
@@ -177,7 +177,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
+        SingleImagePage(
           title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
