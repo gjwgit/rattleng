@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Thursday 2024-08-15 07:17:53 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 09:53:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -129,16 +129,28 @@ void updateVariablesProvider(WidgetRef ref) {
         debugPrint('ERROR: unidentified variables: ${column.name}!');
       }
     }
-    // update types
+
+    // Update the types.
+
     if (!ref.read(typesProvider.notifier).state.containsKey(column.name)) {
       ref.read(typesProvider.notifier).state[column.name] =
           isNumeric(column.type) ? Type.numeric : Type.categoric;
     }
-    for (var highVar in highVars) {
-      if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
-        ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
-      }
-    }
+
+    // 20241213 gjw Remove this heuristic for now. It is causing the IGNORE of
+    // country in the PROTEIN dataset to be retained even if I change it to
+    // INPUT/RISK/IDENT. Not if I change it to TARGET as per the test below. It
+    // should actually be IDENT or TARGET.
+
+    // 20241213 gjw This is repeated code from dataset/display.dart - we should
+    // avoid repeated code as it is harder to maintain ans I have just
+    // demonstrated - I had to find this in two places to fix!!!!
+
+    // for (var highVar in highVars) {
+    //   if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
+    //     ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+    //   }
+    // }
   }
 }
 
