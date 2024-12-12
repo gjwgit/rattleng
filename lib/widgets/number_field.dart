@@ -26,13 +26,15 @@
 library;
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+
+import 'package:rattle/constants/style.dart';
 
 class NumberField extends ConsumerStatefulWidget {
   final String label;
@@ -81,34 +83,49 @@ class NumberFieldState extends ConsumerState<NumberField> {
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChange);
-    widget.controller.text =
-        ref.read(widget.stateProvider.notifier).state.toString();
+
+    // Listen to provider changes and update controller.
+
+    ref.listenManual(
+      widget.stateProvider,
+      (previous, next) {
+        // Update controller text when provider state changes.
+
+        widget.controller.text = next.toString();
+        setState(() {});
+      },
+      fireImmediately: true,
+    );
   }
 
   void increment() {
-    // Parse the current value, increment by interval, and update the text field.
-
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
     currentValue += widget.interval;
-    if (widget.max != null && currentValue > widget.max!) {
-      currentValue = widget.max!;
+
+    // Automatically cap at max if specified.
+
+    if (widget.max != null) {
+      currentValue = min(currentValue, widget.max!);
     }
-    widget.controller.text = currentValue.toStringAsFixed(widget.decimalPlaces);
-    updateField();
+
+    // Update state provider directly.
+
+    ref.read(widget.stateProvider.notifier).state = currentValue;
   }
 
   void decrement() {
-    // Parse the current value, decrement by interval, and update the text field.
-
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
-    if (currentValue > widget.interval) {
-      currentValue -= widget.interval;
+    currentValue -= widget.interval;
+
+    // Automatically floor at min if specified.
+
+    if (widget.min != null) {
+      currentValue = max(currentValue, widget.min!);
     }
-    if (widget.min != null && currentValue < widget.min!) {
-      currentValue = widget.min!;
-    }
-    widget.controller.text = currentValue.toStringAsFixed(widget.decimalPlaces);
-    updateField();
+
+    // Update state provider directly.
+
+    ref.read(widget.stateProvider.notifier).state = currentValue;
   }
 
   // Timer for continuous incrementing/decrementing.
@@ -134,51 +151,58 @@ class NumberFieldState extends ConsumerState<NumberField> {
     timer?.cancel();
   }
 
-  // update the provider and the interval in the gui.
   void updateField() {
     String updatedText = widget.controller.text;
-
     num? v = num.tryParse(updatedText);
 
     if (v == null) {
-      ref.read(widget.stateProvider.notifier).state = updatedText;
+      // If parsing fails, set to 0 or min.
+
+      v = widget.min ?? 0;
     } else {
-      if (widget.max != null && v > widget.max!) {
-        v = widget.max!;
-      } else if (widget.min != null && v < widget.min!) {
-        v = widget.min!;
-      }
-      widget.controller.text = v.toString();
+      // Apply min and max constraints.
 
-      if (widget.decimalPlaces > 0) {
-        // Convert v to double with specified decimalPlaces.
-
-        v = double.parse(v.toStringAsFixed(widget.decimalPlaces));
+      if (widget.min != null) {
+        v = max(v, widget.min!);
       }
-      ref.read(widget.stateProvider.notifier).state = v;
+      if (widget.max != null) {
+        v = min(v, widget.max!);
+      }
     }
+
+    widget.controller.text = v.toString();
+
+    // Apply decimal places if needed.
+
+    if (widget.decimalPlaces > 0) {
+      v = double.parse(v.toStringAsFixed(widget.decimalPlaces));
+    }
+
+    // Update state provider.
+
+    ref.watch(widget.stateProvider.notifier).state = v;
   }
 
   void _onFocusChange() {
-    // triggered after losing focus.
     if (!_focusNode.hasFocus) {
       updateField();
     }
   }
 
-  // Define a text style for normal fields.
-
-  TextStyle normalTextStyle = const TextStyle(fontSize: 14.0);
-
-  // Define a text style for disabled fields.
-
-  TextStyle disabledTextStyle = const TextStyle(
-    fontSize: 14.0,
-    color: Colors.grey, // Grey out the text
-  );
-
   @override
   Widget build(BuildContext context) {
+    // Watch the state provider to auto-update.
+
+    final currentValue = ref.watch(widget.stateProvider);
+
+    // Ensure controller reflects the current state.
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.controller.text != currentValue.toString()) {
+        widget.controller.text = currentValue.toString();
+      }
+    });
+
     return MarkdownTooltip(
       message: widget.tooltip,
       child: Column(
@@ -206,7 +230,12 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   onEditingComplete: () {
-                    // triggered after user clicks enter.
+                    updateField();
+                  },
+                  onChanged: (value) {
+                    updateField();
+                  },
+                  onSaved: (value) {
                     updateField();
                   },
                   style: widget.enabled ? normalTextStyle : disabledTextStyle,
@@ -217,6 +246,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   ],
                 ),
                 // Positioned Arrow Buttons.
+                
                 Positioned(
                   right: 0,
                   top: 0,
@@ -258,11 +288,24 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
 // Validation logic for integer fields.
 
-String? validateInteger(String? value, {required int min}) {
+String? validateInteger(
+  String? value, {
+  required int min,
+  int? max,
+}) {
   if (value == null || value.isEmpty) return 'Cannot be empty';
+
   int? intValue = int.tryParse(value);
-  if (intValue == null || intValue < min) {
+  if (intValue == null) {
+    return 'Must be a valid number';
+  }
+
+  if (intValue < min) {
     return 'Must be at least $min';
+  }
+
+  if (max != null && intValue > max) {
+    return 'Must be at most $max';
   }
 
   return null;
