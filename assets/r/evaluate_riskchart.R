@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-13 08:25:45 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-12-13 08:32:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,7 +39,7 @@ library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
 library(rattle)
 
-########################################################################
+####################################
 
 # Use rattle's evaluateRisk to generate data required for a Risk Chart.
 
