@@ -91,8 +91,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
       (previous, next) {
         // Update controller text when provider state changes.
 
-        widget.controller.text = next.toString();
-        setState(() {});
+        setState(() {
+          widget.controller.text = next.toString();
+        });
       },
       fireImmediately: true,
     );
