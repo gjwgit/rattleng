@@ -39,6 +39,7 @@ String _basicTemplate(
   bool boostExecuted = ref.watch(boostEvaluateProvider);
   bool forestExecuted = ref.watch(forestEvaluateProvider);
   bool svmExecuted = ref.watch(svmEvaluateProvider);
+  bool nnetExecuted = ref.watch(nnetEvaluateProvider);
 
   String hdr;
   String mdr;
@@ -54,6 +55,8 @@ String _basicTemplate(
   String mdcf;
   String ecsvm;
   String epsvm;
+  String ennc;
+  String ennp;
 
   hdr =
       'Error matrix for the RPART Decision Tree model [$evaluateDataset] (counts)';
@@ -79,6 +82,10 @@ String _basicTemplate(
 
   epsvm = 'Error matrix for the SVM model [$evaluateDataset] (proportions)';
 
+  ennc = 'Error matrix for the NNET model [$evaluateDataset] (counts)';
+
+  ennp = 'Error matrix for the NNET model [$evaluateDataset] (proportions)';
+
   // Now extract the output from particular commands.
 
   String sz = '',
@@ -94,7 +101,9 @@ String _basicTemplate(
       ccf = '',
       pcf = '',
       csvm = '',
-      psvm = '';
+      psvm = '',
+      cnc = '',
+      cnp = '';
 
   sz = rExtract(
     log,
@@ -151,6 +160,16 @@ String _basicTemplate(
   psvm = rExtract(
     log,
     'print(svm_per)',
+  );
+
+  cnc = rExtract(
+    log,
+    'print(nnet_cem)',
+  );
+
+  cnp = rExtract(
+    log,
+    'print(nnet_per)',
   );
 
   // Obtain the current timestamp.
@@ -213,6 +232,14 @@ String _basicTemplate(
         '$csvm\n\n'
         '$epsvm\n\n'
         '$psvm\n\n';
+  }
+
+  if (cnc != '' && cnp != '' && nnetExecuted) {
+    result = '$result\n'
+        '$ennc\n\n'
+        '$cnc\n\n'
+        '$ennp\n\n'
+        '$cnp\n\n';
   }
 
   result = '$result\n'
