@@ -173,6 +173,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
       }
     }
 
+    // Controller text automatically updates to 
+    // the range of [widget.min] and [widget.max].
+
     widget.controller.text = v.toString();
 
     // Apply decimal places if needed.
