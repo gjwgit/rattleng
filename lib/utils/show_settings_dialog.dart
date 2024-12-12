@@ -352,13 +352,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(partitionTestProvider.notifier).state = test;
   }
 
-  // Future<void> _savePartition(List<int> values) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setInt('train', values[0]);
-  //   await prefs.setInt('valid', values[1]);
-  //   await prefs.setInt('test', values[2]);
-  // }
-
   Future<void> _savePartitionTrain(value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('train', value);
@@ -796,22 +789,19 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       settingsGroupGap,
                       Divider(),
 
-                      //TODO kevin
-
-                      // Adding to the SettingsDialogState
                       Row(
                         children: [
                           MarkdownTooltip(
                             message: '''
 
-      **Dataset Partition Setting:** 
-      Configure the dataset partitioning ratios for training, validation, and testing datasets. 
+                            **Dataset Partition Setting:** 
+                            Configure the dataset partitioning ratios for training, validation, and testing datasets. 
 
-      - Default: 70/15/15 (70% training, 15% validation, 15% testing).
-      - Customize to suit your dataset requirements, e.g., 50/25/25.
-      - The values must sum up to 100%.
+                            - Default: 70/15/15 (70% training, 15% validation, 15% testing).
+                            - Customize to suit your dataset requirements, e.g., 50/25/25.
+                            - The values must sum up to 100%.
 
-      ''',
+                            ''',
                             child: const Text(
                               'Partition',
                               style: TextStyle(
@@ -824,10 +814,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-      **Reset Partition Ratios:** 
-      Reset the dataset partition ratios to the default values of 70/15/15.
+                            **Reset Partition Ratios:** 
+                            Reset the dataset partition ratios to the default values of 70/15/15.
 
-      ''',
+                            ''',
                             child: ElevatedButton(
                               onPressed: () {
                                 ref
@@ -847,8 +837,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
-                      //TODO kevin
-
                       Row(
                         children: [
                           NumberField(
@@ -859,9 +847,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-The percentage of data allocated for training the model. Ensure the total 
-across training, validation, and testing sums to 100%.
-''',
+
+                            The percentage of data allocated for training the model. Ensure the total 
+                            across training, validation, and testing sums to 100%.
+
+                            ''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
@@ -884,9 +874,11 @@ across training, validation, and testing sums to 100%.
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-The percentage of data allocated for validating the model. Ensure the total 
-across training, validation, and testing sums to 100%.
-''',
+
+                            The percentage of data allocated for validating the model. Ensure the total 
+                            across training, validation, and testing sums to 100%.
+
+                            ''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
@@ -909,9 +901,11 @@ across training, validation, and testing sums to 100%.
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-The percentage of data allocated for testing the model. Ensure the total 
-across training, validation, and testing sums to 100%.
-''',
+
+                            The percentage of data allocated for testing the model. Ensure the total 
+                            across training, validation, and testing sums to 100%.
+                            
+                            ''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
