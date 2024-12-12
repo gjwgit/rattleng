@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Friday 2024-12-13 08:45:54 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 08:57:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -293,9 +293,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _minSplitController,
                 tooltip: '''
 
-                The minimum number of observations that must exist in a dataset
-                at any node in order for a split of that node to be attempted.
-                The default is 20.
+                This is the minimum number of observations that must exist in a
+                dataset at any node in order for a split of that node to be
+                attempted.  The default is 20.
 
                 ''',
                 inputFormatter:
@@ -310,9 +310,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _maxDepthController,
                 tooltip: '''
 
-                The maximum depth of any node of the final tree. The root
-                node is considered to be depth 0 so a non-trivial tree starts
-                with depth 1.  The maximum allowable depth for rpart() is 30.
+                This is the maximum depth of any node of the final tree. The
+                root node is considered to be depth 0 so a non-trivial tree
+                starts with depth 1.  The maximum allowable depth for rpart() is
+                30 which we retain as the maximum depth allowable for Rattle and
+                the default.
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
