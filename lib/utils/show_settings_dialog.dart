@@ -859,17 +859,21 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-      The percentage of data allocated for training the model. Ensure the total 
-      across training, validation, and testing sums to 100%.
-      ''',
+The percentage of data allocated for training the model. Ensure the total 
+across training, validation, and testing sums to 100%.
+''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
                               value,
                               min: 0,
                             ),
-                            stateProvider:
-                                partitionTrainProvider, // Assuming this is the intended state provider.
+                            stateProvider: partitionTrainProvider,
+                            onValueChanged: (newValue) async {
+                              if (newValue != null) {
+                                await _savePartitionTrain(int.parse(newValue));
+                              }
+                            },
                           ),
                           configRowGap,
                           NumberField(
@@ -880,9 +884,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-      The percentage of data allocated for validating the model. Ensure the total 
-      across training, validation, and testing sums to 100%.
-      ''',
+The percentage of data allocated for validating the model. Ensure the total 
+across training, validation, and testing sums to 100%.
+''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
@@ -890,6 +894,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               min: 0,
                             ),
                             stateProvider: partitionValidProvider,
+                            onValueChanged: (newValue) async {
+                              if (newValue != null) {
+                                await _savePartitionValid(int.parse(newValue));
+                              }
+                            },
                           ),
                           configRowGap,
                           NumberField(
@@ -900,9 +909,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-      The percentage of data allocated for testing the model. Ensure the total 
-      across training, validation, and testing sums to 100%.
-      ''',
+The percentage of data allocated for testing the model. Ensure the total 
+across training, validation, and testing sums to 100%.
+''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
@@ -910,6 +919,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               min: 0,
                             ),
                             stateProvider: partitionTestProvider,
+                            onValueChanged: (newValue) async {
+                              if (newValue != null) {
+                                await _savePartitionTest(int.parse(newValue));
+                              }
+                            },
                           ),
                         ],
                       ),

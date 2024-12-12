@@ -47,6 +47,8 @@ class NumberField extends ConsumerStatefulWidget {
   final int decimalPlaces;
   final num? min;
   final num? max;
+  final Future<void> Function(String? newValue)?
+      onValueChanged; // Made optional
 
   const NumberField({
     super.key,
@@ -62,6 +64,7 @@ class NumberField extends ConsumerStatefulWidget {
     this.maxWidth = 5,
     this.decimalPlaces = 0,
     this.interval = 1, // Default interval is 1, can be set as double or int
+    this.onValueChanged, // Optional parameter
   });
 
   @override
@@ -142,6 +145,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
     if (v == null) {
       ref.read(widget.stateProvider.notifier).state = updatedText;
+      widget.onValueChanged
+          ?.call(updatedText); // Call onValueChanged if defined
     } else {
       if (widget.max != null && v > widget.max!) {
         v = widget.max!;
@@ -156,6 +161,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
         v = double.parse(v.toStringAsFixed(widget.decimalPlaces));
       }
       ref.read(widget.stateProvider.notifier).state = v;
+      widget.onValueChanged
+          ?.call(v.toString()); // Call onValueChanged if defined
     }
   }
 
