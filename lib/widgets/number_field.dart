@@ -1,6 +1,6 @@
 /// A numerical text input field.
 //
-// Time-stamp: <Thursday 2024-12-12 08:24:08 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 08:49:23 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -63,7 +63,8 @@ class NumberField extends ConsumerStatefulWidget {
     this.enabled = true,
     this.maxWidth = 5,
     this.decimalPlaces = 0,
-    this.interval = 1, // Default interval is 1, can be set as double or int
+    // The default interval is 1 and can be set as double or int.
+    this.interval = 1,
   });
 
   @override
@@ -84,12 +85,12 @@ class NumberFieldState extends ConsumerState<NumberField> {
     super.initState();
     _focusNode.addListener(_onFocusChange);
 
-    // Listen to provider changes and update controller.
+    // Listen to provider changes and update the controller.
 
     ref.listenManual(
       widget.stateProvider,
       (previous, next) {
-        // Update controller text when provider state changes.
+        // Update the controller text when the provider state changes.
 
         setState(() {
           widget.controller.text = next.toString();
@@ -103,13 +104,13 @@ class NumberFieldState extends ConsumerState<NumberField> {
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
     currentValue += widget.interval;
 
-    // Automatically cap at max if specified.
+    // Automatically cap at the max if specified.
 
     if (widget.max != null) {
       currentValue = min(currentValue, widget.max!);
     }
 
-    // Update state provider directly.
+    // Update the state provider directly.
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
   }
@@ -129,7 +130,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
     ref.read(widget.stateProvider.notifier).state = currentValue;
   }
 
-  // Timer for continuous incrementing/decrementing.
+  // A timer for continuous incrementing/decrementing.
+
   Timer? timer;
 
   void startIncrementing() {
@@ -157,7 +159,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
     num? v = num.tryParse(updatedText);
 
     if (v == null) {
-      // If parsing fails, set to 0 or min.
+      // If the parsing fails, set to 0 or min.
 
       v = widget.min ?? 0;
     } else {
