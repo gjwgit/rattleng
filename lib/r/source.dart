@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-12-12 08:01:57 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-12-12 16:23:29 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -572,10 +572,7 @@ Future<void> rSource(
   // Add the code to the script provider so it will be displayed in the script
   // tab and available to be exported there.
 
-  updateScript(
-    ref,
-    code,
-  );
+  updateScript(ref, code);
 
   // Run the code without comments.
 

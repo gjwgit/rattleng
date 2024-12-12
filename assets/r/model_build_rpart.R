@@ -1,11 +1,11 @@
-# Using the dataset `ds` build an `rpart()` decision tree.
+# From dataset `ds` build an `rpart()` decision tree.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-12-10 15:52:56 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-12-12 17:19:07 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -41,7 +41,7 @@ library(hmeasure)
 library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 
-# Define the model type and description for file paths and titles
+# Define the model type and description for file paths and titles.
 
 mtype <- "rpart"
 mdesc <- "Decision Tree"

@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ ASSOCIATIONS bug fixes [6.3.39 20241212 gjw]
 + Intial ERROR MATRIX for EVALUATE [6.3.38 20241212 zy]
 + Add PROTEIN demo dataset for cluster analysis [6.3.37 20241212 gjw]
 + Bug fix meta data update each transform [6.3.36 20241212 gjw]
