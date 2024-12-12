@@ -419,7 +419,7 @@ Future<void> rSource(
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
 
-  debugPrint("DATA_SPLIT_TR_TU_TE: $partitionString");
+  debugPrint('DATA_SPLIT_TR_TU_TE: $partitionString');
 
   // TODO if (script == 'model_build_rpart')) {
 
