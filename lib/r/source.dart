@@ -134,7 +134,7 @@ Future<void> rSource(
   String lossMatrix = ref.read(lossMatrixProvider);
   List<double> partitionRatios = ref.read(partitionSettingProvider);
   String partitionString =
-      '${partitionRatios[0]}, ${partitionRatios[1]}, ${partitionRatios[2]}';
+      '${partitionRatios.first}, ${partitionRatios[1]}, ${partitionRatios.last}';
 
   // VISUAL
 
