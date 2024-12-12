@@ -1,6 +1,6 @@
 /// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Thursday 2024-12-12 16:47:25 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 16:49:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,18 +30,18 @@ library;
 //
 // Also cleanup this file, remoaving all of the commented out code.
 
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+//import 'package:package_info_plus/package_info_plus.dart';
 
-import 'package:rattle/providers/pty.dart';
+//import 'package:rattle/providers/pty.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/r/strip_comments.dart';
-import 'package:rattle/utils/debug_text.dart';
-import 'package:rattle/utils/update_script.dart';
+//import 'package:rattle/r/strip_comments.dart';
+//import 'package:rattle/utils/debug_text.dart';
+//import 'package:rattle/utils/update_script.dart';
 
 /// Start up the R sub-process and set up the capture of stderr and stdout.
 
