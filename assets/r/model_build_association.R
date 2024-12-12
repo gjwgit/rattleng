@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-12-12 17:09:47 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-12-12 19:20:30 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,6 +34,7 @@
 # Load required packages from the local library into the R session.
 
 library(arules)
+library(arulesViz)
 
 # Define the model type and description for file paths and titles.
 
@@ -93,14 +94,14 @@ measures <- interestMeasure(
 
 print(measures)
 
-# Plot the relative importance of the rules using arulesViz.
+# Plot a summary of the
 
-library(arulesViz)
+svg("TEMPDIR/model_arules_viz.svg")
+plot(model_arules, method="graph")
+dev.off()
+
+# Plot the relative importance of the rules using arulesViz.
 
 svg("TEMPDIR/model_arules_item_frequency.svg")
 itemFrequencyPlot(transactions, topN = 10, type = "relative")
-dev.off()
-
-png("TEMPDIR/model_arules_item_plot.png")
-plot(model_arules, method="graph")
 dev.off()
