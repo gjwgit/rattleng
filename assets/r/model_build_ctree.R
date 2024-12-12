@@ -35,6 +35,7 @@
 
 # Load required packages from the local library into the R session.
 
+library(hmeasure)
 library(party)        # Conditional inference trees
 library(partykit)     # Enhanced visualization and interpretation
 
@@ -85,26 +86,3 @@ cat("\n")
 svg("TEMPDIR/model_tree_ctree.svg")
 plot(model_ctree, main = paste("Conditional Inference Tree", target))
 dev.off()
-
-## # Prepare probabilities for predictions.
-
-## pr_tu <- predict(model_ctree, newdata = tuds, type = "prob")
-## predicted <- apply(pr_tu, 1, function(x) colnames(pr_tu)[which.max(x)])
-  
-## # Get unique levels of predicted.
-
-## levels_predicted <- unique(predicted)
-## predicted <- as.character(predicted)
-## predicted_numeric <- ifelse(predicted == levels_predicted[1], 0, 1)
-
-
-## svg("TEMPDIR/model_ctree_risk.svg")
-## rattle::riskchart(predicted_numeric, actual_numeric, risks,
-##                   title          = "Risk Chart Conditional Tree FILENAME [tuning] TARGET_VAR ",
-##                   risk.name      = "RISK_VAR",
-##                   recall.name    = "TARGET_VAR",
-##                   show.lift      = TRUE,
-##                   show.precision = TRUE,
-##                   legend.horiz   = FALSE) +
-##     SETTINGS_GRAPHIC_THEME()
-## dev.off()

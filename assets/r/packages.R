@@ -99,6 +99,7 @@ pkgs <- c(
   'ggtext',
   'ggplotify',
   'ggthemes',
+  'hmeasure',
   'janitor',
   'lubridate',
   'magrittr',

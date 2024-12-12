@@ -30,6 +30,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/svm.dart';
 import 'package:rattle/r/source.dart';
@@ -103,6 +104,8 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
                 String erc = 'evaluate_riskchart';
 
                 await rSource(context, ref, [mt, mbs, etr, erc, etu, erc]);
+
+                ref.read(svmEvaluateProvider.notifier).state = true;
 
                 await ref.read(svmPageControllerProvider).animateToPage(
                       // Index of the second page.

@@ -31,7 +31,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
+import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
+import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class EvaluateConfig extends ConsumerStatefulWidget {
@@ -54,7 +57,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         ['model_tree_rpart.svg'],
         ['model_tree_ctree.svg'],
       ],
-      provider: treeEvaluateProvider,
+      provider: rpartTreeEvaluateProvider,
     ),
     _ModelConfig(
       key: 'boostEvaluate',
@@ -167,6 +170,102 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         configBotGap,
         Row(
           children: [
+            configLeftGap,
+            ActivityButton(
+              pageControllerProvider: evaluatePageControllerProvider,
+              onPressed: () async {
+                bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
+                bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+                bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
+                bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
+                bool boostTicked = ref.watch(boostEvaluateProvider);
+                bool randomForestExecuted =
+                    ref.watch(randomForestEvaluateProvider);
+                bool conditionalForestExecuted =
+                    ref.watch(conditionalForestEvaluateProvider);
+                bool forestTicked = ref.watch(forestEvaluateProvider);
+                bool svmExecuted = ref.watch(svmEvaluateProvider);
+
+                String mbe = 'model_build_evaluate';
+                String er = 'evaluate_rpart';
+                String ec = 'evaluate_ctree';
+                String ea = 'evaluate_adaboost';
+                String ex = 'evaluate_xgboost';
+                String erf = 'evaluate_random_forest';
+                String ecf = 'evaluate_conditional_forest';
+                String es = 'evaluate_svm';
+
+                await rSource(
+                  context,
+                  ref,
+                  [mbe],
+                );
+
+                if (rpartExecuted) {
+                  await rSource(
+                    context,
+                    ref,
+                    [er],
+                  );
+                }
+
+                if (ctreeExecuted) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ec],
+                  );
+                }
+
+                if (adaBoostExecuted && boostTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ea],
+                  );
+                }
+
+                if (xgBoostExecuted && boostTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ex],
+                  );
+                }
+
+                if (randomForestExecuted && forestTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [erf],
+                  );
+                }
+
+                if (conditionalForestExecuted && forestTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ecf],
+                  );
+                }
+
+                if (svmExecuted) {
+                  await rSource(
+                    context,
+                    ref,
+                    [es],
+                  );
+                }
+
+                await ref.read(evaluatePageControllerProvider).animateToPage(
+                      // Index of the second page.
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+              },
+              child: const Text('Execute'),
+            ),
             configLeftGap,
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {

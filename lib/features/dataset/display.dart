@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Saturday 2024-11-23 10:00:02 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-11 17:08:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -280,7 +280,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               ),
               MarkdownTooltip(
                 message: '''
-              
+
                 **Viewer.** Tap here to open a separate window to view the
                 current dataset. The default and quite simple data viewer in R
                 will be used. It is invoked as `View(ds)`.
@@ -374,12 +374,26 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
-  // Any variables that have a unique value for every row in the dataset
-  // is considered to be an IDENTifier.
-
   void _setIdentRole(WidgetRef ref) {
+    // Any variables that have a unique value for every row in the dataset is
+    // considered to be an IDENTifier.
+
     for (var id in getUniqueColumns(ref)) {
       ref.read(rolesProvider.notifier).state[id] = Role.ident;
+    }
+
+    Map metaData = ref.read(metaDataProvider);
+
+    // 20241211 gjw A hueristic that says if there are only two columns in the
+    // dataset, expect it to be a basket dataset for association rule
+    // analysis. Set the firt column as the basket identifier (IDENT) and the
+    // second column as the basket item (TARGET). As we move away from the
+    // DATASET tab we also set the BASKETS checkbox in the ASSOCIATE feature to
+    // match this heuristic. That is done in `lib/home.dart`.
+
+    if (metaData.length == 2) {
+      ref.read(rolesProvider.notifier).state[metaData.keys.first] = Role.ident;
+      ref.read(rolesProvider.notifier).state[metaData.keys.last] = Role.target;
     }
   }
 

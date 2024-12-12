@@ -29,9 +29,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract_evaluate.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
+import 'package:rattle/widgets/text_page.dart';
 
 /// The EVALUATE panel displays the instructions and then the build output.
 
@@ -49,7 +55,57 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       evaluatePageControllerProvider,
     ); // Get the PageController from Riverpod
 
+    String stdout = ref.watch(stdoutProvider);
+
     List<Widget> pages = [showMarkdownFile(evaluateIntroFile, context)];
+
+    String content = '';
+
+    content = rExtractEvaluate(stdout, 'TRAINING', ref);
+
+    bool showContentMaterial = content.trim().split('\n').length > 1;
+
+    if (showContentMaterial) {
+      pages.add(
+        TextPage(
+          title: '# Error Matrix\n\n',
+          content: '\n$content',
+        ),
+      );
+    }
+
+    String handRpartImage = '$tempDir/model_rpart_evaluate_hand.svg';
+
+    String handCtreeImage = '$tempDir/model_ctree_evaluate_hand.svg';
+
+    String handAdaBoostImage = '$tempDir/model_ada_evaluate_hand.svg';
+
+    List<String> existingImages = [];
+    List<String> imagesTitles = [];
+
+    if (imageExists(handRpartImage)) {
+      existingImages.add(handRpartImage);
+      imagesTitles.add('RPART');
+    }
+
+    if (imageExists(handCtreeImage)) {
+      existingImages.add(handCtreeImage);
+      imagesTitles.add('CTREE');
+    }
+
+    if (imageExists(handAdaBoostImage)) {
+      existingImages.add(handAdaBoostImage);
+      imagesTitles.add('ADA BOOST');
+    }
+
+    if (existingImages.isNotEmpty) {
+      pages.add(
+        ImagePage(
+          titles: imagesTitles,
+          paths: existingImages,
+        ),
+      );
+    }
 
     return PageViewer(
       pageController: pageController,

@@ -1,6 +1,6 @@
 /// A numerical text input field.
 //
-// Time-stamp: <Tuesday 2024-09-10 05:40:11 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 08:24:08 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -262,7 +262,7 @@ String? validateInteger(String? value, {required int min}) {
   if (value == null || value.isEmpty) return 'Cannot be empty';
   int? intValue = int.tryParse(value);
   if (intValue == null || intValue < min) {
-    return 'Must >= $min';
+    return 'Must be at least $min';
   }
 
   return null;

@@ -39,7 +39,7 @@ import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Forest panel displays the instructions and then the model build output
@@ -157,7 +157,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          ImagePage(
+          SingleImagePage(
             title: '''
 
             # Variable Importance &#8212; Plot
@@ -174,7 +174,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(errorRatesImage)) {
         pages.add(
-          ImagePage(
+          SingleImagePage(
             title: '''
 
             # Error Rate Plot
@@ -191,7 +191,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(oobRocImage)) {
         pages.add(
-          ImagePage(
+          SingleImagePage(
             title: '''
 
             # Out of Bag ROC Curve
@@ -271,7 +271,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(varImportanceImage)) {
         pages.add(
-          ImagePage(
+          SingleImagePage(
             title: '''
 
             # Variable Importance &#8212; Plot
@@ -293,7 +293,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
+        SingleImagePage(
           title: '''
 
           # Risk Chart &#8212; Optimistic Estimate of Performance
@@ -317,7 +317,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        ImagePage(
+        SingleImagePage(
           title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
