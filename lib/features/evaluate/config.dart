@@ -185,6 +185,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref.watch(conditionalForestEvaluateProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
                 bool svmExecuted = ref.watch(svmEvaluateProvider);
+                bool nnetExecuted = ref.watch(nnetEvaluateProvider);
+                bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
 
                 String mbe = 'model_build_evaluate';
                 String er = 'evaluate_rpart';
@@ -194,6 +196,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String erf = 'evaluate_random_forest';
                 String ecf = 'evaluate_conditional_forest';
                 String es = 'evaluate_svm';
+                String en = 'evaluate_nnet';
 
                 await rSource(
                   context,
@@ -254,6 +257,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     context,
                     ref,
                     [es],
+                  );
+                }
+
+                if (neuralTicked && nnetExecuted) {
+                  await rSource(
+                    context,
+                    ref,
+                    [en],
                   );
                 }
 
