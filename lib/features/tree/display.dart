@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-11 16:45:20 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 08:28:05 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -131,9 +131,10 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
         SingleImagePage(
           title: '''
 
-          # A visualisation of the Tree
+          # Decision Tree Visualisation
 
-          Built using [rattle::fancyRpartPlot()](https://www.rdocumentation.org/packages/rattle/topics/fancyRpartPlot).
+          Built using
+          [rattle::fancyRpartPlot()](https://www.rdocumentation.org/packages/rattle/topics/fancyRpartPlot).
 
           ''',
           path: image,
