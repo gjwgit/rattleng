@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Thursday 2024-12-12 08:19:31 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 08:57:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -55,10 +55,19 @@ import 'package:rattle/widgets/number_field.dart';
 /// explaining the splitting method and potential biases.
 
 Map decisionTreeTooltips = {
-  AlgorithmType.conditional:
-      'Uses statistical tests for unbiased splits, preventing overfitting.',
-  AlgorithmType.traditional:
-      'Uses greedy algorithms for splits, which may cause overfitting and bias.',
+  AlgorithmType.conditional: '''
+
+      A **conditional** decision tree built using ctree() uses statistical tests
+      for unbiased choices of the splits, and so reducing the likelihood of
+      overfitting.
+
+      ''',
+  AlgorithmType.traditional: '''
+
+      A **trditional** decision tree built using rpart() uses a greedy algorithm
+      to recursively split the dataset.
+
+      ''',
 };
 
 class TreeModelConfig extends ConsumerStatefulWidget {
@@ -284,9 +293,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _minSplitController,
                 tooltip: '''
 
-                The minimum number of observations that must exist in a dataset
-                at any node in order for a split of that node to be attempted.
-                The default is 20.
+                This is the minimum number of observations that must exist in a
+                dataset at any node in order for a split of that node to be
+                attempted.  The default is 20.
 
                 ''',
                 inputFormatter:
@@ -301,13 +310,16 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _maxDepthController,
                 tooltip: '''
 
-                The maximum depth of any node of the final tree.  The root node
-                is considered to be depth 0.  The maximum allowable depth for
-                rpart() is 30.
+                This is the maximum depth of any node of the final tree. The
+                root node is considered to be depth 0 so a non-trivial tree
+                starts with depth 1.  The maximum allowable depth for rpart() is
+                30 which we retain as the maximum depth allowable for Rattle and
+                the default.
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                validator: (value) => validateInteger(value, min: 1),
+                validator: (value) => validateInteger(value, min: 1, max: 30),
+                max: 30,
                 stateProvider: maxDepthProvider,
               ),
               configWidgetGap,

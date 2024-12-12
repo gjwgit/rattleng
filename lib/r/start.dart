@@ -1,8 +1,8 @@
 /// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Thursday 2024-10-10 08:47:25 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 16:49:35 +1100 Graham Williams>
 //
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -26,17 +26,22 @@
 
 library;
 
-import 'dart:convert';
+// TODO 20241212 gjw FIX LINT ISSUES AFTER TESTING ALL IS STILL OKAY FOR A FEW DAYS
+//
+// Also cleanup this file, remoaving all of the commented out code.
+
+//import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+//import 'package:package_info_plus/package_info_plus.dart';
 
-import 'package:rattle/providers/pty.dart';
-import 'package:rattle/r/strip_comments.dart';
-import 'package:rattle/utils/debug_text.dart';
-import 'package:rattle/utils/update_script.dart';
+//import 'package:rattle/providers/pty.dart';
+import 'package:rattle/r/source.dart';
+//import 'package:rattle/r/strip_comments.dart';
+//import 'package:rattle/utils/debug_text.dart';
+//import 'package:rattle/utils/update_script.dart';
 
 /// Start up the R sub-process and set up the capture of stderr and stdout.
 
@@ -68,48 +73,55 @@ void rStart(BuildContext context, WidgetRef ref) async {
   //           ref.read(stderrProvider) + txt,
   //     );
 
-  // Read the main R startup code from the script file.
+  // Run the main R startup code from the script file.
 
-  const asset = 'assets/r/session_setup.R';
-  String code = await DefaultAssetBundle.of(context).loadString(asset);
-  PackageInfo info = await PackageInfo.fromPlatform();
-  code = code.replaceAll('VERSION', info.version);
+  rSource(context, ref, ['session_setup']);
 
-  // 20240615 gjw Previously the code used File() to access the asset file which
-  // worked fine in development but failed on a deployment. Thus I moved to the
-  // async reading from the asset bundle.
-  //
-  // String code = File('assets/r/main.R').readAsStringSync();
+  // 20241212 gjw I used to do the following rather than the above
+  // rSource(). However, rSource seems to work so go with that (since it expands
+  // the TEMPLATE variables properly. Monitor it to see if there was a reason we
+  // needed to mimic rSource() as below.
 
-  // Populate the <<USER>>. Bit it seems to need to use Firebase. Too much
-  // trouble just for the user name.
+  // const asset = 'assets/r/session_setup.R';
+  // String code = await DefaultAssetBundle.of(context).loadString(asset);
+  // PackageInfo info = await PackageInfo.fromPlatform();
+  // code = code.replaceAll('VERSION', info.version);
 
-  // User currentUser = await FirebaseAuth.instance.currentUser!;
-  // code = code.replaceAll('<<USER>>', currentUser.displayName ?? 'unknown');
+  // // 20240615 gjw Previously the code used File() to access the asset file which
+  // // worked fine in development but failed on a deployment. Thus I moved to the
+  // // async reading from the asset bundle.
+  // //
+  // // String code = File('assets/r/main.R').readAsStringSync();
 
-  // Because we want to modify a provider here we note that the widget tree is
-  // still building. Modifying a provider inside of the widget life-cycle
-  // (build, initState, etc) is not allowed, as it could lead to an inconsistent
-  // UI state. For example, two widgets could listen to the same provider, but
-  // incorrectly receive different states. We resolve that here by delaying the
-  // modification by encapsulating it within a `Future(() {...})`.  This will
-  // perform the update after the widget tree is done building. 20231104 gjw
+  // // Populate the <<USER>>. Bit it seems to need to use Firebase. Too much
+  // // trouble just for the user name.
 
-  // 20240812 gjw Try using an await here so we wait for the console to
-  // startup. Seems to have a slight delay on Linux with a all black
-  // screen. Let's see what it does on Windows.
+  // // User currentUser = await FirebaseAuth.instance.currentUser!;
+  // // code = code.replaceAll('<<USER>>', currentUser.displayName ?? 'unknown');
 
-  await Future(() async {
-    // Add the code to the SCRIPT tab.
+  // // Because we want to modify a provider here we note that the widget tree is
+  // // still building. Modifying a provider inside of the widget life-cycle
+  // // (build, initState, etc) is not allowed, as it could lead to an inconsistent
+  // // UI state. For example, two widgets could listen to the same provider, but
+  // // incorrectly receive different states. We resolve that here by delaying the
+  // // modification by encapsulating it within a `Future(() {...})`.  This will
+  // // perform the update after the widget tree is done building. 20231104 gjw
 
-    updateScript(ref, code);
+  // // 20240812 gjw Try using an await here so we wait for the console to
+  // // startup. Seems to have a slight delay on Linux with a all black
+  // // screen. Let's see what it does on Windows.
 
-    // Strip the code of comments.
+  // await Future(() async {
+  //   // Add the code to the SCRIPT tab.
 
-    code = rStripComments(code);
+  //   updateScript(ref, code);
 
-    debugText('R START', 'session_setup.R');
+  //   // Strip the code of comments.
 
-    ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
-  });
+  //   code = rStripComments(code);
+
+  //   debugText('R START', 'session_setup.R');
+
+  //   ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+  // });
 }

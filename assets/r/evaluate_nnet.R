@@ -1,11 +1,11 @@
-# From `predicted`, `actual`, and `risk` generate a riskchart.
+# Generate error matrix of model nnet.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-13 08:32:05 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Zheyuan Xu
 
 # Rattle timestamp: TIMESTAMP
 #
@@ -33,35 +33,18 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
-
-library(ggtext)       # Support markdown in ggplot titles.
-library(glue)         # Format strings: glue().
 library(rattle)
 
-####################################
+print("Error matrix for the nnet model (counts)")
 
-# Use rattle's evaluateRisk to generate data required for a Risk Chart.
+error_predic <- predict(model_nn, newdata = trds, type = "class")
 
-eval <- rattle::evaluateRisk(predicted, actual, risk)
+nnet_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
 
-# Build title string.
+print(nnet_cem)
 
-title <- glue("Risk Chart &#8212; {mdesc} &#8212; ",
-              "{mtype} {basename('FILENAME')} ",
-              "*{dtype}* TARGET_VAR")
-title
+print('Error matrix for the nnet model (proportions)')
 
-# Generate the risk chart.
+nnet_per <- rattle::errorMatrix(trds[[target]], error_predic)
 
-svg(glue("TEMPDIR/model_{mtype}_riskchart_{dtype}.svg"), width=11)
-rattle::riskchart(predicted, actual, risk,
-                  title          = title,
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
-                  show.lift      = TRUE,
-                  show.precision = TRUE,
-                  legend.horiz   = FALSE) +
-  SETTINGS_GRAPHIC_THEME() +
-  theme(plot.title = element_markdown())
-dev.off()
+print(nnet_per)

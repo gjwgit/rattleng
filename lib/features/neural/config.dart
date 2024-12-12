@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
@@ -206,6 +207,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                         ref,
                         [mt, mbnn],
                       );
+                      ref.read(nnetEvaluateProvider.notifier).state = true;
                     } else if (algorithm == 'neuralnet') {
                       await rSource(
                         context,
