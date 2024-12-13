@@ -30,155 +30,87 @@ import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
+/// Constructs a formatted result string using output from various model evaluations.
+///
+/// Takes in a [log] string, an [evaluateDataset] identifier, and a [ref] to
+/// model evaluation states. It returns a formatted string that contains relevant
+/// evaluation results.
+
 String _basicTemplate(
   String log,
   String evaluateDataset,
   WidgetRef ref,
 ) {
+  // Check which models and evaluation options have been selected or executed.
+
   bool treeExecuted = ref.watch(rpartTreeEvaluateProvider);
   bool boostExecuted = ref.watch(boostEvaluateProvider);
   bool forestExecuted = ref.watch(forestEvaluateProvider);
   bool svmExecuted = ref.watch(svmEvaluateProvider);
   bool nnetExecuted = ref.watch(nnetEvaluateProvider);
 
-  String hdr;
-  String mdr;
-  String hdc;
-  String mdc;
-  String hda;
-  String mda;
-  String hdx;
-  String mdx;
-  String hdrf;
-  String mdrf;
-  String hdcf;
-  String mdcf;
-  String ecsvm;
-  String epsvm;
-  String ennc;
-  String ennp;
+  // Define header strings for various model error matrices (counts and proportions).
 
-  hdr =
+  String hdr =
       'Error matrix for the RPART Decision Tree model [$evaluateDataset] (counts)';
-  mdr =
+  String mdr =
       'Error matrix for the RPART Decision Tree model [$evaluateDataset] (proportions)';
-  hdc =
+  String hdc =
       'Error matrix for the CTREE Decision Tree model [$evaluateDataset] (counts)';
-  mdc =
+  String mdc =
       'Error matrix for the CTREE Decision Tree model [$evaluateDataset] (proportions)';
-  hda = 'Error matrix for the ADABOOST model [$evaluateDataset] (counts)';
-  mda = 'Error matrix for the ADABOOST model [$evaluateDataset] (proportions)';
-  hdx = 'Error matrix for the XGBOOST model [$evaluateDataset] (counts)';
-  mdx = 'Error matrix for the XGBOOST model [$evaluateDataset] (proportions)';
-  hdrf = 'Error matrix for the RANDOM FOREST model [$evaluateDataset] (counts)';
-  mdrf =
+  String hda =
+      'Error matrix for the ADABOOST model [$evaluateDataset] (counts)';
+  String mda =
+      'Error matrix for the ADABOOST model [$evaluateDataset] (proportions)';
+  String hdx = 'Error matrix for the XGBOOST model [$evaluateDataset] (counts)';
+  String mdx =
+      'Error matrix for the XGBOOST model [$evaluateDataset] (proportions)';
+  String hdrf =
+      'Error matrix for the RANDOM FOREST model [$evaluateDataset] (counts)';
+  String mdrf =
       'Error matrix for the RANDOM FOREST model [$evaluateDataset] (proportions)';
-  hdcf =
+  String hdcf =
       'Error matrix for the CONDITIONAL FOREST model [$evaluateDataset] (counts)';
-  mdcf =
+  String mdcf =
       'Error matrix for the CONDITIONAL FOREST model [$evaluateDataset] (proportions)';
 
-  ecsvm = 'Error matrix for the SVM model [$evaluateDataset] (counts)';
+  String ecsvm = 'Error matrix for the SVM model [$evaluateDataset] (counts)';
+  String epsvm =
+      'Error matrix for the SVM model [$evaluateDataset] (proportions)';
 
-  epsvm = 'Error matrix for the SVM model [$evaluateDataset] (proportions)';
+  String ennc = 'Error matrix for the NNET model [$evaluateDataset] (counts)';
+  String ennp =
+      'Error matrix for the NNET model [$evaluateDataset] (proportions)';
 
-  ennc = 'Error matrix for the NNET model [$evaluateDataset] (counts)';
+  // Extract results from the log for each model's error matrices.
 
-  ennp = 'Error matrix for the NNET model [$evaluateDataset] (proportions)';
+  String sz = rExtract(log, 'print(rpart_cem)');
+  String cm = rExtract(log, 'print(rpart_per)');
+  String cc = rExtract(log, 'print(ctree_cem)');
+  String cp = rExtract(log, 'print(ctree_per)');
+  String ca = rExtract(log, 'print(adaboost_cem)');
+  String pa = rExtract(log, 'print(adaboost_per)');
+  String cx = rExtract(log, 'print(xgboost_cem)');
+  String px = rExtract(log, 'print(xgboost_per)');
+  String crf = rExtract(log, 'print(rforest_cem)');
+  String prf = rExtract(log, 'print(rforest_per)');
+  String ccf = rExtract(log, 'print(cforest_cem)');
+  String pcf = rExtract(log, 'print(cforest_per)');
+  String csvm = rExtract(log, 'print(svm_cem)');
+  String psvm = rExtract(log, 'print(svm_per)');
+  String cnc = rExtract(log, 'print(nnet_cem)');
+  String cnp = rExtract(log, 'print(nnet_per)');
 
-  // Now extract the output from particular commands.
-
-  String sz = '',
-      cm = '',
-      cc = '',
-      cp = '',
-      ca = '',
-      pa = '',
-      cx = '',
-      px = '',
-      crf = '',
-      prf = '',
-      ccf = '',
-      pcf = '',
-      csvm = '',
-      psvm = '',
-      cnc = '',
-      cnp = '';
-
-  sz = rExtract(
-    log,
-    'print(rpart_cem)',
-  );
-  cm = rExtract(
-    log,
-    'print(rpart_per)',
-  );
-  cc = rExtract(
-    log,
-    'print(ctree_cem)',
-  );
-  cp = rExtract(
-    log,
-    'print(ctree_per)',
-  );
-  ca = rExtract(
-    log,
-    'print(adaboost_cem)',
-  );
-  pa = rExtract(
-    log,
-    'print(adaboost_per)',
-  );
-  cx = rExtract(
-    log,
-    'print(xgboost_cem)',
-  );
-  px = rExtract(
-    log,
-    'print(xgboost_per)',
-  );
-  crf = rExtract(
-    log,
-    'print(rforest_cem)',
-  );
-  prf = rExtract(
-    log,
-    'print(rforest_per)',
-  );
-  ccf = rExtract(
-    log,
-    'print(cforest_cem)',
-  );
-  pcf = rExtract(
-    log,
-    'print(cforest_per)',
-  );
-  csvm = rExtract(
-    log,
-    'print(svm_cem)',
-  );
-  psvm = rExtract(
-    log,
-    'print(svm_per)',
-  );
-
-  cnc = rExtract(
-    log,
-    'print(nnet_cem)',
-  );
-
-  cnp = rExtract(
-    log,
-    'print(nnet_per)',
-  );
-
-  // Obtain the current timestamp.
+  // Obtain the current timestamp for logging purposes.
 
   final String ts = timestamp();
 
-  // Build the result.
+  // Initialize the result string that will be built based on available model outputs.
 
   String result = '';
+
+  // Append RPART model results if available and executed.
 
   if (sz != '' && cm != '' && treeExecuted) {
     result = '$hdr\n\n'
@@ -187,6 +119,8 @@ String _basicTemplate(
         '\n$cm\n\n';
   }
 
+  // Append CTREE model results if available and tree execution is confirmed.
+
   if (cc != '' && cp != '' && treeExecuted) {
     result = '$result\n'
         '$hdc\n\n'
@@ -194,6 +128,9 @@ String _basicTemplate(
         '$mdc\n\n'
         '$cp\n\n';
   }
+
+  // Append ADABOOST model results if available and boosting is enabled.
+
   if (ca != '' && pa != '' && boostExecuted) {
     result = '$result\n'
         '$hda\n\n'
@@ -201,6 +138,8 @@ String _basicTemplate(
         '$mda\n\n'
         '$pa\n\n';
   }
+
+  // Append XGBOOST model results if available and boosting is enabled.
 
   if (cx != '' && px != '' && boostExecuted) {
     result = '$result\n'
@@ -210,6 +149,8 @@ String _basicTemplate(
         '$px\n\n';
   }
 
+  // Append RANDOM FOREST model results if available and forest option is enabled.
+
   if (crf != '' && prf != '' && forestExecuted) {
     result = '$result\n'
         '$mdrf\n\n'
@@ -217,6 +158,8 @@ String _basicTemplate(
         '$hdrf\n\n'
         '$prf\n\n';
   }
+
+  // Append CONDITIONAL FOREST model results if available and forest option is enabled.
 
   if (ccf != '' && pcf != '' && forestExecuted) {
     result = '$result\n'
@@ -226,6 +169,8 @@ String _basicTemplate(
         '$pcf\n\n';
   }
 
+  // Append SVM model results if available and SVM is executed.
+
   if (csvm != '' && psvm != '' && svmExecuted) {
     result = '$result\n'
         '$ecsvm\n\n'
@@ -233,6 +178,8 @@ String _basicTemplate(
         '$epsvm\n\n'
         '$psvm\n\n';
   }
+
+  // Append NNET model results if available and NNET is executed.
 
   if (cnc != '' && cnp != '' && nnetExecuted) {
     result = '$result\n'
