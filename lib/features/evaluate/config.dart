@@ -174,6 +174,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             ActivityButton(
               pageControllerProvider: evaluatePageControllerProvider,
               onPressed: () async {
+                // Retrieve the boolean state indicating if the evaluation was executed.
+
                 bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
                 bool boostTicked = ref.watch(boostEvaluateProvider);
                 bool conditionalForestExecuted =
@@ -187,6 +189,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
                 bool svmExecuted = ref.watch(svmEvaluateProvider);
                 bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
+
+                // String constants corresponding to the various evaluation commands.
 
                 String ea = 'evaluate_adaboost';
                 String ec = 'evaluate_ctree';
