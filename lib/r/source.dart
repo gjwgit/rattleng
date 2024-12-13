@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-12-12 16:23:29 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-13 14:52:00 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -262,8 +262,6 @@ Future<void> rSource(
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
 
   code = code.replaceAll('MAXFACTOR', '20');
-
-  // TODO 20241202 gjw VALUE OF RANDOM_SEED NEEDS TO COME FROM SETTINGS.
 
   code = code.replaceAll('RANDOM_PARTITION', 'FALSE');
   code = code.replaceAll('RANDOM_SEED', '42');
