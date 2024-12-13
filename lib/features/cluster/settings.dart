@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Friday 2024-09-27 10:28:59 +1000 Graham Williams>
+/// Time-stamp: <Friday 2024-12-13 19:02:07 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -67,7 +67,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     _clusterController.text =
         ref.read(numberClusterProvider.notifier).state.toString();
     _seedController.text =
-        ref.read(randomSeedProvider.notifier).state.toString();
+        ref.read(randomSeedSettingProvider.notifier).state.toString();
     _runController.text =
         ref.read(runClusterProvider.notifier).state.toString();
 
@@ -132,7 +132,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               controller: _seedController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: randomSeedProvider,
+              stateProvider: randomSeedSettingProvider,
             ),
             configWidgetGap,
             NumberField(
@@ -141,7 +141,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               tooltip: '''
 
               The number of random starting partitions to explore when centers
-              is a number rather than specific centers. 
+              is a number rather than specific centers.
 
               ''',
               controller: _runController,
@@ -155,7 +155,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               label: 'Processors:',
               key: const Key('cluster_processor'),
               tooltip: '''
-              
+
               Integer, number of subprocess for parallelization.
 
               ''',
@@ -174,7 +174,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               distanceClusterProvider,
               tooltip: '''
 
-              Distance measures how similar or dissimilar data points are, 
+              Distance measures how similar or dissimilar data points are,
               determining how they are grouped together in clusters.
 
               ''',
@@ -194,7 +194,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               linkClusterProvider,
               tooltip: '''
 
-              A link determines how the distance between clusters is calculated 
+              A link determines how the distance between clusters is calculated
               when merging them, influencing the shape and structure of the resulting clusters.
 
               ''',
