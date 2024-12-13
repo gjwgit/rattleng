@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Thursday 2024-12-12 08:46:29 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-13 15:55:29 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -160,9 +160,19 @@ class DatasetPopup extends ConsumerWidget {
 
           configRowGap,
 
-          MarkdownBody(
-            data: '**Demo Datasets** '
-                'Tap to load one of the available demonstration datasets:',
+          const MarkdownTooltip(
+            message: '''
+
+                  **Demo Datasets** Rattle provides a number of small datasets
+                  so you can very quickly explore the Rattle functionality.  The
+                  *buttons* below will load one of the demo datasets. Hover over
+                  any of them to see a description of that dataset.
+
+                  ''',
+            child: MarkdownBody(
+              data: '**Demo Datasets** '
+                  'Tap to load one of the available demonstration datasets:',
+            ),
           ),
 
           configRowGap,
