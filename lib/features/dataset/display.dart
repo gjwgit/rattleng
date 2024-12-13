@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Wednesday 2024-12-11 17:08:37 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 14:22:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -337,7 +337,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       }
       _setTargetRole(vars, ref);
       _setIdentRole(ref);
-      _setIgnoreRoleForHighVars(highVars, ref);
+
+      // 20241213 gjw Let's turn off the IGNORE heursitic for now. Leave it to a
+      // user to decide. For the PROTEIN dataset we want COUNTRY to be IDENT r
+      // TARGET rather than IGNORE.
+
+      // _setIgnoreRoleForHighVars(highVars, ref);
     }
   }
 
@@ -399,13 +404,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   // Set ignore role for high cardinality variables.
 
-  void _setIgnoreRoleForHighVars(List<String> highVars, WidgetRef ref) {
-    for (var highVar in highVars) {
-      if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
-        ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
-      }
-    }
-  }
+  // 20241213 gjw Remove this for now until we decide how to best deal with
+  // identifying variables to IGNORE.
+
+  // void _setIgnoreRoleForHighVars(List<String> highVars, WidgetRef ref) {
+  //   for (var highVar in highVars) {
+  //     if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
+  //       ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+  //     }
+  //   }
+  // }
 
   // Build data table with row selection logic.
 
