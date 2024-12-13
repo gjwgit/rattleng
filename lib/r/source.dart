@@ -103,6 +103,8 @@ Future<void> rSource(
 ) async {
   // Initialise the state variables obtained from the different providers.
 
+  int randomSeedSetting = ref.read(randomSeedProvider);
+
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
@@ -162,7 +164,6 @@ Future<void> rSource(
 
   // CLUSTER
 
-  int clusterSeed = ref.read(randomSeedProvider);
   int clusterNum = ref.read(numberClusterProvider);
   int clusterRun = ref.read(runClusterProvider);
   int clusterProcessor = ref.read(processorClusterProvider);
@@ -266,7 +267,7 @@ Future<void> rSource(
   // TODO 20241202 gjw VALUE OF RANDOM_SEED NEEDS TO COME FROM SETTINGS.
 
   code = code.replaceAll('RANDOM_PARTITION', 'FALSE');
-  code = code.replaceAll('RANDOM_SEED', '42');
+  code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
@@ -476,7 +477,7 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // CLUSTER
 
-  code = code.replaceAll('RANDOM_SEED', clusterSeed.toString());
+  code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
