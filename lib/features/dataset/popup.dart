@@ -353,17 +353,31 @@ Future<void> loadDemoDataset(
   String assetPath,
   String datasetName,
 ) async {
+  // Copy the asset to a temporary directory.
+
   String dest = await copyAssetToTempDir(asset: assetPath);
+
+  // Update the path provider state with the dataset path.
 
   ref.read(pathProvider.notifier).state = dest;
 
+  // Check if the context is still mounted before proceeding and load the dataset.
+
   if (context.mounted) await rLoadDataset(context, ref);
+
+  // Update the status to indicate variable roles can now be chosen.
 
   setStatus(ref, statusChooseVariableRoles);
 
+  // Close the current dialog if the context is still mounted.
+
   if (context.mounted) Navigator.pop(context, datasetName);
 
+  // Mark the dataset as loaded in the state management system.
+
   datasetLoadedUpdate(ref);
+
+  // Navigate to the second page using the page controller.
 
   ref.read(pageControllerProvider).animateToPage(
         1,
