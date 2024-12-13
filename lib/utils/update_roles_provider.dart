@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Friday 2024-12-13 10:01:13 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 14:23:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -111,7 +111,12 @@ void updateVariablesProvider(WidgetRef ref) {
   // get the most recent vars information from glimpse and update the information in roles provider and types provider
   String stdout = ref.watch(stdoutProvider);
   List<VariableInfo> vars = extractVariables(stdout);
-  List<String> highVars = extractLargeFactors(stdout);
+
+  // 20241213 gjw Remove this for now. It was used for determining IGNORE roles
+  // but due to an issues iwth that (see other comments) it is no longer being
+  // done.
+
+  // List<String> highVars = extractLargeFactors(stdout);
 
   // When a new row is added after transformation, initialise its role and update the role of the old variable
   for (var column in vars) {
