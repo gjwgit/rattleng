@@ -67,8 +67,6 @@ class DatasetPopup extends ConsumerWidget {
 
     // A state to hold the selected demo dataset.
 
-    final demoDatasetProvider = StateProvider<String>((ref) => 'weather');
-
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
