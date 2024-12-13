@@ -174,35 +174,30 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             ActivityButton(
               pageControllerProvider: evaluatePageControllerProvider,
               onPressed: () async {
-                bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
-                bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
                 bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
-                bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
                 bool boostTicked = ref.watch(boostEvaluateProvider);
-                bool randomForestExecuted =
-                    ref.watch(randomForestEvaluateProvider);
                 bool conditionalForestExecuted =
                     ref.watch(conditionalForestEvaluateProvider);
+                bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
-                bool svmExecuted = ref.watch(svmEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
+                bool randomForestExecuted =
+                    ref.watch(randomForestEvaluateProvider);
+                bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
+                bool svmExecuted = ref.watch(svmEvaluateProvider);
+                bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
 
-                String mbe = 'model_build_evaluate';
-                String er = 'evaluate_rpart';
-                String ec = 'evaluate_ctree';
                 String ea = 'evaluate_adaboost';
-                String ex = 'evaluate_xgboost';
-                String erf = 'evaluate_random_forest';
+                String ec = 'evaluate_ctree';
                 String ecf = 'evaluate_conditional_forest';
-                String es = 'evaluate_svm';
                 String en = 'evaluate_nnet';
+                String erf = 'evaluate_random_forest';
+                String er = 'evaluate_rpart';
+                String es = 'evaluate_svm';
+                String ex = 'evaluate_xgboost';
 
-                await rSource(
-                  context,
-                  ref,
-                  [mbe],
-                );
+                // Check if rpart model evaluation was executed.
 
                 if (rpartExecuted) {
                   await rSource(
@@ -212,6 +207,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   );
                 }
 
+                // Check if ctree model evaluation was executed.
+
                 if (ctreeExecuted) {
                   await rSource(
                     context,
@@ -219,6 +216,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     [ec],
                   );
                 }
+
+                // Check if AdaBoost evaluation was executed and boost box is enabled.
 
                 if (adaBoostExecuted && boostTicked) {
                   await rSource(
@@ -228,6 +227,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   );
                 }
 
+                // Check if XGBoost evaluation was executed and boost box is enabled.
+
                 if (xgBoostExecuted && boostTicked) {
                   await rSource(
                     context,
@@ -235,6 +236,9 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     [ex],
                   );
                 }
+
+                // Check if Random Forest evaluation was executed
+                // and forest box was ticked.
 
                 if (randomForestExecuted && forestTicked) {
                   await rSource(
@@ -244,6 +248,9 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   );
                 }
 
+                // Check if Conditional Forest evaluation was executed
+                // and forest box was ticked.
+
                 if (conditionalForestExecuted && forestTicked) {
                   await rSource(
                     context,
@@ -252,6 +259,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   );
                 }
 
+                // Check if SVM evaluation was executed.
+
                 if (svmExecuted) {
                   await rSource(
                     context,
@@ -259,6 +268,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     [es],
                   );
                 }
+
+                // Check if Neural Network box was ticked and neural network methods are enabled.
 
                 if (neuralTicked && nnetExecuted) {
                   await rSource(
