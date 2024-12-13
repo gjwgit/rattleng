@@ -1,3 +1,5 @@
+![Last Updated](https://img.shields.io/github/last-commit/gjwgit/rattleng?label=last%20updated)
+![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjegit/rattleng/master/pubspec.yaml&query=$.version&label=version)
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
 [![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
 [![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
@@ -138,7 +140,7 @@ waiting at the R prompt:
 
 ```r
 ...
-> 
+>
 ```
 
 RattleNG will itself eventually check for these and prompt if they are
