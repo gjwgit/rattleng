@@ -3,6 +3,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
 [![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
 [![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
+![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/rattleng/master/pubspec.yaml&query=$.environment.flutter&label=flutter&color=02569B)
 
 # Rattle the Next Generation Data Scientist
 
