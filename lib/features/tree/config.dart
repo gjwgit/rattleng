@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Saturday 2024-12-14 17:03:53 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 08:07:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -189,7 +189,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
                     return;
                   }
-                  // Require a target variable.
+
+                  // 20241215 gjw Require a target variable. This needs to be a
+                  // function and used across all predictive modelling fetures.
+
                   if (getTarget(ref) == 'NULL') {
                     showOk(
                       context: context,
