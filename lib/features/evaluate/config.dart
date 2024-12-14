@@ -250,7 +250,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [erf],
+                    [erf, mbem],
                   );
                 }
 

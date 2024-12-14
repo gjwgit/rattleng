@@ -273,6 +273,12 @@ Future<void> rSource(
     code = code.replaceAll('ERROR_MATRIX_PROP', 'nnet_per');
   }
 
+  if (scripts.contains('evaluate_random_forest') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'rforest_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'rforest_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.

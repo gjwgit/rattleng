@@ -36,17 +36,15 @@
 library(rattle)
 library(randomForest)
 
-print("Error matrix for the Random Forest model (counts)")
+error_matrix_predic <- predict(model_randomForest, newdata = trds, type = "prob")
 
-error_predic <- predict(model_randomForest, newdata = trds, type = "prob")
-
-target_clean <- trds[[target]][!is.na(error_predic)]
+target_clean <- trds[[target]][!is.na(error_matrix_predic)]
 
 # Remove all <NA> values from the vector.
 
 target_clean <- target_clean[!is.na(target_clean)]
 
-error_predic <- apply(error_predic, 1, function(row) {
+error_matrix_predic <- apply(error_matrix_predic, 1, function(row) {
   if (any(is.na(row))) {
     return(NULL) # Skip rows with NA
   }
@@ -58,16 +56,8 @@ error_predic <- apply(error_predic, 1, function(row) {
 
 # Remove NULL entries from the list.
 
-error_predic <- error_predic[!sapply(error_predic, is.null)]
+error_matrix_predic <- error_matrix_predic[!sapply(error_matrix_predic, is.null)]
 
-error_predic <- unlist(error_predic, use.names = FALSE)
+error_matrix_predic <- unlist(error_matrix_predic, use.names = FALSE)
 
-rforest_cem <- rattle::errorMatrix(target_clean, error_predic, count = TRUE)
-
-print(rforest_cem)
-
-print("Error matrix for the Random Forest model (proportions)")
-
-rforest_per <- rattle::errorMatrix(target_clean, error_predic)
-
-print(rforest_per)
+error_matrix_target <- target_clean
