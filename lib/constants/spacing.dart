@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Saturday 2024-12-14 17:01:04 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 21:15:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,30 +37,45 @@ const choiceChipRowSpace = 10.0;
 
 /// Gap above the beginning of the configs Row.
 
-const configTopGap = Gap(10);
+// 20241214 gjw On moving to using the `spacing:` parameter of `Column()` the top gap is
+// added to the default spacing. So we now set it to 0 so that we get the same
+// as the spacing between rows. This is a little larger than previously, but is
+// okay, giving a little less crowded look.
+
+const configTopGap = Gap(0);
 
 /// Gap below the last row of configs often to ensure the underline of numeric
 /// paramaters is not lost.
 
-const configBotGap = Gap(5);
+// 20241214 gjw On moving to using the `spacing:` parameter of `Column()` the top gap is
+// added to the default spacing. So we now set it to 0 so that we get the same
+// as the spacing between rows. This is a little larger than previously, but is
+// okay, giving a little less crowded look.
+
+const configBotGap = Gap(0);
 
 /// Gap between the config Rows.
 
 const configRowGap = Gap(20);
 
-// 20241214 gjw Migrate to Flutter 3.27 Row/Column spacing.
+// 20241214 gjw Migrate to Flutter 3.27 Row/Column introduction of `spacing:`.
 
 const configRowSpace = 20.0;
 
 /// Gap to the left of the configs within a Row.
 
-const configLeftGap = Gap(5);
+// 20241214 gjw On moving to using the `spacing:` parameter of `Row()` the left
+// gap is added to the default spacing. So we now set it to 0 so that we get the
+// same as the spacing between widgets. This is a little larger than previously,
+// but is okay, giving a little less crowded look.
+
+const configLeftGap = Gap(0);
 
 /// Gap between widgets in a Row in the config.
 
 const configWidgetGap = Gap(20);
 
-// 20241214 gjw Migrate to Flutter 3.27 Row/Column spacing.
+// 20241214 gjw Migrate to Flutter 3.27 Row/Column introduction of `spacing:`.
 
 const configWidgetSpace = 20.0;
 

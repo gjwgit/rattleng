@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-17 11:09:00 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 21:26:13 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/cluster/settings.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
@@ -81,22 +80,19 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
     String type = ref.read(typeClusterProvider.notifier).state;
 
     return Column(
+      spacing: configRowSpace,
       children: [
         configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
-            // Space to the left of the configs.
-
             configLeftGap,
-
-            // The BUILD button.
-
             ActivityButton(
               tooltip: '''
 
               Tap to build a $type cluster model using the parameter values that
               are set here.
-              
+
               ''',
               onPressed: () async {
                 // Identify the R scripts to run for the vcarious choices of
@@ -127,16 +123,6 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               },
               child: const Text('Build Clustering'),
             ),
-
-            configWidgetGap,
-
-            const Text(
-              'Type:',
-              style: normalTextStyle,
-            ),
-
-            configWidgetGap,
-
             ChoiceChipTip<String>(
               options: clusterTypes.keys.toList(),
               selectedOption: type,
@@ -169,9 +155,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             ),
           ],
         ),
-        configRowGap,
         const ClusterSetting(),
-        configBotGap,
       ],
     );
   }

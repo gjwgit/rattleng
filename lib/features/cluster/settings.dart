@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Friday 2024-12-13 19:02:07 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-12-14 21:27:46 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -101,7 +101,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
       children: [
         configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
+            configLeftGap,
             NumberField(
               label: 'Clusters:',
               key: const Key('cluster_number'),
@@ -117,7 +119,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: numberClusterProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Seed:',
               key: const Key('random_seed'),
@@ -134,7 +135,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: randomSeedSettingProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Runs:',
               key: const Key('cluster_run'),
@@ -150,7 +150,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: runClusterProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Processors:',
               key: const Key('cluster_processor'),
@@ -165,7 +164,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: processorClusterProvider,
             ),
-            configWidgetGap,
             variableChooser(
               'Distance',
               distance,
@@ -185,7 +183,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
                 }
               },
             ),
-            configWidgetGap,
             variableChooser(
               'Link',
               link,
