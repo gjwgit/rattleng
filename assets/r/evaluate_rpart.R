@@ -1,4 +1,4 @@
-# Generate error matrix and Hand plot of model rpart.
+# Generate error matrix of model rpart.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -58,16 +58,6 @@ plotROC(results)
 
 dev.off()
 
-print("Error matrix for the RPART Decision Tree model (counts)")
+error_matrix_predic <- predict(model_rpart, newdata = trds, type = "class")
 
-error_predic <- predict(model_rpart, newdata = trds, type = "class")
-
-rpart_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
-
-print(rpart_cem)
-
-print('Error matrix for the RPART Decision Tree model (proportions)')
-
-rpart_per <- rattle::errorMatrix(trds[[target]],error_predic)
-
-print(rpart_per)
+error_matrix_target <- trds[[target]]
