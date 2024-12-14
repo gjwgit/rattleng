@@ -261,6 +261,12 @@ Future<void> rSource(
     code = code.replaceAll('ERROR_MATRIX_PROP', 'cforest_per');
   }
 
+  if (scripts.contains('evaluate_ctree') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'ctree_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'ctree_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.

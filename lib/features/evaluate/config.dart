@@ -57,7 +57,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         ['model_tree_rpart.svg'],
         ['model_tree_ctree.svg'],
       ],
-      provider: rpartTreeEvaluateProvider,
+      provider: treeEvaluateProvider,
     ),
     _ModelConfig(
       key: 'boostEvaluate',
@@ -188,6 +188,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref.watch(randomForestEvaluateProvider);
                 bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
                 bool svmExecuted = ref.watch(svmEvaluateProvider);
+                bool treeExecuted = ref.watch(treeEvaluateProvider);
                 bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
 
                 // String constants corresponding to the various evaluation commands.
@@ -204,7 +205,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 // Check if rpart model evaluation was executed.
 
-                if (rpartExecuted) {
+                if (rpartExecuted && treeExecuted) {
                   await rSource(
                     context,
                     ref,
@@ -218,7 +219,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ec],
+                    [ec, mbem],
                   );
                 }
 

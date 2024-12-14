@@ -43,7 +43,9 @@ String _basicTemplate(
 ) {
   // Check which models and evaluation options have been selected or executed.
 
-  bool treeExecuted = ref.watch(rpartTreeEvaluateProvider);
+  bool rpartTreeExecuted = ref.watch(rpartTreeEvaluateProvider);
+  bool cTreeExecuted = ref.watch(cTreeEvaluateProvider);
+
   bool boostExecuted = ref.watch(boostEvaluateProvider);
   bool forestExecuted = ref.watch(forestEvaluateProvider);
   bool svmExecuted = ref.watch(svmEvaluateProvider);
@@ -112,7 +114,7 @@ String _basicTemplate(
 
   // Append RPART model results if available and executed.
 
-  if (sz != '' && cm != '' && treeExecuted) {
+  if (sz != '' && cm != '' && rpartTreeExecuted) {
     result = '$hdr\n\n'
         '\n$sz\n\n'
         '$mdr\n\n'
@@ -121,7 +123,7 @@ String _basicTemplate(
 
   // Append CTREE model results if available and tree execution is confirmed.
 
-  if (cc != '' && cp != '' && treeExecuted) {
+  if (cc != '' && cp != '' && cTreeExecuted) {
     result = '$result\n'
         '$hdc\n\n'
         '$cc\n\n'
