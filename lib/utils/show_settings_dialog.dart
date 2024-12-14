@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Friday 2024-12-13 19:05:35 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 19:53:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -412,7 +412,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
