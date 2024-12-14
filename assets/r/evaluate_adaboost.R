@@ -62,6 +62,8 @@ dev.off()
 
 error_matrix_predic <- predict(model_ada, newdata = trds,)
 
+# Set the predict value as the level of max value in the row.
+
 error_matrix_predic <- apply(error_matrix_predic, 1, function(x) {
   colnames(error_matrix_predic)[which.max(x)]
 })

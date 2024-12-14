@@ -50,6 +50,8 @@ error_matrix_predic <- error_matrix_predic[!is.na(error_matrix_predic)]
 
 target_levels <- levels(target_clean)
 
+# Convert predicted probabilities into binary class labels based on a threshold.
+
 error_matrix_predic <- ifelse(error_matrix_predic > 0.5, target_levels[2], target_levels[1])
 
 error_matrix_target <- target_clean
