@@ -39,9 +39,13 @@ library(rattle)
 
 ########################################################################
 
+# Setting `count = TRUE` ensures the matrix represents raw counts of predictions.
+
 ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count = TRUE)
 
 print(ERROR_MATRIX_COUNT)
+
+# Generate a confusion matrix with proportions (relative frequencies).
 
 ERROR_MATRIX_PROP <- rattle::errorMatrix(error_matrix_target, error_matrix_predic)
 
