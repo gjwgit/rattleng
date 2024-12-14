@@ -57,7 +57,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         ['model_tree_rpart.svg'],
         ['model_tree_ctree.svg'],
       ],
-      provider: rpartTreeEvaluateProvider,
+      provider: treeEvaluateProvider,
     ),
     _ModelConfig(
       key: 'boostEvaluate',
@@ -174,97 +174,114 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             ActivityButton(
               pageControllerProvider: evaluatePageControllerProvider,
               onPressed: () async {
-                bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
-                bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+                // Retrieve the boolean state indicating if the evaluation was executed.
+
                 bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
-                bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
                 bool boostTicked = ref.watch(boostEvaluateProvider);
-                bool randomForestExecuted =
-                    ref.watch(randomForestEvaluateProvider);
                 bool conditionalForestExecuted =
                     ref.watch(conditionalForestEvaluateProvider);
+                bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
-                bool svmExecuted = ref.watch(svmEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
+                bool randomForestExecuted =
+                    ref.watch(randomForestEvaluateProvider);
+                bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
+                bool svmExecuted = ref.watch(svmEvaluateProvider);
+                bool treeExecuted = ref.watch(treeEvaluateProvider);
+                bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
 
-                String mbe = 'model_build_evaluate';
-                String er = 'evaluate_rpart';
-                String ec = 'evaluate_ctree';
+                // String constants corresponding to the various evaluation commands.
+
                 String ea = 'evaluate_adaboost';
-                String ex = 'evaluate_xgboost';
-                String erf = 'evaluate_random_forest';
+                String mbem = 'model_build_error_matrix';
+                String ec = 'evaluate_ctree';
                 String ecf = 'evaluate_conditional_forest';
-                String es = 'evaluate_svm';
                 String en = 'evaluate_nnet';
+                String erf = 'evaluate_random_forest';
+                String er = 'evaluate_rpart';
+                String es = 'evaluate_svm';
+                String ex = 'evaluate_xgboost';
 
-                await rSource(
-                  context,
-                  ref,
-                  [mbe],
-                );
+                // Check if rpart model evaluation was executed.
 
-                if (rpartExecuted) {
+                if (rpartExecuted && treeExecuted) {
                   await rSource(
                     context,
                     ref,
-                    [er],
+                    [er, mbem],
                   );
                 }
+
+                // Check if ctree model evaluation was executed.
 
                 if (ctreeExecuted) {
                   await rSource(
                     context,
                     ref,
-                    [ec],
+                    [ec, mbem],
                   );
                 }
+
+                // Check if AdaBoost evaluation was executed and boost box is enabled.
 
                 if (adaBoostExecuted && boostTicked) {
                   await rSource(
                     context,
                     ref,
-                    [ea],
+                    [ea, mbem],
                   );
                 }
+
+                // Check if XGBoost evaluation was executed and boost box is enabled.
 
                 if (xgBoostExecuted && boostTicked) {
                   await rSource(
                     context,
                     ref,
-                    [ex],
+                    [ex, mbem],
                   );
                 }
+
+                // Check if Random Forest evaluation was executed
+                // and forest box was ticked.
 
                 if (randomForestExecuted && forestTicked) {
                   await rSource(
                     context,
                     ref,
-                    [erf],
+                    [erf, mbem],
                   );
                 }
+
+                // Check if Conditional Forest evaluation was executed
+                // and forest box was ticked.
 
                 if (conditionalForestExecuted && forestTicked) {
                   await rSource(
                     context,
                     ref,
-                    [ecf],
+                    [ecf, mbem],
                   );
                 }
+
+                // Check if SVM evaluation was executed.
 
                 if (svmExecuted) {
                   await rSource(
                     context,
                     ref,
-                    [es],
+                    [es, mbem],
                   );
                 }
+
+                // Check if Neural Network box was ticked and neural network methods are enabled.
 
                 if (neuralTicked && nnetExecuted) {
                   await rSource(
                     context,
                     ref,
-                    [en],
+                    [en, mbem],
                   );
                 }
 

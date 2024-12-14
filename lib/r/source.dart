@@ -172,16 +172,6 @@ Future<void> rSource(
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
 
-  // EVALUATE
-
-  // bool evaluateBoostExecuted = ref.read(boostEvaluateProvider);
-  // bool evaluateForestExecuted = ref.read(forestEvaluateProvider);
-  // bool evaluatehClusterExecuted = ref.read(hClusterEvaluateProvider);
-  // bool evaluatekMeansExecuted = ref.read(kMeansEvaluateProvider);
-  // bool evaluateLinearExecuted = ref.read(linearEvaluateProvider);
-  // bool evaluateNeuralNetExecuted = ref.read(neuralNetEvaluateProvider);
-  // bool evaluateSVMExecuted = ref.read(svmEvaluateProvider);
-
   // FOREST
 
   int forestTrees = ref.read(treeNumForestProvider);
@@ -258,6 +248,55 @@ Future<void> rSource(
   code = code.replaceAll('TEMPDIR', tempDir);
 
   ////////////////////////////////////////////////////////////////////////
+
+  if (scripts.contains('evaluate_adaboost') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'adaboost_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'adaboost_per');
+  }
+
+  if (scripts.contains('evaluate_conditional_forest') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'cforest_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'cforest_per');
+  }
+
+  if (scripts.contains('evaluate_ctree') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'ctree_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'ctree_per');
+  }
+
+  if (scripts.contains('evaluate_nnet') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'nnet_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'nnet_per');
+  }
+
+  if (scripts.contains('evaluate_random_forest') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'rforest_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'rforest_per');
+  }
+
+  if (scripts.contains('evaluate_rpart') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'rpart_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'rpart_per');
+  }
+
+  if (scripts.contains('evaluate_svm') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'svm_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'svm_per');
+  }
+
+  if (scripts.contains('evaluate_xgboost') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'xgboost_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'xgboost_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.

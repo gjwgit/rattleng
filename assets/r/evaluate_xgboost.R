@@ -39,26 +39,19 @@ library(hmeasure)
 library(rattle)         # Provides a convenient wrapper for xgboost.
 library(xgboost)        # For XGBoost model.
 
-print('Error matrix for the XGBOOST model (counts)')
+error_matrix_predic <- predict(model_xgb, newdata = trds, )
 
-error_predic <- predict(model_xgb, newdata = trds,)
+target_clean <- trds[[target]][!is.na(error_matrix_predic)]
 
-error_predic_clean <- error_predic[!is.na(error_predic)]
+error_matrix_predic <- error_matrix_predic[!is.na(error_matrix_predic)]
 
-target_clean <- trds[[target]][!is.na(error_predic)]
 
 # Get levels from target_clean.
 
 target_levels <- levels(target_clean)
 
-error_predic_clean <- ifelse(error_predic_clean > 0.5, target_levels[2], target_levels[1])
+# Convert predicted probabilities into binary class labels based on a threshold.
 
-xgboost_cem <- rattle::errorMatrix(target_clean, error_predic_clean, count = TRUE)
+error_matrix_predic <- ifelse(error_matrix_predic > 0.5, target_levels[2], target_levels[1])
 
-print(xgboost_cem)
-
-print('Error matrix for the XGBOOST model (proportions)')
-
-xgboost_per <- rattle::errorMatrix(target_clean, error_predic_clean)
-
-print(xgboost_per)
+error_matrix_target <- target_clean

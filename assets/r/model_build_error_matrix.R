@@ -1,4 +1,4 @@
-# Generate error matrix model svm.
+# Use `errorMatrix` to generate error matrix .
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -33,45 +33,20 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(kernlab)
+# Load required packages from the local library into the R session.
+
 library(rattle)
 
-error_matrix_predic <- predict(svm_model, newdata = trds, type = "probabilities")
+########################################################################
 
-# Convert to a list of labels based on maximum values.
+# Setting `count = TRUE` ensures the matrix represents raw counts of predictions.
 
-error_matrix_predic <- apply(error_matrix_predic, 1, function(row) {
-  if (any(is.na(row))) {
-      return(NULL)
-  }
-  
-  # Identify the column with the maximum value.
+ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count = TRUE)
 
-  max_label <- names(row)[which.max(row)]
-  return(max_label)
-})
+print(ERROR_MATRIX_COUNT)
 
-# Remove NULL entries and convert to a simple character vector.
+# Generate a confusion matrix with proportions (relative frequencies).
 
-error_matrix_predic <- unlist(error_matrix_predic, use.names = FALSE)
+ERROR_MATRIX_PROP <- rattle::errorMatrix(error_matrix_target, error_matrix_predic)
 
-# Find the lengths of the two objects.
-
-len_trds_target <- length(trds[[target]])
-len_error_matrix_predic <- length(error_matrix_predic)
-
-# Determine the minimum length.
-
-min_length <- min(len_trds_target, len_error_matrix_predic)
-
-# Subset trds[[target]] to match the minimum length.
-
-svm_target <- trds[[target]][seq_len(min_length)]
-
-# Ensure svm_target has the same length as the rows in error_matrix_predic.
-
-if (length(error_matrix_predic) > min_length) {
-  error_matrix_predic <- error_matrix_predic[seq_len(min_length), , drop = FALSE]
-}
-
-error_matrix_target <- svm_target
+print(ERROR_MATRIX_PROP)

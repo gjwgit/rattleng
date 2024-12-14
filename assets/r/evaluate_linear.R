@@ -1,4 +1,4 @@
-# Generate error matrix and Hand plot of model linear.
+# Generate error matrix of linear model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -37,14 +37,23 @@ library(rattle)
 
 print("Error matrix for the Linear model (counts)")
 
+# Generate predictions using the Linear model (model_glm) on the dataset 'trds'.
+# 'type = "response"' ensures predictions are on the response scale.
+
 error_predic <- predict(model_glm, newdata = trds, type = "response")
 
-rpart_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+# Calculate the error matrix using the rattle::errorMatrix function.
+# 'count = TRUE' produces an error matrix in terms of raw counts.
 
-print(rpart_cem)
+linear_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+
+print(linear_cem)
 
 print('Error matrix for the Linear model (proportions)')
 
-rpart_per <- rattle::errorMatrix(trds[[target]],error_predic)
+# Calculate the error matrix using rattle::errorMatrix without the 'count' argument.
+# Produces an error matrix expressed in proportions instead of raw counts.
 
-print(rpart_per)
+linear_per <- rattle::errorMatrix(trds[[target]], error_predic)
+
+print(linear_per)
