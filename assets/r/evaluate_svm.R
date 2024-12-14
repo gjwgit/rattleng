@@ -36,13 +36,11 @@
 library(kernlab)
 library(rattle)
 
-print("Error matrix for the SVM model (counts)")
-
-error_predic <- predict(svm_model, newdata = trds, type = "probabilities")
+error_matrix_predic <- predict(svm_model, newdata = trds, type = "probabilities")
 
 # Convert to a list of labels based on maximum values.
 
-error_predic <- apply(error_predic, 1, function(row) {
+error_matrix_predic <- apply(error_matrix_predic, 1, function(row) {
   if (any(is.na(row))) {
       return(NULL)
   }
@@ -55,33 +53,25 @@ error_predic <- apply(error_predic, 1, function(row) {
 
 # Remove NULL entries and convert to a simple character vector.
 
-error_predic <- unlist(error_predic, use.names = FALSE)
+error_matrix_predic <- unlist(error_matrix_predic, use.names = FALSE)
 
 # Find the lengths of the two objects.
 
 len_trds_target <- length(trds[[target]])
-len_error_predic <- length(error_predic)
+len_error_matrix_predic <- length(error_matrix_predic)
 
 # Determine the minimum length.
 
-min_length <- min(len_trds_target, len_error_predic)
+min_length <- min(len_trds_target, len_error_matrix_predic)
 
 # Subset trds[[target]] to match the minimum length.
 
 svm_target <- trds[[target]][seq_len(min_length)]
 
-# Ensure svm_target has the same length as the rows in error_predic.
+# Ensure svm_target has the same length as the rows in error_matrix_predic.
 
-if (length(error_predic) > min_length) {
-  error_predic <- error_predic[seq_len(min_length), , drop = FALSE]
+if (length(error_matrix_predic) > min_length) {
+  error_matrix_predic <- error_matrix_predic[seq_len(min_length), , drop = FALSE]
 }
 
-svm_cem <- rattle::errorMatrix(svm_target, error_predic, count = TRUE)
-
-print(svm_cem)
-
-print('Error matrix for the SVM model (proportions)')
-
-svm_per <- rattle::errorMatrix(svm_target, error_predic)
-
-print(svm_per)
+error_matrix_target <- svm_target

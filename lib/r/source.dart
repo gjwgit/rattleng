@@ -285,6 +285,12 @@ Future<void> rSource(
     code = code.replaceAll('ERROR_MATRIX_PROP', 'rpart_per');
   }
 
+  if (scripts.contains('evaluate_svm') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'svm_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'svm_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
