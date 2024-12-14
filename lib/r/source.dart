@@ -267,6 +267,12 @@ Future<void> rSource(
     code = code.replaceAll('ERROR_MATRIX_PROP', 'ctree_per');
   }
 
+  if (scripts.contains('evaluate_nnet') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'nnet_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'nnet_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
