@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Review and update ERROR MATRIX feature. [6.3.41 20241215 gjw]
 + Improved UX for DEMO dataset selection [6.3.40 20241213 kev]
 + ASSOCIATIONS bug fixes [6.3.39 20241212 gjw]
 + Intial ERROR MATRIX for EVALUATE [6.3.38 20241212 zy]
