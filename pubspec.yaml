@@ -44,7 +44,7 @@ dependencies:
   flutter_riverpod: ^2.4.4
   flutter_svg: ^2.0.7
   gap: ^3.0.1
-  intl: ^0.19.0
+  intl: ^0.20.1
   markdown_tooltip: ^0.0.2
   package_info_plus: ^8.0.0
   path: ^1.8.3
@@ -67,10 +67,10 @@ dev_dependencies:
     sdk: flutter
 
   build_runner: ^2.4.6
-  custom_lint: ^0.6.4
+  custom_lint: ^0.7.0
   dependency_validator: ^4.1.1
   flutter_gen: ^5.3.1
-  flutter_launcher_icons: '^0.13.1'
+  flutter_launcher_icons: ^0.14.2
 
   # The `flutter_lints` package contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the
@@ -78,7 +78,7 @@ dev_dependencies:
   # at the root of your package. See that file for information about
   # deactivating specific lint rules and activating additional ones.
 
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   msix: ^3.16.2
   riverpod_generator: ^2.3.5
 
