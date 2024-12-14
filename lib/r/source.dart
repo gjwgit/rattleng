@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-12-12 16:23:29 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-13 19:00:47 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin, Zheyuan Xu
+/// Authors: Graham Williams, Yixiang Yin, Zheyuan Xu, Kevin Wang
 
 library;
 
@@ -103,6 +103,8 @@ Future<void> rSource(
 ) async {
   // Initialise the state variables obtained from the different providers.
 
+  int randomSeedSetting = ref.read(randomSeedSettingProvider);
+
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
@@ -162,7 +164,6 @@ Future<void> rSource(
 
   // CLUSTER
 
-  int clusterSeed = ref.read(randomSeedProvider);
   int clusterNum = ref.read(numberClusterProvider);
   int clusterRun = ref.read(runClusterProvider);
   int clusterProcessor = ref.read(processorClusterProvider);
@@ -259,10 +260,8 @@ Future<void> rSource(
 
   code = code.replaceAll('MAXFACTOR', '20');
 
-  // TODO 20241202 gjw VALUE OF RANDOM_SEED NEEDS TO COME FROM SETTINGS.
-
   code = code.replaceAll('RANDOM_PARTITION', 'FALSE');
-  code = code.replaceAll('RANDOM_SEED', '42');
+  code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
@@ -472,7 +471,6 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // CLUSTER
 
-  code = code.replaceAll('RANDOM_SEED', clusterSeed.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');

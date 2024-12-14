@@ -1,6 +1,6 @@
 /// Settings provider.
 //
-// Time-stamp: <Thursday 2024-11-21 08:05:30 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 18:59:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -71,6 +71,6 @@ final settingsGraphicThemeProvider =
   (ref) => SettingsGraphicThemeNotifier(),
 );
 
-final randomSeedProvider = StateProvider<int>((ref) => 42);
+final randomSeedSettingProvider = StateProvider<int>((ref) => 42);
 
 final imageViewerSettingProvider = StateProvider<String>((ref) => '');

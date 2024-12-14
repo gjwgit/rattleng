@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Thursday 2024-08-15 07:17:53 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-12-13 14:24:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,6 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
-import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/is_numeric.dart';
 
@@ -111,7 +110,12 @@ void updateVariablesProvider(WidgetRef ref) {
   // get the most recent vars information from glimpse and update the information in roles provider and types provider
   String stdout = ref.watch(stdoutProvider);
   List<VariableInfo> vars = extractVariables(stdout);
-  List<String> highVars = extractLargeFactors(stdout);
+
+  // 20241213 gjw Remove this for now. It was used for determining IGNORE roles
+  // but due to an issues iwth that (see other comments) it is no longer being
+  // done.
+
+  // List<String> highVars = extractLargeFactors(stdout);
 
   // When a new row is added after transformation, initialise its role and update the role of the old variable
   for (var column in vars) {
@@ -129,16 +133,28 @@ void updateVariablesProvider(WidgetRef ref) {
         debugPrint('ERROR: unidentified variables: ${column.name}!');
       }
     }
-    // update types
+
+    // Update the types.
+
     if (!ref.read(typesProvider.notifier).state.containsKey(column.name)) {
       ref.read(typesProvider.notifier).state[column.name] =
           isNumeric(column.type) ? Type.numeric : Type.categoric;
     }
-    for (var highVar in highVars) {
-      if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
-        ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
-      }
-    }
+
+    // 20241213 gjw Remove this heuristic for now. It is causing the IGNORE of
+    // country in the PROTEIN dataset to be retained even if I change it to
+    // INPUT/RISK/IDENT. Not if I change it to TARGET as per the test below. It
+    // should actually be IDENT or TARGET.
+
+    // 20241213 gjw This is repeated code from dataset/display.dart - we should
+    // avoid repeated code as it is harder to maintain as I have just
+    // demonstrated - I had to find this in two places to fix :-)
+
+    // for (var highVar in highVars) {
+    //   if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
+    //     ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
+    //   }
+    // }
   }
 }
 
