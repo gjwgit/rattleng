@@ -291,6 +291,12 @@ Future<void> rSource(
     code = code.replaceAll('ERROR_MATRIX_PROP', 'svm_per');
   }
 
+  if (scripts.contains('evaluate_xgboost') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'xgboost_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'xgboost_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
