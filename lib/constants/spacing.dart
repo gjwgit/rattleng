@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Sunday 2024-11-24 12:14:38 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 17:01:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -48,6 +48,10 @@ const configBotGap = Gap(5);
 
 const configRowGap = Gap(20);
 
+// 20241214 gjw Migrate to Flutter 3.27 Row/Column spacing.
+
+const configRowSpace = 20.0;
+
 /// Gap to the left of the configs within a Row.
 
 const configLeftGap = Gap(5);
@@ -55,6 +59,10 @@ const configLeftGap = Gap(5);
 /// Gap between widgets in a Row in the config.
 
 const configWidgetGap = Gap(20);
+
+// 20241214 gjw Migrate to Flutter 3.27 Row/Column spacing.
+
+const configWidgetSpace = 20.0;
 
 /// Gap between widgets in a Row in the the config.
 
