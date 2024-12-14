@@ -193,6 +193,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // String constants corresponding to the various evaluation commands.
 
                 String ea = 'evaluate_adaboost';
+                String mbem = 'model_build_error_matrix';
                 String ec = 'evaluate_ctree';
                 String ecf = 'evaluate_conditional_forest';
                 String en = 'evaluate_nnet';
@@ -227,7 +228,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ea],
+                    [ea, mbem],
                   );
                 }
 

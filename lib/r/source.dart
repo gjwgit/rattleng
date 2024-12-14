@@ -171,16 +171,6 @@ Future<void> rSource(
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
 
-  // EVALUATE
-
-  // bool evaluateBoostExecuted = ref.read(boostEvaluateProvider);
-  // bool evaluateForestExecuted = ref.read(forestEvaluateProvider);
-  // bool evaluatehClusterExecuted = ref.read(hClusterEvaluateProvider);
-  // bool evaluatekMeansExecuted = ref.read(kMeansEvaluateProvider);
-  // bool evaluateLinearExecuted = ref.read(linearEvaluateProvider);
-  // bool evaluateNeuralNetExecuted = ref.read(neuralNetEvaluateProvider);
-  // bool evaluateSVMExecuted = ref.read(svmEvaluateProvider);
-
   // FOREST
 
   int forestTrees = ref.read(treeNumForestProvider);
@@ -257,6 +247,12 @@ Future<void> rSource(
   code = code.replaceAll('TEMPDIR', tempDir);
 
   ////////////////////////////////////////////////////////////////////////
+
+  if (scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'adaboost_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'adaboost_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.

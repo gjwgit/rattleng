@@ -1,4 +1,4 @@
-# Generate error matrix and Hand plot of model adaboost.
+# Use `errorMatrix` to generate error matrix .
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -33,40 +33,20 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(ada)
-library(caret)
-library(ggplot2)
-library(hmeasure)
+# Load required packages from the local library into the R session.
+
 library(rattle)
-library(rpart)
 
+########################################################################
 
-target_ada_levels <- unique(trds[[target]])
-target_ada_levels <- target_ada_levels[!is.na(target_ada_levels)]
-  
-# Get predicted probabilities for the positive class.
+print('Error matrix for the SVM model (count)')
 
-predicted_ada_probs <- predict(model_ada, newdata = trds, type = "prob")[,2]
+ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count = TRUE)
 
-actual_ada_labels <- ifelse(trds[[target]] == target_ada_levels[1], 0, 1)
+print(ERROR_MATRIX_COUNT)
 
-# Evaluate the model using HMeasure.
+print('Error matrix for the SVM model (proportions)')
 
-results <- HMeasure(true.class = actual_ada_labels, scores = predicted_ada_probs)
-  
-svg("TEMPDIR/model_ada_evaluate_hand.svg")
+ERROR_MATRIX_PROP <- rattle::errorMatrix(error_matrix_target, error_matrix_predic)
 
-plotROC(results)
-
-dev.off()
-
-error_predic <- predict(model_ada, newdata = trds,)
-
-error_predic <- apply(error_predic, 1, function(x) {
-  colnames(error_predic)[which.max(x)]
-})
-
-
-error_matrix_target <- trds[[target]]
-
-error_matrix_predic <- error_predic
+print(ERROR_MATRIX_PROP)
