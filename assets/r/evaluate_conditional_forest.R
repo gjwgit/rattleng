@@ -33,8 +33,6 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-error_predic <- predict(model_conditionalForest, newdata = trds,)
-
-error_matrix_predic <- error_predic
+error_matrix_predic <- predict(model_conditionalForest, newdata = trds,)
 
 error_matrix_target <- trds[[target]]
