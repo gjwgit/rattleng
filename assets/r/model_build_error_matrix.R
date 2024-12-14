@@ -39,13 +39,9 @@ library(rattle)
 
 ########################################################################
 
-print('Error matrix for the SVM model (count)')
-
 ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count = TRUE)
 
 print(ERROR_MATRIX_COUNT)
-
-print('Error matrix for the SVM model (proportions)')
 
 ERROR_MATRIX_PROP <- rattle::errorMatrix(error_matrix_target, error_matrix_predic)
 

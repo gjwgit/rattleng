@@ -66,7 +66,6 @@ error_predic <- apply(error_predic, 1, function(x) {
   colnames(error_predic)[which.max(x)]
 })
 
-
 error_matrix_target <- trds[[target]]
 
 error_matrix_predic <- error_predic

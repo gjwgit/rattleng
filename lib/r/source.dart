@@ -249,9 +249,16 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  if (scripts.contains('model_build_error_matrix')) {
+  if (scripts.contains('evaluate_adaboost') &&
+      scripts.contains('model_build_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'adaboost_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'adaboost_per');
+  }
+
+  if (scripts.contains('evaluate_conditional_forest') &&
+      scripts.contains('model_build_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'cforest_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'cforest_per');
   }
 
   // SETTINGS

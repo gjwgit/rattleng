@@ -33,21 +33,8 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(kernlab)
-library(party)
-library(rattle)
-library(reshape2)
-
-print("Error matrix for the Conditional Forest model (counts)")
-
 error_predic <- predict(model_conditionalForest, newdata = trds,)
 
-cforest_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
+error_matrix_predic <- error_predic
 
-print(cforest_cem)
-
-print("Error matrix for the Conditional Forest model (proportions)")
-
-cforest_per <- rattle::errorMatrix(trds[[target]], error_predic)
-
-print(cforest_per)
+error_matrix_target <- trds[[target]]
