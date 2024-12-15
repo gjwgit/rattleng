@@ -47,6 +47,7 @@ FutureBuilder showMarkdownFile(
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         String svgAsset = 'assets/svg/generic.svg';
+
         return Container(
           decoration: sunkenBoxDecoration,
 
