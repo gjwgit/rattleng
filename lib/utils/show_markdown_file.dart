@@ -65,33 +65,38 @@ FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-// To avoid this error, provide a height limit at a higher (parent) level using the expanded() widget. The higher the better.
-// The following assertion was thrown during performResize():
-// Vertical viewport was given unbounded height.
-// Viewports expand in the scrolling direction to fill their container. In this case, a vertical
-// viewport was given an unlimited amount of vertical space in which to expand. This situation
-// typically happens when a scrollable widget is nested inside another scrollable widget.
-// If this widget is always nested in a scrollable widget there is no need to use a viewport because
-// there will always be enough vertical space for the children. In this case, consider using a Column
-// or Wrap instead. Otherwise, consider using a CustomScrollView to concatenate arbitrary slivers into
-// a single scrollable.
-// The relevant error-causing widget was:
-//   ListView
-//   ListView:file:///Users/yinyixiang/.pub-cache/hosted/pub.dev/flutter_markdown-0.7.1/lib/src/widget.dart:559:12
           decoration: sunkenBoxDecoration,
-          child: Center(
-            child: Markdown(
-              data: snapshot.data!,
-              selectable: true,
-              onTapLink: (text, href, title) {
-                final Uri url = Uri.parse(href ?? '');
-                launchUrl(url);
-              },
-              // Custom image builder to load assets.
-              imageBuilder: (uri, title, alt) {
-                return Image.asset('$assetsPath/${uri.toString()}');
-              },
-            ),
+
+          // 20241215 gjw It is easier to read the overview text when it is not
+          // too wide. For now, and assuming the default window width, place the
+          // Markdown text into a row and half fill the row. Eventually probably
+          // want a fixed width?
+
+          child: Row(
+            children: [
+              // The text goes into the left pane.
+
+              Expanded(
+                child: Markdown(
+                  data: snapshot.data!,
+                  selectable: true,
+                  onTapLink: (text, href, title) {
+                    final Uri url = Uri.parse(href ?? '');
+                    launchUrl(url);
+                  },
+
+                  // Custom image builder to load assets.
+
+                  imageBuilder: (uri, title, alt) {
+                    return Image.asset('$assetsPath/${uri.toString()}');
+                  },
+                ),
+              ),
+
+              // The right pain is empty.
+
+              Expanded(child: Text('')),
+            ],
           ),
         );
       }
