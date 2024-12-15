@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Add images to overview pages [6.3.42 20241215 gjw]
 + Review and update ERROR MATRIX feature. [6.3.41 20241215 gjw]
 + Improved UX for DEMO dataset selection [6.3.40 20241213 kev]
 + ASSOCIATIONS bug fixes [6.3.39 20241212 gjw]
