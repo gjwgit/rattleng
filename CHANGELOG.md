@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Update spacing in row/column with flutter 3.27 update [6.3.43]
 + Add images to overview pages [6.3.42 20241215 gjw]
 + Review and update ERROR MATRIX feature. [6.3.41 20241215 gjw]
 + Improved UX for DEMO dataset selection [6.3.40 20241213 kev]
