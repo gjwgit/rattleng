@@ -1,11 +1,11 @@
-# From dataset `ds` build an `rpart()` decision tree.
+# From dataset `tcds` build an `rpart()` decision tree.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-12-12 17:19:07 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-16 08:04:25 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -37,7 +37,7 @@
 
 library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
-library(hmeasure)
+library(hmeasure)     # David Hand's classifier performance measure.
 library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 
@@ -49,7 +49,7 @@ mdesc <- "Decision Tree"
 # Determine what type of model to build, based on the number of values
 # of the target variable.
 
-method <- ifelse(ds[[target]] %>% unique() %>% length() > 10,
+method <- ifelse(tcds[[target]] %>% unique() %>% length() > 10,
                  "anova",
                  "class")
 

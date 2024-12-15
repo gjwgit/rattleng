@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Friday 2024-12-13 14:22:15 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-16 08:19:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -374,7 +374,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String target = getTarget(ref);
     if (target == 'NULL') {
       ref.read(rolesProvider.notifier).state[vars.last.name] = Role.target;
-    } else {
+    } else if (target != '""') {
+      // TODO 20241216 gjw HOW DOES target BECOME '""' - TO BE FIXED
       ref.read(rolesProvider.notifier).state[target] = Role.target;
     }
   }

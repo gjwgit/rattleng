@@ -1,11 +1,11 @@
-# Rattle Scripts: Setup the model template variables.
+# Setup the model template variables for descriptive and predictive models.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-13 08:33:19 +1100 Graham Williams>
+# Time-stamp: <Monday 2024-12-16 08:13:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # Run this script after the variable `ds` (dataset) and other data
 # template variables have been defined as in `data_template.R`. This
@@ -37,24 +37,41 @@
 #
 # https://survivor.togaware.com/datascience/model-template.html
 
+# Load required packages from the local library into the R session.
+
 library(stringi)      # The string concat operator %s+%.
+
+# Record basic variable roles for the templates.
 
 ignore <- c(risk, id, IGNORE_VARS)
 vars   <- setdiff(vars, ignore)
 inputs <- setdiff(vars, target)
 
-# Generate the formula to be used for predictive modelling.
+# Generate the formula to be used for predictive modelling which is
+# available when a TARGET variable is identified.
 
-form   <- formula(target %s+% " ~ .")
+if (!is.null(target)) {
+  form <- formula(target %s+% " ~ .")
+
+  # Identify a subset of the full dataset that has values for the target
+  # variable, removing those rows that do not have a target. For
+  # predictive modelling we will only use data that has a target value.
+  # This will be refered to as the TARGET COMPLETE dataset (tcds).
+
+  tcds <- ds[!is.na(ds[[target]]),]
+
+} else {
+
+  form <- formula("~ .")
+
+  # If not TARGET variable is identified then we still want to start
+  # with a `tcds` for processing.
+
+  tcds <- ds
+
+}
 
 print(form)
-
-# Identify a subset of the full dataset that has values for the target
-# variable, removing those rows that do not have a target. For
-# predictive modelling we will only use data that has a target value.
-# This will be refered to as the TARGET COMPLETE dataset (tcds).
-
-tcds <- ds[!is.na(ds[[target]]),]
 
 # Update the number of `obs` which is needed for the partitioning.
 
@@ -104,12 +121,13 @@ if (SPLIT_DATASET) {
 # Note the actual values of the TARGET variable and the RISK variable
 # for use in model training and evaluation later on.
 
-actual_tr <- tcds %>% slice(tr) %>% pull(target)
-actual_tu <- tcds %>% slice(tu) %>% pull(target)
-actual_te <- tcds %>% slice(te) %>% pull(target)
+if (!is.null(target)) {
+  actual_tr <- tcds %>% slice(tr) %>% pull(target)
+  actual_tu <- tcds %>% slice(tu) %>% pull(target)
+  actual_te <- tcds %>% slice(te) %>% pull(target)
+}
 
-if (!is.null(risk))
-{
+if (!is.null(risk)) {
   risk_tr <- tcds %>% slice(tr) %>% pull(risk)
   risk_tu <- tcds %>% slice(tu) %>% pull(risk)
   risk_te <- tcds %>% slice(te) %>% pull(risk)

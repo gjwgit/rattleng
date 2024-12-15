@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Sunday 2024-12-15 11:20:21 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-12-16 08:17:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -363,9 +363,6 @@ Future<void> rSource(
 
   code = code.replaceAll('CLEANSE_DATASET', cleanse ? 'TRUE' : 'FALSE');
 
-  // TODO 20231016 gjw HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE
-  // FUNCTION CALL AS A MAP AS DESCRIBED ABOVE..
-
   // TODO 20231016 gjw THESE SHOULD BE SET IN THE DATASET TAB AND ACCESS THROUGH
   // PROVIDERS.
   //
@@ -383,6 +380,7 @@ Future<void> rSource(
 
   String target = 'NULL';
   String ident = 'NULL';
+
   roles.forEach((key, value) {
     if (value == Role.target) {
       target = key;
@@ -403,7 +401,7 @@ Future<void> rSource(
   // handle that special case and then replace any other TARGET_VAR replacement
   // as usual.
 
-  if (target == 'NULL') {
+  if (target == 'NULL' || target.isEmpty || target == '\"\"') {
     code = code.replaceAll('"TARGET_VAR"', target);
   }
   code = code.replaceAll('TARGET_VAR', target);

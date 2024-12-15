@@ -1,6 +1,6 @@
 /// Identify a target variable.
 //
-// Time-stamp: <Monday 2024-08-26 14:22:28 +0800 Graham Williams>
+// Time-stamp: <Monday 2024-12-16 08:18:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -64,7 +64,7 @@ String getTarget(WidgetRef ref) {
       }
     }
 
-    if (defineTarget.isNotEmpty) {
+    if (defineTarget.isNotEmpty && target != '""') {
       return defineTarget;
     }
   }
