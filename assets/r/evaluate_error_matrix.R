@@ -1,11 +1,11 @@
-# Use `errorMatrix` to generate error matrix .
+# From `em_target` and `empred` use `rattle::errorMatrix()` to generate error matrix evaluation.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-12-15 10:50:49 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,9 +22,9 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -35,18 +35,16 @@
 
 # Load required packages from the local library into the R session.
 
-library(rattle)
+library(rattle)       # Generate an error matrix.
 
 ########################################################################
 
 # Setting `count = TRUE` ensures the matrix represents raw counts of predictions.
 
-ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count = TRUE)
-
+ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count=TRUE)
 print(ERROR_MATRIX_COUNT)
 
 # Generate a confusion matrix with proportions (relative frequencies).
 
 ERROR_MATRIX_PROP <- rattle::errorMatrix(error_matrix_target, error_matrix_predic)
-
 print(ERROR_MATRIX_PROP)

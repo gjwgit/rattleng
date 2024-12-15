@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-10-07 06:47:54 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 11:53:41 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -60,19 +60,6 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       provider: treeEvaluateProvider,
     ),
     _ModelConfig(
-      key: 'boostEvaluate',
-      label: 'Boost',
-      checkCommands: [
-        ['print(model_ada)', 'summary(model_ada)'],
-        ['print(model_xgb)', 'summary(model_xgb)'],
-      ],
-      checkFiles: [
-        ['model_ada_boost.svg'],
-        ['model_xgb_importance.svg'],
-      ],
-      provider: boostEvaluateProvider,
-    ),
-    _ModelConfig(
       key: 'forestEvaluate',
       label: 'Forest',
       checkCommands: [
@@ -88,6 +75,19 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         ],
       ],
       provider: forestEvaluateProvider,
+    ),
+    _ModelConfig(
+      key: 'boostEvaluate',
+      label: 'Boost',
+      checkCommands: [
+        ['print(model_ada)', 'summary(model_ada)'],
+        ['print(model_xgb)', 'summary(model_xgb)'],
+      ],
+      checkFiles: [
+        ['model_ada_boost.svg'],
+        ['model_xgb_importance.svg'],
+      ],
+      provider: boostEvaluateProvider,
     ),
     _ModelConfig(
       key: 'svmEvaluate',
@@ -114,7 +114,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     ),
     _ModelConfig(
       key: 'neuralNetEvaluate',
-      label: 'Neural Net',
+      label: 'Neural',
       checkCommands: [
         ['print(model_neuralnet)', 'summary(model_neuralnet)'],
         ['print(model_nn)', 'summary(model_nn)'],
@@ -166,11 +166,19 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: configRowSpace,
       children: [
-        configBotGap,
+        // 20241215 gjw Add comment to allow empty lines between widgets.
+
+        configTopGap,
+
         Row(
+          spacing: configWidgetSpace,
           children: [
+            // 20241215 gjw Add comment to allow empty lines between widgets.
+
             configLeftGap,
+
             ActivityButton(
               pageControllerProvider: evaluatePageControllerProvider,
               onPressed: () async {
@@ -194,14 +202,15 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // String constants corresponding to the various evaluation commands.
 
                 String ea = 'evaluate_adaboost';
-                String mbem = 'model_build_error_matrix';
+                String em = 'evaluate_error_matrix';
                 String ec = 'evaluate_ctree';
-                String ecf = 'evaluate_conditional_forest';
                 String en = 'evaluate_nnet';
-                String erf = 'evaluate_random_forest';
                 String er = 'evaluate_rpart';
                 String es = 'evaluate_svm';
                 String ex = 'evaluate_xgboost';
+
+                String ecf = 'evaluate_conditional_forest';
+                String erf = 'evaluate_random_forest';
 
                 // Check if rpart model evaluation was executed.
 
@@ -209,7 +218,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [er, mbem],
+                    [er, em],
                   );
                 }
 
@@ -219,27 +228,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ec, mbem],
-                  );
-                }
-
-                // Check if AdaBoost evaluation was executed and boost box is enabled.
-
-                if (adaBoostExecuted && boostTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ea, mbem],
-                  );
-                }
-
-                // Check if XGBoost evaluation was executed and boost box is enabled.
-
-                if (xgBoostExecuted && boostTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ex, mbem],
+                    [ec, em],
                   );
                 }
 
@@ -250,7 +239,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [erf, mbem],
+                    [erf, em],
                   );
                 }
 
@@ -261,7 +250,27 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ecf, mbem],
+                    [ecf, em],
+                  );
+                }
+
+                // Check if AdaBoost evaluation was executed and boost box is enabled.
+
+                if (adaBoostExecuted && boostTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ea, em],
+                  );
+                }
+
+                // Check if XGBoost evaluation was executed and boost box is enabled.
+
+                if (xgBoostExecuted && boostTicked) {
+                  await rSource(
+                    context,
+                    ref,
+                    [ex, em],
                   );
                 }
 
@@ -271,7 +280,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [es, mbem],
+                    [es, em],
                   );
                 }
 
@@ -281,7 +290,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [en, mbem],
+                    [en, em],
                   );
                 }
 
@@ -294,7 +303,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               },
               child: const Text('Execute'),
             ),
-            configLeftGap,
+
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
               bool enabled = _isEvaluationEnabled(config);
@@ -315,13 +324,11 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       });
                     },
                   ),
-                  configWidgetGap,
                 ],
               );
             }).toList(),
           ],
         ),
-        configRowGap,
       ],
     );
   }
