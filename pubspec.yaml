@@ -115,6 +115,8 @@ flutter:
     - assets/icons/icon.png
     - assets/markdown/
     - assets/r/
+    - assets/svg/explore.svg
+    - assets/svg/generic.svg
 
   # Use a fixed width Ubuntu font for the Log tab.
 

@@ -1,6 +1,6 @@
-/// Render a markdown document as a widget.
+/// Render a markdown document as a widget with an optional SVG asset.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
@@ -33,27 +33,30 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/utils/load_asset.dart';
 
-/// A scrolling widget that parses and displays Markdown file,
-/// which is located under the path [markdownFilePath].
-/// It allows handling asynchronous loading of markdown file.
+// TODO 20241215 gjw MIGRATE ALL showMardownFile TO THAT IN show_markdown_file_image.dart
+
+/// 20241215 gjw A scrolling widget that parses and displays Markdown file,
+/// which is located under the path [markdownFilePath]. The markdown file takes
+/// up the left half of the widget while an optional SVG image the right ahlf. A
+/// generic image is displayed if no image is provided.  It allows handling
+/// asynchronous loading of markdown file.
 
 FutureBuilder showMarkdownFile(
-  String markdownFilePath,
   BuildContext context,
-) {
+  String markdownFilePath, [
+  String svgAsset = 'generic.svg',
+]) {
   return FutureBuilder(
     key: const Key('markdown_file'),
     future: loadAsset(markdownFilePath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        String svgAsset = 'assets/svg/generic.svg';
         return Container(
           decoration: sunkenBoxDecoration,
 
           // 20241215 gjw It is easier to read the overview text when it is not
           // too wide. For now, and assuming the default window width, place the
-          // Markdown text into a row and half fill the row. Eventually probably
-          // want a fixed width?
+          // Markdown text into a row and half fill the row.
 
           child: Row(
             children: [
@@ -76,7 +79,7 @@ FutureBuilder showMarkdownFile(
                 ),
               ),
 
-              // The right pain is empty.
+              // 20241215 gjw The right pain is for an image.
 
               Expanded(
                 child: SvgPicture.asset(
@@ -84,15 +87,7 @@ FutureBuilder showMarkdownFile(
                   width: 300, // You can adjust these dimensions
                   height: 500, // to fit your needs
                   fit: BoxFit.contain,
-                  // colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
                 ),
-                // child: SvgPicture.string(
-                //   svgString,
-                //   width: 300, // You can adjust these dimensions
-                //   height: 500, // to fit your needs
-                //   fit: BoxFit.contain,
-                //   // colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-                // ),
               ),
             ],
           ),
