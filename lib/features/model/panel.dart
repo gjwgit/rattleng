@@ -1,6 +1,6 @@
 /// SVM tab made up of config and panel widgets.
 //
-// Time-stamp: <Friday 2024-11-15 10:00:05 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 19:10:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,7 +30,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 
 /// The SVM feature supports Svm rule analysis.
 
@@ -42,6 +42,6 @@ class ModelPanel extends StatelessWidget {
     // As per the RattleNG pattern, a Tab consists of a Config bar and the
     // results Display().
 
-    return showMarkdownFile(modelIntroFile, context);
+    return showMarkdownFile(context, modelIntroFile, 'assets/svg/model.svg');
   }
 }

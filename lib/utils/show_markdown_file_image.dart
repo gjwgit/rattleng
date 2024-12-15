@@ -44,7 +44,7 @@ import 'package:rattle/utils/load_asset.dart';
 FutureBuilder showMarkdownFile(
   BuildContext context,
   String markdownFilePath, [
-  String svgAsset = 'generic.svg',
+  String svgAsset = 'assets/svg/generic.svg',
 ]) {
   return FutureBuilder(
     key: const Key('markdown_file'),

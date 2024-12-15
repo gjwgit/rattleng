@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-10-25 08:31:48 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 19:43:54 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,7 +36,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -85,7 +85,10 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
-    List<Widget> pages = [showMarkdownFile(clusterIntroFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile(
+          context, clusterIntroFile), //, 'assets/svg/cluster.svg'),
+    ];
 
     // Retrieve the function name and URL from the mapping.
 

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Data Collection & Processing Section -->
+  <g transform="translate(50, 50)">
+    <!-- Database Icon -->
+    <rect x="20" y="10" width="60" height="80" rx="5" fill="#4e79a7"/>
+    <rect x="30" y="20" width="40" height="10" fill="white"/>
+    <rect x="30" y="40" width="40" height="10" fill="white"/>
+    <rect x="30" y="60" width="40" height="10" fill="white"/>
+    
+    <!-- Flow Arrow 1 -->
+    <path d="M90 50 L160 50" stroke="#bab0ab" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+    
+    <!-- Data Cleaning Icon -->
+    <rect x="170" y="20" width="60" height="60" fill="#f28e2b"/>
+    <path d="M180 50 L220 50 M190 40 L210 40 M185 60 L215 60" stroke="white" stroke-width="3"/>
+  </g>
+
+  <!-- Feature Engineering Section -->
+  <g transform="translate(300, 30)">
+    <!-- Feature Box -->
+    <rect x="20" y="20" width="80" height="80" rx="5" fill="#76b7b2"/>
+    <path d="M30 40 L90 40 M30 60 L90 60 M30 80 L90 80" stroke="white" stroke-width="2"/>
+    <text x="35" y="35" fill="white" font-size="10">Features</text>
+  </g>
+
+  <!-- Model Training Section -->
+  <g transform="translate(450, 20)">
+    <!-- Neural Network -->
+    <g transform="translate(0, 20)">
+      <circle cx="20" cy="40" r="8" fill="#e15759"/>
+      <circle cx="20" cy="80" r="8" fill="#e15759"/>
+      <circle cx="60" cy="30" r="8" fill="#e15759"/>
+      <circle cx="60" cy="60" r="8" fill="#e15759"/>
+      <circle cx="60" cy="90" r="8" fill="#e15759"/>
+      <circle cx="100" cy="60" r="8" fill="#e15759"/>
+      
+      <!-- NN Connections -->
+      <path d="M28 40 L52 30 M28 40 L52 60 M28 40 L52 90" stroke="#bab0ab" stroke-width="1"/>
+      <path d="M28 80 L52 30 M28 80 L52 60 M28 80 L52 90" stroke="#bab0ab" stroke-width="1"/>
+      <path d="M68 30 L92 60 M68 60 L92 60 M68 90 L92 60" stroke="#bab0ab" stroke-width="1"/>
+    </g>
+  </g>
+
+  <!-- Evaluation & Deployment Section -->
+  <g transform="translate(600, 40)">
+    <!-- Metrics Dashboard -->
+    <rect x="20" y="20" width="100" height="60" rx="5" fill="#59a14f"/>
+    <path d="M30 50 L60 30 L90 45 L110 35" stroke="white" stroke-width="2" fill="none"/>
+    <circle cx="60" cy="30" r="3" fill="white"/>
+    <circle cx="90" cy="45" r="3" fill="white"/>
+  </g>
+
+  <!-- Data Flow Connections -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#bab0ab"/>
+    </marker>
+  </defs>
+
+  <!-- Main Flow Arrows -->
+  <g>
+    <path d="M280 80 C320 80, 340 80, 380 80" stroke="#bab0ab" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+    <path d="M480 80 C520 80, 540 80, 580 80" stroke="#bab0ab" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  </g>
+
+  <!-- Feedback Loop -->
+  <path d="M720 100 C720 150, 400 150, 400 100" stroke="#bab0ab" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+
+  <!-- Process Labels -->
+  <g font-size="12" fill="#333">
+    <text x="60" y="160">Raw Data</text>
+    <text x="170" y="160">Preprocessing</text>
+    <text x="320" y="160">Feature Engineering</text>
+    <text x="450" y="160">Model Training</text>
+    <text x="600" y="160">Evaluation</text>
+    <text x="500" y="200">Iteration &amp; Improvement</text>
+  </g>
+
+  <!-- Validation Split Section -->
+  <g transform="translate(50, 250)">
+    <!-- Data Split Visualization -->
+    <rect x="20" y="20" width="150" height="30" fill="#b07aa1"/>
+    <rect x="20" y="60" width="50" height="30" fill="#ff9da7"/>
+    <rect x="80" y="60" width="50" height="30" fill="#edc948"/>
+    <text x="45" y="40" fill="white" font-size="12">Full Dataset</text>
+    <text x="30" y="80" fill="white" font-size="10">Train</text>
+    <text x="90" y="80" fill="white" font-size="10">Test</text>
+  </g>
+
+  <!-- Model Performance Section -->
+  <g transform="translate(450, 250)">
+    <!-- Confusion Matrix -->
+    <rect x="20" y="20" width="40" height="40" fill="#4e79a7" opacity="0.8"/>
+    <rect x="60" y="20" width="40" height="40" fill="#4e79a7" opacity="0.4"/>
+    <rect x="20" y="60" width="40" height="40" fill="#4e79a7" opacity="0.4"/>
+    <rect x="60" y="60" width="40" height="40" fill="#4e79a7" opacity="0.8"/>
+  </g>
+</svg>
