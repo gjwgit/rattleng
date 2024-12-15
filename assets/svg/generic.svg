@@ -29,8 +29,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="2.002"
-     inkscape:cx="200.04995"
-     inkscape:cy="250"
+     inkscape:cx="200.54945"
+     inkscape:cy="250.4995"
      inkscape:window-width="3326"
      inkscape:window-height="1371"
      inkscape:window-x="2034"
@@ -495,13 +495,4 @@
      fill="none"
      stroke-dasharray="5,5"
      id="path142" />
-  <text
-     xml:space="preserve"
-     id="text1350"
-     style="white-space:pre;shape-inside:url(#rect1352);fill:#d76df8"><tspan
-       x="34.109375"
-       y="38.701705"
-       id="tspan1587"><tspan
-         style="fill:#6e6df8"
-         id="tspan1585">Generic Image Placeholder</tspan></tspan></text>
 </svg>
