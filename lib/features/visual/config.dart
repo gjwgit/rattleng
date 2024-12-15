@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-10 08:55:33 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 15:54:09 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -155,14 +155,13 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     }
 
     return Column(
+      spacing: configRowSpace,
       children: [
         configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
             configLeftGap,
-
-            // The BUILD button.
-
             ActivityButton(
               tooltip: '''
 
@@ -203,9 +202,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               },
               child: const Text('Generate Plots'),
             ),
-
-            configWidgetGap,
-
             MarkdownTooltip(
               message: '''
 
@@ -230,9 +226,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 },
               ),
             ),
-
-            configWidgetGap,
-
             MarkdownTooltip(
               message: '''
 
@@ -261,8 +254,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 },
               ),
             ),
-            configWidgetGap,
-
             LabelledCheckbox(
               label: 'Ignore Missing Group by',
               tooltip: '''
@@ -274,23 +265,21 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               ''',
               provider: ignoreMissingGroupByProvider,
             ),
-
-            configWidgetGap,
             LabelledCheckbox(
               label: 'Box Plot Notch',
               tooltip: '''
 
               **Box Plot Notch:**
 
-              Enabling this option adds notches to the box plots. 
-              The notches represent the confidence interval around the median. 
-              This helps in visually assessing if two medians are significantly different. 
+              Enabling this option adds notches to the box plots.
+              The notches represent the confidence interval around the median.
+              This helps in visually assessing if two medians are significantly different.
 
-              - **On:** Adds notches to the box plot. 
-              
+              - **On:** Adds notches to the box plot.
+
               - **Off:** Displays box plots without notches.
 
-              Note: If the notch areas of two box plots do not overlap, 
+              Note: If the notch areas of two box plots do not overlap,
               their medians are significantly different at approximately a 5% significance level.
 
               ''',
