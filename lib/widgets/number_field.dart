@@ -173,6 +173,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
       if (widget.max != null) {
         v = min(v, widget.max!);
       }
+      ref.read(widget.stateProvider.notifier).state = v;
+      widget.onValueChanged
+          ?.call(v.toString()); // Call onValueChanged if defined
     }
 
     // Controller text automatically updates to
@@ -182,9 +185,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
     // Apply decimal places if needed.
 
-      if (widget.decimalPlaces > 0) {
-        // Convert v to double with specified decimalPlaces.
-
+    if (widget.decimalPlaces > 0) {
+      if (v != null) {
         v = double.parse(v.toStringAsFixed(widget.decimalPlaces));
       }
       ref.read(widget.stateProvider.notifier).state = v;
