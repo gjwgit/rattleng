@@ -165,9 +165,11 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
       v = widget.min ?? 0;
             ref.read(widget.stateProvider.notifier).state = updatedText;
+      
+      // Call onValueChanged if defined.
 
       widget.onValueChanged
-          ?.call(updatedText); // Call onValueChanged if defined
+          ?.call(updatedText);
     } else {
       // Apply min and max constraints.
 
@@ -188,8 +190,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
     if (widget.decimalPlaces > 0) {
       v = double.parse(v.toStringAsFixed(widget.decimalPlaces));
+      // Call onValueChanged if defined.
+      
       widget.onValueChanged
-          ?.call(v.toString()); // Call onValueChanged if defined
+          ?.call(v.toString()); 
     }
 
     // Update state provider.

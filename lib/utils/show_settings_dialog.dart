@@ -352,12 +352,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(partitionTestProvider.notifier).state = test;
   }
 
-  // Future<void> _savePartition(List<int> values) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setInt('train', values[0]);
-  //   await prefs.setInt('valid', values[1]);
-  //   await prefs.setInt('test', values[2]);
-  // }
+
 
   Future<void> _savePartitionTrain(value) async {
     final prefs = await SharedPreferences.getInstance();
@@ -796,7 +791,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       settingsGroupGap,
                       Divider(),
 
-                      //TODO kevin
 
                       // Adding to the SettingsDialogState
                       Row(
@@ -847,7 +841,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
-                      //TODO kevin
 
                       Row(
                         children: [
@@ -859,9 +852,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-The percentage of data allocated for training the model. Ensure the total 
-across training, validation, and testing sums to 100%.
-''',
+
+                            The percentage of data allocated for training the model. Ensure the total 
+                            across training, validation, and testing sums to 100%.
+
+                            ''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
@@ -884,9 +879,11 @@ across training, validation, and testing sums to 100%.
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-The percentage of data allocated for validating the model. Ensure the total 
-across training, validation, and testing sums to 100%.
-''',
+
+                            The percentage of data allocated for validating the model. Ensure the total 
+                            across training, validation, and testing sums to 100%.
+
+                            ''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
@@ -909,9 +906,11 @@ across training, validation, and testing sums to 100%.
                                   .toStringAsFixed(0),
                             ),
                             tooltip: '''
-The percentage of data allocated for testing the model. Ensure the total 
-across training, validation, and testing sums to 100%.
-''',
+
+                            The percentage of data allocated for testing the model. Ensure the total 
+                            across training, validation, and testing sums to 100%.
+
+                            ''',
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             validator: (value) => validateInteger(
