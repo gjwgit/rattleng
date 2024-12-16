@@ -8,6 +8,11 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Bug fix for no TARGET [6.3.44 20241216 gjw]
++ Update spacing in row/column with flutter 3.27 update [6.3.43 20241216 gjw]
++ Add images to overview pages [6.3.42 20241215 gjw]
++ Review and update ERROR MATRIX feature. [6.3.41 20241215 gjw]
++ Improved UX for DEMO dataset selection [6.3.40 20241213 kev]
 + ASSOCIATIONS bug fixes [6.3.39 20241212 gjw]
 + Intial ERROR MATRIX for EVALUATE [6.3.38 20241212 zy]
 + Add PROTEIN demo dataset for cluster analysis [6.3.37 20241212 gjw]

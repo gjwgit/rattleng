@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Monday 2024-12-02 16:54:34 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 19:53:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -337,7 +337,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   Future<void> _loadRandomSeed() async {
     final prefs = await SharedPreferences.getInstance();
     final seed = prefs.getInt('randomSeed') ?? 42;
-    ref.read(randomSeedProvider.notifier).state = seed;
+    ref.read(randomSeedSettingProvider.notifier).state = seed;
   }
 
   Future<void> _loadPartition() async {
@@ -432,7 +432,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final keepInSync = ref.watch(keepInSyncProvider);
     final askOnExit = ref.watch(askOnExitProvider);
 
-    final randomSeed = ref.watch(randomSeedProvider);
+    final randomSeed = ref.watch(randomSeedSettingProvider);
 
     return Material(
       color: Colors.transparent,
@@ -448,7 +448,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -476,14 +476,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         children: [
                           MarkdownTooltip(
                             message: '''
-                  
+
                             **Dataset Toggles Setting:** The default setting of
                             the dataset toggles, on starting up Rattle, is set
                             here. During a session with Rattle the toggles may be
                             changed by the user. If the *Sync* option is set, then
                             the changes made by the user are tracked and restored
                             on the next time Rattle is run.
-                  
+
                             ''',
                             child: const Text(
                               'Dataset Toggles',
@@ -500,10 +500,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           MarkdownTooltip(
                             message: '''
-                  
+
                             **Reset Toggles:** Tap here to reset the Dataset Toggles
                               setting to the default for Rattle.
-                            
+
                             ''',
                             child: ElevatedButton(
                               onPressed: _resetToggleStates,
@@ -531,13 +531,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               },
                               '''
 
-                              **Cleanse Toggle:** 
+                              **Cleanse Toggle:**
 
-                              Cleansing prepares the dataset by: 
+                              Cleansing prepares the dataset by:
 
                               - Removing columns with a single constant value.
 
-                              - Converting character columns with limited unique values to categoric factors. 
+                              - Converting character columns with limited unique values to categoric factors.
 
                               Enable for automated cleansing, or disable if not required.
 
@@ -555,13 +555,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               },
                               '''
 
-                              **Unify Toggle:** 
+                              **Unify Toggle:**
 
                               Unifies dataset column names by:
 
                               - Converting names to lowercase.
 
-                              - Replacing spaces with underscores. 
+                              - Replacing spaces with underscores.
 
                               Enable for consistent formatting, or disable if original names are preferred.
 
@@ -579,7 +579,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               },
                               '''
 
-                              **Partition Toggle:** 
+                              **Partition Toggle:**
 
                               Splits the dataset into subsets for predictive modeling:
 
@@ -587,7 +587,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                               - **Validation:** Tunes the model.
 
-                              - **Testing:** Evaluates model performance. 
+                              - **Testing:** Evaluates model performance.
 
                               Enable for larger datasets, or disable for exploratory analysis.
 
@@ -597,9 +597,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Keep in Sync Toggle:** 
+                            **Keep in Sync Toggle:**
 
-                            - **On:** Saves toggle changes for current sessions. 
+                            - **On:** Saves toggle changes for current sessions.
 
                             - **Off:** Changes are only recovered on restart.
 
@@ -612,9 +612,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Keep in Sync Toggle:** 
+                            **Keep in Sync Toggle:**
 
-                            - **On:** Saves toggle changes for current sessions. 
+                            - **On:** Saves toggle changes for current sessions.
 
                             - **Off:** Changes are only recovered on restart.
 
@@ -637,13 +637,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         children: [
                           MarkdownTooltip(
                             message: '''
-                  
+
                             **Graphic Theme Setting:** The graphic theme is used
                             by many (but not all) of the plots in Rattle, and
                             specifically by those plots using the ggplot2
                             package. Hover over each theme for more details. The
                             default is the Rattle theme.
-                  
+
                             ''',
                             child: Text(
                               'Graphic Theme',
@@ -663,7 +663,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                             **Reset Theme:** Tap here to reset the Graphic Theme
                               setting to the default theme for Rattle.
-                            
+
                             ''',
                             child: ElevatedButton(
                               onPressed: () {
@@ -717,11 +717,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         children: [
                           MarkdownTooltip(
                             message: '''
-                  
+
                             **Image Viewer Application Setting:** This setting determines the default
                             command to open image files. The default is "open" on Linux/MacOS and "start"
                             on Windows. You can customise it to match your preferred image viewer.
-                  
+
                             ''',
                             child: const Text(
                               'Image Viewer App',
@@ -738,10 +738,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           MarkdownTooltip(
                             message: '''
-                  
+
                             **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
                             to the platform's default ("open" on Linux/MacOS, "start" on Windows).
-                  
+
                             ''',
                             child: ElevatedButton(
                               onPressed: () {
@@ -931,8 +931,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Random Seed Setting:** 
-                            The random seed is used to control the randomness. 
+                            **Random Seed Setting:**
+                            The random seed is used to control the randomness.
                             Setting a specific seed ensures that results are reproducible.
 
                             - **Default Seed:** The default seed is 42.
@@ -951,15 +951,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Reset Random Seed:** 
+                            **Reset Random Seed:**
                             Clicking this button resets the random seed to the default value of 42.
                             This is useful if you want to restore the initial random state.
 
                             ''',
                             child: ElevatedButton(
                               onPressed: () {
-                                ref.read(randomSeedProvider.notifier).state =
-                                    42;
+                                ref
+                                    .read(randomSeedSettingProvider.notifier)
+                                    .state = 42;
                                 _saveRandomSeed(42);
                               },
                               child: const Text('Reset'),
@@ -973,7 +974,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       RandomSeedRow(
                         randomSeed: randomSeed,
                         updateSeed: (newSeed) {
-                          ref.read(randomSeedProvider.notifier).state = newSeed;
+                          ref.read(randomSeedSettingProvider.notifier).state =
+                              newSeed;
                           _saveRandomSeed(newSeed);
                         },
                       ),
@@ -984,16 +986,16 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         children: [
                           MarkdownTooltip(
                             message: '''
-                  
-                            **Session Control:** This setting determines whether a confirmation popup 
-                            appears when the user tries to quit the application. 
-                  
+
+                            **Session Control:** This setting determines whether a confirmation popup
+                            appears when the user tries to quit the application.
+
                             - **ON**: A popup will appear asking the user to confirm quitting.
-                  
+
                             - **OFF**: The application will exit immediately without a confirmation popup.
-                  
+
                             The default setting is **ON**.
-                  
+
                             ''',
                             child: const Text(
                               'Session Control',
@@ -1010,10 +1012,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           MarkdownTooltip(
                             message: '''
-                  
-                            **Reset Session Control:** Tap here to reset to enable a confirmation 
+
+                            **Reset Session Control:** Tap here to reset to enable a confirmation
                             popup when exiting the application.
-                            
+
                             ''',
                             child: ElevatedButton(
                               onPressed: resetSessionControl,
@@ -1041,13 +1043,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           MarkdownTooltip(
                             message: '''
-                  
+
                             **Toggle Session Control:**
-                  
+
                             - Slide to **ON** to enable a confirmation popup when exiting the application.
-                  
+
                             - Slide to **OFF** to disable the popup, allowing the app to exit directly.
-                  
+
                             ''',
                             child: Switch(
                               value: askOnExit,

@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2024-12-11 17:09:49 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-13 19:02:48 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -394,7 +394,8 @@ Xu, Yixiang Yin, Bo Zhang.
 
                           final newSeed =
                               DateTime.now().millisecondsSinceEpoch % 100000;
-                          ref.read(randomSeedProvider.notifier).state = newSeed;
+                          ref.read(randomSeedSettingProvider.notifier).state =
+                              newSeed;
 
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.setInt('randomSeed', newSeed);

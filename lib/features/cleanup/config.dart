@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-11-14 09:25:39 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 16:02:48 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -117,7 +117,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
         ''',
       'Obs with Missing' => '''
-      
+
         There are ${getObsMissing(ref)} rows with missing values that will be
         deleted. Continue?
 
@@ -265,14 +265,13 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     }
 
     return Column(
+      spacing: configRowSpace,
       children: [
         configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
             configLeftGap,
-
-            // The BUILD button.
-
             ActivityButton(
               onPressed: () {
                 ref.read(selectedProvider.notifier).state = selected;
@@ -280,8 +279,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
               child: const Text('Delete from Dataset'),
             ),
-
-            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: multiMethods.keys.toList(),
@@ -297,8 +294,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               },
             ),
 
-            configWidgetGap,
-
             ChoiceChipTip<String>(
               options: specificMethods.keys.toList(),
               selectedOption: method,
@@ -312,8 +307,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 });
               },
             ),
-
-            configChooserGap,
 
             // Use the variableChooser with enabled parameter.
 
@@ -340,8 +333,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 }
               },
             ),
-
-            configWidgetGap,
           ],
         ),
       ],

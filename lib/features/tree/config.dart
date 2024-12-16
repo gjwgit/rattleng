@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Friday 2024-12-13 08:57:57 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 08:07:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
@@ -47,7 +48,6 @@ import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -69,6 +69,11 @@ Map decisionTreeTooltips = {
 
       ''',
 };
+
+// Defines the maximum allowable depth for a given operation or process.
+// The value is set to 30 to ensure the process does not exceed practical or safe limits.
+
+final int maxDepthLimit = 30;
 
 class TreeModelConfig extends ConsumerStatefulWidget {
   const TreeModelConfig({super.key});
@@ -122,10 +127,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        spacing: configRowSpace,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Algorithm Radio Buttons.
           Row(
+            spacing: configWidgetSpace,
             children: [
               ActivityButton(
                 key: const Key('Build Decision Tree'),
@@ -187,7 +194,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
                     return;
                   }
-                  // Require a target variable.
+
+                  // 20241215 gjw Require a target variable. This needs to be a
+                  // function and used across all predictive modelling fetures.
+
                   if (getTarget(ref) == 'NULL') {
                     showOk(
                       context: context,
@@ -253,9 +263,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 },
                 child: const Text('Build Decision Tree'),
               ),
-              configWidgetGap,
               Text('Target: ${getTarget(ref)}'),
-              configWidgetGap,
               ChoiceChipTip<AlgorithmType>(
                 options: AlgorithmType.values,
                 getLabel: (AlgorithmType type) => type.displayName,
@@ -270,7 +278,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   });
                 },
               ),
-              configWidgetGap,
               LabelledCheckbox(
                 key: const Key('include_missing'),
                 tooltip: '''
@@ -283,9 +290,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               ),
             ],
           ),
-          configRowGap,
           // Min Split, Max Depth, and Min Bucket.
           Row(
+            spacing: configWidgetSpace,
             children: [
               NumberField(
                 label: 'Min Split:',
@@ -303,7 +310,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 0),
                 stateProvider: minSplitProvider,
               ),
-              configWidgetGap,
               NumberField(
                 label: 'Max Depth:',
                 key: const Key('maxDepthField'),
@@ -313,16 +319,16 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 This is the maximum depth of any node of the final tree. The
                 root node is considered to be depth 0 so a non-trivial tree
                 starts with depth 1.  The maximum allowable depth for rpart() is
-                30 which we retain as the maximum depth allowable for Rattle and
-                the default.
+                ${maxDepthLimit.toString()} which we retain as the maximum 
+                depth allowable for Rattle and the default.
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                validator: (value) => validateInteger(value, min: 1, max: 30),
-                max: 30,
+                validator: (value) =>
+                    validateInteger(value, min: 1, max: maxDepthLimit),
+                max: maxDepthLimit,
                 stateProvider: maxDepthProvider,
               ),
-              configWidgetGap,
               NumberField(
                 label: 'Min Bucket:',
                 key: const Key('minBucketField'),
@@ -337,7 +343,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => validateInteger(value, min: 1),
                 stateProvider: minBucketProvider,
               ),
-              configWidgetGap,
               NumberField(
                 label: 'Complexity:',
                 key: const Key('complexityField'),
@@ -357,7 +362,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),
-              configWidgetGap,
               _buildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
@@ -378,7 +382,6 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ),
                 maxWidth: 10,
               ),
-              configWidgetGap,
               _buildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,

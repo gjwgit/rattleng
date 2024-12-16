@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-13 08:28:05 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 08:08:47 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -188,7 +188,8 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
           [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
+
+          ''',
           path: image,
         ),
       );

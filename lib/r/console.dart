@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Wednesday 2024-11-20 17:08:38 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-12-14 19:55:09 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -111,7 +111,7 @@ class _RConsoleState extends ConsumerState<RConsole> {
 
   final blackOnWhite = TerminalTheme(
     cursor: const Color(0XFFAEAFAD),
-    selection: const Color(0XFFAEAFAD).withOpacity(0.2),
+    selection: const Color(0XFFAEAFAD).withValues(alpha: 0.2),
     foreground: const Color(0XFF222222),
     background: const Color(0XFFFFFFFF),
     black: const Color(0XFF000000),

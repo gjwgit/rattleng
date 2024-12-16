@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-11-01 16:21:12 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 21:23:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/boost/settings.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/evaluate.dart';
@@ -54,13 +53,13 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
   Map<String, String> boostAlgorithm = {
     'Extreme': '''
 
-      A highly efficient gradient boosting algorithm designed for large-scale 
+      A highly efficient gradient boosting algorithm designed for large-scale
       and complex data.
 
       ''',
     'Adaptive': '''
 
-      A boosting algorithm that builds a strong classifier by iteratively 
+      A boosting algorithm that builds a strong classifier by iteratively
       combining weak learners, focusing on errors.
 
       ''',
@@ -71,19 +70,13 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
     String algorithm = ref.read(algorithmBoostProvider.notifier).state;
 
     return Column(
+      spacing: configRowSpace,
       children: [
-        // Space above the beginning of the configs.
-
         configTopGap,
-
         Row(
+          spacing: configWidgetSpace,
           children: [
-            // Space to the left of the configs.
-
             configLeftGap,
-
-            // The BUILD button.
-
             ActivityButton(
               pageControllerProvider: boostPageControllerProvider,
               tooltip: '''
@@ -112,20 +105,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
               },
               child: const Text('Build Boosted Trees'),
             ),
-
-            configWidgetGap,
-
             Text('Target: ${getTarget(ref)}'),
-
-            configWidgetGap,
-
-            const Text(
-              'Algorithm:',
-              style: normalTextStyle,
-            ),
-
-            configWidgetGap,
-
             ChoiceChipTip<String>(
               options: boostAlgorithm.keys.toList(),
               selectedOption: algorithm,
@@ -141,9 +121,7 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
             ),
           ],
         ),
-        configRowGap,
         BoostSettings(algorithm: algorithm),
-        configBotGap,
       ],
     );
   }

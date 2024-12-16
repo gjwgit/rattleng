@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-11-07 14:57:54 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 15:59:51 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -126,7 +126,10 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     valCtrl.text = ref.read(intervalProvider.notifier).state.toString();
 
     return Row(
+      spacing: configWidgetSpace,
       children: [
+        configLeftGap,
+
         // Add tooltips to normaliseMethods ChoiceChipTip.
 
         ChoiceChipTip<String>(
@@ -141,8 +144,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
           tooltips: normaliseMethodTooltips,
         ),
-
-        configWidgetGap,
 
         // Add a ChoiceChip with Tooltip for RANK. This is separated out now so
         // that we can have a larger gap between this and INTERVAL. The INTERVAL
@@ -162,8 +163,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           tooltips: orderMethodTooltips,
         ),
 
-        configWidgetGap,
-
         // Add tooltips to orderMethods ChoiceChipTip. INTERVAL
 
         ChoiceChipTip<String>(
@@ -179,8 +178,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
           tooltips: orderMethodTooltips,
         ),
-
-        configWidgetGap,
 
         NumberField(
           label: 'Interval',
@@ -274,9 +271,11 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     }
 
     return Column(
+      spacing: configRowSpace,
       children: [
         configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
             configLeftGap,
             ActivityButton(
@@ -299,7 +298,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               },
               child: const Text('Rescale Variable Values'),
             ),
-            configWidgetGap,
             variableChooser(
               'Variable',
               numericInputs,

@@ -1,15 +1,21 @@
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
+[![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)](https://www.r-project.org/)
+
+[![Last Updated](https://img.shields.io/github/last-commit/gjwgit/rattleng?label=last%20updated)](https://github.com/gjwgit/rattleng/commits/dev/)
+[![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/rattleng/master/pubspec.yaml&query=$.version&label=version)](https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md)
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
 [![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
 [![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 
 # Rattle the Next Generation Data Scientist
 
-Rattle has been in development and use for almost 20 years as a Data
-Mining and now Data Science toolkit for the apprentice and practising
-Data Scientist. The open source software and it books and papers have
-been used by educators, consultants, and practitioners across industry
-and government, to turn data into knowledge, through machine learning
-and artificial intelligence.
+[Rattle](https://rattle.togaware.com) has been in development and use
+for almost 20 years as a Data Mining and now Data Science toolkit for
+the apprentice and practising Data Scientist. The open source software
+and it books and papers have been used by educators, consultants, and
+practitioners across industry and government, to turn data into
+knowledge, through machine learning and artificial intelligence.
 
 But now, it is time for a refresh. To install the new Rattle visit the
 [Installers](https://github.com/gjwgit/rattleng/tree/dev/installers/README.md).
@@ -138,7 +144,7 @@ waiting at the R prompt:
 
 ```r
 ...
-> 
+>
 ```
 
 RattleNG will itself eventually check for these and prompt if they are

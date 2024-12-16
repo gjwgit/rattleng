@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Thursday 2024-12-12 16:23:29 +1100 Graham Williams>
+/// Time-stamp: <Monday 2024-12-16 08:17:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Yixiang Yin, Zheyuan Xu
+/// Authors: Graham Williams, Yixiang Yin, Zheyuan Xu, Kevin Wang
 
 library;
 
@@ -103,6 +103,8 @@ Future<void> rSource(
 ) async {
   // Initialise the state variables obtained from the different providers.
 
+  int randomSeedSetting = ref.read(randomSeedSettingProvider);
+
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
@@ -165,7 +167,6 @@ Future<void> rSource(
 
   // CLUSTER
 
-  int clusterSeed = ref.read(randomSeedProvider);
   int clusterNum = ref.read(numberClusterProvider);
   int clusterRun = ref.read(runClusterProvider);
   int clusterProcessor = ref.read(processorClusterProvider);
@@ -173,16 +174,6 @@ Future<void> rSource(
   String clusterDistance = ref.read(distanceClusterProvider);
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
-
-  // EVALUATE
-
-  // bool evaluateBoostExecuted = ref.read(boostEvaluateProvider);
-  // bool evaluateForestExecuted = ref.read(forestEvaluateProvider);
-  // bool evaluatehClusterExecuted = ref.read(hClusterEvaluateProvider);
-  // bool evaluatekMeansExecuted = ref.read(kMeansEvaluateProvider);
-  // bool evaluateLinearExecuted = ref.read(linearEvaluateProvider);
-  // bool evaluateNeuralNetExecuted = ref.read(neuralNetEvaluateProvider);
-  // bool evaluateSVMExecuted = ref.read(svmEvaluateProvider);
 
   // FOREST
 
@@ -260,16 +251,63 @@ Future<void> rSource(
   code = code.replaceAll('TEMPDIR', tempDir);
 
   ////////////////////////////////////////////////////////////////////////
+
+  if (scripts.contains('evaluate_adaboost') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'adaboost_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'adaboost_per');
+  }
+
+  if (scripts.contains('evaluate_conditional_forest') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'cforest_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'cforest_per');
+  }
+
+  if (scripts.contains('evaluate_ctree') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'ctree_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'ctree_per');
+  }
+
+  if (scripts.contains('evaluate_nnet') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'nnet_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'nnet_per');
+  }
+
+  if (scripts.contains('evaluate_random_forest') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'rforest_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'rforest_per');
+  }
+
+  if (scripts.contains('evaluate_rpart') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'rpart_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'rpart_per');
+  }
+
+  if (scripts.contains('evaluate_svm') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'svm_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'svm_per');
+  }
+
+  if (scripts.contains('evaluate_xgboost') &&
+      scripts.contains('evaluate_error_matrix')) {
+    code = code.replaceAll('ERROR_MATRIX_COUNT', 'xgboost_cem');
+    code = code.replaceAll('ERROR_MATRIX_PROP', 'xgboost_per');
+  }
+
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
 
   code = code.replaceAll('MAXFACTOR', '20');
 
-  // TODO 20241202 gjw VALUE OF RANDOM_SEED NEEDS TO COME FROM SETTINGS.
-
   code = code.replaceAll('RANDOM_PARTITION', 'FALSE');
-  code = code.replaceAll('RANDOM_SEED', '42');
+  code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
 
@@ -328,9 +366,6 @@ Future<void> rSource(
 
   code = code.replaceAll('CLEANSE_DATASET', cleanse ? 'TRUE' : 'FALSE');
 
-  // TODO 20231016 gjw HARD CODE FOR NOW BUT EVENTUALLY PASSED IN THROUGH THE
-  // FUNCTION CALL AS A MAP AS DESCRIBED ABOVE..
-
   // TODO 20231016 gjw THESE SHOULD BE SET IN THE DATASET TAB AND ACCESS THROUGH
   // PROVIDERS.
   //
@@ -348,6 +383,7 @@ Future<void> rSource(
 
   String target = 'NULL';
   String ident = 'NULL';
+
   roles.forEach((key, value) {
     if (value == Role.target) {
       target = key;
@@ -368,7 +404,7 @@ Future<void> rSource(
   // handle that special case and then replace any other TARGET_VAR replacement
   // as usual.
 
-  if (target == 'NULL') {
+  if (target == 'NULL' || target.isEmpty || target == '\"\"') {
     code = code.replaceAll('"TARGET_VAR"', target);
   }
   code = code.replaceAll('TARGET_VAR', target);
@@ -483,7 +519,6 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // CLUSTER
 
-  code = code.replaceAll('RANDOM_SEED', clusterSeed.toString());
   code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
   code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
   code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
