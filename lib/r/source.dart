@@ -136,8 +136,7 @@ Future<void> rSource(
   String lossMatrix = ref.read(lossMatrixProvider);
   List<double> partitionRatios = ref.read(partitionSettingProvider);
   String partitionString =
-      '${partitionRatios[0]}, ${partitionRatios[1]}, ${partitionRatios[2]}';
-
+      '${partitionRatios.first}, ${partitionRatios[1]}, ${partitionRatios.last}';
   // VISUAL
 
   bool ignoreMissingGroupBy = ref.read(ignoreMissingGroupByProvider);
@@ -455,7 +454,7 @@ Future<void> rSource(
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
 
-  print("DATA_SPLIT_TR_TU_TE: $partitionString");
+  debugPrint('DATA_SPLIT_TR_TU_TE: $partitionString');
 
   // TODO if (script == 'model_build_rpart')) {
 
