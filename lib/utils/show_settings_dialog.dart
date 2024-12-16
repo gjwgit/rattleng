@@ -802,6 +802,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                     .read(randomSeedSettingProvider.notifier)
                                     .state = 42;
                                 _saveRandomSeed(42);
+
+                                ref
+                                    .read(
+                                      randomPartitionSettingProvider.notifier,
+                                    )
+                                    .state = false;
+                                _saveRandomPartition(false);
                               },
                               child: const Text('Reset'),
                             ),
@@ -845,7 +852,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               onChanged: (value) {
                                 ref
                                     .read(
-                                        randomPartitionSettingProvider.notifier)
+                                      randomPartitionSettingProvider.notifier,
+                                    )
                                     .state = value;
                                 _saveRandomPartition(value);
                               },
