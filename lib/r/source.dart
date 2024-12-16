@@ -104,6 +104,7 @@ Future<void> rSource(
   // Initialise the state variables obtained from the different providers.
 
   int randomSeedSetting = ref.read(randomSeedSettingProvider);
+  bool randomPartitionSetting = ref.read(randomPartitionSettingProvider);
 
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
@@ -303,7 +304,8 @@ Future<void> rSource(
 
   code = code.replaceAll('MAXFACTOR', '20');
 
-  code = code.replaceAll('RANDOM_PARTITION', 'FALSE');
+  code = code.replaceAll(
+      'RANDOM_PARTITION', randomPartitionSetting.toString().toUpperCase());
   code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
