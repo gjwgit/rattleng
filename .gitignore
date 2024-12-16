@@ -39,9 +39,11 @@ installers/*-windows.zip
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
 r_lib/
 .Renviron
