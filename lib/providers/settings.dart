@@ -74,3 +74,5 @@ final settingsGraphicThemeProvider =
 final randomSeedSettingProvider = StateProvider<int>((ref) => 42);
 
 final imageViewerSettingProvider = StateProvider<String>((ref) => '');
+
+final ramdomPartitionSettingProvider = StateProvider<bool>((ref) => false);
