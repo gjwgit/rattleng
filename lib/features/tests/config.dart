@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-10-07 06:38:54 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 15:48:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
@@ -70,13 +71,13 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
     }
 
     return Column(
+      spacing: configRowSpace,
       children: [
         configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
             configLeftGap,
-
-            // The BUILD button
 
             ActivityButton(
               pageControllerProvider:
@@ -89,8 +90,6 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
               },
               child: const Text('Perform Statistical Tests'),
             ),
-
-            configWidgetGap,
 
             // Dropdown for first numeric input
 
@@ -105,8 +104,6 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
                     value ?? 'IMPOSSIBLE';
               },
             ),
-
-            configWidgetGap,
 
             // Dropdown for second numeric input
 

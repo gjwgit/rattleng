@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build an association model.
+# From dataset `ds` build an `apriori()` association model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-12-11 17:32:12 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-12-12 19:20:30 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,10 +22,8 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
-# Association using arules()
-#
 # TIMESTAMP
 #
 # References:
@@ -33,30 +31,40 @@
 # @williams:2017:essentials Chapter 8.
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(arules)
+# Load required packages from the local library into the R session.
 
-# Model type and description.
+library(arules)
+library(arulesViz)
+
+# Define the model type and description for file paths and titles.
 
 mtype <- "arules"
 mdesc <- "Association Rules"
 
-# Set whether the baskets applied to association model.
+# Depending on whether we consider the dataset `ds` as a collection of
+# baskets or not, we build our transactions dataset. For `ds` as a
+# basket it will have two columns, one (IDENT) identifying the basket
+# and the other (TARGET) identifying an item contained in the basket.
 
-isBaskets <- ASSOCIATION_BASKETS
+if(ASSOCIATION_BASKETS) {
+  # We need to get the IDENT variable from ds since all IDENTs are
+  # removed from trds.
 
-# Generate transactions from the dataset.
+  transactions <- as(split(trds$TARGET_VAR, ds[tr, "IDENT_VAR"]), "transactions")
 
-if(isBaskets){
-  transactions <- as(split(trds$TARGET_VAR, ds$IDENT_VAR), "transactions")
-}else{
+} else {
+
   transactions <- as(trds, "transactions")
+
 }
 
 # Build the association model using the Apriori algorithm.
 
 model_arules <- apriori(
-  data = transactions,
-  parameter = list(support = ASSOCIATION_SUPPORT, confidence = ASSOCIATION_CONFIDENCE, minlen = ASSOCIATION_MIN_LENGTH)
+  data      = transactions,
+  parameter = list(support    = ASSOCIATION_SUPPORT,
+                   confidence = ASSOCIATION_CONFIDENCE,
+                   minlen     = ASSOCIATION_MIN_LENGTH)
 )
 
 # Generate textual output of the 'Association Rules' model.
@@ -86,14 +94,14 @@ measures <- interestMeasure(
 
 print(measures)
 
-# Plot the relative importance of the rules using arulesViz.
+# Plot a summary of the
 
-library(arulesViz)
+svg("TEMPDIR/model_arules_viz.svg")
+plot(model_arules, method="graph")
+dev.off()
+
+# Plot the relative importance of the rules using arulesViz.
 
 svg("TEMPDIR/model_arules_item_frequency.svg")
 itemFrequencyPlot(transactions, topN = 10, type = "relative")
-dev.off()
-
-png("TEMPDIR/model_arules_item_plot.png")
-plot(model_arules, method="graph")
 dev.off()

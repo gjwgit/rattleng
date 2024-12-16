@@ -1,6 +1,6 @@
 // Reset the app.
 //
-// Time-stamp: <Saturday 2024-11-23 16:44:47 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 16:42:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,6 +40,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 // TODO 20240618 gjw DO WE NEED ALL OF `app.dart`?
 //
@@ -70,6 +71,7 @@ import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/utils/timestamp.dart';
 
 Future<void> reset(BuildContext context, WidgetRef ref) async {
   debugText('  RESET');
@@ -134,6 +136,13 @@ Future<void> reset(BuildContext context, WidgetRef ref) async {
   // they depend on it
 
   ref.invalidate(stdoutProvider);
+
+  PackageInfo info = await PackageInfo.fromPlatform();
+  ref.read(scriptProvider.notifier).update(
+        (state) => state
+            .replaceAll('VERSION', info.version)
+            .replaceAll('TIMESTAMP', 'Timestamp ${timestamp()}'),
+      );
 
   // CONSOLE TAB
 

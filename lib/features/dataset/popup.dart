@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Thursday 2024-12-12 08:46:29 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-13 15:55:29 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -66,8 +66,6 @@ class DatasetPopup extends ConsumerWidget {
     // rStart(context, ref);
 
     // A state to hold the selected demo dataset.
-
-    final demoDatasetProvider = StateProvider<String>((ref) => 'weather');
 
     return AlertDialog(
       content: Column(
@@ -157,91 +155,38 @@ class DatasetPopup extends ConsumerWidget {
                   child: Text('Package'),
                 ),
               ),
-
-              buttonGap,
-
-              // DEMO
-
-              ElevatedButton(
-                onPressed: () async {
-                  String asset;
-                  switch (ref.read(demoDatasetProvider)) {
-                    case 'audit':
-                      asset = 'data/audit.csv';
-                      break;
-                    case 'movies':
-                      asset = 'data/movies.csv';
-                      break;
-                    case 'protein':
-                      asset = 'data/protein.csv';
-                      break;
-                    case 'sherlock':
-                      asset = 'data/sherlock.txt';
-                      break;
-                    case 'weather':
-                    default:
-                      asset = 'data/weather.csv';
-                      break;
-                  }
-
-                  String dest = await copyAssetToTempDir(asset: asset);
-                  ref.read(pathProvider.notifier).state = dest;
-
-                  if (context.mounted) await rLoadDataset(context, ref);
-                  setStatus(ref, statusChooseVariableRoles);
-
-                  if (context.mounted) Navigator.pop(context, 'Demo');
-
-                  datasetLoadedUpdate(ref);
-
-                  // Access the PageController via Riverpod and move to the second page.
-
-                  ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
-
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                },
-                child: const MarkdownTooltip(
-                  message: '''
-
-                  **Demo Datasets** Rattle provides a number of small datasets
-                  so you can very quickly explore the Rattle functionality.  The
-                  *radio buttons* below can be used to choose one of the
-                  available datasets. Hover over any of them to see a
-                  description of each. The selected dataset will be loaded once
-                  you tap this **Demo** button.
-
-                  ''',
-                  child: Text('Demo'),
-                ),
-              ),
             ],
           ),
 
           configRowGap,
 
-          MarkdownBody(
-            data: '**Demo Datasets** '
-                'Tap to load one of the available demonstration datasets:',
+          const MarkdownTooltip(
+            message: '''
+
+                  **Demo Datasets** Rattle provides a number of small datasets
+                  so you can very quickly explore the Rattle functionality.  The
+                  *buttons* below will load one of the demo datasets. Hover over
+                  any of them to see a description of that dataset.
+
+                  ''',
+            child: MarkdownBody(
+              data: '**Demo Datasets** '
+                  'Tap to load one of the available demonstration datasets:',
+            ),
           ),
 
-          // Radio buttons for selecting the demo dataset.
+          configRowGap,
+
+          //  Buttons for selecting the demo dataset.
 
           Consumer(
             builder: (context, ref, child) {
-              String selectedDataset = ref.watch(demoDatasetProvider);
-
               return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // Option for Weather dataset.
-
-                  Expanded(
-                    child: MarkdownTooltip(
-                      message: '''
+                  buttonGap,
+                  MarkdownTooltip(
+                    message: '''
 
                       The **Weather** dataset is a recent dataset of one year of
                       daily observations from a weather station in Canberra,
@@ -261,23 +206,21 @@ class DatasetPopup extends ConsumerWidget {
                       [weatherAus.csv](https://access.togaware.com/weatherAUS.csv).
 
                       ''',
-                      child: RadioListTile(
-                        title: const Text('Weather  '),
-                        value: 'weather',
-                        groupValue: selectedDataset,
-                        contentPadding: EdgeInsets.zero,
-                        onChanged: (value) {
-                          ref.read(demoDatasetProvider.notifier).state = value!;
-                        },
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await loadDemoDataset(
+                          ref,
+                          context,
+                          'data/weather.csv',
+                          'Weather',
+                        );
+                      },
+                      child: const Text('Weather'),
                     ),
                   ),
-
-                  // Option for Audit dataset.
-
-                  Expanded(
-                    child: MarkdownTooltip(
-                      message: '''
+                  buttonGap,
+                  MarkdownTooltip(
+                    message: '''
 
                       The **Audit** dataset is a demonstrator for predicting
                       whether the govenrment revenue authority might need to
@@ -296,23 +239,21 @@ class DatasetPopup extends ConsumerWidget {
                       non-productive audits.
 
                       ''',
-                      child: RadioListTile(
-                        title: const Text('Audit'),
-                        value: 'audit',
-                        groupValue: selectedDataset,
-                        contentPadding: EdgeInsets.zero,
-                        onChanged: (value) {
-                          ref.read(demoDatasetProvider.notifier).state = value!;
-                        },
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await loadDemoDataset(
+                          ref,
+                          context,
+                          'data/audit.csv',
+                          'Audit',
+                        );
+                      },
+                      child: const Text('Audit'),
                     ),
                   ),
-
-                  // Option for Protein dataset.
-
-                  Expanded(
-                    child: MarkdownTooltip(
-                      message: '''
+                  buttonGap,
+                  MarkdownTooltip(
+                    message: '''
 
                       The **Protein** dataset comes from the [Tippie College of
                       Business, The University of
@@ -320,23 +261,21 @@ class DatasetPopup extends ConsumerWidget {
                       is useful for demonstrating **Cluster** analysis.
 
                       ''',
-                      child: RadioListTile(
-                        title: const Text('Protein'),
-                        value: 'protein',
-                        groupValue: selectedDataset,
-                        contentPadding: EdgeInsets.zero,
-                        onChanged: (value) {
-                          ref.read(demoDatasetProvider.notifier).state = value!;
-                        },
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await loadDemoDataset(
+                          ref,
+                          context,
+                          'data/protein.csv',
+                          'Protein',
+                        );
+                      },
+                      child: const Text('Protein'),
                     ),
                   ),
-
-                  // Option for Movies dataset.
-
-                  Expanded(
-                    child: MarkdownTooltip(
-                      message: '''
+                  buttonGap,
+                  MarkdownTooltip(
+                    message: '''
 
                       The **Movies** dataset is useful for demonstrating basket
                       analysis under the **Associations** feature of the
@@ -347,38 +286,37 @@ class DatasetPopup extends ConsumerWidget {
                       build assoitation rules found in the dataset.
 
                       ''',
-                      child: RadioListTile(
-                        title: const Text('Movies'),
-                        value: 'movies',
-                        groupValue: selectedDataset,
-                        contentPadding: EdgeInsets.zero,
-                        onChanged: (value) {
-                          ref.read(demoDatasetProvider.notifier).state = value!;
-                        },
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await loadDemoDataset(
+                          ref,
+                          context,
+                          'data/movies.csv',
+                          'Movies',
+                        );
+                      },
+                      child: const Text('Movies'),
                     ),
                   ),
-
-                  // Option for Sherlock text file.
-
-                  Expanded(
-                    child: MarkdownTooltip(
-                      message: '''
+                  buttonGap,
+                  MarkdownTooltip(
+                    message: '''
 
                       The **Sherlock** data file is a text file for
                       demonstrating the **Word Cloud** feature of the **Model**
                       tab. It is a snippet from a Sherlock Holmes novel.
 
                       ''',
-                      child: RadioListTile(
-                        title: const Text('Sherlock'),
-                        value: 'sherlock',
-                        groupValue: selectedDataset,
-                        contentPadding: EdgeInsets.zero,
-                        onChanged: (value) {
-                          ref.read(demoDatasetProvider.notifier).state = value!;
-                        },
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await loadDemoDataset(
+                          ref,
+                          context,
+                          'data/sherlock.txt',
+                          'Sherlock',
+                        );
+                      },
+                      child: const Text('Sherlock'),
                     ),
                   ),
                 ],
@@ -415,4 +353,43 @@ class DatasetPopup extends ConsumerWidget {
       ),
     );
   }
+}
+
+Future<void> loadDemoDataset(
+  WidgetRef ref,
+  BuildContext context,
+  String assetPath,
+  String datasetName,
+) async {
+  // Copy the asset to a temporary directory.
+
+  String dest = await copyAssetToTempDir(asset: assetPath);
+
+  // Update the path provider state with the dataset path.
+
+  ref.read(pathProvider.notifier).state = dest;
+
+  // Check if the context is still mounted before proceeding and load the dataset.
+
+  if (context.mounted) await rLoadDataset(context, ref);
+
+  // Update the status to indicate variable roles can now be chosen.
+
+  setStatus(ref, statusChooseVariableRoles);
+
+  // Close the current dialog if the context is still mounted.
+
+  if (context.mounted) Navigator.pop(context, datasetName);
+
+  // Mark the dataset as loaded in the state management system.
+
+  datasetLoadedUpdate(ref);
+
+  // Navigate to the second page using the page controller.
+
+  ref.read(pageControllerProvider).animateToPage(
+        1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
 }

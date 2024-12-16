@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-12-12 05:32:47 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-12-12 16:31:27 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -43,14 +43,15 @@ library(janitor)      # Cleanup: clean_names().
 library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
 ## # Index the original variable names by the new names.
-
+##
 ## names(vnames) <- names(ds)
-
+##
 ## # Display the list of vars.
-
+##
 ## names(ds)
 
-# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
+# Filter the variables in the dataset that are factors or ordered
+# factors with more than 20 levels.
 
 large_factors <- sapply(ds, is_large_factor)
 
@@ -73,14 +74,14 @@ id     <- c(ID_VARS)
 
 ignore <- IGNORE_VARS
 
-# 20240829 gjw Ideally remove the ignored variables from ds for now as
-# a bug fix to support the CORRELATION feature for selected
-# variables. In future this dataset template will reload the dataset
-# into ds from `get(dsname)` each time it is run afresh. FOR NOW do
-# this for CORRELATION only.
-
-# ds <- ds[setdiff(names(ds), ignore)]
-
+## 20240829 gjw Ideally remove the ignored variables from ds for now as
+## a bug fix to support the CORRELATION feature for selected
+## variables. In future this dataset template will reload the dataset
+## into ds from `get(dsname)` each time it is run afresh. FOR NOW do
+## this for CORRELATION only.
+##
+## ds <- ds[setdiff(names(ds), ignore)]
+##
 # Record the number of observations.
 
 nobs   <- nrow(ds)
@@ -150,34 +151,36 @@ nmobs <- sum(apply(ds, 1, anyNA))
 
 nmobs
 
-# 20240916 gjw This is required for building the ROLES table but will
-# eventually be replaced by the meta data.
+## # 20240916 gjw This is required for building the ROLES table but will
+## # eventually be replaced by the meta data.
+##
+## # 20241008 gjw I don't think these are required here now.
+##
+## # glimpse(ds)
+## # summary(ds)
+##
+## # 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
+##
+## # 20241008 gjw I think we now move this to PREP rather than
+## # here. 20241212 gjw However this is required to update the DATASET
+## # view of the data, particularly after a TRANSFORM. So add it back in
+## # here. Without this the DATASET will not show that an imputed
+## # IMN_rainfull, for example, has 54 unique values (it is 0 when
+## # IMN_rainfall does not appear in metaData).
 
-# 20241008 gjw I don't think these are required here now.
-
-# glimpse(ds)
-# summary(ds)
-
-# 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
-
-# 20241008 gjw I think we now move this to PREP rather than
-# here. 20241212 gjw However this is required to update the DATASET
-# view of the data, particularly after a TRANSFORM. So add it back in
-# here. Without this the DATASET will not show that an imputed
-# IMN_rainfull, for example, has 54 unique values (it is 0 when
-# IMN_rainfall does not appear in metaData).
+# Report on the meta data for `ds`.
 
 meta_data(ds)
-
-# Filter the variables in the dataset that are factors or ordered
-# factors with more than 20 levels.
-
-# large_factors <- sapply(ds, is_large_factor)
-
-# Get the names of those variables.
-
-# large_factor_vars <- names(large_factors)[large_factors]
-
-# Print the variable names.
-
-# large_factor_vars
+##
+## # Filter the variables in the dataset that are factors or ordered
+## # factors with more than 20 levels.
+##
+## # large_factors <- sapply(ds, is_large_factor)
+##
+## # Get the names of those variables.
+##
+## # large_factor_vars <- names(large_factors)[large_factors]
+##
+## # Print the variable names.
+##
+## # large_factor_vars

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-11 17:34:50 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 21:00:49 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -85,9 +85,11 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
     bool basketsTicked = ref.read(basketsAssociationProvider.notifier).state;
 
     return Column(
+      spacing: configRowSpace,
       children: [
-        configRowGap,
+        configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
 
@@ -113,11 +115,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               child: const Text('Build Association Rules'),
             ),
 
-            configWidgetGap,
-
             Text('Target: ${getTarget(ref)}'),
-
-            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('basketsAssociationField'),
@@ -141,8 +139,8 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             ),
           ],
         ),
-        configRowGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
             configLeftGap,
             NumberField(
@@ -163,7 +161,6 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               interval: 0.005,
               decimalPlaces: 4,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Confidence:',
               key: const Key('confidenceAssociationField'),
@@ -182,7 +179,6 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               interval: 0.005,
               decimalPlaces: 4,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Min Length:',
               key: const Key('minLengthAssociationField'),
@@ -198,7 +194,6 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               validator: validateVector,
               stateProvider: minLengthAssociationProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Limit Rules:',
               key: const Key('measuresLimitAssociationField'),
@@ -218,7 +213,6 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               stateProvider: interestMeasuresAssociationProvider,
               enabled: !basketsTicked,
             ),
-            configWidgetGap,
             variableChooser(
               'Sort by:',
               associationRulesSortBy,

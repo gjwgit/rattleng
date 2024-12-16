@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 17:05:36 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 21:04:33 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -80,12 +80,14 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
     String kernel = ref.read(kernelSVMProvider.notifier).state;
 
     return Column(
+      spacing: configRowSpace,
       children: [
         // Space above the beginning of the configs.
 
         configTopGap,
 
         Row(
+          spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
 
@@ -117,11 +119,7 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
               child: const Text('Build SVM Model'),
             ),
 
-            configWidgetGap,
-
             Text('Target: ${getTarget(ref)}'),
-
-            configWidgetGap,
 
             variableChooser(
               'Kernel:',
@@ -131,7 +129,7 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
               kernelSVMProvider,
               tooltip: '''
 
-              A mathematical function that transforms data into a higher-dimensional space, 
+              A mathematical function that transforms data into a higher-dimensional space,
               enabling the model to find a more effective boundary between classes.
 
               ''',
@@ -145,14 +143,12 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
               },
             ),
 
-            configWidgetGap,
-
             NumberField(
               label: 'Degree:',
               key: const Key('svm_degree'),
               tooltip: '''
 
-              Controls the complexity of the polynomial decision boundary, 
+              Controls the complexity of the polynomial decision boundary,
               with higher degrees allowing more complex relationships.
 
               ''',

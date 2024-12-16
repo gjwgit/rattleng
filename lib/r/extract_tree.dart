@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-09 06:14:12 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-12-16 08:27:30 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -24,12 +24,13 @@
 library;
 
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log) {
   const String hd = 'Summary of the Decision Tree model for Classification';
   const String md = "(built using 'rpart'):";
-  final String fm = rExtract(log, '> print(form)');
+  final String fm = rExtractFormula(log);
   final String pr = rExtract(log, '> print(model_rpart)');
   final String cp = rExtract(log, '> printcp(model_rpart)');
   final String ts = timestamp();

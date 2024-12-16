@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 17:05:58 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 21:36:37 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
@@ -52,15 +51,15 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
   Map<String, String> linearFamily = {
     'Logit': '''
 
-        The logit model uses the logistic function to model the probability of a binary outcome, 
+        The logit model uses the logistic function to model the probability of a binary outcome,
         mapping it to a log-odds scale for linearity in coefficients.
-    
+
     ''',
     'Probit': '''
-        
-        The probit model uses the cumulative normal distribution to model the probability of 
+
+        The probit model uses the cumulative normal distribution to model the probability of
         a binary outcome, mapping probabilities to a z-score scale for linearity in coefficients.
-    
+
     ''',
   };
 
@@ -69,12 +68,14 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
     String family = ref.read(familyLinearProvider);
 
     return Column(
+      spacing: configRowSpace,
       children: [
         // Space above the beginning of the configs.
 
         configBotGap,
 
         Row(
+          spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
 
@@ -99,18 +100,7 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
               child: const Text('Build Linear Model'),
             ),
 
-            configWidgetGap,
-
             Text('Target: ${getTarget(ref)}'),
-
-            configWidgetGap,
-
-            const Text(
-              'Family:',
-              style: normalTextStyle,
-            ),
-
-            configWidgetGap,
 
             ChoiceChipTip<String>(
               options: linearFamily.keys.toList(),

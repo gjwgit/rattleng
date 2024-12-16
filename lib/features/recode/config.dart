@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-10-15 08:44:14 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 16:01:45 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -123,7 +123,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     // TODO 20240819 gjw WHERE ARE THE TOOLTIPS?
 
     return Row(
+      spacing: configWidgetSpace,
       children: [
+        configLeftGap,
         ChoiceChipTip(
           options: numericMethods,
           selectedOption: selectedTransform,
@@ -134,7 +136,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             });
           },
         ),
-        configWidgetGap,
         NumberField(
           label: 'Number',
           controller: valCtrl,
@@ -143,7 +144,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
           enabled: isNumeric,
         ),
-        configWidgetGap,
         ChoiceChipTip(
           enabled: selected == 'NULL' || !isNumeric,
           options: categoricMethods,
@@ -154,7 +154,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             });
           },
         ),
-        configWidgetGap,
         Expanded(
           child: variableChooser(
             'Secondary',
@@ -176,7 +175,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             tooltip: '''
 
             Select a secondary variable to assist in the recoding process.
-              
+
             ''',
           ),
         ),
@@ -218,9 +217,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     return Stack(
       children: [
         Column(
+          spacing: configRowSpace,
           children: [
             configTopGap,
             Row(
+              spacing: configWidgetSpace,
               children: [
                 configTopGap,
                 ActivityButton(
@@ -249,7 +250,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   },
                   child: const Text('Recode Variable Values'),
                 ),
-                configWidgetGap,
                 variableChooser(
                   'Variable',
                   inputs,
@@ -273,12 +273,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   tooltip: '''
 
                   Choose the primary variable to be recoded.
-                  
+
                   ''',
                 ),
               ],
             ),
-            configTopGap,
             recodeChooser(inputs, selected2),
           ],
         ),
