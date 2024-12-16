@@ -352,8 +352,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(partitionTestProvider.notifier).state = test;
   }
 
-
-
   Future<void> _savePartitionTrain(value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('train', value);
@@ -791,7 +789,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       settingsGroupGap,
                       Divider(),
 
-
                       // Adding to the SettingsDialogState
                       Row(
                         children: [
@@ -840,7 +837,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       ),
 
                       configRowGap,
-
 
                       Row(
                         children: [
