@@ -305,7 +305,9 @@ Future<void> rSource(
   code = code.replaceAll('MAXFACTOR', '20');
 
   code = code.replaceAll(
-      'RANDOM_PARTITION', randomPartitionSetting.toString().toUpperCase());
+    'RANDOM_PARTITION',
+    randomPartitionSetting.toString().toUpperCase(),
+  );
   code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
