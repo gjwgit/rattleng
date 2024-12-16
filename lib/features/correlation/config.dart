@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-10-07 06:47:11 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 15:51:51 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/page_controller.dart';
 
 import 'package:rattle/r/source.dart';
@@ -47,16 +48,13 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: configRowSpace,
       children: [
-        // Space above the beginning of the configs.
-
-        const SizedBox(height: 5),
-
+        configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
-            // Space to the left of the configs.
-
-            const SizedBox(width: 5),
+            configLeftGap,
 
             // The BUILD button.
 

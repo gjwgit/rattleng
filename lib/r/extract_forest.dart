@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-09 09:27:07 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-12-16 08:28:52 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,6 +28,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(
@@ -44,7 +45,7 @@ String _basicTemplate(
       ? "(built using 'randomForest'):"
       : "(built using 'cforest'):";
   final String fm = forestAlgorithm == AlgorithmType.traditional
-      ? rExtract(log, '> print(form)')
+      ? rExtractFormula(log)
       : rExtract(log, '> print(model_conditionalForest)');
   final String pr = forestAlgorithm == AlgorithmType.traditional
       ? rExtract(log, '> print(model_randomForest)')

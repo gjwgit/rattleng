@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Sunday 2024-11-24 05:44:32 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 21:21:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -85,12 +85,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     // Layout the config bar.
 
     return Column(
+      spacing: configRowSpace,
       children: [
         configTopGap,
 
-        // BUILD button.
-
         Row(
+          spacing: configWidgetSpace,
           children: [
             configLeftGap,
             ActivityButton(
@@ -138,12 +138,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ],
         ),
 
-        configRowGap,
-
         // Options for the current functionality.
 
         Row(
+          spacing: configWidgetSpace,
           children: [
+            configBotGap,
             const Text('Tuning Options:  '),
             // Checkbox for random order of words in the cloud.
 
@@ -158,8 +158,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: checkboxProvider,
             ),
 
-            configWidgetGap,
-
             LabelledCheckbox(
               key: const Key('stem'),
               tooltip: '''
@@ -173,8 +171,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stemProvider,
             ),
 
-            configWidgetGap,
-
             LabelledCheckbox(
               key: const Key('remove_punctuation'),
               tooltip: '''
@@ -185,8 +181,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Remove Punctuation',
               provider: punctuationProvider,
             ),
-
-            configWidgetGap,
 
             LabelledCheckbox(
               key: const Key('remove_stopwords'),
@@ -199,12 +193,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               provider: stopwordProvider,
             ),
 
-            configWidgetGap,
-
             Expanded(
               child: MarkdownTooltip(
                 message: '''
-                
+
                 Select the language to filter out common stopwords from the word
                 cloud.  'SMART' covers English stopwords from the SMART
                 information retrieval system (as documented in Appendix 11 of
@@ -227,16 +219,15 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ],
         ),
 
-        configRowGap,
-
         // Parameters for the current functionality.
 
         Align(
           alignment: Alignment.bottomCenter,
           child: Row(
+            spacing: configWidgetSpace,
             children: [
+              configBotGap,
               const Text('Tuning Parameters:  '),
-              configLabelGap,
               // max word text field
               SizedBox(
                 width: 150.0,
@@ -244,7 +235,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   message: '''
 
                   Maximum number of words plotted.  Drop least frequent words.
-                  
+
                   ''',
                   child: TextField(
                     controller: maxWordTextController,
@@ -257,7 +248,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ),
                 ),
               ),
-              configWidgetGap,
               SizedBox(
                 width: 150.0,
                 child: MarkdownTooltip(
@@ -281,8 +271,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ],
           ),
         ),
-
-        configBotGap,
       ],
     );
   }

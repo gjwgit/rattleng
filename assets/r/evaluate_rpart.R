@@ -1,11 +1,11 @@
-# Generate error matrix and Hand plot of model rpart.
+# Generate error matrix of model rpart.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-12-13 09:11:34 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,7 +41,7 @@ library(rpart)        # ML: decision tree rpart().
 
 target_rpart_levels <- unique(trds[[target]])
 target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present
-  
+
 # Get predicted probabilities for the positive class.
 
 predicted_rpart_probs <- predict(model_rpart, newdata = trds, type = "prob")[,2]
@@ -51,23 +51,13 @@ actual_rpart_labels <- ifelse(trds[[target]] == target_rpart_levels[1], 0, 1)
 # Evaluate the model using HMeasure.
 
 results <- HMeasure(true.class = actual_rpart_labels, scores = predicted_rpart_probs)
-  
+
 svg("TEMPDIR/model_rpart_evaluate_hand.svg")
 
 plotROC(results)
 
 dev.off()
 
-print("Error matrix for the RPART Decision Tree model (counts)")
+error_matrix_predic <- predict(model_rpart, newdata = trds, type = "class")
 
-error_predic <- predict(model_rpart, newdata = trds, type = "class")
-
-rpart_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
-
-print(rpart_cem)
-
-print('Error matrix for the RPART Decision Tree model (proportions)')
-
-rpart_per <- rattle::errorMatrix(trds[[target]],error_predic)
-
-print(rpart_per)
+error_matrix_target <- trds[[target]]

@@ -1,11 +1,11 @@
-# Generate error matrix and Hand plot of model ctree.
+# From `em_target` and `empred` use `rattle::errorMatrix()` to generate error matrix evaluation.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-12-15 10:50:49 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,9 +22,9 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -33,25 +33,18 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(Ckmeans.1d.dp)  # For ggplot.
-library(data.table)     # Display data as a nicely formatted table.
-library(hmeasure)
-library(rattle)         # Provides a convenient wrapper for xgboost.
-library(xgboost)        # For XGBoost model.
+# Load required packages from the local library into the R session.
 
-error_matrix_predic <- predict(model_xgb, newdata = trds, )
+library(rattle)       # Generate an error matrix.
 
-target_clean <- trds[[target]][!is.na(error_matrix_predic)]
+########################################################################
 
-error_matrix_predic <- error_matrix_predic[!is.na(error_matrix_predic)]
+# Setting `count = TRUE` ensures the matrix represents raw counts of predictions.
 
+ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count=TRUE)
+print(ERROR_MATRIX_COUNT)
 
-# Get levels from target_clean.
+# Generate a confusion matrix with proportions (relative frequencies).
 
-target_levels <- levels(target_clean)
-
-# Convert predicted probabilities into binary class labels based on a threshold.
-
-error_matrix_predic <- ifelse(error_matrix_predic > 0.5, target_levels[2], target_levels[1])
-
-error_matrix_target <- target_clean
+ERROR_MATRIX_PROP <- rattle::errorMatrix(error_matrix_target, error_matrix_predic)
+print(ERROR_MATRIX_PROP)

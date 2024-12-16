@@ -56,20 +56,12 @@ plotROC(results)
 
 dev.off()
 
-print("Error matrix for the CTREE Decision Tree model (counts)")
+error_matrix_predic <- predict(model_ctree, newdata = trds, type = "prob")
 
-error_predic <- predict(model_ctree, newdata = trds, type = "prob")
+# Set the predict value as the level of max value in the row.
 
-error_predic <- apply(error_predic, 1, function(x) {
-  colnames(error_predic)[which.max(x)]
+error_matrix_predic <- apply(error_matrix_predic, 1, function(x) {
+  colnames(error_matrix_predic)[which.max(x)]
 })
 
-ctree_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
-
-print(ctree_cem)
-
-print('Error matrix for the CTREE Decision Tree model (proportions)')
-
-ctree_per <- rattle::errorMatrix(trds[[target]], error_predic)
-
-print(ctree_per)
+error_matrix_target <- trds[[target]]

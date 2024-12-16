@@ -1,6 +1,6 @@
 /// Boost settings for different boost algorithms.
 ///
-/// Time-stamp: <Tuesday 2024-10-15 08:53:55 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2024-12-14 21:25:32 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -113,15 +113,17 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
     String objective = ref.read(objectiveBoostProvider.notifier).state;
 
     return Column(
+      spacing: configRowSpace,
       children: [
-        configRowGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
+            configLeftGap,
             NumberField(
               label: 'Max Depth:',
               key: const Key('boost_max_depth'),
               tooltip: '''
-        
+
               Maximum depth of each tree. This serves to control the model
               complexity. Be wary the deeper trees can also lead to the model
               over-fitting the training data and so a good general model.
@@ -134,7 +136,6 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: maxDepthBoostProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Min Split:',
               key: const Key('boost_min_split'),
@@ -149,7 +150,6 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: minSplitBoostProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Complexity:',
               key: const Key('boost_complexity'),
@@ -170,7 +170,6 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateDecimal(value),
               stateProvider: complexityBoostProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'X Val:',
               key: const Key('boost_x_value'),
@@ -186,12 +185,12 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: xValueBoostProvider,
             ),
-            configWidgetGap,
           ],
         ),
-        configRowGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
+            configLeftGap,
             NumberField(
               label: 'Learning Rate:',
               key: const Key('boost_learning_rate'),
@@ -213,7 +212,6 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateDecimal(value),
               stateProvider: learningRateBoostProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Threads:',
               key: const Key('boost_max_depth'),
@@ -230,12 +228,11 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: threadsBoostProvider,
             ),
-            configWidgetGap,
             NumberField(
               label: 'Iterations:',
               key: const Key('boost_iteration'),
               tooltip: '''
-  
+
               Number of boosting rounds or iterations to train the model. This
               is the number of trees that will be built for the ensemble.
 
@@ -245,7 +242,6 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: iterationsBoostProvider,
             ),
-            configWidgetGap,
             variableChooser(
               'Objective',
               modelObjective,
@@ -254,7 +250,7 @@ class _BoostSettingsState extends ConsumerState<BoostSettings> {
               objectiveBoostProvider,
               tooltip: '''
 
-              The objective is used to minimize a regularized loss function to 
+              The objective is used to minimize a regularized loss function to
               achieve accurate predictions while preventing over-fitting.
 
               ''',

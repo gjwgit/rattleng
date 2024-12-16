@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-12-04 08:57:05 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-12-15 10:48:49 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -37,9 +37,9 @@
 
 library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
-library(rattle)
+library(rattle)       # Generate a risk chart.
 
-########################################################################
+####################################
 
 # Use rattle's evaluateRisk to generate data required for a Risk Chart.
 
@@ -47,7 +47,9 @@ eval <- rattle::evaluateRisk(predicted, actual, risk)
 
 # Build title string.
 
-title <- glue("Risk Chart &#8212; {mdesc} &#8212; {mtype} {basename('FILENAME')} *{dtype}* TARGET_VAR")
+title <- glue("Risk Chart &#8212; {mdesc} &#8212; ",
+              "{mtype} {basename('FILENAME')} ",
+              "*{dtype}* TARGET_VAR")
 title
 
 # Generate the risk chart.

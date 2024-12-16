@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-10-24 15:38:15 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-12-15 15:55:07 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -54,12 +54,13 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
     ref.watch(crossTabSummaryProvider);
 
     return Column(
+      spacing: configRowSpace,
       children: [
         configTopGap,
         Row(
+          spacing: configWidgetSpace,
           children: [
             configLeftGap,
-            // The "Generate Dataset Summary" button.
             ActivityButton(
               tooltip: '''
 
@@ -72,7 +73,6 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
               },
               child: const Text('Generate Dataset Summary'),
             ),
-            configWidgetGap,
             LabelledCheckbox(
               label: 'Include Cross Tab',
               tooltip: '''

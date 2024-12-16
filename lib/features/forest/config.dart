@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-10-07 06:47:54 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-14 19:59:21 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -48,15 +48,15 @@ import 'package:rattle/widgets/vector_number_field.dart';
 Map forestTooltips = {
   AlgorithmType.conditional: '''
 
-      Build multiple decision trees using random samples of 
+      Build multiple decision trees using random samples of
       data and features, then aggregate their predictions.
 
       ''',
   AlgorithmType.traditional: '''
-      
-      Adjust for covariate distributions during tree construction 
+
+      Adjust for covariate distributions during tree construction
       to provide unbiased variable importance measures.
-      
+
       ''',
 };
 
@@ -94,12 +94,14 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
         ref.read(algorithmForestProvider.notifier).state;
 
     return Column(
+      spacing: configRowSpace,
       children: [
         // Space above the beginning of the configs.
 
         configBotGap,
 
         Row(
+          spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
 
@@ -150,11 +152,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               child: const Text('Build Random Forest'),
             ),
 
-            configWidgetGap,
-
             Text('Target: ${getTarget(ref)}'),
-
-            configWidgetGap,
 
             ChoiceChipTip<AlgorithmType>(
               options: AlgorithmType.values,
@@ -173,9 +171,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
           ],
         ),
 
-        configRowGap,
-
         Row(
+          spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
 
@@ -198,15 +195,13 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               interval: 10,
             ),
 
-            configWidgetGap,
-
             NumberField(
               label: 'Variables:',
               key: const Key('variablesForest'),
               controller: _variablesController,
               tooltip: '''
 
-                The mtry parameter defines the number of variables 
+                The mtry parameter defines the number of variables
                 randomly selected as candidates at each split in the trees.
 
                 ''',
@@ -215,8 +210,6 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: predictorNumForestProvider,
             ),
-
-            configWidgetGap,
 
             NumberField(
               label: 'NO. Tree:',
@@ -234,13 +227,11 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               stateProvider: treeNoForestProvider,
             ),
 
-            configWidgetGap,
-
             LabelledCheckbox(
               key: const Key('imputeForest'),
               tooltip: '''
 
-              Impute the median (numerical) or most frequent (categoric) value 
+              Impute the median (numerical) or most frequent (categoric) value
               for missing data using na.roughfix() from randomForest.
 
               ''',

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-11 17:24:30 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-12 20:23:00 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -137,29 +137,40 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    if (!associationBaskets) {
-      String plotImage = '$tempDir/model_arules_item_plot.png';
+    // 20241212 gjw This SVG does not load into Flutter. Yet it can be displayed
+    // on Ubuntu. It is probably a PNG encapsulated within an SVG?
 
-      if (imageExists(plotImage)) {
-        pages.add(
-          SingleImagePage(
-            title: 'ASSOCIATION RULES',
-            path: plotImage,
-            svgImage: false,
-          ),
-        );
-      }
+    String image = '$tempDir/model_arules_viz.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        SingleImagePage(
+          title: '''
+
+          # Association Rules  &#8212; Graph of Associations
+
+          **Currently not functional.** Visit $image.
+
+          ''',
+          path: image,
+          svgImage: false,
+        ),
+      );
     }
 
     ////////////////////////////////////////////////////////////////////////
 
-    String frequencyImage = '$tempDir/model_arules_item_frequency.svg';
+    image = '$tempDir/model_arules_item_frequency.svg';
 
-    if (imageExists(frequencyImage)) {
+    if (imageExists(image)) {
       pages.add(
         SingleImagePage(
-          title: 'ASSOCIATION FREQUENCY',
-          path: frequencyImage,
+          title: '''
+
+          # Association Rules  &#8212; Item Frequency
+
+          ''',
+          path: image,
         ),
       );
     }

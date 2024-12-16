@@ -12,7 +12,7 @@ on:
       - dev
 
 env:
-  FLUTTER_VERSION: '3.24.4'
+  FLUTTER_VERSION: '3.27.0'
 
 jobs:
 
@@ -24,7 +24,7 @@ jobs:
   # /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found
   # (required by rattle)" On Ubuntu 20.04 the highest version of GLIBC
   # is GLIBC2.30.
- 
+
   build-linux-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
@@ -56,7 +56,7 @@ jobs:
 
       - name: Install Flutter Project Dependencies
         run: flutter pub get
-        
+
       - name: Enable Linux Build
         run: flutter config --enable-linux-desktop
 
@@ -106,7 +106,7 @@ jobs:
 
       - name: Check the DLLs for Inclusion in the .iss script
         run: dir D:\a\rattleng\rattleng\build\windows\x64\runner\Release\
-        
+
       - name: Get Version from pubspec.yaml
         run: |
           $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })

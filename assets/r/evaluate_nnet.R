@@ -1,11 +1,11 @@
-# Rattle Scripts: Evaluate executed models.
+# Generate error matrix of model nnet.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 17:03:05 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,4 +24,17 @@
 #
 # Author: Zheyuan Xu
 
-library(hmeasure)
+# Rattle timestamp: TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/dtrees.html
+# https://survivor.togaware.com/datascience/rpart.html
+# https://survivor.togaware.com/datascience/ for further details.
+
+library(rattle)
+
+error_matrix_predic <- predict(model_nn, newdata = trds, type = "class")
+
+error_matrix_target <- trds[[target]]
