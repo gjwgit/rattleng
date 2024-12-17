@@ -203,6 +203,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String ea = 'evaluate_adaboost';
                 String em = 'evaluate_error_matrix';
+                String eroc = 'evaluate_roc';
                 String ec = 'evaluate_ctree';
                 String en = 'evaluate_nnet';
                 String er = 'evaluate_rpart';
@@ -218,7 +219,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [er, em],
+                    [er, em, eroc],
                   );
                 }
 

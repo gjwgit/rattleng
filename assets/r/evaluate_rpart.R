@@ -37,7 +37,7 @@ library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
 library(hmeasure)
 library(rattle)       # Support: asRules(), fancyRpartPlot().
-library(rpart)        # ML: decision tree rpart().
+library(rpart) # ML: decision tree rpart().
 
 target_rpart_levels <- unique(trds[[target]])
 target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present
@@ -61,3 +61,5 @@ dev.off()
 error_matrix_predic <- predict(model_rpart, newdata = trds, type = "class")
 
 error_matrix_target <- trds[[target]]
+
+roc_predicted_probs <- predicted_rpart_probs
