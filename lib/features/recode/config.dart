@@ -74,6 +74,26 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     'Equal Width',
   ];
 
+  Map<String, String> numericMethodsTooltips = {
+    'Quantiles': '''
+
+      Each bin will have approximately the same number of observations.
+      If the Data tab includes a Weight variable, then the observations 
+      are weighted when performing the binning.
+
+      ''',
+    'KMeans': '''
+
+      A kmeans clustering will be used to bin the variable.
+    
+      ''',
+    'Equal Width': '''
+
+      The min to max range will be split into equal width bins.
+
+      ''',
+  };
+
   List<String> categoricMethods = [
     'Indicator Variable',
     'Join Categorics',
@@ -130,6 +150,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           options: numericMethods,
           selectedOption: selectedTransform,
           enabled: isNumeric,
+          tooltips: numericMethodsTooltips,
           onSelected: (String? selected) {
             setState(() {
               selectedTransform = selected ?? '';
