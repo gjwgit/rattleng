@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-09 09:31:18 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-12-17 18:02:56 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -39,7 +39,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -60,7 +60,9 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
     // Populate the initial overview
 
-    List<Widget> pages = [showMarkdownFile(boostIntroFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile(context, boostIntroFile, 'assets/svg/boost.svg'),
+    ];
 
     final pageController = ref.watch(boostPageControllerProvider);
 
@@ -75,7 +77,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
           # XGBoost - Summary
 
-          Visit the 
+          Visit the
           [Guide](https://xgboost.readthedocs.io/en/stable/R-package/xgboostPresentation.html). Built
           using
           [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
@@ -97,7 +99,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
           Generated using
           [xgb::xgb.importance()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.importance).
-          
+
           ''',
             path: image,
           ),
@@ -113,7 +115,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
           # AdaBoost - Summary
 
-          Visit the 
+          Visit the
           [Guide](https://www.rdocumentation.org/packages/JOUSBoost/topics/adaboost). Built
           using
           [ada::ada()](https://www.rdocumentation.org/packages/ada/topics/ada).

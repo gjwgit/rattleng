@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="white"/>
+  
+  <!-- Grid lines for reference - made much lighter -->
+  <g stroke="#f5f5f5" stroke-width="1">
+    <line x1="0" y1="75" x2="400" y2="75"/>
+    <line x1="0" y1="150" x2="400" y2="150"/>
+    <line x1="0" y1="225" x2="400" y2="225"/>
+    <line x1="100" y1="0" x2="100" y2="300"/>
+    <line x1="200" y1="0" x2="200" y2="300"/>
+    <line x1="300" y1="0" x2="300" y2="300"/>
+  </g>
+
+  <!-- Cluster 1 (red) - 7 points -->
+  <path d="M 100 40 C 80 30, 60 50, 70 80 C 60 110, 80 130, 110 120 C 140 130, 160 110, 150 80 C 160 50, 140 30, 110 40 Z" 
+        fill="#ff000030" stroke="#ff0000" stroke-width="2"/>
+  
+  <!-- Cluster 2 (blue) - 4 points -->
+  <path d="M 250 40 C 230 30, 220 50, 230 80 C 220 110, 240 130, 270 120 C 300 130, 320 110, 310 80 C 320 50, 300 30, 270 40 Z" 
+        fill="#0000ff30" stroke="#0000ff" stroke-width="2"/>
+  
+  <!-- Cluster 3 (green) - 6 points -->
+  <path d="M 100 180 C 80 170, 70 190, 80 220 C 70 250, 90 270, 120 260 C 150 270, 170 250, 160 220 C 170 190, 150 170, 120 180 Z" 
+        fill="#00800030" stroke="#008000" stroke-width="2"/>
+
+  <!-- Cluster 4 (purple) - 5 points -->
+  <path d="M 250 180 C 230 170, 220 190, 230 220 C 220 250, 240 270, 270 260 C 300 270, 320 250, 310 220 C 320 190, 300 170, 270 180 Z" 
+        fill="#80008030" stroke="#800080" stroke-width="2"/>
+
+  <!-- Points in Cluster 1 (red) -->
+  <circle cx="90" cy="60" r="4" fill="#ff0000"/>
+  <circle cx="110" cy="80" r="4" fill="#ff0000"/>
+  <circle cx="130" cy="70" r="4" fill="#ff0000"/>
+  <circle cx="95" cy="90" r="4" fill="#ff0000"/>
+  <circle cx="115" cy="50" r="4" fill="#ff0000"/>
+  <circle cx="105" cy="75" r="4" fill="#ff0000"/>
+  <circle cx="125" cy="85" r="4" fill="#ff0000"/>
+  
+  <!-- Points in Cluster 2 (blue) -->
+  <circle cx="260" cy="60" r="4" fill="#0000ff"/>
+  <circle cx="280" cy="80" r="4" fill="#0000ff"/>
+  <circle cx="270" cy="90" r="4" fill="#0000ff"/>
+  <circle cx="255" cy="70" r="4" fill="#0000ff"/>
+  
+  <!-- Points in Cluster 3 (green) -->
+  <circle cx="90" cy="200" r="4" fill="#008000"/>
+  <circle cx="110" cy="220" r="4" fill="#008000"/>
+  <circle cx="100" cy="240" r="4" fill="#008000"/>
+  <circle cx="85" cy="230" r="4" fill="#008000"/>
+  <circle cx="115" cy="210" r="4" fill="#008000"/>
+  <circle cx="95" cy="215" r="4" fill="#008000"/>
+  
+  <!-- Points in Cluster 4 (purple) -->
+  <circle cx="260" cy="200" r="4" fill="#800080"/>
+  <circle cx="280" cy="220" r="4" fill="#800080"/>
+  <circle cx="270" cy="210" r="4" fill="#800080"/>
+  <circle cx="265" cy="230" r="4" fill="#800080"/>
+  <circle cx="285" cy="190" r="4" fill="#800080"/>
+  
+  <!-- Axes labels -->
+  <text x="380" y="290" font-size="12">X</text>
+  <text x="10" y="20" font-size="12">Y</text>
+</svg>
