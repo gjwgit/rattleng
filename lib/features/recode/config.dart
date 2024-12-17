@@ -110,6 +110,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     'Join Categorics': '''
 
       Combine multiple categoric variables into just one.
+      A join of categoric variables requires two categoric variables.
+      Please select two categoric variables, then Execute.
     
       ''',
   };
@@ -193,31 +195,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               selectedTransform = selected ?? '';
             });
           },
-        ),
-        Expanded(
-          child: variableChooser(
-            'Secondary',
-            inputs,
-            selected2,
-            ref,
-            selected2Provider,
-            enabled: true,
-            onChanged: (String? value) {
-              ref.read(selected2Provider.notifier).state =
-                  value ?? 'IMPOSSIBLE';
-
-              // Reset after selection.
-
-              selectedTransform = ref.read(typesProvider)[value] == Type.numeric
-                  ? numericMethods.first
-                  : categoricMethods.first;
-            },
-            tooltip: '''
-
-            Select a secondary variable to assist in the recoding process.
-
-            ''',
-          ),
         ),
       ],
     );
@@ -315,6 +292,32 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   Choose the primary variable to be recoded.
 
                   ''',
+                ),
+                Expanded(
+                  child: variableChooser(
+                    'Secondary',
+                    inputs,
+                    selected2,
+                    ref,
+                    selected2Provider,
+                    enabled: true,
+                    onChanged: (String? value) {
+                      ref.read(selected2Provider.notifier).state =
+                          value ?? 'IMPOSSIBLE';
+
+                      // Reset after selection.
+
+                      selectedTransform =
+                          ref.read(typesProvider)[value] == Type.numeric
+                              ? numericMethods.first
+                              : categoricMethods.first;
+                    },
+                    tooltip: '''
+
+                    Select a secondary variable to assist in the recoding process.
+
+                    ''',
+                  ),
                 ),
               ],
             ),
