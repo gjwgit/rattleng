@@ -35,7 +35,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/session_control.dart';
-import 'package:rattle/widgets/number_field.dart';
 import 'package:rattle/widgets/repeat_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -352,20 +351,18 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(partitionTestProvider.notifier).state = test;
   }
 
-  /// Save training partition percentage
+  /// Save training partition percentage.
+
   Future<void> _savePartitionTrain(int value) async {
-    print(value);
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('train', value);
 
     ref.read(partitionTrainProvider.notifier).state = value;
-
-    print("Training partition: $value");
-    print("Validation partition: ${ref.read(partitionValidProvider)}");
   }
 
-  /// Save validation partition percentage
+  /// Save validation partition percentage.
+
   Future<void> _savePartitionValid(int value) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -374,7 +371,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(partitionValidProvider.notifier).state = value;
   }
 
-  /// Save testing partition percentage
+  /// Save testing partition percentage.
+
   Future<void> _savePartitionTest(int value) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -855,91 +853,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       _buildPartitionControls(),
 
-                      // Row(
-                      //   children: [
-                      //     NumberField(
-                      //       label: 'Training %:',
-                      //       key: const Key('trainingField'),
-                      //       controller: TextEditingController(
-                      //         text: (ref.watch(partitionTrainProvider))
-                      //             .toStringAsFixed(0),
-                      //       ),
-                      //       tooltip: '''
-
-                      //       The percentage of data allocated for training the model. Ensure the total
-                      //       across training, validation, and testing sums to 100%.
-
-                      //       ''',
-                      //       inputFormatter:
-                      //           FilteringTextInputFormatter.digitsOnly,
-                      //       validator: (value) => validateInteger(
-                      //         value,
-                      //         min: 0,
-                      //       ),
-                      //       stateProvider: partitionTrainProvider,
-                      //       onValueChanged: (newValue) async {
-                      //         if (newValue != null) {
-                      //           await _savePartitionTrain(int.parse(newValue));
-                      //         }
-                      //       },
-                      //     ),
-                      //     configRowGap,
-                      //     NumberField(
-                      //       label: 'Validation %:',
-                      //       key: const Key('validationField'),
-                      //       controller: TextEditingController(
-                      //         text: (ref.watch(partitionValidProvider))
-                      //             .toStringAsFixed(0),
-                      //       ),
-                      //       tooltip: '''
-
-                      //       The percentage of data allocated for validating the model. Ensure the total
-                      //       across training, validation, and testing sums to 100%.
-
-                      //       ''',
-                      //       inputFormatter:
-                      //           FilteringTextInputFormatter.digitsOnly,
-                      //       validator: (value) => validateInteger(
-                      //         value,
-                      //         min: 0,
-                      //       ),
-                      //       stateProvider: partitionValidProvider,
-                      //       onValueChanged: (newValue) async {
-                      //         if (newValue != null) {
-                      //           await _savePartitionValid(int.parse(newValue));
-                      //         }
-                      //       },
-                      //     ),
-                      //     configRowGap,
-                      //     NumberField(
-                      //       label: 'Testing %:',
-                      //       key: const Key('testingField'),
-                      //       controller: TextEditingController(
-                      //         text: (ref.watch(partitionTestProvider))
-                      //             .toStringAsFixed(0),
-                      //       ),
-                      //       tooltip: '''
-
-                      //       The percentage of data allocated for testing the model. Ensure the total
-                      //       across training, validation, and testing sums to 100%.
-
-                      //       ''',
-                      //       inputFormatter:
-                      //           FilteringTextInputFormatter.digitsOnly,
-                      //       validator: (value) => validateInteger(
-                      //         value,
-                      //         min: 0,
-                      //       ),
-                      //       stateProvider: partitionTestProvider,
-                      //       onValueChanged: (newValue) async {
-                      //         if (newValue != null) {
-                      //           await _savePartitionTest(int.parse(newValue));
-                      //         }
-                      //       },
-                      //     ),
-                      //   ],
-                      // ),
-
                       settingsGroupGap,
                       Divider(),
                       // Random Seed Section.
@@ -1134,66 +1047,69 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     );
   }
 
-  /// Custom Text Field widget for integer input
+  /// Custom Text Field widget for integer input.
+
   Widget _buildCustomNumberField({
     required String label,
     required int value,
     required ValueChanged<int> onChanged,
-    String? tooltipMessage,
+    String? tooltip,
   }) {
     final controller = TextEditingController(text: value.toString());
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Tooltip(
-          message: tooltipMessage ?? '',
-          child: Text(
+    return MarkdownTooltip(
+      message: tooltip ?? '',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
             label,
             style: const TextStyle(fontSize: 16),
           ),
-        ),
-        const SizedBox(height: 4),
-        SizedBox(
-          width: 80,
-          child: Focus(
-            // Add focus to detect changes when focus is lost
-            onFocusChange: (hasFocus) {
-              if (!hasFocus) {
-                final input = controller.text;
-                if (input.isNotEmpty) {
-                  final parsedValue = int.tryParse(input);
-                  if (parsedValue != null) {
-                    onChanged(parsedValue);
-                  }
-                }
-              }
-            },
-            child: TextField(
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              controller: controller,
-              onSubmitted: (input) {
-                if (input.isNotEmpty) {
-                  final parsedValue = int.tryParse(input);
-                  if (parsedValue != null) {
-                    onChanged(parsedValue);
+          const SizedBox(height: 4),
+          SizedBox(
+            width: 80,
+            child: Focus(
+              // Add focus to detect changes when focus is lost.
+
+              onFocusChange: (hasFocus) {
+                if (!hasFocus) {
+                  final input = controller.text;
+                  if (input.isNotEmpty) {
+                    final parsedValue = int.tryParse(input);
+                    if (parsedValue != null) {
+                      onChanged(parsedValue);
+                    }
                   }
                 }
               },
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                controller: controller,
+                onSubmitted: (input) {
+                  if (input.isNotEmpty) {
+                    final parsedValue = int.tryParse(input);
+                    if (parsedValue != null) {
+                      onChanged(parsedValue);
+                    }
+                  }
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  /// Build partition controls
+  /// Build partition controls.
+
   Widget _buildPartitionControls() {
     final train = ref.watch(partitionTrainProvider);
     final valid = ref.watch(partitionValidProvider);
@@ -1207,7 +1123,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           onChanged: (value) async {
             await _savePartitionTrain(value.toInt());
           },
-          tooltipMessage: 'Percentage of data for training.',
+          tooltip: '''
+                            
+          The percentage of data allocated for training the model. Ensure the total 
+          across training, validation, and testing sums to 100%.
+
+          ''',
         ),
         configRowGap,
         _buildCustomNumberField(
@@ -1216,7 +1137,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           onChanged: (value) async {
             await _savePartitionValid(value.toInt());
           },
-          tooltipMessage: 'Percentage of data for validation.',
+          tooltip: '''
+          
+          The percentage of data allocated for validating the model. Ensure the total 
+          across training, validation, and testing sums to 100%.
+          
+          ''',
         ),
         configRowGap,
         _buildCustomNumberField(
@@ -1225,7 +1151,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           onChanged: (value) async {
             await _savePartitionTest(value.toInt());
           },
-          tooltipMessage: 'Percentage of data for testing.',
+          tooltip: '''
+          
+          The percentage of data allocated for testing the model. Ensure the total 
+          across training, validation, and testing sums to 100%.
+                            
+          ''',
         ),
       ],
     );
