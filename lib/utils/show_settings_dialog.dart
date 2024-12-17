@@ -1011,7 +1011,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               right: 16,
               child: IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: _handleCancelButton,
                 tooltip: 'Cancel',
               ),
             ),
@@ -1114,51 +1114,96 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final train = ref.watch(partitionTrainProvider);
     final valid = ref.watch(partitionValidProvider);
     final test = ref.watch(partitionTestProvider);
+    final total = train + valid + test;
 
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildCustomNumberField(
-          label: 'Training %:',
-          value: train,
-          onChanged: (value) async {
-            await _savePartitionTrain(value.toInt());
-          },
-          tooltip: '''
-                            
-          The percentage of data allocated for training the model. Ensure the total 
-          across training, validation, and testing sums to 100%.
-
-          ''',
-        ),
-        configRowGap,
-        _buildCustomNumberField(
-          label: 'Validation %:',
-          value: valid,
-          onChanged: (value) async {
-            await _savePartitionValid(value.toInt());
-          },
-          tooltip: '''
-          
-          The percentage of data allocated for validating the model. Ensure the total 
-          across training, validation, and testing sums to 100%.
-          
-          ''',
-        ),
-        configRowGap,
-        _buildCustomNumberField(
-          label: 'Testing %:',
-          value: test,
-          onChanged: (value) async {
-            await _savePartitionTest(value.toInt());
-          },
-          tooltip: '''
-          
-          The percentage of data allocated for testing the model. Ensure the total 
-          across training, validation, and testing sums to 100%.
-                            
-          ''',
+        Row(
+          children: [
+            _buildCustomNumberField(
+              label: 'Training %:',
+              value: train,
+              onChanged: (value) async {
+                if (value >= 0 && value <= 100) {
+                  await _savePartitionTrain(value);
+                }
+              },
+              tooltip:
+                  'Training percentage (0-100). Ensure the total is exactly 100%.',
+            ),
+            configRowGap,
+            _buildCustomNumberField(
+              label: 'Validation %:',
+              value: valid,
+              onChanged: (value) async {
+                if (value >= 0 && value <= 100) {
+                  await _savePartitionValid(value);
+                }
+              },
+              tooltip:
+                  'Validation percentage (0-100). Ensure the total is exactly 100%.',
+            ),
+            configRowGap,
+            _buildCustomNumberField(
+              label: 'Testing %:',
+              value: test,
+              onChanged: (value) async {
+                if (value >= 0 && value <= 100) {
+                  await _savePartitionTest(value);
+                }
+              },
+              tooltip:
+                  'Testing percentage (0-100). Ensure the total is exactly 100%.',
+            ),
+            configRowGap,
+            Text(
+              'Total: $total%',
+              style: TextStyle(
+                fontSize: 16,
+                color: total == 100 ? Colors.green : Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ],
     );
+  }
+
+  /// Display a warning if the partition total is invalid when pressing cancel.
+
+  void _showInvalidPartitionWarning() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Invalid Partition Total'),
+          content: const Text(
+              'The total of Training, Validation, and Testing percentages must be exactly 100.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// Validate partition total when pressing cancel button.
+
+  void _handleCancelButton() {
+    final train = ref.read(partitionTrainProvider);
+    final valid = ref.read(partitionValidProvider);
+    final test = ref.read(partitionTestProvider);
+    final total = train + valid + test;
+
+    if (total != 100) {
+      _showInvalidPartitionWarning();
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 }
