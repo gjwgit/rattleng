@@ -67,12 +67,31 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   String selected = 'NULL';
   String selectedTransform = '';
+  String selectedAs = '';
 
   List<String> numericMethods = [
     'Quantiles',
     'KMeans',
     'Equal Width',
   ];
+
+  List<String> asMethods = [
+    'As Categoric',
+    'As Numeric',
+  ];
+
+  Map<String, String> asMethodsTooltips = {
+    'As Categoric': '''
+
+      Multiply out the selected numeric variables into a new single variable.
+
+      ''',
+    'As Numeric': '''
+
+      Multiply out the selected categoric variables into a new single variable.
+    
+      ''',
+  };
 
   Map<String, String> numericMethodsTooltips = {
     'Quantiles': '''
@@ -231,6 +250,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       selected2 = inputs[1];
     }
 
+    bool isNumeric = true;
+
+    // On startup with no dataset (so nothing selected), the default is to enable
+    // all the chips.
+
+    if (selected != 'NULL') {
+      isNumeric = ref.read(typesProvider)[selected] == Type.numeric;
+    }
     return Stack(
       children: [
         Column(
@@ -276,6 +303,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   enabled: true,
                   onChanged: (String? value) {
                     setState(() {
+                      print("inputs: $inputs");
                       ref.read(selectedProvider.notifier).state =
                           value ?? 'IMPOSSIBLE';
 
@@ -293,31 +321,40 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
                   ''',
                 ),
-                Expanded(
-                  child: variableChooser(
-                    'Secondary',
-                    inputs,
-                    selected2,
-                    ref,
-                    selected2Provider,
-                    enabled: true,
-                    onChanged: (String? value) {
-                      ref.read(selected2Provider.notifier).state =
-                          value ?? 'IMPOSSIBLE';
+                variableChooser(
+                  'Secondary',
+                  inputs,
+                  selected2,
+                  ref,
+                  selected2Provider,
+                  enabled: true,
+                  onChanged: (String? value) {
+                    ref.read(selected2Provider.notifier).state =
+                        value ?? 'IMPOSSIBLE';
 
-                      // Reset after selection.
+                    // Reset after selection.
 
-                      selectedTransform =
-                          ref.read(typesProvider)[value] == Type.numeric
-                              ? numericMethods.first
-                              : categoricMethods.first;
-                    },
-                    tooltip: '''
-
-                    Select a secondary variable to assist in the recoding process.
-
-                    ''',
-                  ),
+                    selectedTransform =
+                        ref.read(typesProvider)[value] == Type.numeric
+                            ? numericMethods.first
+                            : categoricMethods.first;
+                  },
+                  tooltip: '''
+                
+                  Select a secondary variable to assist in the recoding process.
+                
+                  ''',
+                ),
+                ChoiceChipTip(
+                  options: asMethods,
+                  selectedOption: selectedAs,
+                  // enabled: isNumeric,
+                  tooltips: asMethodsTooltips,
+                  onSelected: (String? selected) {
+                    setState(() {
+                      selectedAs = selected ?? '';
+                    });
+                  },
                 ),
               ],
             ),
