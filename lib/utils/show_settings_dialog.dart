@@ -1131,8 +1131,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                   _showOutOfRangeWarning();
                 }
               },
-              tooltip:
-                  'Training percentage (0-100). Ensure the total is exactly 100%.',
+              tooltip: '''
+                            
+              The percentage of data allocated for training the model. Ensure the total 
+              across training, validation, and testing sums to 100%.
+
+              ''',
             ),
             configRowGap,
             _buildCustomNumberField(
@@ -1145,8 +1149,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                   _showOutOfRangeWarning();
                 }
               },
-              tooltip:
-                  'Validation percentage (0-100). Ensure the total is exactly 100%.',
+              tooltip: '''
+          
+              The percentage of data allocated for validating the model. Ensure the total 
+              across training, validation, and testing sums to 100%.
+              
+              ''',
             ),
             configRowGap,
             _buildCustomNumberField(
@@ -1159,8 +1167,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                   _showOutOfRangeWarning();
                 }
               },
-              tooltip:
-                  'Testing percentage (0-100). Ensure the total is exactly 100%.',
+              tooltip: '''
+          
+              The percentage of data allocated for testing the model. Ensure the total 
+              across training, validation, and testing sums to 100%.
+                                
+              ''',
             ),
             configRowGap,
             Text(
@@ -1186,7 +1198,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         return AlertDialog(
           title: const Text('Invalid Partition Total'),
           content: const Text(
-              'The total of Training, Validation, and Testing percentages must be exactly 100.'),
+            'The total of Training, Validation, and Testing percentages must be exactly 100.',
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
