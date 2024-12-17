@@ -54,8 +54,6 @@ class ScriptInfo extends StatelessWidget {
                       child: Column(
                         children: [
                           MarkdownBody(data: snapshot.data!),
-                          const SizedBox(height: 50),
-                          const ScriptSaveButton(),
                         ],
                       ),
                     )
