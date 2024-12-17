@@ -1,99 +1,453 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 800 500"
+   version="1.1"
+   id="svg109"
+   sodipodi:docname="model.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview111"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.6375"
+     inkscape:cx="370.68702"
+     inkscape:cy="250.07634"
+     inkscape:window-width="3326"
+     inkscape:window-height="1371"
+     inkscape:window-x="2034"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg109" />
   <!-- Data Collection & Processing Section -->
-  <g transform="translate(50, 50)">
+  <g
+     transform="translate(37.367665,53.203311)"
+     id="g16">
     <!-- Database Icon -->
-    <rect x="20" y="10" width="60" height="80" rx="5" fill="#4e79a7"/>
-    <rect x="30" y="20" width="40" height="10" fill="white"/>
-    <rect x="30" y="40" width="40" height="10" fill="white"/>
-    <rect x="30" y="60" width="40" height="10" fill="white"/>
-    
+    <rect
+       x="20"
+       y="10"
+       width="60"
+       height="80"
+       rx="5"
+       fill="#4e79a7"
+       id="rect2" />
+    <rect
+       x="30"
+       y="20"
+       width="40"
+       height="10"
+       fill="#ffffff"
+       id="rect4" />
+    <rect
+       x="30"
+       y="40"
+       width="40"
+       height="10"
+       fill="#ffffff"
+       id="rect6" />
+    <rect
+       x="30"
+       y="60"
+       width="40"
+       height="10"
+       fill="#ffffff"
+       id="rect8" />
     <!-- Flow Arrow 1 -->
-    <path d="M90 50 L160 50" stroke="#bab0ab" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-    
     <!-- Data Cleaning Icon -->
-    <rect x="170" y="20" width="60" height="60" fill="#f28e2b"/>
-    <path d="M180 50 L220 50 M190 40 L210 40 M185 60 L215 60" stroke="white" stroke-width="3"/>
+    <rect
+       x="150.15282"
+       y="14.373808"
+       width="60"
+       height="60"
+       fill="#f28e2b"
+       id="rect12"
+       inkscape:label="rect12"
+       style="display:inline" />
+    <path
+       d="m 161.26998,45.426072 h 40 m -30,-10 h 20 m -25,20 h 30"
+       stroke="#ffffff"
+       stroke-width="3"
+       id="path14" />
   </g>
-
   <!-- Feature Engineering Section -->
-  <g transform="translate(300, 30)">
+  <g
+     transform="translate(300,40)"
+     id="g24">
     <!-- Feature Box -->
-    <rect x="20" y="20" width="80" height="80" rx="5" fill="#76b7b2"/>
-    <path d="M30 40 L90 40 M30 60 L90 60 M30 80 L90 80" stroke="white" stroke-width="2"/>
-    <text x="35" y="35" fill="white" font-size="10">Features</text>
+    <rect
+       x="20"
+       y="20"
+       width="80"
+       height="80"
+       rx="5"
+       fill="#76b7b2"
+       id="rect18" />
+    <path
+       d="M 30,40 H 90 M 30,60 H 90 M 30,80 h 60"
+       stroke="#ffffff"
+       stroke-width="2"
+       id="path20" />
+    <text
+       x="35"
+       y="35"
+       fill="#ffffff"
+       font-size="10px"
+       id="text22">Features</text>
   </g>
-
   <!-- Model Training Section -->
-  <g transform="translate(450, 20)">
+  <g
+     transform="translate(462,20)"
+     id="g46">
     <!-- Neural Network -->
-    <g transform="translate(0, 20)">
-      <circle cx="20" cy="40" r="8" fill="#e15759"/>
-      <circle cx="20" cy="80" r="8" fill="#e15759"/>
-      <circle cx="60" cy="30" r="8" fill="#e15759"/>
-      <circle cx="60" cy="60" r="8" fill="#e15759"/>
-      <circle cx="60" cy="90" r="8" fill="#e15759"/>
-      <circle cx="100" cy="60" r="8" fill="#e15759"/>
-      
+    <g
+       transform="translate(0,20)"
+       id="g44">
+      <circle
+         cx="20"
+         cy="40"
+         r="8"
+         fill="#e15759"
+         id="circle26" />
+      <circle
+         cx="20"
+         cy="80"
+         r="8"
+         fill="#e15759"
+         id="circle28" />
+      <circle
+         cx="60"
+         cy="30"
+         r="8"
+         fill="#e15759"
+         id="circle30" />
+      <circle
+         cx="60"
+         cy="60"
+         r="8"
+         fill="#e15759"
+         id="circle32" />
+      <circle
+         cx="60"
+         cy="90"
+         r="8"
+         fill="#e15759"
+         id="circle34" />
+      <circle
+         cx="100"
+         cy="60"
+         r="8"
+         fill="#e15759"
+         id="circle36" />
       <!-- NN Connections -->
-      <path d="M28 40 L52 30 M28 40 L52 60 M28 40 L52 90" stroke="#bab0ab" stroke-width="1"/>
-      <path d="M28 80 L52 30 M28 80 L52 60 M28 80 L52 90" stroke="#bab0ab" stroke-width="1"/>
-      <path d="M68 30 L92 60 M68 60 L92 60 M68 90 L92 60" stroke="#bab0ab" stroke-width="1"/>
+      <path
+         d="M 28,40 52,30 M 28,40 52,60 M 28,40 52,90"
+         stroke="#bab0ab"
+         stroke-width="1"
+         id="path38" />
+      <path
+         d="M 28,80 52,30 M 28,80 52,60 M 28,80 52,90"
+         stroke="#bab0ab"
+         stroke-width="1"
+         id="path40" />
+      <path
+         d="M 68,30 92,60 M 68,60 H 92 M 68,90 92,60"
+         stroke="#bab0ab"
+         stroke-width="1"
+         id="path42" />
     </g>
   </g>
-
   <!-- Evaluation & Deployment Section -->
-  <g transform="translate(600, 40)">
+  <g
+     transform="translate(622,48)"
+     id="g56">
     <!-- Metrics Dashboard -->
-    <rect x="20" y="20" width="100" height="60" rx="5" fill="#59a14f"/>
-    <path d="M30 50 L60 30 L90 45 L110 35" stroke="white" stroke-width="2" fill="none"/>
-    <circle cx="60" cy="30" r="3" fill="white"/>
-    <circle cx="90" cy="45" r="3" fill="white"/>
+    <rect
+       x="20"
+       y="20"
+       width="100"
+       height="60"
+       rx="5"
+       fill="#59a14f"
+       id="rect48" />
+    <path
+       d="M 30,50 60,30 90,45 110,35"
+       stroke="#ffffff"
+       stroke-width="2"
+       fill="none"
+       id="path50" />
+    <circle
+       cx="60"
+       cy="30"
+       r="3"
+       fill="#ffffff"
+       id="circle52" />
+    <circle
+       cx="90"
+       cy="45"
+       r="3"
+       fill="#ffffff"
+       id="circle54" />
   </g>
-
   <!-- Data Flow Connections -->
-  <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-            refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#bab0ab"/>
+  <defs
+     id="defs61">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0,7 0,0 10,3.5 "
+         fill="#bab0ab"
+         id="polygon58" />
+    </marker>
+    <marker
+       id="arrowhead-1"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0,7 0,0 10,3.5 "
+         fill="#bab0ab"
+         id="polygon58-2" />
+    </marker>
+    <marker
+       id="arrowhead-9"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0,7 0,0 10,3.5 "
+         fill="#bab0ab"
+         id="polygon58-3" />
+    </marker>
+    <marker
+       id="arrowhead-1-2"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0,0 10,3.5 0,7 "
+         fill="#bab0ab"
+         id="polygon58-2-6" />
     </marker>
   </defs>
-
   <!-- Main Flow Arrows -->
-  <g>
-    <path d="M280 80 C320 80, 340 80, 380 80" stroke="#bab0ab" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-    <path d="M480 80 C520 80, 540 80, 580 80" stroke="#bab0ab" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <g
+     id="g67"
+     transform="matrix(1.03991,0,0,1.359934,-16.719593,-27.455742)">
+    <path
+       d="m 262.71126,93.731946 c 18.45617,0 27.68425,0 46.14042,0"
+       stroke="#bab0ab"
+       stroke-width="1.35853"
+       fill="none"
+       marker-end="url(#arrowhead)"
+       id="path63" />
   </g>
-
+  <g
+     id="g67-6"
+     transform="matrix(1.03991,0,0,1.359934,-144.76361,-28.537962)">
+    <path
+       d="m 262.71126,93.731946 c 18.45617,0 27.68425,0 46.14042,0"
+       stroke="#bab0ab"
+       stroke-width="1.35853"
+       fill="none"
+       marker-end="url(#arrowhead-9)"
+       id="path63-06"
+       style="marker-end:url(#arrowhead-9)" />
+  </g>
+  <g
+     id="g67-7"
+     transform="matrix(1.03991,0,0,1.359934,135.23639,-28.537962)">
+    <path
+       d="m 262.71126,93.731946 c 18.45617,0 27.68425,0 46.14042,0"
+       stroke="#bab0ab"
+       stroke-width="1.35853"
+       fill="none"
+       marker-end="url(#arrowhead-1)"
+       id="path63-0"
+       style="marker-end:url(#arrowhead-1)" />
+  </g>
+  <g
+     id="g67-7-1"
+     transform="matrix(1.03991,0,0,1.359934,307.7402,-30.202085)">
+    <path
+       d="m 262.71126,93.731946 c 18.45617,0 27.68425,0 46.14042,0"
+       stroke="#bab0ab"
+       stroke-width="1.35853"
+       fill="none"
+       marker-end="url(#arrowhead-1-2)"
+       id="path63-0-8"
+       style="marker-end:url(#arrowhead-1-2)" />
+  </g>
   <!-- Feedback Loop -->
-  <path d="M720 100 C720 150, 400 150, 400 100" stroke="#bab0ab" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
-
+  <path
+     d="m 680.92278,154.43115 c 0,77.60946 -321.26414,77.60946 -321.26414,0"
+     stroke="#bab0ab"
+     stroke-width="2.49666"
+     fill="none"
+     stroke-dasharray="5, 5"
+     marker-end="url(#arrowhead)"
+     id="path69"
+     inkscape:label="path69" />
   <!-- Process Labels -->
-  <g font-size="12" fill="#333">
-    <text x="60" y="160">Raw Data</text>
-    <text x="170" y="160">Preprocessing</text>
-    <text x="320" y="160">Feature Engineering</text>
-    <text x="450" y="160">Model Training</text>
-    <text x="600" y="160">Evaluation</text>
-    <text x="500" y="200">Iteration &amp; Improvement</text>
+  <g
+     font-size="12px"
+     fill="#333333"
+     id="g83"
+     transform="translate(-44.162989,-23.073712)">
+    <text
+       x="500"
+       y="200"
+       id="text81">Iteration &amp; Improvement</text>
   </g>
-
+  <g
+     font-size="12px"
+     fill="#333333"
+     id="g83-3"
+     transform="translate(2.58687,-118.20824)">
+    <text
+       x="60"
+       y="160"
+       id="text71-6">Raw Data</text>
+    <text
+       x="170"
+       y="160"
+       id="text73-7">Preprocessing</text>
+    <text
+       x="305.65512"
+       y="158.87703"
+       id="text75-5">Feature Engineering</text>
+    <text
+       x="473.23996"
+       y="160.53175"
+       id="text77-3">Model Training</text>
+    <text
+       x="642.13531"
+       y="159.73875"
+       id="text79-5">Evaluation</text>
+  </g>
   <!-- Validation Split Section -->
-  <g transform="translate(50, 250)">
+  <g
+     transform="translate(50, 250)"
+     id="g97">
     <!-- Data Split Visualization -->
-    <rect x="20" y="20" width="150" height="30" fill="#b07aa1"/>
-    <rect x="20" y="60" width="50" height="30" fill="#ff9da7"/>
-    <rect x="80" y="60" width="50" height="30" fill="#edc948"/>
-    <text x="45" y="40" fill="white" font-size="12">Full Dataset</text>
-    <text x="30" y="80" fill="white" font-size="10">Train</text>
-    <text x="90" y="80" fill="white" font-size="10">Test</text>
+    <rect
+       x="20"
+       y="20"
+       width="150"
+       height="30"
+       fill="#b07aa1"
+       id="rect85" />
+    <rect
+       x="20"
+       y="60"
+       width="87.203003"
+       height="30"
+       fill="#ff9da7"
+       id="rect87"
+       style="display:inline;stroke-width:1.32063"
+       inkscape:label="rect87" />
+    <rect
+       x="110.94964"
+       y="60"
+       width="27.056894"
+       height="30"
+       fill="#edc948"
+       id="rect89"
+       style="stroke-width:0.73562" />
+    <text
+       x="45"
+       y="40"
+       fill="white"
+       font-size="12"
+       id="text91">Full Dataset</text>
+    <text
+       x="56"
+       y="78"
+       fill="#ffffff"
+       font-size="10px"
+       id="text93">Train</text>
+    <text
+       x="112"
+       y="78"
+       fill="#ffffff"
+       font-size="10px"
+       id="text95"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"><tspan
+         sodipodi:role="line"
+         id="tspan1332"
+         x="112"
+         y="78">Tune</tspan></text>
+    <rect
+       x="141.54811"
+       y="59.946564"
+       width="27.304237"
+       height="30"
+       fill="#edc948"
+       id="rect89-2"
+       style="stroke-width:0.738976" />
+    <text
+       x="145.82442"
+       y="77.946564"
+       fill="#ffffff"
+       font-size="10px"
+       id="text95-9">Test</text>
   </g>
-
   <!-- Model Performance Section -->
-  <g transform="translate(450, 250)">
+  <g
+     transform="translate(472.97024,244.10041)"
+     id="g107">
     <!-- Confusion Matrix -->
-    <rect x="20" y="20" width="40" height="40" fill="#4e79a7" opacity="0.8"/>
-    <rect x="60" y="20" width="40" height="40" fill="#4e79a7" opacity="0.4"/>
-    <rect x="20" y="60" width="40" height="40" fill="#4e79a7" opacity="0.4"/>
-    <rect x="60" y="60" width="40" height="40" fill="#4e79a7" opacity="0.8"/>
+    <rect
+       x="20"
+       y="20"
+       width="40"
+       height="40"
+       fill="#4e79a7"
+       opacity="0.8"
+       id="rect99" />
+    <rect
+       x="60"
+       y="20"
+       width="40"
+       height="40"
+       fill="#4e79a7"
+       opacity="0.4"
+       id="rect101" />
+    <rect
+       x="20"
+       y="60"
+       width="40"
+       height="40"
+       fill="#4e79a7"
+       opacity="0.4"
+       id="rect103" />
+    <rect
+       x="60"
+       y="60"
+       width="40"
+       height="40"
+       fill="#4e79a7"
+       opacity="0.8"
+       id="rect105" />
   </g>
 </svg>
