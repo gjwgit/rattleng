@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 08:08:47 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-12-17 17:23:38 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -37,7 +37,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_tree.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -67,7 +67,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     // Begin the list of pages to display with the introduction markdown text.
 
     List<Widget> pages = [
-      showMarkdownFile(treeIntroFile, context),
+      showMarkdownFile(context, treeIntroFile, 'assets/svg/tree.svg'),
     ];
 
     String content = '';

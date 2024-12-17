@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-12-05 17:22:27 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-12-17 17:26:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -38,7 +38,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -66,7 +66,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     AlgorithmType forestAlgorithm =
         ref.watch(algorithmForestProvider.notifier).state;
 
-    List<Widget> pages = [showMarkdownFile(forestIntroFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile(
+        context,
+        forestIntroFile,
+        'assets/svg/forest.svg',
+      ),
+    ];
 
     String content = '';
 
