@@ -101,6 +101,19 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     // 'As Numeric',
   ];
 
+  Map<String, String> categoricMethodsTooltips = {
+    'Indicator Variable': '''
+
+      Turn a categoric into a collection of numeric (0,1) variables.
+
+      ''',
+    'Join Categorics': '''
+
+      Combine multiple categoric variables into just one.
+    
+      ''',
+  };
+
   // BUILD button action.
 
   void buildAction() {
@@ -164,11 +177,17 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           validator: (value) => validateInteger(value, min: 1),
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
           enabled: isNumeric,
+          tooltip: '''
+              
+          Set the number of bins to construct.
+
+          ''',
         ),
         ChoiceChipTip(
           enabled: selected == 'NULL' || !isNumeric,
           options: categoricMethods,
           selectedOption: !isNumeric ? selectedTransform : '',
+          tooltips: categoricMethodsTooltips,
           onSelected: (String? selected) {
             setState(() {
               selectedTransform = selected ?? '';
