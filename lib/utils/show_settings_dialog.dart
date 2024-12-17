@@ -1127,6 +1127,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               onChanged: (value) async {
                 if (value >= 0 && value <= 100) {
                   await _savePartitionTrain(value);
+                } else {
+                  _showOutOfRangeWarning();
                 }
               },
               tooltip:
@@ -1139,6 +1141,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               onChanged: (value) async {
                 if (value >= 0 && value <= 100) {
                   await _savePartitionValid(value);
+                } else {
+                  _showOutOfRangeWarning();
                 }
               },
               tooltip:
@@ -1151,6 +1155,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               onChanged: (value) async {
                 if (value >= 0 && value <= 100) {
                   await _savePartitionTest(value);
+                } else {
+                  _showOutOfRangeWarning();
                 }
               },
               tooltip:
@@ -1205,5 +1211,25 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     } else {
       Navigator.of(context).pop();
     }
+  }
+
+  /// Display a warning if a value is out of the valid range (0-100).
+
+  void _showOutOfRangeWarning() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Invalid Input'),
+          content: const Text('Values must be between 0 and 100.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
