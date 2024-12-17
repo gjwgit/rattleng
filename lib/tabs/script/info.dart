@@ -30,7 +30,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rattle/constants/app.dart';
-import 'package:rattle/tabs/script/save_button.dart';
 
 /// Create a script info widget with a Save button and displaying markdown.
 ///
