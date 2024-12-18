@@ -281,6 +281,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(imageViewerSettingProvider.notifier).state =
         prefs.getString('imageViewerApp') ?? platformDefault;
+
+    ref.read(randomPartitionSettingProvider.notifier).state =
+        prefs.getBool('randomPartition') ?? false;
   }
 
   Future<void> _saveToggleStates() async {
@@ -323,6 +326,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save "Keep in Sync" state to preferences.
 
     await prefs.setBool('keepInSync', value);
+  }
+
+  Future<void> _saveRandomPartition(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "Random Partition" state to preferences.
+
+    await prefs.setBool('randomPartition', value);
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -447,6 +458,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final askOnExit = ref.watch(askOnExitProvider);
 
     final randomSeed = ref.watch(randomSeedSettingProvider);
+    final randomPartition = ref.watch(randomPartitionSettingProvider);
 
     return Material(
       color: Colors.transparent,
@@ -893,6 +905,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                     .read(randomSeedSettingProvider.notifier)
                                     .state = 42;
                                 _saveRandomSeed(42);
+
+                                ref
+                                    .read(
+                                      randomPartitionSettingProvider.notifier,
+                                    )
+                                    .state = false;
+                                _saveRandomPartition(false);
                               },
                               child: const Text('Reset'),
                             ),
@@ -902,13 +921,48 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
-                      RandomSeedRow(
-                        randomSeed: randomSeed,
-                        updateSeed: (newSeed) {
-                          ref.read(randomSeedSettingProvider.notifier).state =
-                              newSeed;
-                          _saveRandomSeed(newSeed);
-                        },
+                      Row(
+                        spacing: 10,
+                        children: [
+                          RandomSeedRow(
+                            randomSeed: randomSeed,
+                            updateSeed: (newSeed) {
+                              ref
+                                  .read(randomSeedSettingProvider.notifier)
+                                  .state = newSeed;
+                              _saveRandomSeed(newSeed);
+                            },
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+
+         
+
+                            ''',
+                            child: const Text(
+                              'Random Partition each Model Build',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+
+           
+
+                            ''',
+                            child: Switch(
+                              value: randomPartition,
+                              onChanged: (value) {
+                                ref
+                                    .read(
+                                      randomPartitionSettingProvider.notifier,
+                                    )
+                                    .state = value;
+                                _saveRandomPartition(value);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
 
                       settingsGroupGap,
