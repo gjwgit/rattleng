@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+    <!-- Background -->
+    <rect width="800" height="500" fill="#ffffff"/>
+    
+    <!-- Title -->
+    <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#333">Gradient Boosting Model</text>
+    
+    <!-- Residual labels -->
+    <text x="60" y="90" font-size="14" fill="#666">Initial Prediction</text>
+    <text x="60" y="220" font-size="14" fill="#666">Residual 1</text>
+    <text x="60" y="350" font-size="14" fill="#666">Residual 2</text>
+    
+    <!-- Tree 1 (Initial) -->
+    <g transform="translate(200,100)">
+        <!-- Tree structure -->
+        <circle cx="0" cy="0" r="20" fill="#4CAF50" opacity="0.8"/>
+        <circle cx="-30" cy="40" r="15" fill="#81C784" opacity="0.8"/>
+        <circle cx="30" cy="40" r="15" fill="#81C784" opacity="0.8"/>
+        <!-- Connections -->
+        <line x1="0" y1="0" x2="-30" y2="40" stroke="#666" stroke-width="2"/>
+        <line x1="0" y1="0" x2="30" y2="40" stroke="#666" stroke-width="2"/>
+        <!-- Prediction arrow -->
+        <line x1="80" y1="20" x2="150" y2="20" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+    </g>
+    
+    <!-- Tree 2 (First residual) -->
+    <g transform="translate(200,230)">
+        <!-- Tree structure -->
+        <circle cx="0" cy="0" r="20" fill="#2196F3" opacity="0.8"/>
+        <circle cx="-30" cy="40" r="15" fill="#64B5F6" opacity="0.8"/>
+        <circle cx="30" cy="40" r="15" fill="#64B5F6" opacity="0.8"/>
+        <!-- Connections -->
+        <line x1="0" y1="0" x2="-30" y2="40" stroke="#666" stroke-width="2"/>
+        <line x1="0" y1="0" x2="30" y2="40" stroke="#666" stroke-width="2"/>
+        <!-- Learning rate multiplier -->
+        <text x="100" y="20" font-size="16" fill="#666">× η</text>
+        <!-- Prediction arrow -->
+        <line x1="130" y1="20" x2="200" y2="20" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+    </g>
+    
+    <!-- Tree 3 (Second residual) -->
+    <g transform="translate(200,360)">
+        <!-- Tree structure -->
+        <circle cx="0" cy="0" r="20" fill="#FF9800" opacity="0.8"/>
+        <circle cx="-30" cy="40" r="15" fill="#FFB74D" opacity="0.8"/>
+        <circle cx="30" cy="40" r="15" fill="#FFB74D" opacity="0.8"/>
+        <!-- Connections -->
+        <line x1="0" y1="0" x2="-30" y2="40" stroke="#666" stroke-width="2"/>
+        <line x1="0" y1="0" x2="30" y2="40" stroke="#666" stroke-width="2"/>
+        <!-- Learning rate multiplier -->
+        <text x="100" y="20" font-size="16" fill="#666">× η</text>
+        <!-- Prediction arrow -->
+        <line x1="130" y1="20" x2="200" y2="20" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+    </g>
+    
+    <!-- Arrowhead definition -->
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+        </marker>
+    </defs>
+    
+    <!-- Final prediction box -->
+    <g transform="translate(500,230)">
+        <rect x="-60" y="-40" width="120" height="80" rx="10" fill="#673AB7" opacity="0.8"/>
+        <text x="0" y="0" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Final Prediction</text>
+        <text x="0" y="20" text-anchor="middle" fill="white" font-size="12">F(x) = F₀(x) +</text>
+        <text x="0" y="35" text-anchor="middle" fill="white" font-size="12">η∑Fᵢ(x)</text>
+    </g>
+    
+    <!-- Addition symbols -->
+    <text x="450" y="250" font-size="24" fill="#666">+</text>
+    <text x="450" y="380" font-size="24" fill="#666">+</text>
+    
+    <!-- Vertical combination line -->
+    <line x1="500" y1="120" x2="500" y2="190" stroke="#666" stroke-width="2"/>
+    <line x1="500" y1="270" x2="500" y2="380" stroke="#666" stroke-width="2"/>
+</svg>

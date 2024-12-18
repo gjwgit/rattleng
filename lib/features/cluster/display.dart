@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 20:31:40 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-18 08:08:53 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -89,7 +89,8 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       showMarkdownFile(
         context,
         clusterIntroFile,
-      ), //, 'assets/svg/cluster.svg'),
+        'assets/svg/cluster.svg',
+      ),
     ];
 
     // Retrieve the function name and URL from the mapping.

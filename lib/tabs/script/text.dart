@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/providers/script.dart';
+import 'package:rattle/tabs/script/save_button.dart';
 
 /// Create a script text viewer that can scroll the text of the script widget.
 ///
@@ -45,18 +46,30 @@ class ScriptText extends ConsumerWidget {
 
     return Container(
       color: Colors.white,
-      child: SingleChildScrollView(
-        child: Builder(
-          builder: (BuildContext context) {
-            final script = ref.watch(scriptProvider);
+      child: Stack(
+        children: [
+          // Main content with scrollable text
+          SingleChildScrollView(
+            child: Builder(
+              builder: (BuildContext context) {
+                final script = ref.watch(scriptProvider);
 
-            return SelectableText(
-              script,
-              key: scriptTextKey,
-              style: monoSmallTextStyle,
-            );
-          },
-        ),
+                return SelectableText(
+                  script,
+                  key: scriptTextKey,
+                  style: monoSmallTextStyle,
+                );
+              },
+            ),
+          ),
+          // ScriptSaveButton at the top-right corner.
+
+          Positioned(
+            top: 8.0,
+            right: 8.0,
+            child: const ScriptSaveButton(),
+          ),
+        ],
       ),
     );
   }
