@@ -40,7 +40,8 @@ library(ROCR)
 
 ########################################################################
 
-title <- glue("TEMPDIR/model_{mtype}_evaluate_roc.svg")
+title <- "ROC Curve - Decision Tree - FILENAME TARGET_VAR"
+
 
 # Remove observations with missing target values.
 
@@ -69,13 +70,15 @@ pd <- data.frame(fpr=unlist(pe@x.values), tpr=unlist(pe@y.values))
 p <- ggplot(pd, aes(x = fpr, y = tpr))
 p <- p + geom_line(colour = "red")
 p <- p + xlab("False Positive Rate") + ylab("True Positive Rate")
-p <- p + ggtitle("ROC Curve Decision Tree FILENAME")
-p <- p + theme(plot.title = element_text(size = 10))
+p <- p + ggtitle(title)
+p <- p + theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5, colour = "darkblue"))
 p <- p + geom_line(data = data.frame(), aes(x = c(0,1), y = c(0,1)), colour = "grey")
 p <- p + annotate("text", x = 0.50, y = 0.00, hjust = 0, vjust = 0, size = 5,
                    label = paste("AUC =", round(au, 2)))
 
-svg(title, width = 11)
+image_title <- glue("TEMPDIR/model_{mtype}_evaluate_roc.svg")
+
+svg(image_title, width = 11)
 
 print(p)
 
