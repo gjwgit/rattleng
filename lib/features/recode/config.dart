@@ -176,46 +176,49 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     // TODO 20240819 gjw WHERE ARE THE TOOLTIPS?
 
-    return Row(
-      spacing: configWidgetSpace,
-      children: [
-        configLeftGap,
-        ChoiceChipTip(
-          options: numericMethods,
-          selectedOption: selectedTransform,
-          enabled: isNumeric,
-          tooltips: numericMethodsTooltips,
-          onSelected: (String? selected) {
-            setState(() {
-              selectedTransform = selected ?? '';
-            });
-          },
-        ),
-        NumberField(
-          label: 'Number',
-          controller: valCtrl,
-          stateProvider: numberProvider,
-          validator: (value) => validateInteger(value, min: 1),
-          inputFormatter: FilteringTextInputFormatter.digitsOnly,
-          enabled: isNumeric,
-          tooltip: '''
-              
-          Set the number of bins to construct.
-
-          ''',
-        ),
-        ChoiceChipTip(
-          enabled: selected == 'NULL' || !isNumeric,
-          options: categoricMethods,
-          selectedOption: !isNumeric ? selectedTransform : '',
-          tooltips: categoricMethodsTooltips,
-          onSelected: (String? selected) {
-            setState(() {
-              selectedTransform = selected ?? '';
-            });
-          },
-        ),
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        spacing: configWidgetSpace,
+        children: [
+          configLeftGap,
+          ChoiceChipTip(
+            options: numericMethods,
+            selectedOption: selectedTransform,
+            enabled: isNumeric,
+            tooltips: numericMethodsTooltips,
+            onSelected: (String? selected) {
+              setState(() {
+                selectedTransform = selected ?? '';
+              });
+            },
+          ),
+          NumberField(
+            label: 'Number',
+            controller: valCtrl,
+            stateProvider: numberProvider,
+            validator: (value) => validateInteger(value, min: 1),
+            inputFormatter: FilteringTextInputFormatter.digitsOnly,
+            enabled: isNumeric,
+            tooltip: '''
+                
+            Set the number of bins to construct.
+      
+            ''',
+          ),
+          ChoiceChipTip(
+            enabled: selected == 'NULL' || !isNumeric,
+            options: categoricMethods,
+            selectedOption: !isNumeric ? selectedTransform : '',
+            tooltips: categoricMethodsTooltips,
+            onSelected: (String? selected) {
+              setState(() {
+                selectedTransform = selected ?? '';
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -264,99 +267,102 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           spacing: configRowSpace,
           children: [
             configTopGap,
-            Row(
-              spacing: configWidgetSpace,
-              children: [
-                configTopGap,
-                ActivityButton(
-                  onPressed: () async {
-                    setState(() {
-                      _isLoading = selectedTransform == 'Quantiles';
-                    });
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                spacing: configWidgetSpace,
+                children: [
+                  configTopGap,
+                  ActivityButton(
+                    onPressed: () async {
+                      setState(() {
+                        _isLoading = selectedTransform == 'Quantiles';
+                      });
 
-                    ref.read(selectedProvider.notifier).state = selected;
-                    ref.read(selected2Provider.notifier).state = selected2;
-                    buildAction();
+                      ref.read(selectedProvider.notifier).state = selected;
+                      ref.read(selected2Provider.notifier).state = selected2;
+                      buildAction();
 
-                    if (selectedTransform == 'Quantiles') {
-                      await Future.delayed(const Duration(seconds: 5));
-                    }
+                      if (selectedTransform == 'Quantiles') {
+                        await Future.delayed(const Duration(seconds: 5));
+                      }
 
-                    setState(() {
-                      _isLoading = false;
-                    });
+                      setState(() {
+                        _isLoading = false;
+                      });
 
-                    ref.read(recodePageControllerProvider).animateToPage(
-                          1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                  },
-                  child: const Text('Recode Variable Values'),
-                ),
-                variableChooser(
-                  'Variable',
-                  inputs,
-                  selected,
-                  ref,
-                  selectedProvider,
-                  enabled: true,
-                  onChanged: (String? value) {
-                    setState(() {
-                      print("all inputs: $inputs");
-                      ref.read(selectedProvider.notifier).state =
+                      ref.read(recodePageControllerProvider).animateToPage(
+                            1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                    },
+                    child: const Text('Recode Variable Values'),
+                  ),
+                  variableChooser(
+                    'Variable',
+                    inputs,
+                    selected,
+                    ref,
+                    selectedProvider,
+                    enabled: true,
+                    onChanged: (String? value) {
+                      setState(() {
+                        print("all inputs: $inputs");
+                        ref.read(selectedProvider.notifier).state =
+                            value ?? 'IMPOSSIBLE';
+
+                        // Reset the selected transform based on the variable type.
+
+                        selectedTransform =
+                            ref.read(typesProvider)[value] == Type.numeric
+                                ? numericMethods.first
+                                : categoricMethods.first;
+                      });
+                    },
+                    tooltip: '''
+              
+                    Choose the primary variable to be recoded.
+              
+                    ''',
+                  ),
+                  variableChooser(
+                    'Secondary',
+                    inputs,
+                    selected2,
+                    ref,
+                    selected2Provider,
+                    enabled: true,
+                    onChanged: (String? value) {
+                      ref.read(selected2Provider.notifier).state =
                           value ?? 'IMPOSSIBLE';
 
-                      // Reset the selected transform based on the variable type.
+                      // Reset after selection.
 
                       selectedTransform =
                           ref.read(typesProvider)[value] == Type.numeric
                               ? numericMethods.first
                               : categoricMethods.first;
-                    });
-                  },
-                  tooltip: '''
-
-                  Choose the primary variable to be recoded.
-
-                  ''',
-                ),
-                variableChooser(
-                  'Secondary',
-                  inputs,
-                  selected2,
-                  ref,
-                  selected2Provider,
-                  enabled: true,
-                  onChanged: (String? value) {
-                    ref.read(selected2Provider.notifier).state =
-                        value ?? 'IMPOSSIBLE';
-
-                    // Reset after selection.
-
-                    selectedTransform =
-                        ref.read(typesProvider)[value] == Type.numeric
-                            ? numericMethods.first
-                            : categoricMethods.first;
-                  },
-                  tooltip: '''
-                
-                  Select a secondary variable to assist in the recoding process.
-                
-                  ''',
-                ),
-                ChoiceChipTip(
-                  options: asMethods,
-                  selectedOption: selectedAs,
-                  // enabled: isNumeric,
-                  tooltips: asMethodsTooltips,
-                  onSelected: (String? selected) {
-                    setState(() {
-                      selectedAs = selected ?? '';
-                    });
-                  },
-                ),
-              ],
+                    },
+                    tooltip: '''
+                  
+                    Select a secondary variable to assist in the recoding process.
+                  
+                    ''',
+                  ),
+                  ChoiceChipTip(
+                    options: asMethods,
+                    selectedOption: selectedAs,
+                    // enabled: isNumeric,
+                    tooltips: asMethodsTooltips,
+                    onSelected: (String? selected) {
+                      setState(() {
+                        selectedAs = selected ?? '';
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
             recodeChooser(inputs, selected2),
           ],
