@@ -35,4 +35,8 @@
 
 error_matrix_predic <- predict(model_conditionalForest, newdata = trds,)
 
+roc_predicted_probs <- predict(model_conditionalForest, newdata = trds,)
+
+roc_predicted_probs <- as.numeric(factor(roc_predicted_probs)) - 1
+
 error_matrix_target <- trds[[target]]
