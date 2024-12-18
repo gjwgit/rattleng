@@ -40,7 +40,12 @@ class ScriptTab extends StatelessWidget {
       children: [
         Expanded(
           flex: 4,
-          child: ScriptInfo(),
+          child: Align(
+            // Align to the top.
+
+            alignment: Alignment.topCenter,
+            child: ScriptInfo(),
+          ),
         ),
         VerticalDivider(),
         Expanded(
