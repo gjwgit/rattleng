@@ -42,7 +42,6 @@ library(ROCR)
 
 title <- "ROC Curve - Decision Tree - FILENAME TARGET_VAR"
 
-
 # Remove observations with missing target values.
 
 no.miss <- na.omit(trds[[target]])

@@ -78,6 +78,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String rocRpartImage = '$tempDir/model_rpart_evaluate_roc.svg';
 
+    String rocRforestImage = '$tempDir/model_randomForest_evaluate_roc.svg';
+
     String handRpartImage = '$tempDir/model_rpart_evaluate_hand.svg';
 
     String handCtreeImage = '$tempDir/model_ctree_evaluate_hand.svg';
@@ -97,6 +99,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     if (imageExists(rocCtreeImage)) {
       rocImages.add(rocCtreeImage);
       rocImagesTitles.add('CTREE');
+    }
+
+    if (imageExists(rocRforestImage)) {
+      rocImages.add(rocRforestImage);
+      rocImagesTitles.add('RANDOM FORESET');
     }
 
     if (imageExists(handRpartImage)) {
