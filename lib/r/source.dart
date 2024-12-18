@@ -104,6 +104,7 @@ Future<void> rSource(
   // Initialise the state variables obtained from the different providers.
 
   int randomSeedSetting = ref.read(randomSeedSettingProvider);
+  bool randomPartitionSetting = ref.read(randomPartitionSettingProvider);
 
   bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
@@ -134,6 +135,9 @@ Future<void> rSource(
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
+  List<double> partitionRatios = ref.read(partitionSettingProvider);
+  String partitionString =
+      '${partitionRatios.first}, ${partitionRatios[1]}, ${partitionRatios.last}';
 
   // VISUAL
 
@@ -303,7 +307,10 @@ Future<void> rSource(
 
   code = code.replaceAll('MAXFACTOR', '20');
 
-  code = code.replaceAll('RANDOM_PARTITION', 'FALSE');
+  code = code.replaceAll(
+    'RANDOM_PARTITION',
+    randomPartitionSetting.toString().toUpperCase(),
+  );
   code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
@@ -448,7 +455,11 @@ Future<void> rSource(
 
   code = code.replaceAll('ID_VARS', ids);
 
-  code = code.replaceAll('DATA_SPLIT_TR_TU_TE', '0.7, 0.15, 0.15');
+  // Replace DATA_SPLIT_TR_TU_TE with the current values from partitionSettingProvider.
+
+  code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
+
+  debugPrint('DATA_SPLIT_TR_TU_TE: $partitionString');
 
   // TODO if (script == 'model_build_rpart')) {
 
