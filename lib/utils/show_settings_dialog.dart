@@ -29,6 +29,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -241,6 +242,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _loadSettings();
 
     _loadRandomSeed();
+
+    _loadPartition();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> _loadSettings() async {
@@ -273,6 +281,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(imageViewerSettingProvider.notifier).state =
         prefs.getString('imageViewerApp') ?? platformDefault;
+
+    ref.read(randomPartitionSettingProvider.notifier).state =
+        prefs.getBool('randomPartition') ?? false;
   }
 
   Future<void> _saveToggleStates() async {
@@ -317,6 +328,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('keepInSync', value);
   }
 
+  Future<void> _saveRandomPartition(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "Random Partition" state to preferences.
+
+    await prefs.setBool('randomPartition', value);
+  }
+
   Future<void> _saveAskOnExit(bool value) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -329,6 +348,48 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final prefs = await SharedPreferences.getInstance();
     final seed = prefs.getInt('randomSeed') ?? 42;
     ref.read(randomSeedSettingProvider.notifier).state = seed;
+  }
+
+  Future<void> _loadPartition() async {
+    final prefs = await SharedPreferences.getInstance();
+    final train = prefs.getInt('train') ?? 70;
+    ref.read(partitionTrainProvider.notifier).state = train;
+
+    final valid = prefs.getInt('valid') ?? 15;
+    ref.read(partitionValidProvider.notifier).state = valid;
+
+    final test = prefs.getInt('test') ?? 15;
+    ref.read(partitionTestProvider.notifier).state = test;
+  }
+
+  /// Save training partition percentage.
+
+  Future<void> _savePartitionTrain(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setInt('train', value);
+
+    ref.read(partitionTrainProvider.notifier).state = value;
+  }
+
+  /// Save validation partition percentage.
+
+  Future<void> _savePartitionValid(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setInt('valid', value);
+
+    ref.read(partitionValidProvider.notifier).state = value;
+  }
+
+  /// Save testing partition percentage.
+
+  Future<void> _savePartitionTest(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setInt('test', value);
+
+    ref.read(partitionTestProvider.notifier).state = value;
   }
 
   Future<void> _saveRandomSeed(int value) async {
@@ -397,6 +458,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final askOnExit = ref.watch(askOnExitProvider);
 
     final randomSeed = ref.watch(randomSeedSettingProvider);
+    final randomPartition = ref.watch(randomPartitionSettingProvider);
 
     return Material(
       color: Colors.transparent,
@@ -752,6 +814,59 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       settingsGroupGap,
                       Divider(),
+
+                      Row(
+                        children: [
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Dataset Partition Setting:** 
+                            Configure the dataset partitioning ratios for training, validation, and testing datasets. 
+
+                            - Default: 70/15/15 (70% training, 15% validation, 15% testing).
+                            - Customize to suit your dataset requirements, e.g., 50/25/25.
+                            - The values must sum up to 100%.
+
+                            ''',
+                            child: const Text(
+                              'Partition',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          configRowGap,
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Reset Partition Ratios:** 
+                            Reset the dataset partition ratios to the default values of 70/15/15.
+
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: () {
+                                ref
+                                    .read(partitionTrainProvider.notifier)
+                                    .state = 70;
+                                ref
+                                    .read(partitionValidProvider.notifier)
+                                    .state = 15;
+                                ref.read(partitionTestProvider.notifier).state =
+                                    15;
+                              },
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      configRowGap,
+
+                      _buildPartitionControls(),
+
+                      settingsGroupGap,
+                      Divider(),
                       // Random Seed Section.
 
                       Row(
@@ -790,6 +905,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                     .read(randomSeedSettingProvider.notifier)
                                     .state = 42;
                                 _saveRandomSeed(42);
+
+                                ref
+                                    .read(
+                                      randomPartitionSettingProvider.notifier,
+                                    )
+                                    .state = false;
+                                _saveRandomPartition(false);
                               },
                               child: const Text('Reset'),
                             ),
@@ -799,13 +921,48 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
-                      RandomSeedRow(
-                        randomSeed: randomSeed,
-                        updateSeed: (newSeed) {
-                          ref.read(randomSeedSettingProvider.notifier).state =
-                              newSeed;
-                          _saveRandomSeed(newSeed);
-                        },
+                      Row(
+                        spacing: 10,
+                        children: [
+                          RandomSeedRow(
+                            randomSeed: randomSeed,
+                            updateSeed: (newSeed) {
+                              ref
+                                  .read(randomSeedSettingProvider.notifier)
+                                  .state = newSeed;
+                              _saveRandomSeed(newSeed);
+                            },
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+
+         
+
+                            ''',
+                            child: const Text(
+                              'Random Partition each Model Build',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          MarkdownTooltip(
+                            message: '''
+
+           
+
+                            ''',
+                            child: Switch(
+                              value: randomPartition,
+                              onChanged: (value) {
+                                ref
+                                    .read(
+                                      randomPartitionSettingProvider.notifier,
+                                    )
+                                    .state = value;
+                                _saveRandomPartition(value);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
 
                       settingsGroupGap,
@@ -908,7 +1065,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               right: 16,
               child: IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: _handleCancelButton,
                 tooltip: 'Cancel',
               ),
             ),
@@ -941,6 +1098,205 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           ),
         ],
       ),
+    );
+  }
+
+  /// Custom Text Field widget for integer input.
+
+  Widget _buildCustomNumberField({
+    required String label,
+    required int value,
+    required ValueChanged<int> onChanged,
+    String? tooltip,
+  }) {
+    final controller = TextEditingController(text: value.toString());
+
+    return MarkdownTooltip(
+      message: tooltip ?? '',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 4),
+          SizedBox(
+            width: 80,
+            child: Focus(
+              // Add focus to detect changes when focus is lost.
+
+              onFocusChange: (hasFocus) {
+                if (!hasFocus) {
+                  final input = controller.text;
+                  if (input.isNotEmpty) {
+                    final parsedValue = int.tryParse(input);
+                    if (parsedValue != null) {
+                      onChanged(parsedValue);
+                    }
+                  }
+                }
+              },
+              child: TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                controller: controller,
+                onSubmitted: (input) {
+                  if (input.isNotEmpty) {
+                    final parsedValue = int.tryParse(input);
+                    if (parsedValue != null) {
+                      onChanged(parsedValue);
+                    }
+                  }
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Build partition controls.
+
+  Widget _buildPartitionControls() {
+    final train = ref.watch(partitionTrainProvider);
+    final valid = ref.watch(partitionValidProvider);
+    final test = ref.watch(partitionTestProvider);
+    final total = train + valid + test;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            _buildCustomNumberField(
+              label: 'Training %:',
+              value: train,
+              onChanged: (value) async {
+                if (value >= 0 && value <= 100) {
+                  await _savePartitionTrain(value);
+                } else {
+                  _showOutOfRangeWarning();
+                }
+              },
+              tooltip: '''
+                            
+              The percentage of data allocated for training the model. Ensure the total 
+              across training, validation, and testing sums to 100%.
+
+              ''',
+            ),
+            configRowGap,
+            _buildCustomNumberField(
+              label: 'Validation %:',
+              value: valid,
+              onChanged: (value) async {
+                if (value >= 0 && value <= 100) {
+                  await _savePartitionValid(value);
+                } else {
+                  _showOutOfRangeWarning();
+                }
+              },
+              tooltip: '''
+          
+              The percentage of data allocated for validating the model. Ensure the total 
+              across training, validation, and testing sums to 100%.
+              
+              ''',
+            ),
+            configRowGap,
+            _buildCustomNumberField(
+              label: 'Testing %:',
+              value: test,
+              onChanged: (value) async {
+                if (value >= 0 && value <= 100) {
+                  await _savePartitionTest(value);
+                } else {
+                  _showOutOfRangeWarning();
+                }
+              },
+              tooltip: '''
+          
+              The percentage of data allocated for testing the model. Ensure the total 
+              across training, validation, and testing sums to 100%.
+                                
+              ''',
+            ),
+            configRowGap,
+            Text(
+              'Total: $total%',
+              style: TextStyle(
+                fontSize: 16,
+                color: total == 100 ? Colors.green : Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  /// Display a warning if the partition total is invalid when pressing cancel.
+
+  void _showInvalidPartitionWarning() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Invalid Partition Total'),
+          content: const Text(
+            'The total of Training, Validation, and Testing percentages must be exactly 100.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// Validate partition total when pressing cancel button.
+
+  void _handleCancelButton() {
+    final train = ref.read(partitionTrainProvider);
+    final valid = ref.read(partitionValidProvider);
+    final test = ref.read(partitionTestProvider);
+    final total = train + valid + test;
+
+    if (total != 100) {
+      _showInvalidPartitionWarning();
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
+  /// Display a warning if a value is out of the valid range (0-100).
+
+  void _showOutOfRangeWarning() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Invalid Input'),
+          content: const Text('Values must be between 0 and 100.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

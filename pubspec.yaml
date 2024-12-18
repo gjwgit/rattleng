@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.44+156
+version: 6.3.45+156
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -115,9 +115,7 @@ flutter:
     - assets/icons/icon.png
     - assets/markdown/
     - assets/r/
-    - assets/svg/explore.svg
-    - assets/svg/generic.svg
-    - assets/svg/model.svg
+    - assets/svg/
 
   # Use a fixed width Ubuntu font for the Log tab.
 

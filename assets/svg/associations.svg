@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 500 300"
+   version="1.1"
+   id="svg44"
+   sodipodi:docname="associations.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs48" />
+  <sodipodi:namedview
+     id="namedview46"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="2.62"
+     inkscape:cx="250.19084"
+     inkscape:cy="150.19084"
+     inkscape:window-width="3326"
+     inkscape:window-height="1371"
+     inkscape:window-x="2034"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg44" />
+  <!-- Background -->
+  <rect
+     width="500"
+     height="300"
+     fill="white"
+     id="rect2" />
+  <!-- Items (Nodes) -->
+  <circle
+     cx="100"
+     cy="150"
+     r="40"
+     fill="#4CAF50"
+     opacity="0.8"
+     id="circle4" />
+  <text
+     x="100"
+     y="155"
+     text-anchor="middle"
+     fill="white"
+     font-size="14"
+     id="text6">Bread</text>
+  <circle
+     cx="250"
+     cy="80"
+     r="40"
+     fill="#2196F3"
+     opacity="0.8"
+     id="circle8" />
+  <text
+     x="250"
+     y="85"
+     text-anchor="middle"
+     fill="white"
+     font-size="14"
+     id="text10">Butter</text>
+  <circle
+     cx="400"
+     cy="150"
+     r="40"
+     fill="#9C27B0"
+     opacity="0.8"
+     id="circle12" />
+  <text
+     x="400"
+     y="155"
+     text-anchor="middle"
+     fill="white"
+     font-size="14"
+     id="text14">Milk</text>
+  <circle
+     cx="250"
+     cy="220"
+     r="40"
+     fill="#FF9800"
+     opacity="0.8"
+     id="circle16" />
+  <text
+     x="250"
+     y="225"
+     text-anchor="middle"
+     fill="white"
+     font-size="14"
+     id="text18">Eggs</text>
+  <!-- Association Rules (Edges) -->
+  <!-- Bread -> Butter -->
+  <path
+     d="M 130 130 Q 190 105 215 95"
+     stroke="#666"
+     stroke-width="2"
+     fill="none"
+     id="path20" />
+  <text
+     x="128"
+     y="99"
+     font-size="12px"
+     id="text22">support: 0.6</text>
+  <!-- Butter -> Milk -->
+  <path
+     d="M 285 95 Q 340 120 365 130"
+     stroke="#666"
+     stroke-width="2"
+     fill="none"
+     id="path24" />
+  <text
+     x="304"
+     y="99"
+     font-size="12px"
+     id="text26">support: 0.5</text>
+  <!-- Bread -> Eggs -->
+  <path
+     d="M 130 170 Q 190 195 215 205"
+     stroke="#666"
+     stroke-width="2"
+     fill="none"
+     id="path28" />
+  <text
+     x="128"
+     y="212"
+     font-size="12px"
+     id="text30">support: 0.4</text>
+  <!-- Milk -> Eggs -->
+  <path
+     d="M 365 170 Q 310 195 285 205"
+     stroke="#666"
+     stroke-width="2"
+     fill="none"
+     id="path32" />
+  <text
+     x="312"
+     y="212"
+     font-size="12px"
+     id="text34">support: 0.7</text>
+  <!-- Legend -->
+  <rect
+     x="20"
+     y="20"
+     width="120"
+     height="40"
+     fill="#ffffff"
+     stroke="#dddddd"
+     id="rect36" />
+  <text
+     x="30"
+     y="40"
+     font-size="12"
+     id="text38">Confidence:</text>
+  <line
+     x1="30"
+     y1="50"
+     x2="90"
+     y2="50"
+     stroke="#666"
+     stroke-width="2"
+     id="line40" />
+  <text
+     x="100"
+     y="55"
+     font-size="12"
+     id="text42">≥ 0.5</text>
+</svg>

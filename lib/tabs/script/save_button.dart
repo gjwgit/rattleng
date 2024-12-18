@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/providers/script.dart';
 
@@ -40,11 +41,24 @@ class ScriptSaveButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      child: const Text('Save'),
-      onPressed: () {
-        _showFileNameDialog(context, ref);
-      },
+    // Button to save as R script.
+
+    return MarkdownTooltip(
+      message: '''
+
+      **Save.** Tap here to save the information in this text
+          page to a **R script** document.
+
+      ''',
+      child: IconButton(
+        onPressed: () {
+          _showFileNameDialog(context, ref);
+        },
+        icon: Icon(
+          Icons.save,
+          color: Colors.blue,
+        ),
+      ),
     );
   }
 

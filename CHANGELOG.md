@@ -8,6 +8,7 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Add various images for overview pages [6.3.45 20241218 gjw]
 + Bug fix for no TARGET [6.3.44 20241216 gjw]
 + Update spacing in row/column with flutter 3.27 update [6.3.43 20241216 gjw]
 + Add images to overview pages [6.3.42 20241215 gjw]

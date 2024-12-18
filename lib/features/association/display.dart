@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-12-12 20:23:00 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-18 06:46:10 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,7 +36,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_association.dart';
 import 'package:rattle/utils/image_exists.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -67,7 +67,11 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
     // Begin the list of pages to display with the introduction markdown text.
 
     List<Widget> pages = [
-      showMarkdownFile(associationIntroFile, context),
+      showMarkdownFile(
+        context,
+        associationIntroFile,
+        'assets/svg/associations.svg',
+      ),
     ];
 
     String content = '';
