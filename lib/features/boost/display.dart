@@ -35,6 +35,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -55,6 +56,7 @@ class BoostDisplay extends ConsumerStatefulWidget {
 class _BoostDisplayState extends ConsumerState<BoostDisplay> {
   @override
   Widget build(BuildContext context) {
+    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
     String stdout = ref.watch(stdoutProvider);
     String algorithm = ref.read(algorithmBoostProvider.notifier).state;
 
@@ -180,7 +182,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **tuning** dataset to evaluate the model performance.
+          Using the **${validationThanTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',

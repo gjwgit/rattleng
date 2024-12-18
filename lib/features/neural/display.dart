@@ -31,6 +31,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -52,6 +53,7 @@ class NeuralDisplay extends ConsumerStatefulWidget {
 class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
+    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
     final pageController = ref.watch(
       neuralPageControllerProvider,
     ); // Get the PageController from Riverpod
@@ -278,7 +280,7 @@ $weights
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **tuning** dataset to evaluate the model performance.
+          Using the **${validationThanTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',

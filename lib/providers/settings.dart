@@ -77,6 +77,8 @@ final imageViewerSettingProvider = StateProvider<String>((ref) => '');
 
 final randomPartitionSettingProvider = StateProvider<bool>((ref) => false);
 
+final validationThanTuningSettingProvider = StateProvider<bool>((ref) => false);
+
 final rExecutablePathProvider = StateProvider<String>((ref) => '');
 
 // Partition setting provider with default values.
