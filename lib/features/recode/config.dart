@@ -303,7 +303,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   enabled: true,
                   onChanged: (String? value) {
                     setState(() {
-                      print("inputs: $inputs");
+                      print("all inputs: $inputs");
                       ref.read(selectedProvider.notifier).state =
                           value ?? 'IMPOSSIBLE';
 
