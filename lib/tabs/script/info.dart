@@ -54,12 +54,13 @@ class ScriptInfo extends StatelessWidget {
                   ? Container(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
+                        spacing: 200,
                         children: [
                           MarkdownBody(data: snapshot.data!),
                           SvgPicture.asset(
                             rImagePath,
-                            width: 200, // You can adjust these dimensions
-                            height: 200, // to fit your needs
+                            width: 200,
+                            height: 200,
                             fit: BoxFit.contain,
                           ),
                         ],
