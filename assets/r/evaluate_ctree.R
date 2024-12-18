@@ -65,3 +65,5 @@ error_matrix_predic <- apply(error_matrix_predic, 1, function(x) {
 })
 
 error_matrix_target <- trds[[target]]
+
+roc_predicted_probs <- predicted_ctree_probs

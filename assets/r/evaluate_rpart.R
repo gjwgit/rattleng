@@ -37,7 +37,6 @@ library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
 library(hmeasure)
 library(rattle)       # Support: asRules(), fancyRpartPlot().
-library(rpart) # ML: decision tree rpart().
 
 target_rpart_levels <- unique(trds[[target]])
 target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present
