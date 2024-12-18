@@ -284,6 +284,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(randomPartitionSettingProvider.notifier).state =
         prefs.getBool('randomPartition') ?? false;
+
+    ref.read(validationThanTuningSettingProvider.notifier).state =
+        prefs.getBool('validationThanTuning') ?? false;
   }
 
   Future<void> _saveToggleStates() async {
@@ -334,6 +337,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save "Random Partition" state to preferences.
 
     await prefs.setBool('randomPartition', value);
+  }
+
+  Future<void> _saveValidationThanTuning(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save "Validation than Tuning" state to preferences.
+
+    await prefs.setBool('validationThanTuning', value);
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -1168,6 +1179,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final train = ref.watch(partitionTrainProvider);
     final valid = ref.watch(partitionValidProvider);
     final test = ref.watch(partitionTestProvider);
+    final validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+
     final total = train + valid + test;
 
     return Column(
@@ -1235,6 +1248,36 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 fontSize: 16,
                 color: total == 100 ? Colors.green : Colors.red,
                 fontWeight: FontWeight.bold,
+              ),
+            ),
+            configRowGap,
+            MarkdownTooltip(
+              message: '''
+
+         
+
+                            ''',
+              child: const Text(
+                'Use Validation rather than Tuning for Evaluation',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            MarkdownTooltip(
+              message: '''
+
+           
+
+                            ''',
+              child: Switch(
+                value: validationThanTuning,
+                onChanged: (value) {
+                  ref
+                      .read(
+                        validationThanTuningSettingProvider.notifier,
+                      )
+                      .state = value;
+                  _saveValidationThanTuning(value);
+                },
               ),
             ),
           ],
