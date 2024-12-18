@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:rattle/constants/app.dart';
 
@@ -53,6 +54,21 @@ class ScriptInfo extends StatelessWidget {
                       child: Column(
                         children: [
                           MarkdownBody(data: snapshot.data!),
+                          const SizedBox(height: 20), // Add spacing
+                          Expanded(
+                            child: SvgPicture.asset(
+                              'assets/svg/r_script_overview.svg',
+                              width: 200, // You can adjust these dimensions
+                              height: 200, // to fit your needs
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          // SvgPicture.asset(
+                          //   'assets/images/r_script_overview.svg',
+                          //   width: 200, // Set desired width
+                          //   height: 200, // Set desired height
+                          //   fit: BoxFit.contain, // Adjust fit if necessary
+                          // ),
                         ],
                       ),
                     )
