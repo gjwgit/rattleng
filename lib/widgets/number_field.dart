@@ -49,6 +49,7 @@ class NumberField extends ConsumerStatefulWidget {
   final int decimalPlaces;
   final num? min;
   final num? max;
+  final Future<void> Function(String? newValue)? onValueChanged;
 
   const NumberField({
     super.key,
@@ -63,8 +64,11 @@ class NumberField extends ConsumerStatefulWidget {
     this.enabled = true,
     this.maxWidth = 5,
     this.decimalPlaces = 0,
-    // The default interval is 1 and can be set as double or int.
-    this.interval = 1,
+    this.interval = 1, // Default interval is 1, can be set as double or int
+
+    // Optional parameter for onValueChanged callback.
+
+    this.onValueChanged,
   });
 
   @override

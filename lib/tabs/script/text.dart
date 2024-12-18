@@ -42,24 +42,40 @@ class ScriptText extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Create a ScrollController for scrolling.
+
+    final ScrollController scrollController = ScrollController();
+
     // Build the widget.
 
     return Container(
       color: Colors.white,
       child: Stack(
         children: [
-          // Main content with scrollable text
-          SingleChildScrollView(
-            child: Builder(
-              builder: (BuildContext context) {
-                final script = ref.watch(scriptProvider);
+          // Main content with scrollable text.
 
-                return SelectableText(
-                  script,
-                  key: scriptTextKey,
-                  style: monoSmallTextStyle,
-                );
-              },
+          Scrollbar(
+            controller: scrollController,
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+              controller: scrollController,
+              scrollDirection: Axis.vertical,
+              child: Builder(
+                builder: (BuildContext context) {
+                  final script = ref.watch(scriptProvider);
+
+                  return Container(
+                    // Ensure width matches the full container.
+
+                    width: MediaQuery.of(context).size.width,
+                    child: SelectableText(
+                      script,
+                      key: scriptTextKey,
+                      style: monoSmallTextStyle,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           // ScriptSaveButton at the top-right corner.
