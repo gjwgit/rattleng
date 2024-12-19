@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:rattle/constants/app.dart';
 
@@ -43,6 +44,8 @@ class ScriptInfo extends StatelessWidget {
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
+          String rImagePath = 'assets/svg/r_script_overview.svg';
+
           // WHY USING FUTURE BUILDER HERE?
           return FutureBuilder(
             future: rootBundle.loadString(scriptIntroFile),
@@ -51,8 +54,15 @@ class ScriptInfo extends StatelessWidget {
                   ? Container(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
+                        spacing: 200,
                         children: [
                           MarkdownBody(data: snapshot.data!),
+                          SvgPicture.asset(
+                            rImagePath,
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.contain,
+                          ),
                         ],
                       ),
                     )
