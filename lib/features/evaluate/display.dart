@@ -82,6 +82,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String rocRforestImage = '$tempDir/model_randomForest_evaluate_roc.svg';
 
+    String rocXGBoostImage = '$tempDir/model_xgboost_evaluate_roc.svg';
+
     String handRpartImage = '$tempDir/model_rpart_evaluate_hand.svg';
 
     String handCtreeImage = '$tempDir/model_ctree_evaluate_hand.svg';
@@ -111,6 +113,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     if (imageExists(rocCforestImage)) {
       rocImages.add(rocCforestImage);
       rocImagesTitles.add('CONDITIONAL FORESET');
+    }
+
+    if (imageExists(rocXGBoostImage)) {
+      rocImages.add(rocXGBoostImage);
+      rocImagesTitles.add('XGBoost');
     }
 
     if (imageExists(handRpartImage)) {

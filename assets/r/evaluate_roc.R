@@ -69,6 +69,10 @@ na_positions <- is.na(roc_predicted_probs) | is.na(actual_model_labels)
 roc_predicted_probs <- roc_predicted_probs[!na_positions]
 actual_model_labels <- actual_model_labels[!na_positions]
 
+# Convert roc_predicted_probs to numeric.
+
+roc_predicted_probs <- as.numeric(factor(roc_predicted_probs)) - 1
+
 prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
 
 pe <- performance(prediction_prob_values, "tpr", "fpr")
