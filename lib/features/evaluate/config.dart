@@ -291,7 +291,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [en, em],
+                    [en, em, eroc],
                   );
                 }
 

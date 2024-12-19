@@ -78,6 +78,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String rocCtreeImage = '$tempDir/model_ctree_evaluate_roc.svg';
 
+    String rocNNETImage = '$tempDir/model_nnet_evaluate_roc.svg';
+
     String rocRpartImage = '$tempDir/model_rpart_evaluate_roc.svg';
 
     String rocSVMImage = '$tempDir/model_svm_evaluate_roc.svg';
@@ -112,6 +114,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     if (imageExists(rocCtreeImage)) {
       rocImages.add(rocCtreeImage);
       rocImagesTitles.add('CTREE');
+    }
+
+    if (imageExists(rocNNETImage)) {
+      rocImages.add(rocNNETImage);
+      rocImagesTitles.add('NNET');
     }
 
     if (imageExists(rocRforestImage)) {

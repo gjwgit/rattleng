@@ -35,7 +35,8 @@
 
 # Load required packages from the local library into the R session.
 
-library(ggplot2, quietly=TRUE)
+library(ggplot2, quietly = TRUE)
+library(glue)
 library(ROCR)
 
 ########################################################################
@@ -84,8 +85,8 @@ roc_min_length <- min(len_actual_target, len_roc_predicted_predic)
 
 # Match the minimum length.
 
-roc_predicted_probs <- roc_predicted_probs[seq_len(min_length)]
-actual_model_labels <- actual_model_labels[seq_len(min_length)]
+roc_predicted_probs <- roc_predicted_probs[seq_len(roc_min_length)]
+actual_model_labels <- actual_model_labels[seq_len(roc_min_length)]
 
 prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
 
