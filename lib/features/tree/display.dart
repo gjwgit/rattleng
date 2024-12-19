@@ -61,7 +61,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
       treePageControllerProvider,
     );
 
-    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
 
     String stdout = ref.watch(stdoutProvider);
 
@@ -186,7 +186,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationThanTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and

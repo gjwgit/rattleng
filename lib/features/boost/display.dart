@@ -56,7 +56,7 @@ class BoostDisplay extends ConsumerStatefulWidget {
 class _BoostDisplayState extends ConsumerState<BoostDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
     String stdout = ref.watch(stdoutProvider);
     String algorithm = ref.read(algorithmBoostProvider.notifier).state;
 
@@ -182,7 +182,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationThanTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
