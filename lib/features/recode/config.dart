@@ -187,6 +187,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        mainAxisAlignment:
+            MainAxisAlignment.start, // Align children to the start
+
         spacing: configWidgetSpace,
         children: [
           configLeftGap,
@@ -213,6 +216,17 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             Set the number of bins to construct.
       
             ''',
+          ),
+          ChoiceChipTip(
+            options: asMethods,
+            selectedOption: selectedAs,
+            // enabled: isNumeric,
+            tooltips: asMethodsTooltips,
+            onSelected: (String? selected) {
+              setState(() {
+                selectedAs = selected ?? '';
+              });
+            },
           ),
           ChoiceChipTip(
             enabled: selected == 'NULL' || !isNumeric,
@@ -272,12 +286,18 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     return Stack(
       children: [
         Column(
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Align content to the start
+          mainAxisAlignment:
+              MainAxisAlignment.start, // Optional: Align vertically
           spacing: configRowSpace,
           children: [
             configTopGap,
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start, // Align to start
+
                 spacing: configWidgetSpace,
                 children: [
                   configTopGap,
@@ -357,17 +377,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     Select a secondary variable to assist in the recoding process.
                   
                     ''',
-                  ),
-                  ChoiceChipTip(
-                    options: asMethods,
-                    selectedOption: selectedAs,
-                    // enabled: isNumeric,
-                    tooltips: asMethodsTooltips,
-                    onSelected: (String? selected) {
-                      setState(() {
-                        selectedAs = selected ?? '';
-                      });
-                    },
                   ),
                 ],
               ),
