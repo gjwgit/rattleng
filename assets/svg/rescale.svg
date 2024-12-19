@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <!-- Background -->
+    <rect width="800" height="600" fill="#ffffff"/>
+
+    <!-- Title -->
+    <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#333">
+        Common Data Scaling Transformations
+    </text>
+
+    <!-- Original Data Points -->
+    <g transform="translate(100, 100)">
+        <text x="0" y="-10" font-size="14" fill="#666">Original Data</text>
+        <line x1="0" y1="0" x2="600" y2="0" stroke="#ddd" stroke-width="1"/>
+        <circle cx="100" cy="0" r="4" fill="#ff6b6b"/>
+        <circle cx="200" cy="0" r="4" fill="#ff6b6b"/>
+        <circle cx="400" cy="0" r="4" fill="#ff6b6b"/>
+        <circle cx="550" cy="0" r="4" fill="#ff6b6b"/>
+        <!-- Value labels -->
+        <text x="100" y="20" text-anchor="middle" font-size="12" fill="#666">10</text>
+        <text x="200" y="20" text-anchor="middle" font-size="12" fill="#666">25</text>
+        <text x="400" y="20" text-anchor="middle" font-size="12" fill="#666">75</text>
+        <text x="550" y="20" text-anchor="middle" font-size="12" fill="#666">100</text>
+    </g>
+
+    <!-- Min-Max Scaling (0-1) -->
+    <g transform="translate(100, 180)">
+        <text x="0" y="-10" font-size="14" fill="#666">Min-Max Scaling (0-1)</text>
+        <line x1="0" y1="0" x2="600" y2="0" stroke="#ddd" stroke-width="1"/>
+        <circle cx="0" cy="0" r="4" fill="#4ecdc4"/>
+        <circle cx="200" cy="0" r="4" fill="#4ecdc4"/>
+        <circle cx="400" cy="0" r="4" fill="#4ecdc4"/>
+        <circle cx="600" cy="0" r="4" fill="#4ecdc4"/>
+        <!-- Value labels -->
+        <text x="0" y="20" text-anchor="middle" font-size="12" fill="#666">0.0</text>
+        <text x="200" y="20" text-anchor="middle" font-size="12" fill="#666">0.33</text>
+        <text x="400" y="20" text-anchor="middle" font-size="12" fill="#666">0.67</text>
+        <text x="600" y="20" text-anchor="middle" font-size="12" fill="#666">1.0</text>
+    </g>
+
+    <!-- Z-Score (Mean/SD) -->
+    <g transform="translate(100, 260)">
+        <text x="0" y="-10" font-size="14" fill="#666">Z-Score (Mean/SD)</text>
+        <line x1="0" y1="0" x2="600" y2="0" stroke="#ddd" stroke-width="1"/>
+        <circle cx="150" cy="0" r="4" fill="#45b7d1"/>
+        <circle cx="250" cy="0" r="4" fill="#45b7d1"/>
+        <circle cx="350" cy="0" r="4" fill="#45b7d1"/>
+        <circle cx="450" cy="0" r="4" fill="#45b7d1"/>
+        <!-- Value labels -->
+        <text x="150" y="20" text-anchor="middle" font-size="12" fill="#666">-1.5</text>
+        <text x="250" y="20" text-anchor="middle" font-size="12" fill="#666">-0.5</text>
+        <text x="350" y="20" text-anchor="middle" font-size="12" fill="#666">0.5</text>
+        <text x="450" y="20" text-anchor="middle" font-size="12" fill="#666">1.5</text>
+    </g>
+
+    <!-- Log Transform (natural) -->
+    <g transform="translate(100, 340)">
+        <text x="0" y="-10" font-size="14" fill="#666">Log Transform (ln)</text>
+        <line x1="0" y1="0" x2="600" y2="0" stroke="#ddd" stroke-width="1"/>
+        <circle cx="150" cy="0" r="4" fill="#96ceb4"/>
+        <circle cx="300" cy="0" r="4" fill="#96ceb4"/>
+        <circle cx="400" cy="0" r="4" fill="#96ceb4"/>
+        <circle cx="450" cy="0" r="4" fill="#96ceb4"/>
+        <!-- Value labels -->
+        <text x="150" y="20" text-anchor="middle" font-size="12" fill="#666">2.30</text>
+        <text x="300" y="20" text-anchor="middle" font-size="12" fill="#666">3.22</text>
+        <text x="400" y="20" text-anchor="middle" font-size="12" fill="#666">4.32</text>
+        <text x="450" y="20" text-anchor="middle" font-size="12" fill="#666">4.61</text>
+    </g>
+
+    <!-- Log Transform (base 10) -->
+    <g transform="translate(100, 420)">
+        <text x="0" y="-10" font-size="14" fill="#666">Log Transform (log10)</text>
+        <line x1="0" y1="0" x2="600" y2="0" stroke="#ddd" stroke-width="1"/>
+        <circle cx="150" cy="0" r="4" fill="#ffd93d"/>
+        <circle cx="300" cy="0" r="4" fill="#ffd93d"/>
+        <circle cx="400" cy="0" r="4" fill="#ffd93d"/>
+        <circle cx="450" cy="0" r="4" fill="#ffd93d"/>
+        <!-- Value labels -->
+        <text x="150" y="20" text-anchor="middle" font-size="12" fill="#666">1.00</text>
+        <text x="300" y="20" text-anchor="middle" font-size="12" fill="#666">1.40</text>
+        <text x="400" y="20" text-anchor="middle" font-size="12" fill="#666">1.88</text>
+        <text x="450" y="20" text-anchor="middle" font-size="12" fill="#666">2.00</text>
+    </g>
+
+    <!-- Rank Transform -->
+    <g transform="translate(100, 500)">
+        <text x="0" y="-10" font-size="14" fill="#666">Rank Transform</text>
+        <line x1="0" y1="0" x2="600" y2="0" stroke="#ddd" stroke-width="1"/>
+        <circle cx="150" cy="0" r="4" fill="#88d8b0"/>
+        <circle cx="300" cy="0" r="4" fill="#88d8b0"/>
+        <circle cx="450" cy="0" r="4" fill="#88d8b0"/>
+        <circle cx="600" cy="0" r="4" fill="#88d8b0"/>
+        <!-- Value labels -->
+        <text x="150" y="20" text-anchor="middle" font-size="12" fill="#666">1</text>
+        <text x="300" y="20" text-anchor="middle" font-size="12" fill="#666">2</text>
+        <text x="450" y="20" text-anchor="middle" font-size="12" fill="#666">3</text>
+        <text x="600" y="20" text-anchor="middle" font-size="12" fill="#666">4</text>
+    </g>
+
+    <!-- Arrows showing transformation -->
+    <g stroke="#999" stroke-width="1" fill="none">
+        <path d="M200,100 C 200,130 200,150 200,180" marker-end="url(#arrowhead)"/>
+        <path d="M300,100 C 300,130 300,230 300,260" marker-end="url(#arrowhead)"/>
+        <path d="M400,100 C 400,130 400,310 400,340" marker-end="url(#arrowhead)"/>
+        <path d="M500,100 C 500,130 500,390 500,420" marker-end="url(#arrowhead)"/>
+    </g>
+
+    <!-- Arrow marker definition -->
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7"
+                refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#999"/>
+        </marker>
+    </defs>
+</svg>
