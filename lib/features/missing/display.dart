@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-10-05 15:43:30 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 08:22:02 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,7 +35,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -57,7 +57,13 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
-    List<Widget> pages = [showMarkdownFile(missingIntroFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile(
+        context,
+        missingIntroFile,
+        'assets/svg/missing.svg',
+      ),
+    ];
 
     String content = '';
     String image = '';
@@ -161,12 +167,12 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
       pages.add(
         SingleImagePage(
           title: '''
-          
+
         # Aggregation of Missing Values - Visual
-          
+
         Generated using
         [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
-        
+
         ''',
           path: image,
         ),

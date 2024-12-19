@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial" font-weight="bold" text-anchor="middle" font-size="16">Missing Data Patterns Analysis</text>
+
+  <!-- Matrix Plot (Top Left) -->
+  <g transform="translate(50, 60)">
+    <text x="150" y="0" font-family="Arial" font-weight="bold" text-anchor="middle">Missing Data Matrix</text>
+    
+    <!-- Y-axis labels (Variables) -->
+    <g font-family="Arial" font-size="12">
+      <text x="-5" y="40" text-anchor="end">Age</text>
+      <text x="-5" y="70" text-anchor="end">Income</text>
+      <text x="-5" y="100" text-anchor="end">Education</text>
+      <text x="-5" y="130" text-anchor="end">Location</text>
+      <text x="-5" y="160" text-anchor="end">Score</text>
+    </g>
+
+    <!-- Matrix cells (black = present, white with red border = missing) -->
+    <g>
+      <!-- Row 1 -->
+      <rect x="10" y="25" width="20" height="20" fill="black"/>
+      <rect x="35" y="25" width="20" height="20" fill="black"/>
+      <rect x="60" y="25" width="20" height="20" fill="white" stroke="red"/>
+      <rect x="85" y="25" width="20" height="20" fill="black"/>
+      <rect x="110" y="25" width="20" height="20" fill="black"/>
+      
+      <!-- Row 2 -->
+      <rect x="10" y="55" width="20" height="20" fill="black"/>
+      <rect x="35" y="55" width="20" height="20" fill="white" stroke="red"/>
+      <rect x="60" y="55" width="20" height="20" fill="white" stroke="red"/>
+      <rect x="85" y="55" width="20" height="20" fill="black"/>
+      <rect x="110" y="55" width="20" height="20" fill="black"/>
+      
+      <!-- Row 3 -->
+      <rect x="10" y="85" width="20" height="20" fill="black"/>
+      <rect x="35" y="85" width="20" height="20" fill="black"/>
+      <rect x="60" y="85" width="20" height="20" fill="black"/>
+      <rect x="85" y="85" width="20" height="20" fill="white" stroke="red"/>
+      <rect x="110" y="85" width="20" height="20" fill="black"/>
+      
+      <!-- Row 4 -->
+      <rect x="10" y="115" width="20" height="20" fill="white" stroke="red"/>
+      <rect x="35" y="115" width="20" height="20" fill="black"/>
+      <rect x="60" y="115" width="20" height="20" fill="black"/>
+      <rect x="85" y="115" width="20" height="20" fill="black"/>
+      <rect x="110" y="115" width="20" height="20" fill="white" stroke="red"/>
+      
+      <!-- Row 5 -->
+      <rect x="10" y="145" width="20" height="20" fill="black"/>
+      <rect x="35" y="145" width="20" height="20" fill="white" stroke="red"/>
+      <rect x="60" y="145" width="20" height="20" fill="black"/>
+      <rect x="85" y="145" width="20" height="20" fill="black"/>
+      <rect x="110" y="145" width="20" height="20" fill="black"/>
+    </g>
+  </g>
+
+  <!-- Missing Data Bar Chart (Top Right) -->
+  <g transform="translate(400, 60)">
+    <text x="150" y="0" font-family="Arial" font-weight="bold" text-anchor="middle">Missing Values by Variable</text>
+    
+    <!-- Axes -->
+    <line x1="0" y1="180" x2="300" y2="180" stroke="black"/>
+    <line x1="0" y1="20" x2="0" y2="180" stroke="black"/>
+    
+    <!-- Bars -->
+    <g>
+      <rect x="20" y="40" width="30" height="140" fill="#4682b4" fill-opacity="0.7"/>
+      <rect x="70" y="80" width="30" height="100" fill="#4682b4" fill-opacity="0.7"/>
+      <rect x="120" y="100" width="30" height="80" fill="#4682b4" fill-opacity="0.7"/>
+      <rect x="170" y="120" width="30" height="60" fill="#4682b4" fill-opacity="0.7"/>
+      <rect x="220" y="140" width="30" height="40" fill="#4682b4" fill-opacity="0.7"/>
+    </g>
+    
+    <!-- Labels -->
+    <g font-family="Arial" font-size="12" transform="translate(0,195)">
+      <text x="35" y="0" text-anchor="middle">Age</text>
+      <text x="85" y="0" text-anchor="middle">Income</text>
+      <text x="135" y="0" text-anchor="middle">Education</text>
+      <text x="185" y="0" text-anchor="middle">Location</text>
+      <text x="235" y="0" text-anchor="middle">Score</text>
+    </g>
+    
+    <!-- Percentages -->
+    <g font-family="Arial" font-size="10" fill="#666">
+      <text x="35" y="35" text-anchor="middle">15%</text>
+      <text x="85" y="75" text-anchor="middle">12%</text>
+      <text x="135" y="95" text-anchor="middle">8%</text>
+      <text x="185" y="115" text-anchor="middle">6%</text>
+      <text x="235" y="135" text-anchor="middle">4%</text>
+    </g>
+  </g>
+
+  <!-- Missing Patterns Heatmap (Bottom) -->
+  <g transform="translate(50, 300)">
+    <text x="350" y="0" font-family="Arial" font-weight="bold" text-anchor="middle">Missing Data Patterns Heatmap</text>
+    
+    <!-- Heatmap cells -->
+    <g transform="translate(100,30)">
+      <!-- Pattern labels -->
+      <text x="-50" y="25" font-family="Arial" font-size="12" text-anchor="end">Pattern 1</text>
+      <text x="-50" y="55" font-family="Arial" font-size="12" text-anchor="end">Pattern 2</text>
+      <text x="-50" y="85" font-family="Arial" font-size="12" text-anchor="end">Pattern 3</text>
+      <text x="-50" y="115" font-family="Arial" font-size="12" text-anchor="end">Pattern 4</text>
+      
+      <!-- Variable labels -->
+      <g font-family="Arial" font-size="12">
+        <text x="25" y="-10" text-anchor="middle">Age</text>
+        <text x="75" y="-10" text-anchor="middle">Income</text>
+        <text x="125" y="-10" text-anchor="middle">Education</text>
+        <text x="175" y="-10" text-anchor="middle">Location</text>
+        <text x="225" y="-10" text-anchor="middle">Score</text>
+      </g>
+      
+      <!-- Heatmap grid -->
+      <g>
+        <!-- Row 1 -->
+        <rect x="0" y="10" width="50" height="30" fill="#eff3ff"/>
+        <rect x="50" y="10" width="50" height="30" fill="#bdd7e7"/>
+        <rect x="100" y="10" width="50" height="30" fill="#6baed6"/>
+        <rect x="150" y="10" width="50" height="30" fill="#3182bd"/>
+        <rect x="200" y="10" width="50" height="30" fill="#08519c"/>
+        
+        <!-- Row 2 -->
+        <rect x="0" y="40" width="50" height="30" fill="#bdd7e7"/>
+        <rect x="50" y="40" width="50" height="30" fill="#6baed6"/>
+        <rect x="100" y="40" width="50" height="30" fill="#3182bd"/>
+        <rect x="150" y="40" width="50" height="30" fill="#08519c"/>
+        <rect x="200" y="40" width="50" height="30" fill="#eff3ff"/>
+        
+        <!-- Row 3 -->
+        <rect x="0" y="70" width="50" height="30" fill="#6baed6"/>
+        <rect x="50" y="70" width="50" height="30" fill="#3182bd"/>
+        <rect x="100" y="70" width="50" height="30" fill="#08519c"/>
+        <rect x="150" y="70" width="50" height="30" fill="#eff3ff"/>
+        <rect x="200" y="70" width="50" height="30" fill="#bdd7e7"/>
+        
+        <!-- Row 4 -->
+        <rect x="0" y="100" width="50" height="30" fill="#3182bd"/>
+        <rect x="50" y="100" width="50" height="30" fill="#08519c"/>
+        <rect x="100" y="100" width="50" height="30" fill="#eff3ff"/>
+        <rect x="150" y="100" width="50" height="30" fill="#bdd7e7"/>
+        <rect x="200" y="100" width="50" height="30" fill="#6baed6"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(50, 520)">
+    <text x="0" y="0" font-family="Arial" font-weight="bold">Legend:</text>
+    <rect x="0" y="10" width="15" height="15" fill="black"/>
+    <text x="25" y="22" font-family="Arial" font-size="12">Present Data</text>
+    <rect x="100" y="10" width="15" height="15" fill="white" stroke="red"/>
+    <text x="125" y="22" font-family="Arial" font-size="12">Missing Data</text>
+    <text x="200" y="22" font-family="Arial" font-size="12">Darker Blue = Higher % Missing</text>
+  </g>
+</svg>

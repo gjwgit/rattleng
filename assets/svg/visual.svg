@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Titles and Layout -->
+  <text x="400" y="30" font-family="Arial" font-weight="bold" text-anchor="middle" font-size="16">Dataset Visual Summary</text>
+  
+  <!-- Box Plot (Top Left) -->
+  <g transform="translate(50, 80)">
+    <text x="150" y="0" font-family="Arial" font-weight="bold" text-anchor="middle">Box Plot</text>
+    <!-- Axis -->
+    <line x1="0" y1="100" x2="300" y2="100" stroke="black" stroke-width="1"/>
+    <!-- Tick marks -->
+    <g font-family="Arial" font-size="10">
+      <line x1="50" y1="95" x2="50" y2="105" stroke="black"/>
+      <text x="50" y="120" text-anchor="middle">0</text>
+      <line x1="150" y1="95" x2="150" y2="105" stroke="black"/>
+      <text x="150" y="120" text-anchor="middle">50</text>
+      <line x1="250" y1="95" x2="250" y2="105" stroke="black"/>
+      <text x="250" y="120" text-anchor="middle">100</text>
+    </g>
+    <!-- Box -->
+    <rect x="100" y="80" width="100" height="40" fill="#e6f3ff" stroke="black"/>
+    <!-- Whiskers -->
+    <line x1="75" y1="100" x2="100" y2="100" stroke="black"/>
+    <line x1="200" y1="100" x2="225" y2="100" stroke="black"/>
+    <line x1="75" y1="90" x2="75" y2="110" stroke="black"/>
+    <line x1="225" y1="90" x2="225" y2="110" stroke="black"/>
+    <!-- Median -->
+    <line x1="150" y1="80" x2="150" y2="120" stroke="#2166ac" stroke-width="2"/>
+  </g>
+
+  <!-- Density Plot (Top Right) -->
+  <g transform="translate(400, 80)">
+    <text x="150" y="0" font-family="Arial" font-weight="bold" text-anchor="middle">Density Plot</text>
+    <!-- Axis -->
+    <line x1="0" y1="100" x2="300" y2="100" stroke="black"/>
+    <!-- Distribution curve -->
+    <path d="M0,100 Q75,90 150,60 T300,100" fill="none" stroke="#4682b4" stroke-width="2"/>
+    <path d="M0,100 Q75,90 150,60 T300,100 V100 Z" fill="#4682b4" fill-opacity="0.2"/>
+  </g>
+
+  <!-- Cumulative Plot (Bottom Left) -->
+  <g transform="translate(50, 300)">
+    <text x="150" y="0" font-family="Arial" font-weight="bold" text-anchor="middle">Cumulative Distribution</text>
+    <!-- Axes -->
+    <line x1="0" y1="200" x2="300" y2="200" stroke="black"/>
+    <line x1="0" y1="0" x2="0" y2="200" stroke="black"/>
+    <!-- CDF curve -->
+    <path d="M0,200 C50,190 100,150 150,100 S250,20 300,0" 
+          fill="none" stroke="#2166ac" stroke-width="2"/>
+    <!-- Tick marks -->
+    <g font-family="Arial" font-size="10">
+      <line x1="-5" y1="0" x2="5" y2="0" stroke="black"/>
+      <text x="-10" y="5" text-anchor="end">1.0</text>
+      <line x1="-5" y1="100" x2="5" y2="100" stroke="black"/>
+      <text x="-10" y="105" text-anchor="end">0.5</text>
+      <line x1="-5" y1="200" x2="5" y2="200" stroke="black"/>
+      <text x="-10" y="205" text-anchor="end">0.0</text>
+    </g>
+  </g>
+
+  <!-- Benford's Law Plot (Bottom Right) -->
+  <g transform="translate(400, 300)">
+    <text x="150" y="0" font-family="Arial" font-weight="bold" text-anchor="middle">Benford's Law Analysis</text>
+    <!-- Axes -->
+    <line x1="0" y1="200" x2="300" y2="200" stroke="black"/>
+    <line x1="0" y1="0" x2="0" y2="200" stroke="black"/>
+    <!-- Bars -->
+    <g>
+      <!-- Expected Benford's Law distribution -->
+      <rect x="10" y="70" width="20" height="130" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="40" y="110" width="20" height="90" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="70" y="130" width="20" height="70" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="100" y="145" width="20" height="55" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="130" y="155" width="20" height="45" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="160" y="162" width="20" height="38" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="190" y="168" width="20" height="32" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="220" y="172" width="20" height="28" fill="#2166ac" fill-opacity="0.3"/>
+      <rect x="250" y="176" width="20" height="24" fill="#2166ac" fill-opacity="0.3"/>
+      
+      <!-- Actual distribution -->
+      <rect x="10" y="80" width="20" height="120" fill="#2166ac"/>
+      <rect x="40" y="115" width="20" height="85" fill="#2166ac"/>
+      <rect x="70" y="135" width="20" height="65" fill="#2166ac"/>
+      <rect x="100" y="148" width="20" height="52" fill="#2166ac"/>
+      <rect x="130" y="158" width="20" height="42" fill="#2166ac"/>
+      <rect x="160" y="165" width="20" height="35" fill="#2166ac"/>
+      <rect x="190" y="170" width="20" height="30" fill="#2166ac"/>
+      <rect x="220" y="174" width="20" height="26" fill="#2166ac"/>
+      <rect x="250" y="177" width="20" height="23" fill="#2166ac"/>
+    </g>
+    <!-- X-axis labels -->
+    <g font-family="Arial" font-size="10">
+      <text x="20" y="215" text-anchor="middle">1</text>
+      <text x="50" y="215" text-anchor="middle">2</text>
+      <text x="80" y="215" text-anchor="middle">3</text>
+      <text x="110" y="215" text-anchor="middle">4</text>
+      <text x="140" y="215" text-anchor="middle">5</text>
+      <text x="170" y="215" text-anchor="middle">6</text>
+      <text x="200" y="215" text-anchor="middle">7</text>
+      <text x="230" y="215" text-anchor="middle">8</text>
+      <text x="260" y="215" text-anchor="middle">9</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(50, 550)">
+    <rect x="0" y="0" width="15" height="15" fill="#2166ac"/>
+    <text x="25" y="12" font-family="Arial" font-size="12">Actual Distribution</text>
+    <rect x="150" y="0" width="15" height="15" fill="#2166ac" fill-opacity="0.3"/>
+    <text x="175" y="12" font-family="Arial" font-size="12">Expected Distribution</text>
+  </g>
+</svg>
