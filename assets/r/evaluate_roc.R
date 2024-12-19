@@ -60,6 +60,14 @@ target_levels <- levels(as.factor(trds[[target]]))  # Retrieve unique levels
 actual_model_labels <- ifelse(trds[[target]] == target_levels[1], 0, 1)
 
 # Create prediction object using probabilities and binary labels.
+# Identify positions where either vector has NA.
+
+na_positions <- is.na(roc_predicted_probs) | is.na(actual_model_labels)
+
+# Remove NA positions from both vectors.
+
+roc_predicted_probs <- roc_predicted_probs[!na_positions]
+actual_model_labels <- actual_model_labels[!na_positions]
 
 prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
 

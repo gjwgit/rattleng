@@ -65,5 +65,3 @@ error_matrix_predic <- unlist(error_matrix_predic, use.names = FALSE)
 error_matrix_target <- target_clean
 
 roc_predicted_probs <- predicted_rforest_probs
-
-roc_predicted_probs[is.na(roc_predicted_probs)] <- 0
