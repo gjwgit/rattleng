@@ -64,4 +64,6 @@ error_matrix_predic <- unlist(error_matrix_predic, use.names = FALSE)
 
 error_matrix_target <- target_clean
 
+# A variable containing the predictions.
+
 roc_predicted_probs <- predicted_rforest_probs

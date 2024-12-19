@@ -70,4 +70,6 @@ error_matrix_predic <- apply(error_matrix_predic, 1, function(x) {
 
 error_matrix_target <- trds[[target]]
 
+# A variable containing the predictions.
+
 roc_predicted_probs <- predicted_ada_probs

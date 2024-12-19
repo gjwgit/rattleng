@@ -101,44 +101,26 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     List<String> rocImages = [];
     List<String> rocImagesTitles = [];
 
-    if (imageExists(rocAdaBoostImage)) {
-      rocImages.add(rocAdaBoostImage);
-      rocImagesTitles.add('AdaBoost');
-    }
+    // List of image-title pairs for ROC data.
 
-    if (imageExists(rocRpartImage)) {
-      rocImages.add(rocRpartImage);
-      rocImagesTitles.add('RPART');
-    }
+    final rocImageData = [
+      {'image': rocAdaBoostImage, 'title': 'AdaBoost'},
+      {'image': rocRpartImage, 'title': 'RPART'},
+      {'image': rocCtreeImage, 'title': 'CTREE'},
+      {'image': rocNNETImage, 'title': 'NNET'},
+      {'image': rocRforestImage, 'title': 'RANDOM FOREST'},
+      {'image': rocSVMImage, 'title': 'SVM'},
+      {'image': rocCforestImage, 'title': 'CONDITIONAL FOREST'},
+      {'image': rocXGBoostImage, 'title': 'XGBoost'},
+    ];
 
-    if (imageExists(rocCtreeImage)) {
-      rocImages.add(rocCtreeImage);
-      rocImagesTitles.add('CTREE');
-    }
+    // Iterate through each image-title pair.
 
-    if (imageExists(rocNNETImage)) {
-      rocImages.add(rocNNETImage);
-      rocImagesTitles.add('NNET');
-    }
-
-    if (imageExists(rocRforestImage)) {
-      rocImages.add(rocRforestImage);
-      rocImagesTitles.add('RANDOM FORESET');
-    }
-
-    if (imageExists(rocSVMImage)) {
-      rocImages.add(rocSVMImage);
-      rocImagesTitles.add('SVM');
-    }
-
-    if (imageExists(rocCforestImage)) {
-      rocImages.add(rocCforestImage);
-      rocImagesTitles.add('CONDITIONAL FORESET');
-    }
-
-    if (imageExists(rocXGBoostImage)) {
-      rocImages.add(rocXGBoostImage);
-      rocImagesTitles.add('XGBoost');
+    for (var data in rocImageData) {
+      if (imageExists(data['image']!)) {
+        rocImages.add(data['image']!);
+        rocImagesTitles.add(data['title']!);
+      }
     }
 
     if (imageExists(handRpartImage)) {

@@ -61,4 +61,6 @@ error_matrix_predic <- predict(model_rpart, newdata = trds, type = "class")
 
 error_matrix_target <- trds[[target]]
 
+# A variable containing the predictions.
+
 roc_predicted_probs <- predicted_rpart_probs

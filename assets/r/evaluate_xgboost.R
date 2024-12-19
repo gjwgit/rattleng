@@ -53,4 +53,6 @@ error_matrix_predic <- ifelse(error_matrix_predic > 0.5, target_levels[2], targe
 
 error_matrix_target <- target_clean
 
+# A variable containing the predictions.
+
 roc_predicted_probs <- error_matrix_predic

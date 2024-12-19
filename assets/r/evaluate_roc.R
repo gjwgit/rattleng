@@ -1,4 +1,4 @@
-# Use `rattle::errorMatrix()` to generate ROC/AUC plots.
+# Use `prediction` to generate ROC/AUC plots.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -88,17 +88,45 @@ roc_min_length <- min(len_actual_target, len_roc_predicted_predic)
 roc_predicted_probs <- roc_predicted_probs[seq_len(roc_min_length)]
 actual_model_labels <- actual_model_labels[seq_len(roc_min_length)]
 
+# Generate a prediction object that combines the predicted probabilities and actual labels.
+
 prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
 
+# Compute performance metrics: True Positive Rate (TPR) and False Positive Rate (FPR).
+
 pe <- performance(prediction_prob_values, "tpr", "fpr")
+
+# Extract the Area Under the Curve (AUC) value for the ROC curve.
+
 au <- performance(prediction_prob_values, "auc")@y.values[[1]]
-pd <- data.frame(fpr=unlist(pe@x.values), tpr=unlist(pe@y.values))
+
+# Create a data frame containing the FPR and TPR values for plotting the ROC curve.
+
+pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
+
+# Initialize a ggplot object with the FPR and TPR data, setting up axes for the ROC curve.
+
 p <- ggplot(pd, aes(x = fpr, y = tpr))
+
+# Add a red line to represent the ROC curve.
+
 p <- p + geom_line(colour = "red")
+
+# Label the x-axis as "False Positive Rate" and the y-axis as "True Positive Rate".
+
 p <- p + xlab("False Positive Rate") + ylab("True Positive Rate")
+
+# Add a title to the plot and customize its appearance.
+
 p <- p + ggtitle(title)
 p <- p + theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5, colour = "darkblue"))
-p <- p + geom_line(data = data.frame(), aes(x = c(0,1), y = c(0,1)), colour = "grey")
+
+# Add a diagonal grey reference line indicating a random classifier (baseline).
+
+p <- p + geom_line(data = data.frame(), aes(x = c(0, 1), y = c(0, 1)), colour = "grey")
+
+# Annotate the plot with the AUC value at a specific position.
+
 p <- p + annotate("text", x = 0.50, y = 0.00, hjust = 0, vjust = 0, size = 5,
                    label = paste("AUC =", round(au, 2)))
 
