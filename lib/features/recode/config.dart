@@ -382,7 +382,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     selected2,
                     ref,
                     selected2Provider,
-                    enabled: true,
+                    enabled: selectedTransform == 'Join Categorics',
                     onChanged: (String? value) {
                       ref.read(selected2Provider.notifier).state =
                           value ?? 'IMPOSSIBLE';
