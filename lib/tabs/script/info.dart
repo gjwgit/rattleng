@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-06-13 05:42:30 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-12-19 12:06:29 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -44,7 +44,7 @@ class ScriptInfo extends StatelessWidget {
     return SingleChildScrollView(
       child: Builder(
         builder: (BuildContext context) {
-          String rImagePath = 'assets/svg/r_script_overview.svg';
+          String rImagePath = 'assets/svg/script.svg';
 
           // WHY USING FUTURE BUILDER HERE?
           return FutureBuilder(
@@ -54,13 +54,13 @@ class ScriptInfo extends StatelessWidget {
                   ? Container(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
-                        spacing: 200,
+//                        spacing: 200,
                         children: [
                           MarkdownBody(data: snapshot.data!),
                           SvgPicture.asset(
                             rImagePath,
-                            width: 200,
-                            height: 200,
+//                            width: 200,
+//                            height: 200,
                             fit: BoxFit.contain,
                           ),
                         ],
