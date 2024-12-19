@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+    <!-- Background -->
+    <rect width="800" height="400" fill="#ffffff"/>
+
+    <!-- Title -->
+    <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#2c3e50">Variable Recoding Examples</text>
+
+    <!-- Binning Section -->
+    <g transform="translate(50, 100)">
+        <!-- Original Data -->
+        <text x="0" y="0" font-size="14" fill="#2c3e50">Age: 18, 25, 32, 45, 52, 67</text>
+        <!-- Arrow -->
+        <path d="M0 10 L0 40" stroke="#3498db" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- Binned Data -->
+        <rect x="0" y="50" width="60" height="30" fill="#3498db" opacity="0.3"/>
+        <rect x="70" y="50" width="60" height="30" fill="#3498db" opacity="0.6"/>
+        <rect x="140" y="50" width="60" height="30" fill="#3498db" opacity="0.9"/>
+        <text x="30" y="70" text-anchor="middle" font-size="12" fill="#2c3e50">18-30</text>
+        <text x="100" y="70" text-anchor="middle" font-size="12" fill="#2c3e50">31-50</text>
+        <text x="170" y="70" text-anchor="middle" font-size="12" fill="#2c3e50">51+</text>
+        <text x="85" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Binning</text>
+    </g>
+
+    <!-- Indicator Variables Section -->
+    <g transform="translate(350, 100)">
+        <!-- Original Data -->
+        <text x="0" y="0" font-size="14" fill="#2c3e50">Status: "Active", "Inactive"</text>
+        <!-- Arrow -->
+        <path d="M0 10 L0 40" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- Indicator Variables -->
+        <rect x="0" y="50" width="100" height="30" fill="#e74c3c" opacity="0.2"/>
+        <text x="50" y="70" text-anchor="middle" font-size="12" fill="#2c3e50">is_active: 1/0</text>
+        <text x="50" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Indicator Variables</text>
+    </g>
+
+    <!-- Combining Factors Section -->
+    <g transform="translate(50, 250)">
+        <!-- Original Data -->
+        <text x="0" y="0" font-size="14" fill="#2c3e50">Day: "Mon" Level: "High"</text>
+        <!-- Arrow -->
+        <path d="M0 10 L0 40" stroke="#2ecc71" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- Combined Factor -->
+        <rect x="0" y="50" width="150" height="30" fill="#2ecc71" opacity="0.3"/>
+        <text x="75" y="70" text-anchor="middle" font-size="12" fill="#2c3e50">day_level: "Mon_High"</text>
+        <text x="75" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Combining Factors</text>
+    </g>
+
+    <!-- Numeric to Categorical Section -->
+    <g transform="translate(350, 250)">
+        <!-- Original Data -->
+        <text x="0" y="0" font-size="14" fill="#2c3e50">Score: 85, 92, 78, 95</text>
+        <!-- Arrow -->
+        <path d="M0 10 L0 40" stroke="#9b59b6" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- Categorical Data -->
+        <rect x="0" y="50" width="150" height="30" fill="#9b59b6" opacity="0.3"/>
+        <text x="75" y="70" text-anchor="middle" font-size="12" fill="#2c3e50">grade: A, A, C, A</text>
+        <text x="75" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Numeric to Categorical</text>
+    </g>
+
+    <!-- Arrow Marker Definition -->
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+        </marker>
+    </defs>
+</svg>
