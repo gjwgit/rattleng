@@ -60,7 +60,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     final pageController = ref.watch(
       treePageControllerProvider,
     );
-    
+
     bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
 
     String stdout = ref.watch(stdoutProvider);
