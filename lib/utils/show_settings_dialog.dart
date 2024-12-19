@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Saturday 2024-12-14 19:53:28 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-19 16:37:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -285,8 +285,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(randomPartitionSettingProvider.notifier).state =
         prefs.getBool('randomPartition') ?? false;
 
-    ref.read(validationThanTuningSettingProvider.notifier).state =
-        prefs.getBool('validationThanTuning') ?? false;
+    ref.read(validationForTuningSettingProvider.notifier).state =
+        prefs.getBool('validationForTuning') ?? false;
   }
 
   Future<void> _saveToggleStates() async {
@@ -344,7 +344,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     // Save "Validation than Tuning" state to preferences.
 
-    await prefs.setBool('validationThanTuning', value);
+    await prefs.setBool('validationForTuning', value);
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -470,6 +470,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     final randomSeed = ref.watch(randomSeedSettingProvider);
     final randomPartition = ref.watch(randomPartitionSettingProvider);
+
+    final validationForTuning = ref.watch(validationForTuningSettingProvider);
 
     return Material(
       color: Colors.transparent,
@@ -622,7 +624,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                               - **Training:** Builds the model.
 
-                              - **Validation:** Tunes the model.
+                              - **${validationForTuning ? 'Validation' : 'Tuning'}:** Tunes the model.
 
                               - **Testing:** Evaluates model performance.
 
@@ -831,8 +833,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Dataset Partition Setting:** 
-                            Configure the dataset partitioning ratios for training, validation, and testing datasets. 
+                            **Dataset Partition Setting:**
+                            Configure the dataset partitioning ratios for training, validation, and testing datasets.
 
                             - Default: 70/15/15 (70% training, 15% validation, 15% testing).
                             - Customize to suit your dataset requirements, e.g., 50/25/25.
@@ -851,7 +853,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Reset Partition Ratios:** 
+                            **Reset Partition Ratios:**
                             Reset the dataset partition ratios to the default values of 70/15/15.
 
                             ''',
@@ -947,7 +949,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-         
+
 
                             ''',
                             child: const Text(
@@ -958,7 +960,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-           
+
 
                             ''',
                             child: Switch(
@@ -1179,7 +1181,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final train = ref.watch(partitionTrainProvider);
     final valid = ref.watch(partitionValidProvider);
     final test = ref.watch(partitionTestProvider);
-    final validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+    final validationForTuning = ref.watch(validationForTuningSettingProvider);
 
     final total = train + valid + test;
 
@@ -1187,6 +1189,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          spacing: configRowSpace,
           children: [
             _buildCustomNumberField(
               label: 'Training %:',
@@ -1199,15 +1202,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 }
               },
               tooltip: '''
-                            
-              The percentage of data allocated for training the model. Ensure the total 
-              across training, validation, and testing sums to 100%.
+
+              The percentage of data allocated for training the model. Ensure
+              the total across training, ${validationForTuning ? "validation" : "tuning"}, and testing sums to 100%.
 
               ''',
             ),
-            configRowGap,
             _buildCustomNumberField(
-              label: 'Validation %:',
+              label: '${validationForTuning ? "Validation" : "Tuning"} %:',
               value: valid,
               onChanged: (value) async {
                 if (value >= 0 && value <= 100) {
@@ -1217,13 +1219,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 }
               },
               tooltip: '''
-          
-              The percentage of data allocated for validating the model. Ensure the total 
-              across training, validation, and testing sums to 100%.
-              
+
+              The percentage of data allocated for ${validationForTuning ? "validating" : "tuning"} the model. Ensure the total across
+              training, ${validationForTuning ? "validation" : "tuning"}, and testing sums to 100%.
+
               ''',
             ),
-            configRowGap,
             _buildCustomNumberField(
               label: 'Testing %:',
               value: test,
@@ -1235,13 +1236,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 }
               },
               tooltip: '''
-          
-              The percentage of data allocated for testing the model. Ensure the total 
-              across training, validation, and testing sums to 100%.
-                                
+
+              The percentage of data allocated for testing the model. Ensure the total
+              across training, ${validationForTuning ? "validation" : "tuning"}, and testing sums to 100%.
+
               ''',
             ),
-            configRowGap,
             Text(
               'Total: $total%',
               style: TextStyle(
@@ -1250,34 +1250,39 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            configRowGap,
-            MarkdownTooltip(
-              message: '''
+            Container(
+              child: MarkdownTooltip(
+                message: '''
 
-         
+                Some data scientists think of the second dataset of the
+                partitions as a dataset to use for **tuning** the model. Others
+                see it as a dataset for **validating** parameter settings. You
+                can choose your preference here.
 
-                            ''',
-              child: const Text(
-                'Use Validation rather than Tuning for Evaluation',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            MarkdownTooltip(
-              message: '''
-
-           
-
-                            ''',
-              child: Switch(
-                value: validationThanTuning,
-                onChanged: (value) {
-                  ref
-                      .read(
-                        validationThanTuningSettingProvider.notifier,
-                      )
-                      .state = value;
-                  _saveValidationThanTuning(value);
-                },
+                ''',
+                child: Row(
+                  children: [
+                    const Text(
+                      'Use Tuning',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Switch(
+                      value: validationForTuning,
+                      onChanged: (value) {
+                        ref
+                            .read(
+                              validationForTuningSettingProvider.notifier,
+                            )
+                            .state = value;
+                        _saveValidationThanTuning(value);
+                      },
+                    ),
+                    const Text(
+                      'or Validation',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

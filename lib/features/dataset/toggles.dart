@@ -129,7 +129,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
   @override
   Widget build(BuildContext context) {
-    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
     // Watch the "Keep in Sync" state to determine the synchronization behavior.
 
     final keepInSync = ref.watch(keepInSyncProvider);
@@ -284,7 +284,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           will be randomly split into three smaller datasets. The three-way
           split defaults to 70/15/15 percent and is currently set as
           70/15/15. Respectively, this creates a **training** dataset (to build
-          the model), a **${validationThanTuning ? 'validation' : 'tuning'}** dataset (to support
+          the model), a **${validationForTuning ? 'validation' : 'tuning'}** dataset (to support
           exploring the model parameters and prevent overfitting), and a
           **testing** dataset (as a hold-out dataset for an unbiased estimate of
           the expected performance of the model). For exploring reasonably large

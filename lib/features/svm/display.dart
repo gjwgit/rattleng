@@ -52,7 +52,7 @@ class SvmDisplay extends ConsumerStatefulWidget {
 class _SvmDisplayState extends ConsumerState<SvmDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
     final pageController = ref.watch(
       svmPageControllerProvider,
     );
@@ -90,7 +90,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationThanTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',

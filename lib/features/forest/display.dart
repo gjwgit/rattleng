@@ -63,7 +63,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     );
 
     String stdout = ref.watch(stdoutProvider);
-    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
     int forestNo = ref.watch(treeNoForestProvider);
     AlgorithmType forestAlgorithm =
         ref.watch(algorithmForestProvider.notifier).state;
@@ -330,7 +330,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationThanTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
