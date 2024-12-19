@@ -302,7 +302,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   void _resetToggleStates() {
     // Reset all toggles to default.
 
-    ref.read(validationThanTuningSettingProvider.notifier).state = false;
+    ref.read(validationForTuningSettingProvider.notifier).state = false;
     ref.read(cleanseProvider.notifier).state = true;
     ref.read(normaliseProvider.notifier).state = true;
     ref.read(partitionProvider.notifier).state = true;
