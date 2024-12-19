@@ -196,7 +196,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           ChoiceChipTip(
             options: numericMethods,
             selectedOption: selectedTransform,
-            enabled: isNumeric,
+            enabled:
+                isNumeric, // Dynamic enabling based on the selected variable type
             tooltips: numericMethodsTooltips,
             onSelected: (String? selected) {
               setState(() {
@@ -359,10 +360,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                       setState(() {
                         ref.read(selectedProvider.notifier).state =
                             value ?? 'IMPOSSIBLE';
-                        selectedTransform =
-                            ref.read(typesProvider)[value] == Type.numeric
-                                ? numericMethods.first
-                                : categoricMethods.first;
+
+                        // Update isNumeric dynamically based on the selected variable type
+                        isNumeric =
+                            ref.read(typesProvider)[value] == Type.numeric;
                       });
                     },
                     tooltip: '''
