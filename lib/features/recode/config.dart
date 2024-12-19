@@ -67,7 +67,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   String selected = 'NULL';
   String selectedTransform = '';
-  String selectedAs = '';
+  String selectedAs = 'As Categoric';
 
   List<String> numericMethods = [
     'Quantiles',
@@ -393,7 +393,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   tooltip: '''
 
                   Choose the primary variable to be recoded.
-                  
+
                   ''',
                 ),
                 variableChooser(
