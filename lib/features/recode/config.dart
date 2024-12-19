@@ -236,6 +236,21 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             onSelected: (String? selected) {
               setState(() {
                 selectedTransform = selected ?? '';
+
+                // If "Join Categorics" is selected, filter inputs to only categoric types
+                if (selectedTransform == 'Join Categorics') {
+                  inputs = inputs
+                      .where((input) =>
+                          ref.read(typesProvider)[input] == Type.categoric)
+                      .toList();
+
+                  // Update selected and selected2 to ensure they are valid
+                  selected = inputs.isNotEmpty ? inputs.first : 'NULL';
+                  selected2 = inputs.length > 1 ? inputs[1] : 'NULL';
+
+                  ref.read(selectedProvider.notifier).state = selected!;
+                  ref.read(selected2Provider.notifier).state = selected2;
+                }
               });
             },
           ),
@@ -329,19 +344,21 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   ),
                   variableChooser(
                     'Variable',
-                    inputs,
+                    selectedTransform == 'Join Categorics'
+                        ? inputs
+                            .where((input) =>
+                                ref.read(typesProvider)[input] ==
+                                Type.categoric)
+                            .toList()
+                        : inputs,
                     selected,
                     ref,
                     selectedProvider,
                     enabled: true,
                     onChanged: (String? value) {
                       setState(() {
-                        print("all inputs: $inputs");
                         ref.read(selectedProvider.notifier).state =
                             value ?? 'IMPOSSIBLE';
-
-                        // Reset the selected transform based on the variable type.
-
                         selectedTransform =
                             ref.read(typesProvider)[value] == Type.numeric
                                 ? numericMethods.first
@@ -349,14 +366,18 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                       });
                     },
                     tooltip: '''
-              
-                    Choose the primary variable to be recoded.
-              
-                    ''',
+    Choose the primary variable to be recoded.
+  ''',
                   ),
                   variableChooser(
                     'Secondary',
-                    inputs,
+                    selectedTransform == 'Join Categorics'
+                        ? inputs
+                            .where((input) =>
+                                ref.read(typesProvider)[input] ==
+                                Type.categoric)
+                            .toList()
+                        : inputs,
                     selected2,
                     ref,
                     selected2Provider,
@@ -364,19 +385,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     onChanged: (String? value) {
                       ref.read(selected2Provider.notifier).state =
                           value ?? 'IMPOSSIBLE';
-
-                      // Reset after selection.
-
-                      selectedTransform =
-                          ref.read(typesProvider)[value] == Type.numeric
-                              ? numericMethods.first
-                              : categoricMethods.first;
                     },
                     tooltip: '''
-                  
-                    Select a secondary variable to assist in the recoding process.
-                  
-                    ''',
+    Select a secondary variable to assist in the recoding process.
+  ''',
                   ),
                 ],
               ),
