@@ -218,11 +218,29 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         ChoiceChipTip(
           options: asMethods,
           selectedOption: selectedAs,
-          // enabled: isNumeric,
           tooltips: asMethodsTooltips,
           onSelected: (String? selected) {
             setState(() {
               selectedAs = selected ?? '';
+
+              // Update the input list dynamically
+              if (selectedAs == 'As Numeric' || selectedAs == 'As Categoric') {
+                inputs = selectedAs == 'As Numeric'
+                    ? inputs
+                        .where((input) =>
+                            ref.read(typesProvider)[input] == Type.categoric)
+                        .toList()
+                    : inputs
+                        .where((input) =>
+                            ref.read(typesProvider)[input] == Type.numeric)
+                        .toList();
+
+                // Reset selected if it no longer matches the filtered options
+                if (!inputs.contains(selected)) {
+                  selected = inputs.isNotEmpty ? inputs.first : 'NULL';
+                  ref.read(selectedProvider.notifier).state = selected!;
+                }
+              }
             });
           },
         ),
@@ -344,7 +362,19 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                           .where((input) =>
                               ref.read(typesProvider)[input] == Type.categoric)
                           .toList()
-                      : inputs,
+                      : selectedAs == 'As Numeric'
+                          ? inputs
+                              .where((input) =>
+                                  ref.read(typesProvider)[input] ==
+                                  Type.categoric)
+                              .toList()
+                          : selectedAs == 'As Categoric'
+                              ? inputs
+                                  .where((input) =>
+                                      ref.read(typesProvider)[input] ==
+                                      Type.numeric)
+                                  .toList()
+                              : inputs,
                   selected,
                   ref,
                   selectedProvider,
@@ -360,8 +390,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     });
                   },
                   tooltip: '''
-                Choose the primary variable to be recoded.
-              ''',
+    Choose the primary variable to be recoded.
+  ''',
                 ),
                 variableChooser(
                   'Secondary',
