@@ -391,8 +391,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     });
                   },
                   tooltip: '''
-    Choose the primary variable to be recoded.
-  ''',
+
+                  Choose the primary variable to be recoded.
+                  
+                  ''',
                 ),
                 variableChooser(
                   'Secondary',
@@ -411,8 +413,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                         value ?? 'IMPOSSIBLE';
                   },
                   tooltip: '''
-                Select a secondary variable to assist in the recoding process.
-              ''',
+
+                  Select a secondary variable to assist in the recoding process.
+
+                  ''',
                 ),
               ],
             ),
