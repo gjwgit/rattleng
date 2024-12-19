@@ -74,6 +74,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       );
     }
 
+    String rocAdaBoostImage = '$tempDir/model_adaboost_evaluate_roc.svg';
+
     String rocCtreeImage = '$tempDir/model_ctree_evaluate_roc.svg';
 
     String rocRpartImage = '$tempDir/model_rpart_evaluate_roc.svg';
@@ -94,6 +96,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     List<String> imagesTitles = [];
     List<String> rocImages = [];
     List<String> rocImagesTitles = [];
+
+    if (imageExists(rocAdaBoostImage)) {
+      rocImages.add(rocAdaBoostImage);
+      rocImagesTitles.add('AdaBoost');
+    }
 
     if (imageExists(rocRpartImage)) {
       rocImages.add(rocRpartImage);
