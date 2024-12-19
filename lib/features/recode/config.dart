@@ -138,6 +138,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   // BUILD button action.
 
   void buildAction() {
+    print("selectedAs: $selectedAs");
     // Run the R scripts.
 
     switch (selectedTransform) {
