@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 400 300"
+   version="1.1"
+   id="svg26"
+   sodipodi:docname="r-script-visualization.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs30" />
+  <sodipodi:namedview
+     id="namedview28"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="3.275"
+     inkscape:cx="173.12977"
+     inkscape:cy="150.07634"
+     inkscape:window-width="3326"
+     inkscape:window-height="1371"
+     inkscape:window-x="2034"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg26" />
+  <!-- Background paper -->
+  <rect
+     x="50"
+     y="30"
+     width="300"
+     height="240"
+     fill="#ffffff"
+     stroke="#d1d1d1"
+     stroke-width="2"
+     id="rect2" />
+  <!-- File fold corner -->
+  <path
+     d="M300 30 L300 80 L350 30 Z"
+     fill="#f0f0f0"
+     stroke="#d1d1d1"
+     stroke-width="2"
+     id="path4" />
+  <!-- R logo -->
+  <circle
+     cx="100"
+     cy="80"
+     r="25"
+     fill="#2266BB"
+     id="circle6" />
+  <text
+     x="100"
+     y="90"
+     font-family="Arial"
+     font-size="30"
+     fill="white"
+     text-anchor="middle"
+     id="text8">R</text>
+  <!-- Code lines -->
+  <rect
+     x="140"
+     y="70"
+     width="160"
+     height="8"
+     fill="#6C8EBF"
+     rx="2"
+     id="rect10" />
+  <rect
+     x="140"
+     y="90"
+     width="120"
+     height="8"
+     fill="#6C8EBF"
+     rx="2"
+     id="rect12" />
+  <rect
+     x="140"
+     y="110"
+     width="140"
+     height="8"
+     fill="#6C8EBF"
+     rx="2"
+     id="rect14" />
+  <!-- Play button -->
+  <circle
+     cx="200"
+     cy="180"
+     r="35"
+     fill="#4CAF50"
+     id="circle16" />
+  <path
+     d="M185 160 L225 180 L185 200 Z"
+     fill="white"
+     id="path18" />
+  <!-- Terminal output suggestion -->
+  <rect
+     x="80"
+     y="230"
+     width="240"
+     height="20"
+     fill="#2C3E50"
+     rx="4"
+     id="rect20" />
+  <rect
+     x="90"
+     y="235"
+     width="140"
+     height="10"
+     fill="#95A5A6"
+     rx="2"
+     id="rect22" />
+  <!-- File extension -->
+  <text
+     x="265.98096"
+     y="265.04059"
+     font-family="Monaco, monospace"
+     font-size="16"
+     fill="#666666"
+     id="text24"
+     inkscape:label="text24"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Monaco, monospace;-inkscape-font-specification:'Monaco, monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#666666"><tspan
+       sodipodi:role="line"
+       id="tspan313"
+       x="265.98096"
+       y="265.04059">script.R</tspan></text>
+</svg>
