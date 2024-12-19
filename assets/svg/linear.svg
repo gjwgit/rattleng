@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+  <!-- Background -->
+  <rect width="500" height="400" fill="#ffffff"/>
+
+  <!-- Grid lines -->
+  <g stroke="#e9ecef" stroke-width="1">
+    <!-- Vertical grid lines -->
+    <line x1="100" y1="50" x2="100" y2="350"/>
+    <line x1="200" y1="50" x2="200" y2="350"/>
+    <line x1="300" y1="50" x2="300" y2="350"/>
+    <line x1="400" y1="50" x2="400" y2="350"/>
+
+    <!-- Horizontal grid lines -->
+    <line x1="50" y1="100" x2="450" y2="100"/>
+    <line x1="50" y1="200" x2="450" y2="200"/>
+    <line x1="50" y1="300" x2="450" y2="300"/>
+  </g>
+
+  <!-- Axes -->
+  <g stroke="#212529" stroke-width="2">
+    <line x1="50" y1="350" x2="450" y2="350"/> <!-- x-axis -->
+    <line x1="50" y1="350" x2="50" y2="50"/>   <!-- y-axis -->
+  </g>
+
+  <!-- Axis labels -->
+  <g font-family="Arial" font-size="14" fill="#495057">
+    <text x="240" y="390" text-anchor="middle">X Variable</text>
+    <text x="20" y="200" text-anchor="middle" transform="rotate(-90,20,200)">Y Variable</text>
+  </g>
+
+  <!-- Data points with more spread -->
+  <g fill="#228be6" opacity="0.7">
+    <circle cx="100" cy="320" r="5"/>
+    <circle cx="150" cy="250" r="5"/>
+    <circle cx="180" cy="290" r="5"/>
+    <circle cx="220" cy="200" r="5"/>
+    <circle cx="250" cy="180" r="5"/>
+    <circle cx="270" cy="240" r="5"/>
+    <circle cx="300" cy="150" r="5"/>
+    <circle cx="330" cy="190" r="5"/>
+    <circle cx="370" cy="120" r="5"/>
+    <circle cx="400" cy="140" r="5"/>
+    <circle cx="120" cy="280" r="5"/>
+    <circle cx="200" cy="230" r="5"/>
+  </g>
+
+  <!-- Regression line -->
+  <line x1="80" y1="300" x2="420" y2="120" stroke="#fa5252" stroke-width="3"/>
+
+  <!-- Title -->
+  <text x="250" y="30" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#212529">
+    Linear Regression Model
+  </text>
+</svg>

@@ -59,6 +59,7 @@ FutureBuilder showMarkdownFile(
           // Markdown text into a row and half fill the row.
 
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // The text goes into the left pane.
 
@@ -79,7 +80,7 @@ FutureBuilder showMarkdownFile(
                 ),
               ),
 
-              // 20241215 gjw The right pain is for an image.
+              // 20241215 gjw The right pane is for an image.
 
               Expanded(
                 child: SvgPicture.asset(

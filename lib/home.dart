@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-12-13 19:02:48 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2024-12-19 16:02:48 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -368,8 +368,12 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Change Seed:** Tap here to quickly change the random seed.
-            A new seed will be automatically generated.
+            **Change Seed:** Tap here to quickly change the seed for the random
+            number generator.  A new seed will be automatically generated. It
+            will also be saved as your new seed within **Settings** and so the
+            latest seed set here will be used in your next session. Go to
+            **Settings** to reset the seed back to the application's
+            default. The button is only active once a dataset is loaded.
 
             ''',
             child: Consumer(
