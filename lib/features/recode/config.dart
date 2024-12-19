@@ -159,6 +159,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       default:
         showUnderConstruction(context);
     }
+    switch (selectedAs) {
+      case 'As Categoric':
+        rSource(context, ref, ['transform_recode_as_categoric']);
+        break;
+      case 'As Numeric':
+        rSource(context, ref, ['transform_recode_as_numeric']);
+        break;
+    }
   }
 
   Widget recodeChooser(inputs, selected2) {
