@@ -75,3 +75,5 @@ if (length(error_matrix_predic) > min_length) {
 }
 
 error_matrix_target <- svm_target
+
+roc_predicted_probs <- error_matrix_predic

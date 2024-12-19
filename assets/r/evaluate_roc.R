@@ -73,6 +73,20 @@ actual_model_labels <- actual_model_labels[!na_positions]
 
 roc_predicted_probs <- as.numeric(factor(roc_predicted_probs)) - 1
 
+# Find the lengths of the two objects.
+
+len_actual_target <- length(actual_model_labels)
+len_roc_predicted_predic <- length(roc_predicted_probs)
+
+# Determine the minimum length.
+
+roc_min_length <- min(len_actual_target, len_roc_predicted_predic)
+
+# Match the minimum length.
+
+roc_predicted_probs <- roc_predicted_probs[seq_len(min_length)]
+actual_model_labels <- actual_model_labels[seq_len(min_length)]
+
 prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
 
 pe <- performance(prediction_prob_values, "tpr", "fpr")
