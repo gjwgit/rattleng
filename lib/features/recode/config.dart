@@ -184,79 +184,75 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     // TODO 20240819 gjw WHERE ARE THE TOOLTIPS?
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.start, // Align children to the start
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start, // Align children to the start
 
-        spacing: configWidgetSpace,
-        children: [
-          configLeftGap,
-          ChoiceChipTip(
-            options: numericMethods,
-            selectedOption: selectedTransform,
-            enabled:
-                isNumeric, // Dynamic enabling based on the selected variable type
-            tooltips: numericMethodsTooltips,
-            onSelected: (String? selected) {
-              setState(() {
-                selectedTransform = selected ?? '';
-              });
-            },
-          ),
-          NumberField(
-            label: 'Number',
-            controller: valCtrl,
-            stateProvider: numberProvider,
-            validator: (value) => validateInteger(value, min: 1),
-            inputFormatter: FilteringTextInputFormatter.digitsOnly,
-            enabled: isNumeric,
-            tooltip: '''
-                
-            Set the number of bins to construct.
-      
-            ''',
-          ),
-          ChoiceChipTip(
-            options: asMethods,
-            selectedOption: selectedAs,
-            // enabled: isNumeric,
-            tooltips: asMethodsTooltips,
-            onSelected: (String? selected) {
-              setState(() {
-                selectedAs = selected ?? '';
-              });
-            },
-          ),
-          ChoiceChipTip(
-            enabled: selected == 'NULL' || !isNumeric,
-            options: categoricMethods,
-            selectedOption: !isNumeric ? selectedTransform : '',
-            tooltips: categoricMethodsTooltips,
-            onSelected: (String? selected) {
-              setState(() {
-                selectedTransform = selected ?? '';
+      spacing: configWidgetSpace,
+      children: [
+        configLeftGap,
+        ChoiceChipTip(
+          options: numericMethods,
+          selectedOption: selectedTransform,
+          enabled:
+              isNumeric, // Dynamic enabling based on the selected variable type
+          tooltips: numericMethodsTooltips,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
+        ),
+        NumberField(
+          label: 'Number',
+          controller: valCtrl,
+          stateProvider: numberProvider,
+          validator: (value) => validateInteger(value, min: 1),
+          inputFormatter: FilteringTextInputFormatter.digitsOnly,
+          enabled: isNumeric,
+          tooltip: '''
+              
+          Set the number of bins to construct.
+    
+          ''',
+        ),
+        ChoiceChipTip(
+          options: asMethods,
+          selectedOption: selectedAs,
+          // enabled: isNumeric,
+          tooltips: asMethodsTooltips,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedAs = selected ?? '';
+            });
+          },
+        ),
+        ChoiceChipTip(
+          enabled: selected == 'NULL' || !isNumeric,
+          options: categoricMethods,
+          selectedOption: !isNumeric ? selectedTransform : '',
+          tooltips: categoricMethodsTooltips,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
 
-                // If "Join Categorics" is selected, filter inputs to only categoric types
-                if (selectedTransform == 'Join Categorics') {
-                  inputs = inputs
-                      .where((input) =>
-                          ref.read(typesProvider)[input] == Type.categoric)
-                      .toList();
+              // If "Join Categorics" is selected, filter inputs to only categoric types
+              if (selectedTransform == 'Join Categorics') {
+                inputs = inputs
+                    .where((input) =>
+                        ref.read(typesProvider)[input] == Type.categoric)
+                    .toList();
 
-                  // Update selected and selected2 to ensure they are valid
-                  selected = inputs.isNotEmpty ? inputs.first : 'NULL';
-                  selected2 = inputs.length > 1 ? inputs[1] : 'NULL';
+                // Update selected and selected2 to ensure they are valid
+                selected = inputs.isNotEmpty ? inputs.first : 'NULL';
+                selected2 = inputs.length > 1 ? inputs[1] : 'NULL';
 
-                  ref.read(selectedProvider.notifier).state = selected!;
-                  ref.read(selected2Provider.notifier).state = selected2;
-                }
-              });
-            },
-          ),
-        ],
-      ),
+                ref.read(selectedProvider.notifier).state = selected!;
+                ref.read(selected2Provider.notifier).state = selected2;
+              }
+            });
+          },
+        ),
+      ],
     );
   }
 
@@ -309,90 +305,85 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           spacing: configRowSpace,
           children: [
             configTopGap,
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start, // Align to start
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start, // Align to start
 
-                spacing: configWidgetSpace,
-                children: [
-                  configTopGap,
-                  ActivityButton(
-                    onPressed: () async {
-                      setState(() {
-                        _isLoading = selectedTransform == 'Quantiles';
-                      });
+              spacing: configWidgetSpace,
+              children: [
+                configTopGap,
+                ActivityButton(
+                  onPressed: () async {
+                    setState(() {
+                      _isLoading = selectedTransform == 'Quantiles';
+                    });
 
-                      ref.read(selectedProvider.notifier).state = selected;
-                      ref.read(selected2Provider.notifier).state = selected2;
-                      buildAction();
+                    ref.read(selectedProvider.notifier).state = selected;
+                    ref.read(selected2Provider.notifier).state = selected2;
+                    buildAction();
 
-                      if (selectedTransform == 'Quantiles') {
-                        await Future.delayed(const Duration(seconds: 5));
-                      }
+                    if (selectedTransform == 'Quantiles') {
+                      await Future.delayed(const Duration(seconds: 5));
+                    }
 
-                      setState(() {
-                        _isLoading = false;
-                      });
+                    setState(() {
+                      _isLoading = false;
+                    });
 
-                      ref.read(recodePageControllerProvider).animateToPage(
-                            1,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                    },
-                    child: const Text('Recode Variable Values'),
-                  ),
-                  variableChooser(
-                    'Variable',
-                    selectedTransform == 'Join Categorics'
-                        ? inputs
-                            .where((input) =>
-                                ref.read(typesProvider)[input] ==
-                                Type.categoric)
-                            .toList()
-                        : inputs,
-                    selected,
-                    ref,
-                    selectedProvider,
-                    enabled: true,
-                    onChanged: (String? value) {
-                      setState(() {
-                        ref.read(selectedProvider.notifier).state =
-                            value ?? 'IMPOSSIBLE';
-
-                        // Update isNumeric dynamically based on the selected variable type
-                        isNumeric =
-                            ref.read(typesProvider)[value] == Type.numeric;
-                      });
-                    },
-                    tooltip: '''
-    Choose the primary variable to be recoded.
-  ''',
-                  ),
-                  variableChooser(
-                    'Secondary',
-                    selectedTransform == 'Join Categorics'
-                        ? inputs
-                            .where((input) =>
-                                ref.read(typesProvider)[input] ==
-                                Type.categoric)
-                            .toList()
-                        : inputs,
-                    selected2,
-                    ref,
-                    selected2Provider,
-                    enabled: selectedTransform == 'Join Categorics',
-                    onChanged: (String? value) {
-                      ref.read(selected2Provider.notifier).state =
+                    ref.read(recodePageControllerProvider).animateToPage(
+                          1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                  },
+                  child: const Text('Recode Variable Values'),
+                ),
+                variableChooser(
+                  'Variable',
+                  selectedTransform == 'Join Categorics'
+                      ? inputs
+                          .where((input) =>
+                              ref.read(typesProvider)[input] == Type.categoric)
+                          .toList()
+                      : inputs,
+                  selected,
+                  ref,
+                  selectedProvider,
+                  enabled: true,
+                  onChanged: (String? value) {
+                    setState(() {
+                      ref.read(selectedProvider.notifier).state =
                           value ?? 'IMPOSSIBLE';
-                    },
-                    tooltip: '''
-    Select a secondary variable to assist in the recoding process.
-  ''',
-                  ),
-                ],
-              ),
+
+                      // Update isNumeric dynamically based on the selected variable type
+                      isNumeric =
+                          ref.read(typesProvider)[value] == Type.numeric;
+                    });
+                  },
+                  tooltip: '''
+                Choose the primary variable to be recoded.
+              ''',
+                ),
+                variableChooser(
+                  'Secondary',
+                  selectedTransform == 'Join Categorics'
+                      ? inputs
+                          .where((input) =>
+                              ref.read(typesProvider)[input] == Type.categoric)
+                          .toList()
+                      : inputs,
+                  selected2,
+                  ref,
+                  selected2Provider,
+                  enabled: selectedTransform == 'Join Categorics',
+                  onChanged: (String? value) {
+                    ref.read(selected2Provider.notifier).state =
+                        value ?? 'IMPOSSIBLE';
+                  },
+                  tooltip: '''
+                Select a secondary variable to assist in the recoding process.
+              ''',
+                ),
+              ],
             ),
             recodeChooser(inputs, selected2),
           ],
