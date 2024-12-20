@@ -203,6 +203,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String ea = 'evaluate_adaboost';
                 String em = 'evaluate_error_matrix';
+                String eroc = 'evaluate_roc';
                 String ec = 'evaluate_ctree';
                 String en = 'evaluate_nnet';
                 String er = 'evaluate_rpart';
@@ -218,7 +219,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [er, em],
+                    [er, em, eroc],
                   );
                 }
 
@@ -228,7 +229,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ec, em],
+                    [ec, em, eroc],
                   );
                 }
 
@@ -239,7 +240,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [erf, em],
+                    [erf, em, eroc],
                   );
                 }
 
@@ -250,7 +251,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ecf, em],
+                    [ecf, em, eroc],
                   );
                 }
 
@@ -260,7 +261,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ea, em],
+                    [ea, em, eroc],
                   );
                 }
 
@@ -270,7 +271,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ex, em],
+                    [ex, em, eroc],
                   );
                 }
 
@@ -280,7 +281,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [es, em],
+                    [es, em, eroc],
                   );
                 }
 
@@ -290,7 +291,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [en, em],
+                    [en, em, eroc],
                   );
                 }
 

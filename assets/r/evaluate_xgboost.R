@@ -43,9 +43,6 @@ error_matrix_predic <- predict(model_xgb, newdata = trds, )
 
 target_clean <- trds[[target]][!is.na(error_matrix_predic)]
 
-error_matrix_predic <- error_matrix_predic[!is.na(error_matrix_predic)]
-
-
 # Get levels from target_clean.
 
 target_levels <- levels(target_clean)
@@ -55,3 +52,7 @@ target_levels <- levels(target_clean)
 error_matrix_predic <- ifelse(error_matrix_predic > 0.5, target_levels[2], target_levels[1])
 
 error_matrix_target <- target_clean
+
+# A variable containing the predictions.
+
+roc_predicted_probs <- error_matrix_predic

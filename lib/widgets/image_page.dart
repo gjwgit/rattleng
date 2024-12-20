@@ -49,12 +49,14 @@ import 'package:rattle/utils/show_ok.dart';
 class ImagePage extends StatelessWidget {
   final List<String> titles;
   final List<String> paths;
+  final String appBarImage;
   final bool svgImage;
 
   const ImagePage({
     super.key,
     required this.titles,
     required this.paths,
+    this.appBarImage = 'Hand',
     this.svgImage = true,
   });
 
@@ -134,7 +136,7 @@ class ImagePage extends StatelessWidget {
     imageCache.clearLiveImages();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Hand')),
+      appBar: AppBar(title: Text(appBarImage)),
       body: Column(
         children: [
           Expanded(
