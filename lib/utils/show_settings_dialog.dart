@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Thursday 2024-12-19 16:37:30 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 11:18:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -302,7 +302,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   void _resetToggleStates() {
     // Reset all toggles to default.
 
-    ref.read(validationForTuningSettingProvider.notifier).state = false;
     ref.read(cleanseProvider.notifier).state = true;
     ref.read(normaliseProvider.notifier).state = true;
     ref.read(partitionProvider.notifier).state = true;
@@ -860,14 +859,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             ''',
                             child: ElevatedButton(
                               onPressed: () {
-                                ref
-                                    .read(partitionTrainProvider.notifier)
-                                    .state = 70;
+                                ref.invalidate(partitionTrainProvider);
                                 ref
                                     .read(partitionValidProvider.notifier)
                                     .state = 15;
                                 ref.read(partitionTestProvider.notifier).state =
                                     15;
+                                ref.invalidate(
+                                    validationForTuningSettingProvider);
                               },
                               child: const Text('Reset'),
                             ),
