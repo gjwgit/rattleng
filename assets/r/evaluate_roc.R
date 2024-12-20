@@ -41,9 +41,15 @@ library(ROCR)
 
 ################################
 
-title <- glue("ROC Curve &#8212; {mdesc} &#8212; ",
-              "{mtype} {basename('FILENAME')} ",
-              "*{dtype}* TARGET_VAR")
+# Identify the dataset partition that the model is applied to.
+
+dtype <- 'training'
+
+title <- glue(
+    "ROC Curve &#8212; {mdesc} &#8212; ",
+    "{mtype} {basename('FILENAME')} ",
+    "*{dtype}* TARGET_VAR"
+)
 
 # Remove observations with missing target values.
 
