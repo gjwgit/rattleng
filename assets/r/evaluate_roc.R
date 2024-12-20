@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-12-15 10:50:49 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-12-20 12:01:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,9 +39,11 @@ library(ggplot2, quietly = TRUE)
 library(glue)
 library(ROCR)
 
-########################################################################
+################################
 
-title <- "ROC Curve - Decision Tree - FILENAME TARGET_VAR"
+title <- glue("ROC Curve &#8212; {mdesc} &#8212; ",
+              "{mtype} {basename('FILENAME')} ",
+              "*{dtype}* TARGET_VAR")
 
 # Remove observations with missing target values.
 
@@ -129,6 +131,10 @@ p <- p + geom_line(data = data.frame(), aes(x = c(0, 1), y = c(0, 1)), colour = 
 
 p <- p + annotate("text", x = 0.50, y = 0.00, hjust = 0, vjust = 0, size = 5,
                    label = paste("AUC =", round(au, 2)))
+
+p <- p +
+  SETTINGS_GRAPHIC_THEME() +
+  theme(plot.title = element_markdown())
 
 image_title <- glue("TEMPDIR/model_{mtype}_evaluate_roc.svg")
 
