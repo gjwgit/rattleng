@@ -857,16 +857,14 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                             ''',
                             child: ElevatedButton(
-                              onPressed: () {
-                                ref.invalidate(partitionTrainProvider);
-                                ref
-                                    .read(partitionValidProvider.notifier)
-                                    .state = 15;
-                                ref.read(partitionTestProvider.notifier).state =
-                                    15;
+                              onPressed: () async {
                                 ref.invalidate(
                                   validationForTuningSettingProvider,
                                 );
+
+                                await _savePartitionTrain(70);
+                                await _savePartitionValid(15);
+                                await _savePartitionTest(15);
                               },
                               child: const Text('Reset'),
                             ),
