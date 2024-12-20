@@ -35,6 +35,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class EvaluateConfig extends ConsumerStatefulWidget {
@@ -149,6 +150,41 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     ),
   ];
 
+  Map<String, String> datasetTypes = {
+    'Training': '''
+
+    Evaluate the model using the training dataset.
+    This will give an optimistic estimate of the 
+    performance of the model.
+
+    ''',
+    'Validation': '''
+
+    Evaluate the model using the validation dataset.
+    This is used whilst the model parameters are 
+    still being tuned but not for the final unbiased
+    estimate of error. This option is only available
+    if partitioning is enabled in the Data tab and a
+    validation dataset is specified.
+
+    ''',
+    'Testing': '''
+
+    Evaluate the performance of the model over the
+    testing dataset, which is the remainder of the
+    dataset not used for building, and so will provide
+    an unbiased estimate. This option is only available
+    if partitioning is enabled in the Data tab and a
+    testing dataset is specified.
+
+    ''',
+    'Full': '''
+
+    Score the whole dataset.
+
+    ''',
+  };
+
   bool _isEvaluationEnabled(_ModelConfig config) {
     for (var i = 0; i < config.checkCommands.length; i++) {
       if (checkFunctionExecuted(
@@ -165,6 +201,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
   @override
   Widget build(BuildContext context) {
+    String datasetType = ref.watch(datasetTypeProvider.notifier).state;
+
     return Column(
       spacing: configRowSpace,
       children: [
@@ -328,6 +366,26 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 ],
               );
             }).toList(),
+          ],
+        ),
+        Row(
+          spacing: configWidgetSpace,
+          children: [
+            configLeftGap,
+            Text('Data: '),
+            ChoiceChipTip<String>(
+              options: datasetTypes.keys.toList(),
+              selectedOption: datasetType,
+              tooltips: datasetTypes,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    datasetType = chosen;
+                    ref.read(datasetTypeProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
       ],
