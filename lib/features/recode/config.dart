@@ -67,7 +67,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   String selected = 'NULL';
   String selectedTransform = '';
-  String selectedAs = 'As Categoric';
+  // String selectedAs = 'As Categoric';
 
   List<String> numericMethods = [
     'Quantiles',
@@ -79,13 +79,22 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     'As Categoric',
     'As Numeric',
   ];
+  List<String> asCategoricMethods = [
+    'As Categoric',
+  ];
+  List<String> asNumericMethods = [
+    'As Numeric',
+  ];
 
-  Map<String, String> asMethodsTooltips = {
+  Map<String, String> asCategoricMethodsTooltips = {
     'As Categoric': '''
 
       Multiply out the selected numeric variables into a new single variable.
 
       ''',
+  };
+
+  Map<String, String> asNumericMethodsTooltips = {
     'As Numeric': '''
 
       Multiply out the selected categoric variables into a new single variable.
@@ -138,7 +147,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   // BUILD button action.
 
   void buildAction() {
-    print("selectedAs: $selectedAs");
+    print("selectedAs: $selectedTransform");
     // Run the R scripts.
 
     switch (selectedTransform) {
@@ -157,16 +166,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       case 'Join Categorics':
         rSource(context, ref, ['transform_recode_join_categoric']);
         break;
-      default:
-        showUnderConstruction(context);
-    }
-    switch (selectedAs) {
       case 'As Categoric':
         rSource(context, ref, ['transform_recode_as_categoric']);
         break;
       case 'As Numeric':
         rSource(context, ref, ['transform_recode_as_numeric']);
         break;
+      default:
+        showUnderConstruction(context);
     }
   }
 
@@ -216,32 +223,31 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     
           ''',
         ),
+
+        // As Categoric chip.
+
         ChoiceChipTip(
-          options: asMethods,
-          selectedOption: selectedAs,
-          tooltips: asMethodsTooltips,
+          options: asCategoricMethods,
+          selectedOption: selectedTransform,
+          tooltips: asCategoricMethodsTooltips,
+          enabled: isNumeric,
           onSelected: (String? selected) {
             setState(() {
-              selectedAs = selected ?? '';
+              selectedTransform = selected ?? '';
+            });
+          },
+        ),
 
-              // Update the input list dynamically
-              if (selectedAs == 'As Numeric' || selectedAs == 'As Categoric') {
-                inputs = selectedAs == 'As Numeric'
-                    ? inputs
-                        .where((input) =>
-                            ref.read(typesProvider)[input] == Type.categoric)
-                        .toList()
-                    : inputs
-                        .where((input) =>
-                            ref.read(typesProvider)[input] == Type.numeric)
-                        .toList();
+        // As Numeric chip.
 
-                // Reset selected if it no longer matches the filtered options
-                if (!inputs.contains(selected)) {
-                  selected = inputs.isNotEmpty ? inputs.first : 'NULL';
-                  ref.read(selectedProvider.notifier).state = selected!;
-                }
-              }
+        ChoiceChipTip(
+          options: asNumericMethods,
+          selectedOption: selectedTransform,
+          tooltips: asNumericMethodsTooltips,
+          enabled: !isNumeric,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
             });
           },
         ),
@@ -257,8 +263,10 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
               // If "Join Categorics" is selected, filter inputs to only categoric types
               if (selectedTransform == 'Join Categorics') {
                 inputs = inputs
-                    .where((input) =>
-                        ref.read(typesProvider)[input] == Type.categoric)
+                    .where(
+                      (input) =>
+                          ref.read(typesProvider)[input] == Type.categoric,
+                    )
                     .toList();
 
                 // Update selected and selected2 to ensure they are valid
@@ -360,22 +368,13 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   'Variable',
                   selectedTransform == 'Join Categorics'
                       ? inputs
-                          .where((input) =>
-                              ref.read(typesProvider)[input] == Type.categoric)
+                          .where(
+                            (input) =>
+                                ref.read(typesProvider)[input] ==
+                                Type.categoric,
+                          )
                           .toList()
-                      : selectedAs == 'As Numeric'
-                          ? inputs
-                              .where((input) =>
-                                  ref.read(typesProvider)[input] ==
-                                  Type.categoric)
-                              .toList()
-                          : selectedAs == 'As Categoric'
-                              ? inputs
-                                  .where((input) =>
-                                      ref.read(typesProvider)[input] ==
-                                      Type.numeric)
-                                  .toList()
-                              : inputs,
+                      : inputs,
                   selected,
                   ref,
                   selectedProvider,
@@ -400,8 +399,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                   'Secondary',
                   selectedTransform == 'Join Categorics'
                       ? inputs
-                          .where((input) =>
-                              ref.read(typesProvider)[input] == Type.categoric)
+                          .where(
+                            (input) =>
+                                ref.read(typesProvider)[input] ==
+                                Type.categoric,
+                          )
                           .toList()
                       : inputs,
                   selected2,
