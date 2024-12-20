@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Monday 2024-12-16 08:17:57 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-20 15:59:16 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -458,8 +458,6 @@ Future<void> rSource(
   // Replace DATA_SPLIT_TR_TU_TE with the current values from partitionSettingProvider.
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
-
-  debugPrint('DATA_SPLIT_TR_TU_TE: $partitionString');
 
   // TODO if (script == 'model_build_rpart')) {
 

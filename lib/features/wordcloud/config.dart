@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Saturday 2024-12-14 21:21:14 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 16:01:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -115,21 +115,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   oldTmpFile.deleteSync();
                 }
 
-                // This is the main action.
+                // The main action here is to run the R script to build the word
+                // cloud itself whic is saved into an SVG file.
 
                 rSource(context, ref, ['model_build_word_cloud']);
 
-                // TODO 20240612 gjw COULD EXPLAIN HERE WHY THE NEED TO WAIT.
-
-                // final file = File(wordCloudImagePath);
-                // while (true) {
-                //   if (await file.exists()) {
-                //     debugPrint('file exists');
-                //     break;
-                //   }
-                // }
-
-                // Toggle the state to trigger rebuild
+                // Toggle the state to trigger rebuild.
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
