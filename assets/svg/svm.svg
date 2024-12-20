@@ -9,25 +9,6 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview68"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="2.5025"
-     inkscape:cx="245.95405"
-     inkscape:cy="200"
-     inkscape:window-width="3326"
-     inkscape:window-height="1371"
-     inkscape:window-x="2034"
-     inkscape:window-y="32"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg66" />
   <!-- Background -->
   <rect
      width="500"
@@ -41,45 +22,6 @@
      fill="#0000ff"
      id="circle38-3" />
   <!-- Define gradients -->
-  <defs
-     id="defs14">
-    <!-- Red region gradient -->
-    <linearGradient
-       id="redGradient"
-       x1="0"
-       y1="0"
-       x2="418.33001"
-       y2="418.33001"
-       gradientTransform="matrix(0.69587868,0,0,0.56368336,121.85832,114.19434)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         offset="0%"
-         style="stop-color:#ff0000;stop-opacity:0.1"
-         id="stop4" />
-      <stop
-         offset="100%"
-         style="stop-color:#ff0000;stop-opacity:0.2"
-         id="stop6" />
-    </linearGradient>
-    <!-- Blue region gradient -->
-    <linearGradient
-       id="blueGradient"
-       x1="0"
-       y1="395.28471"
-       x2="316.22777"
-       y2="711.51247"
-       gradientTransform="matrix(1.2622872,0,0,0.48041825,14.569903,66.245138)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         offset="0%"
-         style="stop-color:#0000ff;stop-opacity:0.1"
-         id="stop9" />
-      <stop
-         offset="100%"
-         style="stop-color:#0000ff;stop-opacity:0.2"
-         id="stop11" />
-    </linearGradient>
-  </defs>
   <!-- Class regions with gradient fills -->
   <path
      d="M 121.85832,114.19434 H 412.96526 V 215.2539 L 121.85832,350 Z"

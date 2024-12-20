@@ -38,6 +38,8 @@ library(randomForest)
 
 error_matrix_predic <- predict(model_randomForest, newdata = trds, type = "prob")
 
+predicted_rforest_probs <- predict(model_randomForest, newdata = trds, type = "prob")[,2]
+
 target_clean <- trds[[target]][!is.na(error_matrix_predic)]
 
 # Remove all <NA> values from the vector.
@@ -61,3 +63,7 @@ error_matrix_predic <- error_matrix_predic[!sapply(error_matrix_predic, is.null)
 error_matrix_predic <- unlist(error_matrix_predic, use.names = FALSE)
 
 error_matrix_target <- target_clean
+
+# A variable containing the predictions.
+
+roc_predicted_probs <- predicted_rforest_probs

@@ -74,6 +74,22 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       );
     }
 
+    String rocAdaBoostImage = '$tempDir/model_adaboost_evaluate_roc.svg';
+
+    String rocCtreeImage = '$tempDir/model_ctree_evaluate_roc.svg';
+
+    String rocNNETImage = '$tempDir/model_nnet_evaluate_roc.svg';
+
+    String rocRpartImage = '$tempDir/model_rpart_evaluate_roc.svg';
+
+    String rocSVMImage = '$tempDir/model_svm_evaluate_roc.svg';
+
+    String rocCforestImage = '$tempDir/model_cforest_evaluate_roc.svg';
+
+    String rocRforestImage = '$tempDir/model_randomForest_evaluate_roc.svg';
+
+    String rocXGBoostImage = '$tempDir/model_xgboost_evaluate_roc.svg';
+
     String handRpartImage = '$tempDir/model_rpart_evaluate_hand.svg';
 
     String handCtreeImage = '$tempDir/model_ctree_evaluate_hand.svg';
@@ -82,6 +98,30 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     List<String> existingImages = [];
     List<String> imagesTitles = [];
+    List<String> rocImages = [];
+    List<String> rocImagesTitles = [];
+
+    // List of image-title pairs for ROC data.
+
+    final rocImageData = [
+      {'image': rocAdaBoostImage, 'title': 'AdaBoost'},
+      {'image': rocRpartImage, 'title': 'RPART'},
+      {'image': rocCtreeImage, 'title': 'CTREE'},
+      {'image': rocNNETImage, 'title': 'NNET'},
+      {'image': rocRforestImage, 'title': 'RANDOM FOREST'},
+      {'image': rocSVMImage, 'title': 'SVM'},
+      {'image': rocCforestImage, 'title': 'CONDITIONAL FOREST'},
+      {'image': rocXGBoostImage, 'title': 'XGBoost'},
+    ];
+
+    // Iterate through each image-title pair.
+
+    for (var data in rocImageData) {
+      if (imageExists(data['image']!)) {
+        rocImages.add(data['image']!);
+        rocImagesTitles.add(data['title']!);
+      }
+    }
 
     if (imageExists(handRpartImage)) {
       existingImages.add(handRpartImage);
@@ -96,6 +136,16 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     if (imageExists(handAdaBoostImage)) {
       existingImages.add(handAdaBoostImage);
       imagesTitles.add('ADA BOOST');
+    }
+
+    if (rocImages.isNotEmpty) {
+      pages.add(
+        ImagePage(
+          titles: rocImagesTitles,
+          paths: rocImages,
+          appBarImage: 'ROC',
+        ),
+      );
     }
 
     if (existingImages.isNotEmpty) {

@@ -39,6 +39,16 @@ library(rattle)       # Generate an error matrix.
 
 ########################################################################
 
+# Identify positions where either vector has NA.
+
+na_positions <- is.na(error_matrix_target) | is.na(error_matrix_predic)
+
+# Remove NA positions from both vectors.
+
+error_matrix_predic <- error_matrix_predic[!na_positions]
+error_matrix_target <- error_matrix_target[!na_positions]
+
+
 # Setting `count = TRUE` ensures the matrix represents raw counts of predictions.
 
 ERROR_MATRIX_COUNT <- rattle::errorMatrix(error_matrix_target, error_matrix_predic, count=TRUE)
