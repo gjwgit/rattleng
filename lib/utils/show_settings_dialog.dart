@@ -302,11 +302,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   void _resetToggleStates() {
     // Reset all toggles to default.
 
-    ref.read(cleanseProvider.notifier).state = true;
-    ref.read(normaliseProvider.notifier).state = true;
-    ref.read(partitionProvider.notifier).state = true;
-
-    ref.read(keepInSyncProvider.notifier).state = false;
+    ref.invalidate(cleanseProvider);
+    ref.invalidate(normaliseProvider);
+    ref.invalidate(partitionProvider);
+    ref.invalidate(keepInSyncProvider);
 
     // Save the reset states to preferences.
 
@@ -316,7 +315,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   void resetSessionControl() {
     // Reset session control to default.
 
-    ref.read(askOnExitProvider.notifier).state = true;
+    ref.invalidate(askOnExitProvider);
 
     // Save the reset state to preferences.
 
