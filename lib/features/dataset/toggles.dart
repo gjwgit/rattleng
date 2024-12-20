@@ -129,7 +129,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
   @override
   Widget build(BuildContext context) {
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool validationForTuning = ref.watch(useValidationSettingProvider);
     // Watch the "Keep in Sync" state to determine the synchronization behavior.
 
     final keepInSync = ref.watch(keepInSyncProvider);

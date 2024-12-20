@@ -56,7 +56,7 @@ class BoostDisplay extends ConsumerStatefulWidget {
 class _BoostDisplayState extends ConsumerState<BoostDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool validationForTuning = ref.watch(useValidationSettingProvider);
     String stdout = ref.watch(stdoutProvider);
     String algorithm = ref.read(algorithmBoostProvider.notifier).state;
 

@@ -63,7 +63,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     );
 
     String stdout = ref.watch(stdoutProvider);
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool validationForTuning = ref.watch(useValidationSettingProvider);
     int forestNo = ref.watch(treeNoForestProvider);
     AlgorithmType forestAlgorithm =
         ref.watch(algorithmForestProvider.notifier).state;
