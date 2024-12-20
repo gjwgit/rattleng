@@ -1,6 +1,6 @@
 /// Display the settings dialog.
 //
-// Time-stamp: <Friday 2024-12-20 11:18:15 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 11:20:18 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -866,7 +866,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 ref.read(partitionTestProvider.notifier).state =
                                     15;
                                 ref.invalidate(
-                                    validationForTuningSettingProvider);
+                                  validationForTuningSettingProvider,
+                                );
                               },
                               child: const Text('Reset'),
                             ),
