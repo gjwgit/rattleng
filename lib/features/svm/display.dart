@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -51,6 +52,7 @@ class SvmDisplay extends ConsumerStatefulWidget {
 class _SvmDisplayState extends ConsumerState<SvmDisplay> {
   @override
   Widget build(BuildContext context) {
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
     final pageController = ref.watch(
       svmPageControllerProvider,
     );
@@ -88,7 +90,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **tuning** dataset to evaluate the model performance.
+          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
