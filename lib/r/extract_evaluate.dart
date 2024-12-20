@@ -131,26 +131,6 @@ String _basicTemplate(
         '$cp\n\n';
   }
 
-  // Append ADABOOST model results if available and boosting is enabled.
-
-  if (ca != '' && pa != '' && boostExecuted) {
-    result = '$result\n'
-        '$hda\n\n'
-        '$ca\n\n'
-        '$mda\n\n'
-        '$pa\n\n';
-  }
-
-  // Append XGBOOST model results if available and boosting is enabled.
-
-  if (cx != '' && px != '' && boostExecuted) {
-    result = '$result\n'
-        '$hdx\n\n'
-        '$cx\n\n'
-        '$mdx\n\n'
-        '$px\n\n';
-  }
-
   // Append RANDOM FOREST model results if available and forest option is enabled.
 
   if (crf != '' && prf != '' && forestExecuted) {
@@ -169,6 +149,26 @@ String _basicTemplate(
         '$ccf\n\n'
         '$hdcf\n\n'
         '$pcf\n\n';
+  }
+
+  // Append ADABOOST model results if available and boosting is enabled.
+
+  if (ca != '' && pa != '' && boostExecuted) {
+    result = '$result\n'
+        '$hda\n\n'
+        '$ca\n\n'
+        '$mda\n\n'
+        '$pa\n\n';
+  }
+
+  // Append XGBOOST model results if available and boosting is enabled.
+
+  if (cx != '' && px != '' && boostExecuted) {
+    result = '$result\n'
+        '$hdx\n\n'
+        '$cx\n\n'
+        '$mdx\n\n'
+        '$px\n\n';
   }
 
   // Append SVM model results if available and SVM is executed.
