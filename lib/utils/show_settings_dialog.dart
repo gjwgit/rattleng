@@ -301,6 +301,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
   void _resetToggleStates() {
     // Reset all toggles to default.
+    // Reset 4 providers to default by calling invalidate method.
 
     ref.invalidate(cleanseProvider);
     ref.invalidate(normaliseProvider);
@@ -375,9 +376,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   /// Save training partition percentage.
 
   Future<void> _savePartitionTrain(int value) async {
+    // Save the new state to shared preference.
+
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('train', value);
+
+    // Update the provider state.
 
     ref.read(partitionTrainProvider.notifier).state = value;
   }
@@ -385,9 +390,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   /// Save validation partition percentage.
 
   Future<void> _savePartitionValid(int value) async {
+    // Save the new state to shared preference.
+
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('valid', value);
+
+    // Update the provider state.
 
     ref.read(partitionValidProvider.notifier).state = value;
   }
@@ -395,9 +404,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   /// Save testing partition percentage.
 
   Future<void> _savePartitionTest(int value) async {
+    // Save the new state to shared preference.
+
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('test', value);
+
+    // Update the provider state.
 
     ref.read(partitionTestProvider.notifier).state = value;
   }
@@ -861,6 +874,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 ref.invalidate(
                                   validationForTuningSettingProvider,
                                 );
+
+                                // Reset the partition values to default.
+                                // Save the new values to shared preferences and providers.
 
                                 await _savePartitionTrain(70);
                                 await _savePartitionValid(15);
