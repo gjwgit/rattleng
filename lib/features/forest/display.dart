@@ -32,6 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/r/extract.dart';
@@ -62,6 +63,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     );
 
     String stdout = ref.watch(stdoutProvider);
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
     int forestNo = ref.watch(treeNoForestProvider);
     AlgorithmType forestAlgorithm =
         ref.watch(algorithmForestProvider.notifier).state;
@@ -328,7 +330,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **tuning** dataset to evaluate the model performance.
+          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
