@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 12:01:33 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-12-20 20:46:00 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,6 +33,14 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+## #########################################################################
+## #########################################################################
+## #########################################################################
+## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+## #########################################################################
+## #########################################################################
+## #########################################################################
+
 # Load required packages from the local library into the R session.
 
 library(ggplot2, quietly = TRUE)
@@ -40,10 +48,6 @@ library(glue)
 library(ROCR)
 
 ################################
-
-# Identify the dataset partition that the model is applied to.
-
-dtype <- 'training'
 
 title <- glue(
     "ROC Curve &#8212; {mdesc} &#8212; ",
@@ -53,7 +57,7 @@ title <- glue(
 
 # Remove observations with missing target values.
 
-no.miss <- na.omit(trds[[target]])
+no.miss <- na.omit(actual)
 
 # Retrieve the indices of missing values.
 
@@ -65,27 +69,27 @@ attributes(no.miss) <- NULL
 
 # Handle predictions to align with non-missing values.
 
-target_levels <- levels(as.factor(trds[[target]]))  # Retrieve unique levels
-actual_model_labels <- ifelse(trds[[target]] == target_levels[1], 0, 1)
+target_levels <- levels(as.factor(actual))  # Retrieve unique levels
+actual_model_labels <- ifelse(actual == target_levels[1], 0, 1)
 
-# Create prediction object using probabilities and binary labels.
+# Create prediction object using probability and binary labels.
 # Identify positions where either vector has NA.
 
-na_positions <- is.na(roc_predicted_probs) | is.na(actual_model_labels)
+na_positions <- is.na(probability) | is.na(actual_model_labels)
 
 # Remove NA positions from both vectors.
 
-roc_predicted_probs <- roc_predicted_probs[!na_positions]
+roc_predicted_probs <- probability[!na_positions]
 actual_model_labels <- actual_model_labels[!na_positions]
 
 # Convert roc_predicted_probs to numeric.
 
-roc_predicted_probs <- as.numeric(factor(roc_predicted_probs)) - 1
+roc_predicted_probs <- as.numeric(factor(probability)) - 1
 
 # Find the lengths of the two objects.
 
 len_actual_target <- length(actual_model_labels)
-len_roc_predicted_predic <- length(roc_predicted_probs)
+len_roc_predicted_predic <- length(probability)
 
 # Determine the minimum length.
 
@@ -93,10 +97,10 @@ roc_min_length <- min(len_actual_target, len_roc_predicted_predic)
 
 # Match the minimum length.
 
-roc_predicted_probs <- roc_predicted_probs[seq_len(roc_min_length)]
+roc_predicted_probs <- probability[seq_len(roc_min_length)]
 actual_model_labels <- actual_model_labels[seq_len(roc_min_length)]
 
-# Generate a prediction object that combines the predicted probabilities and actual labels.
+# Generate a prediction object that combines the predicted probability and actual labels.
 
 prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
 
@@ -112,40 +116,28 @@ au <- performance(prediction_prob_values, "auc")@y.values[[1]]
 
 pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
 
-# Initialize a ggplot object with the FPR and TPR data, setting up axes for the ROC curve.
+fname <- glue("TEMPDIR/model_{mtype}_evaluate_roc.svg")
+svg(fname, width = 11)
 
-p <- ggplot(pd, aes(x = fpr, y = tpr))
+# 20241220 gjw Now render the ROC curve with the FPR and TPR data.
+# The red line represent the ROC curve while the diagonal grey
+# reference line indicates a random classifier (baseline).
 
-# Add a red line to represent the ROC curve.
-
-p <- p + geom_line(colour = "red")
-
-# Label the x-axis as "False Positive Rate" and the y-axis as "True Positive Rate".
-
-p <- p + xlab("False Positive Rate") + ylab("True Positive Rate")
-
-# Add a title to the plot and customize its appearance.
-
-p <- p + ggtitle(title)
-p <- p + theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5, colour = "darkblue"))
-
-# Add a diagonal grey reference line indicating a random classifier (baseline).
-
-p <- p + geom_line(data = data.frame(), aes(x = c(0, 1), y = c(0, 1)), colour = "grey")
-
-# Annotate the plot with the AUC value at a specific position.
-
-p <- p + annotate("text", x = 0.50, y = 0.00, hjust = 0, vjust = 0, size = 5,
-                   label = paste("AUC =", round(au, 2)))
-
-p <- p +
+pd %>%
+  ggplot(aes(x=fpr, y=tpr)) +
+  geom_line(colour = "red") +
+  xlab("False Positive Rate") +
+  ylab("True Positive Rate") +
+  ggtitle(title) +
+  theme(plot.title=element_text(size=12, face="bold", hjust=0.5, colour="darkblue")) +
+  geom_line(data=data.frame(), aes(x=c(0, 1), y=c(0, 1)), colour="grey") +
+  annotate("text",
+           x     = 0.50,
+           y     = 0.00,
+           hjust = 0,
+           vjust = 0,
+           size  = 5,
+           label = paste("AUC =", round(au, 2))) +
   SETTINGS_GRAPHIC_THEME() +
   theme(plot.title = element_markdown())
-
-image_title <- glue("TEMPDIR/model_{mtype}_evaluate_roc.svg")
-
-svg(image_title, width = 11)
-
-print(p)
-
 dev.off()
