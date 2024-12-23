@@ -1,6 +1,6 @@
 /// Show the settings dialog.
 //
-// Time-stamp: <Saturday 2024-12-21 10:36:48 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:35:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -338,7 +338,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('randomPartition', value);
   }
 
-  Future<void> _saveValidationThanTuning(bool value) async {
+  Future<void> _saveValidation(bool value) async {
     final prefs = await SharedPreferences.getInstance();
 
     // Save "Validation than Tuning" state to preferences.
@@ -1289,7 +1289,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                               useValidationSettingProvider.notifier,
                             )
                             .state = value;
-                        _saveValidationThanTuning(value);
+                        _saveValidation(value);
                       },
                     ),
                     const Text(

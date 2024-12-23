@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-12-19 19:57:16 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:32:26 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -53,7 +53,7 @@ class NeuralDisplay extends ConsumerStatefulWidget {
 class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationForTuning = ref.watch(useValidationSettingProvider);
+    bool useValidation = ref.watch(useValidationSettingProvider);
     final pageController = ref.watch(
       neuralPageControllerProvider,
     ); // Get the PageController from Riverpod
@@ -284,7 +284,8 @@ $weights
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to
+          evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
