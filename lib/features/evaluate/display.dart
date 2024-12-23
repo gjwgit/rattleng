@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_evaluate.dart';
@@ -57,11 +58,13 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
+    String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
+
     List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
 
     String content = '';
 
-    content = rExtractEvaluate(stdout, 'TRAINING', ref);
+    content = rExtractEvaluate(stdout, datasetType, ref);
 
     bool showContentMaterial = content.trim().split('\n').length > 1;
 

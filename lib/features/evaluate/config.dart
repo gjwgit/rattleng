@@ -227,6 +227,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool conditionalForestExecuted =
                     ref.watch(conditionalForestEvaluateProvider);
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+                String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
@@ -269,13 +270,25 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // Check if rpart model evaluation was executed.
 
                 if (rpartExecuted && treeExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    // 20241220 gjw Let's try out ttu instead of ttr. This will
-                    // then be chosen via the GUI.
-                    [er, ttu, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Validation') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, tte, em, ro],
+                    );
+                  }
                 }
 
                 // Check if ctree model evaluation was executed.
