@@ -1,11 +1,11 @@
-# Apply the `model` to the training dataset `trds`.
+# Use `rattle::errorMatrix()` to generate error matrix evaluation.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 20:46:13 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-12-20 20:46:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,9 +22,9 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Zheyuan Xu, Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
@@ -41,16 +41,38 @@
 ## #########################################################################
 ## #########################################################################
 
+# Load required packages from the local library into the R session.
+
+library(rattle)       # Generate an error matrix.
+
 ########################################################################
 
-# Identify the dataset partition that the model is applied to.
+# Identify positions where either vector has NA. 20241220 gjw Whcih
+# models needed this and can we fix that in the evaluate_model part?
+# Or is it best here?
 
-dtype <- 'training'
+#na_positions <- is.na(error_matrix_target) | is.na(error_matrix_predic)
 
-# Store into the TEMPLATE variables the corresponding predicted,
-# actual and risk values for later processing.
+# Remove NA positions from both vectors.
 
-actual      <- actual_tr
-predicted   <- pred_tr
-probability <- prob_tr
-risk        <- risk_tr
+#error_matrix_predic <- error_matrix_predic[!na_positions]
+#error_matrix_target <- error_matrix_target[!na_positions]
+
+
+# Setting `count=TRUE` in `errorMatrix()` ensures the matrix
+# represents raw counts of predictions rather than the proportions.
+##
+## 20241220 gjw The r/source.dart was creating a new variable for each
+## error matrix. Probably for some checking in dart for the
+## differently generated error matrices. Is there a better way to do
+## this? E.g., look for `mdodel <- model_rpart` in the stdout and then
+## find the first `print(em_count)` for the RPart error matrix, etc.
+
+em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
+print(em_count)
+
+# Generate a confusion matrix with proportions (relative frequencies)
+# rather than counts.
+
+em_prop <- rattle::errorMatrix(actual, predicted)
+print(em_prop)

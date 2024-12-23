@@ -38,3 +38,7 @@ library(rattle)
 error_matrix_predic <- predict(model_nn, newdata = trds, type = "class")
 
 error_matrix_target <- trds[[target]]
+
+# A variable containing the predictions.
+
+roc_predicted_probs <- error_matrix_predic

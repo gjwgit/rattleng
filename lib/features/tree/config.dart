@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Sunday 2024-12-15 08:07:51 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 14:38:03 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -240,23 +240,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     String mt = 'model_template';
                     String mbc = 'model_build_ctree';
                     String mbr = 'model_build_rpart';
-                    String etr = 'evaluate_template_tr';
-                    String etu = 'evaluate_template_tu';
-                    String erc = 'evaluate_riskchart';
 
                     if (selectedAlgorithm == AlgorithmType.conditional) {
-                      await rSource(
-                        context,
-                        ref,
-                        [mt, mbc, etr, erc, etu, erc],
-                      );
+                      await rSource(context, ref, [mt, mbc]);
                       ref.read(cTreeEvaluateProvider.notifier).state = true;
                     } else {
-                      await rSource(
-                        context,
-                        ref,
-                        [mt, mbr, etr, erc, etu, erc],
-                      );
+                      await rSource(context, ref, [mt, mbr]);
                       ref.read(rpartTreeEvaluateProvider.notifier).state = true;
                     }
                   }
@@ -319,7 +308,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 This is the maximum depth of any node of the final tree. The
                 root node is considered to be depth 0 so a non-trivial tree
                 starts with depth 1.  The maximum allowable depth for rpart() is
-                ${maxDepthLimit.toString()} which we retain as the maximum 
+                ${maxDepthLimit.toString()} which we retain as the maximum
                 depth allowable for Rattle and the default.
 
                 ''',

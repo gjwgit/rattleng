@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-07-31 05:58:52 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-12-19 11:15:49 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -33,7 +33,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_summary.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
@@ -54,7 +54,13 @@ class _ImputeDisplayState extends ConsumerState<ImputeDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
-    List<Widget> pages = [showMarkdownFile(imputeIntroFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile(
+        context,
+        imputeIntroFile,
+        'assets/svg/impute.svg',
+      ),
+    ];
 
     // Second page is the data summary. Be sure to include the IGNOREd variables
     // since we may transform it multiple times.

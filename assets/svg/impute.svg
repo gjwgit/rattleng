@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400">
+    <!-- Background -->
+    <rect width="1000" height="400" fill="#ffffff"/>
+
+    <!-- Title -->
+    <text x="500" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#333">
+        Common Data Imputation Methods
+    </text>
+
+    <!-- Dataset Columns -->
+    <g transform="translate(50, 80)">
+        <!-- Original Data Column -->
+        <rect x="0" y="0" width="140" height="250" fill="#e9ecef" rx="5"/>
+        <text x="70" y="-10" text-anchor="middle" font-size="16" fill="#495057">Original Data</text>
+
+        <!-- Data points -->
+        <text x="70" y="40" text-anchor="middle" font-size="14" fill="#212529">42</text>
+        <text x="70" y="80" text-anchor="middle" font-size="14" fill="#212529">38</text>
+        <text x="70" y="120" text-anchor="middle" font-size="14" fill="#dc3545">?</text>
+        <text x="70" y="160" text-anchor="middle" font-size="14" fill="#212529">45</text>
+        <text x="70" y="200" text-anchor="middle" font-size="14" fill="#212529">39</text>
+    </g>
+
+    <!-- Mean Imputation -->
+    <g transform="translate(230, 80)">
+        <rect x="0" y="0" width="140" height="250" fill="#e9ecef" rx="5"/>
+        <text x="70" y="-10" text-anchor="middle" font-size="16" fill="#495057">Mean Imputation</text>
+
+        <text x="70" y="40" text-anchor="middle" font-size="14" fill="#212529">42</text>
+        <text x="70" y="80" text-anchor="middle" font-size="14" fill="#212529">38</text>
+        <text x="70" y="120" text-anchor="middle" font-size="14" fill="#28a745">41</text>
+        <text x="70" y="160" text-anchor="middle" font-size="14" fill="#212529">45</text>
+        <text x="70" y="200" text-anchor="middle" font-size="14" fill="#212529">39</text>
+
+        <!-- Mean calculation -->
+        <path d="M 20 230 L 120 230" stroke="#28a745" stroke-width="2"/>
+        <text x="70" y="245" text-anchor="middle" font-size="12" fill="#28a745">Mean = 41</text>
+    </g>
+
+    <!-- Median Imputation -->
+    <g transform="translate(410, 80)">
+        <rect x="0" y="0" width="140" height="250" fill="#e9ecef" rx="5"/>
+        <text x="70" y="-10" text-anchor="middle" font-size="16" fill="#495057">Median Imputation</text>
+
+        <text x="70" y="40" text-anchor="middle" font-size="14" fill="#212529">42</text>
+        <text x="70" y="80" text-anchor="middle" font-size="14" fill="#212529">38</text>
+        <text x="70" y="120" text-anchor="middle" font-size="14" fill="#007bff">40</text>
+        <text x="70" y="160" text-anchor="middle" font-size="14" fill="#212529">45</text>
+        <text x="70" y="200" text-anchor="middle" font-size="14" fill="#212529">39</text>
+
+        <!-- Median indication -->
+        <path d="M 20 230 L 120 230" stroke="#007bff" stroke-width="2"/>
+        <text x="70" y="245" text-anchor="middle" font-size="12" fill="#007bff">Median = 40</text>
+    </g>
+
+    <!-- Mode Imputation -->
+    <g transform="translate(590, 80)">
+        <rect x="0" y="0" width="140" height="250" fill="#e9ecef" rx="5"/>
+        <text x="70" y="-10" text-anchor="middle" font-size="16" fill="#495057">Mode Imputation</text>
+
+        <text x="70" y="40" text-anchor="middle" font-size="14" fill="#212529">42</text>
+        <text x="70" y="80" text-anchor="middle" font-size="14" fill="#212529">38</text>
+        <text x="70" y="120" text-anchor="middle" font-size="14" fill="#9c27b0">50</text>
+        <text x="70" y="160" text-anchor="middle" font-size="14" fill="#212529">45</text>
+        <text x="70" y="200" text-anchor="middle" font-size="14" fill="#212529">39</text>
+
+        <!-- Mode indication -->
+        <path d="M 20 230 L 120 230" stroke="#9c27b0" stroke-width="2"/>
+        <text x="70" y="245" text-anchor="middle" font-size="12" fill="#9c27b0">Mode = 50</text>
+    </g>
+
+    <!-- Fixed Value Imputation -->
+    <g transform="translate(770, 80)">
+        <rect x="0" y="0" width="140" height="250" fill="#e9ecef" rx="5"/>
+        <text x="70" y="-10" text-anchor="middle" font-size="16" fill="#495057">Fixed Value</text>
+
+        <text x="70" y="40" text-anchor="middle" font-size="14" fill="#212529">42</text>
+        <text x="70" y="80" text-anchor="middle" font-size="14" fill="#212529">38</text>
+        <text x="70" y="120" text-anchor="middle" font-size="14" fill="#fd7e14">0</text>
+        <text x="70" y="160" text-anchor="middle" font-size="14" fill="#212529">45</text>
+        <text x="70" y="200" text-anchor="middle" font-size="14" fill="#212529">39</text>
+
+        <!-- Fixed value indication -->
+        <path d="M 20 230 L 120 230" stroke="#fd7e14" stroke-width="2"/>
+        <text x="70" y="245" text-anchor="middle" font-size="12" fill="#fd7e14">Fixed = 0</text>
+    </g>
+
+    <!-- Arrows connecting columns -->
+    <g stroke="#6c757d" stroke-width="2" fill="none">
+        <path d="M 190 200 C 200 200, 220 200, 230 200"/>
+        <path d="M 370 200 C 380 200, 400 200, 410 200"/>
+        <path d="M 550 200 C 560 200, 580 200, 590 200"/>
+        <path d="M 730 200 C 740 200, 760 200, 770 200"/>
+
+        <!-- Arrow heads -->
+        <path d="M 230 200 l -10 -5 l 0 10 z" fill="#6c757d"/>
+        <path d="M 410 200 l -10 -5 l 0 10 z" fill="#6c757d"/>
+        <path d="M 590 200 l -10 -5 l 0 10 z" fill="#6c757d"/>
+        <path d="M 770 200 l -10 -5 l 0 10 z" fill="#6c757d"/>
+    </g>
+
+    <!-- Legend -->
+    <g transform="translate(50, 350)">
+        <text x="0" y="0" font-size="14" fill="#dc3545">? = Missing Value</text>
+        <text x="200" y="0" font-size="14" fill="#28a745">Green = Mean</text>
+        <text x="400" y="0" font-size="14" fill="#007bff">Blue = Median</text>
+        <text x="600" y="0" font-size="14" fill="#9c27b0">Purple = Mode</text>
+        <text x="800" y="0" font-size="14" fill="#fd7e14">Orange = Fixed Value</text>
+    </g>
+</svg>

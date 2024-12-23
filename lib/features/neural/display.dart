@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-10-16 09:48:46 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-19 19:57:16 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,12 +31,13 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/single_image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -52,6 +53,7 @@ class NeuralDisplay extends ConsumerStatefulWidget {
 class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
+    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
     final pageController = ref.watch(
       neuralPageControllerProvider,
     ); // Get the PageController from Riverpod
@@ -62,7 +64,11 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
     String content = '';
 
     List<Widget> pages = [
-      showMarkdownFile(neuralIntroFile, context),
+      showMarkdownFile(
+        context,
+        neuralIntroFile,
+        'assets/svg/neural.svg',
+      ),
     ];
 
     ////////////////////////////////////////////////////////////////////////
@@ -278,7 +284,7 @@ $weights
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **tuning** dataset to evaluate the model performance.
+          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',

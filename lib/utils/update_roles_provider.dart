@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Friday 2024-12-13 14:24:30 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 14:58:58 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -174,15 +174,11 @@ bool deleteVar(WidgetRef ref, String v) {
   }
 
   if (r == null) {
-    debugPrint(
-      'ERROR: attempt to delete $v from roles but $v is not found in the map.',
-    );
+    debugPrint('ERROR: Attempt to delete $v from ROLES but not in the map.');
 
     return false;
   } else if (t == null) {
-    debugPrint(
-      'ERROR: attempt to delete $v from types but $v is not found in the map.',
-    );
+    debugPrint('ERROR: Attempt to delete $v from TYPES but not in the map.');
 
     return false;
   }

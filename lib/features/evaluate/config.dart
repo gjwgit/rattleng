@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 11:53:41 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 20:50:36 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -199,18 +199,34 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool treeExecuted = ref.watch(treeEvaluateProvider);
                 bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
 
-                // String constants corresponding to the various evaluation commands.
+                // 20241220 gjw Identify constants corresponding to the various
+                // evaluation commands for each model to generate the required
+                // TEMPLATE variables.
 
                 String ea = 'evaluate_adaboost';
-                String em = 'evaluate_error_matrix';
                 String ec = 'evaluate_ctree';
                 String en = 'evaluate_nnet';
-                String er = 'evaluate_rpart';
+                String er = 'evaluate_model_rpart';
                 String es = 'evaluate_svm';
                 String ex = 'evaluate_xgboost';
 
                 String ecf = 'evaluate_conditional_forest';
                 String erf = 'evaluate_random_forest';
+
+                // 20241220 gjw One of the following templates then needs to be
+                // run to convert the appropriate predictions and probabilities
+                // to the variables that are non-specific to a dataset
+                // partition.
+
+                String ttr = 'evaluate_template_tr';
+                String ttu = 'evaluate_template_tu';
+                String tte = 'evaluate_template_te';
+
+                // 20241220 gjw Finally we will run the generic templates for
+                // the various performance measures.
+
+                String em = 'evaluate_measure_error_matrix';
+                String ro = 'evaluate_measure_roc';
 
                 // Check if rpart model evaluation was executed.
 
@@ -218,7 +234,9 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [er, em],
+                    // 20241220 gjw Let's try out ttu instead of ttr. This will
+                    // then be chosen via the GUI.
+                    [er, ttu, em, ro],
                   );
                 }
 
@@ -228,7 +246,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ec, em],
+                    [ec, ttr, em, ro],
                   );
                 }
 
@@ -239,7 +257,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [erf, em],
+                    [erf, tte, em, ro],
                   );
                 }
 
@@ -250,7 +268,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ecf, em],
+                    [ecf, em, ro],
                   );
                 }
 
@@ -260,7 +278,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ea, em],
+                    [ea, em, ro],
                   );
                 }
 
@@ -270,7 +288,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ex, em],
+                    [ex, em, ro],
                   );
                 }
 
@@ -280,7 +298,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [es, em],
+                    [es, em, ro],
                   );
                 }
 
@@ -290,7 +308,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [en, em],
+                    [en, em, ro],
                   );
                 }
 

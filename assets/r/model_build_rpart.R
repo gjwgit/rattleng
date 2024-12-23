@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-16 08:04:25 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-12-20 14:30:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -64,15 +64,6 @@ model_rpart <- rpart(
                           maxsurrogate = 0,
                           MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model   = TRUE)
-
-# Save the model to the TEMPLATE variable `model` and the predicted
-# values appropriately.
-
-model <- model_rpart
-
-predicted_tr <- predict(model, newdata = trds)[,2]
-predicted_tu <- predict(model, newdata = tuds)[,2]
-predicted_te <- predict(model, newdata = teds)[,2]
 
 # Output a textual view of the Decision Tree model.
 

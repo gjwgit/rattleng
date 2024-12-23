@@ -75,8 +75,9 @@ final randomSeedSettingProvider = StateProvider<int>((ref) => 42);
 
 final imageViewerSettingProvider = StateProvider<String>((ref) => '');
 
-
 final randomPartitionSettingProvider = StateProvider<bool>((ref) => false);
+
+final validationForTuningSettingProvider = StateProvider<bool>((ref) => false);
 
 final rExecutablePathProvider = StateProvider<String>((ref) => '');
 
