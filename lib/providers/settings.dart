@@ -1,6 +1,6 @@
 /// Settings provider.
 //
-// Time-stamp: <Friday 2024-12-13 18:59:17 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-21 10:34:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -77,7 +77,7 @@ final imageViewerSettingProvider = StateProvider<String>((ref) => '');
 
 final randomPartitionSettingProvider = StateProvider<bool>((ref) => false);
 
-final validationForTuningSettingProvider = StateProvider<bool>((ref) => false);
+final useValidationSettingProvider = StateProvider<bool>((ref) => false);
 
 final rExecutablePathProvider = StateProvider<String>((ref) => '');
 
@@ -86,13 +86,13 @@ final rExecutablePathProvider = StateProvider<String>((ref) => '');
 final partitionSettingProvider = StateProvider<List<double>>(
   (ref) => [
     ref.watch(partitionTrainProvider.notifier).state.toDouble() / 100,
-    ref.watch(partitionValidProvider.notifier).state.toDouble() / 100,
+    ref.watch(partitionTuneProvider.notifier).state.toDouble() / 100,
     ref.watch(partitionTestProvider.notifier).state.toDouble() / 100,
   ],
 );
 
 final partitionTrainProvider = StateProvider<int>((ref) => 70);
 
-final partitionValidProvider = StateProvider<int>((ref) => 15);
+final partitionTuneProvider = StateProvider<int>((ref) => 15);
 
 final partitionTestProvider = StateProvider<int>((ref) => 15);

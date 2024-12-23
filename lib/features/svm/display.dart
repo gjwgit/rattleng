@@ -52,7 +52,7 @@ class SvmDisplay extends ConsumerStatefulWidget {
 class _SvmDisplayState extends ConsumerState<SvmDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool validationForTuning = ref.watch(useValidationSettingProvider);
     final pageController = ref.watch(
       svmPageControllerProvider,
     );

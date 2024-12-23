@@ -53,7 +53,7 @@ class NeuralDisplay extends ConsumerStatefulWidget {
 class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool validationForTuning = ref.watch(useValidationSettingProvider);
     final pageController = ref.watch(
       neuralPageControllerProvider,
     ); // Get the PageController from Riverpod
