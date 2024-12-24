@@ -61,9 +61,18 @@ pred_tr <- predict(model, newdata=trds, type="class")
 pred_tu <- predict(model, newdata=tuds, type="class")
 pred_te <- predict(model, newdata=teds, type="class")
 
+# 20241224 zy Save the predicted values based on full dataset.
+
+pred_tf <- predict(model, newdata=tcds, type="class")
+
 prob_tr <- predict(model, newdata=trds, type="prob")[,2]
 prob_tu <- predict(model, newdata=tuds, type="prob")[,2]
 prob_te <- predict(model, newdata=teds, type="prob")[,2]
+
+# 20241224 zy Save the predicted probabilities based on full dataset.
+
+prob_tf <- predict(model, newdata=tcds, type="prob")[,2]
+
 
 #target_rpart_levels <- unique(trds[[target]])
 #target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present

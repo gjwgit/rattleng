@@ -139,6 +139,45 @@ trds <- tcds[tr, setdiff(vars, ignore)]
 tuds <- tcds[tu, setdiff(vars, ignore)]
 teds <- tcds[te, setdiff(vars, ignore)]
 
+# Check if the target variable exists and create `actual_tf`.
+
+if (!is.null(target)) {
+  # Retrieve the actual values for the full dataset and remove `NA`.
+
+  actual_tf <- ds %>%
+    filter(!is.na(!!sym(target))) %>% # Remove rows where `target` is `NA`.
+    pull(target) %>%
+    as.character()
+  
+  # Convert to numeric (binary if applicable).
+
+  levels_actual <- unique(actual_tf)
+  actual_numeric_tf <- ifelse(actual_tf == levels_actual[1], 0, 1)
+} else {
+  # If no target, set `actual_tf` to NULL.
+
+  actual_tf <- NULL
+  actual_numeric_tf <- NULL
+}
+
+# Check if the risk variable exists and create `risk_tf`.
+
+if (!is.null(risk)) {
+  # Retrieve the risk values for the full dataset.
+
+  risk_tf <- ds %>%
+    pull(risk) %>%
+    as.numeric()  # Ensure it's numeric.
+
+  # Handle NA values by replacing them with a default value (e.g., 0).
+
+  risk_tf <- ifelse(is.na(risk_tf) | is.nan(risk_tf), 0, risk_tf)
+} else {
+  # If no risk, set `risk_tf` to NULL.
+
+  risk_tf <- NULL
+}
+
 ####################################
 # TODO 20241202 gjw REVIEW ALL OF THE FOLLOWING - WHY HERE OR WHY NEEDED
 

@@ -260,6 +260,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ttr = 'evaluate_template_tr';
                 String ttu = 'evaluate_template_tu';
                 String tte = 'evaluate_template_te';
+                String ttf = 'evaluate_template_tf';
 
                 // 20241220 gjw Finally we will run the generic templates for
                 // the various performance measures.
@@ -287,6 +288,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       context,
                       ref,
                       [er, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Full') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttf, em, ro],
                     );
                   }
                 }
