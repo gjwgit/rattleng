@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-17 17:26:59 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:32:03 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -63,7 +63,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     );
 
     String stdout = ref.watch(stdoutProvider);
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool useValidation = ref.watch(useValidationSettingProvider);
     int forestNo = ref.watch(treeNoForestProvider);
     AlgorithmType forestAlgorithm =
         ref.watch(algorithmForestProvider.notifier).state;
@@ -330,7 +330,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to
+          evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',

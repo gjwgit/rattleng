@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-17 17:23:38 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:33:14 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -61,7 +61,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
       treePageControllerProvider,
     );
 
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool useValidation = ref.watch(useValidationSettingProvider);
 
     String stdout = ref.watch(stdoutProvider);
 
@@ -186,7 +186,8 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to
+          evaluate the model performance.
 
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and

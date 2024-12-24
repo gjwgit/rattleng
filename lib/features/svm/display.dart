@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-18 08:30:54 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:32:49 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -52,7 +52,7 @@ class SvmDisplay extends ConsumerStatefulWidget {
 class _SvmDisplayState extends ConsumerState<SvmDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool useValidation = ref.watch(useValidationSettingProvider);
     final pageController = ref.watch(
       svmPageControllerProvider,
     );
@@ -90,7 +90,8 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to
+          evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',
