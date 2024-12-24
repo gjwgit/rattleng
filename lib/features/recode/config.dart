@@ -66,8 +66,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   // Before build, selected contains the most recent value.
 
   String selected = 'NULL';
-  String selectedTransform = '';
-  // String selectedAs = 'As Categoric';
+  String selectedTransform = 'Quantiles';
 
   List<String> numericMethods = [
     'Quantiles',
@@ -125,8 +124,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   List<String> categoricMethods = [
     'Indicator Variable',
     'Join Categorics',
-    // 'As Categoric',
-    // 'As Numeric',
   ];
 
   Map<String, String> categoricMethodsTooltips = {
@@ -201,10 +198,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         ChoiceChipTip(
           options: numericMethods,
           selectedOption: selectedTransform,
-          enabled:
-              isNumeric, // Dynamic enabling based on the selected variable type
+          enabled: isNumeric && selected != 'NULL',
+          // Dynamic enabling based on the selected variable type
           tooltips: numericMethodsTooltips,
           onSelected: (String? selected) {
+            print("selected: $selected");
             setState(() {
               selectedTransform = selected ?? '';
             });
@@ -216,7 +214,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           stateProvider: numberProvider,
           validator: (value) => validateInteger(value, min: 1),
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
-          enabled: isNumeric,
+          enabled: isNumeric && selected != 'NULL',
           tooltip: '''
               
           Set the number of bins to construct.
@@ -230,8 +228,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           options: asCategoricMethods,
           selectedOption: selectedTransform,
           tooltips: asCategoricMethodsTooltips,
-          enabled: isNumeric,
+          enabled: isNumeric && selected != 'NULL',
           onSelected: (String? selected) {
+            print(selected);
+            print("selected: $selected");
+
             setState(() {
               selectedTransform = selected ?? '';
             });
@@ -349,7 +350,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     buildAction();
 
                     if (selectedTransform == 'Quantiles') {
-                      await Future.delayed(const Duration(seconds: 5));
+                      await Future.delayed(const Duration(seconds: 1));
                     }
 
                     setState(() {
