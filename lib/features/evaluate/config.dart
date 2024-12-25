@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-20 20:50:36 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-25 17:22:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -153,29 +153,24 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   Map<String, String> datasetTypes = {
     'Training': '''
 
-    Evaluate the model using the training dataset.
-    This will give an optimistic estimate of the 
-    performance of the model.
+    Evaluate the model using the training dataset.  This will give an optimistic
+    estimate of the performance of the model.
 
     ''',
-    'Validation': '''
+    'Tuning': '''
 
-    Evaluate the model using the validation dataset.
-    This is used whilst the model parameters are 
-    still being tuned but not for the final unbiased
-    estimate of error. This option is only available
-    if partitioning is enabled in the Data tab and a
-    validation dataset is specified.
+    Evaluate the model using the tuning dataset.  This is used whilst the model
+    parameters are still being tuned but not for the final unbiased estimate of
+    error. This option is only available if partitioning is enabled in the Data
+    tab and a tuning dataset is specified.
 
     ''',
     'Testing': '''
 
-    Evaluate the performance of the model over the
-    testing dataset, which is the remainder of the
-    dataset not used for building, and so will provide
-    an unbiased estimate. This option is only available
-    if partitioning is enabled in the Data tab and a
-    testing dataset is specified.
+    Evaluate the performance of the model over the testing dataset, which is the
+    remainder of the dataset not used for building, and so will provide an
+    unbiased estimate. This option is only available if partitioning is enabled
+    in the Data tab and a testing dataset is specified.
 
     ''',
     'Full': '''
@@ -260,7 +255,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ttr = 'evaluate_template_tr';
                 String ttu = 'evaluate_template_tu';
                 String tte = 'evaluate_template_te';
-                String ttf = 'evaluate_template_tf';
+                String ttc = 'evaluate_template_tc';
 
                 // 20241220 gjw Finally we will run the generic templates for
                 // the various performance measures.
@@ -293,7 +288,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     await rSource(
                       context,
                       ref,
-                      [er, ttf, em, ro],
+                      [er, ttc, em, ro],
                     );
                   }
                 }

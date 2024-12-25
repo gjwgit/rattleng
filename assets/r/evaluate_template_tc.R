@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 20:46:22 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-12-25 17:19:22 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,12 +47,12 @@
 ##
 ## TODO 20241220 THIS NEEDS TO TOGGLE full OR validation.
 
-dtype <- 'full'
+dtype <- 'complete'
 
 # Store into the TEMPLATE variables the corresponding predicted,
 # actual and risk values for later processing.
 
-actual      <- actual_tf
-predicted   <- pred_tf
-probability <- prob_tf
-risk        <- risk_tf
+actual      <- actual_tc
+predicted   <- pred_tc
+probability <- prob_tc
+risk        <- risk_tc
