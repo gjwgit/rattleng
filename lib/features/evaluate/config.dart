@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-25 17:22:18 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-12-25 19:22:40 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -153,29 +154,30 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   Map<String, String> datasetTypes = {
     'Training': '''
 
-    Evaluate the model using the training dataset.  This will give an optimistic
-    estimate of the performance of the model.
+    Evaluate the model using the **training** dataset.  This will give an
+    optimistic estimate of the performance of the model since it is using the
+    same data that trained the model to then test the model. It should do well.
 
     ''',
     'Tuning': '''
 
-    Evaluate the model using the tuning dataset.  This is used whilst the model
-    parameters are still being tuned but not for the final unbiased estimate of
-    error. This option is only available if partitioning is enabled in the Data
-    tab and a tuning dataset is specified.
+    Evaluate the model using the **tuning** dataset.  This is used whilst the
+    model parameters are still being tuned but not for the final unbiased
+    estimate of error. This option is only available if partitioning is enabled
+    in the Data tab and a tuning dataset is specified.
 
     ''',
     'Testing': '''
 
-    Evaluate the performance of the model over the testing dataset, which is the
-    remainder of the dataset not used for building, and so will provide an
-    unbiased estimate. This option is only available if partitioning is enabled
-    in the Data tab and a testing dataset is specified.
+    Evaluate the performance of the model over the **testing** dataset, which is
+    the remainder of the dataset not used for training (and tuning), and so will
+    provide an unbiased estimate. This option is only available if partitioning
+    is enabled in the Data tab and a testing dataset is specified.
 
     ''',
-    'Full': '''
+    'Complete': '''
 
-    Score the whole dataset.
+    Evaluate the performance on the **complete** dataset.
 
     ''',
   };
@@ -272,7 +274,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       ref,
                       [er, ttr, em, ro],
                     );
-                  } else if (datasetSplitType == 'Validation') {
+                  } else if (datasetSplitType == 'Tuning') {
                     await rSource(
                       context,
                       ref,
@@ -284,7 +286,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       ref,
                       [er, tte, em, ro],
                     );
-                  } else if (datasetSplitType == 'Full') {
+                  } else if (datasetSplitType == 'Complete') {
                     await rSource(
                       context,
                       ref,
