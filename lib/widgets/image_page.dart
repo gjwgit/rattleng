@@ -181,6 +181,7 @@ class ImagePage extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -330,15 +331,17 @@ class ImagePage extends StatelessWidget {
                                   const SizedBox(width: 5),
                                 ],
                               ),
-                              InteractiveViewer(
-                                maxScale: 5,
-                                alignment: Alignment.topCenter,
-                                child: svgImage
-                                    ? SvgPicture.memory(
-                                        bytes,
-                                        fit: BoxFit.scaleDown,
-                                      )
-                                    : Image.memory(bytes),
+                              Expanded(
+                                child: InteractiveViewer(
+                                  maxScale: 5,
+                                  alignment: Alignment.topCenter,
+                                  child: svgImage
+                                      ? SvgPicture.memory(
+                                          bytes,
+                                          fit: BoxFit.scaleDown,
+                                        )
+                                      : Image.memory(bytes),
+                                ),
                               ),
                             ],
                           ),
