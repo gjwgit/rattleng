@@ -37,7 +37,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_weather_dataset.dart';
-import 'utils/press_button.dart';
+import 'utils/tap_button.dart';
 import 'utils/verify_next_page.dart';
 
 void main() {
@@ -55,10 +55,10 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Boost', BoostPanel);
 
-      await pressButton(tester, 'Build Boosted Trees');
+      await tapButton(tester, 'Build Boosted Trees');
       await tester.pump(longHack);
 
-      await pressButton(tester, 'Build Boosted Trees');
+      await tapButton(tester, 'Build Boosted Trees');
 
       // Verify the content of the page.
 

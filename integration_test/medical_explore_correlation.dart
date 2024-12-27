@@ -36,7 +36,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
-import 'utils/press_button.dart';
+import 'utils/tap_button.dart';
 import 'utils/verify_next_page.dart';
 import 'utils/verify_text.dart';
 
@@ -52,7 +52,7 @@ void main() {
       await openDatasetByPath(tester, 'integration_test/medical.csv');
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
-      await pressButton(tester, 'Perform Correlation Analysis');
+      await tapButton(tester, 'Perform Correlation Analysis');
 
       // Verify the content of the page 1.
 

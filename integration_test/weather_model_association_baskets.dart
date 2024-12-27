@@ -40,7 +40,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_weather_dataset.dart';
-import 'utils/press_button.dart';
+import 'utils/tap_button.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -73,11 +73,11 @@ void main() {
       await tester.tap(basketsCheckbox);
       await tester.pumpAndSettle();
 
-      await pressButton(tester, 'Build Association Rules');
+      await tapButton(tester, 'Build Association Rules');
 
       await tester.pump(delay);
 
-      await pressButton(tester, 'Build Association Rules');
+      await tapButton(tester, 'Build Association Rules');
 
       await tester.pump(interact);
 

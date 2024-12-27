@@ -38,7 +38,7 @@ import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_weather_dataset.dart';
-import 'utils/press_button.dart';
+import 'utils/tap_button.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -64,11 +64,11 @@ void main() {
 
       await tester.pump(interact);
 
-      await pressButton(tester, 'Build SVM Model');
+      await tapButton(tester, 'Build SVM Model');
 
       await tester.pump(delay);
 
-      await pressButton(tester, 'Build SVM Model');
+      await tapButton(tester, 'Build SVM Model');
 
       await tester.pump(interact);
 

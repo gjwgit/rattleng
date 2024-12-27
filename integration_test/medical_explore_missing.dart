@@ -36,7 +36,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
-import 'utils/press_button.dart';
+import 'utils/tap_button.dart';
 import 'utils/verify_next_page.dart';
 
 void main() {
@@ -55,7 +55,7 @@ void main() {
 
       await navigateToFeature(tester, 'Missing', MissingPanel);
 
-      await pressButton(tester, 'Perform Missing Analysis');
+      await tapButton(tester, 'Perform Missing Analysis');
       await gotoNextPage(tester);
 
       await verifyPage('Patterns of Missing Data - Textual');

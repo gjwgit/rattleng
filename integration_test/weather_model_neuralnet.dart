@@ -41,7 +41,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_weather_dataset.dart';
-import 'utils/press_button.dart';
+import 'utils/tap_button.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
@@ -197,11 +197,11 @@ void main() {
       await tester.tap(neuralnetChip);
       await tester.pumpAndSettle();
 
-      await pressButton(tester, 'Build Neural Network');
+      await tapButton(tester, 'Build Neural Network');
 
       await tester.pump(longHack);
 
-      await pressButton(tester, 'Build Neural Network');
+      await tapButton(tester, 'Build Neural Network');
 
       // Check if SelectableText contains the expected content.
 

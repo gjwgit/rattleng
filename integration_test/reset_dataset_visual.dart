@@ -42,7 +42,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_dataset_by_path.dart';
 import 'utils/open_weather_dataset.dart';
-import 'utils/press_button.dart';
+import 'utils/tap_button.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +64,7 @@ void main() {
 
       await navigateToFeature(tester, 'Tree', TreePanel);
 
-      await pressButton(tester, 'Build Decision Tree');
+      await tapButton(tester, 'Build Decision Tree');
       await tester.pump(hack);
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
@@ -150,7 +150,7 @@ void main() {
 
     await navigateToFeature(tester, 'Tree', TreePanel);
 
-    await pressButton(tester, 'Build Decision Tree');
+    await tapButton(tester, 'Build Decision Tree');
 
     await tester.pump(hack);
 
