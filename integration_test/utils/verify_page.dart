@@ -1,6 +1,6 @@
-///  Press the first button with the given text.
+/// Verify the content of the page.
 //
-// Time-stamp: <Friday 2024-12-27 14:58:23 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 13:45:53 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,25 +21,21 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> pressFirstButton(
-  WidgetTester tester,
-  String buttonText,
-) async {
-  // Finds the first widget with the given text.
+Future<void> verifyPage(
+  String title, [
+  String? value,
+]) async {
+  final titleFinder = find.textContaining(title);
+  expect(titleFinder, findsOneWidget);
 
-  final buttonFinder = find.text(buttonText).first;
-
-  // Taps the first widget found.
-
-  await tester.tap(buttonFinder);
-
-  // Wait for any animations or changes to complete.
-
-  await tester.pumpAndSettle();
+  if (value != null) {
+    final valueFinder = find.textContaining(value);
+    expect(valueFinder, findsOneWidget);
+  }
 }

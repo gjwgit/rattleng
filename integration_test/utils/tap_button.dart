@@ -1,6 +1,6 @@
-///  Press the first button with the given text.
+///  Press a button with the given text.
 //
-// Time-stamp: <Friday 2024-12-27 14:58:23 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 14:06:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,25 +21,19 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> pressFirstButton(
+Future<void> tapButton(
   WidgetTester tester,
   String buttonText,
 ) async {
-  // Finds the first widget with the given text.
-
-  final buttonFinder = find.text(buttonText).first;
-
-  // Taps the first widget found.
+  final buttonFinder = find.text(buttonText);
+  expect(buttonFinder, findsOneWidget);
 
   await tester.tap(buttonFinder);
-
-  // Wait for any animations or changes to complete.
-
   await tester.pumpAndSettle();
 }

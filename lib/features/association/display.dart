@@ -38,7 +38,7 @@ import 'package:rattle/r/extract_association.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/single_image_page.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Association panel displays the associate instructions and then output
@@ -148,7 +148,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
           # Association Rules  &#8212; Graph of Associations
@@ -168,7 +168,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
           # Association Rules  &#8212; Item Frequency

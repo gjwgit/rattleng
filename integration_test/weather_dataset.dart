@@ -1,8 +1,8 @@
-///  Press the first button with the given text.
+/// Test WEATHER dataset loads properly.
 //
-// Time-stamp: <Friday 2024-12-27 14:58:23 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 15:33:40 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,25 +21,24 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Graham Williams, Kevin Wang
 
 library;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 
-Future<void> pressFirstButton(
-  WidgetTester tester,
-  String buttonText,
-) async {
-  // Finds the first widget with the given text.
+import 'package:rattle/main.dart' as app;
 
-  final buttonFinder = find.text(buttonText).first;
+import 'utils/open_weather_dataset.dart';
 
-  // Taps the first widget found.
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  await tester.tap(buttonFinder);
+  testWidgets('Dataset Weather Load.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  // Wait for any animations or changes to complete.
-
-  await tester.pumpAndSettle();
+    await openWeatherDataset(tester);
+  });
 }

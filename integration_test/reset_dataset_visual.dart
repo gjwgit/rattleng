@@ -41,7 +41,7 @@ import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_dataset_by_path.dart';
-import 'utils/open_demo_dataset.dart';
+import 'utils/open_weather_dataset.dart';
 import 'utils/press_button.dart';
 
 void main() {
@@ -53,7 +53,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openDemoDataset(tester);
+      await openWeatherDataset(tester);
       await tester.pump(hack);
 
       await navigateToPage(
@@ -140,7 +140,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(interact);
 
-    await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
+    await openDatasetByPath(tester, 'integration_test/medical.csv');
 
     await navigateToPage(
       tester,

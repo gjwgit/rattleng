@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-20 19:18:16 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 16:11:43 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,7 +36,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_evaluate.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
-import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/multi_image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -143,7 +143,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     if (rocImages.isNotEmpty) {
       pages.add(
-        ImagePage(
+        MultiImagePage(
           titles: rocImagesTitles,
           paths: rocImages,
           appBarImage: 'ROC',
@@ -153,7 +153,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     if (existingImages.isNotEmpty) {
       pages.add(
-        ImagePage(
+        MultiImagePage(
           titles: imagesTitles,
           paths: existingImages,
         ),
