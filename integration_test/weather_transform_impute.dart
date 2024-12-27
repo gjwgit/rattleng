@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Saturday 2024-10-19 21:00:32 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 16:23:12 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,7 +37,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/open_weather_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_text.dart';
-import 'utils/verify_next_page.dart';
+import 'utils/verify_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -75,8 +75,7 @@ void main() {
 
       // Verify that the page content includes the expected dataset summary with 'IZR_rainfall'.
 
-      await verifyNextPage(
-        tester,
+      await verifyPage(
         'Dataset Summary',
         'IMN_rainfall',
       );

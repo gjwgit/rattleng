@@ -37,7 +37,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
 import 'utils/tap_button.dart';
-import 'utils/verify_next_page.dart';
+import 'utils/verify_page.dart';
 import 'utils/verify_text.dart';
 
 void main() {

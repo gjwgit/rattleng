@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Monday 2024-10-14 13:33:21 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 16:22:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,7 +37,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/open_dataset_by_path.dart';
 import 'utils/press_first_button.dart';
-import 'utils/verify_next_page.dart';
+import 'utils/verify_page.dart';
 import 'utils/verify_text.dart';
 // import 'utils/check_missing_variable.dart';
 // import 'utils/check_variable_not_missing.dart';
@@ -89,8 +89,7 @@ void main() {
 
       // Verify that the page content includes the expected dataset summary with 'IZR_middle_name'.
 
-      await verifyNextPage(
-        tester,
+      await verifyPage(
         'Dataset Summary',
         'IZR_middle_name',
       );
