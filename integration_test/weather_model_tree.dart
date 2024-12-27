@@ -40,7 +40,7 @@ import 'package:rattle/widgets/text_page.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_weather_dataset.dart';
+import 'utils/load_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +52,7 @@ void main() {
 
       await tester.pump(interact);
 
-      await openWeatherDataset(tester);
+      await loadDemoDataset(tester);
 
       await tester.pump(hack);
 
@@ -144,7 +144,7 @@ void main() {
 
       await tester.pump(interact);
 
-      await openWeatherDataset(tester);
+      await loadDemoDataset(tester);
 
       await tester.pump(hack);
 
@@ -243,7 +243,7 @@ void main() {
 
       await tester.pump(interact);
 
-      await openWeatherDataset(tester);
+      await loadDemoDataset(tester);
 
       // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
       //

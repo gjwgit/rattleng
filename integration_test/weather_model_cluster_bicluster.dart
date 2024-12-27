@@ -37,7 +37,7 @@ import 'package:rattle/tabs/model.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
-import 'utils/open_weather_dataset.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 
 void main() {
@@ -50,7 +50,7 @@ void main() {
 
       await tester.pump(interact);
 
-      await openWeatherDataset(tester);
+      await loadDemoDataset(tester);
 
       await navigateToPage(
         tester,

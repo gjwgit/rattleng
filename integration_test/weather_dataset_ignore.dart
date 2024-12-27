@@ -33,7 +33,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/open_weather_dataset.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/test_print.dart';
 
 // List of specific variables that should have their role automatically set by
@@ -49,7 +49,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    await openWeatherDataset(tester);
+    await loadDemoDataset(tester);
 
     // Find the scrollable ListView that makes up the ROLES page. This should
     // now be the visible page.

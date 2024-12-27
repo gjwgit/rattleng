@@ -38,7 +38,7 @@ import 'package:rattle/widgets/text_page.dart';
 import 'utils/delays.dart';
 import 'utils/ignore_variables.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/open_weather_dataset.dart';
+import 'utils/load_demo_dataset.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
@@ -58,7 +58,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    await openWeatherDataset(tester);
+    await loadDemoDataset(tester);
 
     await ignoreVariables(tester, demoVariablesToIgnore);
 

@@ -1,6 +1,6 @@
-/// Open the WEATHER dataset and test its contents.
+/// Load one of the DEMO datasets.
 //
-// Time-stamp: <Friday 2024-12-27 14:44:59 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,12 +36,14 @@ import 'package:rattle/features/dataset/popup.dart';
 import 'delays.dart';
 import 'navigate_to_tab.dart';
 import 'test_print.dart';
-import 'verify_text.dart';
 
-/// Open the WEATHER dataset and undertake basic tests that it loaded just fine.
+/// Load the dataset and undertake basic tests that it loaded just fine.
 
-Future<void> openWeatherDataset(WidgetTester tester) async {
-  testPrint('Open the WEATHER Dataset.');
+Future<void> loadDemoDataset(
+  WidgetTester tester, [
+  String dataset = 'Weather',
+]) async {
+  testPrint('Open the ${dataset.toUpperCase()} Dataset.');
 
   // Ensure we are on the DATASET tab.
 
@@ -63,7 +65,7 @@ Future<void> openWeatherDataset(WidgetTester tester) async {
 
   await tester.pump(interact);
 
-  final weatherButton = find.text('Weather');
+  final weatherButton = find.text(dataset);
   expect(weatherButton, findsOneWidget);
 
   await tester.tap(weatherButton);
@@ -71,41 +73,17 @@ Future<void> openWeatherDataset(WidgetTester tester) async {
 
   await tester.pump(interact);
 
-  // Expect to find the WEATHER filename in the path.
+  // Expect to find the dataset filename in the path.
 
   final dsPathTextFinder = find.byKey(datasetPathKey);
   expect(dsPathTextFinder, findsOneWidget);
   final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
   String filename = dsPathText.controller?.text ?? '';
-  expect(filename.contains('weather.csv'), isTrue);
+  expect(filename.contains('${dataset.toLowerCase()}.csv'), isTrue);
 
-  testPrint('Check the ROLES page content for specific text.');
-
-  // 20241019 gjw Add a delay here. Whilst app and weather_dataset and
-  // weather_dataset_ignore loaded the dataset just fine, weather_explore failed
-  // to find the text '2023-07-01'.
+  // 20241019 gjw Add a delay here. Whilst app and dataset load.
 
   await tester.pump(delay);
 
-  // Expect specific text in the ROLES page.
-
-  await verifyText(
-    tester,
-    [
-      // Verify dates in the Content Column.
-
-      '2023-07-01',
-      '2023-07-02',
-
-      // Verify min_temp in the Content Column.
-
-      '4.6',
-
-      // Verify max_temp in the Content Column.
-
-      '13.9',
-    ],
-  );
-
-  testPrint('Finished openning the WEATHER Dataset.');
+  testPrint('Finished loading the ${dataset.toUpperCase()} Dataset.');
 }

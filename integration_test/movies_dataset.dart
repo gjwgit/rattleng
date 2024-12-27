@@ -1,6 +1,6 @@
-/// Test WEATHER dataset loads properly.
+/// Test MOVIES dataset loads properly.
 //
-// Time-stamp: <Saturday 2024-12-28 06:24:47 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-28 06:31:26 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,29 +36,21 @@ import 'utils/verify_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Dataset Weather Load.', (WidgetTester tester) async {
+  testWidgets('Dataset Movies Load.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
-    await loadDemoDataset(tester);
+    await loadDemoDataset(tester, 'Movies');
 
     // Expect specific text in the ROLES page.
 
     await verifyText(
       tester,
       [
-        // Verify dates in the Content Column.
-
-        '2023-07-01',
-        '2023-07-02',
-
-        // Verify min_temp in the Content Column.
-
-        '4.6',
-
-        // Verify max_temp in the Content Column.
-
-        '13.9',
+        'Sixth Sense',
+        'LOTR1',
+        'basket',
+        'item',
       ],
     );
   });

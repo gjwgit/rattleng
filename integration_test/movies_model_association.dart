@@ -1,6 +1,6 @@
-/// Test WEATHER dataset Model tab ASSOCIATION feature.
+/// Test MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Friday 2024-12-27 19:36:53 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-28 08:00:58 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,11 +43,11 @@ import 'utils/verify_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Weather Model Association.', (WidgetTester tester) async {
+  testWidgets('Movies Model Association.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
-    await loadDemoDataset(tester);
+    await loadDemoDataset(tester, 'Movies');
 
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Associations', AssociationPanel);
@@ -60,7 +60,7 @@ void main() {
       tester,
       [
         'Association Rules - Meta Summary',
-        '9863 rules',
+        '44 rules',
       ],
     );
 
@@ -69,19 +69,25 @@ void main() {
       tester,
       [
         'Association Rules - Discovered Rules',
-        'rain_today=No',
-        '0.7125984',
+        'Patriot',
+        '0.7500000  0.4      1.5000000 3',
       ],
     );
+
+    // TODO 20241228 gjw THIS IS CURRENTLY FAILING TO BE EXTRACTED FROM STDOUT
 
     await gotoNextPage(tester);
     await verifyText(
       tester,
       [
         'chiSquared',
-        '10.0492825',
+        '0.7125984',
       ],
     );
+
+    // TODO 20241228 gjw THIS IS FAILING TO BE RENDERED IN FLUTTER
+    //
+    // It might require a bug report to the svg package.
 
     await gotoNextPage(tester);
     var imageFinder = find.byType(ImagePage);

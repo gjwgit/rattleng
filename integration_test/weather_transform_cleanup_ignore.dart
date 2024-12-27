@@ -36,7 +36,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/check_popup.dart';
 import 'utils/goto_next_page.dart';
-import 'utils/open_weather_dataset.dart';
+import 'utils/load_demo_dataset.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +47,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openWeatherDataset(tester);
+      await loadDemoDataset(tester);
 
       final dsPathTextFinder = find.byKey(datasetPathKey);
       expect(dsPathTextFinder, findsOneWidget);

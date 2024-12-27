@@ -34,7 +34,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_weather_dataset.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_text.dart';
 import 'utils/verify_page.dart';
@@ -51,7 +51,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openWeatherDataset(tester);
+      await loadDemoDataset(tester);
 
       // Navigate to the 'Transform' tab in the app.
 
