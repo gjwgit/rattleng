@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-12-12 19:20:30 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-12-28 11:36:18 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -96,8 +96,18 @@ print(measures)
 
 # Plot a summary of the
 
-svg("TEMPDIR/model_arules_viz.svg")
+# The CVG generated here uses filter elements which are not supported
+# by flutter_svg. Other tools display it jsut fine. Alternative might
+# be to go with PNG for
+# now. https://github.com/dnfield/flutter_svg/issues/53
+
+# svg("TEMPDIR/model_arules_viz.svg")
+png("TEMPDIR/model_arules_viz.png")
 plot(model_arules, method="graph")
+dev.off()
+
+svg("TEMPDIR/model_arules_para.svg")
+plot(model_arules, method="paracoord")
 dev.off()
 
 # Plot the relative importance of the rules using arulesViz.

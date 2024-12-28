@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-18 06:46:10 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-28 17:07:56 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -142,9 +142,12 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
     ////////////////////////////////////////////////////////////////////////
 
     // 20241212 gjw This SVG does not load into Flutter. Yet it can be displayed
-    // on Ubuntu. It is probably a PNG encapsulated within an SVG?
+    // on Ubuntu. It is probably a PNG encapsulated within an SVG? It uses the
+    // filter element that is not supported by
+    // flutter_svg. https://github.com/dnfield/flutter_svg/issues/53
 
-    String image = '$tempDir/model_arules_viz.svg';
+    // String image = '$tempDir/model_arules_viz.svg';
+    String image = '$tempDir/model_arules_viz.png';
 
     if (imageExists(image)) {
       pages.add(
@@ -153,11 +156,32 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
           # Association Rules  &#8212; Graph of Associations
 
-          **Currently not functional.** Visit $image.
+          Visit $image.
 
           ''',
           path: image,
-          svgImage: false,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    // 20241212 gjw This SVG does load into Flutter and does not utilise the
+    // filter element.
+
+    image = '$tempDir/model_arules_para.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Association Rules  &#8212; Parrallel Coordinates Plot
+
+          Visit $image.
+
+          ''',
+          path: image,
         ),
       );
     }
