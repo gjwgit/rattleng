@@ -69,10 +69,18 @@ library(rattle)       # Generate an error matrix.
 ## find the first `print(em_count)` for the RPart error matrix, etc.
 
 em_count <- rattle::errorMatrix(actual, predicted, count = TRUE)
+
+# 20241229 zy Capture the output of the error matrix and print it to the console.
+# The print line is updated to help the dart script to capture the error matrix.
+
 cat(paste(mtype, "_DATASET_TYPE_COUNT", sep = ""), capture.output(em_count), sep = "\n")
 
 # Generate a confusion matrix with proportions (relative frequencies)
 # rather than counts.
 
 em_prop <- rattle::errorMatrix(actual, predicted)
+
+# 20241229 zy Capture the output of the error matrix and print it to the console.
+# The print line is updated to help the dart script to capture the error matrix.
+
 cat(paste(mtype, "_DATASET_TYPE_PROP", sep = ""), capture.output(em_prop), sep = "\n")
