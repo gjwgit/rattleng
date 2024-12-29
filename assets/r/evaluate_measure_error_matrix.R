@@ -51,12 +51,12 @@ library(rattle)       # Generate an error matrix.
 # models needed this and can we fix that in the evaluate_model part?
 # Or is it best here?
 
-#na_positions <- is.na(error_matrix_target) | is.na(error_matrix_predic)
+# na_positions <- is.na(error_matrix_target) | is.na(error_matrix_predic)
 
 # Remove NA positions from both vectors.
 
-#error_matrix_predic <- error_matrix_predic[!na_positions]
-#error_matrix_target <- error_matrix_target[!na_positions]
+# error_matrix_predic <- error_matrix_predic[!na_positions]
+# error_matrix_target <- error_matrix_target[!na_positions]
 
 
 # Setting `count=TRUE` in `errorMatrix()` ensures the matrix
@@ -68,11 +68,11 @@ library(rattle)       # Generate an error matrix.
 ## this? E.g., look for `mdodel <- model_rpart` in the stdout and then
 ## find the first `print(em_count)` for the RPart error matrix, etc.
 
-em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
-print(em_count)
+em_count <- rattle::errorMatrix(actual, predicted, count = TRUE)
+cat(paste(mtype, "_DATASET_TYPE_COUNT", sep = ""), capture.output(em_count), sep = "\n")
 
 # Generate a confusion matrix with proportions (relative frequencies)
 # rather than counts.
 
 em_prop <- rattle::errorMatrix(actual, predicted)
-print(em_prop)
+cat(paste(mtype, "_DATASET_TYPE_PROP", sep = ""), capture.output(em_prop), sep = "\n")
