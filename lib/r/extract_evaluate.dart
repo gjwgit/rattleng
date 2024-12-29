@@ -88,17 +88,15 @@ String _basicTemplate(
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
 
-  String crc = rExtract(log,
-          'cat(paste(mtype, "_${evaluateDataset}_COUNT", sep = ""), capture.output(em_count), sep = "\\n")',)
-      .split('\n')
-      .skip(1)
-      .join('\n');
+  String crc = rExtract(
+    log,
+    'cat(paste(mtype, "_${evaluateDataset}_COUNT", sep = ""), capture.output(em_count), sep = "\\n")',
+  ).split('\n').skip(1).join('\n');
 
-  String crp = rExtract(log,
-          'cat(paste(mtype, "_${evaluateDataset}_PROP", sep = ""), capture.output(em_prop), sep = "\\n")',)
-      .split('\n')
-      .skip(1)
-      .join('\n');
+  String crp = rExtract(
+    log,
+    'cat(paste(mtype, "_${evaluateDataset}_PROP", sep = ""), capture.output(em_prop), sep = "\\n")',
+  ).split('\n').skip(1).join('\n');
   String cc = rExtract(log, 'print(ctree_cem)');
   String cp = rExtract(log, 'print(ctree_per)');
   String ca = rExtract(log, 'print(adaboost_cem)');
