@@ -86,9 +86,17 @@ String _basicTemplate(
       'Error matrix for the NNET model [$evaluateDataset] (proportions)';
 
   // Extract results from the log for each model's error matrices.
+  // Extract the count data from the log and remove the first line.
 
-  String sz = rExtract(log, 'print(rpart_cem)');
-  String cm = rExtract(log, 'print(rpart_per)');
+  String crc = rExtract(
+    log,
+    'cat(paste(mtype, "_${evaluateDataset}_COUNT", sep = ""), capture.output(em_count), sep = "\\n")',
+  ).split('\n').skip(1).join('\n');
+
+  String crp = rExtract(
+    log,
+    'cat(paste(mtype, "_${evaluateDataset}_PROP", sep = ""), capture.output(em_prop), sep = "\\n")',
+  ).split('\n').skip(1).join('\n');
   String cc = rExtract(log, 'print(ctree_cem)');
   String cp = rExtract(log, 'print(ctree_per)');
   String ca = rExtract(log, 'print(adaboost_cem)');
@@ -114,11 +122,11 @@ String _basicTemplate(
 
   // Append RPART model results if available and executed.
 
-  if (sz != '' && cm != '' && rpartTreeExecuted) {
+  if (crc != '' && crp != '' && rpartTreeExecuted) {
     result = '$hdr\n\n'
-        '\n$sz\n\n'
+        '\n$crc\n\n'
         '$mdr\n\n'
-        '\n$cm\n\n';
+        '\n$crp\n\n';
   }
 
   // Append CTREE model results if available and tree execution is confirmed.

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 20:46:00 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-12-31 10:26:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -116,7 +116,7 @@ au <- performance(prediction_prob_values, "auc")@y.values[[1]]
 
 pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
 
-fname <- glue("TEMPDIR/model_{mtype}_evaluate_roc.svg")
+fname <- glue("TEMPDIR/model_evaluate_roc_{mtype}_{dtype}.svg")
 svg(fname, width = 11)
 
 # 20241220 gjw Now render the ROC curve with the FPR and TPR data.
