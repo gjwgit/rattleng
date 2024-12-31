@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2024-12-26 14:20:59 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-12-31 12:10:31 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -236,7 +236,9 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 // 20241220 gjw Identify constants corresponding to the various
                 // evaluation commands for each model to generate the required
-                // TEMPLATE variables.
+                // TEMPLATE variables. This is being updated to use the TEMPLATE
+                // variables one model at a time. Those that have _model_ are
+                // updated.
 
                 String ea = 'evaluate_adaboost';
                 String ec = 'evaluate_ctree';

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 20:46:39 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-12-31 12:05:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,7 +45,7 @@
 
 library(rattle)       # Generate an error matrix.
 
-########################################################################
+####################################
 
 # Identify positions where either vector has NA. 20241220 gjw Whcih
 # models needed this and can we fix that in the evaluate_model part?
