@@ -241,7 +241,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // updated.
 
                 String ea = 'evaluate_adaboost';
-                String ec = 'evaluate_ctree';
+                String ec = 'evaluate_model_ctree';
                 String en = 'evaluate_nnet';
                 String er = 'evaluate_model_rpart';
                 String es = 'evaluate_svm';
@@ -298,12 +298,32 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 // Check if ctree model evaluation was executed.
 
-                if (ctreeExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ec, ttr, em, ro],
-                  );
+                if (ctreeExecuted && treeExecuted) {
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ec, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ec, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ec, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ec, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if Random Forest evaluation was executed

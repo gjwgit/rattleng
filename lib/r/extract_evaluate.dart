@@ -90,15 +90,21 @@ String _basicTemplate(
 
   String crc = rExtract(
     log,
-    'cat(paste(mtype, "_${evaluateDataset}_COUNT", sep = ""), capture.output(em_count), sep = "\\n")',
-  ).split('\n').skip(1).join('\n');
+    '> rpart_${evaluateDataset}_COUNT',
+  );
 
   String crp = rExtract(
     log,
-    'cat(paste(mtype, "_${evaluateDataset}_PROP", sep = ""), capture.output(em_prop), sep = "\\n")',
-  ).split('\n').skip(1).join('\n');
-  String cc = rExtract(log, 'print(ctree_cem)');
-  String cp = rExtract(log, 'print(ctree_per)');
+    '> rpart_${evaluateDataset}_PROP',
+  );
+  String cc = rExtract(
+    log,
+    '> ctree_${evaluateDataset}_COUNT',
+  );
+  String cp = rExtract(
+    log,
+    '> ctree_${evaluateDataset}_PROP',
+  );
   String ca = rExtract(log, 'print(adaboost_cem)');
   String pa = rExtract(log, 'print(adaboost_per)');
   String cx = rExtract(log, 'print(xgboost_cem)');
