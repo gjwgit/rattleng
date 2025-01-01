@@ -111,8 +111,8 @@ String _basicTemplate(
   String px = rExtract(log, 'print(xgboost_per)');
   String crf = rExtract(log, 'print(rforest_cem)');
   String prf = rExtract(log, 'print(rforest_per)');
-  String ccf = rExtract(log, 'print(cforest_cem)');
-  String pcf = rExtract(log, 'print(cforest_per)');
+  String ccf = rExtract(log, '> cforest_${evaluateDataset}_COUNT');
+  String pcf = rExtract(log, '> cforest_${evaluateDataset}_PROP');
   String csvm = rExtract(log, 'print(svm_cem)');
   String psvm = rExtract(log, 'print(svm_per)');
   String cnc = rExtract(log, 'print(nnet_cem)');

@@ -247,7 +247,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String es = 'evaluate_svm';
                 String ex = 'evaluate_xgboost';
 
-                String ecf = 'evaluate_conditional_forest';
+                String ecf = 'evaluate_model_conditional_forest';
                 String erf = 'evaluate_random_forest';
 
                 // 20241220 gjw One of the following templates then needs to be
@@ -341,11 +341,31 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // and forest box was ticked.
 
                 if (conditionalForestExecuted && forestTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ecf, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ecf, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ecf, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ecf, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ecf, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if AdaBoost evaluation was executed and boost box is enabled.
