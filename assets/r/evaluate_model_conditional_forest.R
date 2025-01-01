@@ -63,7 +63,12 @@ pred_te <- predict(model, newdata = teds,)
 pred_tc <- predict(model, newdata = tcds,)
 
 
-prob_tr <- as.numeric(factor(trds[[target]])) - 1
-prob_tu <- as.numeric(factor(tuds[[target]])) - 1
-prob_te <- as.numeric(factor(teds[[target]])) - 1
-prob_tc <- as.numeric(factor(tcds[[target]])) - 1
+prob_tr <- predict(model, newdata = trds, type = "prob")
+prob_tu <- predict(model, newdata = tuds, type = "prob")
+prob_te <- predict(model, newdata = teds, type = "prob")
+prob_tc <- predict(model, newdata = tcds, type = "prob")
+
+prob_tr <- generate_predictions(prob_tr)
+prob_tu <- generate_predictions(prob_tu)
+prob_te <- generate_predictions(prob_te)
+prob_tc <- generate_predictions(prob_tc)
