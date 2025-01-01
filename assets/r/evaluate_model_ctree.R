@@ -40,36 +40,26 @@
 ## #########################################################################
 ## #########################################################################
 
-library(ggtext)       # Support markdown in ggplot titles.
-library(glue)         # Format strings: glue().
-library(hmeasure)
-library(rattle)       # Support: asRules(), fancyRpartPlot().
-
 # 20241220 gjw Save the model to the TEMPLATE variable `model`. This
-# will be used below and in the following evaluations if required.
-## 20241220 gjw It will also be used in the dart code to identify a
-## section of code related to the evaluation of the ctree model.
+# will be used below and in the following evaluations as required.
 
 model <- model_ctree
 
-# 20241220 gjw Save the predicted values for the three different
-# datasets. We should only do this if the dataset is partitioned. That
-# has to be fixed.  20241224 zy Save the predicted values based on
-# full dataset.
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities for any dataset.
 
-pred_tr <- predict(model, newdata = trds, type = "prob")
-pred_tu <- predict(model, newdata = tuds, type = "prob")
-pred_te <- predict(model, newdata = teds, type = "prob")
-pred_tc <- predict(model, newdata = tcds, type = "prob")
+pred_ra <- function(model, data) {
+  # Get the probability matrix from the model.
 
-# Finds the index of the column with the highest value in each row of 'pred_tr'.
+  prob_matrix <- predict(model, newdata = data, type = "prob")
 
-pred_tr <- colnames(pred_tr)[max.col(pred_tr, ties.method = "first")]
-pred_tu <- colnames(pred_tu)[max.col(pred_tu, ties.method = "first")]
-pred_te <- colnames(pred_te)[max.col(pred_te, ties.method = "first")]
-pred_tc <- colnames(pred_tc)[max.col(pred_tc, ties.method = "first")]
+  # Identify, for each row, which column has the highest probability.
 
-prob_tr <- predict(model, newdata=trds, type="prob")[,2]
-prob_tu <- predict(model, newdata=tuds, type="prob")[,2]
-prob_te <- predict(model, newdata=teds, type="prob")[,2]
-prob_tc <- predict(model, newdata=tcds, type="prob")[,2]
+  idx_max <- max.col(prob_matrix, ties.method = "first")
+
+  # Convert those column indices into class labels.
+
+  colnames(prob_matrix)[idx_max]
+}
+
+prob_ra <- function(model, data) predict(model, newdata = data, type = "prob")[,2]
