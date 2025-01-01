@@ -100,6 +100,15 @@ roc_min_length <- min(len_actual_target, len_roc_predicted_predic)
 roc_predicted_probs <- probability[seq_len(roc_min_length)]
 actual_model_labels <- actual_model_labels[seq_len(roc_min_length)]
 
+# Identify which positions are NOT NA in roc_predicted_probs.
+
+keep_idx <- !is.na(roc_predicted_probs)
+
+# Filter both vectors to keep only those positions.
+
+roc_predicted_probs <- roc_predicted_probs[keep_idx]
+actual_model_labels <- actual_model_labels[keep_idx]
+
 # Generate a prediction object that combines the predicted probability and actual labels.
 
 prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)

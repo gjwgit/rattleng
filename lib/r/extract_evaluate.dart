@@ -109,8 +109,8 @@ String _basicTemplate(
   String pa = rExtract(log, 'print(adaboost_per)');
   String cx = rExtract(log, 'print(xgboost_cem)');
   String px = rExtract(log, 'print(xgboost_per)');
-  String crf = rExtract(log, 'print(rforest_cem)');
-  String prf = rExtract(log, 'print(rforest_per)');
+  String crf = rExtract(log, '> randomForest_${evaluateDataset}_COUNT');
+  String prf = rExtract(log, '> randomForest_${evaluateDataset}_PROP');
   String ccf = rExtract(log, '> cforest_${evaluateDataset}_COUNT');
   String pcf = rExtract(log, '> cforest_${evaluateDataset}_PROP');
   String csvm = rExtract(log, 'print(svm_cem)');

@@ -248,7 +248,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ex = 'evaluate_xgboost';
 
                 String ecf = 'evaluate_model_conditional_forest';
-                String erf = 'evaluate_random_forest';
+                String erf = 'evaluate_model_random_forest';
 
                 // 20241220 gjw One of the following templates then needs to be
                 // run to convert the appropriate predictions and probabilities
@@ -330,11 +330,31 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // and forest box was ticked.
 
                 if (randomForestExecuted && forestTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [erf, tte, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [erf, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [erf, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [erf, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [erf, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if Conditional Forest evaluation was executed
