@@ -1,11 +1,11 @@
-# Use `rattle::errorMatrix()` to generate error matrix evaluation.
+# Using `actual` and `predicted` generate error matrix with `rattle::errorMatrix()`.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-12-31 12:05:33 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-01 21:04:15 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #

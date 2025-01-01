@@ -1,11 +1,11 @@
-# Apply the `model` to the full dataset `tcds`.
+# Apply the `model` to the complete dataset `tcds`.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-12-25 17:19:22 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-01 21:00:49 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,18 +41,17 @@
 ## #########################################################################
 ## #########################################################################
 
-########################################################################
+####################################
 
 # Identify the dataset partition that the model is applied to.
-##
-## TODO 20241220 THIS NEEDS TO TOGGLE full OR validation.
 
 dtype <- 'complete'
 
-# Store into the TEMPLATE variables the corresponding predicted,
-# actual and risk values for later processing.
+# Store in TEMPLATE variables the actual and risk values, and the
+# predicted and probabilites, for later processing.
 
 actual      <- actual_tc
-predicted   <- pred_tc
-probability <- prob_tc
 risk        <- risk_tc
+
+predicted   <- pred_ra(model, tcds)
+probability <- prob_ra(model, tcds)
