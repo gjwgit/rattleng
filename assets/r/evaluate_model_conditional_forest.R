@@ -40,35 +40,21 @@
 ## #########################################################################
 ## #########################################################################
 
-library(ggtext)       # Support markdown in ggplot titles.
-library(glue)         # Format strings: glue().
-library(hmeasure)
-library(rattle)       # Support: asRules(), fancyRpartPlot().
+# 20250101 zy This loads all functions (including 'generate_predictions')
+# defined in 'model_template.R'.
+
+source("assets/r/model_template.R")
 
 # 20241220 gjw Save the model to the TEMPLATE variable `model`. This
-# will be used below and in the following evaluations if required.
-## 20241220 gjw It will also be used in the dart code to identify a
-## section of code related to the evaluation of the conditional forest model.
+# will be used below and in the following evaluations as required.
 
 model <- model_conditionalForest
 
-# 20241220 gjw Save the predicted values for the three different
-# datasets. We should only do this if the dataset is partitioned. That
-# has to be fixed.  20241224 zy Save the predicted values based on
-# full dataset.
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities for any dataset.
 
-pred_tr <- predict(model, newdata = trds,)
-pred_tu <- predict(model, newdata = tuds,)
-pred_te <- predict(model, newdata = teds,)
-pred_tc <- predict(model, newdata = tcds,)
-
-
-prob_tr <- predict(model, newdata = trds, type = "prob")
-prob_tu <- predict(model, newdata = tuds, type = "prob")
-prob_te <- predict(model, newdata = teds, type = "prob")
-prob_tc <- predict(model, newdata = tcds, type = "prob")
-
-prob_tr <- generate_predictions(prob_tr)
-prob_tu <- generate_predictions(prob_tu)
-prob_te <- generate_predictions(prob_te)
-prob_tc <- generate_predictions(prob_tc)
+pred_ra <- function(model, data) predict(model, newdata = data, )
+prob_ra <- function(model, data) {
+  prob_matrix <- predict(model, newdata = data, type = "prob")
+  generate_predictions(prob_matrix) # nolint as sourced from 'model_template.R'
+}
