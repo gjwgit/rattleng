@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-01 21:02:26 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-02 06:05:45 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,17 +33,9 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-## #########################################################################
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
-
 # Load required packages from the local library into the R session.
 
-library(ggplot2, quietly = TRUE)
+library(ggplot2, quietly=TRUE)
 library(glue)
 library(ROCR)
 
@@ -77,16 +69,11 @@ actual_model_labels <- ifelse(actual == target_levels[1], 0, 1)
 
 na_positions <- is.na(probability) | is.na(actual_model_labels)
 
-# Remove NA positions from both vectors.
+# Remove NA positions from the vector of actual model labels.
 
-roc_predicted_probs <- probability[!na_positions]
 actual_model_labels <- actual_model_labels[!na_positions]
 
-# Convert roc_predicted_probs to numeric.
-
-roc_predicted_probs <- as.numeric(factor(probability)) - 1
-
-# Find the lengths of the two objects.
+# Find the lengths of the actual and the predicted.
 
 len_actual_target <- length(actual_model_labels)
 len_roc_predicted_predic <- length(probability)
