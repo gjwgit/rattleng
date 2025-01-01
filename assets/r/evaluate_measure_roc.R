@@ -1,11 +1,11 @@
-# Use `prediction` to generate ROC/AUC plots.
+# Using `actual` and `prediction` to generate ROC/AUC plots.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-12-31 10:26:50 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-01 21:02:26 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #

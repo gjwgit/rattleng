@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-02 08:33:36 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-01 21:00:38 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,15 +33,17 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-########################################################################
+####################################
 
 # Identify the dataset partition that the model is applied to.
 
 dtype <- 'testing'
 
-# Store into the TEMPLATE variables the correcponding predicted,
-# actual and risk values for later processing.
+# Store in TEMPLATE variables the actual and risk values, and the
+# predicted and probabilites, for later processing.
 
-predicted <- predicted_te
-actual <- actual_te
-risk <- risk_te
+actual      <- actual_te
+risk        <- risk_te
+
+predicted   <- pred_ra(model, teds)
+probability <- prob_ra(model, teds)
