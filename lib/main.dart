@@ -27,6 +27,8 @@ library;
 
 import 'dart:io';
 
+import 'package:git/git.dart';
+import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -109,6 +111,26 @@ Future<void> main() async {
     debugPrint = (String? message, {int? wrapWidth}) {
       null;
     };
+  }
+
+  // TODO: check for updates
+  debugPrint('Current directory: ${p.current}');
+  // retrieve the latest bump version from git commit history
+  if (await GitDir.isGitDir(p.current)) {
+    final gitDir = await GitDir.fromExisting(p.current);
+    final commitCount = await gitDir.commitCount();
+    final commitHistory = await gitDir.commits();
+    
+    for (var commit in commitHistory.values) {
+      if (commit.message.toLowerCase().contains('bump version')) {
+        debugPrint(commit.message);
+        break;
+      }
+    }
+
+    debugPrint('Git commit count: $commitCount');
+  } else {
+    debugPrint('Not a Git directory');
   }
 
   // Tune the window manager before runApp() to avoid a lag in the UI.

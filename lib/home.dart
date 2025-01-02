@@ -38,6 +38,7 @@ import 'package:flutter/material.dart';
 
 // Package imports
 
+
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -152,8 +153,12 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   Future<void> _loadAppInfo() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+
+
     setState(() {
       _appName = packageInfo.packageName; // Set app version from package info
+      debugPrint('Current version: ${packageInfo.version}');
       _appVersion = packageInfo.version; // Set app version from package info
     });
   }
