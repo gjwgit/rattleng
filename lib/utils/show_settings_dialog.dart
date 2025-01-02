@@ -285,13 +285,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(randomPartitionSettingProvider.notifier).state =
         prefs.getBool('randomPartition') ?? false;
 
-<<<<<<< HEAD
-    ref.read(validationThanTuningSettingProvider.notifier).state =
-        prefs.getBool('validationThanTuning') ?? false;
-=======
     ref.read(useValidationSettingProvider.notifier).state =
         prefs.getBool('useValidation') ?? false;
->>>>>>> rattleng/dev
   }
 
   Future<void> _saveToggleStates() async {
@@ -343,20 +338,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('randomPartition', value);
   }
 
-<<<<<<< HEAD
-  Future<void> _saveValidationThanTuning(bool value) async {
-=======
   Future<void> _saveValidation(bool value) async {
->>>>>>> rattleng/dev
     final prefs = await SharedPreferences.getInstance();
 
     // Save "Validation than Tuning" state to preferences.
 
-<<<<<<< HEAD
-    await prefs.setBool('validationThanTuning', value);
-=======
     await prefs.setBool('useValidation', value);
->>>>>>> rattleng/dev
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -1209,15 +1196,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final train = ref.watch(partitionTrainProvider);
     final tune = ref.watch(partitionTuneProvider);
     final test = ref.watch(partitionTestProvider);
-<<<<<<< HEAD
-    final validationThanTuning = ref.watch(validationThanTuningSettingProvider);
-
-    final total = train + valid + test;
-=======
     final useValidation = ref.watch(useValidationSettingProvider);
 
     final total = train + tune + test;
->>>>>>> rattleng/dev
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1284,36 +1265,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-<<<<<<< HEAD
-            configRowGap,
-            MarkdownTooltip(
-              message: '''
 
-         
-
-                            ''',
-              child: const Text(
-                'Use Validation rather than Tuning for Evaluation',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            MarkdownTooltip(
-              message: '''
-
-           
-
-                            ''',
-              child: Switch(
-                value: validationThanTuning,
-                onChanged: (value) {
-                  ref
-                      .read(
-                        validationThanTuningSettingProvider.notifier,
-                      )
-                      .state = value;
-                  _saveValidationThanTuning(value);
-                },
-=======
             Container(
               child: MarkdownTooltip(
                 message: '''
@@ -1347,7 +1299,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     ),
                   ],
                 ),
->>>>>>> rattleng/dev
               ),
             ),
           ],
