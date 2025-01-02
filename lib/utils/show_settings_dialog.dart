@@ -354,11 +354,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     await prefs.setBool('useValidation', value);
 
-    // If the value is false, invalidate the provider to reset the partition values.
+    // Update the provider state.
 
-    if (!value) {
-      ref.invalidate(useValidationSettingProvider);
-    }
+    ref.read(useValidationSettingProvider.notifier).state = value;
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -1241,11 +1239,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     Switch(
                       value: useValidation,
                       onChanged: (value) {
-                        ref
-                            .read(
-                              useValidationSettingProvider.notifier,
-                            )
-                            .state = value;
                         _saveValidation(value);
                       },
                     ),
