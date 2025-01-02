@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-17 18:02:56 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:30:47 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -41,7 +41,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
-import 'package:rattle/widgets/single_image_page.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions and a navigator to the outputs.
@@ -56,7 +56,7 @@ class BoostDisplay extends ConsumerStatefulWidget {
 class _BoostDisplayState extends ConsumerState<BoostDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool validationForTuning = ref.watch(validationForTuningSettingProvider);
+    bool useValidation = ref.watch(useValidationSettingProvider);
     String stdout = ref.watch(stdoutProvider);
     String algorithm = ref.read(algorithmBoostProvider.notifier).state;
 
@@ -94,7 +94,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          SingleImagePage(
+          ImagePage(
             title: '''
 
           # Variable Importance
@@ -132,7 +132,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          SingleImagePage(
+          ImagePage(
             title: '''
 
           # Variable Importance
@@ -157,7 +157,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
     if (imageExists(riskImage)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
@@ -177,12 +177,12 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
     if (imageExists(riskImage)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationForTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',

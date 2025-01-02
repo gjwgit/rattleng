@@ -1,6 +1,6 @@
-/// Verify multiple text content in the widget
+/// Verify multiple text content in the widget.
 //
-// Time-stamp: <Monday 2024-10-14 13:33:28 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 13:45:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///

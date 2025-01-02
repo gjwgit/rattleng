@@ -1,11 +1,11 @@
-# Generate template variables for evaluating an rpart model.
+# Define `pred_ra` and `prob_ra` for an rpart model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 20:46:56 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-01 21:09:04 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
 # Rattle timestamp: TIMESTAMP
 #
@@ -41,43 +41,13 @@
 ## #########################################################################
 ## #########################################################################
 
-library(ggtext)       # Support markdown in ggplot titles.
-library(glue)         # Format strings: glue().
-library(hmeasure)
-library(rattle)       # Support: asRules(), fancyRpartPlot().
-
 # 20241220 gjw Save the model to the TEMPLATE variable `model`. This
-# will be used below and in the following evaluations if required.
-## 20241220 gjw It will also be used in the dart code to identify a
-## section of code related to the evaluaation of the rpart model.
+# will be used below and in the following evaluations as required.
 
 model <- model_rpart
 
-# 20241220 gjw Save the predicted values for the three different
-# datasets. We should only do this if the dataset is partitioned. That
-# has to be fixed.
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities for any dataset.
 
-pred_tr <- predict(model, newdata=trds, type="class")
-pred_tu <- predict(model, newdata=tuds, type="class")
-pred_te <- predict(model, newdata=teds, type="class")
-
-prob_tr <- predict(model, newdata=trds, type="prob")[,2]
-prob_tu <- predict(model, newdata=tuds, type="prob")[,2]
-prob_te <- predict(model, newdata=teds, type="prob")[,2]
-
-#target_rpart_levels <- unique(trds[[target]])
-#target_rpart_levels <- target_rpart_levels[!is.na(target_rpart_levels)]  # Remove NA if present
-
-# Get predicted probabilities for the positive class.
-
-#predicted_rpart_probs <- predict(model_rpart, newdata = trds, type = "prob")[,2]
-
-#actual_rpart_labels <- ifelse(trds[[target]] == target_rpart_levels[1], 0, 1)
-
-#error_matrix_predic <- predict(model_rpart, newdata = trds, type = "class")
-
-#error_matrix_target <- trds[[target]]
-
-# A variable containing the predictions.
-
-#roc_predicted_probs <- predicted_rpart_probs
+pred_ra <- function(model, data) predict(model, newdata=data, type="class")
+prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]

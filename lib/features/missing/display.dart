@@ -36,7 +36,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
-import 'package:rattle/widgets/single_image_page.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
@@ -111,7 +111,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
         # Patterns of Missing Values - Visual
@@ -165,7 +165,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
         # Aggregation of Missing Values - Visual
@@ -185,7 +185,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
         # Visualisation of Observations with Missing Values
@@ -207,7 +207,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
         # Comparison of Counts of Missing Values
@@ -229,7 +229,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
         # Patterns of Missingness

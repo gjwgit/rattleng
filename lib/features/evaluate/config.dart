@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-20 20:50:36 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-12-31 13:46:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,6 +35,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class EvaluateConfig extends ConsumerStatefulWidget {
@@ -149,6 +150,37 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     ),
   ];
 
+  Map<String, String> datasetTypes = {
+    'Training': '''
+
+    Evaluate the model using the **training** dataset.  This will give an
+    optimistic estimate of the performance of the model since it is using the
+    same data that trained the model to then test the model. It should do well.
+
+    ''',
+    'Tuning': '''
+
+    Evaluate the model using the **tuning** dataset.  This is used whilst the
+    model parameters are still being tuned but not for the final unbiased
+    estimate of error. This option is only available if partitioning is enabled
+    in the Data tab and a tuning dataset is specified.
+
+    ''',
+    'Testing': '''
+
+    Evaluate the performance of the model over the **testing** dataset, which is
+    the remainder of the dataset not used for training (and tuning), and so will
+    provide an unbiased estimate. This option is only available if partitioning
+    is enabled in the Data tab and a testing dataset is specified.
+
+    ''',
+    'Complete': '''
+
+    Evaluate the performance on the **complete** dataset.
+
+    ''',
+  };
+
   bool _isEvaluationEnabled(_ModelConfig config) {
     for (var i = 0; i < config.checkCommands.length; i++) {
       if (checkFunctionExecuted(
@@ -165,6 +197,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
   @override
   Widget build(BuildContext context) {
+    String datasetType = ref.watch(datasetTypeProvider.notifier).state;
+
     return Column(
       spacing: configRowSpace,
       children: [
@@ -189,6 +223,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool conditionalForestExecuted =
                     ref.watch(conditionalForestEvaluateProvider);
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+                String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
@@ -201,7 +236,9 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 // 20241220 gjw Identify constants corresponding to the various
                 // evaluation commands for each model to generate the required
-                // TEMPLATE variables.
+                // TEMPLATE variables. This is being updated to use the TEMPLATE
+                // variables one model at a time. Those that have _model_ are
+                // updated.
 
                 String ea = 'evaluate_adaboost';
                 String ec = 'evaluate_ctree';
@@ -221,6 +258,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ttr = 'evaluate_template_tr';
                 String ttu = 'evaluate_template_tu';
                 String tte = 'evaluate_template_te';
+                String ttc = 'evaluate_template_tc';
 
                 // 20241220 gjw Finally we will run the generic templates for
                 // the various performance measures.
@@ -231,13 +269,31 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // Check if rpart model evaluation was executed.
 
                 if (rpartExecuted && treeExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    // 20241220 gjw Let's try out ttu instead of ttr. This will
-                    // then be chosen via the GUI.
-                    [er, ttu, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if ctree model evaluation was executed.
@@ -319,7 +375,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       curve: Curves.easeInOut,
                     );
               },
-              child: const Text('Execute'),
+              child: const Text('Evaluate'),
             ),
 
             const Text('Model:', style: normalTextStyle),
@@ -345,6 +401,26 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 ],
               );
             }).toList(),
+          ],
+        ),
+        Row(
+          spacing: configWidgetSpace,
+          children: [
+            configLeftGap,
+            Text('Eavluation Dataset: '),
+            ChoiceChipTip<String>(
+              options: datasetTypes.keys.toList(),
+              selectedOption: datasetType,
+              tooltips: datasetTypes,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    datasetType = chosen;
+                    ref.read(datasetTypeProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
       ],
