@@ -9,25 +9,6 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview111"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="1.6375"
-     inkscape:cx="370.68702"
-     inkscape:cy="250.07634"
-     inkscape:window-width="3326"
-     inkscape:window-height="1371"
-     inkscape:window-x="2034"
-     inkscape:window-y="32"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg109" />
   <!-- Data Collection & Processing Section -->
   <g
      transform="translate(37.367665,53.203311)"
@@ -199,57 +180,6 @@
        id="circle54" />
   </g>
   <!-- Data Flow Connections -->
-  <defs
-     id="defs61">
-    <marker
-       id="arrowhead"
-       markerWidth="10"
-       markerHeight="7"
-       refX="9"
-       refY="3.5"
-       orient="auto">
-      <polygon
-         points="0,7 0,0 10,3.5 "
-         fill="#bab0ab"
-         id="polygon58" />
-    </marker>
-    <marker
-       id="arrowhead-1"
-       markerWidth="10"
-       markerHeight="7"
-       refX="9"
-       refY="3.5"
-       orient="auto">
-      <polygon
-         points="0,7 0,0 10,3.5 "
-         fill="#bab0ab"
-         id="polygon58-2" />
-    </marker>
-    <marker
-       id="arrowhead-9"
-       markerWidth="10"
-       markerHeight="7"
-       refX="9"
-       refY="3.5"
-       orient="auto">
-      <polygon
-         points="0,7 0,0 10,3.5 "
-         fill="#bab0ab"
-         id="polygon58-3" />
-    </marker>
-    <marker
-       id="arrowhead-1-2"
-       markerWidth="10"
-       markerHeight="7"
-       refX="9"
-       refY="3.5"
-       orient="auto">
-      <polygon
-         points="0,0 10,3.5 0,7 "
-         fill="#bab0ab"
-         id="polygon58-2-6" />
-    </marker>
-  </defs>
   <!-- Main Flow Arrows -->
   <g
      id="g67"

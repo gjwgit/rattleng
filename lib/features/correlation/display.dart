@@ -36,7 +36,7 @@ import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/single_image_page.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
@@ -102,7 +102,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
         # Variable Correlation Plot

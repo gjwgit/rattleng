@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-17 17:26:59 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:32:03 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -40,7 +40,7 @@ import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
-import 'package:rattle/widgets/single_image_page.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Forest panel displays the instructions and then the model build output
@@ -63,7 +63,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     );
 
     String stdout = ref.watch(stdoutProvider);
-    bool validationThanTuning = ref.watch(validationThanTuningSettingProvider);
+    bool useValidation = ref.watch(useValidationSettingProvider);
     int forestNo = ref.watch(treeNoForestProvider);
     AlgorithmType forestAlgorithm =
         ref.watch(algorithmForestProvider.notifier).state;
@@ -165,7 +165,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(image)) {
         pages.add(
-          SingleImagePage(
+          ImagePage(
             title: '''
 
             # Variable Importance &#8212; Plot
@@ -182,7 +182,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(errorRatesImage)) {
         pages.add(
-          SingleImagePage(
+          ImagePage(
             title: '''
 
             # Error Rate Plot
@@ -199,7 +199,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(oobRocImage)) {
         pages.add(
-          SingleImagePage(
+          ImagePage(
             title: '''
 
             # Out of Bag ROC Curve
@@ -279,7 +279,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       if (imageExists(varImportanceImage)) {
         pages.add(
-          SingleImagePage(
+          ImagePage(
             title: '''
 
             # Variable Importance &#8212; Plot
@@ -301,7 +301,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
           # Risk Chart &#8212; Optimistic Estimate of Performance
@@ -325,12 +325,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     if (imageExists(image)) {
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '''
 
           # Risk Chart &#8212; Unbiased Estimate of Performance
 
-          Using the **${validationThanTuning ? 'validation' : 'tuning'}** dataset to evaluate the model performance.
+          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to
+          evaluate the model performance.
 
           Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
             ''',

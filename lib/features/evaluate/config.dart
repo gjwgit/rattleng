@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 11:53:41 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-12-26 14:20:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,6 +35,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 class EvaluateConfig extends ConsumerStatefulWidget {
@@ -149,6 +150,37 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     ),
   ];
 
+  Map<String, String> datasetTypes = {
+    'Training': '''
+
+    Evaluate the model using the **training** dataset.  This will give an
+    optimistic estimate of the performance of the model since it is using the
+    same data that trained the model to then test the model. It should do well.
+
+    ''',
+    'Tuning': '''
+
+    Evaluate the model using the **tuning** dataset.  This is used whilst the
+    model parameters are still being tuned but not for the final unbiased
+    estimate of error. This option is only available if partitioning is enabled
+    in the Data tab and a tuning dataset is specified.
+
+    ''',
+    'Testing': '''
+
+    Evaluate the performance of the model over the **testing** dataset, which is
+    the remainder of the dataset not used for training (and tuning), and so will
+    provide an unbiased estimate. This option is only available if partitioning
+    is enabled in the Data tab and a testing dataset is specified.
+
+    ''',
+    'Complete': '''
+
+    Evaluate the performance on the **complete** dataset.
+
+    ''',
+  };
+
   bool _isEvaluationEnabled(_ModelConfig config) {
     for (var i = 0; i < config.checkCommands.length; i++) {
       if (checkFunctionExecuted(
@@ -165,6 +197,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
   @override
   Widget build(BuildContext context) {
+    String datasetType = ref.watch(datasetTypeProvider.notifier).state;
+
     return Column(
       spacing: configRowSpace,
       children: [
@@ -189,6 +223,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool conditionalForestExecuted =
                     ref.watch(conditionalForestEvaluateProvider);
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+                String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
@@ -199,27 +234,64 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool treeExecuted = ref.watch(treeEvaluateProvider);
                 bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
 
-                // String constants corresponding to the various evaluation commands.
+                // 20241220 gjw Identify constants corresponding to the various
+                // evaluation commands for each model to generate the required
+                // TEMPLATE variables.
 
                 String ea = 'evaluate_adaboost';
-                String em = 'evaluate_error_matrix';
                 String ec = 'evaluate_ctree';
                 String en = 'evaluate_nnet';
-                String er = 'evaluate_rpart';
+                String er = 'evaluate_model_rpart';
                 String es = 'evaluate_svm';
                 String ex = 'evaluate_xgboost';
 
                 String ecf = 'evaluate_conditional_forest';
                 String erf = 'evaluate_random_forest';
 
+                // 20241220 gjw One of the following templates then needs to be
+                // run to convert the appropriate predictions and probabilities
+                // to the variables that are non-specific to a dataset
+                // partition.
+
+                String ttr = 'evaluate_template_tr';
+                String ttu = 'evaluate_template_tu';
+                String tte = 'evaluate_template_te';
+                String ttc = 'evaluate_template_tc';
+
+                // 20241220 gjw Finally we will run the generic templates for
+                // the various performance measures.
+
+                String em = 'evaluate_measure_error_matrix';
+                String ro = 'evaluate_measure_roc';
+
                 // Check if rpart model evaluation was executed.
 
                 if (rpartExecuted && treeExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    [er, em],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [er, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if ctree model evaluation was executed.
@@ -228,7 +300,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ec, em],
+                    [ec, ttr, em, ro],
                   );
                 }
 
@@ -239,7 +311,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [erf, em],
+                    [erf, tte, em, ro],
                   );
                 }
 
@@ -250,7 +322,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ecf, em],
+                    [ecf, em, ro],
                   );
                 }
 
@@ -260,7 +332,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ea, em],
+                    [ea, em, ro],
                   );
                 }
 
@@ -270,7 +342,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [ex, em],
+                    [ex, em, ro],
                   );
                 }
 
@@ -280,7 +352,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [es, em],
+                    [es, em, ro],
                   );
                 }
 
@@ -290,7 +362,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   await rSource(
                     context,
                     ref,
-                    [en, em],
+                    [en, em, ro],
                   );
                 }
 
@@ -327,6 +399,26 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 ],
               );
             }).toList(),
+          ],
+        ),
+        Row(
+          spacing: configWidgetSpace,
+          children: [
+            configLeftGap,
+            Text('Eavluation Dataset: '),
+            ChoiceChipTip<String>(
+              options: datasetTypes.keys.toList(),
+              selectedOption: datasetType,
+              tooltips: datasetTypes,
+              onSelected: (chosen) {
+                setState(() {
+                  if (chosen != null) {
+                    datasetType = chosen;
+                    ref.read(datasetTypeProvider.notifier).state = chosen;
+                  }
+                });
+              },
+            ),
           ],
         ),
       ],

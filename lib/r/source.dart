@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Monday 2024-12-16 08:17:57 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-20 16:57:11 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -254,49 +254,49 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
 
   if (scripts.contains('evaluate_adaboost') &&
-      scripts.contains('evaluate_error_matrix')) {
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'adaboost_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'adaboost_per');
   }
 
   if (scripts.contains('evaluate_conditional_forest') &&
-      scripts.contains('evaluate_error_matrix')) {
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'cforest_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'cforest_per');
   }
 
   if (scripts.contains('evaluate_ctree') &&
-      scripts.contains('evaluate_error_matrix')) {
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'ctree_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'ctree_per');
   }
 
   if (scripts.contains('evaluate_nnet') &&
-      scripts.contains('evaluate_error_matrix')) {
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'nnet_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'nnet_per');
   }
 
   if (scripts.contains('evaluate_random_forest') &&
-      scripts.contains('evaluate_error_matrix')) {
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'rforest_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'rforest_per');
   }
 
-  if (scripts.contains('evaluate_rpart') &&
-      scripts.contains('evaluate_error_matrix')) {
+  if (scripts.contains('evaluate_model_rpart') &&
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'rpart_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'rpart_per');
   }
 
   if (scripts.contains('evaluate_svm') &&
-      scripts.contains('evaluate_error_matrix')) {
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'svm_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'svm_per');
   }
 
   if (scripts.contains('evaluate_xgboost') &&
-      scripts.contains('evaluate_error_matrix')) {
+      scripts.contains('evaluate_measure_error_matrix')) {
     code = code.replaceAll('ERROR_MATRIX_COUNT', 'xgboost_cem');
     code = code.replaceAll('ERROR_MATRIX_PROP', 'xgboost_per');
   }
@@ -458,8 +458,6 @@ Future<void> rSource(
   // Replace DATA_SPLIT_TR_TU_TE with the current values from partitionSettingProvider.
 
   code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
-
-  debugPrint('DATA_SPLIT_TR_TU_TE: $partitionString');
 
   // TODO if (script == 'model_build_rpart')) {
 

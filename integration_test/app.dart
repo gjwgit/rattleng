@@ -1,6 +1,6 @@
-/// Test that the app starts up.
+/// Test APP starts up.
 //
-// Time-stamp: <Wednesday 2024-10-16 14:30:47 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 15:33:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -36,7 +36,6 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/features/dataset/button.dart';
 
 import 'utils/delays.dart';
-import 'utils/test_print.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -59,21 +58,19 @@ void main() {
 
     final datasetButtonFinder = find.byType(DatasetButton);
     expect(datasetButtonFinder, findsOneWidget);
-
     await tester.pump(interact);
 
-    // Confirm the 2 Markdown widgets.
+    // Confirm the Markdown widgets.
 
     final welcomeMarkdownFinder = find.byType(Markdown);
     expect(welcomeMarkdownFinder, findsNWidgets(3));
 
-    // The first is the first panel of the welcome widget. We can check it's
-    // contents is as expected.
+    // The first Markdown widget is the first panel of the welcome widget with
+    // text frm welcome1.md that we can check is the same as dislayed by reading
+    // the file content and normalizing whitespace.
 
     final welcomeWidget =
         welcomeMarkdownFinder.evaluate().first.widget as Markdown;
-
-    // Read the file content and normalize whitespace.
 
     String expectedwelcome1Content = File('assets/markdown/welcome1.md')
         .readAsStringSync()
@@ -82,15 +79,14 @@ void main() {
     String actualwelcome1Content =
         welcomeWidget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
 
-    // Perform the comparison.
-
     expect(actualwelcome1Content, expectedwelcome1Content);
+
+    // The second Markdown widget should be the second part of the welcome
+    // message, with welcome2.md as the second panel of the welcome widget.
+    // Read the file content and normalize whitespace.
 
     final welcome2Widget =
         welcomeMarkdownFinder.evaluate().elementAt(1).widget as Markdown;
-
-    // welcome2.md is the second panel of the welcome widget.
-    // Read the file content and normalize whitespace.
 
     String expectedwelcome2Content = File('assets/markdown/welcome2.md')
         .readAsStringSync()
@@ -99,15 +95,9 @@ void main() {
     String actualwelcome2Content =
         welcome2Widget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
 
-    // Perform the comparison.
+    expect(actualwelcome2Content, expectedwelcome2Content);
 
-    if (actualwelcome2Content.contains('No **Dataset** loaded')) {
-      testPrint('Dataset not loaded, skipping Markdown content check.');
-    } else {
-      expect(actualwelcome2Content, expectedwelcome2Content);
-    }
-
-    // Check that we have a single status bar.
+    // Also check that we have a single status bar.
 
     final statusBarFinder = find.byKey(statusBarKey);
     expect(statusBarFinder, findsOneWidget);

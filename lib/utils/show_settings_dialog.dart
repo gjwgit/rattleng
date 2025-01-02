@@ -1,6 +1,6 @@
-/// Display the settings dialog.
+/// Show the settings dialog.
 //
-// Time-stamp: <Saturday 2024-12-14 19:53:28 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-12-23 15:35:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Graham Williams, Kevin Wang
 
 library;
 
@@ -33,19 +33,19 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:rattle/providers/keep_in_sync.dart';
-import 'package:rattle/providers/session_control.dart';
-import 'package:rattle/widgets/repeat_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
+import 'package:rattle/providers/session_control.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/widgets/repeat_button.dart';
 
-/// List of available ggplot themes for the user to choose from.
+/// GRAPHICS: List of available ggplot themes for the user to choose from.
 
 const List<Map<String, String>> themeOptions = [
   {
@@ -285,8 +285,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(randomPartitionSettingProvider.notifier).state =
         prefs.getBool('randomPartition') ?? false;
 
+<<<<<<< HEAD
     ref.read(validationThanTuningSettingProvider.notifier).state =
         prefs.getBool('validationThanTuning') ?? false;
+=======
+    ref.read(useValidationSettingProvider.notifier).state =
+        prefs.getBool('useValidation') ?? false;
+>>>>>>> rattleng/dev
   }
 
   Future<void> _saveToggleStates() async {
@@ -300,13 +305,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   }
 
   void _resetToggleStates() {
-    // Reset all toggles to default.
+    // Reset toggle providers to their defaults by invalidating them.
 
-    ref.read(cleanseProvider.notifier).state = true;
-    ref.read(normaliseProvider.notifier).state = true;
-    ref.read(partitionProvider.notifier).state = true;
-
-    ref.read(keepInSyncProvider.notifier).state = false;
+    ref.invalidate(cleanseProvider);
+    ref.invalidate(normaliseProvider);
+    ref.invalidate(partitionProvider);
+    ref.invalidate(keepInSyncProvider);
 
     // Save the reset states to preferences.
 
@@ -316,7 +320,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   void resetSessionControl() {
     // Reset session control to default.
 
-    ref.read(askOnExitProvider.notifier).state = true;
+    ref.invalidate(askOnExitProvider);
 
     // Save the reset state to preferences.
 
@@ -339,12 +343,20 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('randomPartition', value);
   }
 
+<<<<<<< HEAD
   Future<void> _saveValidationThanTuning(bool value) async {
+=======
+  Future<void> _saveValidation(bool value) async {
+>>>>>>> rattleng/dev
     final prefs = await SharedPreferences.getInstance();
 
     // Save "Validation than Tuning" state to preferences.
 
+<<<<<<< HEAD
     await prefs.setBool('validationThanTuning', value);
+=======
+    await prefs.setBool('useValidation', value);
+>>>>>>> rattleng/dev
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -366,8 +378,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     final train = prefs.getInt('train') ?? 70;
     ref.read(partitionTrainProvider.notifier).state = train;
 
-    final valid = prefs.getInt('valid') ?? 15;
-    ref.read(partitionValidProvider.notifier).state = valid;
+    final tune = prefs.getInt('tune') ?? 15;
+    ref.read(partitionTuneProvider.notifier).state = tune;
 
     final test = prefs.getInt('test') ?? 15;
     ref.read(partitionTestProvider.notifier).state = test;
@@ -376,29 +388,41 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   /// Save training partition percentage.
 
   Future<void> _savePartitionTrain(int value) async {
+    // Save the new state to shared preference.
+
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('train', value);
+
+    // Update the provider state.
 
     ref.read(partitionTrainProvider.notifier).state = value;
   }
 
   /// Save validation partition percentage.
 
-  Future<void> _savePartitionValid(int value) async {
+  Future<void> _savePartitionTune(int value) async {
+    // Save the new state to shared preference.
+
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setInt('valid', value);
+    await prefs.setInt('tune', value);
 
-    ref.read(partitionValidProvider.notifier).state = value;
+    // Update the provider state.
+
+    ref.read(partitionTuneProvider.notifier).state = value;
   }
 
   /// Save testing partition percentage.
 
   Future<void> _savePartitionTest(int value) async {
+    // Save the new state to shared preference.
+
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('test', value);
+
+    // Update the provider state.
 
     ref.read(partitionTestProvider.notifier).state = value;
   }
@@ -470,6 +494,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     final randomSeed = ref.watch(randomSeedSettingProvider);
     final randomPartition = ref.watch(randomPartitionSettingProvider);
+
+    final useValidation = ref.watch(useValidationSettingProvider);
 
     return Material(
       color: Colors.transparent,
@@ -622,7 +648,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                               - **Training:** Builds the model.
 
-                              - **Validation:** Tunes the model.
+                              - **${useValidation ? 'Validation' : 'Tuning'}:** Tunes the model.
 
                               - **Testing:** Evaluates model performance.
 
@@ -831,8 +857,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Dataset Partition Setting:** 
-                            Configure the dataset partitioning ratios for training, validation, and testing datasets. 
+                            **Dataset Partition Setting:** Configure the dataset
+                            partitioning ratios for the training, validation, and
+                            testing datasets.
 
                             - Default: 70/15/15 (70% training, 15% validation, 15% testing).
                             - Customize to suit your dataset requirements, e.g., 50/25/25.
@@ -851,20 +878,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-                            **Reset Partition Ratios:** 
+                            **Reset Partition Ratios:**
                             Reset the dataset partition ratios to the default values of 70/15/15.
 
                             ''',
                             child: ElevatedButton(
-                              onPressed: () {
-                                ref
-                                    .read(partitionTrainProvider.notifier)
-                                    .state = 70;
-                                ref
-                                    .read(partitionValidProvider.notifier)
-                                    .state = 15;
-                                ref.read(partitionTestProvider.notifier).state =
-                                    15;
+                              onPressed: () async {
+                                ref.invalidate(
+                                  useValidationSettingProvider,
+                                );
+
+                                // Reset the partition values to default.  Save
+                                // the new values to shared preferences and
+                                // providers.
+
+                                await _savePartitionTrain(70);
+                                await _savePartitionTune(15);
+                                await _savePartitionTest(15);
                               },
                               child: const Text('Reset'),
                             ),
@@ -947,7 +977,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-         
+
 
                             ''',
                             child: const Text(
@@ -958,7 +988,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           MarkdownTooltip(
                             message: '''
 
-           
+
 
                             ''',
                             child: Switch(
@@ -1177,16 +1207,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
   Widget _buildPartitionControls() {
     final train = ref.watch(partitionTrainProvider);
-    final valid = ref.watch(partitionValidProvider);
+    final tune = ref.watch(partitionTuneProvider);
     final test = ref.watch(partitionTestProvider);
+<<<<<<< HEAD
     final validationThanTuning = ref.watch(validationThanTuningSettingProvider);
 
     final total = train + valid + test;
+=======
+    final useValidation = ref.watch(useValidationSettingProvider);
+
+    final total = train + tune + test;
+>>>>>>> rattleng/dev
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          spacing: configRowSpace,
           children: [
             _buildCustomNumberField(
               label: 'Training %:',
@@ -1199,31 +1236,29 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 }
               },
               tooltip: '''
-                            
-              The percentage of data allocated for training the model. Ensure the total 
-              across training, validation, and testing sums to 100%.
+
+              The percentage of data allocated for training the model. Ensure
+              the total across training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
 
               ''',
             ),
-            configRowGap,
             _buildCustomNumberField(
-              label: 'Validation %:',
-              value: valid,
+              label: '${useValidation ? "Validation" : "Tuning"} %:',
+              value: tune,
               onChanged: (value) async {
                 if (value >= 0 && value <= 100) {
-                  await _savePartitionValid(value);
+                  await _savePartitionTune(value);
                 } else {
                   _showOutOfRangeWarning();
                 }
               },
               tooltip: '''
-          
-              The percentage of data allocated for validating the model. Ensure the total 
-              across training, validation, and testing sums to 100%.
-              
+
+              The percentage of data allocated for ${useValidation ? "validating" : "tuning"} the model. Ensure the total across
+              training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
+
               ''',
             ),
-            configRowGap,
             _buildCustomNumberField(
               label: 'Testing %:',
               value: test,
@@ -1235,13 +1270,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 }
               },
               tooltip: '''
-          
-              The percentage of data allocated for testing the model. Ensure the total 
-              across training, validation, and testing sums to 100%.
-                                
+
+              The percentage of data allocated for testing the model. Ensure the total
+              across training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
+
               ''',
             ),
-            configRowGap,
             Text(
               'Total: $total%',
               style: TextStyle(
@@ -1250,6 +1284,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+<<<<<<< HEAD
             configRowGap,
             MarkdownTooltip(
               message: '''
@@ -1278,6 +1313,41 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       .state = value;
                   _saveValidationThanTuning(value);
                 },
+=======
+            Container(
+              child: MarkdownTooltip(
+                message: '''
+
+                Some data scientists think of the second dataset of the
+                partitions as a dataset to use for **tuning** the model. Others
+                see it as a dataset for **validating** parameter settings. You
+                can choose your preference here.
+
+                ''',
+                child: Row(
+                  children: [
+                    const Text(
+                      'Use Tuning',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Switch(
+                      value: useValidation,
+                      onChanged: (value) {
+                        ref
+                            .read(
+                              useValidationSettingProvider.notifier,
+                            )
+                            .state = value;
+                        _saveValidation(value);
+                      },
+                    ),
+                    const Text(
+                      'or Validation',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+>>>>>>> rattleng/dev
               ),
             ),
           ],
@@ -1312,7 +1382,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
   void _handleCancelButton() {
     final train = ref.read(partitionTrainProvider);
-    final valid = ref.read(partitionValidProvider);
+    final valid = ref.read(partitionTuneProvider);
     final test = ref.read(partitionTestProvider);
     final total = train + valid + test;
 

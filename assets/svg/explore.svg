@@ -9,34 +9,6 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs3682">
-    <rect
-       x="32.52119"
-       y="26.446667"
-       width="115.5351"
-       height="18.651194"
-       id="rect4166" />
-  </defs>
-  <sodipodi:namedview
-     id="namedview3680"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="2.002"
-     inkscape:cx="150.0999"
-     inkscape:cy="250"
-     inkscape:window-width="3326"
-     inkscape:window-height="1371"
-     inkscape:window-x="2034"
-     inkscape:window-y="32"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg3678" />
   <!-- Scatter plot points -->
   <ellipse
      cx="59.64484"

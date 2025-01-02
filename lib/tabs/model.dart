@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-11-23 21:10:40 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 16:06:16 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -145,7 +145,6 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
   Widget build(BuildContext context) {
     super.build(context);
     debugText('  BUILD', 'ModelTabs');
-    debugPrint(ref.read(pathProvider));
 
     // Listen to isResetProvider and reset tabController to index 0 if true.
 

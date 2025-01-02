@@ -41,8 +41,8 @@ import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/open_dataset_by_path.dart';
-import 'utils/open_demo_dataset.dart';
-import 'utils/press_button.dart';
+import 'utils/load_demo_dataset.dart';
+import 'utils/tap_button.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +53,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openDemoDataset(tester);
+      await loadDemoDataset(tester);
       await tester.pump(hack);
 
       await navigateToPage(
@@ -64,7 +64,7 @@ void main() {
 
       await navigateToFeature(tester, 'Tree', TreePanel);
 
-      await pressButton(tester, 'Build Decision Tree');
+      await tapButton(tester, 'Build Decision Tree');
       await tester.pump(hack);
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
@@ -140,7 +140,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(interact);
 
-    await openDatasetByPath(tester, 'integration_test/rattle_test_large.csv');
+    await openDatasetByPath(tester, 'integration_test/medical.csv');
 
     await navigateToPage(
       tester,
@@ -150,7 +150,7 @@ void main() {
 
     await navigateToFeature(tester, 'Tree', TreePanel);
 
-    await pressButton(tester, 'Build Decision Tree');
+    await tapButton(tester, 'Build Decision Tree');
 
     await tester.pump(hack);
 

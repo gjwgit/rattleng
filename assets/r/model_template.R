@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-16 08:13:50 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-12-25 17:20:41 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -138,6 +138,45 @@ if (!is.null(risk)) {
 trds <- tcds[tr, setdiff(vars, ignore)]
 tuds <- tcds[tu, setdiff(vars, ignore)]
 teds <- tcds[te, setdiff(vars, ignore)]
+
+# Check if the target variable exists and create `actual_tc`.
+
+if (!is.null(target)) {
+  # Retrieve the actual values for the full dataset and remove `NA`.
+
+  actual_tc <- ds %>%
+    filter(!is.na(!!sym(target))) %>% # Remove rows where `target` is `NA`.
+    pull(target) %>%
+    as.character()
+
+  # Convert to numeric (binary if applicable).
+
+  levels_actual <- unique(actual_tc)
+  actual_numeric_tc <- ifelse(actual_tc == levels_actual[1], 0, 1)
+} else {
+  # If no target, set `actual_tc` to NULL.
+
+  actual_tc <- NULL
+  actual_numeric_tc <- NULL
+}
+
+# Check if the risk variable exists and create `risk_tc`.
+
+if (!is.null(risk)) {
+  # Retrieve the risk values for the full dataset.
+
+  risk_tc <- ds %>%
+    pull(risk) %>%
+    as.numeric()  # Ensure it's numeric.
+
+  # Handle NA values by replacing them with a default value (e.g., 0).
+
+  risk_tc <- ifelse(is.na(risk_tc) | is.nan(risk_tc), 0, risk_tc)
+} else {
+  # If no risk, set `risk_tc` to NULL.
+
+  risk_tc <- NULL
+}
 
 ####################################
 # TODO 20241202 gjw REVIEW ALL OF THE FOLLOWING - WHY HERE OR WHY NEEDED

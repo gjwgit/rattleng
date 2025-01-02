@@ -23,7 +23,7 @@ contributions are also most welcome.
 
 ## Resources
 
-+ [Rattle home page](https://rattle.togaware.com)
++ [Rattle home page](https://rattle.togaware.com) is the best starting point.
 + Rattle V5 is well covered in
   [Data Mining with Rattle and R](https://bit.ly/rattle_data_mining)
 + Rattle utilises R templates as introduced in

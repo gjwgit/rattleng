@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700">
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial" font-weight="bold" text-anchor="middle" font-size="16">Statistical Summary Report</text>
+
+  <!-- Categorical Data Table -->
+  <g transform="translate(50, 60)">
+    <!-- Table Header -->
+    <rect x="0" y="0" width="150" height="30" fill="#f0f0f0"/>
+    <rect x="150" y="0" width="80" height="30" fill="#f0f0f0"/>
+    <rect x="230" y="0" width="80" height="30" fill="#f0f0f0"/>
+    <rect x="310" y="0" width="200" height="30" fill="#f0f0f0"/>
+    
+    <text x="75" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Manufacturer</text>
+    <text x="190" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Count</text>
+    <text x="270" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Percent</text>
+    <text x="410" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Distribution</text>
+
+    <!-- Table Rows -->
+    <g>
+      <!-- Toyota -->
+      <rect x="0" y="30" width="150" height="25" fill="white"/>
+      <rect x="150" y="30" width="80" height="25" fill="white"/>
+      <rect x="230" y="30" width="80" height="25" fill="white"/>
+      <rect x="310" y="30" width="200" height="25" fill="white"/>
+      <text x="20" y="47" font-family="Arial">Toyota</text>
+      <text x="190" y="47" font-family="Arial" text-anchor="middle">325</text>
+      <text x="270" y="47" font-family="Arial" text-anchor="middle">32.5%</text>
+      <rect x="320" y="35" width="160" height="15" fill="#4682b4" fill-opacity="0.8"/>
+
+      <!-- Volkswagen -->
+      <rect x="0" y="55" width="150" height="25" fill="white"/>
+      <rect x="150" y="55" width="80" height="25" fill="white"/>
+      <rect x="230" y="55" width="80" height="25" fill="white"/>
+      <rect x="310" y="55" width="200" height="25" fill="white"/>
+      <text x="20" y="72" font-family="Arial">Volkswagen</text>
+      <text x="190" y="72" font-family="Arial" text-anchor="middle">250</text>
+      <text x="270" y="72" font-family="Arial" text-anchor="middle">25.0%</text>
+      <rect x="320" y="60" width="123" height="15" fill="#4682b4" fill-opacity="0.8"/>
+
+      <!-- Ford -->
+      <rect x="0" y="80" width="150" height="25" fill="white"/>
+      <rect x="150" y="80" width="80" height="25" fill="white"/>
+      <rect x="230" y="80" width="80" height="25" fill="white"/>
+      <rect x="310" y="80" width="200" height="25" fill="white"/>
+      <text x="20" y="97" font-family="Arial">Ford</text>
+      <text x="190" y="97" font-family="Arial" text-anchor="middle">200</text>
+      <text x="270" y="97" font-family="Arial" text-anchor="middle">20.0%</text>
+      <rect x="320" y="85" width="98" height="15" fill="#4682b4" fill-opacity="0.8"/>
+
+      <!-- Honda -->
+      <rect x="0" y="105" width="150" height="25" fill="white"/>
+      <rect x="150" y="105" width="80" height="25" fill="white"/>
+      <rect x="230" y="105" width="80" height="25" fill="white"/>
+      <rect x="310" y="105" width="200" height="25" fill="white"/>
+      <text x="20" y="122" font-family="Arial">Honda</text>
+      <text x="190" y="122" font-family="Arial" text-anchor="middle">150</text>
+      <text x="270" y="122" font-family="Arial" text-anchor="middle">15.0%</text>
+      <rect x="320" y="110" width="74" height="15" fill="#4682b4" fill-opacity="0.8"/>
+
+      <!-- Others -->
+      <rect x="0" y="130" width="150" height="25" fill="white"/>
+      <rect x="150" y="130" width="80" height="25" fill="white"/>
+      <rect x="230" y="130" width="80" height="25" fill="white"/>
+      <rect x="310" y="130" width="200" height="25" fill="white"/>
+      <text x="20" y="147" font-family="Arial">Others</text>
+      <text x="190" y="147" font-family="Arial" text-anchor="middle">75</text>
+      <text x="270" y="147" font-family="Arial" text-anchor="middle">7.5%</text>
+      <rect x="320" y="135" width="37" height="15" fill="#4682b4" fill-opacity="0.8"/>
+    </g>
+  </g>
+
+  <!-- Central Tendency Table -->
+  <g transform="translate(50, 240)">
+    <rect x="0" y="0" width="200" height="30" fill="#f0f0f0"/>
+    <rect x="200" y="0" width="100" height="30" fill="#f0f0f0"/>
+    <text x="100" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Measure</text>
+    <text x="250" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Value</text>
+
+    <g>
+      <rect x="0" y="30" width="200" height="25" fill="white"/>
+      <rect x="200" y="30" width="100" height="25" fill="white"/>
+      <text x="20" y="47" font-family="Arial">Mean</text>
+      <text x="250" y="47" font-family="Arial" text-anchor="middle">42.65</text>
+
+      <rect x="0" y="55" width="200" height="25" fill="white"/>
+      <rect x="200" y="55" width="100" height="25" fill="white"/>
+      <text x="20" y="72" font-family="Arial">Median</text>
+      <text x="250" y="72" font-family="Arial" text-anchor="middle">41.50</text>
+
+      <rect x="0" y="80" width="200" height="25" fill="white"/>
+      <rect x="200" y="80" width="100" height="25" fill="white"/>
+      <text x="20" y="97" font-family="Arial">Mode</text>
+      <text x="250" y="97" font-family="Arial" text-anchor="middle">40.00</text>
+    </g>
+  </g>
+
+  <!-- Dispersion Table -->
+  <g transform="translate(50, 380)">
+    <rect x="0" y="0" width="200" height="30" fill="#f0f0f0"/>
+    <rect x="200" y="0" width="100" height="30" fill="#f0f0f0"/>
+    <text x="100" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Dispersion Measure</text>
+    <text x="250" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Value</text>
+
+    <g>
+      <rect x="0" y="30" width="200" height="25" fill="white"/>
+      <rect x="200" y="30" width="100" height="25" fill="white"/>
+      <text x="20" y="47" font-family="Arial">Standard Deviation</text>
+      <text x="250" y="47" font-family="Arial" text-anchor="middle">12.34</text>
+
+      <rect x="0" y="55" width="200" height="25" fill="white"/>
+      <rect x="200" y="55" width="100" height="25" fill="white"/>
+      <text x="20" y="72" font-family="Arial">Variance</text>
+      <text x="250" y="72" font-family="Arial" text-anchor="middle">152.27</text>
+
+      <rect x="0" y="80" width="200" height="25" fill="white"/>
+      <rect x="200" y="80" width="100" height="25" fill="white"/>
+      <text x="20" y="97" font-family="Arial">Range</text>
+      <text x="250" y="97" font-family="Arial" text-anchor="middle">45.00</text>
+    </g>
+  </g>
+
+  <!-- Shape Measures Table -->
+  <g transform="translate(50, 520)">
+    <rect x="0" y="0" width="200" height="30" fill="#f0f0f0"/>
+    <rect x="200" y="0" width="100" height="30" fill="#f0f0f0"/>
+    <text x="100" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Shape Measure</text>
+    <text x="250" y="20" font-family="Arial" font-weight="bold" text-anchor="middle">Value</text>
+
+    <g>
+      <rect x="0" y="30" width="200" height="25" fill="white"/>
+      <rect x="200" y="30" width="100" height="25" fill="white"/>
+      <text x="20" y="47" font-family="Arial">Skewness</text>
+      <text x="250" y="47" font-family="Arial" text-anchor="middle">0.45</text>
+
+      <rect x="0" y="55" width="200" height="25" fill="white"/>
+      <rect x="200" y="55" width="100" height="25" fill="white"/>
+      <text x="20" y="72" font-family="Arial">Kurtosis</text>
+      <text x="250" y="72" font-family="Arial" text-anchor="middle">2.88</text>
+    </g>
+  </g>
+
+  <!-- Summary Statistics -->
+  <g transform="translate(50, 620)">
+    <text x="0" y="0" font-family="Arial" font-weight="bold">Categorical Summary:</text>
+    <text x="0" y="20" font-family="Arial">• Number of Categories: 5</text>
+    <text x="0" y="40" font-family="Arial">• Mode: Toyota (325 occurrences)</text>
+    <text x="0" y="60" font-family="Arial">• Category Entropy: 1.986</text>
+  </g>
+</svg>

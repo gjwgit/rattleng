@@ -34,7 +34,7 @@ import 'utils/delays.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 
-import 'utils/open_demo_dataset.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/verify_text.dart';
 
 void main() {
@@ -46,7 +46,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openDemoDataset(tester);
+      await loadDemoDataset(tester);
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
@@ -62,7 +62,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      // Reload Demo Dataset. Not using openDemoDataset() for now since it does
+      // Reload Demo Dataset. Not using loadDemoDataset() for now since it does
       // not handle the popup warning where we need to tap YES.
 
       final datasetButtonFinder = find.byType(DatasetButton);
@@ -125,7 +125,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openDemoDataset(tester);
+      await loadDemoDataset(tester);
 
       final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
 
@@ -170,7 +170,7 @@ void main() {
 
       await tester.enterText(
         filePathField,
-        'integration_test/rattle_test_large.csv',
+        'integration_test/medical.csv',
       );
 
       // Simulate pressing the Enter key.

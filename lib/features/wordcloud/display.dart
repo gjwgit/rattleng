@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Thursday 2024-09-26 18:42:41 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-12-19 21:30:44 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,8 +37,8 @@ import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/single_image_page.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
+import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 class WordCloudDisplay extends ConsumerStatefulWidget {
@@ -63,7 +63,13 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // top configuration and the main panel showing the generated image. Before
     // the build we display a introdcurory text to the functionality.
 
-    List<Widget> pages = [showMarkdownFile(wordCloudMsgFile, context)];
+    List<Widget> pages = [
+      showMarkdownFile(
+        context,
+        wordCloudMsgFile,
+        'assets/svg/wordcloud.svg',
+      ),
+    ];
 
     String content = '';
 
@@ -80,7 +86,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       // build button pressed and png file exists
 
       pages.add(
-        SingleImagePage(
+        ImagePage(
           title: '# Word Cloud\n\n'
               'Generated using `wordcloud::wordcloud()`',
           path: wordCloudImagePath,

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 12:10:04 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-27 16:11:43 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,12 +30,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_evaluate.dart';
 import 'package:rattle/utils/image_exists.dart';
-import 'package:rattle/utils/show_markdown_file.dart';
-import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/utils/show_markdown_file_image.dart';
+import 'package:rattle/widgets/multi_image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
@@ -57,11 +58,13 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
-    List<Widget> pages = [showMarkdownFile(evaluateIntroFile, context)];
+    String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
+
+    List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
 
     String content = '';
 
-    content = rExtractEvaluate(stdout, 'TRAINING', ref);
+    content = rExtractEvaluate(stdout, datasetType, ref);
 
     bool showContentMaterial = content.trim().split('\n').length > 1;
 
@@ -74,6 +77,22 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       );
     }
 
+    String rocAdaBoostImage = '$tempDir/model_adaboost_evaluate_roc.svg';
+
+    String rocCtreeImage = '$tempDir/model_ctree_evaluate_roc.svg';
+
+    String rocNNETImage = '$tempDir/model_nnet_evaluate_roc.svg';
+
+    String rocRpartImage = '$tempDir/model_rpart_evaluate_roc.svg';
+
+    String rocSVMImage = '$tempDir/model_svm_evaluate_roc.svg';
+
+    String rocCforestImage = '$tempDir/model_cforest_evaluate_roc.svg';
+
+    String rocRforestImage = '$tempDir/model_randomForest_evaluate_roc.svg';
+
+    String rocXGBoostImage = '$tempDir/model_xgboost_evaluate_roc.svg';
+
     String handRpartImage = '$tempDir/model_rpart_evaluate_hand.svg';
 
     String handCtreeImage = '$tempDir/model_ctree_evaluate_hand.svg';
@@ -82,6 +101,30 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     List<String> existingImages = [];
     List<String> imagesTitles = [];
+    List<String> rocImages = [];
+    List<String> rocImagesTitles = [];
+
+    // List of image-title pairs for ROC data.
+
+    final rocImageData = [
+      {'image': rocAdaBoostImage, 'title': 'AdaBoost'},
+      {'image': rocRpartImage, 'title': 'RPART'},
+      {'image': rocCtreeImage, 'title': 'CTREE'},
+      {'image': rocNNETImage, 'title': 'NNET'},
+      {'image': rocRforestImage, 'title': 'RANDOM FOREST'},
+      {'image': rocSVMImage, 'title': 'SVM'},
+      {'image': rocCforestImage, 'title': 'CONDITIONAL FOREST'},
+      {'image': rocXGBoostImage, 'title': 'XGBoost'},
+    ];
+
+    // Iterate through each image-title pair.
+
+    for (var data in rocImageData) {
+      if (imageExists(data['image']!)) {
+        rocImages.add(data['image']!);
+        rocImagesTitles.add(data['title']!);
+      }
+    }
 
     if (imageExists(handRpartImage)) {
       existingImages.add(handRpartImage);
@@ -98,9 +141,19 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       imagesTitles.add('ADA BOOST');
     }
 
+    if (rocImages.isNotEmpty) {
+      pages.add(
+        MultiImagePage(
+          titles: rocImagesTitles,
+          paths: rocImages,
+          appBarImage: 'ROC',
+        ),
+      );
+    }
+
     if (existingImages.isNotEmpty) {
       pages.add(
-        ImagePage(
+        MultiImagePage(
           titles: imagesTitles,
           paths: existingImages,
         ),

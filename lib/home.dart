@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-12-13 19:02:48 +1100 Graham Williams>
+/// Time-stamp: <Friday 2024-12-27 16:35:19 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -327,7 +327,7 @@ Xu, Yixiang Yin, Bo Zhang.
                   'Version $_appVersion',
                   style: const TextStyle(
                     color: Colors.blue,
-                    fontSize: 10,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -368,8 +368,12 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Change Seed:** Tap here to quickly change the random seed.
-            A new seed will be automatically generated.
+            **Change Seed:** Tap here to quickly change the seed for the random
+            number generator.  A new seed will be automatically generated. It
+            will also be saved as your new seed within **Settings** and so the
+            latest seed set here will be used in your next session. Go to
+            **Settings** to reset the seed back to the application's
+            default. The button is only active once a dataset is loaded.
 
             ''',
             child: Consumer(
@@ -439,14 +443,14 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **R Package Installation:** Tap here to load all required R pacakges
-            now rather than when they are needed. It can be useful to do this
-            before you load a dataset so as to ensure everything is ready. This
-            can avoid some issues on startup. Rattle will check for any R
-            packages that need to be installed and will install them. This could
-            take some time, *upwards of 5 minutes,* for example. After starting
-            this installation do check the **Console** tab for details and
-            progress.
+            **R Packages Installation:** Tap here to load all required R
+            pacakges now rather than when they are needed. It can be useful to
+            do this before you load a dataset so as to ensure everything is
+            ready. This can avoid some issues on startup. Rattle will check for
+            any R packages that need to be installed and will install them. This
+            could take some time, *upwards of 5 minutes,* for example. After
+            starting this installation do check the **Console** tab for details
+            and progress.
 
             ''',
             child: IconButton(

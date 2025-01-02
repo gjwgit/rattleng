@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-02 08:31:30 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-12-20 20:46:13 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,15 +33,24 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+## #########################################################################
+## #########################################################################
+## #########################################################################
+## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+## #########################################################################
+## #########################################################################
+## #########################################################################
+
 ########################################################################
 
 # Identify the dataset partition that the model is applied to.
 
 dtype <- 'training'
 
-# Store into the TEMPLATE variables the correcponding predicted,
+# Store into the TEMPLATE variables the corresponding predicted,
 # actual and risk values for later processing.
 
-predicted <- predicted_tr
-actual <- actual_tr
-risk <- risk_tr
+actual      <- actual_tr
+predicted   <- pred_tr
+probability <- prob_tr
+risk        <- risk_tr
