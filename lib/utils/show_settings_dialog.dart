@@ -320,6 +320,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save the reset state to preferences.
 
     _saveAskOnExit(true);
+
+    // Reset the image viewer app to the platform default.
+
+    final defaultApp = Platform.isWindows ? 'start' : 'open';
+    ref.read(imageViewerSettingProvider.notifier).state = defaultApp;
+
+    // Save the reset value.
+
+    _saveImageViewerApp(defaultApp);
   }
 
   Future<void> _saveKeepInSync(bool value) async {
@@ -436,40 +445,49 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   Widget _buildImageViewerTextField(BuildContext context, WidgetRef ref) {
     final imageViewerApp = ref.watch(imageViewerSettingProvider);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Text(
-          'Image Viewer',
-          style: TextStyle(
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(width: 16),
-        // Adjust the width based on font and expected character size
+    return MarkdownTooltip(
+      message: '''
 
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 150,
-          ),
-          child: TextField(
-            controller: TextEditingController(text: imageViewerApp)
-              ..selection =
-                  TextSelection.collapsed(offset: imageViewerApp.length),
-            onChanged: (value) {
-              ref.read(imageViewerSettingProvider.notifier).state = value;
+      **Image Viewer Application Setting:** This setting determines the default
+      command to open image files. The default is "open" on Linux/MacOS and "start"
+      on Windows. You can customise it to match your preferred image viewer.
 
-              // Save the new state to shared preferences or other storage as needed.
-
-              _saveImageViewerApp(value);
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter image viewer command',
+      ''',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            'Image Viewer',
+            style: TextStyle(
+              fontSize: 16,
             ),
           ),
-        ),
-      ],
+          const SizedBox(width: 16),
+          // Adjust the width based on font and expected character size
+
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 150,
+            ),
+            child: TextField(
+              controller: TextEditingController(text: imageViewerApp)
+                ..selection =
+                    TextSelection.collapsed(offset: imageViewerApp.length),
+              onChanged: (value) {
+                ref.read(imageViewerSettingProvider.notifier).state = value;
+
+                // Save the new state to shared preferences or other storage as needed.
+
+                _saveImageViewerApp(value);
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter image viewer command',
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -769,62 +787,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       settingsGroupGap,
                       Divider(),
-                      Row(
-                        children: [
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Image Viewer Application Setting:** This setting determines the default
-                            command to open image files. The default is "open" on Linux/MacOS and "start"
-                            on Windows. You can customise it to match your preferred image viewer.
-
-                            ''',
-                            child: const Text(
-                              'Image Viewer App',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-
-                          configRowGap,
-
-                          // Reset button to restore the default value.
-
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: () {
-                                final defaultApp =
-                                    Platform.isWindows ? 'start' : 'open';
-                                ref
-                                    .read(imageViewerSettingProvider.notifier)
-                                    .state = defaultApp;
-
-                                // Save the reset value.
-
-                                _saveImageViewerApp(defaultApp);
-                              },
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      configRowGap,
-
-                      // Add the new TextField widget for the Image Viewer App.
-
-                      _buildImageViewerTextField(context, ref),
-
-                      settingsGroupGap,
-                      Divider(),
 
                       Row(
                         children: [
@@ -982,25 +944,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       Divider(),
                       Row(
                         children: [
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Session Control:** This setting determines whether a confirmation popup
-                            appears when the user tries to quit the application.
-
-                            - **ON**: A popup will appear asking the user to confirm quitting.
-
-                            - **OFF**: The application will exit immediately without a confirmation popup.
-
-                            The default setting is **ON**.
-
-                            ''',
-                            child: const Text(
-                              'Session Control',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          const Text(
+                            'Session',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
 
@@ -1013,6 +961,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                             **Reset Session Control:** Tap here to reset to enable a confirmation
                             popup when exiting the application.
+
+
+                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
 
                             ''',
                             child: ElevatedButton(
@@ -1028,39 +980,52 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Ask before exit',
-                            style: TextStyle(
-                              fontSize: 16,
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Session Control:** This setting determines whether a confirmation popup
+                            appears when the user tries to quit the application.
+
+                            - **ON**: A popup will appear asking the user to confirm quitting.
+
+                            - **OFF**: The application will exit immediately without a confirmation popup.
+
+                            The default setting is **ON**.
+
+                            ''',
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Ask before exit',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+
+                                configRowGap,
+
+                                // Switch for Session Control with a tooltip.
+
+                                Switch(
+                                  value: askOnExit,
+                                  onChanged: (value) {
+                                    ref.read(askOnExitProvider.notifier).state =
+                                        value;
+
+                                    // Save the new state to shared preferences or other storage as needed.
+
+                                    _saveAskOnExit(value);
+                                  },
+                                ),
+                              ],
                             ),
                           ),
 
                           configRowGap,
 
-                          // Switch for Session Control with a tooltip.
+                          // Add the new TextField widget for the Image Viewer App.
 
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Toggle Session Control:**
-
-                            - Slide to **ON** to enable a confirmation popup when exiting the application.
-
-                            - Slide to **OFF** to disable the popup, allowing the app to exit directly.
-
-                            ''',
-                            child: Switch(
-                              value: askOnExit,
-                              onChanged: (value) {
-                                ref.read(askOnExitProvider.notifier).state =
-                                    value;
-
-                                // Save the new state to shared preferences or other storage as needed.
-
-                                _saveAskOnExit(value);
-                              },
-                            ),
-                          ),
+                          _buildImageViewerTextField(context, ref),
                         ],
                       ),
 
