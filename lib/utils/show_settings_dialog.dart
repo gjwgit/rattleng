@@ -344,6 +344,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save "Validation than Tuning" state to preferences.
 
     await prefs.setBool('useValidation', value);
+
+    // If the value is false, invalidate the provider to reset the partition values.
+
+    if (!value) {
+      ref.invalidate(useValidationSettingProvider);
+    }
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -871,10 +877,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             ''',
                             child: ElevatedButton(
                               onPressed: () async {
-                                ref.invalidate(
-                                  useValidationSettingProvider,
-                                );
-
                                 // Reset the partition values to default.  Save
                                 // the new values to shared preferences and
                                 // providers.
@@ -882,6 +884,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 await _savePartitionTrain(70);
                                 await _savePartitionTune(15);
                                 await _savePartitionTest(15);
+
+                                _saveValidation(false);
                               },
                               child: const Text('Reset'),
                             ),
