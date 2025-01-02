@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-02 06:05:45 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-02 11:43:45 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -133,7 +133,7 @@ pd %>%
            hjust = 0,
            vjust = 0,
            size  = 5,
-           label = paste("AUC =", round(au, 2))) +
+           label = sprintf('AUC = %.2f', au)) +
   SETTINGS_GRAPHIC_THEME() +
   theme(plot.title = element_markdown())
 dev.off()
