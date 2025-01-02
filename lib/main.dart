@@ -27,16 +27,12 @@ library;
 
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
-import 'package:yaml/yaml.dart';
-import 'package:git/git.dart';
-import 'package:path/path.dart' as p;
+
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/utils/show_error.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:pub_semver/pub_semver.dart';
 
 import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
@@ -115,64 +111,7 @@ Future<void> main() async {
       null;
     };
   }
-  // TODO fetch yaml file and compare
-  Future<void> checkForUpdate(String currentVersion) async {
-  // GitHub raw file URL
-  final url = Uri.parse('https://raw.githubusercontent.com/gjwgit/rattleng/dev/pubspec.yaml');
 
-  try {
-    // Fetch the pubspec.yaml file
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      // Parse the YAML content
-      final yamlContent = loadYaml(response.body);
-
-      // Extract the version field
-      final latestVersion = yamlContent['version'];
-      debugPrint('Latest version: $latestVersion');
-
-      // Compare with the current version
-      if (Version.parse(currentVersion) < Version.parse(latestVersion)) {
-        debugPrint('Update available: $latestVersion');
-        // Add logic to notify the user (e.g., change text color, show a tooltip)
-      } else {
-        debugPrint('You are on the latest version.');
-      }
-    } else {
-      debugPrint('Failed to fetch pubspec.yaml: ${response.statusCode}');
-    }
-  } catch (e) {
-    debugPrint('Error while checking for update: $e');
-  }
-}
-
-Future<String?> getLocalAppVersion() async {
-  try {
-    // Read the pubspec.yaml file
-    final file = File('pubspec.yaml');
-    final content = await file.readAsString();
-
-    // Parse the YAML content
-    final yamlMap = loadYaml(content);
-
-    // Extract the version field
-    final version = yamlMap['version'];
-    return version?.toString();
-  } catch (e) {
-    debugPrint('Error reading pubspec.yaml: $e');
-    return null;
-  }
-}
-  final version = await getLocalAppVersion();
-  if (version != null) {
-    debugPrint('Local app version: $version');
-    checkForUpdate(version);
-  } else {
-    debugPrint('Failed to fetch the version.');
-  }
-
-  
 
   // TODO: check for updates
   // debugPrint('Current directory: ${p.current}');

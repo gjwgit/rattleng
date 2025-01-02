@@ -37,8 +37,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Package imports
-
-
+import 'package:pub_semver/pub_semver.dart';
+import 'package:http/http.dart' as http;
+import 'package:yaml/yaml.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -128,6 +129,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   var _appName = 'Unknown';
   var _appVersion = 'Unknown';
+  var _isLatest = true;
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
 
@@ -149,18 +151,72 @@ class RattleHomeState extends ConsumerState<RattleHome>
     }
   }
 
+  Future<void> checkForUpdate(String currentVersion) async {
+    // GitHub raw file URL
+    final url = Uri.parse(
+        'https://raw.githubusercontent.com/gjwgit/rattleng/dev/pubspec.yaml');
+
+    try {
+      // Fetch the pubspec.yaml file
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // Parse the YAML content
+        final yamlContent = loadYaml(response.body);
+
+        // Extract the version field
+        final latestVersion = yamlContent['version'];
+        debugPrint('Latest version: $latestVersion');
+        debugPrint('nLatestversion: $currentVersion');
+
+        // Compare with the current version
+        if (currentVersion != latestVersion) {
+          debugPrint('Update available: $latestVersion');
+          setState(() {
+            _isLatest = false;
+          });
+        } else {
+          debugPrint('You are on the latest version.');
+        }
+      } else {
+        debugPrint('Failed to fetch pubspec.yaml: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error while checking for update: $e');
+    }
+  }
+
+  Future<String?> getLocalAppVersion() async {
+    try {
+      // Read the pubspec.yaml file
+      final file = File('pubspec.yaml');
+      final content = await file.readAsString();
+
+      // Parse the YAML content
+      final yamlMap = loadYaml(content);
+
+      // Extract the version field
+      final version = yamlMap['version'];
+      return version?.toString();
+    } catch (e) {
+      debugPrint('Error reading pubspec.yaml: $e');
+      return null;
+    }
+  }
   // Helper function to load the app name and version.
 
   Future<void> _loadAppInfo() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-
-
     setState(() {
       _appName = packageInfo.packageName; // Set app version from package info
-      debugPrint('Current version: ${packageInfo.version}');
+      debugPrint('Local version: ${packageInfo.version}');
       _appVersion = packageInfo.version; // Set app version from package info
     });
+    
+    // TODO fetch yaml file and compare
+
+    checkForUpdate(_appVersion);
   }
 
   void goToDatasetTab() {
@@ -308,14 +364,13 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Version:** *Rattle* is regularly updated to bring you the best
+            **Version:** ${_isLatest ? '''*Rattle* is regularly updated to bring you the best
             experience for Data Science, AI and Machine Learning. The latest
             version is always available from the
             [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
             the **Version** text here in the title bar to visit the *CHANGELOG*
-            in your browser and so see a list of all changes to Rattle. This
-            will help decide whether you want to update now.
-
+            in your browser and so see a list of all changes to Rattle. 
+            ''' : '*A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.'}
             ''',
             child: GestureDetector(
               onTap: () async {
@@ -330,8 +385,8 @@ Xu, Yixiang Yin, Bo Zhang.
                 cursor: SystemMouseCursors.click,
                 child: Text(
                   'Version $_appVersion',
-                  style: const TextStyle(
-                    color: Colors.blue,
+                  style: TextStyle(
+                    color: _isLatest ? Colors.blue : Colors.red,
                     fontSize: 16,
                   ),
                 ),
