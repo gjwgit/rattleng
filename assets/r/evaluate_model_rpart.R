@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-01 21:09:04 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-02 11:36:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,7 +47,8 @@
 model <- model_rpart
 
 # 20250101 gjw Define the template functions to generate the
-# predications and the probabilities for any dataset.
+# predications and the probabilities from an rpart model for any
+# dataset.
 
 pred_ra <- function(model, data) predict(model, newdata=data, type="class")
 prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]
