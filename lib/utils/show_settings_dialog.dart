@@ -942,8 +942,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       settingsGroupGap,
                       Divider(),
+
+                      // Session settings (Ask before exit and Image Viewer App).
+
                       Row(
                         children: [
+                          // Session settings header.
+
                           const Text(
                             'Session',
                             style: TextStyle(
@@ -977,6 +982,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
+                      // Ask before exit and image viewer  settings.
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -1004,7 +1011,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                                 configRowGap,
 
-                                // Switch for Session Control with a tooltip.
+                                // Switch for Ask before exit.
 
                                 Switch(
                                   value: askOnExit,
@@ -1023,7 +1030,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                           configRowGap,
 
-                          // Add the new TextField widget for the Image Viewer App.
+                          // The new TextField widget for the Image Viewer.
 
                           _buildImageViewerTextField(context, ref),
                         ],
