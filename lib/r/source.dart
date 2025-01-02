@@ -32,8 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/providers/ignore_missing_group_by.dart';
-import 'package:rattle/providers/visualise.dart';
+
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -42,10 +41,12 @@ import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/complexity.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
+import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
@@ -66,6 +67,7 @@ import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/providers/vars/roles.dart';
+import 'package:rattle/providers/visualise.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
@@ -175,6 +177,10 @@ Future<void> rSource(
   String clusterDistance = ref.read(distanceClusterProvider);
   String clusterLink = ref.read(linkClusterProvider);
   String clusterType = ref.read(typeClusterProvider);
+
+  // EVALUATE
+
+  String chosenDataType = ref.read(datasetTypeProvider);
 
   // FOREST
 
@@ -541,6 +547,10 @@ Future<void> rSource(
     'IGNORE_MISSING_GROUP_BY',
     ignoreMissingGroupBy.toString().toUpperCase(),
   );
+
+  // EVALUATE
+
+  code = code.replaceAll('DATASET_TYPE', chosenDataType.toUpperCase());
 
   ////////////////////////////////////////////////////////////////////////
   // FOREST

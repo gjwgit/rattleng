@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 20:46:13 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-01 21:01:25 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,16 +41,17 @@
 ## #########################################################################
 ## #########################################################################
 
-########################################################################
+####################################
 
 # Identify the dataset partition that the model is applied to.
 
 dtype <- 'training'
 
-# Store into the TEMPLATE variables the corresponding predicted,
-# actual and risk values for later processing.
+# Store in TEMPLATE variables the actual and risk values, and the
+# predicted and probabilites, for later processing.
 
 actual      <- actual_tr
-predicted   <- pred_tr
-probability <- prob_tr
 risk        <- risk_tr
+
+predicted   <- pred_ra(model, trds)
+probability <- prob_ra(model, trds)
