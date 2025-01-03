@@ -113,8 +113,8 @@ String _basicTemplate(
   String prf = rExtract(log, '> randomForest_${evaluateDataset}_PROP');
   String ccf = rExtract(log, '> cforest_${evaluateDataset}_COUNT');
   String pcf = rExtract(log, '> cforest_${evaluateDataset}_PROP');
-  String csvm = rExtract(log, 'print(svm_cem)');
-  String psvm = rExtract(log, 'print(svm_per)');
+  String csvm = rExtract(log, '> svm_${evaluateDataset}_COUNT');
+  String psvm = rExtract(log, '> svm_${evaluateDataset}_PROP');
   String cnc = rExtract(log, 'print(nnet_cem)');
   String cnp = rExtract(log, 'print(nnet_per)');
 

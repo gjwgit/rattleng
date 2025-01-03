@@ -36,7 +36,7 @@
 library(kernlab)
 library(rattle)
 
-error_matrix_predic <- predict(svm_model, newdata = trds, type = "probabilities")
+error_matrix_predic <- predict(svm_model, newdata = trds, type = "prob")
 
 # Convert to a list of labels based on maximum values.
 

@@ -244,7 +244,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ec = 'evaluate_model_ctree';
                 String en = 'evaluate_nnet';
                 String er = 'evaluate_model_rpart';
-                String es = 'evaluate_svm';
+                String es = 'evaluate_model_svm';
                 String ex = 'evaluate_model_xgboost';
 
                 String ecf = 'evaluate_model_conditional_forest';
@@ -451,11 +451,31 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // Check if SVM evaluation was executed.
 
                 if (svmExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    [es, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [es, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [es, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [es, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [es, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if Neural Network box was ticked and neural network methods are enabled.
