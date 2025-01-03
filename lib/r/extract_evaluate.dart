@@ -105,8 +105,8 @@ String _basicTemplate(
     log,
     '> ctree_${evaluateDataset}_PROP',
   );
-  String ca = rExtract(log, 'print(adaboost_cem)');
-  String pa = rExtract(log, 'print(adaboost_per)');
+  String ca = rExtract(log, '> adaboost_${evaluateDataset}_COUNT');
+  String pa = rExtract(log, '> adaboost_${evaluateDataset}_PROP');
   String cx = rExtract(log, '> xgboost_${evaluateDataset}_COUNT');
   String px = rExtract(log, '> xgboost_${evaluateDataset}_PROP');
   String crf = rExtract(log, '> randomForest_${evaluateDataset}_COUNT');

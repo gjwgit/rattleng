@@ -240,7 +240,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // variables one model at a time. Those that have _model_ are
                 // updated.
 
-                String ea = 'evaluate_adaboost';
+                String ea = 'evaluate_model_adaboost';
                 String ec = 'evaluate_model_ctree';
                 String en = 'evaluate_nnet';
                 String er = 'evaluate_model_rpart';
@@ -391,11 +391,31 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // Check if AdaBoost evaluation was executed and boost box is enabled.
 
                 if (adaBoostExecuted && boostTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ea, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ea, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ea, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ea, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ea, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if XGBoost evaluation was executed and boost box is enabled.
