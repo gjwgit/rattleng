@@ -242,7 +242,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String ea = 'evaluate_model_adaboost';
                 String ec = 'evaluate_model_ctree';
-                String en = 'evaluate_nnet';
+                String en = 'evaluate_model_nnet';
                 String er = 'evaluate_model_rpart';
                 String es = 'evaluate_model_svm';
                 String ex = 'evaluate_model_xgboost';
@@ -481,11 +481,31 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // Check if Neural Network box was ticked and neural network methods are enabled.
 
                 if (neuralTicked && nnetExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    [en, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [en, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [en, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [en, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [en, ttc, em, ro],
+                    );
+                  }
                 }
 
                 await ref.read(evaluatePageControllerProvider).animateToPage(

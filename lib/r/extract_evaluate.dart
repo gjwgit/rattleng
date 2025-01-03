@@ -115,8 +115,8 @@ String _basicTemplate(
   String pcf = rExtract(log, '> cforest_${evaluateDataset}_PROP');
   String csvm = rExtract(log, '> svm_${evaluateDataset}_COUNT');
   String psvm = rExtract(log, '> svm_${evaluateDataset}_PROP');
-  String cnc = rExtract(log, 'print(nnet_cem)');
-  String cnp = rExtract(log, 'print(nnet_per)');
+  String cnc = rExtract(log, '> nnet_${evaluateDataset}_COUNT');
+  String cnp = rExtract(log, '> nnet_${evaluateDataset}_PROP');
 
   // Obtain the current timestamp for logging purposes.
 
