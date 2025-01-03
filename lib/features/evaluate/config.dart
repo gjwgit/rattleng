@@ -245,7 +245,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String en = 'evaluate_nnet';
                 String er = 'evaluate_model_rpart';
                 String es = 'evaluate_svm';
-                String ex = 'evaluate_xgboost';
+                String ex = 'evaluate_model_xgboost';
 
                 String ecf = 'evaluate_model_conditional_forest';
                 String erf = 'evaluate_model_random_forest';
@@ -401,11 +401,31 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // Check if XGBoost evaluation was executed and boost box is enabled.
 
                 if (xgBoostExecuted && boostTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ex, em, ro],
-                  );
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ex, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ex, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ex, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ex, ttc, em, ro],
+                    );
+                  }
                 }
 
                 // Check if SVM evaluation was executed.
