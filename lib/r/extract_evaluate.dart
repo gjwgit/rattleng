@@ -50,6 +50,7 @@ String _basicTemplate(
   bool forestExecuted = ref.watch(forestEvaluateProvider);
   bool svmExecuted = ref.watch(svmEvaluateProvider);
   bool nnetExecuted = ref.watch(nnetEvaluateProvider);
+  bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
 
   // Define header strings for various model error matrices (counts and proportions).
 
@@ -84,6 +85,10 @@ String _basicTemplate(
   String ennc = 'Error matrix for the NNET model [$evaluateDataset] (counts)';
   String ennp =
       'Error matrix for the NNET model [$evaluateDataset] (proportions)';
+  String entc =
+      'Error matrix for the NEURALNET model [$evaluateDataset] (counts)';
+  String entp =
+      'Error matrix for the NEURALNET model [$evaluateDataset] (proportions)';
 
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
@@ -117,6 +122,8 @@ String _basicTemplate(
   String psvm = rExtract(log, '> svm_${evaluateDataset}_PROP');
   String cnc = rExtract(log, '> nnet_${evaluateDataset}_COUNT');
   String cnp = rExtract(log, '> nnet_${evaluateDataset}_PROP');
+  String cntc = rExtract(log, '> neuralnet_${evaluateDataset}_COUNT');
+  String cntp = rExtract(log, '> neuralnet_${evaluateDataset}_PROP');
 
   // Obtain the current timestamp for logging purposes.
 
@@ -203,6 +210,16 @@ String _basicTemplate(
         '$cnc\n\n'
         '$ennp\n\n'
         '$cnp\n\n';
+  }
+
+  // Append NeuralNet model results if available and NeuralNet is executed.
+
+  if (cntc != '' && cntp != '' && neuralNetExecuted) {
+    result = '$result\n'
+        '$entc\n\n'
+        '$cntc\n\n'
+        '$entp\n\n'
+        '$cntp\n\n';
   }
 
   result = '$result\n'

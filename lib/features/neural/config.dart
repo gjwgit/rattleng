@@ -208,6 +208,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                         ref,
                         [mt, mbn, etr, erc, etu, erc],
                       );
+                      ref.read(neuralNetEvaluateProvider.notifier).state = true;
                     }
                   }
                 }

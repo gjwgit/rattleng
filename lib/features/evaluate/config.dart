@@ -124,7 +124,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         ['model_neuralnet.svg'],
         ['model_nn_nnet.svg'],
       ],
-      provider: neuralNetEvaluateProvider,
+      provider: neuralEvaluateProvider,
     ),
     _ModelConfig(
       key: 'KMeansEvaluate',
@@ -226,7 +226,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
-                bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
+                bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
+                bool neuralTicked = ref.watch(neuralEvaluateProvider);
                 bool randomForestExecuted =
                     ref.watch(randomForestEvaluateProvider);
                 bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
@@ -246,6 +247,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String er = 'evaluate_model_rpart';
                 String es = 'evaluate_model_svm';
                 String ex = 'evaluate_model_xgboost';
+                String ent = 'evaluate_model_neuralnet';
 
                 String ecf = 'evaluate_model_conditional_forest';
                 String erf = 'evaluate_model_random_forest';
@@ -536,6 +538,36 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       context,
                       ref,
                       [en, ttc, em, ro],
+                    );
+                  }
+                }
+
+                // Check if Neural Network box was ticked and neuralnet method is enabled.
+
+                if (neuralTicked && neuralNetExecuted) {
+                  if (datasetSplitType == 'Training') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ent, ttr, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Tuning') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ent, ttu, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Testing') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ent, tte, em, ro],
+                    );
+                  } else if (datasetSplitType == 'Complete') {
+                    await rSource(
+                      context,
+                      ref,
+                      [ent, ttc, em, ro],
                     );
                   }
                 }
