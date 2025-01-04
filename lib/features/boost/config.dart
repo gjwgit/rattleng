@@ -91,15 +91,18 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
                 String mt = 'model_template';
                 String mbx = 'model_build_xgboost';
                 String mba = 'model_build_adaboost';
-                String etr = 'evaluate_template_tr';
-                String etu = 'evaluate_template_tu';
-                String erc = 'evaluate_riskchart';
 
                 if (algorithm == 'Extreme') {
-                  await rSource(context, ref, [mt, mbx, etr, erc, etu, erc]);
+                  await rSource(context, ref, [
+                    mt,
+                    mbx,
+                  ]);
                   ref.read(xgBoostEvaluateProvider.notifier).state = true;
                 } else {
-                  await rSource(context, ref, [mt, mba, etr, erc, etu, erc]);
+                  await rSource(context, ref, [
+                    mt,
+                    mba,
+                  ]);
                   ref.read(adaBoostEvaluateProvider.notifier).state = true;
                 }
               },

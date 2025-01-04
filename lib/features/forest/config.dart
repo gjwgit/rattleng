@@ -119,20 +119,23 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                 String mt = 'model_template';
                 String mbrf = 'model_build_random_forest';
                 String mbcf = 'model_build_conditional_forest';
-                String etr = 'evaluate_template_tr';
-                String etu = 'evaluate_template_tu';
-                String erc = 'evaluate_riskchart';
 
                 selectedAlgorithm == AlgorithmType.traditional
                     ? await rSource(
                         context,
                         ref,
-                        [mt, mbrf, etr, erc, etu, erc],
+                        [
+                          mt,
+                          mbrf,
+                        ],
                       )
                     : await rSource(
                         context,
                         ref,
-                        [mt, mbcf, etr, erc, etu, erc],
+                        [
+                          mt,
+                          mbcf,
+                        ],
                       );
 
                 if (selectedAlgorithm == AlgorithmType.traditional) {

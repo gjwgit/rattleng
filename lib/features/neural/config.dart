@@ -190,9 +190,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   String mt = 'model_template';
                   String mbn = 'model_build_neural_neuralnet';
                   String mbnn = 'model_build_neural_nnet';
-                  String etr = 'evaluate_template_tr';
-                  String etu = 'evaluate_template_tu';
-                  String erc = 'evaluate_riskchart';
 
                   if (context.mounted) {
                     if (algorithm == 'nnet') {
@@ -206,7 +203,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                       await rSource(
                         context,
                         ref,
-                        [mt, mbn, etr, erc, etu, erc],
+                        [
+                          mt,
+                          mbn,
+                        ],
                       );
                       ref.read(neuralNetEvaluateProvider.notifier).state = true;
                     }

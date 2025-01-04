@@ -101,11 +101,11 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
 
                 String mt = 'model_template';
                 String mbs = 'model_build_svm';
-                String etr = 'evaluate_template_tr';
-                String etu = 'evaluate_template_tu';
-                String erc = 'evaluate_riskchart';
 
-                await rSource(context, ref, [mt, mbs, etr, erc, etu, erc]);
+                await rSource(context, ref, [
+                  mt,
+                  mbs,
+                ]);
 
                 ref.read(svmEvaluateProvider.notifier).state = true;
 
