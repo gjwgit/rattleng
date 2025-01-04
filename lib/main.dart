@@ -27,7 +27,6 @@ library;
 
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,7 +111,6 @@ Future<void> main() async {
     };
   }
 
-
   // TODO: check for updates
   // debugPrint('Current directory: ${p.current}');
   // // retrieve the latest bump version from git commit history
@@ -120,7 +118,7 @@ Future<void> main() async {
   //   final gitDir = await GitDir.fromExisting(p.current);
   //   final commitCount = await gitDir.commitCount();
   //   final commitHistory = await gitDir.commits();
-    
+
   //   for (var commit in commitHistory.values) {
   //     if (commit.message.toLowerCase().contains('bump version')) {
   //       debugPrint(commit.message);

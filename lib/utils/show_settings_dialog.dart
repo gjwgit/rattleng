@@ -1269,7 +1269,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             Container(
               child: MarkdownTooltip(
                 message: '''

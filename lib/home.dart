@@ -37,7 +37,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Package imports
-import 'package:pub_semver/pub_semver.dart';
 import 'package:http/http.dart' as http;
 import 'package:yaml/yaml.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
@@ -156,7 +155,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
     // GitHub raw file URL
     final url = Uri.parse(
-        'https://raw.githubusercontent.com/gjwgit/rattleng/dev/pubspec.yaml');
+      'https://raw.githubusercontent.com/gjwgit/rattleng/dev/pubspec.yaml',
+    );
 
     try {
       // Fetch the pubspec.yaml file
@@ -167,7 +167,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
         final yamlContent = loadYaml(response.body);
 
         // Extract the version field excluding the + sign and anything after
-        final latestVersion = yamlContent['version'].toString().split('+')[0];
+        final latestVersion = yamlContent['version'].toString().split('+').first;
         debugPrint('Latest version: $latestVersion');
 
         // Compare with the current version
@@ -198,9 +198,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
       // Extract the version field
       final version = yamlMap['version'];
+
       return version?.toString();
     } catch (e) {
       debugPrint('Error reading pubspec.yaml: $e');
+      
       return null;
     }
   }
@@ -214,7 +216,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
       // debugPrint('Local version: ${packageInfo.version}');
       _appVersion = packageInfo.version; // Set app version from package info
     });
-    
+
     // TODO fetch yaml file and compare
 
     checkForUpdate(_appVersion);
