@@ -129,6 +129,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
   var _appName = 'Unknown';
   var _appVersion = 'Unknown';
   var _isLatest = true;
+    final String _rattleUrl =
+      'https://rattle.togaware.com';
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
 
@@ -378,7 +380,7 @@ Xu, Yixiang Yin, Bo Zhang.
             ''',
             child: GestureDetector(
               onTap: () async {
-                final Uri url = Uri.parse(_changelogUrl);
+                final Uri url = Uri.parse(_isLatest ? _changelogUrl : _rattleUrl);
                 if (await canLaunchUrl(url)) {
                   await launchUrl(url);
                 } else {
