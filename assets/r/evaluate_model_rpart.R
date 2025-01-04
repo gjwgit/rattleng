@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-02 11:36:19 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-01-05 06:46:59 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -51,4 +51,5 @@ model <- model_rpart
 # dataset.
 
 pred_ra <- function(model, data) predict(model, newdata=data, type="class")
+
 prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]
