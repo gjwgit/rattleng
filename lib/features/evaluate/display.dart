@@ -82,7 +82,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String rocAdaBoostImage = '$tempDir/model_evaluate_roc_adaboost_$dtype.svg';
     String rocCtreeImage = '$tempDir/model_evaluate_roc_ctree_$dtype.svg';
     String rocNNETImage = '$tempDir/model_evaluate_roc_nnet_$dtype.svg';
-    String rocNeuralNetImage = '$tempDir/model_evaluate_roc_neuralnet_$dtype.svg';
+    String rocNeuralNetImage =
+        '$tempDir/model_evaluate_roc_neuralnet_$dtype.svg';
     String rocRpartImage = '$tempDir/model_evaluate_roc_rpart_$dtype.svg';
     String rocSVMImage = '$tempDir/model_evaluate_roc_svm_$dtype.svg';
     String rocCforestImage = '$tempDir/model_evaluate_roc_cforest_$dtype.svg';
