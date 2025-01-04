@@ -30,10 +30,6 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/ for further details.
-
-## #########################################################################
-## #########################################################################
 ## #########################################################################
 ## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
 ## #########################################################################
