@@ -167,7 +167,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
         final yamlContent = loadYaml(response.body);
 
         // Extract the version field excluding the + sign and anything after
-        final latestVersion = yamlContent['version'].toString().split('+').first;
+        final latestVersion =
+            yamlContent['version'].toString().split('+').first;
         debugPrint('Latest version: $latestVersion');
 
         // Compare with the current version
@@ -202,7 +203,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
       return version?.toString();
     } catch (e) {
       debugPrint('Error reading pubspec.yaml: $e');
-      
+
       return null;
     }
   }
