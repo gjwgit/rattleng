@@ -259,54 +259,6 @@ Future<void> rSource(
 
   ////////////////////////////////////////////////////////////////////////
 
-  if (scripts.contains('evaluate_adaboost') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'adaboost_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'adaboost_per');
-  }
-
-  if (scripts.contains('evaluate_conditional_forest') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'cforest_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'cforest_per');
-  }
-
-  if (scripts.contains('evaluate_ctree') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'ctree_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'ctree_per');
-  }
-
-  if (scripts.contains('evaluate_nnet') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'nnet_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'nnet_per');
-  }
-
-  if (scripts.contains('evaluate_random_forest') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'rforest_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'rforest_per');
-  }
-
-  if (scripts.contains('evaluate_model_rpart') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'rpart_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'rpart_per');
-  }
-
-  if (scripts.contains('evaluate_svm') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'svm_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'svm_per');
-  }
-
-  if (scripts.contains('evaluate_xgboost') &&
-      scripts.contains('evaluate_measure_error_matrix')) {
-    code = code.replaceAll('ERROR_MATRIX_COUNT', 'xgboost_cem');
-    code = code.replaceAll('ERROR_MATRIX_PROP', 'xgboost_per');
-  }
-
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.

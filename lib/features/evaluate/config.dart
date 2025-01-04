@@ -296,6 +296,38 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   }
                 }
 
+                // 20250104 zy Linear model has issue (factor wind_dir_9am has
+                // new levels SW) in predict method.
+                // Temporarily skip the evaluation of linear model.
+
+                // if (linearExecuted) {
+                //   if (datasetSplitType == 'Training') {
+                //     await rSource(
+                //       context,
+                //       ref,
+                //       [ec, ttr, em, ro],
+                //     );
+                //   } else if (datasetSplitType == 'Tuning') {
+                //     await rSource(
+                //       context,
+                //       ref,
+                //       [ec, ttu, em, ro],
+                //     );
+                //   } else if (datasetSplitType == 'Testing') {
+                //     await rSource(
+                //       context,
+                //       ref,
+                //       [ec, tte, em, ro],
+                //     );
+                //   } else if (datasetSplitType == 'Complete') {
+                //     await rSource(
+                //       context,
+                //       ref,
+                //       [ec, ttc, em, ro],
+                //     );
+                //   }
+                // }
+
                 // Check if ctree model evaluation was executed.
 
                 if (ctreeExecuted && treeExecuted) {
