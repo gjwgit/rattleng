@@ -32,12 +32,6 @@
 # https://survivor.togaware.com/datascience/dtrees.html
 ## #########################################################################
 ## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
-
-# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
-# will be used below and in the following evaluations as required.
 
 model <- model_ctree
 
