@@ -195,6 +195,78 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     return false;
   }
 
+  /// Executes model evaluation based on the given parameters and conditions.
+  ///
+  /// [executed] - Boolean indicating if the model evaluation should proceed.
+  /// [parameters] - List of parameters specific to the model.
+  /// [datasetSplitType] - String indicating the dataset split type ('Training', 'Tuning', etc.).
+  /// [context] - Build context for the operation.
+  /// [ref] - Reference used in the evaluation (e.g., for dependency injection).
+
+  Future<void> executeEvaluation({
+    required bool executed,
+    required List parameters,
+    required String datasetSplitType,
+    required BuildContext context,
+    required dynamic ref,
+  }) async {
+    // 20241220 gjw One of the following templates then needs to be
+    // run to convert the appropriate predictions and probabilities
+    // to the variables that are non-specific to a dataset
+    // partition.
+
+    String ttr = 'evaluate_template_tr';
+    String ttu = 'evaluate_template_tu';
+    String tte = 'evaluate_template_te';
+    String ttc = 'evaluate_template_tc';
+
+    if (executed) {
+      // Determine the correct parameters based on the dataset split type.
+
+      List<String> selectedParameters;
+      switch (datasetSplitType) {
+        case 'Training':
+          selectedParameters = [
+            parameters[0],
+            ttr,
+            parameters[1],
+            parameters[2],
+          ];
+          break;
+        case 'Tuning':
+          selectedParameters = [
+            parameters[0],
+            ttu,
+            parameters[1],
+            parameters[2],
+          ];
+          break;
+        case 'Testing':
+          selectedParameters = [
+            parameters[0],
+            tte,
+            parameters[1],
+            parameters[2],
+          ];
+          break;
+        case 'Complete':
+          selectedParameters = [
+            parameters[0],
+            ttc,
+            parameters[1],
+            parameters[2],
+          ];
+          break;
+        default:
+          throw Exception('Invalid datasetSplitType: $datasetSplitType');
+      }
+
+      // Execute the rSource function with the determined parameters.
+
+      await rSource(context, ref, selectedParameters);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String datasetType = ref.watch(datasetTypeProvider.notifier).state;
@@ -252,325 +324,99 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ecf = 'evaluate_model_conditional_forest';
                 String erf = 'evaluate_model_random_forest';
 
-                // 20241220 gjw One of the following templates then needs to be
-                // run to convert the appropriate predictions and probabilities
-                // to the variables that are non-specific to a dataset
-                // partition.
-
-                String ttr = 'evaluate_template_tr';
-                String ttu = 'evaluate_template_tu';
-                String tte = 'evaluate_template_te';
-                String ttc = 'evaluate_template_tc';
-
                 // 20241220 gjw Finally we will run the generic templates for
                 // the various performance measures.
 
                 String em = 'evaluate_measure_error_matrix';
                 String ro = 'evaluate_measure_roc';
 
-                // Check if rpart model evaluation was executed.
+                // Execute evaluation for rpart model if it was executed and treeExecuted is true.
 
-                if (rpartExecuted && treeExecuted) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, ttc, em, ro],
-                    );
-                  }
-                }
+                await executeEvaluation(
+                  executed: rpartExecuted && treeExecuted,
+                  parameters: [er, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // 20250104 zy Linear model has issue (factor wind_dir_9am has
-                // new levels SW) in predict method.
-                // Temporarily skip the evaluation of linear model.
+                // Execute evaluation for ctree model if it was executed and treeExecuted is true.
 
-                // if (linearExecuted) {
-                //   if (datasetSplitType == 'Training') {
-                //     await rSource(
-                //       context,
-                //       ref,
-                //       [ec, ttr, em, ro],
-                //     );
-                //   } else if (datasetSplitType == 'Tuning') {
-                //     await rSource(
-                //       context,
-                //       ref,
-                //       [ec, ttu, em, ro],
-                //     );
-                //   } else if (datasetSplitType == 'Testing') {
-                //     await rSource(
-                //       context,
-                //       ref,
-                //       [ec, tte, em, ro],
-                //     );
-                //   } else if (datasetSplitType == 'Complete') {
-                //     await rSource(
-                //       context,
-                //       ref,
-                //       [ec, ttc, em, ro],
-                //     );
-                //   }
-                // }
+                await executeEvaluation(
+                  executed: ctreeExecuted && treeExecuted,
+                  parameters: [ec, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if ctree model evaluation was executed.
+                // Execute evaluation for Random Forest model if executed and forest box is ticked.
 
-                if (ctreeExecuted && treeExecuted) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ec, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ec, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ec, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ec, ttc, em, ro],
-                    );
-                  }
-                }
+                await executeEvaluation(
+                  executed: randomForestExecuted && forestTicked,
+                  parameters: [erf, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
+                // Execute evaluation for Conditional Forest model if executed and forest box is ticked.
 
-                // Check if Random Forest evaluation was executed
-                // and forest box was ticked.
+                await executeEvaluation(
+                  executed: conditionalForestExecuted && forestTicked,
+                  parameters: [ecf, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                if (randomForestExecuted && forestTicked) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [erf, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [erf, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [erf, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [erf, ttc, em, ro],
-                    );
-                  }
-                }
+                // Execute evaluation for AdaBoost model if executed and boost box is ticked.
 
-                // Check if Conditional Forest evaluation was executed
-                // and forest box was ticked.
+                await executeEvaluation(
+                  executed: adaBoostExecuted && boostTicked,
+                  parameters: [ea, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                if (conditionalForestExecuted && forestTicked) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ecf, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ecf, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ecf, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ecf, ttc, em, ro],
-                    );
-                  }
-                }
+                // Execute evaluation for XGBoost model if executed and boost box is ticked.
 
-                // Check if AdaBoost evaluation was executed and boost box is enabled.
+                await executeEvaluation(
+                  executed: xgBoostExecuted && boostTicked,
+                  parameters: [ex, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
+                // Execute evaluation for SVM model if executed.
 
-                if (adaBoostExecuted && boostTicked) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ea, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ea, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ea, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ea, ttc, em, ro],
-                    );
-                  }
-                }
+                await executeEvaluation(
+                  executed: svmExecuted,
+                  parameters: [es, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if XGBoost evaluation was executed and boost box is enabled.
+                // Execute evaluation for Neural Network model if executed and neural network box is ticked.
 
-                if (xgBoostExecuted && boostTicked) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ex, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ex, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ex, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ex, ttc, em, ro],
-                    );
-                  }
-                }
+                await executeEvaluation(
+                  executed: neuralTicked && nnetExecuted,
+                  parameters: [en, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if SVM evaluation was executed.
+                // Execute evaluation for Neural Net model if executed and neural network box is ticked.
 
-                if (svmExecuted) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [es, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [es, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [es, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [es, ttc, em, ro],
-                    );
-                  }
-                }
-
-                // Check if Neural Network box was ticked and neural network methods are enabled.
-
-                if (neuralTicked && nnetExecuted) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [en, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [en, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [en, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [en, ttc, em, ro],
-                    );
-                  }
-                }
-
-                // Check if Neural Network box was ticked and neuralnet method is enabled.
-
-                if (neuralTicked && neuralNetExecuted) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ent, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ent, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ent, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [ent, ttc, em, ro],
-                    );
-                  }
-                }
+                await executeEvaluation(
+                  executed: neuralTicked && neuralNetExecuted,
+                  parameters: [ent, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
                 await ref.read(evaluatePageControllerProvider).animateToPage(
                       // Index of the second page.
