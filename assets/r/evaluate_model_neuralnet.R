@@ -37,10 +37,6 @@
 ## #########################################################################
 ## #########################################################################
 
-# 20250103 zy This loads all variables (including 'target').
-
-source("assets/r/model_template.R")
-
 # 20241220 gjw Save the model to the TEMPLATE variable `model`. This
 # will be used below and in the following evaluations as required.
 
