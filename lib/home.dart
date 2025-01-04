@@ -152,6 +152,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
   }
 
   Future<void> checkForUpdate(String currentVersion) async {
+    debugPrint('Current version: $currentVersion');
+
     // GitHub raw file URL
     final url = Uri.parse(
         'https://raw.githubusercontent.com/gjwgit/rattleng/dev/pubspec.yaml');
@@ -164,10 +166,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Parse the YAML content
         final yamlContent = loadYaml(response.body);
 
-        // Extract the version field
-        final latestVersion = yamlContent['version'];
+        // Extract the version field excluding the + sign and anything after
+        final latestVersion = yamlContent['version'].toString().split('+')[0];
         debugPrint('Latest version: $latestVersion');
-        debugPrint('nLatestversion: $currentVersion');
 
         // Compare with the current version
         if (currentVersion != latestVersion) {
@@ -210,7 +211,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
     setState(() {
       _appName = packageInfo.packageName; // Set app version from package info
-      debugPrint('Local version: ${packageInfo.version}');
+      // debugPrint('Local version: ${packageInfo.version}');
       _appVersion = packageInfo.version; // Set app version from package info
     });
     
