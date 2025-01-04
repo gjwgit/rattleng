@@ -227,7 +227,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       switch (datasetSplitType) {
         case 'Training':
           selectedParameters = [
-            parameters[0],
+            parameters.first,
             ttr,
             parameters[1],
             parameters[2],
@@ -235,7 +235,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           break;
         case 'Tuning':
           selectedParameters = [
-            parameters[0],
+            parameters.first,
             ttu,
             parameters[1],
             parameters[2],
@@ -243,7 +243,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           break;
         case 'Testing':
           selectedParameters = [
-            parameters[0],
+            parameters.first,
             tte,
             parameters[1],
             parameters[2],
@@ -251,7 +251,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           break;
         case 'Complete':
           selectedParameters = [
-            parameters[0],
+            parameters.first,
             ttc,
             parameters[1],
             parameters[2],
