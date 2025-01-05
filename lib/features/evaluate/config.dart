@@ -359,6 +359,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   context: context,
                   ref: ref,
                 );
+
                 // Execute evaluation for Conditional Forest model if executed and forest box is ticked.
 
                 await executeEvaluation(
@@ -388,6 +389,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   context: context,
                   ref: ref,
                 );
+                
                 // Execute evaluation for SVM model if executed.
 
                 await executeEvaluation(
