@@ -29,21 +29,21 @@
 # References:
 #
 # @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+# https://survivor.togaware.com/datascience/ for further details.
+
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# will be used below and in the following evaluations as required.
 
 model <- model_neuralnet
 
-# 20250105 zy Redefine the model type to update the output of error matrix.
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
 mtype <- "neuralnet"
-mdesc <- "Neural Neuralnet"
+mdesc <- "Neural Network"
 
 # 20250101 gjw Define the template functions to generate the
-# predications and the probabilities from a neuralnet model for any
-# dataset.
+# predications and the probabilities for any dataset.
 
 pred_ra <- function(model, data) {
   # Retrieve the vector of possible target levels from the data.
@@ -53,7 +53,7 @@ pred_ra <- function(model, data) {
   # Get raw numeric probabilities (assuming the model returns a single column
   # or you've already extracted the relevant column.
 
-  prob_vec <- predict(model, newdata = data, type = "prob")
+  prob_vec <- predict(model, newdata=data, type="prob")
 
   # Map probabilities to factor levels.
   # - If the probability is NA, set the label to NA.
@@ -73,7 +73,7 @@ pred_ra <- function(model, data) {
   # Convert the character vector to a factor with the same levels as 'target_levels'.
   # This ensures the output is not numeric, but a factor with consistent levels.
 
-  mapped_values_factor <- factor(mapped_values_char, levels = target_levels)
+  mapped_values_factor <- factor(mapped_values_char, levels=target_levels)
 
   # Return the factor vector.
 

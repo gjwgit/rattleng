@@ -1,4 +1,4 @@
-# Generate template variables for evaluating a conditional forest model.
+# Define `pred_ra` and `prob_ra` for a conditional forest model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -30,13 +30,15 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+# https://survivor.togaware.com/datascience/ for further details.
+
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# will be used below and in the following evaluations as required.
 
 model <- model_conditionalForest
 
-# 20250105 zy Redefine the model type to update the output of error matrix.
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
 mtype <- "cforest"
 mdesc <- "Random Forest"
@@ -44,9 +46,9 @@ mdesc <- "Random Forest"
 # 20250101 gjw Define the template functions to generate the
 # predications and the probabilities for any dataset.
 
-pred_ra <- function(model, data) predict(model, newdata = data, )
+pred_ra <- function(model, data) predict(model, newdata=data, )
 
 prob_ra <- function(model, data) {
-  prob_matrix <- predict(model, newdata = data, type = "prob")
+  prob_matrix <- predict(model, newdata=data, type="prob")
   generate_predictions(prob_matrix) # nolint as sourced from 'model_template.R'
 }

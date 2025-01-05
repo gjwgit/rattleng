@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-01-05 06:46:59 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-01-05 20:50:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -46,7 +46,8 @@
 
 model <- model_rpart
 
-# 20250105 zy Redefine the model type to update the output of error matrix.
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
 mtype <- "rpart"
 mdesc <- "Decision Tree"

@@ -1,4 +1,4 @@
-# Generate template variables for evaluating a ctree model.
+# Define `pred_ra` and `prob_ra` for a ctree model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
@@ -30,12 +30,15 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+# https://survivor.togaware.com/datascience/ for further details.
+
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# will be used below and in the following evaluations as required.
 
 model <- model_ctree
 
-# 20250105 zy Redefine the model type to update the output of error matrix.
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
 mtype <- "ctree"
 mdesc <- "Conditional Inference Tree"
@@ -46,15 +49,15 @@ mdesc <- "Conditional Inference Tree"
 pred_ra <- function(model, data) {
   # Get the probability matrix from the model.
 
-  prob_matrix <- predict(model, newdata = data, type = "prob")
+  prob_matrix <- predict(model, newdata=data, type="prob")
 
   # Identify, for each row, which column has the highest probability.
 
-  idx_max <- max.col(prob_matrix, ties.method = "first")
+  idx_max <- max.col(prob_matrix, ties.method="first")
 
   # Convert those column indices into class labels.
 
   colnames(prob_matrix)[idx_max]
 }
 
-prob_ra <- function(model, data) predict(model, newdata = data, type = "prob")[,2]
+prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]

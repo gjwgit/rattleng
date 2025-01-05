@@ -30,20 +30,18 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+# https://survivor.togaware.com/datascience/ for further details.
 
 model <- model_xgb
 
-# 20250105 zy Redefine the model type to update the output of error matrix.
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
 mtype <- "xgboost"
-mdesc <- "XGBoost"
+mdesc <- "Extreme Boost"
 
 # 20250101 gjw Define the template functions to generate the
-# predications and the probabilities from a xgboost model for any
-# dataset.
+# predications and the probabilities for any dataset.
 
 pred_ra <- function(model, data) {
   # Retrieve the vector of possible target levels from the data.
@@ -53,7 +51,7 @@ pred_ra <- function(model, data) {
   # Get raw numeric probabilities (assuming the model returns a single column
   # or you've already extracted the relevant column.
 
-  prob_vec <- predict(model, newdata = data, type = "prob")
+  prob_vec <- predict(model, newdata=data, type="prob")
 
   # Map probabilities to factor levels.
   # - If the probability is NA, set the label to NA.
@@ -79,4 +77,5 @@ pred_ra <- function(model, data) {
 
   return(mapped_values_factor)
 }
+
 prob_ra <- function(model, data) predict(model, newdata=data, type="prob")
