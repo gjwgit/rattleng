@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-12-14 21:23:30 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 21:15:24 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -93,16 +93,10 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
                 String mba = 'model_build_adaboost';
 
                 if (algorithm == 'Extreme') {
-                  await rSource(context, ref, [
-                    mt,
-                    mbx,
-                  ]);
+                  await rSource(context, ref, [mt, mbx]);
                   ref.read(xgBoostEvaluateProvider.notifier).state = true;
                 } else {
-                  await rSource(context, ref, [
-                    mt,
-                    mba,
-                  ]);
+                  await rSource(context, ref, [mt, mba]);
                   ref.read(adaBoostEvaluateProvider.notifier).state = true;
                 }
               },
