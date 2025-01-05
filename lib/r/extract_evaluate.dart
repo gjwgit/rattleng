@@ -136,18 +136,9 @@ String _basicTemplate(
   // Append RPART model results if available and executed.
 
   if (crc != '' && crp != '' && rpartTreeExecuted) {
-    if (result != '') {
-      result = '$result\n'
-          '$hdr\n\n'
-          '\n$crc\n\n'
-          '$mdr\n\n'
-          '\n$crp\n\n';
-    } else {
-      result = '$hdr\n\n'
-          '\n$crc\n\n'
-          '$mdr\n\n'
-          '\n$crp\n\n';
-    }
+    result = result.isNotEmpty
+        ? '$result\n$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n'
+        : '$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n';
   }
 
   // Append CTREE model results if available and tree execution is confirmed.
