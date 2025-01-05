@@ -215,55 +215,25 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     // to the variables that are non-specific to a dataset
     // partition.
 
-    String ttr = 'evaluate_template_tr';
-    String ttu = 'evaluate_template_tu';
-    String tte = 'evaluate_template_te';
-    String ttc = 'evaluate_template_tc';
+    final templateMap = {
+      'Training': 'evaluate_template_tr',
+      'Tuning': 'evaluate_template_tu',
+      'Testing': 'evaluate_template_te',
+      'Complete': 'evaluate_template_tc',
+    };
 
     if (executed) {
-      // Determine the correct parameters based on the dataset split type.
+      final template = templateMap[datasetSplitType] ??
+          (throw Exception('Invalid datasetSplitType: $datasetSplitType'));
 
-      List<String> selectedParameters;
-      switch (datasetSplitType) {
-        case 'Training':
-          selectedParameters = [
-            parameters.first,
-            ttr,
-            parameters[1],
-            parameters[2],
-          ];
-          break;
-        case 'Tuning':
-          selectedParameters = [
-            parameters.first,
-            ttu,
-            parameters[1],
-            parameters[2],
-          ];
-          break;
-        case 'Testing':
-          selectedParameters = [
-            parameters.first,
-            tte,
-            parameters[1],
-            parameters[2],
-          ];
-          break;
-        case 'Complete':
-          selectedParameters = [
-            parameters.first,
-            ttc,
-            parameters[1],
-            parameters[2],
-          ];
-          break;
-        default:
-          throw Exception('Invalid datasetSplitType: $datasetSplitType');
-      }
+      final selectedParameters = [
+        parameters.first,
+        template,
+        parameters[1],
+        parameters[2],
+      ];
 
-      // Execute the rSource function with the determined parameters.
-
-      await rSource(context, ref, selectedParameters);
+      await rSource(context, ref, selectedParameters.cast<String>());
     }
   }
 
@@ -389,7 +359,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   context: context,
                   ref: ref,
                 );
-                
+
                 // Execute evaluation for SVM model if executed.
 
                 await executeEvaluation(
