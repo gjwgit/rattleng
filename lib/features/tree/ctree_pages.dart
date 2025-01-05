@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 19:08:54 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 19:24:48 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,7 +64,7 @@ List<Widget> ctreePages(
 
         # Decision Tree Model
 
-        Built using [party::ctree()](https://www.rdocumentation.org/packages/party/topics/ctree).
+        Built using [partykit::ctree()](https://www.rdocumentation.org/packages/partykit/topics/ctree).
 
         ''',
         content: '\n$content',
@@ -86,7 +86,7 @@ List<Widget> ctreePages(
         # Decision Tree Visualisation
 
         Built using
-        [partykit::print.party()](https://www.rdocumentation.org/packages/partykit/topics/print.party).
+        [partykit::plot()](https://www.rdocumentation.org/packages/partykit/topics/party-plot).
 
         ''',
         path: image,
