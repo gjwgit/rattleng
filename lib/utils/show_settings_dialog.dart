@@ -461,8 +461,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
             ),
           ),
           const SizedBox(width: 16),
-          // Adjust the width based on font and expected character size
-
           ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: 150,
@@ -474,7 +472,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               onChanged: (value) {
                 ref.read(imageViewerSettingProvider.notifier).state = value;
 
-                // Save the new state to shared preferences or other storage as needed.
+                // Save the new state to shared preferences.
 
                 _saveImageViewerApp(value);
               },
@@ -1017,7 +1015,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                     ref.read(askOnExitProvider.notifier).state =
                                         value;
 
-                                    // Save the new state to shared preferences or other storage as needed.
+                                    // Save the new state to shared preferences.
 
                                     _saveAskOnExit(value);
                                   },
