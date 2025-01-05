@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2024-12-27 16:35:19 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-01-06 08:36:32 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -66,6 +66,7 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
@@ -152,7 +153,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
   }
 
   Future<void> checkForUpdate(String currentVersion) async {
-    debugPrint('Current version: $currentVersion');
+    debugText('   VERSION', 'Current $currentVersion');
 
     // GitHub raw file URL
     final url = Uri.parse(
@@ -170,7 +171,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Extract the version field excluding the + sign and anything after
         final latestVersion =
             yamlContent['version'].toString().split('+').first;
-        debugPrint('Latest version: $latestVersion');
+        debugText('   VERSION', 'Available $latestVersion');
 
         // Compare with the current version
         if (currentVersion != latestVersion) {
@@ -374,7 +375,7 @@ Xu, Yixiang Yin, Bo Zhang.
             version is always available from the
             [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
             the **Version** text here in the title bar to visit the *CHANGELOG*
-            in your browser and so see a list of all changes to Rattle. 
+            in your browser and so see a list of all changes to Rattle.
             ''' : '*A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.'}
             ''',
             child: GestureDetector(
