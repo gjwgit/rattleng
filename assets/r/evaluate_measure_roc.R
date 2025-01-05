@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-02 11:43:45 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-01-06 08:23:01 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -111,13 +111,17 @@ au <- performance(prediction_prob_values, "auc")@y.values[[1]]
 # Create a data frame containing the FPR and TPR values for plotting the ROC curve.
 
 pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
+##
+## 20250106 gjw embed the path into the svg() call since the svg()
+## lines are removed from the script saved for the user and having a
+## separate fname definitino all by itself looks a little odd and is
+## not required.
+##
+svg(glue("TEMPDIR/model_evaluate_roc_{mtype}_{dtype}.svg"), width = 11)
 
-fname <- glue("TEMPDIR/model_evaluate_roc_{mtype}_{dtype}.svg")
-svg(fname, width = 11)
-
-# 20241220 gjw Now render the ROC curve with the FPR and TPR data.
-# The red line represent the ROC curve while the diagonal grey
-# reference line indicates a random classifier (baseline).
+# Now render the ROC curve with the FPR and TPR data.  The red line
+# represent the ROC curve while the diagonal grey reference line
+# indicates a random classifier (baseline).
 
 pd %>%
   ggplot(aes(x=fpr, y=tpr)) +

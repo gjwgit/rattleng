@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-01 21:04:15 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-01-06 06:59:55 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,40 +47,27 @@ library(rattle)       # Generate an error matrix.
 
 ####################################
 
-# Identify positions where either vector has NA. 20241220 gjw Whcih
-# models needed this and can we fix that in the evaluate_model part?
-# Or is it best here?
-
-# na_positions <- is.na(error_matrix_target) | is.na(error_matrix_predic)
-
-# Remove NA positions from both vectors.
-
-# error_matrix_predic <- error_matrix_predic[!na_positions]
-# error_matrix_target <- error_matrix_target[!na_positions]
-
-
-# Setting `count=TRUE` in `errorMatrix()` ensures the matrix
-# represents raw counts of predictions rather than the proportions.
+em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
 ##
-## 20241220 gjw The r/source.dart was creating a new variable for each
-## error matrix. Probably for some checking in dart for the
-## differently generated error matrices. Is there a better way to do
-## this? E.g., look for `mdodel <- model_rpart` in the stdout and then
-## find the first `print(em_count)` for the RPart error matrix, etc.
-
-em_count <- rattle::errorMatrix(actual, predicted, count = TRUE)
-
-# 20241229 zy Capture the output of the error matrix and print it to the console.
-# The print line is updated to help the dart script to capture the error matrix.
-
-cat(paste('> ', mtype, "_DATASET_TYPE_COUNT", sep = ""), capture.output(em_count), sep = "\n")
+## 20241229 zy Capture the output of the error matrix and print it to
+## the console.  The print line includes '> ` for the dart script to
+## identify the error matrix. 20250106 gjw Use `rat()` rather than
+## `cat()` to avoid exposing the command to the user's exported
+## script.
+##
+rat(paste('> ', mtype, "_DATASET_TYPE_COUNT ", sep=""))
+em_count
 
 # Generate a confusion matrix with proportions (relative frequencies)
 # rather than counts.
 
 em_prop <- rattle::errorMatrix(actual, predicted)
-
-# 20241229 zy Capture the output of the error matrix and print it to the console.
-# The print line is updated to help the dart script to capture the error matrix.
-
-cat(paste('> ', mtype, "_DATASET_TYPE_PROP", sep = ""), capture.output(em_prop), sep = "\n")
+##
+## 20241229 zy Capture the output of the error matrix and print it to
+## the console.  The print line includes '> ` for the dart script to
+## identify the error matrix. 20250106 gjw Use `rat()` rather than
+## `cat()` to avoid exposing the command to the user's exported
+## script.
+##
+rat(paste('> ', mtype, "_DATASET_TYPE_PROP ", sep = ""))
+em_prop
