@@ -57,7 +57,10 @@ dependencies:
   url_launcher: ^6.3.0
   window_manager: ^0.4.3
   xterm: ^4.0.0
+  git: ^2.3.0
 
+  http: any
+  yaml: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
