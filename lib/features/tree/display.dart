@@ -1,11 +1,11 @@
-/// Widget to display the Tree introduction, the built tree, and evaluation.
+/// A Widget to display the tree introduction and then any built tree models.
 ///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-12-23 15:33:14 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 19:13:56 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,21 +29,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/settings.dart';
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
-import 'package:rattle/r/extract.dart';
-import 'package:rattle/r/extract_tree.dart';
-import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
-import 'package:rattle/widgets/image_page.dart';
-import 'package:rattle/widgets/text_page.dart';
+import 'package:rattle/features/tree/rpart_pages.dart';
+import 'package:rattle/features/tree/ctree_pages.dart';
 
-/// The Tree panel displays the tree instructions and then output for the built
-/// model.
+/// The Tree panel initially displays the tree introduction and then output for
+/// the built models.
 
 class TreeDisplay extends ConsumerStatefulWidget {
   const TreeDisplay({super.key});
@@ -61,10 +55,6 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
       treePageControllerProvider,
     );
 
-    bool useValidation = ref.watch(useValidationSettingProvider);
-
-    String stdout = ref.watch(stdoutProvider);
-
     AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
 
     // Begin the list of pages to display with the introduction markdown text.
@@ -73,133 +63,15 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
       showMarkdownFile(context, treeIntroFile, 'assets/svg/tree.svg'),
     ];
 
-    String content = '';
-
-    ////////////////////////////////////////////////////////////////////////
-
-    // Default tree text.
+    // 20250105 gjw Add the appropriate pages for the currently chosen variety
+    // of tree algorithm.
 
     treeAlgorithm == AlgorithmType.traditional
-        ? content = rExtractTree(stdout)
-        : content = rExtract(stdout, 'print(model_ctree)');
+        ? pages.addAll(rpartPages(ref))
+        : pages.addAll(ctreePages(ref));
 
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '''
-
-          # Decision Tree Model
-
-          Built using [rpart::rpart()](https://www.rdocumentation.org/packages/rpart/topics/rpart).
-
-          ''',
-          content: '\n$content',
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    // Convert to rules.
-
-    if (treeAlgorithm == AlgorithmType.traditional) {
-      content = rExtract(stdout, 'asRules(model_rpart)');
-
-      if (content.isNotEmpty) {
-        pages.add(
-          TextPage(
-            title: '''
-
-            # Decision Tree as Rules
-
-            Built using [rattle::asRules()](https://www.rdocumentation.org/packages/rattle/topics/asRules).
-
-            ''',
-            content: '\n$content',
-          ),
-        );
-      }
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    String image = '';
-
-    treeAlgorithm == AlgorithmType.traditional
-        ? image = '$tempDir/model_tree_rpart.svg'
-        : image = '$tempDir/model_tree_ctree.svg';
-
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-          # Decision Tree Visualisation
-
-          Built using
-          [rattle::fancyRpartPlot()](https://www.rdocumentation.org/packages/rattle/topics/fancyRpartPlot).
-
-          ''',
-          path: image,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    image = '';
-
-    treeAlgorithm == AlgorithmType.traditional
-        ? image = '$tempDir/model_rpart_riskchart_training.svg'
-        : image = '$tempDir/model_ctree_riskchart_training.svg';
-
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-          # Risk Chart &#8212; Optimistic Estimate of Performance
-
-          Using the **training** dataset to evaluate the model performance.
-
-          Visit the [Survival
-          Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
-          [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: image,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    image = '';
-
-    treeAlgorithm == AlgorithmType.traditional
-        ? image = '$tempDir/model_rpart_riskchart_tuning.svg'
-        : image = '$tempDir/model_ctree_riskchart_tuning.svg';
-
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-          # Risk Chart &#8212; Unbiased Estimate of Performance
-
-          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to
-          evaluate the model performance.
-
-          Visit the [Survival
-          Guide](https://survivor.togaware.com/datascience/decision-tree-performance.html) and
-          [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-
-          ''',
-          path: image,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
+    // 20250105 gjw Return the PageViewer widget for navigating through the
+    // model pages.
 
     return PageViewer(
       pageController: pageController,
