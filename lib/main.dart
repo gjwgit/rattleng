@@ -111,6 +111,26 @@ Future<void> main() async {
     };
   }
 
+  // TODO: check for updates
+  // debugPrint('Current directory: ${p.current}');
+  // // retrieve the latest bump version from git commit history
+  // if (await GitDir.isGitDir(p.current)) {
+  //   final gitDir = await GitDir.fromExisting(p.current);
+  //   final commitCount = await gitDir.commitCount();
+  //   final commitHistory = await gitDir.commits();
+
+  //   for (var commit in commitHistory.values) {
+  //     if (commit.message.toLowerCase().contains('bump version')) {
+  //       debugPrint(commit.message);
+  //       break;
+  //     }
+  //   }
+
+  //   debugPrint('Git commit count: $commitCount');
+  // } else {
+  //   debugPrint('Not a Git directory');
+  // }
+
   // Tune the window manager before runApp() to avoid a lag in the UI.
   //
   // For desktop (non-web) versions re-size to a comfortable initial window.

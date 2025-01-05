@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.45+163
+version: 6.3.48+163
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -57,7 +57,10 @@ dependencies:
   url_launcher: ^6.3.0
   window_manager: ^0.4.3
   xterm: ^4.0.0
+  git: ^2.3.0
 
+  http: any
+  yaml: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
