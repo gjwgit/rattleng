@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Thursday 2024-10-17 22:19:36 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-01-05 20:40:42 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -55,7 +55,7 @@ class StatusBar extends ConsumerWidget {
         children: [
           Image.asset(
             'assets/images/favicon_small.png',
-            height: 24,
+            height: 44,
           ),
           const SizedBox(width: 8),
           Expanded(
