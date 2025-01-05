@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 10:14:52 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 21:23:01 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -156,7 +156,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
           paths: existingImages,
         ),
       );
-      // 20250105 gjw Considered displaying a No IMage Available graphic. Not
+      // 20250105 gjw Considered displaying a No Image Available graphic. Not
       // quite working yet so comment it out for now.
       //
       // } else {
