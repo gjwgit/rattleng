@@ -36,6 +36,11 @@
 
 model <- model_nn
 
+# 20250105 zy Redefine the model type to update the output of error matrix.
+
+mtype <- "nnet"
+mdesc <- "Neural NNET"
+
 # 20250101 gjw Define the template functions to generate the
 # predications and the probabilities from a nnet model for any
 # dataset.

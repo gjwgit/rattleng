@@ -35,6 +35,11 @@
 
 model <- model_ctree
 
+# 20250105 zy Redefine the model type to update the output of error matrix.
+
+mtype <- "ctree"
+mdesc <- "Conditional Inference Tree"
+
 # 20250101 gjw Define the template functions to generate the
 # predications and the probabilities for any dataset.
 

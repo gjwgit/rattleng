@@ -457,7 +457,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           spacing: configWidgetSpace,
           children: [
             configLeftGap,
-            Text('Eavluation Dataset: '),
+            Text('Evaluation Dataset: '),
             ChoiceChipTip<String>(
               options: datasetTypes.keys.toList(),
               selectedOption: datasetType,

@@ -46,6 +46,11 @@
 
 model <- model_rpart
 
+# 20250105 zy Redefine the model type to update the output of error matrix.
+
+mtype <- "rpart"
+mdesc <- "Decision Tree"
+
 # 20250101 gjw Define the template functions to generate the
 # predications and the probabilities from an rpart model for any
 # dataset.
