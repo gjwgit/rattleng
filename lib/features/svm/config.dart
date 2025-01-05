@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-12-14 21:04:33 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 21:25:13 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -102,10 +102,7 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
                 String mt = 'model_template';
                 String mbs = 'model_build_svm';
 
-                await rSource(context, ref, [
-                  mt,
-                  mbs,
-                ]);
+                await rSource(context, ref, [mt, mbs]);
 
                 ref.read(svmEvaluateProvider.notifier).state = true;
 
