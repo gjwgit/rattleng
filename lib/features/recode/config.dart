@@ -144,7 +144,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   // BUILD button action.
 
   void buildAction() {
-    print("selectedAs: $selectedTransform");
     // Run the R scripts.
 
     switch (selectedTransform) {
@@ -202,7 +201,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           // Dynamic enabling based on the selected variable type
           tooltips: numericMethodsTooltips,
           onSelected: (String? selected) {
-            print("selected: $selected");
             setState(() {
               selectedTransform = selected ?? '';
             });
@@ -230,9 +228,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           tooltips: asCategoricMethodsTooltips,
           enabled: isNumeric && selected != 'NULL',
           onSelected: (String? selected) {
-            print(selected);
-            print("selected: $selected");
-
             setState(() {
               selectedTransform = selected ?? '';
             });
@@ -323,6 +318,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     if (selected != 'NULL') {
       isNumeric = ref.read(typesProvider)[selected] == Type.numeric;
     }
+
     return Stack(
       children: [
         Column(
