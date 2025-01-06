@@ -25,21 +25,6 @@
 # Author: Kevin Wang
 
 
-# #=======================================================================
-# # Rattle timestamp: 2024-11-15 14:21:06.85022 x86_64-pc-linux-gnu 
-
-# # Remap variables. 
-
-# # Transform into a factor.
-
-#   crs$dataset[["TFC_MinTemp"]] <- as.factor(crs$dataset[["MinTemp"]])
-
-#   ol <- levels(crs$dataset[["TFC_MinTemp"]])
-#   lol <- length(ol)
-#   nl <- c(sprintf("[%s,%s]", ol[1], ol[1]), sprintf("(%s,%s]", ol[-lol], ol[-1]))
-#   levels(crs$dataset[["TFC_MinTemp"]]) <- nl
-
-# #=======================================================================
 
 
 # Remap variables. 
