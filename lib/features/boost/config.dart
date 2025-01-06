@@ -99,6 +99,11 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
                   await rSource(context, ref, [mt, mba]);
                   ref.read(adaBoostEvaluateProvider.notifier).state = true;
                 }
+
+                // Update the state to make the boost evaluate tick box
+                // automatically selected after the model build.
+
+                ref.read(boostEvaluateProvider.notifier).state = true;
               },
               child: const Text('Build Boosted Trees'),
             ),

@@ -139,6 +139,11 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                       true;
                 }
 
+                // Update the state to make the forest evaluate tick box
+                // automatically selected after the model build.
+
+                ref.read(forestEvaluateProvider.notifier).state = true;
+
                 await ref.read(forestPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
