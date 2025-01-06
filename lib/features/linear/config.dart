@@ -92,7 +92,7 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
                   ['model_template', 'model_build_linear'],
                 );
 
-                // Update the state to make the linear evaluate tick box 
+                // Update the state to make the linear evaluate tick box
                 // automatically selected after the model build.
 
                 ref.read(linearEvaluateProvider.notifier).state = true;

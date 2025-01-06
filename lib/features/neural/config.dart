@@ -210,7 +210,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   }
                 }
 
-                // Update the state to make the neural evaluate tick box 
+                // Update the state to make the neural evaluate tick box
                 // automatically selected after the model build.
 
                 ref.read(neuralEvaluateProvider.notifier).state = true;
