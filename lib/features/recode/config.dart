@@ -384,6 +384,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                       // Update isNumeric dynamically based on the selected variable type
                       isNumeric =
                           ref.read(typesProvider)[value] == Type.numeric;
+                      debugPrint('isNumeric changed to $isNumeric');
                     });
                   },
                   tooltip: '''
