@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-12-11 21:00:01 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-01-06 06:58:47 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -159,6 +159,12 @@ username <- Sys.getenv("USER")  # On Linux/MacOS
 if (username == "") {
   username <- Sys.getenv("USERNAME")  # On Windows
 }
+##
+## 20250106 gjw Introduce the `rat()` command as being excatly the
+## same as the `cat()` command but is used where we don't want to
+## export the command to the user's R script.
+##
+rat <- cat
 
 # Check if a variable is a factor (including ordered factors) and has
 # more than 20 levels.

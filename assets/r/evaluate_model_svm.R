@@ -1,11 +1,11 @@
-# Generate error matrix of model conditional forest.
+# Define `pred_ra` and `prob_ra` for a svm model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-12-25 17:17:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -29,14 +29,34 @@
 # References:
 #
 # @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-error_matrix_predic <- predict(model_conditionalForest, newdata = trds,)
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# will be used below and in the following evaluations as required.
 
-error_matrix_target <- trds[[target]]
+model <- svm_model
 
-# A variable containing the predictions.
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
-roc_predicted_probs <- as.numeric(factor(error_matrix_predic)) - 1
+mtype <- "svm"
+mdesc <- "Support Vector Machine"
+
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities for any dataset.
+
+pred_ra <- function(model, data) {
+  # Get the probability matrix from the model.
+
+  prob_matrix <- predict(model, newdata=data, type="prob")
+
+  # Identify, for each row, which column has the highest probability.
+
+  idx_max <- max.col(prob_matrix, ties.method="first")
+
+  # Convert those column indices into class labels.
+
+  colnames(prob_matrix)[idx_max]
+}
+
+prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]
