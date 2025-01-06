@@ -248,6 +248,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                       await rSource(context, ref, [mt, mbr]);
                       ref.read(rpartTreeEvaluateProvider.notifier).state = true;
                     }
+
+                    // Update the state to make the tree evaluate tick box
+                    // automatically selected after the model build.
+
+                    ref.read(treeEvaluateProvider.notifier).state = true;
                   }
                 },
                 child: const Text('Build Decision Tree'),
