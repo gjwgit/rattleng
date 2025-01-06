@@ -1,6 +1,6 @@
 /// Show the settings dialog.
 //
-// Time-stamp: <Monday 2024-12-23 15:35:05 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -320,6 +320,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save the reset state to preferences.
 
     _saveAskOnExit(true);
+
+    // Reset the image viewer app to the platform default.
+
+    final defaultApp = Platform.isWindows ? 'start' : 'open';
+    ref.read(imageViewerSettingProvider.notifier).state = defaultApp;
+
+    // Save the reset value.
+
+    _saveImageViewerApp(defaultApp);
   }
 
   Future<void> _saveKeepInSync(bool value) async {
@@ -344,6 +353,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save "Validation than Tuning" state to preferences.
 
     await prefs.setBool('useValidation', value);
+
+    // Update the provider state.
+
+    ref.read(useValidationSettingProvider.notifier).state = value;
   }
 
   Future<void> _saveAskOnExit(bool value) async {
@@ -430,40 +443,47 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   Widget _buildImageViewerTextField(BuildContext context, WidgetRef ref) {
     final imageViewerApp = ref.watch(imageViewerSettingProvider);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Text(
-          'Image Viewer',
-          style: TextStyle(
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(width: 16),
-        // Adjust the width based on font and expected character size
+    return MarkdownTooltip(
+      message: '''
 
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 150,
-          ),
-          child: TextField(
-            controller: TextEditingController(text: imageViewerApp)
-              ..selection =
-                  TextSelection.collapsed(offset: imageViewerApp.length),
-            onChanged: (value) {
-              ref.read(imageViewerSettingProvider.notifier).state = value;
+      **Image Viewer Application Setting:** This setting determines the default
+      command to open image files. The default is "open" on Linux/MacOS and "start"
+      on Windows. You can customise it to match your preferred image viewer.
 
-              // Save the new state to shared preferences or other storage as needed.
-
-              _saveImageViewerApp(value);
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter image viewer command',
+      ''',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            'Image Viewer',
+            style: TextStyle(
+              fontSize: 16,
             ),
           ),
-        ),
-      ],
+          const SizedBox(width: 16),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 150,
+            ),
+            child: TextField(
+              controller: TextEditingController(text: imageViewerApp)
+                ..selection =
+                    TextSelection.collapsed(offset: imageViewerApp.length),
+              onChanged: (value) {
+                ref.read(imageViewerSettingProvider.notifier).state = value;
+
+                // Save the new state to shared preferences.
+
+                _saveImageViewerApp(value);
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter image viewer command',
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -763,81 +783,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       settingsGroupGap,
                       Divider(),
-                      Row(
-                        children: [
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Image Viewer Application Setting:** This setting determines the default
-                            command to open image files. The default is "open" on Linux/MacOS and "start"
-                            on Windows. You can customise it to match your preferred image viewer.
-
-                            ''',
-                            child: const Text(
-                              'Image Viewer App',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-
-                          configRowGap,
-
-                          // Reset button to restore the default value.
-
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: () {
-                                final defaultApp =
-                                    Platform.isWindows ? 'start' : 'open';
-                                ref
-                                    .read(imageViewerSettingProvider.notifier)
-                                    .state = defaultApp;
-                              },
-                              child: null,
-                            ),
-                          ),
-
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: () {
-                                final defaultApp =
-                                    Platform.isWindows ? 'start' : 'open';
-                                ref
-                                    .read(imageViewerSettingProvider.notifier)
-                                    .state = defaultApp;
-
-                                // Save the reset value.
-
-                                _saveImageViewerApp(defaultApp);
-                              },
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      configRowGap,
-
-                      // Add the new TextField widget for the Image Viewer App.
-
-                      _buildImageViewerTextField(context, ref),
-
-                      settingsGroupGap,
-                      Divider(),
 
                       Row(
                         children: [
@@ -871,10 +816,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             ''',
                             child: ElevatedButton(
                               onPressed: () async {
-                                ref.invalidate(
-                                  useValidationSettingProvider,
-                                );
-
                                 // Reset the partition values to default.  Save
                                 // the new values to shared preferences and
                                 // providers.
@@ -882,6 +823,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                                 await _savePartitionTrain(70);
                                 await _savePartitionTune(15);
                                 await _savePartitionTest(15);
+
+                                _saveValidation(false);
                               },
                               child: const Text('Reset'),
                             ),
@@ -995,7 +938,50 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       settingsGroupGap,
                       Divider(),
+
+                      // Session settings (Ask before exit and Image Viewer App).
+
                       Row(
+                        children: [
+                          // Session settings header.
+
+                          const Text(
+                            'Session',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          configRowGap,
+
+                          // Restore  button.
+
+                          MarkdownTooltip(
+                            message: '''
+
+                            **Reset Session Control:** Tap here to reset to enable a confirmation
+                            popup when exiting the application.
+
+
+                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
+                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+
+                            ''',
+                            child: ElevatedButton(
+                              onPressed: resetSessionControl,
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      configRowGap,
+
+                      // Ask before exit and image viewer  settings.
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MarkdownTooltip(
                             message: '''
@@ -1010,72 +996,39 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             The default setting is **ON**.
 
                             ''',
-                            child: const Text(
-                              'Session Control',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Ask before exit',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+
+                                configRowGap,
+
+                                // Switch for Ask before exit.
+
+                                Switch(
+                                  value: askOnExit,
+                                  onChanged: (value) {
+                                    ref.read(askOnExitProvider.notifier).state =
+                                        value;
+
+                                    // Save the new state to shared preferences.
+
+                                    _saveAskOnExit(value);
+                                  },
+                                ),
+                              ],
                             ),
                           ),
 
                           configRowGap,
 
-                          // Restore  button.
+                          // The new TextField widget for the Image Viewer.
 
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Session Control:** Tap here to reset to enable a confirmation
-                            popup when exiting the application.
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: resetSessionControl,
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      configRowGap,
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Ask before exit',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-
-                          configRowGap,
-
-                          // Switch for Session Control with a tooltip.
-
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Toggle Session Control:**
-
-                            - Slide to **ON** to enable a confirmation popup when exiting the application.
-
-                            - Slide to **OFF** to disable the popup, allowing the app to exit directly.
-
-                            ''',
-                            child: Switch(
-                              value: askOnExit,
-                              onChanged: (value) {
-                                ref.read(askOnExitProvider.notifier).state =
-                                    value;
-
-                                // Save the new state to shared preferences or other storage as needed.
-
-                                _saveAskOnExit(value);
-                              },
-                            ),
-                          ),
+                          _buildImageViewerTextField(context, ref),
                         ],
                       ),
 
@@ -1272,7 +1225,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 Some data scientists think of the second dataset of the
                 partitions as a dataset to use for **tuning** the model. Others
                 see it as a dataset for **validating** parameter settings. You
-                can choose your preference here.
+                can choose your preference for the nomenclature here. The choice
+                does not have any material impact on any analysis.
 
                 ''',
                 child: Row(
@@ -1284,11 +1238,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                     Switch(
                       value: useValidation,
                       onChanged: (value) {
-                        ref
-                            .read(
-                              useValidationSettingProvider.notifier,
-                            )
-                            .state = value;
                         _saveValidation(value);
                       },
                     ),

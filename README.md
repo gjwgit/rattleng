@@ -49,7 +49,7 @@ original Rattle author), Chief Scientist of the Software Innovation
 Institute of the Australian National University.  Significant
 contributions have also been made by Yixiang Yin.
 
-## Quick Start and Current Status 2024-07-07
+## Quick Start and Current Status 2025-01-06
 
 You will need to install R, separate to the  app itself. Visit
 https://www.r-project.org/ for details.
@@ -61,37 +61,51 @@ installers
 Then:
 
 + Start RattleNG.
-+ Tap the **Script** tab to see the R code that has been run.
-+ Tap the **Console** tab to see the R code being run within an R
-  session. You can even type R commands there to have them run.
-+ Tap the **Dataset** tab to return the to the startup screen for
-  RattleNG. Tap the **Dataset** button and then choose **Demo** to
-  load the `rattle::weather` dataset. You can also load your own CSV
-  or TXT file by tapping the **Filename** button instead. The result
-  panel of the page will provide view or summary of the dataset.
++ From the **Dataset** tap the **Dataset** button and then choose
+  **Weather** to load the Canberra weather dataset for 1 year. You can
+  also load your own CSV or TXT file by tapping the **Filename**
+  button instead. Other demo datasets are also available.
 + Tap the right pointing arrow to view the **Roles** page where you
   can specify the role for each variable. Defaults will have been set.
 + Notice the toggle buttons to the top right of the **Dataset** page:
-  **Cleanse**, **Normalise** and **Partition**. Hover the mouse to
+  **Cleanse**, **Unify** and **Partition**. Hover the mouse to
   view the tooltips.
++ Review and understand the dataset from the **Explore** tab. Here you
+  will see statistical summaries, visualisations of the data
+  distributions, explore the missing data, check for correlations and
+  undertake some statistical tests.
++ The data can then be tidied up through the **Transform**
+  tab. Missing values can be imputed or removed, distributions can be
+  re-scaled, variable values can be re-coded, and general cleanup of the
+  data is supported.
 + To build an AI model, tap the **Model** tab and then the **Tree**
-  radio button (selected by default) and then the **Build** button to
-  build and view a decision tree from a CSV dataset. Scroll through
-  the pages to the page showing the decision tree, textually and
-  visually.
+  feature and then the **Build** button. A tree model is built and you
+  can view the decision tree both textually and graphically by
+  scrolling through the pages. A rich selection of AI algorithms is
+  available.
++ Having built a model, typically a predictive model, the
+  **Evaluation** tab allows you to assess how good the model is.
++ Tap the **Console** tab to see the R code being run within an R
+  session. You can even type R commands there to have them run.
 + Tap the **Script** tab and scroll the window to view the latest R
   commands run. Then tap the **Export** button to save the full script
   to `script.R` (no options currently to change the name or location
   of the saved script file).
 + From your own command line run `Rscript script.R`
 
-Currently implemented features as of version 6.3.9 (2024-10-18):
+Currently implemented features as of version 6.3.48 (2025-01-06):
 
 + Dataset
   + Demo
+    + Weather
+	+ Audit
+    + Protein
+	+ Movies
+	+ Sherlock
   + CSV
   + TXT
   + Roles
+    + Input/Target/Risk/Ident/Ignore
 + Explore
   + Summary
   + Visual
@@ -105,13 +119,20 @@ Currently implemented features as of version 6.3.9 (2024-10-18):
   + Cleanup
 + Model
   + Cluster
-  + Neural
+  + Association
   + Tree
   + Forest
   + Boost
+  + SVM
+  + Linear
+  + Neural
   + Word Cloud
++ Evaluate
+  + Error Matrix
+  + ROC Chart
 + Console
 + Script
+  + Export
 
 ## Building RattleNG from Source
 

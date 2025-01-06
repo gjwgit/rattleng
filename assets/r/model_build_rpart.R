@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-12-20 14:30:50 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-01-05 15:01:51 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,13 +47,13 @@ mtype <- "rpart"
 mdesc <- "Decision Tree"
 
 # Determine what type of model to build, based on the number of values
-# of the target variable.
+# of the target variable in the complete dataset.
 
 method <- ifelse(tcds[[target]] %>% unique() %>% length() > 10,
                  "anova",
                  "class")
 
-# Train a decision tree model.
+# Train a decision tree model based on the training dataset.
 
 model_rpart <- rpart(
   form,
@@ -65,18 +65,18 @@ model_rpart <- rpart(
                           MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model   = TRUE)
 
-# Output a textual view of the Decision Tree model.
+# Output a textual view of the Decision Tree model for review.
 
 print(model_rpart)
 printcp(model_rpart)
 cat("\n")
 
-# Output the rules from the tree.
+# Output the rules from the tree for review.
 
 rattle::asRules(model_rpart)
 
 # Plot the resulting Decision Tree using the rpart.plot package via
-# Rattle's fancyRpartPlot().
+# rattle::fancyRpartPlot().
 
 svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
 rattle::fancyRpartPlot(model_rpart,

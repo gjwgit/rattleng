@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Thursday 2024-10-17 22:19:36 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-01-05 20:40:42 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -48,22 +48,42 @@ class StatusBar extends ConsumerWidget {
     String stdout = ref.watch(stdoutProvider);
 
     return Container(
-      height: 50,
-      padding: const EdgeInsets.only(left: 0),
-      // color: statusBarColor,
-      child: Markdown(
-        key: statusBarKey,
-        selectable: true,
-        onTapLink: (text, href, title) {
-          final Uri url = Uri.parse(href ?? '');
-          launchUrl(url);
-        },
-        data: '![](resource:assets/images/favicon_small.png)   '
-            '[togware.com](https://togaware.com)  '
-            '$path'
-            '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
-            '${ref.watch(statusProvider)}',
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+      constraints: const BoxConstraints(minHeight: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            'assets/images/favicon_small.png',
+            height: 44,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: MarkdownBody(
+              key: statusBarKey,
+              selectable: true,
+              softLineBreak: true,
+              onTapLink: (text, href, title) {
+                final Uri url = Uri.parse(href ?? '');
+                launchUrl(url);
+              },
+              data: '[togware.com](https://togaware.com)  '
+                  '$path'
+                  '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
+                  '${ref.watch(statusProvider)}',
+              styleSheet: MarkdownStyleSheet(
+                p: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(height: 1.5),
+                a: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.blue,
+                      height: 1.5,
+                    ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
