@@ -1,6 +1,6 @@
 /// Show the settings dialog.
 //
-// Time-stamp: <Monday 2024-12-23 15:35:05 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -1225,7 +1225,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                 Some data scientists think of the second dataset of the
                 partitions as a dataset to use for **tuning** the model. Others
                 see it as a dataset for **validating** parameter settings. You
-                can choose your preference here.
+                can choose your preference for the nomenclature here. The choice
+                does not have any material impact on any analysis.
 
                 ''',
                 child: Row(
