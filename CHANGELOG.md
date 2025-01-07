@@ -6,10 +6,10 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.3.n series are heading
 toward a 6.4 release.
 
-INSTALL BINARIES:
-[**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip)
-[**MacOS**](https://access.togaware.com/rattle-dev-macos.zip)
-[**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe)
+BINARIES:
+[**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
+[**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
+[**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
 ## 6.4 LATEST UPDATES
 
