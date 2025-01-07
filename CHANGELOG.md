@@ -6,6 +6,11 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.3.n series are heading
 toward a 6.4 release.
 
+INSTALL:
+[**GNU/Linux**](https://survivor.togaware.com/datascience/installing-rattle-on-linux.html) -
+[**MacOS**](https://survivor.togaware.com/datascience/installing-rattle-on-macos.html) -
+[**Windows**](https://survivor.togaware.com/datascience/installing-rattle-on-windows.html).
+
 ## 6.4 LATEST UPDATES
 
 + Model evaluation - error matrix and ROC curve [6.3.49 20250107 zy]
