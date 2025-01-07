@@ -24,6 +24,7 @@
 #
 # Author: Zheyuan Xu
 
+library(ggtext) # Support markdown in ggplot titles.
 library(neuralnet)
 library(caret)
 library(NeuralNetTools)  # For neural network plotting

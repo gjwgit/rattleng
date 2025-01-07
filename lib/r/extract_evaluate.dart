@@ -50,6 +50,7 @@ String _basicTemplate(
   bool forestExecuted = ref.watch(forestEvaluateProvider);
   bool svmExecuted = ref.watch(svmEvaluateProvider);
   bool nnetExecuted = ref.watch(nnetEvaluateProvider);
+  bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
 
   // Define header strings for various model error matrices (counts and proportions).
 
@@ -84,33 +85,45 @@ String _basicTemplate(
   String ennc = 'Error matrix for the NNET model [$evaluateDataset] (counts)';
   String ennp =
       'Error matrix for the NNET model [$evaluateDataset] (proportions)';
+  String entc =
+      'Error matrix for the NEURALNET model [$evaluateDataset] (counts)';
+  String entp =
+      'Error matrix for the NEURALNET model [$evaluateDataset] (proportions)';
 
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
 
   String crc = rExtract(
     log,
-    'cat(paste(mtype, "_${evaluateDataset}_COUNT", sep = ""), capture.output(em_count), sep = "\\n")',
-  ).split('\n').skip(1).join('\n');
+    '> rpart_${evaluateDataset}_COUNT',
+  );
 
   String crp = rExtract(
     log,
-    'cat(paste(mtype, "_${evaluateDataset}_PROP", sep = ""), capture.output(em_prop), sep = "\\n")',
-  ).split('\n').skip(1).join('\n');
-  String cc = rExtract(log, 'print(ctree_cem)');
-  String cp = rExtract(log, 'print(ctree_per)');
-  String ca = rExtract(log, 'print(adaboost_cem)');
-  String pa = rExtract(log, 'print(adaboost_per)');
-  String cx = rExtract(log, 'print(xgboost_cem)');
-  String px = rExtract(log, 'print(xgboost_per)');
-  String crf = rExtract(log, 'print(rforest_cem)');
-  String prf = rExtract(log, 'print(rforest_per)');
-  String ccf = rExtract(log, 'print(cforest_cem)');
-  String pcf = rExtract(log, 'print(cforest_per)');
-  String csvm = rExtract(log, 'print(svm_cem)');
-  String psvm = rExtract(log, 'print(svm_per)');
-  String cnc = rExtract(log, 'print(nnet_cem)');
-  String cnp = rExtract(log, 'print(nnet_per)');
+    '> rpart_${evaluateDataset}_PROP',
+  );
+  String cc = rExtract(
+    log,
+    '> ctree_${evaluateDataset}_COUNT',
+  );
+  String cp = rExtract(
+    log,
+    '> ctree_${evaluateDataset}_PROP',
+  );
+  String ca = rExtract(log, '> adaboost_${evaluateDataset}_COUNT');
+  String pa = rExtract(log, '> adaboost_${evaluateDataset}_PROP');
+  String cx = rExtract(log, '> xgboost_${evaluateDataset}_COUNT');
+  String px = rExtract(log, '> xgboost_${evaluateDataset}_PROP');
+  String crf = rExtract(log, '> randomForest_${evaluateDataset}_COUNT');
+  String prf = rExtract(log, '> randomForest_${evaluateDataset}_PROP');
+  String ccf = rExtract(log, '> cforest_${evaluateDataset}_COUNT');
+  String pcf = rExtract(log, '> cforest_${evaluateDataset}_PROP');
+  String csvm = rExtract(log, '> svm_${evaluateDataset}_COUNT');
+  String psvm = rExtract(log, '> svm_${evaluateDataset}_PROP');
+  String cnc = rExtract(log, '> nnet_${evaluateDataset}_COUNT');
+  String cnp = rExtract(log, '> nnet_${evaluateDataset}_PROP');
+  String cntc = rExtract(log, '> neuralnet_${evaluateDataset}_COUNT');
+  String cntp = rExtract(log, '> neuralnet_${evaluateDataset}_PROP');
 
   // Obtain the current timestamp for logging purposes.
 
@@ -123,10 +136,9 @@ String _basicTemplate(
   // Append RPART model results if available and executed.
 
   if (crc != '' && crp != '' && rpartTreeExecuted) {
-    result = '$hdr\n\n'
-        '\n$crc\n\n'
-        '$mdr\n\n'
-        '\n$crp\n\n';
+    result = result.isNotEmpty
+        ? '$result\n$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n'
+        : '$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n';
   }
 
   // Append CTREE model results if available and tree execution is confirmed.
@@ -197,6 +209,16 @@ String _basicTemplate(
         '$cnc\n\n'
         '$ennp\n\n'
         '$cnp\n\n';
+  }
+
+  // Append NeuralNet model results if available and NeuralNet is executed.
+
+  if (cntc != '' && cntp != '' && neuralNetExecuted) {
+    result = '$result\n'
+        '$entc\n\n'
+        '$cntc\n\n'
+        '$entp\n\n'
+        '$cntp\n\n';
   }
 
   result = '$result\n'

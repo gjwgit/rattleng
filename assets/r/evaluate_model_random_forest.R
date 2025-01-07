@@ -1,11 +1,11 @@
-# Define `pred_ra` and `prob_ra` for an rpart model.
+# Define `pred_ra` and `prob_ra` for a random forest model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-01-05 20:50:10 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-12-25 17:17:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu, Graham Williams
+# Author: Zheyuan Xu
 
 # Rattle timestamp: TIMESTAMP
 #
@@ -30,32 +30,51 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
-
-## #########################################################################
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
 
 # 20241220 gjw Save the model to the TEMPLATE variable `model`. This
 # will be used below and in the following evaluations as required.
 
-model <- model_rpart
+model <- model_randomForest
 
 # 20250105 zy Redefine the model type to update the output of error
 # matrix.
 
-mtype <- "rpart"
-mdesc <- "Decision Tree"
+mtype <- "randomForest"
+mdesc <- "Random Forest"
 
 # 20250101 gjw Define the template functions to generate the
-# predications and the probabilities from an rpart model for any
-# dataset.
+# predications and the probabilities for any dataset.
 
-pred_ra <- function(model, data) predict(model, newdata=data, type="class")
+pred_ra <- function(model, data) {
+  # Get the class probability matrix: one row per observation.
+
+  prob_matrix <- predict(model, newdata = data, type = "prob")
+  
+  # For each row, decide which column is higher, or NA if both are NA.
+  # 'apply' with MARGIN=1 loops over rows.
+
+  pred_vec <- apply(prob_matrix, 1, function(prob_row) {
+    # If both values are NA, return NA.
+
+    if (all(is.na(prob_row))) {
+      return(NA)
+    } else {
+      # Get the index of the column with the highest probability.
+
+      idx_max <- which.max(prob_row)
+
+      # Retrieve the column name associated with that index.
+
+      chosen_class <- names(prob_row)[idx_max]
+
+      # Return the column name (whatever it is).
+
+      return(chosen_class)
+    }
+  })
+
+  return(pred_vec)
+}
 
 prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]

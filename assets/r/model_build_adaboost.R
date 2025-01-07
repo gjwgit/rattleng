@@ -28,6 +28,7 @@
 library(ada)
 library(caret)
 library(ggplot2)
+library(ggtext)
 library(hmeasure)
 library(rattle) 
 library(rpart)

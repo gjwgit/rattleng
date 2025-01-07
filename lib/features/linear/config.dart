@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
@@ -90,6 +91,12 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
                   ref,
                   ['model_template', 'model_build_linear'],
                 );
+
+                // Update the state to make the linear evaluate tick box
+                // automatically selected after the model build.
+
+                ref.read(linearEvaluateProvider.notifier).state = true;
+
                 await ref.read(linearPageControllerProvider).animateToPage(
                       // Index of the second page.
                       1,

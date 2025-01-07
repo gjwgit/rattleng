@@ -1,0 +1,39 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f9ff"/>
+      <stop offset="100%" style="stop-color:#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg-gradient)"/>
+
+  <!-- Main frame -->
+  <rect x="50" y="50" width="500" height="300" fill="#f0f9ff" stroke="#60a5fa" stroke-width="4" stroke-dasharray="10,5"/>
+
+  <!-- Decorative elements -->
+  <!-- Top left -->
+  <circle cx="100" cy="100" r="20" fill="#93c5fd" opacity="0.7"/>
+  <!-- Top right -->
+  <circle cx="500" cy="100" r="20" fill="#3b82f6" opacity="0.7"/>
+  <!-- Bottom left -->
+  <circle cx="100" cy="300" r="20" fill="#60a5fa" opacity="0.7"/>
+  <!-- Bottom right -->
+  <circle cx="500" cy="300" r="20" fill="#2563eb" opacity="0.7"/>
+
+  <!-- Image icon - more stylized -->
+  <rect x="250" y="130" width="100" height="80" fill="#60a5fa" rx="10"/>
+  <circle cx="275" cy="155" r="12" fill="#93c5fd"/>
+  <path d="M250 210 L275 180 L300 195 L350 160" stroke="#bfdbfe" fill="none" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Text -->
+  <text x="300" y="250" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="20" fill="#3b82f6">
+    No image currently available
+  </text>
+
+  <!-- Additional decorative elements -->
+  <path d="M80 80 L110 80 L80 110 Z" fill="#93c5fd" opacity="0.5"/>
+  <path d="M520 80 L490 80 L520 110 Z" fill="#3b82f6" opacity="0.5"/>
+  <path d="M80 320 L110 320 L80 290 Z" fill="#60a5fa" opacity="0.5"/>
+  <path d="M520 320 L490 320 L520 290 Z" fill="#2563eb" opacity="0.5"/>
+</svg>

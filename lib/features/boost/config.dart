@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-12-14 21:23:30 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 21:15:24 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -91,17 +91,19 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
                 String mt = 'model_template';
                 String mbx = 'model_build_xgboost';
                 String mba = 'model_build_adaboost';
-                String etr = 'evaluate_template_tr';
-                String etu = 'evaluate_template_tu';
-                String erc = 'evaluate_riskchart';
 
                 if (algorithm == 'Extreme') {
-                  await rSource(context, ref, [mt, mbx, etr, erc, etu, erc]);
+                  await rSource(context, ref, [mt, mbx]);
                   ref.read(xgBoostEvaluateProvider.notifier).state = true;
                 } else {
-                  await rSource(context, ref, [mt, mba, etr, erc, etu, erc]);
+                  await rSource(context, ref, [mt, mba]);
                   ref.read(adaBoostEvaluateProvider.notifier).state = true;
                 }
+
+                // Update the state to make the boost evaluate tick box
+                // automatically selected after the model build.
+
+                ref.read(boostEvaluateProvider.notifier).state = true;
               },
               child: const Text('Build Boosted Trees'),
             ),

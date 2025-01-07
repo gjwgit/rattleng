@@ -1,11 +1,11 @@
-# Generate error matrix and Hand plot of model ctree.
+# Define `pred_ra` and `prob_ra` for a nnet model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-02 11:36:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,37 +22,28 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
 # Rattle timestamp: TIMESTAMP
 #
 # References:
 #
 # @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(Ckmeans.1d.dp)  # For ggplot.
-library(data.table)     # Display data as a nicely formatted table.
-library(hmeasure)
-library(rattle)         # Provides a convenient wrapper for xgboost.
-library(xgboost)        # For XGBoost model.
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# will be used below and in the following evaluations as required.
 
-error_matrix_predic <- predict(model_xgb, newdata = trds, )
+model <- model_nn
 
-target_clean <- trds[[target]][!is.na(error_matrix_predic)]
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
-# Get levels from target_clean.
+mtype <- "nnet"
+mdesc <- "Neural NNET"
 
-target_levels <- levels(target_clean)
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities for any dataset.
 
-# Convert predicted probabilities into binary class labels based on a threshold.
-
-error_matrix_predic <- ifelse(error_matrix_predic > 0.5, target_levels[2], target_levels[1])
-
-error_matrix_target <- target_clean
-
-# A variable containing the predictions.
-
-roc_predicted_probs <- error_matrix_predic
+pred_ra <- function(model, data) predict(model, newdata=data, type="class")
+prob_ra <- function(model, data) predict(model, newdata=data)

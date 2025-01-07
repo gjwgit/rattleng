@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2025-01-06 09:26:26 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2025-01-07 13:28:43 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -130,7 +130,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
   var _appName = 'Unknown';
   var _appVersion = 'Unknown';
   var _isLatest = true;
-  final String _rattleUrl = 'https://rattle.togaware.com';
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
 
@@ -378,8 +377,15 @@ Xu, Yixiang Yin, Bo Zhang.
             ''',
             child: GestureDetector(
               onTap: () async {
-                final Uri url =
-                    Uri.parse(_isLatest ? _changelogUrl : _rattleUrl);
+                // 20250107 gjw Always go to the CHANGELOG irrespective of
+                // latest version or not. That is where information about the
+                // version comes from. The original alternative was to go to the
+                // Rattle page if a new release is available, presumably to see
+                // the install instructions. I think it makes more sense for the
+                // user to see what has changed.
+
+                final Uri url = Uri.parse(_changelogUrl);
+
                 if (await canLaunchUrl(url)) {
                   await launchUrl(url);
                 } else {
