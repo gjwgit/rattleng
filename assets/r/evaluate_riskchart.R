@@ -41,9 +41,14 @@ library(rattle)       # Generate a risk chart.
 
 ####################################
 
+# Convert factors to characters, then to numeric.
+
+predicted_numeric <- as.numeric(factor(predicted)) - 1
+actual_numeric <- as.numeric(factor(actual)) - 1
+
 # Use rattle's evaluateRisk to generate data required for a Risk Chart.
 
-eval <- rattle::evaluateRisk(predicted, actual, risk)
+eval <- rattle::evaluateRisk(predicted_numeric, actual_numeric, risk)
 
 # Build title string.
 
@@ -55,7 +60,7 @@ title
 # Generate the risk chart.
 
 svg(glue("TEMPDIR/model_{mtype}_riskchart_{dtype}.svg"), width=11)
-rattle::riskchart(predicted, actual, risk,
+rattle::riskchart(predicted_numeric, actual_numeric, risk,
                   title          = title,
                   risk.name      = "RISK_VAR",
                   recall.name    = "TARGET_VAR",

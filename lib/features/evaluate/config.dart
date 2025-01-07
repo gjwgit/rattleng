@@ -226,11 +226,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       final template = templateMap[datasetSplitType] ??
           (throw Exception('Invalid datasetSplitType: $datasetSplitType'));
 
+      // Insert 'template' as the second item in the parameters list.
+
       final selectedParameters = [
         parameters.first,
         template,
-        parameters[1],
-        parameters[2],
+        ...parameters.skip(1),
       ];
 
       await rSource(context, ref, selectedParameters.cast<String>());
@@ -299,12 +300,13 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String em = 'evaluate_measure_error_matrix';
                 String ro = 'evaluate_measure_roc';
+                String erc = 'evaluate_riskchart';
 
                 // Execute evaluation for rpart model if it was executed and treeExecuted is true.
 
                 await executeEvaluation(
                   executed: rpartExecuted && treeExecuted,
-                  parameters: [er, em, ro],
+                  parameters: [er, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -314,7 +316,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: ctreeExecuted && treeExecuted,
-                  parameters: [ec, em, ro],
+                  parameters: [ec, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -324,7 +326,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: randomForestExecuted && forestTicked,
-                  parameters: [erf, em, ro],
+                  parameters: [erf, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -334,7 +336,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: conditionalForestExecuted && forestTicked,
-                  parameters: [ecf, em, ro],
+                  parameters: [ecf, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -344,7 +346,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: adaBoostExecuted && boostTicked,
-                  parameters: [ea, em, ro],
+                  parameters: [ea, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -354,7 +356,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: xgBoostExecuted && boostTicked,
-                  parameters: [ex, em, ro],
+                  parameters: [ex, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -364,7 +366,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: svmExecuted,
-                  parameters: [es, em, ro],
+                  parameters: [es, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -374,7 +376,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && nnetExecuted,
-                  parameters: [en, em, ro],
+                  parameters: [en, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -384,7 +386,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && neuralNetExecuted,
-                  parameters: [ent, em, ro],
+                  parameters: [ent, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
