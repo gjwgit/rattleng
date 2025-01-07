@@ -41,7 +41,7 @@ import 'package:rattle/utils/is_numeric.dart';
 // Define the prefixes that need special handling. They have an number at suffix
 final List<String> specialPrefixes = ['RIN', 'BKM', 'BQT', 'BEQ'];
 
-// Need to track the prefix of the transformed variable as 
+// Need to track the prefix of the transformed variable as
 // when a new row is added after transformation, we need to initialise its role and update the role of the old variable
 Set<String> transformPrefix = {
 // rescale
@@ -126,7 +126,6 @@ void updateVariablesProvider(WidgetRef ref) {
     // update roles
     if (!ref.read(rolesProvider.notifier).state.containsKey(column.name)) {
       if (isTransformedVar(column.name)) {
-
         // update the old variable's role.
 
         ref.read(rolesProvider.notifier).state[column.name] = Role.input;
