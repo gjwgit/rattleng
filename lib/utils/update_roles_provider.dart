@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Friday 2024-12-20 14:58:58 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-08 09:31:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,30 +36,39 @@ import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/is_numeric.dart';
 
-// Define the prefixes that need special handling. They have an number at suffix
+// Define the prefixes that need special handling because they can have a
+// numeric suffix.
+
 final List<String> specialPrefixes = ['RIN', 'BKM', 'BQT', 'BEQ'];
 
-// Need to track the prefix of the transformed variable as
-// when a new row is added after transformation, we need to initialise its role and update the role of the old variable
+// We need to track the prefix of the transformed variable as when a new row is
+// added after a transformation we need to initialise its role and update the
+// role of the old variable.
+
 Set<String> transformPrefix = {
-// rescale
+  // Rescale
+
   'RRC',
   'R01',
   'RMD',
   'RLG',
   'R10',
   'RRK',
-  'RIN', // number at suffix
-// Impute
+  'RIN', // numeric suffix
+
+  // Impute
+
   'IZR',
   'IMN',
   'IMD',
   'IMO',
   'IMP',
-// Recode
-  'BKM', // number at suffix
-  'BQT', // number at suffix
-  'BEQ', // number at suffix
+
+  // Recode
+
+  'BKM', // numeric suffix
+  'BQT', // numeric suffix
+  'BEQ', // numeric suffix
   'TJN',
   'TIN',
   'TFC',
@@ -78,27 +85,34 @@ bool isTransformedVar(String name) {
 }
 
 String getOriginal(String input) {
-  // It should return the variable name before the transformation given the variable name after the transformation
+  // Return the original variable name (before the transformation) given the
+  // supplied variable name after the transformation.
 
-  // Find the index of the first underscore
+  // Find the index of the first underscore.
+
   int firstUnderscoreIndex = input.indexOf('_');
 
-  // If no underscore is found, return the original string
+  // If no underscore is found, return the original string.
+
   if (firstUnderscoreIndex == -1) {
     return input;
   }
 
-  // Extract the prefix from the input string
+  // Extract the prefix from the input string.
+
   String prefix = input.substring(0, firstUnderscoreIndex);
 
-  // Remove everything before and including the first underscore
+  // Remove everything before and including the first underscore.
+
   String result = input.substring(firstUnderscoreIndex + 1);
 
-  // If the prefix is in the list of special prefixes, handle the suffix
+  // If the prefix is in the list of special prefixes, handle the suffix.
+
   if (specialPrefixes.contains(prefix)) {
     int lastUnderscoreIndex = result.lastIndexOf('_');
     if (lastUnderscoreIndex != -1) {
-      // Remove the last underscore and everything after it
+      // Remove the last underscore and everything after it.
+
       result = result.substring(0, lastUnderscoreIndex);
     }
   }
@@ -107,35 +121,48 @@ String getOriginal(String input) {
 }
 
 void updateVariablesProvider(WidgetRef ref) {
-  // reset the rolesProvider and typesProvider
+  // Reset the rolesProvider and typesProvider.
+
   // ref.read(rolesProvider.notifier).state = {};
   // ref.read(typesProvider.notifier).state = {};
-  // get the most recent vars information from glimpse and update the information in roles provider and types provider
+
+  // Get the most recent vars information from glimpse and update the
+  // information in roles provider and types provider.
+
   String stdout = ref.watch(stdoutProvider);
   List<VariableInfo> vars = extractVariables(stdout);
 
   // 20241213 gjw Remove this for now. It was used for determining IGNORE roles
-  // but due to an issues iwth that (see other comments) it is no longer being
+  // but due to an issue with that (see other comments) it is no longer being
   // done.
 
   // List<String> highVars = extractLargeFactors(stdout);
 
-  // When a new row is added after transformation, initialise its role and update the role of the old variable
+  // When a new row is added after transformation, initialise its role and
+  // update the role of the old variable.
 
   for (var column in vars) {
-    // update roles
+    // Update roles.
+
     if (!ref.read(rolesProvider.notifier).state.containsKey(column.name)) {
       if (isTransformedVar(column.name)) {
-        // update the old variable's role.
+        // Update the old variable's role.
 
         ref.read(rolesProvider.notifier).state[column.name] = Role.input;
 
-        // update the new variable's role.
+        // Update the new variable's role.
 
         ref.read(rolesProvider.notifier).state[getOriginal(column.name)] =
             Role.ignoreAfterTransformed;
       } else {
-        debugPrint('ERROR: unidentified variables: ${column.name}!');
+        // 20250108 gjw Keep this debugPrint(). If we add a new transformation
+        // (as we did for TFC) and the developer has not added it to the known
+        // prefixes above then they need to be informed to do so. A NULL
+        // exception is generated otherwise.
+
+        debugPrint('** ERROR: Unidentified variable: ${column.name}.\n'
+            '** ERROR: Please add it to the list in '
+            'utils/update_roles_provider.dart');
       }
     }
 
@@ -165,6 +192,7 @@ void updateVariablesProvider(WidgetRef ref) {
 
 // t -> delete succeed
 // f -> try to delete var which doesn't exist
+
 bool deleteVar(WidgetRef ref, String v) {
   Role? r = ref.read(rolesProvider.notifier).state.remove(v);
   Type? t = ref.read(typesProvider.notifier).state.remove(v);
