@@ -66,12 +66,13 @@ Set<String> transformPrefix = {
 
   // Recode
 
-  'BKM', // numeric suffix
-  'BQT', // numeric suffix
-  'BEQ', // numeric suffix
-  'TJN',
-  'TIN',
-  'TFC',
+  'BKM', // KMeans
+  'BQT', // Quantiles
+  'BEQ', // Equal Width
+  'TJN', // Join Categories
+  'TIN', // Indicator Variable
+  'TFC', // As Categoric
+  'TNM', // As Numeric
 };
 
 bool isTransformedVar(String name) {
