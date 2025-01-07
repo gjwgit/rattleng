@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-01 21:02:26 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-01-06 08:23:01 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,17 +33,9 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-## #########################################################################
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
-
 # Load required packages from the local library into the R session.
 
-library(ggplot2, quietly = TRUE)
+library(ggplot2, quietly=TRUE)
 library(glue)
 library(ROCR)
 
@@ -77,16 +69,11 @@ actual_model_labels <- ifelse(actual == target_levels[1], 0, 1)
 
 na_positions <- is.na(probability) | is.na(actual_model_labels)
 
-# Remove NA positions from both vectors.
+# Remove NA positions from the vector of actual model labels.
 
-roc_predicted_probs <- probability[!na_positions]
 actual_model_labels <- actual_model_labels[!na_positions]
 
-# Convert roc_predicted_probs to numeric.
-
-roc_predicted_probs <- as.numeric(factor(probability)) - 1
-
-# Find the lengths of the two objects.
+# Find the lengths of the actual and the predicted.
 
 len_actual_target <- length(actual_model_labels)
 len_roc_predicted_predic <- length(probability)
@@ -99,6 +86,15 @@ roc_min_length <- min(len_actual_target, len_roc_predicted_predic)
 
 roc_predicted_probs <- probability[seq_len(roc_min_length)]
 actual_model_labels <- actual_model_labels[seq_len(roc_min_length)]
+
+# Identify which positions are NOT NA in roc_predicted_probs.
+
+keep_idx <- !is.na(roc_predicted_probs)
+
+# Filter both vectors to keep only those positions.
+
+roc_predicted_probs <- roc_predicted_probs[keep_idx]
+actual_model_labels <- actual_model_labels[keep_idx]
 
 # Generate a prediction object that combines the predicted probability and actual labels.
 
@@ -115,13 +111,17 @@ au <- performance(prediction_prob_values, "auc")@y.values[[1]]
 # Create a data frame containing the FPR and TPR values for plotting the ROC curve.
 
 pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
+##
+## 20250106 gjw embed the path into the svg() call since the svg()
+## lines are removed from the script saved for the user and having a
+## separate fname definitino all by itself looks a little odd and is
+## not required.
+##
+svg(glue("TEMPDIR/model_evaluate_roc_{mtype}_{dtype}.svg"), width = 11)
 
-fname <- glue("TEMPDIR/model_evaluate_roc_{mtype}_{dtype}.svg")
-svg(fname, width = 11)
-
-# 20241220 gjw Now render the ROC curve with the FPR and TPR data.
-# The red line represent the ROC curve while the diagonal grey
-# reference line indicates a random classifier (baseline).
+# Now render the ROC curve with the FPR and TPR data.  The red line
+# represent the ROC curve while the diagonal grey reference line
+# indicates a random classifier (baseline).
 
 pd %>%
   ggplot(aes(x=fpr, y=tpr)) +
@@ -137,7 +137,7 @@ pd %>%
            hjust = 0,
            vjust = 0,
            size  = 5,
-           label = paste("AUC =", round(au, 2))) +
+           label = sprintf('AUC = %.2f', au)) +
   SETTINGS_GRAPHIC_THEME() +
   theme(plot.title = element_markdown())
 dev.off()

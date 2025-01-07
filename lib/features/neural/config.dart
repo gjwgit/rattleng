@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-12-14 21:36:47 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 21:24:46 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -190,9 +190,6 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   String mt = 'model_template';
                   String mbn = 'model_build_neural_neuralnet';
                   String mbnn = 'model_build_neural_nnet';
-                  String etr = 'evaluate_template_tr';
-                  String etu = 'evaluate_template_tu';
-                  String erc = 'evaluate_riskchart';
 
                   if (context.mounted) {
                     if (algorithm == 'nnet') {
@@ -206,11 +203,17 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                       await rSource(
                         context,
                         ref,
-                        [mt, mbn, etr, erc, etu, erc],
+                        [mt, mbn],
                       );
+                      ref.read(neuralNetEvaluateProvider.notifier).state = true;
                     }
                   }
                 }
+
+                // Update the state to make the neural evaluate tick box
+                // automatically selected after the model build.
+
+                ref.read(neuralEvaluateProvider.notifier).state = true;
 
                 await ref.read(neuralPageControllerProvider).animateToPage(
                       // Index of the second page.

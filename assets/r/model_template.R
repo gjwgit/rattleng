@@ -221,53 +221,65 @@ actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 # based on randomly created probability matrices for a given set of observations.
 
 generate_predictions <- function(predicted_var) {
+  # 1) Handle the case where 'predicted_var' is a named numeric vector.
+  #    - If it's numeric and has names, we rename those elements sequentially.
+  #    - Then immediately return the vector as-is.
+
+  if (is.numeric(predicted_var) && !is.null(names(predicted_var))) {
+    # Rename the elements '1', '2', '3', ... instead of whatever they had before.
+
+    names(predicted_var) <- seq_along(predicted_var)
+    return(predicted_var)
+  }
+  
+  # 2) Handle the case where 'predicted_var' is already a list of matrices
+  #    (or at least something indexable like matrices).
+  #    - We assume each element in the list has at least 2 columns, and we grab
+  #      the value in row 1, column 2 from each element (x[1, 2]).
+
+  if (is.list(predicted_var)) {
+    # Extract the second column from row 1 in each element of 'predicted_var'.
+
+    result <- sapply(predicted_var, function(x) x[1, 2])
+    # Rename the result elements '1', '2', '3', ...
+
+    names(result) <- seq_along(result)
+    return(result)
+  }
+  
+  # 3) If 'predicted_var' is neither a named numeric vector nor a list:
+  #    - We assume it's some other data structure (e.g., a vector of observations).
+  #    - We'll generate random probabilities (1×2) for each observation, normalize them,
+  #      then extract the second probability for each.
+  
+  # Initialize a list to hold the simulated probability matrices.
+
   predicted_probs <- list()
+  
+  # Number of observations is the length of 'predicted_var'.
 
   num_obs <- length(predicted_var)
+  
+  # For each observation, generate random probabilities (2 values),
+  # normalize them to sum to 1, then store as a 1×2 matrix.
 
   for (i in 1:num_obs) {
-    # Simulate probability matrices as in your output.
-    # Here, we will just assign random probabilities for demonstration.
-    # In practice, 'predicted_probs' is the output from your 'predict' function.
-
-    probs <- runif(2)
-    probs <- probs / sum(probs)  # Normalize to sum to 1.
-
-    # Create the column names with unknown prefixes.
-    # For demonstration, let's assume prefixes vary.
-
-    prefix <- paste0("prefix", sample(1:5, 1))
-    col_names <- paste0(prefix, c(".No", ".Yes"))
-
-    # Create the 1x2 probability matrix for each observation.
-
-    predicted_probs[[i]] <- matrix(probs, nrow = 1, dimnames = list(NULL, col_names))
+    probs <- runif(2)          # Generate 2 random probabilities
+    probs <- probs / sum(probs)  # Normalize them so they sum to 1
+    predicted_probs[[i]] <- matrix(probs, nrow = 1)  # Store as a 1×2 matrix
   }
+  
+  # Extract the second probability from each 1×2 matrix (row=1, col=2).
 
-  # Extract the predicted class labels without specifying the prefix.
+  result <- sapply(predicted_probs, function(x) x[1, 2])
+  
+  # Rename the result elements '1', '2', '3', ...
 
-  predicted_var <- sapply(predicted_probs, function(x) {
-    # 'x' is a 1xN matrix for one observation.
-    # Find the index of the maximum probability.
-
-    idx_max <- which.max(x[1, ])
-
-    # Retrieve the corresponding class label with prefix.
-
-    label_with_prefix <- colnames(x)[idx_max]
-
-    # Extract the actual class label by removing everything up to the last dot.
-
-    label_clean <- sub('.*\\.', '', label_with_prefix)
-    return(label_clean)
-  })
-
-  # Get unique levels of predicted.
-
-  levels_predicted <- unique(predicted_var)
-  predicted_var <- as.character(predicted_var)
-  predicted_numeric <- ifelse(predicted_var == levels_predicted[1], 0, 1)
-  return(predicted_numeric)
+  names(result) <- seq_along(result)
+  
+  # Return the vector of probabilities.
+  
+  return(result)
 }
 
 # A data preprocessing function for prediction tasks.
