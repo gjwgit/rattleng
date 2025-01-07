@@ -8,8 +8,9 @@ toward a 6.4 release.
 
 ## 6.4 LATEST UPDATES
 
++ Model evaluation - error matrix and ROC curve [6.3.49 20250107 zy]
 + Various cleanup and style fixes [6.3.48 20250106 gjw]
-+ Check version update on startup [6.3.47 20250106 zy]
++ Check version update on startup [6.3.47 20250106 yyx]
 + Support validation/tuning dataset in SETTINGS [6.3.46 20250106 kev]
 + Add various images for overview pages [6.3.45 20241218 gjw]
 + Bug fix for no TARGET [6.3.44 20241216 gjw]
