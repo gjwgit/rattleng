@@ -45,6 +45,7 @@ names(package_datasets) <- installed_pkgs[, "Package"]
 
 package_datasets_cleaned <- package_datasets[sapply(package_datasets, function(x) length(x) > 0)]
 
+package_datasets_cleaned
 # all_datasets <- unlist(package_datasets)
 
 # all_datasets
