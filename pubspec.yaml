@@ -1,12 +1,12 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.3.48+163
+version: 6.3.50+163
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
 
-# Automatically upgrade package dependencies to the latest versions:
+# To automatically upgrade package dependencies:
 #
 # `flutter pub upgrade --major-versions`.
 #
