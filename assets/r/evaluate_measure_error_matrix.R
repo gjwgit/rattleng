@@ -47,6 +47,19 @@ library(rattle)       # Generate an error matrix.
 
 ####################################
 
+# Combine the levels from both vectors.
+
+all_levels <- union(levels(actual), levels(predicted))
+
+# (Optional) Sort them if you want a consistent order.
+
+all_levels <- sort(all_levels)
+
+# Force both factors to share these levels.
+
+actual    <- factor(actual,    levels = all_levels)
+predicted <- factor(predicted, levels = all_levels)
+
 em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
 ##
 ## 20241229 zy Capture the output of the error matrix and print it to
