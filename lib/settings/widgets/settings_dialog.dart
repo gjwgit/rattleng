@@ -133,33 +133,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         prefs.getBool('useValidation') ?? false;
   }
 
-  void resetSessionControl() {
-    // Reset session control to default.
-
-    ref.invalidate(askOnExitProvider);
-
-    // Save the reset state to preferences.
-
-    _saveAskOnExit(true);
-
-    // Reset the image viewer app to the platform default.
-
-    final defaultApp = Platform.isWindows ? 'start' : 'open';
-    ref.read(imageViewerSettingProvider.notifier).state = defaultApp;
-
-    // Save the reset value.
-
-    saveImageViewerApp(defaultApp);
-  }
-
-  Future<void> _saveAskOnExit(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    // Save "askOnExit" state to preferences.
-
-    await prefs.setBool('askOnExit', value);
-  }
-
   Future<void> _loadRandomSeed() async {
     final prefs = await SharedPreferences.getInstance();
     final seed = prefs.getInt('randomSeed') ?? 42;
@@ -181,19 +154,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
-    // Watch provider values to ensure UI stays in sync.
-
-    final cleanse = ref.watch(cleanseProvider);
-    final normalise = ref.watch(normaliseProvider);
-    final partition = ref.watch(partitionProvider);
-    final keepInSync = ref.watch(keepInSyncProvider);
-    final askOnExit = ref.watch(askOnExitProvider);
-
-    final randomSeed = ref.watch(randomSeedSettingProvider);
-    final randomPartition = ref.watch(randomPartitionSettingProvider);
-
-    final useValidation = ref.watch(useValidationSettingProvider);
 
     return Material(
       color: Colors.transparent,
@@ -222,6 +182,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Settings header.
                       Text(
                         'Settings',
                         style: TextStyle(
