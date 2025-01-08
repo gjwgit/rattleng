@@ -4,6 +4,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/settings/widgets/setting_number_field.dart';
+import 'package:rattle/settings/widgets/settings_number_field.dart';
 
 class PartitionControls extends ConsumerWidget {
   final Function(int) onTrainChanged;

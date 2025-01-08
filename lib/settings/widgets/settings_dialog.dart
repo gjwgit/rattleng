@@ -35,10 +35,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/settings.dart';
 import 'package:rattle/settings/utils/out_of_range_warning.dart';
+import 'package:rattle/settings/widgets/dataset_toggles.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
 import 'package:rattle/settings/widgets/partition_controls.dart';
-import 'package:rattle/settings/widgets/settings_number_field.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -51,7 +51,6 @@ import 'package:rattle/providers/session_control.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/repeat_button.dart';
-import 'package:rattle/settings/utils/invalid_partition_warning.dart';
 import 'package:rattle/settings/utils/handle_cancel_button.dart';
 
 class SettingsDialog extends ConsumerStatefulWidget {
@@ -130,29 +129,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         prefs.getBool('useValidation') ?? false;
   }
 
-  Future<void> _saveToggleStates() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    // Save the latest provider states to preferences.
-
-    await prefs.setBool('cleanse', ref.read(cleanseProvider));
-    await prefs.setBool('normalise', ref.read(normaliseProvider));
-    await prefs.setBool('partition', ref.read(partitionProvider));
-  }
-
-  void _resetToggleStates() {
-    // Reset toggle providers to their defaults by invalidating them.
-
-    ref.invalidate(cleanseProvider);
-    ref.invalidate(normaliseProvider);
-    ref.invalidate(partitionProvider);
-    ref.invalidate(keepInSyncProvider);
-
-    // Save the reset states to preferences.
-
-    _saveToggleStates();
-  }
-
   void resetSessionControl() {
     // Reset session control to default.
 
@@ -170,14 +146,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Save the reset value.
 
     saveImageViewerApp(defaultApp);
-  }
-
-  Future<void> _saveKeepInSync(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    // Save "Keep in Sync" state to preferences.
-
-    await prefs.setBool('keepInSync', value);
   }
 
   Future<void> _saveRandomPartition(bool value) async {
@@ -324,170 +292,10 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      // Dataset Toggles section.
 
                       Divider(),
 
-                      Row(
-                        children: [
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Dataset Toggles Setting:** The default setting of
-                            the dataset toggles, on starting up Rattle, is set
-                            here. During a session with Rattle the toggles may be
-                            changed by the user. If the *Sync* option is set, then
-                            the changes made by the user are tracked and restored
-                            on the next time Rattle is run.
-
-                            ''',
-                            child: const Text(
-                              'Dataset Toggles',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-
-                          configRowGap,
-
-                          // Reset Dataset Toggles to default button.
-
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Toggles:** Tap here to reset the Dataset Toggles
-                              setting to the default for Rattle.
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: _resetToggleStates,
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      configRowGap,
-
-                      // Build toggle rows synced with providers.
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ToggleRow(
-                              label: 'Cleanse',
-                              value: cleanse,
-                              onChanged: (value) {
-                                ref.read(cleanseProvider.notifier).state =
-                                    value;
-                                _saveToggleStates();
-                              },
-                              tooltipMessage: '''
-
-                              **Cleanse Toggle:**
-
-                              Cleansing prepares the dataset by:
-
-                              - Removing columns with a single constant value.
-
-                              - Converting character columns with limited unique values to categoric factors.
-
-                              Enable for automated cleansing, or disable if not required.
-
-                              ''',
-                            ),
-                          ),
-                          Expanded(
-                            child: ToggleRow(
-                              label: 'Unify',
-                              value: normalise,
-                              onChanged: (value) {
-                                ref.read(normaliseProvider.notifier).state =
-                                    value;
-                                _saveToggleStates();
-                              },
-                              tooltipMessage: '''
-
-                              **Unify Toggle:**
-
-                              Unifies dataset column names by:
-
-                              - Converting names to lowercase.
-
-                              - Replacing spaces with underscores.
-
-                              Enable for consistent formatting, or disable if original names are preferred.
-
-                              ''',
-                            ),
-                          ),
-                          Expanded(
-                            child: ToggleRow(
-                              label: 'Partition',
-                              value: partition,
-                              onChanged: (value) {
-                                ref.read(partitionProvider.notifier).state =
-                                    value;
-                                _saveToggleStates();
-                              },
-                              tooltipMessage: '''
-
-                              **Partition Toggle:**
-
-                              Splits the dataset into subsets for predictive modeling:
-
-                              - **Training:** Builds the model.
-
-                              - **${useValidation ? 'Validation' : 'Tuning'}:** Tunes the model.
-
-                              - **Testing:** Evaluates model performance.
-
-                              Enable for larger datasets, or disable for exploratory analysis.
-
-                              ''',
-                            ),
-                          ),
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Keep in Sync Toggle:**
-
-                            - **On:** Saves toggle changes for current sessions.
-
-                            - **Off:** Changes are only recovered on restart.
-
-                            ''',
-                            child: const Text(
-                              'Keep in Sync',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Keep in Sync Toggle:**
-
-                            - **On:** Saves toggle changes for current sessions.
-
-                            - **Off:** Changes are only recovered on restart.
-
-                            ''',
-                            child: Switch(
-                              value: keepInSync,
-                              onChanged: (value) {
-                                ref.read(keepInSyncProvider.notifier).state =
-                                    value;
-                                _saveKeepInSync(value);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      settingsGroupGap,
-                      Divider(),
+                      DatasetToggles(),
 
                       Row(
                         children: [
