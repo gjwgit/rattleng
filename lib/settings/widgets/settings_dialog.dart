@@ -36,7 +36,8 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/settings.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
-import 'package:rattle/settings/widgets/setting_number_field.dart';
+import 'package:rattle/settings/widgets/partition_controls.dart';
+import 'package:rattle/settings/widgets/settings_number_field.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -616,7 +617,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       configRowGap,
 
-                      _buildPartitionControls(),
+                      PartitionControls(
+                        onTrainChanged: _savePartitionTrain,
+                        onTuneChanged: _savePartitionTune,
+                        onTestChanged: _savePartitionTest,
+                        onValidationChanged: _saveValidation,
+                        showOutOfRangeWarning: _showOutOfRangeWarning,
+                      ),
 
                       settingsGroupGap,
                       Divider(),
@@ -834,118 +841,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
           ],
         ),
       ),
-    );
-  }
-
-  /// Build partition controls.
-
-  Widget _buildPartitionControls() {
-    final train = ref.watch(partitionTrainProvider);
-    final tune = ref.watch(partitionTuneProvider);
-    final test = ref.watch(partitionTestProvider);
-    final useValidation = ref.watch(useValidationSettingProvider);
-
-    final total = train + tune + test;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          spacing: configRowSpace,
-          children: [
-            SettingNumberField(
-              label: 'Training %:',
-              value: train,
-              onChanged: (value) async {
-                if (value >= 0 && value <= 100) {
-                  await _savePartitionTrain(value);
-                } else {
-                  _showOutOfRangeWarning();
-                }
-              },
-              tooltip: '''
-
-              The percentage of data allocated for training the model. Ensure
-              the total across training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
-
-              ''',
-            ),
-            SettingNumberField(
-              label: '${useValidation ? "Validation" : "Tuning"} %:',
-              value: tune,
-              onChanged: (value) async {
-                if (value >= 0 && value <= 100) {
-                  await _savePartitionTune(value);
-                } else {
-                  _showOutOfRangeWarning();
-                }
-              },
-              tooltip: '''
-
-              The percentage of data allocated for ${useValidation ? "validating" : "tuning"} the model. Ensure the total across
-              training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
-
-              ''',
-            ),
-            SettingNumberField(
-              label: 'Testing %:',
-              value: test,
-              onChanged: (value) async {
-                if (value >= 0 && value <= 100) {
-                  await _savePartitionTest(value);
-                } else {
-                  _showOutOfRangeWarning();
-                }
-              },
-              tooltip: '''
-
-              The percentage of data allocated for testing the model. Ensure the total
-              across training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
-
-              ''',
-            ),
-            Text(
-              'Total: $total%',
-              style: TextStyle(
-                fontSize: 16,
-                color: total == 100 ? Colors.green : Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Container(
-              child: MarkdownTooltip(
-                message: '''
-
-                Some data scientists think of the second dataset of the
-                partitions as a dataset to use for **tuning** the model. Others
-                see it as a dataset for **validating** parameter settings. You
-                can choose your preference for the nomenclature here. The choice
-                does not have any material impact on any analysis.
-
-                ''',
-                child: Row(
-                  children: [
-                    const Text(
-                      'Use Tuning',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Switch(
-                      value: useValidation,
-                      onChanged: (value) {
-                        _saveValidation(value);
-                      },
-                    ),
-                    const Text(
-                      'or Validation',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 
