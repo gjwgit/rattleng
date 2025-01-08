@@ -42,6 +42,7 @@ import 'package:rattle/settings/utils/save_image_viewer_app.dart';
 import 'package:rattle/settings/widgets/partition.dart';
 import 'package:rattle/settings/widgets/partition_controls.dart';
 import 'package:rattle/settings/widgets/random_seed.dart';
+import 'package:rattle/settings/widgets/session.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -228,110 +229,12 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                       Divider(),
-
                       DatasetToggles(),
-
                       GraphicTheme(),
-
                       Partition(),
-
                       RandomSeed(),
-
-                      // Session settings (Ask before exit and Image Viewer App).
-
-                      Row(
-                        children: [
-                          // Session settings header.
-
-                          const Text(
-                            'Session',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                          configRowGap,
-
-                          // Restore  button.
-
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Session Control:** Tap here to reset to enable a confirmation
-                            popup when exiting the application.
-
-
-                            **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-                            to the platform's default ("open" on Linux/MacOS, "start" on Windows).
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: resetSessionControl,
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      configRowGap,
-
-                      // Ask before exit and image viewer  settings.
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Session Control:** This setting determines whether a confirmation popup
-                            appears when the user tries to quit the application.
-
-                            - **ON**: A popup will appear asking the user to confirm quitting.
-
-                            - **OFF**: The application will exit immediately without a confirmation popup.
-
-                            The default setting is **ON**.
-
-                            ''',
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Ask before exit',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-
-                                configRowGap,
-
-                                // Switch for Ask before exit.
-
-                                Switch(
-                                  value: askOnExit,
-                                  onChanged: (value) {
-                                    ref.read(askOnExitProvider.notifier).state =
-                                        value;
-
-                                    // Save the new state to shared preferences.
-
-                                    _saveAskOnExit(value);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          configRowGap,
-
-                          // The new TextField widget for the Image Viewer.
-                          const ImageViewerTextField(),
-                        ],
-                      ),
-
-                      settingsGroupGap,
+                      Session(),
                     ],
                   ),
                 ),
