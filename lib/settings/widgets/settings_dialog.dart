@@ -39,6 +39,7 @@ import 'package:rattle/settings/widgets/dataset_toggles.dart';
 import 'package:rattle/settings/widgets/graphic_theme.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
+import 'package:rattle/settings/widgets/partition.dart';
 import 'package:rattle/settings/widgets/partition_controls.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -157,18 +158,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     await prefs.setBool('randomPartition', value);
   }
 
-  Future<void> _saveValidation(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    // Save "Validation than Tuning" state to preferences.
-
-    await prefs.setBool('useValidation', value);
-
-    // Update the provider state.
-
-    ref.read(useValidationSettingProvider.notifier).state = value;
-  }
-
   Future<void> _saveAskOnExit(bool value) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -193,48 +182,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     final test = prefs.getInt('test') ?? 15;
     ref.read(partitionTestProvider.notifier).state = test;
-  }
-
-  /// Save training partition percentage.
-
-  Future<void> _savePartitionTrain(int value) async {
-    // Save the new state to shared preference.
-
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setInt('train', value);
-
-    // Update the provider state.
-
-    ref.read(partitionTrainProvider.notifier).state = value;
-  }
-
-  /// Save validation partition percentage.
-
-  Future<void> _savePartitionTune(int value) async {
-    // Save the new state to shared preference.
-
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setInt('tune', value);
-
-    // Update the provider state.
-
-    ref.read(partitionTuneProvider.notifier).state = value;
-  }
-
-  /// Save testing partition percentage.
-
-  Future<void> _savePartitionTest(int value) async {
-    // Save the new state to shared preference.
-
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setInt('test', value);
-
-    // Update the provider state.
-
-    ref.read(partitionTestProvider.notifier).state = value;
   }
 
   Future<void> _saveRandomSeed(int value) async {
@@ -300,67 +247,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       GraphicTheme(),
 
-                      Row(
-                        children: [
-                          MarkdownTooltip(
-                            message: '''
+                      Partition(),
 
-                            **Dataset Partition Setting:** Configure the dataset
-                            partitioning ratios for the training, validation, and
-                            testing datasets.
-
-                            - Default: 70/15/15 (70% training, 15% validation, 15% testing).
-                            - Customize to suit your dataset requirements, e.g., 50/25/25.
-                            - The values must sum up to 100%.
-
-                            ''',
-                            child: const Text(
-                              'Partition',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          configRowGap,
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Partition Ratios:**
-                            Reset the dataset partition ratios to the default values of 70/15/15.
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                // Reset the partition values to default.  Save
-                                // the new values to shared preferences and
-                                // providers.
-
-                                await _savePartitionTrain(70);
-                                await _savePartitionTune(15);
-                                await _savePartitionTest(15);
-
-                                _saveValidation(false);
-                              },
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      configRowGap,
-
-                      PartitionControls(
-                        onTrainChanged: _savePartitionTrain,
-                        onTuneChanged: _savePartitionTune,
-                        onTestChanged: _savePartitionTest,
-                        onValidationChanged: _saveValidation,
-                        showOutOfRangeWarning: () =>
-                            showOutOfRangeWarning(context),
-                      ),
-
-                      settingsGroupGap,
-                      Divider(),
                       // Random Seed Section.
 
                       Row(
