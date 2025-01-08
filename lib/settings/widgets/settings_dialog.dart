@@ -36,6 +36,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/settings.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
+import 'package:rattle/settings/widgets/setting_number_field.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -836,67 +837,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     );
   }
 
-  /// Custom Text Field widget for integer input.
-
-  Widget _buildCustomNumberField({
-    required String label,
-    required int value,
-    required ValueChanged<int> onChanged,
-    String? tooltip,
-  }) {
-    final controller = TextEditingController(text: value.toString());
-
-    return MarkdownTooltip(
-      message: tooltip ?? '',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 4),
-          SizedBox(
-            width: 80,
-            child: Focus(
-              // Add focus to detect changes when focus is lost.
-
-              onFocusChange: (hasFocus) {
-                if (!hasFocus) {
-                  final input = controller.text;
-                  if (input.isNotEmpty) {
-                    final parsedValue = int.tryParse(input);
-                    if (parsedValue != null) {
-                      onChanged(parsedValue);
-                    }
-                  }
-                }
-              },
-              child: TextField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: controller,
-                onSubmitted: (input) {
-                  if (input.isNotEmpty) {
-                    final parsedValue = int.tryParse(input);
-                    if (parsedValue != null) {
-                      onChanged(parsedValue);
-                    }
-                  }
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   /// Build partition controls.
 
   Widget _buildPartitionControls() {
@@ -913,7 +853,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         Row(
           spacing: configRowSpace,
           children: [
-            _buildCustomNumberField(
+            SettingNumberField(
               label: 'Training %:',
               value: train,
               onChanged: (value) async {
@@ -930,7 +870,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
               ''',
             ),
-            _buildCustomNumberField(
+            SettingNumberField(
               label: '${useValidation ? "Validation" : "Tuning"} %:',
               value: tune,
               onChanged: (value) async {
@@ -947,7 +887,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
               ''',
             ),
-            _buildCustomNumberField(
+            SettingNumberField(
               label: 'Testing %:',
               value: test,
               onChanged: (value) async {
