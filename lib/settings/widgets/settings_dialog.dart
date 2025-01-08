@@ -34,6 +34,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/settings.dart';
+import 'package:rattle/settings/utils/out_of_range_warning.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
 import 'package:rattle/settings/widgets/partition_controls.dart';
@@ -50,6 +51,8 @@ import 'package:rattle/providers/session_control.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/widgets/repeat_button.dart';
+import 'package:rattle/settings/utils/invalid_partition_warning.dart';
+import 'package:rattle/settings/utils/handle_cancel_button.dart';
 
 class SettingsDialog extends ConsumerStatefulWidget {
   const SettingsDialog({super.key});
@@ -622,7 +625,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         onTuneChanged: _savePartitionTune,
                         onTestChanged: _savePartitionTest,
                         onValidationChanged: _saveValidation,
-                        showOutOfRangeWarning: _showOutOfRangeWarning,
+                        showOutOfRangeWarning: () =>
+                            showOutOfRangeWarning(context),
                       ),
 
                       settingsGroupGap,
@@ -834,70 +838,13 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
               right: 16,
               child: IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: _handleCancelButton,
+                onPressed: () => handleCancelButton(context, ref),
                 tooltip: 'Cancel',
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  /// Display a warning if the partition total is invalid when pressing cancel.
-
-  void _showInvalidPartitionWarning() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Invalid Partition Total'),
-          content: const Text(
-            'The total of Training, Validation, and Testing percentages must be exactly 100.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  /// Validate partition total when pressing cancel button.
-
-  void _handleCancelButton() {
-    final train = ref.read(partitionTrainProvider);
-    final valid = ref.read(partitionTuneProvider);
-    final test = ref.read(partitionTestProvider);
-    final total = train + valid + test;
-
-    if (total != 100) {
-      _showInvalidPartitionWarning();
-    } else {
-      Navigator.of(context).pop();
-    }
-  }
-
-  /// Display a warning if a value is out of the valid range (0-100).
-
-  void _showOutOfRangeWarning() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Invalid Input'),
-          content: const Text('Values must be between 0 and 100.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
     );
   }
 }
