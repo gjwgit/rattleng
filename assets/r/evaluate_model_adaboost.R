@@ -1,11 +1,11 @@
-# Generate error matrix of linear model.
+# Define `pred_ra` and `prob_ra` for an adaboost model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-02 11:36:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
 # Rattle timestamp: TIMESTAMP
 #
@@ -30,30 +30,21 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(rattle)
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# will be used below and in the following evaluations as required.
 
-print("Error matrix for the Linear model (counts)")
+model <- model_ada
 
-# Generate predictions using the Linear model (model_glm) on the dataset 'trds'.
-# 'type = "response"' ensures predictions are on the response scale.
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
-error_predic <- predict(model_glm, newdata = trds, type = "response")
+mtype <- "adaboost"
+mdesc <- "Adaptive Boosting (AdaBoost)"
 
-# Calculate the error matrix using the rattle::errorMatrix function.
-# 'count = TRUE' produces an error matrix in terms of raw counts.
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities for any dataset.
 
-linear_cem <- rattle::errorMatrix(trds[[target]], error_predic, count = TRUE)
-
-print(linear_cem)
-
-print('Error matrix for the Linear model (proportions)')
-
-# Calculate the error matrix using rattle::errorMatrix without the 'count' argument.
-# Produces an error matrix expressed in proportions instead of raw counts.
-
-linear_per <- rattle::errorMatrix(trds[[target]], error_predic)
-
-print(linear_per)
+pred_ra <- function(model, data) predict(model, newdata=data)
+prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]

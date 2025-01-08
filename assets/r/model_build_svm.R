@@ -24,6 +24,7 @@
 #
 # Author: Zheyuan Xu
 
+library(ggtext) # Support markdown in ggplot titles.
 library(kernlab)
 library(rattle)
 

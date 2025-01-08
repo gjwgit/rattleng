@@ -51,6 +51,7 @@ import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/datatype.dart';
+import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/path.dart';
@@ -131,6 +132,12 @@ Future<void> reset(BuildContext context, WidgetRef ref) async {
   ref.invalidate(stopwordProvider);
   ref.invalidate(maxWordProvider);
   ref.invalidate(minFreqProvider);
+
+  // Reset all check boxes in Evaluate tab.
+
+  for (final provider in evaluateProviders) {
+    ref.invalidate(provider);
+  }
 
   // Reset the stdoutProvider, this resets the tree tab and the forest tab as
   // they depend on it

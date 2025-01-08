@@ -37,10 +37,33 @@ final forestEvaluateProvider = StateProvider<bool>((ref) => false);
 final hClusterEvaluateProvider = StateProvider<bool>((ref) => false);
 final kMeansEvaluateProvider = StateProvider<bool>((ref) => false);
 final linearEvaluateProvider = StateProvider<bool>((ref) => false);
-final neuralNetEvaluateProvider = StateProvider<bool>((ref) => false);
+final neuralEvaluateProvider = StateProvider<bool>((ref) => false);
 final nnetEvaluateProvider = StateProvider<bool>((ref) => false);
+final neuralNetEvaluateProvider = StateProvider<bool>((ref) => false);
 final svmEvaluateProvider = StateProvider<bool>((ref) => false);
 final randomForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final rpartTreeEvaluateProvider = StateProvider<bool>((ref) => false);
 final treeEvaluateProvider = StateProvider<bool>((ref) => false);
 final xgBoostEvaluateProvider = StateProvider<bool>((ref) => false);
+
+// List of all the providers of model to be evaluated.
+
+final List<StateProvider> evaluateProviders = [
+  adaBoostEvaluateProvider,
+  boostEvaluateProvider,
+  conditionalForestEvaluateProvider,
+  cTreeEvaluateProvider,
+  datasetTypeProvider,
+  forestEvaluateProvider,
+  hClusterEvaluateProvider,
+  kMeansEvaluateProvider,
+  linearEvaluateProvider,
+  neuralEvaluateProvider,
+  nnetEvaluateProvider,
+  neuralNetEvaluateProvider,
+  svmEvaluateProvider,
+  randomForestEvaluateProvider,
+  rpartTreeEvaluateProvider,
+  treeEvaluateProvider,
+  xgBoostEvaluateProvider,
+];

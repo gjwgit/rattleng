@@ -124,7 +124,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
         ['model_neuralnet.svg'],
         ['model_nn_nnet.svg'],
       ],
-      provider: neuralNetEvaluateProvider,
+      provider: neuralEvaluateProvider,
     ),
     _ModelConfig(
       key: 'KMeansEvaluate',
@@ -195,6 +195,48 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     return false;
   }
 
+  /// Executes model evaluation based on the given parameters and conditions.
+  ///
+  /// [executed] - Boolean indicating if the model evaluation should proceed.
+  /// [parameters] - List of parameters specific to the model.
+  /// [datasetSplitType] - String indicating the dataset split type ('Training', 'Tuning', etc.).
+  /// [context] - Build context for the operation.
+  /// [ref] - Reference used in the evaluation (e.g., for dependency injection).
+
+  Future<void> executeEvaluation({
+    required bool executed,
+    required List parameters,
+    required String datasetSplitType,
+    required BuildContext context,
+    required dynamic ref,
+  }) async {
+    // 20241220 gjw One of the following templates then needs to be
+    // run to convert the appropriate predictions and probabilities
+    // to the variables that are non-specific to a dataset
+    // partition.
+
+    final templateMap = {
+      'Training': 'evaluate_template_tr',
+      'Tuning': 'evaluate_template_tu',
+      'Testing': 'evaluate_template_te',
+      'Complete': 'evaluate_template_tc',
+    };
+
+    if (executed) {
+      final template = templateMap[datasetSplitType] ??
+          (throw Exception('Invalid datasetSplitType: $datasetSplitType'));
+
+      final selectedParameters = [
+        parameters.first,
+        template,
+        parameters[1],
+        parameters[2],
+      ];
+
+      await rSource(context, ref, selectedParameters.cast<String>());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String datasetType = ref.watch(datasetTypeProvider.notifier).state;
@@ -226,7 +268,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
-                bool neuralTicked = ref.watch(neuralNetEvaluateProvider);
+                bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
+                bool neuralTicked = ref.watch(neuralEvaluateProvider);
                 bool randomForestExecuted =
                     ref.watch(randomForestEvaluateProvider);
                 bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
@@ -240,25 +283,16 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 // variables one model at a time. Those that have _model_ are
                 // updated.
 
-                String ea = 'evaluate_adaboost';
-                String ec = 'evaluate_ctree';
-                String en = 'evaluate_nnet';
+                String ea = 'evaluate_model_adaboost';
+                String ec = 'evaluate_model_ctree';
+                String en = 'evaluate_model_nnet';
                 String er = 'evaluate_model_rpart';
-                String es = 'evaluate_svm';
-                String ex = 'evaluate_xgboost';
+                String es = 'evaluate_model_svm';
+                String ex = 'evaluate_model_xgboost';
+                String ent = 'evaluate_model_neuralnet';
 
-                String ecf = 'evaluate_conditional_forest';
-                String erf = 'evaluate_random_forest';
-
-                // 20241220 gjw One of the following templates then needs to be
-                // run to convert the appropriate predictions and probabilities
-                // to the variables that are non-specific to a dataset
-                // partition.
-
-                String ttr = 'evaluate_template_tr';
-                String ttu = 'evaluate_template_tu';
-                String tte = 'evaluate_template_te';
-                String ttc = 'evaluate_template_tc';
+                String ecf = 'evaluate_model_conditional_forest';
+                String erf = 'evaluate_model_random_forest';
 
                 // 20241220 gjw Finally we will run the generic templates for
                 // the various performance measures.
@@ -266,107 +300,95 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String em = 'evaluate_measure_error_matrix';
                 String ro = 'evaluate_measure_roc';
 
-                // Check if rpart model evaluation was executed.
+                // Execute evaluation for rpart model if it was executed and treeExecuted is true.
 
-                if (rpartExecuted && treeExecuted) {
-                  if (datasetSplitType == 'Training') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, ttr, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Tuning') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, ttu, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Testing') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, tte, em, ro],
-                    );
-                  } else if (datasetSplitType == 'Complete') {
-                    await rSource(
-                      context,
-                      ref,
-                      [er, ttc, em, ro],
-                    );
-                  }
-                }
+                await executeEvaluation(
+                  executed: rpartExecuted && treeExecuted,
+                  parameters: [er, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if ctree model evaluation was executed.
+                // Execute evaluation for ctree model if it was executed and treeExecuted is true.
 
-                if (ctreeExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ec, ttr, em, ro],
-                  );
-                }
+                await executeEvaluation(
+                  executed: ctreeExecuted && treeExecuted,
+                  parameters: [ec, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if Random Forest evaluation was executed
-                // and forest box was ticked.
+                // Execute evaluation for Random Forest model if executed and forest box is ticked.
 
-                if (randomForestExecuted && forestTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [erf, tte, em, ro],
-                  );
-                }
+                await executeEvaluation(
+                  executed: randomForestExecuted && forestTicked,
+                  parameters: [erf, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if Conditional Forest evaluation was executed
-                // and forest box was ticked.
+                // Execute evaluation for Conditional Forest model if executed and forest box is ticked.
 
-                if (conditionalForestExecuted && forestTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ecf, em, ro],
-                  );
-                }
+                await executeEvaluation(
+                  executed: conditionalForestExecuted && forestTicked,
+                  parameters: [ecf, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if AdaBoost evaluation was executed and boost box is enabled.
+                // Execute evaluation for AdaBoost model if executed and boost box is ticked.
 
-                if (adaBoostExecuted && boostTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ea, em, ro],
-                  );
-                }
+                await executeEvaluation(
+                  executed: adaBoostExecuted && boostTicked,
+                  parameters: [ea, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if XGBoost evaluation was executed and boost box is enabled.
+                // Execute evaluation for XGBoost model if executed and boost box is ticked.
 
-                if (xgBoostExecuted && boostTicked) {
-                  await rSource(
-                    context,
-                    ref,
-                    [ex, em, ro],
-                  );
-                }
+                await executeEvaluation(
+                  executed: xgBoostExecuted && boostTicked,
+                  parameters: [ex, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if SVM evaluation was executed.
+                // Execute evaluation for SVM model if executed.
 
-                if (svmExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    [es, em, ro],
-                  );
-                }
+                await executeEvaluation(
+                  executed: svmExecuted,
+                  parameters: [es, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
-                // Check if Neural Network box was ticked and neural network methods are enabled.
+                // Execute evaluation for Neural Network model if executed and neural network box is ticked.
 
-                if (neuralTicked && nnetExecuted) {
-                  await rSource(
-                    context,
-                    ref,
-                    [en, em, ro],
-                  );
-                }
+                await executeEvaluation(
+                  executed: neuralTicked && nnetExecuted,
+                  parameters: [en, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
+
+                // Execute evaluation for Neural Net model if executed and neural network box is ticked.
+
+                await executeEvaluation(
+                  executed: neuralTicked && neuralNetExecuted,
+                  parameters: [ent, em, ro],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
 
                 await ref.read(evaluatePageControllerProvider).animateToPage(
                       // Index of the second page.
@@ -407,7 +429,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           spacing: configWidgetSpace,
           children: [
             configLeftGap,
-            Text('Eavluation Dataset: '),
+            Text('Evaluation Dataset: '),
             ChoiceChipTip<String>(
               options: datasetTypes.keys.toList(),
               selectedOption: datasetType,

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-12-25 17:20:41 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-08 11:45:07 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -53,10 +53,11 @@ inputs <- setdiff(vars, target)
 if (!is.null(target)) {
   form <- formula(target %s+% " ~ .")
 
-  # Identify a subset of the full dataset that has values for the target
-  # variable, removing those rows that do not have a target. For
-  # predictive modelling we will only use data that has a target value.
-  # This will be refered to as the TARGET COMPLETE dataset (tcds).
+  # 20250108 gjw Create the TARGET COMPLETE dataset (tcds).  We
+  # identify a subset of the FULL DATASET that has values for the
+  # target variable, removing those rows that do not have a
+  # target. For predictive modelling we would only use data that has a
+  # target value.
 
   tcds <- ds[!is.na(ds[[target]]),]
 
@@ -64,7 +65,7 @@ if (!is.null(target)) {
 
   form <- formula("~ .")
 
-  # If not TARGET variable is identified then we still want to start
+  # If no TARGET variable is identified then we still want to start
   # with a `tcds` for processing.
 
   tcds <- ds
@@ -142,10 +143,9 @@ teds <- tcds[te, setdiff(vars, ignore)]
 # Check if the target variable exists and create `actual_tc`.
 
 if (!is.null(target)) {
-  # Retrieve the actual values for the full dataset and remove `NA`.
+  # Retrieve the actual target values for the complete dataset.
 
-  actual_tc <- ds %>%
-    filter(!is.na(!!sym(target))) %>% # Remove rows where `target` is `NA`.
+  actual_tc <- tcds %>%
     pull(target) %>%
     as.character()
 
@@ -165,11 +165,12 @@ if (!is.null(target)) {
 if (!is.null(risk)) {
   # Retrieve the risk values for the full dataset.
 
-  risk_tc <- ds %>%
+  risk_tc <- tcds %>%
     pull(risk) %>%
     as.numeric()  # Ensure it's numeric.
 
-  # Handle NA values by replacing them with a default value (e.g., 0).
+  # 20250108 gjw We used to handle NA risk values by replacing them
+  # with a default value (e.g., 0). For now let's not do that.
 
   risk_tc <- ifelse(is.na(risk_tc) | is.nan(risk_tc), 0, risk_tc)
 } else {
@@ -221,53 +222,65 @@ actual_numeric <- ifelse(actual == levels_actual[1], 0, 1)
 # based on randomly created probability matrices for a given set of observations.
 
 generate_predictions <- function(predicted_var) {
+  # 1) Handle the case where 'predicted_var' is a named numeric vector.
+  #    - If it's numeric and has names, we rename those elements sequentially.
+  #    - Then immediately return the vector as-is.
+
+  if (is.numeric(predicted_var) && !is.null(names(predicted_var))) {
+    # Rename the elements '1', '2', '3', ... instead of whatever they had before.
+
+    names(predicted_var) <- seq_along(predicted_var)
+    return(predicted_var)
+  }
+
+  # 2) Handle the case where 'predicted_var' is already a list of matrices
+  #    (or at least something indexable like matrices).
+  #    - We assume each element in the list has at least 2 columns, and we grab
+  #      the value in row 1, column 2 from each element (x[1, 2]).
+
+  if (is.list(predicted_var)) {
+    # Extract the second column from row 1 in each element of 'predicted_var'.
+
+    result <- sapply(predicted_var, function(x) x[1, 2])
+    # Rename the result elements '1', '2', '3', ...
+
+    names(result) <- seq_along(result)
+    return(result)
+  }
+
+  # 3) If 'predicted_var' is neither a named numeric vector nor a list:
+  #    - We assume it's some other data structure (e.g., a vector of observations).
+  #    - We'll generate random probabilities (1×2) for each observation, normalize them,
+  #      then extract the second probability for each.
+
+  # Initialize a list to hold the simulated probability matrices.
+
   predicted_probs <- list()
+
+  # Number of observations is the length of 'predicted_var'.
 
   num_obs <- length(predicted_var)
 
+  # For each observation, generate random probabilities (2 values),
+  # normalize them to sum to 1, then store as a 1×2 matrix.
+
   for (i in 1:num_obs) {
-    # Simulate probability matrices as in your output.
-    # Here, we will just assign random probabilities for demonstration.
-    # In practice, 'predicted_probs' is the output from your 'predict' function.
-
-    probs <- runif(2)
-    probs <- probs / sum(probs)  # Normalize to sum to 1.
-
-    # Create the column names with unknown prefixes.
-    # For demonstration, let's assume prefixes vary.
-
-    prefix <- paste0("prefix", sample(1:5, 1))
-    col_names <- paste0(prefix, c(".No", ".Yes"))
-
-    # Create the 1x2 probability matrix for each observation.
-
-    predicted_probs[[i]] <- matrix(probs, nrow = 1, dimnames = list(NULL, col_names))
+    probs <- runif(2)          # Generate 2 random probabilities
+    probs <- probs / sum(probs)  # Normalize them so they sum to 1
+    predicted_probs[[i]] <- matrix(probs, nrow = 1)  # Store as a 1×2 matrix
   }
 
-  # Extract the predicted class labels without specifying the prefix.
+  # Extract the second probability from each 1×2 matrix (row=1, col=2).
 
-  predicted_var <- sapply(predicted_probs, function(x) {
-    # 'x' is a 1xN matrix for one observation.
-    # Find the index of the maximum probability.
+  result <- sapply(predicted_probs, function(x) x[1, 2])
 
-    idx_max <- which.max(x[1, ])
+  # Rename the result elements '1', '2', '3', ...
 
-    # Retrieve the corresponding class label with prefix.
+  names(result) <- seq_along(result)
 
-    label_with_prefix <- colnames(x)[idx_max]
+  # Return the vector of probabilities.
 
-    # Extract the actual class label by removing everything up to the last dot.
-
-    label_clean <- sub('.*\\.', '', label_with_prefix)
-    return(label_clean)
-  })
-
-  # Get unique levels of predicted.
-
-  levels_predicted <- unique(predicted_var)
-  predicted_var <- as.character(predicted_var)
-  predicted_numeric <- ifelse(predicted_var == levels_predicted[1], 0, 1)
-  return(predicted_numeric)
+  return(result)
 }
 
 # A data preprocessing function for prediction tasks.

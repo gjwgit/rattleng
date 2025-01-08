@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Sunday 2024-09-08 13:47:58 +1000 Graham Williams>
+/// Time-stamp: <Monday 2025-01-06 07:10:54 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -34,6 +34,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/script.dart';
 
 class ScriptSaveButton extends ConsumerWidget {
@@ -62,7 +63,8 @@ class ScriptSaveButton extends ConsumerWidget {
     );
   }
 
-  // Function to display a dialog for the user to enter the file name.
+  // Display a dialog for the user to enter the file name.
+
   Future<void> _showFileNameDialog(BuildContext context, WidgetRef ref) async {
     String? outputPath = await FilePicker.platform.saveFile(
       dialogTitle: 'Provide a .R filename to save the R script to',
@@ -86,7 +88,7 @@ class ScriptSaveButton extends ConsumerWidget {
     return;
   }
 
-  // Function to display an error dialog.
+  // Display an error dialog.
 
   void _showErrorDialog(BuildContext context, String message) {
     showDialog(
@@ -108,17 +110,28 @@ class ScriptSaveButton extends ConsumerWidget {
     );
   }
 
-  // Function to save the script to a file.
+  // Save the script to a file.
+
   void _saveScript(WidgetRef ref, String fileName, BuildContext context) {
     debugPrint("SAVE BUTTON EXPORT: '$fileName'");
 
     // Get the script content from the provider.
+
     String script = ref.read(scriptProvider);
 
-    // Remove the lines starting with 'svg' and 'dev.off'
+    // 20250106 gjw Remove the lines starting with 'svg' and 'dev.off' since the
+    // final user script will generally not have access to the tmpdir and the
+    // user will generally want to see the plots rather than immediately save
+    // them to file. 20250106 gjw Also remove any lines starting with rat as
+    // they are Rattle versions of cat used for communicating to Rattle rather
+    // than for user messages.
+
     List<String> lines = script.split('\n');
     lines = lines.where((line) => !line.trim().startsWith('svg')).toList();
     lines = lines.where((line) => !line.trim().startsWith('dev.off')).toList();
+    lines = lines.where((line) => !line.trim().startsWith('rat <-')).toList();
+    lines = lines.where((line) => !line.trim().startsWith('rat(')).toList();
+    lines = lines.map((line) => line.replaceAll(tempDir + '/', '')).toList();
     script = lines.join('\n');
 
     if (!fileName.endsWith('.R')) {
@@ -127,9 +140,11 @@ class ScriptSaveButton extends ConsumerWidget {
     final file = File(fileName);
 
     // Write the script content to the file.
+
     file.writeAsString(script);
 
     // Show a confirmation message.
+
     final filePath = file.absolute.path;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('R script file saved as $filePath')),

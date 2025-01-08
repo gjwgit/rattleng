@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-01-05 15:01:51 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-01-06 07:15:37 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -80,6 +80,6 @@ rattle::asRules(model_rpart)
 
 svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
 rattle::fancyRpartPlot(model_rpart,
-                       main = "Decision Tree FILENAME $ TARGET_VAR",
+                       main = glue("Decision Tree {basename('FILENAME')} $ TARGET_VAR"),
                        sub  = paste("TIMESTAMP", username))
 dev.off()

@@ -1,11 +1,11 @@
-# Generate error matrix of model nnet.
+# Define `pred_ra` and `prob_ra` for a conditional forest model.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 21:41:15 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-01-05 06:46:54 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,15 +30,25 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(rattle)
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# will be used below and in the following evaluations as required.
 
-error_matrix_predic <- predict(model_nn, newdata = trds, type = "class")
+model <- model_conditionalForest
 
-error_matrix_target <- trds[[target]]
+# 20250105 zy Redefine the model type to update the output of error
+# matrix.
 
-# A variable containing the predictions.
+mtype <- "cforest"
+mdesc <- "Random Forest"
 
-roc_predicted_probs <- error_matrix_predic
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities for any dataset.
+
+pred_ra <- function(model, data) predict(model, newdata=data, )
+
+prob_ra <- function(model, data) {
+  prob_matrix <- predict(model, newdata=data, type="prob")
+  generate_predictions(prob_matrix) # nolint as sourced from 'model_template.R'
+}

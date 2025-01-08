@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-31 11:58:22 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-05 21:23:01 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -39,6 +39,7 @@ import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/multi_image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
+// import 'package:rattle/widgets/no_image_page.dart';
 
 /// The EVALUATE panel displays the instructions and then the build output.
 
@@ -82,6 +83,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String rocAdaBoostImage = '$tempDir/model_evaluate_roc_adaboost_$dtype.svg';
     String rocCtreeImage = '$tempDir/model_evaluate_roc_ctree_$dtype.svg';
     String rocNNETImage = '$tempDir/model_evaluate_roc_nnet_$dtype.svg';
+    String rocNeuralNetImage =
+        '$tempDir/model_evaluate_roc_neuralnet_$dtype.svg';
     String rocRpartImage = '$tempDir/model_evaluate_roc_rpart_$dtype.svg';
     String rocSVMImage = '$tempDir/model_evaluate_roc_svm_$dtype.svg';
     String rocCforestImage = '$tempDir/model_evaluate_roc_cforest_$dtype.svg';
@@ -105,6 +108,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {'image': rocRpartImage, 'title': 'RPART'},
       {'image': rocCtreeImage, 'title': 'CTREE'},
       {'image': rocNNETImage, 'title': 'NNET'},
+      {'image': rocNeuralNetImage, 'title': 'NEURALNET'},
       {'image': rocRforestImage, 'title': 'RANDOM FOREST'},
       {'image': rocSVMImage, 'title': 'SVM'},
       {'image': rocCforestImage, 'title': 'CONDITIONAL FOREST'},
@@ -152,6 +156,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
           paths: existingImages,
         ),
       );
+      // 20250105 gjw Considered displaying a No Image Available graphic. Not
+      // quite working yet so comment it out for now.
+      //
+      // } else {
+      //   pages.add(NoImagePage());
     }
 
     return PageViewer(

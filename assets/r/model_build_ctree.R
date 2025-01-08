@@ -35,6 +35,7 @@
 
 # Load required packages from the local library into the R session.
 
+library(ggtext)       # Support markdown in ggplot titles.
 library(hmeasure)
 library(party)        # Conditional inference trees
 library(partykit)     # Enhanced visualization and interpretation
