@@ -144,8 +144,7 @@ teds <- tcds[te, setdiff(vars, ignore)]
 if (!is.null(target)) {
   # Retrieve the actual values for the full dataset and remove `NA`.
 
-  actual_tc <- ds %>%
-    filter(!is.na(!!sym(target))) %>% # Remove rows where `target` is `NA`.
+  actual_tc <- tcds %>%
     pull(target) %>%
     as.character()
 
@@ -165,7 +164,7 @@ if (!is.null(target)) {
 if (!is.null(risk)) {
   # Retrieve the risk values for the full dataset.
 
-  risk_tc <- ds %>%
+  risk_tc <- tcds %>%
     pull(risk) %>%
     as.numeric()  # Ensure it's numeric.
 

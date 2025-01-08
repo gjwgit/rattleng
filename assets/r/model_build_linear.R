@@ -24,7 +24,6 @@
 #
 # Author: Zheyuan Xu
 
-library(ggtext)       # Support markdown in ggplot titles.
 library(rattle)
 
 # Define model type and description.

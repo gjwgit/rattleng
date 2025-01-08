@@ -37,7 +37,6 @@
 
 library(rattle)
 library(randomForest) # ML: randomForest() na.roughfix() for missing data.
-library(ggtext)       # Support markdown in ggplot titles.
 library(ggplot2)
 library(glue)         # Format strings: glue().
 library(kernlab)

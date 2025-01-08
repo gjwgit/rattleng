@@ -35,7 +35,6 @@
 
 # Load required packages from the local library into the R session.
 
-library(ggtext)       # Support markdown in ggplot titles.
 library(glue)         # Format strings: glue().
 library(rattle)       # Generate a risk chart.
 

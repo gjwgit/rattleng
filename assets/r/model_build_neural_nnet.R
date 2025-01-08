@@ -26,7 +26,6 @@
 
 # Load necessary libraries
 
-library(ggtext)          # Support markdown in ggplot titles.
 library(nnet)            # Neural networks
 library(NeuralNetTools)  # For neural network plotting
 

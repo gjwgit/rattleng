@@ -27,7 +27,6 @@
 
 library(Ckmeans.1d.dp)  # For ggplot.
 library(data.table)     # Display data as a nicely formatted table.
-library(ggtext)         # Support markdown in ggplot titles.
 library(hmeasure)
 library(rattle)         # Provides a convenient wrapper for xgboost.
 library(xgboost)        # For XGBoost model.

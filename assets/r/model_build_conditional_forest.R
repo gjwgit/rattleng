@@ -36,7 +36,6 @@
 # Load required packages.
 
 library(ggplot2)
-library(ggtext)       # Support markdown in ggplot titles.
 library(kernlab)
 library(party)
 library(rattle)
