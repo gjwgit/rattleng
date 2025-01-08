@@ -32,29 +32,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:rattle/constants/settings.dart';
-import 'package:rattle/settings/utils/out_of_range_warning.dart';
+
 import 'package:rattle/settings/widgets/dataset_toggles.dart';
 import 'package:rattle/settings/widgets/graphic_theme.dart';
-import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
-import 'package:rattle/settings/utils/save_image_viewer_app.dart';
+
 import 'package:rattle/settings/widgets/partition.dart';
-import 'package:rattle/settings/widgets/partition_controls.dart';
 import 'package:rattle/settings/widgets/random_seed.dart';
 import 'package:rattle/settings/widgets/session.dart';
-import 'package:rattle/settings/widgets/toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/session_control.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/r/source.dart';
-import 'package:rattle/widgets/repeat_button.dart';
+
 import 'package:rattle/settings/utils/handle_cancel_button.dart';
 
 class SettingsDialog extends ConsumerStatefulWidget {
@@ -71,23 +64,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   void initState() {
     super.initState();
 
-    // Get the current theme from the Riverpod provider.
-
-    _selectedTheme = ref.read(settingsGraphicThemeProvider);
-
-    // Automatically update the theme in Riverpod when the dialog is opened.
-
-    ref
-        .read(settingsGraphicThemeProvider.notifier)
-        .setGraphicTheme(_selectedTheme!);
-
-    // Load toggle states and "Keep in Sync" state from shared preferences.
-
     _loadSettings();
-
-    _loadRandomSeed();
-
-    _loadPartition();
   }
 
   @override
@@ -131,6 +108,23 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(useValidationSettingProvider.notifier).state =
         prefs.getBool('useValidation') ?? false;
+
+    _loadTheme();
+
+    _loadRandomSeed();
+
+    _loadPartition();
+  }
+
+  Future<void> _loadTheme() async {
+    // Get the current theme from the Riverpod provider.
+
+    _selectedTheme = ref.read(settingsGraphicThemeProvider);
+
+    // Automatically update the theme in Riverpod when the dialog is opened.
+    ref
+        .read(settingsGraphicThemeProvider.notifier)
+        .setGraphicTheme(_selectedTheme!);
   }
 
   Future<void> _loadRandomSeed() async {
