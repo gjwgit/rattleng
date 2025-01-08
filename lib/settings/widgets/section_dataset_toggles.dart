@@ -7,7 +7,7 @@ import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/settings/widgets/toggle_row.dart';
+import 'package:rattle/settings/widgets/settings_toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DatasetToggles extends ConsumerWidget {
