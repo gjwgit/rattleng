@@ -45,18 +45,6 @@ mdesc <- "Support Vector Machine"
 # 20250101 gjw Define the template functions to generate the
 # predications and the probabilities for any dataset.
 
-pred_ra <- function(model, data) {
-  # Get the probability matrix from the model.
-
-  prob_matrix <- predict(model, newdata=data, type="prob")
-
-  # Identify, for each row, which column has the highest probability.
-
-  idx_max <- max.col(prob_matrix, ties.method="first")
-
-  # Convert those column indices into class labels.
-
-  colnames(prob_matrix)[idx_max]
-}
+pred_ra <- function(model, data) predict(model, newdata=data,)
 
 prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]
