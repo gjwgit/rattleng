@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Thursday 2024-11-14 09:16:41 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-08 20:25:19 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -134,6 +134,8 @@ class TextPage extends StatelessWidget {
           Expanded(
             child: Scrollbar(
               thumbVisibility: true,
+              trackVisibility: true,
+
               // Attach the horizontal controller.
 
               controller: horizontalScrollController,
