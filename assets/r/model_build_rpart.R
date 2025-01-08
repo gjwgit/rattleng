@@ -1,11 +1,11 @@
-# From dataset `tcds` build an `rpart()` decision tree.
+# From dataset `trds` build an `rpart()` decision tree.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-01-06 07:15:37 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-08 14:55:25 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,7 +36,6 @@
 # Load required packages from the local library into the R session.
 
 library(glue)         # Format strings: glue().
-library(hmeasure)     # David Hand's classifier performance measure.
 library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 
