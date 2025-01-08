@@ -58,22 +58,6 @@ if (svm_kernel == "polydot") {
 
 model <- svm_model
 
-predicted_tr <- predict(model, newdata = trds, type = "probabilities")[,2]
-predicted_tu <- predict(model, newdata = tuds, type = "probabilities")[,2]
-predicted_te <- predict(model, newdata = teds, type = "probabilities")[,2]
-
-predicted_tr <- prepare_predictions(predicted_tr, actual, risks)[[1]]
-predicted_tu <- prepare_predictions(predicted_tu, actual, risks)[[1]]
-predicted_te <- prepare_predictions(predicted_te, actual, risks)[[1]]
-
-actual_tr <- prepare_predictions(predicted_tr, actual, risks)[[2]]
-actual_tu <- prepare_predictions(predicted_tu, actual, risks)[[2]]
-actual_te <- prepare_predictions(predicted_te, actual, risks)[[2]]
-
-risk_tr <- prepare_predictions(predicted_tr, actual, risks)[[3]]
-risk_tu <- prepare_predictions(predicted_tu, actual, risks)[[3]]
-risk_te <- prepare_predictions(predicted_te, actual, risks)[[3]]
-
 # Print a summary of the trained SVM model.
 
 print(svm_model)

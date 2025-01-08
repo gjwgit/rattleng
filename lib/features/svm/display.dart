@@ -29,15 +29,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
-import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
-import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
@@ -52,7 +48,6 @@ class SvmDisplay extends ConsumerStatefulWidget {
 class _SvmDisplayState extends ConsumerState<SvmDisplay> {
   @override
   Widget build(BuildContext context) {
-    bool useValidation = ref.watch(useValidationSettingProvider);
     final pageController = ref.watch(
       svmPageControllerProvider,
     );
@@ -75,45 +70,6 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
           title: '# SVM Model\n\n'
               'Built using `kernlab::ksvm()`.\n\n',
           content: '\n$content',
-        ),
-      );
-    }
-
-    String riskImage = '';
-
-    riskImage = '$tempDir/model_svm_riskchart_tuning.svg';
-
-    if (imageExists(riskImage)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-          # Risk Chart &#8212; Unbiased Estimate of Performance
-
-          Using the **${useValidation ? 'validation' : 'tuning'}** dataset to
-          evaluate the model performance.
-
-          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: riskImage,
-        ),
-      );
-    }
-
-    riskImage = '$tempDir/model_svm_riskchart_training.svg';
-
-    if (imageExists(riskImage)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-          # Risk Chart &#8212; Unbiased Estimate of Performance
-
-          Using the **training** dataset to evaluate the model performance.
-
-          Visit [rattle::riskchart()](https://www.rdocumentation.org/packages/rattle/topics/riskchart).
-            ''',
-          path: riskImage,
         ),
       );
     }
