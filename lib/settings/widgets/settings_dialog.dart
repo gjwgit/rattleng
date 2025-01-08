@@ -36,6 +36,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/settings.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
+import 'package:rattle/settings/widgets/toggle_row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -371,15 +372,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: _buildToggleRow(
-                              'Cleanse',
-                              cleanse,
-                              (value) {
+                            child: ToggleRow(
+                              label: 'Cleanse',
+                              value: cleanse,
+                              onChanged: (value) {
                                 ref.read(cleanseProvider.notifier).state =
                                     value;
                                 _saveToggleStates();
                               },
-                              '''
+                              tooltipMessage: '''
 
                               **Cleanse Toggle:**
 
@@ -395,15 +396,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             ),
                           ),
                           Expanded(
-                            child: _buildToggleRow(
-                              'Unify',
-                              normalise,
-                              (value) {
+                            child: ToggleRow(
+                              label: 'Unify',
+                              value: normalise,
+                              onChanged: (value) {
                                 ref.read(normaliseProvider.notifier).state =
                                     value;
                                 _saveToggleStates();
                               },
-                              '''
+                              tooltipMessage: '''
 
                               **Unify Toggle:**
 
@@ -419,15 +420,15 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                             ),
                           ),
                           Expanded(
-                            child: _buildToggleRow(
-                              'Partition',
-                              partition,
-                              (value) {
+                            child: ToggleRow(
+                              label: 'Partition',
+                              value: partition,
+                              onChanged: (value) {
                                 ref.read(partitionProvider.notifier).state =
                                     value;
                                 _saveToggleStates();
                               },
-                              '''
+                              tooltipMessage: '''
 
                               **Partition Toggle:**
 
@@ -831,32 +832,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // Build a toggle row with a label and a switch.
-
-  Widget _buildToggleRow(
-    String label,
-    bool value,
-    ValueChanged<bool> onChanged,
-    String tooltipMessage, // Tooltip message for the entire row
-  ) {
-    return MarkdownTooltip(
-      message: tooltipMessage,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16),
-          ),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-          ),
-        ],
       ),
     );
   }
