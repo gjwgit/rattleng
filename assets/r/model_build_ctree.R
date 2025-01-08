@@ -1,11 +1,11 @@
-# Using the dataset `ds` build a `ctree()` decision tree.
+# From dataset `trds` build a `ctree()` decision tree.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-02 08:42:13 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-08 14:54:32 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,14 +44,7 @@ library(partykit)     # Enhanced visualization and interpretation
 mtype <- "ctree"
 mdesc <- "Conditional Inference Tree"
 
-# Determine what type of model to build based on the number of values of the target variable
-# Not needed for ctree as it automatically handles the data type
-
-# Define the formula for the model
-
-# TODO 20240930 gjw SHOULDN'T THIS BE FRO `model_template.r`
-
-form <- as.formula(paste(target, "~ ."))
+# 20250108 gjw Setup the model build parameters.
 
 control <- ctree_control(
   MINSPLIT, MINBUCKET, MAXDEPTH
@@ -65,15 +58,6 @@ model_ctree <- ctree(
   na.action = na.exclude,
   control   = control
 )
-
-# Save the model to the TEMPLATE variable `model` and the predicted
-# values appropriately.
-
-model <- model_ctree
-
-predicted_tr <- predict(model_ctree, newdata = trds, type = "prob")
-predicted_tu <- predict(model_ctree, newdata = tuds, type = "prob")
-predicted_te <- predict(model_ctree, newdata = teds, type = "prob")
 
 # Output a textual view of the Conditional Inference Tree model.
 
