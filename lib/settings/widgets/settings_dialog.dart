@@ -36,6 +36,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/settings.dart';
 import 'package:rattle/settings/utils/out_of_range_warning.dart';
 import 'package:rattle/settings/widgets/dataset_toggles.dart';
+import 'package:rattle/settings/widgets/graphic_theme.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
 import 'package:rattle/settings/widgets/partition_controls.dart';
@@ -297,86 +298,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
                       DatasetToggles(),
 
-                      Row(
-                        children: [
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Graphic Theme Setting:** The graphic theme is used
-                            by many (but not all) of the plots in Rattle, and
-                            specifically by those plots using the ggplot2
-                            package. Hover over each theme for more details. The
-                            default is the Rattle theme.
-
-                            ''',
-                            child: Text(
-                              'Graphic Theme',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-
-                          configRowGap,
-
-                          // Restore default theme button.
-
-                          MarkdownTooltip(
-                            message: '''
-
-                            **Reset Theme:** Tap here to reset the Graphic Theme
-                              setting to the default theme for Rattle.
-
-                            ''',
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  _selectedTheme = 'theme_rattle';
-                                });
-
-                                ref
-                                    .read(settingsGraphicThemeProvider.notifier)
-                                    .setGraphicTheme(_selectedTheme!);
-
-                                rSource(context, ref, ['settings']);
-                              },
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      configRowGap,
-                      // Theme selection chips.
-
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: themeOptions.map((option) {
-                          return MarkdownTooltip(
-                            message: option['tooltip']!,
-                            child: ChoiceChip(
-                              label: Text(option['label']!),
-                              selected: _selectedTheme == option['value'],
-                              onSelected: (bool selected) {
-                                setState(() {
-                                  _selectedTheme = option['value'];
-                                });
-
-                                ref
-                                    .read(settingsGraphicThemeProvider.notifier)
-                                    .setGraphicTheme(_selectedTheme!);
-
-                                rSource(context, ref, ['settings']);
-                              },
-                            ),
-                          );
-                        }).toList(),
-                      ),
-
-                      settingsGroupGap,
-                      Divider(),
+                      GraphicTheme(),
 
                       Row(
                         children: [
