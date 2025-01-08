@@ -47,6 +47,10 @@ library(rattle)       # Generate an error matrix.
 
 ####################################
 
+# 20250108 zy Add a check to ensure that the actual and
+# predicted have the same levels. To avoid every pred_ra
+# function to do this check, we do it here.
+
 # Combine the levels from both vectors.
 
 all_levels <- union(levels(actual), levels(predicted))
