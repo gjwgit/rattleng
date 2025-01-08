@@ -1,4 +1,4 @@
-/// Show the settings dialog.
+/// Settings dialog high-level widget.
 //
 // Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
@@ -33,12 +33,12 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/settings/widgets/dataset_toggles.dart';
-import 'package:rattle/settings/widgets/graphic_theme.dart';
+import 'package:rattle/settings/widgets/section_dataset_toggles.dart';
+import 'package:rattle/settings/widgets/section_graphic_theme.dart';
 
-import 'package:rattle/settings/widgets/partition.dart';
-import 'package:rattle/settings/widgets/random_seed.dart';
-import 'package:rattle/settings/widgets/session.dart';
+import 'package:rattle/settings/widgets/section_partition.dart';
+import 'package:rattle/settings/widgets/section_random_seed.dart';
+import 'package:rattle/settings/widgets/section_session.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/providers/cleanse.dart';
