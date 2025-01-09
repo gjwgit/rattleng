@@ -31,6 +31,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rattle/settings/widgets/section_script.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/settings/widgets/section_dataset_toggles.dart';
@@ -108,6 +109,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     _loadRandomSeed();
 
     _loadPartition();
+
+    // Load strip comments setting.
+
+    ref.read(stripCommentsProvider.notifier).state =
+        prefs.getBool('stripComments') ?? false;
   }
 
   Future<void> _loadRandomSeed() async {
@@ -173,6 +179,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       Partition(),
                       RandomSeed(),
                       Session(),
+                      Script(),
                     ],
                   ),
                 ),
