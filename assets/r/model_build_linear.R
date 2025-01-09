@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 08:53:21 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 08:57:45 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,12 +33,12 @@
 
 # Load required packages from the local library into the R session.
 
-# Define model type and description.
+# Define model type and description to be used in following R scripts.
 
 mtype <- "linear"
 mdesc <- "Linear Model"
 
-# Train a Logistic Regression Model.
+# Train a logistic regression model.
 
 model_glm <- glm(
   form,
@@ -46,11 +46,11 @@ model_glm <- glm(
   family = binomial(link = LINEAR_FAMILY),
 )
 
-# Generate a textual view of the Logistic Regression Model.
+# Output a textual view of the model for review.
 
 print(summary(model_glm))
 
-# Display additional model statistics.
+# Output additional model statistics for review.
 
 cat(sprintf("Log likelihood: %.3f (%d df)\n",
             logLik(model_glm)[1],
@@ -67,7 +67,7 @@ cat('\n==== ANOVA ====\n\n')
 print(anova(model_glm, test = "Chisq"))
 cat("\n")
 
-# Plot diagnostic plots for the logistic regression model.
+# Display diagnostics the model for review.
 
 svg("TEMPDIR/model_glm_diagnostic_plots.svg")
 par(mfrow = c(2, 2))

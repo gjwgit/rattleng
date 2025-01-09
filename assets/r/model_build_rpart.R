@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-08 14:55:25 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 08:57:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,7 +39,7 @@ library(glue)         # Format strings: glue().
 library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 
-# Define the model type and description for file paths and titles.
+# Define model type and description to be used in following R scripts.
 
 mtype <- "rpart"
 mdesc <- "Decision Tree"
@@ -63,7 +63,7 @@ model_rpart <- rpart(
                           MINSPLIT, MINBUCKET, MAXDEPTH, CP),
   model   = TRUE)
 
-# Output a textual view of the Decision Tree model for review.
+# Output a textual view of themodel for review.
 
 print(model_rpart)
 printcp(model_rpart)
@@ -73,8 +73,7 @@ cat("\n")
 
 rattle::asRules(model_rpart)
 
-# Plot the resulting Decision Tree using the rpart.plot package via
-# rattle::fancyRpartPlot().
+# Display the model visually for review.
 
 svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
 rattle::fancyRpartPlot(model_rpart,
