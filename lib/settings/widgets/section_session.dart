@@ -26,18 +26,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/session_control.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/settings/utils/save_image_viewer_app.dart';
 import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Session extends ConsumerWidget {
   const Session({super.key});
 
-  /// Save ask on exit setting
+  /// Save ask on exit setting.
   Future<void> saveAskOnExit(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('askOnExit', value);

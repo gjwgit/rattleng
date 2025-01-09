@@ -24,12 +24,14 @@
 /// Authors: Kevin Wang
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/settings/widgets/settings_partition_controls.dart';
 import 'package:rattle/settings/utils/out_of_range_warning.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Partition extends ConsumerWidget {
   const Partition({

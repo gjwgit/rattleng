@@ -27,7 +27,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
@@ -35,7 +38,6 @@ import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/settings/widgets/settings_toggle_row.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DatasetToggles extends ConsumerWidget {
   const DatasetToggles({super.key});

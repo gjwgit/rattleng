@@ -24,11 +24,13 @@
 /// Authors: Kevin Wang
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/widgets/repeat_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RandomSeed extends ConsumerWidget {
   const RandomSeed({
@@ -129,7 +131,9 @@ class RandomSeed extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-
+              **Random Partition each Model Build:**
+              When enabled, the partition will be randomised each time a model is built.
+              This is useful if you want to ensure that the model is not biased towards a specific partition.
 
               ''',
               child: Switch(
