@@ -76,14 +76,17 @@ class ScriptSaveButton extends ConsumerWidget {
     if (context.mounted) {
       if (outputPath != null) {
         // User picked a file.
+
         bool stripComments = ref.read(stripCommentsProvider);
         _saveScript(ref, outputPath, context, stripComments);
       } else {
-        // user canceled the file picker
+        // user canceled the file picker.
+
         _showErrorDialog(context, 'No file selected');
       }
     } else {
       // The context is no longer mounted.
+
       debugPrint('ERROR: Context is no longer mounted');
     }
 
@@ -114,8 +117,12 @@ class ScriptSaveButton extends ConsumerWidget {
 
   // Save the script to a file.
 
-  void _saveScript(WidgetRef ref, String fileName, BuildContext context,
-      bool stripComments) {
+  void _saveScript(
+    WidgetRef ref,
+    String fileName,
+    BuildContext context,
+    bool stripComments,
+  ) {
     debugPrint("SAVE BUTTON EXPORT: '$fileName'");
     // Get the script content from the provider.
 
@@ -135,9 +142,11 @@ class ScriptSaveButton extends ConsumerWidget {
     lines = lines.map((line) => line.replaceAll(tempDir + '/', '')).toList();
 
     if (stripComments) {
-      // Remove R comments (lines starting with #)
+      // Remove R comments (lines starting with #).
+
       lines = lines.where((line) => !line.trim().startsWith('#')).toList();
-      // Remove blank lines
+      // Remove blank lines.
+
       lines = lines.where((line) => line.trim().isNotEmpty).toList();
     }
 
