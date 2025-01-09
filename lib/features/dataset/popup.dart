@@ -55,25 +55,41 @@ class DatasetPopup extends ConsumerWidget {
 
   // Function to show package options
   void showPackageDialog(
-      BuildContext context, Map<String, List<String>> packageMap) {
+    BuildContext context,
+    Map<String, List<String>> packageMap,
+  ) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text('Available Packages'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: packageMap.entries.map((entry) {
-              return ListTile(
-                title: Text(entry.key),
-                subtitle: Text(entry.value.join(', ')),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  print('Selected Package: ${entry.key}');
-                },
-              );
-            }).toList(),
+          content: SizedBox(
+            width:
+                double.maxFinite, // Ensures the dialog expands to fit content
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: packageMap.entries.map((entry) {
+                  return ListTile(
+                    title: Text(entry.key),
+                    subtitle: Text(entry.value.join(', ')),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      debugPrint('Selected Package: ${entry.key}');
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Close'),
+            ),
+          ],
         );
       },
     );
@@ -177,7 +193,8 @@ class DatasetPopup extends ConsumerWidget {
                   // debugPrint('content is $content');
                   Map<String, List<String>> map = parsePackage(content);
                   debugPrint(
-                      'map from package to dataset is ${map.toString()}',);
+                    'map from package to dataset is ${map.toString()}',
+                  );
 
                   showPackageDialog(context, map);
                   // TODO 20231018 gjw datasetSelectPackage();
