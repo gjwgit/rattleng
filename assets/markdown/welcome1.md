@@ -34,7 +34,7 @@ contributions are also most welcome.
 + Also visit Togaware's [Data Science Portal](https://togaware.com/onepager.html).
 
 Rattle comes with **NO WARRANTY**. Rattle, RattleNG, and the
-collection of R template scripts are Copyright © 2006-2024 Togaware
+collection of R template scripts are Copyright © 2006-2025 Togaware
 Pty Ltd. Rattle is a registered trademark of Togaware Pty Ltd. Tap the
 About (Info) button for acknowledgements.
 

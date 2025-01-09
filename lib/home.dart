@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2025-01-07 13:28:43 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-01-08 20:17:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -597,7 +597,7 @@ Xu, Yixiang Yin, Bo Zhang.
                   applicationName:
                       '${_appName[0].toUpperCase()}${_appName.substring(1)}',
                   applicationVersion: 'Version $_appVersion',
-                  applicationLegalese: '© 2006-2024 Togaware Pty Ltd\n',
+                  applicationLegalese: '© 2006-2025 Togaware Pty Ltd\n',
                   children: [
                     MarkdownBody(
                       data: about,
