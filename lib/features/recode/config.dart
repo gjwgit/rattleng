@@ -66,7 +66,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   // Before build, selected contains the most recent value.
 
   String selected = 'NULL';
-  String selectedTransform = '';
+  String selectedTransform = 'Quantiles';
 
   List<String> numericMethods = [
     'Quantiles',
@@ -74,12 +74,72 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     'Equal Width',
   ];
 
+  List<String> asMethods = [
+    'As Categoric',
+    'As Numeric',
+  ];
+  List<String> asCategoricMethods = [
+    'As Categoric',
+  ];
+  List<String> asNumericMethods = [
+    'As Numeric',
+  ];
+
+  Map<String, String> asCategoricMethodsTooltips = {
+    'As Categoric': '''
+
+      Multiply out the selected numeric variables into a new single variable.
+
+      ''',
+  };
+
+  Map<String, String> asNumericMethodsTooltips = {
+    'As Numeric': '''
+
+      Multiply out the selected categoric variables into a new single variable.
+    
+      ''',
+  };
+
+  Map<String, String> numericMethodsTooltips = {
+    'Quantiles': '''
+
+      Each bin will have approximately the same number of observations.
+      If the Data tab includes a Weight variable, then the observations 
+      are weighted when performing the binning.
+
+      ''',
+    'KMeans': '''
+
+      A kmeans clustering will be used to bin the variable.
+    
+      ''',
+    'Equal Width': '''
+
+      The min to max range will be split into equal width bins.
+
+      ''',
+  };
+
   List<String> categoricMethods = [
     'Indicator Variable',
     'Join Categorics',
-    // 'As Categoric',
-    // 'As Numeric',
   ];
+
+  Map<String, String> categoricMethodsTooltips = {
+    'Indicator Variable': '''
+
+      Turn a categoric into a collection of numeric (0,1) variables.
+
+      ''',
+    'Join Categorics': '''
+
+      Combine multiple categoric variables into just one.
+      A join of categoric variables requires two categoric variables.
+      Please select two categoric variables, then Execute.
+    
+      ''',
+  };
 
   // BUILD button action.
 
@@ -102,6 +162,12 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       case 'Join Categorics':
         rSource(context, ref, ['transform_recode_join_categoric']);
         break;
+      case 'As Categoric':
+        rSource(context, ref, ['transform_recode_as_categoric']);
+        break;
+      case 'As Numeric':
+        rSource(context, ref, ['transform_recode_as_numeric']);
+        break;
       default:
         showUnderConstruction(context);
     }
@@ -123,13 +189,17 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     // TODO 20240819 gjw WHERE ARE THE TOOLTIPS?
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start, // Align children to the start
+
       spacing: configWidgetSpace,
       children: [
         configLeftGap,
         ChoiceChipTip(
           options: numericMethods,
           selectedOption: selectedTransform,
-          enabled: isNumeric,
+          enabled: isNumeric && selected != 'NULL',
+          // Dynamic enabling based on the selected variable type
+          tooltips: numericMethodsTooltips,
           onSelected: (String? selected) {
             setState(() {
               selectedTransform = selected ?? '';
@@ -142,42 +212,68 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           stateProvider: numberProvider,
           validator: (value) => validateInteger(value, min: 1),
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
-          enabled: isNumeric,
+          enabled: isNumeric && selected != 'NULL',
+          tooltip: '''
+              
+          Set the number of bins to construct.
+    
+          ''',
         ),
+
+        // As Categoric chip.
+
         ChoiceChipTip(
-          enabled: selected == 'NULL' || !isNumeric,
-          options: categoricMethods,
-          selectedOption: !isNumeric ? selectedTransform : '',
+          options: asCategoricMethods,
+          selectedOption: selectedTransform,
+          tooltips: asCategoricMethodsTooltips,
+          enabled: isNumeric && selected != 'NULL',
           onSelected: (String? selected) {
             setState(() {
               selectedTransform = selected ?? '';
             });
           },
         ),
-        Expanded(
-          child: variableChooser(
-            'Secondary',
-            inputs,
-            selected2,
-            ref,
-            selected2Provider,
-            enabled: true,
-            onChanged: (String? value) {
-              ref.read(selected2Provider.notifier).state =
-                  value ?? 'IMPOSSIBLE';
 
-              // Reset after selection.
+        // As Numeric chip.
 
-              selectedTransform = ref.read(typesProvider)[value] == Type.numeric
-                  ? numericMethods.first
-                  : categoricMethods.first;
-            },
-            tooltip: '''
+        ChoiceChipTip(
+          options: asNumericMethods,
+          selectedOption: selectedTransform,
+          tooltips: asNumericMethodsTooltips,
+          enabled: !isNumeric,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
+            });
+          },
+        ),
+        ChoiceChipTip(
+          enabled: selected == 'NULL' || !isNumeric,
+          options: categoricMethods,
+          selectedOption: !isNumeric ? selectedTransform : '',
+          tooltips: categoricMethodsTooltips,
+          onSelected: (String? selected) {
+            setState(() {
+              selectedTransform = selected ?? '';
 
-            Select a secondary variable to assist in the recoding process.
+              // If "Join Categorics" is selected, filter inputs to only categoric types
+              if (selectedTransform == 'Join Categorics') {
+                inputs = inputs
+                    .where(
+                      (input) =>
+                          ref.read(typesProvider)[input] == Type.categoric,
+                    )
+                    .toList();
 
-            ''',
-          ),
+                // Update selected and selected2 to ensure they are valid
+                selected = inputs.isNotEmpty ? inputs.first : 'NULL';
+                selected2 = inputs.length > 1 ? inputs[1] : 'NULL';
+
+                ref.read(selectedProvider.notifier).state = selected!;
+                ref.read(selected2Provider.notifier).state = selected2;
+              }
+            });
+          },
         ),
       ],
     );
@@ -214,13 +310,28 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       selected2 = inputs[1];
     }
 
+    bool isNumeric = true;
+
+    // On startup with no dataset (so nothing selected), the default is to enable
+    // all the chips.
+
+    if (selected != 'NULL') {
+      isNumeric = ref.read(typesProvider)[selected] == Type.numeric;
+    }
+
     return Stack(
       children: [
         Column(
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Align content to the start
+          mainAxisAlignment:
+              MainAxisAlignment.start, // Optional: Align vertically
           spacing: configRowSpace,
           children: [
             configTopGap,
             Row(
+              mainAxisAlignment: MainAxisAlignment.start, // Align to start
+
               spacing: configWidgetSpace,
               children: [
                 configTopGap,
@@ -235,7 +346,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     buildAction();
 
                     if (selectedTransform == 'Quantiles') {
-                      await Future.delayed(const Duration(seconds: 5));
+                      await Future.delayed(const Duration(seconds: 1));
                     }
 
                     setState(() {
@@ -252,7 +363,15 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                 ),
                 variableChooser(
                   'Variable',
-                  inputs,
+                  selectedTransform == 'Join Categorics'
+                      ? inputs
+                          .where(
+                            (input) =>
+                                ref.read(typesProvider)[input] ==
+                                Type.categoric,
+                          )
+                          .toList()
+                      : inputs,
                   selected,
                   ref,
                   selectedProvider,
@@ -262,17 +381,40 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                       ref.read(selectedProvider.notifier).state =
                           value ?? 'IMPOSSIBLE';
 
-                      // Reset the selected transform based on the variable type.
-
-                      selectedTransform =
-                          ref.read(typesProvider)[value] == Type.numeric
-                              ? numericMethods.first
-                              : categoricMethods.first;
+                      // Update isNumeric dynamically based on the selected variable type
+                      isNumeric =
+                          ref.read(typesProvider)[value] == Type.numeric;
+                      debugPrint('isNumeric changed to $isNumeric');
                     });
                   },
                   tooltip: '''
 
                   Choose the primary variable to be recoded.
+
+                  ''',
+                ),
+                variableChooser(
+                  'Secondary',
+                  selectedTransform == 'Join Categorics'
+                      ? inputs
+                          .where(
+                            (input) =>
+                                ref.read(typesProvider)[input] ==
+                                Type.categoric,
+                          )
+                          .toList()
+                      : inputs,
+                  selected2,
+                  ref,
+                  selected2Provider,
+                  enabled: selectedTransform == 'Join Categorics',
+                  onChanged: (String? value) {
+                    ref.read(selected2Provider.notifier).state =
+                        value ?? 'IMPOSSIBLE';
+                  },
+                  tooltip: '''
+
+                  Select a secondary variable to assist in the recoding process.
 
                   ''',
                 ),

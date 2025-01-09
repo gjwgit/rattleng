@@ -6,8 +6,14 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.3.n series are heading
 toward a 6.4 release.
 
+Binaries to download latest version:
+[**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
+[**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
+[**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
+
 ## 6.4 LATEST UPDATES
 
++ TRANSFORM supports AsNumeric and AsCategoric [6.3.50 20250108 kev]
 + Model evaluation - error matrix and ROC curve [6.3.49 20250107 zy]
 + Various cleanup and style fixes [6.3.48 20250106 gjw]
 + Check version update on startup [6.3.47 20250106 yyx]
