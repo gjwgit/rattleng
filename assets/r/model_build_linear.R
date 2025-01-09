@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset ds build a linear model.
+# From dataset `tcds` build a `glm()` linear model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-10-07 17:03:05 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 08:53:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,24 +22,27 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
-library(rattle)
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials.
+# https://survivor.togaware.com/datascience/ for further details.
+
+# Load required packages from the local library into the R session.
 
 # Define model type and description.
 
 mtype <- "linear"
 mdesc <- "Linear Model"
 
-# Define the formula for the model.
-
-form <- as.formula(paste(target, "~ ."))
-
-# Build a Logistic Regression Model.
+# Train a Logistic Regression Model.
 
 model_glm <- glm(
   form,
-  data   = ds[tr, vars],
+  data   = trds,
   family = binomial(link = LINEAR_FAMILY),
 )
 
