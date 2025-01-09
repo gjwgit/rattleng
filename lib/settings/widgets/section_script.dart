@@ -66,7 +66,11 @@ class Script extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-
+              **Reset Script Settings**
+              
+              Click to reset the script settings to their default values.
+              This will restore the default behavior of including comments
+              when saving scripts.
 
               ''',
               child: ElevatedButton(
@@ -83,8 +87,15 @@ class Script extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-
-
+              **Strip Comments and Blank Lines**
+              
+              When enabled, comments and blank lines will be removed from
+              the script when saving to file. This produces cleaner R code
+              that can be more easily compared with Rattle V5 output.
+              
+              By default, comments are preserved to maintain documentation
+              and readability of the saved scripts.
+              
               ''',
               child: Row(
                 children: [
