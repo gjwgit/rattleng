@@ -51,6 +51,10 @@ class ScriptSaveButton extends ConsumerWidget {
       **Save.** Tap here to save the information in this text
           page to a **R script** document.
 
+      By default, comments and blank lines are included in the saved script.
+      This can be changed in Settings to strip comments and blank lines
+      for a more concise output.
+
       ''',
       child: IconButton(
         onPressed: () {
