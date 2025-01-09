@@ -1,4 +1,4 @@
-/// Session section.
+/// Script section.
 //
 // Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
@@ -89,13 +89,13 @@ class Script extends ConsumerWidget {
 
               **Strip Comments and Blank Lines**
               
-              When enabled, comments and blank lines will be removed from
+              When **ON**, comments and blank lines will be removed from
               the script when saving to file. This produces cleaner R code
               that can be more easily compared with Rattle V5 output.
               
-              By default, comments are preserved to maintain documentation
+              When **OFF**, comments are preserved to maintain documentation
               and readability of the saved scripts.
-              
+
               ''',
               child: Row(
                 children: [

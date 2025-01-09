@@ -110,7 +110,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     _loadPartition();
 
-    // Load strip comments setting.
+    // Load strip comments setting from shared preferences.
 
     ref.read(stripCommentsProvider.notifier).state =
         prefs.getBool('stripComments') ?? false;
