@@ -36,6 +36,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/script.dart';
+import 'package:rattle/providers/settings.dart';
 
 class ScriptSaveButton extends ConsumerWidget {
   const ScriptSaveButton({super.key});
@@ -75,7 +76,8 @@ class ScriptSaveButton extends ConsumerWidget {
     if (context.mounted) {
       if (outputPath != null) {
         // User picked a file.
-        _saveScript(ref, outputPath, context);
+        bool stripComments = ref.read(stripCommentsProvider);
+        _saveScript(ref, outputPath, context, stripComments);
       } else {
         // user canceled the file picker
         _showErrorDialog(context, 'No file selected');
@@ -112,13 +114,12 @@ class ScriptSaveButton extends ConsumerWidget {
 
   // Save the script to a file.
 
-  void _saveScript(WidgetRef ref, String fileName, BuildContext context) {
+  void _saveScript(WidgetRef ref, String fileName, BuildContext context,
+      bool stripComments) {
     debugPrint("SAVE BUTTON EXPORT: '$fileName'");
-
     // Get the script content from the provider.
 
     String script = ref.read(scriptProvider);
-
     // 20250106 gjw Remove the lines starting with 'svg' and 'dev.off' since the
     // final user script will generally not have access to the tmpdir and the
     // user will generally want to see the plots rather than immediately save
@@ -132,6 +133,14 @@ class ScriptSaveButton extends ConsumerWidget {
     lines = lines.where((line) => !line.trim().startsWith('rat <-')).toList();
     lines = lines.where((line) => !line.trim().startsWith('rat(')).toList();
     lines = lines.map((line) => line.replaceAll(tempDir + '/', '')).toList();
+
+    if (stripComments) {
+      // Remove R comments (lines starting with #)
+      lines = lines.where((line) => !line.trim().startsWith('#')).toList();
+      // Remove blank lines
+      lines = lines.where((line) => line.trim().isNotEmpty).toList();
+    }
+
     script = lines.join('\n');
 
     if (!fileName.endsWith('.R')) {
@@ -139,11 +148,7 @@ class ScriptSaveButton extends ConsumerWidget {
     }
     final file = File(fileName);
 
-    // Write the script content to the file.
-
     file.writeAsString(script);
-
-    // Show a confirmation message.
 
     final filePath = file.absolute.path;
     ScaffoldMessenger.of(context).showSnackBar(
