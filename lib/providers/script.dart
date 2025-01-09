@@ -1,6 +1,6 @@
 /// Gloabl variable status as text for the status bar.
 ///
-/// Time-stamp: <Sunday 2024-10-13 10:36:28 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-01-08 20:10:43 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -31,7 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final scriptProvider = StateProvider<String>(
   (ref) => '''# An R script to replicate your Rattle session.
 #
-# Copyright (C) 2023-2024, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # RattleNG Version VERSION.
 #
