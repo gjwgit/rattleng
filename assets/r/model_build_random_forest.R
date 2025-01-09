@@ -61,6 +61,9 @@ model_randomForest <- randomForest(
 
 model <- model_randomForest
 
+# 20250109 zy Model page has OOB ROC Curve Random Forest plot.
+# Keep the following code for the model page.
+
 predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
 predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
 predicted_te <- predict(model, newdata = teds, type = "prob")[,2]

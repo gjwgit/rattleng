@@ -57,10 +57,6 @@ model_ada <- ada(form,
 
 model <- model_ada
 
-predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
-predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
-predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
-
 
 # Print the summary of the trained model.
 

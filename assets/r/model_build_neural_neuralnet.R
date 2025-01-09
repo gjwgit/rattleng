@@ -154,10 +154,6 @@ if (length(target_levels) == 2) {
 
 model <- model_neuralnet
 
-predicted_tr <- predict(model, newdata = trds)
-predicted_tu <- predict(model, newdata = tuds)
-predicted_te <- predict(model, newdata = teds)
-
 # Generate a textual view of the Neural Network model.
 
 print(model_neuralnet)

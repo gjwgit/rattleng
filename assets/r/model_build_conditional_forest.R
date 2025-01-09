@@ -51,21 +51,6 @@ model_conditionalForest <- cforest(
                              mtry  = RF_MTRY,)
 )
 
-# Save the model to the TEMPLATE variable `model` and the predicted
-# values appropriately.
-
-model <- model_conditionalForest
-
-predicted_tr <- predict(model, newdata = trds, type = "prob")
-predicted_tu <- predict(model, newdata = tuds, type = "prob")
-predicted_te <- predict(model, newdata = teds, type = "prob")
-
-# The predictions need to be converted to percentages/probabilities.
-
-predicted_tr <- generate_predictions(predicted_tr)
-predicted_tu <- generate_predictions(predicted_tu)
-predicted_te <- generate_predictions(predicted_te)
-
 # Generate textual output of the 'Conditional Random Forest' model.
 
 print(model_conditionalForest)

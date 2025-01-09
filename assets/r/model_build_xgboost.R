@@ -51,10 +51,6 @@ model_xgb <- rattle::xgboost(form,
 
 model <- model_xgb
 
-predicted_tr <- predict(model, newdata = trds)
-predicted_tu <- predict(model, newdata = tuds)
-predicted_te <- predict(model, newdata = teds)
-
 # Print the summary of the trained model.
 
 print(model_xgb)
