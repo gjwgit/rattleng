@@ -22,10 +22,18 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
+
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials.
+# https://survivor.togaware.com/datascience/ for further details.
+
+# Load required packages from the local library into the R session.
 
 library(kernlab)
-library(rattle)
 
 # Define the model type and description for file paths and titles.
 
@@ -37,27 +45,22 @@ mdesc <- "Support Vector Machine"
 svm_kernel <- SVM_KERNEL
 
 if (svm_kernel == "polydot") {
-  svm_model <- ksvm(
-    as.factor(trds[[target]]) ~ .,
+  model_svm <- ksvm(
+    form,
     data       = trds,
-    kernel     = SVM_KERNEL,
+    kernel     = svm_kernel,
     kpar       = list("degree" = SVM_DEGREE),
     prob.model = TRUE
   )
 } else {
-  svm_model <- ksvm(
-    as.factor(trds[[target]]) ~ .,
+  model_svm <- ksvm(
+    form,
     data       = trds,
-    kernel     = SVM_KERNEL,
+    kernel     = svm_kernel,
     prob.model = TRUE
   )
 }
 
-# Save the model to the TEMPLATE variable `model` and the predicted
-# values appropriately.
+# Output a summary of the trained SVM model.
 
-model <- svm_model
-
-# Print a summary of the trained SVM model.
-
-print(svm_model)
+print(model_svm)
