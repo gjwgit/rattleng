@@ -42,7 +42,6 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_package.dart';
 import 'package:rattle/r/load_dataset.dart';
-import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
@@ -69,15 +68,20 @@ class DatasetPopup extends ConsumerWidget {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: packageMap.entries.map((entry) {
-                  return ListTile(
-                    title: Text(entry.key),
-                    subtitle: Text(entry.value.join(', ')),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      debugPrint('Selected Package: ${entry.key}');
-                    },
-                  );
+                children: packageMap.entries.expand((entry) {
+                  // Expand each package into a list of ListTile widgets
+                  return entry.value.map((dataset) {
+                    return ListTile(
+                      title: Text(
+                        '${entry.key} - $dataset',
+                      ), // Display package name and dataset
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        debugPrint(
+                            'Selected Package: ${entry.key}, Dataset: $dataset');
+                      },
+                    );
+                  }).toList();
                 }).toList(),
               ),
             ),
