@@ -93,13 +93,13 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String rocXGBoostImage = '$tempDir/model_evaluate_roc_xgboost_$dtype.svg';
 
     String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
-    String handCtreeImage = '$tempDir/model_evaluate_hand_ctree_$dtype.svg';
-    String handAdaBoostImage = '$tempDir/model_evaluate_hand_ada_$dtype.svg';
 
     List<String> existingImages = [];
     List<String> imagesTitles = [];
     List<String> rocImages = [];
     List<String> rocImagesTitles = [];
+    List<String> handImages = [];
+    List<String> handImagesTitles = [];
 
     // List of image-title pairs for ROC data.
 
@@ -115,6 +115,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {'image': rocXGBoostImage, 'title': 'XGBoost'},
     ];
 
+    // List of image-title pairs for Hand plot.
+
+    final handImageData = [
+      {'image': handRpartImage, 'title': 'RPART'},
+    ];
+
     // Iterate through each image-title pair.
 
     for (var data in rocImageData) {
@@ -124,19 +130,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       }
     }
 
-    if (imageExists(handRpartImage)) {
-      existingImages.add(handRpartImage);
-      imagesTitles.add('RPART');
-    }
-
-    if (imageExists(handCtreeImage)) {
-      existingImages.add(handCtreeImage);
-      imagesTitles.add('CTREE');
-    }
-
-    if (imageExists(handAdaBoostImage)) {
-      existingImages.add(handAdaBoostImage);
-      imagesTitles.add('ADA BOOST');
+    for (var data in handImageData) {
+      if (imageExists(data['image']!)) {
+        handImages.add(data['image']!);
+        handImagesTitles.add(data['title']!);
+      }
     }
 
     if (rocImages.isNotEmpty) {
@@ -145,6 +143,16 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
           titles: rocImagesTitles,
           paths: rocImages,
           appBarImage: 'ROC',
+        ),
+      );
+    }
+
+    if (handImages.isNotEmpty) {
+      pages.add(
+        MultiImagePage(
+          titles: handImagesTitles,
+          paths: handImages,
+          appBarImage: 'Hand',
         ),
       );
     }

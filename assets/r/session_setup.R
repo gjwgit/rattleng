@@ -52,7 +52,8 @@
 # right button bar which will run the `packages.R` script to check and
 # install any missing packages.
 
-library(ggplot2)      # To support a local rattle theme.
+library(ggplot2) # To support a local rattle theme.
+library(ggtext)  # To support markdown text in ggplot title.
 
 ####################################
 # Default settings
