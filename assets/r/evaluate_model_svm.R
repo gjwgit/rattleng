@@ -1,11 +1,11 @@
 # Define `pred_ra` and `prob_ra` for a svm model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-12-25 17:17:19 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 09:34:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
 # Rattle timestamp: TIMESTAMP
 #
@@ -43,7 +43,7 @@ mtype <- "svm"
 mdesc <- "Support Vector Machine"
 
 # 20250101 gjw Define the template functions to generate the
-# predications and the probabilities for any dataset.
+# predications and the probabilities.
 
 pred_ra <- function(model, data) predict(model, newdata=data,)
 
