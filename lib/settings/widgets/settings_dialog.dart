@@ -66,6 +66,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     super.dispose();
   }
 
+  // Load settings from shared preferences and update providers.
+
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
 
