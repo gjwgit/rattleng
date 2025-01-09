@@ -54,8 +54,6 @@ class SettingsDialog extends ConsumerStatefulWidget {
 }
 
 class SettingsDialogState extends ConsumerState<SettingsDialog> {
-  String? _selectedTheme;
-
   @override
   void initState() {
     super.initState();
@@ -105,22 +103,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(useValidationSettingProvider.notifier).state =
         prefs.getBool('useValidation') ?? false;
 
-    _loadTheme();
-
     _loadRandomSeed();
 
     _loadPartition();
-  }
-
-  Future<void> _loadTheme() async {
-    // Get the current theme from the Riverpod provider.
-
-    _selectedTheme = ref.read(settingsGraphicThemeProvider);
-
-    // Automatically update the theme in Riverpod when the dialog is opened.
-    ref
-        .read(settingsGraphicThemeProvider.notifier)
-        .setGraphicTheme(_selectedTheme!);
   }
 
   Future<void> _loadRandomSeed() async {
