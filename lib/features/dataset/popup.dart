@@ -38,7 +38,11 @@ import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_package.dart';
 import 'package:rattle/r/load_dataset.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 
@@ -48,6 +52,32 @@ void datasetLoadedUpdate(WidgetRef ref) {
 
 class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
+
+  // Function to show package options
+  void showPackageDialog(
+      BuildContext context, Map<String, List<String>> packageMap) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Available Packages'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: packageMap.entries.map((entry) {
+              return ListTile(
+                title: Text(entry.key),
+                subtitle: Text(entry.value.join(', ')),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  print('Selected Package: ${entry.key}');
+                },
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -137,13 +167,24 @@ class DatasetPopup extends ConsumerWidget {
               buttonGap,
 
               ElevatedButton(
-                onPressed: null,
-                // onPressed: () {
-                //   // TODO 20231018 gjw datasetSelectPackage();
-                //   Navigator.pop(context, 'Package');
-                //   showUnderConstruction(context);
-                //   datasetLoadedUpdate(ref);
-                // },
+                onPressed: () {
+                  // 20240109 yyx might not work for the first click need to wait it?
+                  // await rSource(context, ref, ['list_package_dataset']);
+                  // scrape the packages
+                  String stdout = ref.read(stdoutProvider);
+                  String content =
+                      rExtract(stdout, '> package_datasets_cleaned');
+                  // debugPrint('content is $content');
+                  Map<String, List<String>> map = parsePackage(content);
+                  debugPrint(
+                      'map from package to dataset is ${map.toString()}',);
+
+                  showPackageDialog(context, map);
+                  // TODO 20231018 gjw datasetSelectPackage();
+                  // Navigator.pop(context, 'Package');
+                  // showUnderConstruction(context);
+                  datasetLoadedUpdate(ref);
+                },
                 child: const MarkdownTooltip(
                   message: '''
 
