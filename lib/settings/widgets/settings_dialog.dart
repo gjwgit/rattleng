@@ -42,7 +42,6 @@ import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
-import 'package:rattle/providers/session_control.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/settings/utils/handle_cancel_button.dart';
 
