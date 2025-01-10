@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-10-13 17:22:35 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:02:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -27,8 +27,6 @@
 
 library(Ckmeans.1d.dp)  # For ggplot.
 library(data.table)     # Display data as a nicely formatted table.
-library(ggtext)         # Support markdown in ggplot titles.
-library(hmeasure)
 library(rattle)         # Provides a convenient wrapper for xgboost.
 library(xgboost)        # For XGBoost model.
 
@@ -38,11 +36,11 @@ mtype <- "xgboost"
 mdesc <- "XGBoost"
 
 model_xgb <- rattle::xgboost(form,
-                     data              = trds, 
+                     data              = trds,
                      max_depth         = BOOST_MAX_DEPTH,     # Maximum depth of a tree
                      eta               = BOOST_LEARNING_RATE, # Learning rate
                      nthread           = BOOST_THREADS,       # Set the number of threads
-                     num_parallel_tree = 1, 
+                     num_parallel_tree = 1,
                      nrounds           = BOOST_ITERATIONS,
                      metrics           = 'error',
                      objective         = BOOST_OBJECTIVE, )
@@ -81,8 +79,8 @@ print(importance_dt, row.names = FALSE)
 # Add value labels to the bars using geom_text().
 
 importance_plot <- importance_plot +
-  geom_text(aes(label = round(Importance, 4), y = Importance), 
-            hjust = -0.2, 
+  geom_text(aes(label = round(Importance, 4), y = Importance),
+            hjust = -0.2,
             size = 3,)
 
 # Increase plot limits to make space for the labels.
