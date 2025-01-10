@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset `ds` build a conditional forest model.
+# From dataset `trds` build an `cforest()` conditional forest.
 #
-# Copyright (C) 2023-2024, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-12-03 12:39:21 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 08:57:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,16 +24,15 @@
 #
 # Author: Graham Williams
 
-# Random Forest using cforest()
-#
 # TIMESTAMP
 #
 # References:
 #
-# @williams:2017:essentials Chapter 8.
+# @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages.
+# Load required packages from the local library into the R session.
 
 library(ggplot2)
 library(kernlab)
@@ -41,8 +40,12 @@ library(party)
 library(rattle)
 library(reshape2)
 
+# Define model type and description to be used in following R scripts.
+
 mtype <- "cforest"
 mdesc <- "Random Forest"
+
+# Train a conditional model based on the training dataset.
 
 model_conditionalForest <- cforest(
   form,
