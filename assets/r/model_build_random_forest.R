@@ -1,6 +1,6 @@
-# Rattle Scripts: From dataset ds build a random forest model.
+# From dataset `trds` build a `randomForest()` forest model.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
