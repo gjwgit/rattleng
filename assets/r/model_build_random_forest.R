@@ -56,18 +56,6 @@ model_randomForest <- randomForest(
   na.action  = RF_NA_ACTION,
   replace    = FALSE)
 
-# Save the model to the TEMPLATE variable `model` and the predicted
-# values appropriately.
-
-model <- model_randomForest
-
-# 20250109 zy Model page has OOB ROC Curve Random Forest plot.
-# Keep the following code for the model page.
-
-predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
-predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
-predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
-
 ########################################################################
 
 # Generate textual output of the 'Random Forest' model.
@@ -143,99 +131,4 @@ legend("topright", c("OOB", "No", "Yes"),
 title(main="Error Rates Random",
     sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
 
-dev.off()
-
-# Plot the OOB ROC curve.
-
-svg("TEMPDIR/model_random_forest_oob_roc_curve.svg")
-
-# Extract observed class labels from the Random Forest model.
-
-observed <- model_randomForest$y  # This is a factor
-
-# Get the class labels from the model.
-
-class_labels <- levels(observed)
-
-# Check the distribution of classes.
-
-class_counts <- table(observed)
-
-# Decide on the positive class.
-# Let's choose the class with fewer observations as the positive class.
-
-positive_class <- names(which.min(class_counts))
-
-# Convert observed outcomes to binary (0/1).
-
-observed_binary <- ifelse(observed == positive_class, 1, 0)
-
-# Extract the OOB predicted probabilities for the positive class.
-
-predicted_probs <- model_randomForest$votes[, positive_class]
-
-# Remove any NA values.
-
-valid_indices <- !is.na(predicted_probs) & !is.na(observed_binary)
-predicted_probs <- predicted_probs[valid_indices]
-observed_binary <- observed_binary[valid_indices]
-
-# Check if we have enough data points in each class.
-
-min_class_size <- min(sum(observed_binary == 1), sum(observed_binary == 0))
-
-if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
-  # Calculate ROC curve using pROC package instead of verification.
-
-  roc_obj <- pROC::roc(observed_binary, predicted_probs, 
-                       quiet     = TRUE, 
-                       ci        = TRUE, 
-                       ci.method = "delong")
-  
-  # Plot ROC curve.
-
-  plot(roc_obj, 
-       main        = "OOB ROC Curve Random Forest",
-       col         = "blue", 
-       lwd         = 2,
-       legacy.axes = TRUE)
-  
-  # Add diagonal reference line.
-
-  abline(0, 1, lty = 2, col = "gray")
-  
-  # Add AUC to the plot.
-
-  auc_value <- pROC::auc(roc_obj)
-  legend("bottomright", 
-         legend = sprintf("AUC = %.3f\n95%% CI: %.3f-%.3f", 
-                         auc_value,
-                         roc_obj$ci[1],
-                         roc_obj$ci[3]),
-         bty = "n")
-  
-  # Add subtitle.
-
-  mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), 
-              Sys.info()["user"]), 
-        side = 3, 
-        line = 0.5, 
-        cex  = 0.8)
-  
-} else {
-  # Create an empty plot with an error message.
-
-  plot(0, 0, 
-       type = "n", 
-       main = "ROC Curve Error", 
-       xlab = "", 
-       ylab = "",
-       axes = FALSE)
-  text(0, 0, 
-       paste("Insufficient data for ROC curve:\n",
-             "Minimum class size =", min_class_size,
-             "\nUnique probability values =", 
-             length(unique(predicted_probs))),
-       cex = 1.2)
-}
 dev.off()
