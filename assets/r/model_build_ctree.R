@@ -1,11 +1,11 @@
-# From dataset `trds` build a `ctree()` decision tree.
+# From dataset `trds` build a `ctree()` conditional tree.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-08 14:54:32 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 08:57:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,13 +24,12 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# TIMESTAMP
 #
 # References:
 #
 # @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
+# https://survivor.togaware.com/datascience/conditional-decision-tree.html
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Load required packages from the local library into the R session.
