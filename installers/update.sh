@@ -30,12 +30,12 @@ conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
 
 if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
-    echo 'Uploads are going to ${DEST}.'
+    echo "Uploads are going to ${DEST}."
     echo
 
     # Determine the latest version from pubspec.yaml. Assumes the
     # latest Bump Version push is the same version.
-    
+
     version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
 
     echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
@@ -62,7 +62,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}-${version}-windows.zip
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
 
-    
+
     echo ""
 
     echo '***** UPLOAD MACOS'
@@ -71,7 +71,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
     mv ${APP}-dev-macos.zip ARCHIVE/${APP}-${version}-macos.zip
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
-    
+
 else
     gh run view ${bumpId}
     gh run view ${bumpId} --json status,conclusion
