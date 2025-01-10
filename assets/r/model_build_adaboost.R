@@ -1,11 +1,11 @@
-# Build an AdaBoost model.
+# From dataset `trds` build an `ada()` boost model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 11:39:42 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 08:57:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -16,14 +16,23 @@
 #
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR MORE DETAILS.
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+# details.
 #
 # You should have received a copy of the GNU General Public License along with
-# this program. If not, see <https://www.gnu.org/licenses/>.
+# this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
-# Load required libraries.
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/dtrees.html
+# https://survivor.togaware.com/datascience/ for further details.
+
+# Load required packages from the local library into the R session.
 
 library(ada)
 library(caret)
@@ -32,7 +41,7 @@ library(hmeasure)
 library(rattle) 
 library(rpart)
 
-# Define model type and description.
+# Define model type and description to be used in following R scripts.
 
 mtype <- "adaboost"
 mdesc <- "Adaptive Boosting (AdaBoost)"
@@ -51,12 +60,6 @@ model_ada <- ada(form,
                  iter    = BOOST_ITERATIONS,
                  type    = "gentle", # Type of boosting.
                  control = ada_control)
-
-# Save the model to the TEMPLATE variable `model` and the predicted
-# values appropriately.
-
-model <- model_ada
-
 
 # Print the summary of the trained model.
 
