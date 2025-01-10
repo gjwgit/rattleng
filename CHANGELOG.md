@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.4 LATEST UPDATES
 
++ Refactor SETTINGS and add Strip Script Comments [6.3.51 20250110 kev]
 + TRANSFORM supports AsNumeric and AsCategoric [6.3.50 20250108 kev]
 + Model evaluation - error matrix and ROC curve [6.3.49 20250107 zy]
 + Various cleanup and style fixes [6.3.48 20250106 gjw]
