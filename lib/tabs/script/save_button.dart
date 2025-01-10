@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Monday 2025-01-06 07:10:54 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-10 14:41:06 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -48,12 +48,12 @@ class ScriptSaveButton extends ConsumerWidget {
     return MarkdownTooltip(
       message: '''
 
-      **Save.** Tap here to save the information in this text
-          page to a **R script** document.
+      **Save.** Tap here to save the information in this text page to a **R
+      script** document.
 
       By default, comments and blank lines are included in the saved script.
-      This can be changed in Settings to strip comments and blank lines
-      for a more concise output.
+      This can be changed in **Settings** to strip comments and blank lines for
+      a more concise output.
 
       ''',
       child: IconButton(
