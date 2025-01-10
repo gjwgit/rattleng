@@ -1,8 +1,8 @@
-/// Verify the content of the page.
+/// Display a warning if a value is out of the valid range (0-100).
 //
-// Time-stamp: <Friday 2025-01-10 08:26:05 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,24 +21,24 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang, Graham Williams
+/// Authors: Kevin Wang
 
-library;
+import 'package:flutter/material.dart';
 
-import 'package:flutter_test/flutter_test.dart';
-
-/// Check that the expected title for the page is found and optionally some text
-/// value on the page can be found.
-
-Future<void> verifyPage(
-  String title, [
-  String? value,
-]) async {
-  final titleFinder = find.textContaining(title);
-  expect(titleFinder, findsOneWidget);
-
-  if (value != null) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
+void showOutOfRangeWarning(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Invalid Input'),
+        content: const Text('Values must be between 0 and 100.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -1,6 +1,6 @@
-/// Test MOVIES dataset loads properly.
+/// Show the settings dialog.
 //
-// Time-stamp: <Friday 2025-01-10 08:03:45 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,33 +25,28 @@
 
 library;
 
-import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
+import 'package:flutter/material.dart';
 
-import 'package:rattle/main.dart' as app;
+import 'package:rattle/settings/widgets/settings_dialog.dart';
 
-import 'utils/load_demo_dataset.dart';
-import 'utils/verify_text.dart';
-
-void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-  testWidgets('Load Movies Dataset.', (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-
-    await loadDemoDataset(tester, 'Movies');
-
-    // Expect specific text in the ROLES page.
-
-    await verifyText(
-      tester,
-      [
-        'Sixth Sense',
-        'LOTR1',
-        'basket',
-        'item',
-      ],
-    );
-  });
+void showSettingsDialog(BuildContext context) {
+  showGeneralDialog(
+    context: context,
+    barrierLabel: 'Settings',
+    barrierDismissible: true,
+    barrierColor: Colors.black54, // Darken the background
+    transitionDuration: const Duration(milliseconds: 300),
+    pageBuilder: (context, anim1, anim2) {
+      return const Align(
+        alignment: Alignment.center,
+        child: SettingsDialog(),
+      );
+    },
+    transitionBuilder: (context, anim1, anim2, child) {
+      return FadeTransition(
+        opacity: CurvedAnimation(parent: anim1, curve: Curves.easeOut),
+        child: child,
+      );
+    },
+  );
 }
