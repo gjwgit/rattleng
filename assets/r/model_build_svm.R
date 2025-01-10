@@ -1,11 +1,11 @@
-# # From dataset `trds` build a `ksvm()` support vector machine.
+# From dataset `trds` build a `ksvm()` support vector machine.
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 09:50:24 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 11:34:42 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
