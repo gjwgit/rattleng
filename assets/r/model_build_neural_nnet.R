@@ -1,11 +1,11 @@
-# Build a neural network.
+# From dataset `trds` build a `nnet()` nerual model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:43:10 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 08:57:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,29 +24,37 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# Load necessary libraries
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials.
+# https://survivor.togaware.com/datascience/ for further details.
+
+# Load required packages from the local library into the R session.
 
 library(nnet)            # Neural networks
 library(NeuralNetTools)  # For neural network plotting
 
-# Define model type and description.
+# Define model type and description to be used in following R scripts.
 
 mtype <- "nnet"
 mdesc <- "Neural NNET"
 
-# Conditional logic to handle categoric variables based on 'neural_ignore_categoric'.
+# training_ds is set to replace trds in handling situations of
+# Ignore Categoric and Not Ignore Categoric.
 
 if (neural_ignore_categoric) {
-  tds <- ds[tr, ignore_categoric_vars]  
+  training_ds <- ds[tr, ignore_categoric_vars]
 } else {
-  tds <- ds[tr, vars]  
+  training_ds <- ds[tr, vars]
 }
 
 # Train a Neural Network model using nnet.
 
 model_nn <- nnet(
   form,
-  data    = tds,
+  data    = training_ds,
   size    = NNET_HIDDEN_LAYERS,
   skip    = TRUE,
   MaxNWts = NEURAL_MAX_NWTS,
