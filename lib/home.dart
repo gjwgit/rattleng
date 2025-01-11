@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2025-01-08 20:17:57 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-10 08:05:45 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -152,7 +152,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
   }
 
   Future<void> checkForUpdate(String currentVersion) async {
-    debugText('   VERSION', 'Current   $currentVersion');
+    debugText('  VERSION', 'Current   $currentVersion');
 
     // GitHub raw file URL
     final url = Uri.parse(
@@ -170,7 +170,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Extract the version field excluding the + sign and anything after
         final latestVersion =
             yamlContent['version'].toString().split('+').first;
-        debugText('   VERSION', 'Available $latestVersion');
+        debugText('  VERSION', 'Available $latestVersion');
 
         // Compare with the current version
         if (currentVersion != latestVersion) {

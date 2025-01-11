@@ -1,8 +1,8 @@
-/// Test WEATHER dataset loads properly.
+/// Test AUDIT dataset loads properly.
 //
-// Time-stamp: <Friday 2025-01-10 08:45:30 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-10 08:13:20 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams, Kevin Wang
+/// Authors: Graham Williams
 
 library;
 
@@ -36,29 +36,26 @@ import 'utils/verify_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Load Weather Dataset.', (WidgetTester tester) async {
+  testWidgets('Load Audit Dataset.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
-    await loadDemoDataset(tester);
+    await loadDemoDataset(tester, 'Audit');
 
-    // Expect specific text in the ROLES page.
+    // 20250110 gjw On first attempt of the test I had to wait a bit longer. But
+    // repeated testing worked just fine without a delay.
+
+    // await tester.pump(delay);
+
+    // 20250110 gjw Expect specific text in the ROLES page.
 
     await verifyText(
       tester,
       [
-        // Verify dates in the Content Column.
-
-        '2023-07-01',
-        '2023-07-02',
-
-        // Verify min_temp in the Content Column.
-
-        '4.6',
-
-        // Verify max_temp in the Content Column.
-
-        '13.9',
+        'employment',
+        'income',
+        '30, 50, 40',
+        'Female, Male, Male',
       ],
     );
   });

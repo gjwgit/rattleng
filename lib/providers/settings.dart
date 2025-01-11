@@ -96,3 +96,9 @@ final partitionTrainProvider = StateProvider<int>((ref) => 70);
 final partitionTuneProvider = StateProvider<int>((ref) => 15);
 
 final partitionTestProvider = StateProvider<int>((ref) => 15);
+
+final stripCommentsProvider = StateProvider<bool>((ref) => false);
+
+// Settings provider for the session control.
+
+final askOnExitProvider = StateProvider<bool>((ref) => true);
