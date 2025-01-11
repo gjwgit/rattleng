@@ -72,7 +72,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     if (showContentMaterial) {
       pages.add(
         TextPage(
-          title: '# Error Matrix\n\n',
+          title: '''
+                 # Error Matrix\n
+                 Built using [errorMatrix::errorMatrix](https://www.rdocumentation.org/packages/rattle/topics/errorMatrix)
+                 ''',
           content: '\n$content',
         ),
       );
@@ -142,7 +145,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         MultiImagePage(
           titles: rocImagesTitles,
           paths: rocImages,
-          appBarImage: 'ROC',
+          appBarImage:
+              'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
+          buildHyperLink:
+              'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
         ),
       );
     }
@@ -152,7 +158,9 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         MultiImagePage(
           titles: handImagesTitles,
           paths: handImages,
-          appBarImage: 'Hand',
+          appBarImage: 'H-Measure --- Coherent Alternative to the AUC',
+          buildHyperLink:
+              'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
         ),
       );
     }
