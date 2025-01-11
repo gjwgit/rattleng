@@ -31,8 +31,6 @@
 # @williams:2017:essentials.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
-
 # Define model type and description to be used in following R scripts.
 
 mtype <- "linear"
