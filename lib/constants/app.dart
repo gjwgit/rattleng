@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-10-09 17:31:28 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-12 06:08:38 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -28,7 +28,8 @@ library;
 
 /// The Rattle app's title.
 
-const String appTitle = 'Rattle Next Generation Data Science';
+const String appTitle = '[Rattle](https://rattle.togaware.com) '
+    'Next Generation Data Science';
 
 /// Project assets folder path used in the APP.
 

@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Monday 2025-01-06 08:13:59 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-01-12 06:03:23 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -69,7 +69,8 @@ class StatusBar extends ConsumerWidget {
                 final Uri url = Uri.parse(href ?? '');
                 launchUrl(url);
               },
-              data: '[togware.com](https://togaware.com)  '
+              data: '[Rattle @](https://rattle.togaware.com)  '
+                  '[togware.com](https://togaware.com)  '
                   '${basename(path)}'
                   '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
                   '${ref.watch(statusProvider)}',

@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2025-01-10 08:05:45 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-01-12 06:28:28 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -352,7 +352,17 @@ Xu, Yixiang Yin, Bo Zhang.
               height: 40,
             ),
             configWidgetGap,
-            const Text(appTitle),
+            MarkdownBody(
+              data: appTitle,
+              onTapLink: (text, href, title) {
+                final Uri url = Uri.parse(href ?? '');
+                launchUrl(url);
+              },
+              styleSheet: MarkdownStyleSheet(
+                p: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                a: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
         ),
 
