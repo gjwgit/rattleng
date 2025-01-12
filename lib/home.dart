@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2025-01-10 08:05:45 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-01-13 05:54:58 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -352,17 +352,27 @@ Xu, Yixiang Yin, Bo Zhang.
               height: 40,
             ),
             configWidgetGap,
-            const Text(appTitle),
+            MarkdownBody(
+              data: appTitle,
+              onTapLink: (text, href, title) {
+                final Uri url = Uri.parse(href ?? '');
+                launchUrl(url);
+              },
+              styleSheet: MarkdownStyleSheet(
+                p: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                a: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
         ),
 
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
-          // While the version number is reported in the About popup but for
-          // screenshots, during development it is useful to have the version
-          // visiable at all times, particularly for a screenshot, so place it
-          // on the title bar for now.
+          // 20250113 gjw The version number is reported in the About popup but
+          // for screenshots, during development it is useful to have the
+          // version visiable at all times so place it on the title bar. Users
+          // have also noted it and seems useful to have it exposed.
 
           MarkdownTooltip(
             message: '''
