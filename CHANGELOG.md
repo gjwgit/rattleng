@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.4 LATEST UPDATES
 
++ Support links in tooltips [6.3.53 20250113 gjw]
 + Linking title and status bar text to web pages [6.3.52 20250112 gjw]
 + Refactor SETTINGS and add Strip Script Comments [6.3.51 20250110 kev]
 + TRANSFORM supports AsNumeric and AsCategoric [6.3.50 20250108 kev]
