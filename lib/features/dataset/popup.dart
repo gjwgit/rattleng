@@ -362,9 +362,9 @@ Future<void> loadDemoDataset(
   String assetPath,
   String datasetName,
 ) async {
-  // Save the dataset name to the datasetNameProvider.
+  // Save the dataset name in lowercase to the datasetNameProvider.
 
-  ref.read(datasetNameProvider.notifier).state = datasetName;
+  ref.read(datasetNameProvider.notifier).state = datasetName.toLowerCase();
 
   // Copy the asset to a temporary directory.
 
