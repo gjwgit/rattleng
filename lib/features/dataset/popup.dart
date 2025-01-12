@@ -35,6 +35,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -361,6 +362,10 @@ Future<void> loadDemoDataset(
   String assetPath,
   String datasetName,
 ) async {
+  // Save the dataset name to the datasetNameProvider.
+
+  ref.read(datasetNameProvider.notifier).state = datasetName;
+
   // Copy the asset to a temporary directory.
 
   String dest = await copyAssetToTempDir(asset: assetPath);

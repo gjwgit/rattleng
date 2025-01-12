@@ -35,6 +35,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/settings.dart';
 
@@ -73,7 +74,7 @@ class ScriptSaveButton extends ConsumerWidget {
   Future<void> _showFileNameDialog(BuildContext context, WidgetRef ref) async {
     String? outputPath = await FilePicker.platform.saveFile(
       dialogTitle: 'Provide a .R filename to save the R script to',
-      fileName: 'script.R',
+      fileName: '${ref.read(datasetNameProvider)}_script.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
     );
