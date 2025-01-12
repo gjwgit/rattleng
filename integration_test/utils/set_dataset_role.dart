@@ -160,5 +160,4 @@ Future<void> setDatasetRole(
 
   await tester.tap(roleChipFinder);
   await tester.pumpAndSettle();
-
 }

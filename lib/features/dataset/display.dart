@@ -555,7 +555,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     return Center(
       key: Key('role-${columnName}'),
       // Set width to fit 5 ChoiceChips in a row.
-      
+
       child: SizedBox(
         width: choiceChipRowWidth,
         child: Wrap(
