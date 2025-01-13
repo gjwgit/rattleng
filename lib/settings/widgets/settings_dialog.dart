@@ -36,7 +36,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/settings/widgets/section_dataset_toggles.dart';
 import 'package:rattle/settings/widgets/section_graphic_theme.dart';
-import 'package:rattle/settings/widgets/section_partition.dart';
 import 'package:rattle/settings/widgets/section_random_seed.dart';
 import 'package:rattle/settings/widgets/section_session.dart';
 import 'package:rattle/providers/cleanse.dart';

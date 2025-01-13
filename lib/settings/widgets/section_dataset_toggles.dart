@@ -30,7 +30,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/settings/widgets/section_partition.dart';
-import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
