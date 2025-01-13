@@ -113,6 +113,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(stripCommentsProvider.notifier).state =
         prefs.getBool('stripComments') ?? false;
+
+    // Load ignore missing target setting from shared preferences.
+
+    ref.read(ignoreMissingTargetProvider.notifier).state =
+        prefs.getBool('ignoreMissingTarget') ?? true;
   }
 
   Future<void> _loadRandomSeed() async {

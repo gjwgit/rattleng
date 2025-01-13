@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/settings/widgets/section_partition.dart';
+import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -50,6 +51,7 @@ class DatasetToggles extends ConsumerWidget {
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final useValidation = ref.watch(useValidationSettingProvider);
+    final ignoreMissingTarget = ref.watch(ignoreMissingTargetProvider);
 
     Future<void> _saveToggleStates() async {
       final prefs = await SharedPreferences.getInstance();
@@ -251,6 +253,45 @@ class DatasetToggles extends ConsumerWidget {
         ),
         settingsGroupGap,
         Partition(),
+        settingsGroupGap,
+
+        // Ignore Missing Target row.
+
+        Row(
+          spacing: configRowSpace,
+          children: [
+            MarkdownTooltip(
+              message: '''
+              *Note: This setting is not yet having any effect.*
+
+
+              **Ignore Missing Target:**
+              
+              - **On:** Exclude observations with missing target values from analysis.
+              
+              - **Off:** Include all observations, even those with missing target values.
+              ''',
+              child: Row(
+                children: [
+                  const Text(
+                    'Ignore observations with missing target',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(width: 10),
+                  Switch(
+                    value: ignoreMissingTarget,
+                    onChanged: (value) async {
+                      ref.read(ignoreMissingTargetProvider.notifier).state =
+                          value;
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('ignoreMissingTarget', value);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         settingsGroupGap,
 
         Divider(),

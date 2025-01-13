@@ -102,3 +102,5 @@ final stripCommentsProvider = StateProvider<bool>((ref) => false);
 // Settings provider for the session control.
 
 final askOnExitProvider = StateProvider<bool>((ref) => true);
+
+final ignoreMissingTargetProvider = StateProvider<bool>((ref) => true);
