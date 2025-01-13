@@ -104,23 +104,7 @@ class DatasetToggles extends ConsumerWidget {
                 ),
               ),
             ),
-
             configRowGap,
-
-            // Reset Dataset Toggles to default button.
-
-            MarkdownTooltip(
-              message: '''
-
-              **Reset Toggles:** Tap here to reset the Dataset Toggles
-                setting to the default for Rattle.
-
-              ''',
-              child: ElevatedButton(
-                onPressed: _resetToggleStates,
-                child: const Text('Reset'),
-              ),
-            ),
           ],
         ),
 
@@ -243,6 +227,23 @@ class DatasetToggles extends ConsumerWidget {
                   ref.read(keepInSyncProvider.notifier).state = value;
                   _saveKeepInSync(value);
                 },
+              ),
+            ),
+
+            configRowGap,
+
+            // Reset Dataset Toggles to default button.
+
+            MarkdownTooltip(
+              message: '''
+
+              **Reset Toggles:** Tap here to reset the Dataset Toggles
+                setting to the default for Rattle.
+
+              ''',
+              child: ElevatedButton(
+                onPressed: _resetToggleStates,
+                child: const Text('Reset'),
               ),
             ),
           ],
