@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/dataset.dart';
 
 import 'package:universal_io/io.dart' show Platform;
 
@@ -256,6 +257,12 @@ Future<void> rSource(
   code = code.replaceAll('FILENAME', path);
 
   code = code.replaceAll('TEMPDIR', tempDir);
+
+  String package = ref.read(packageProvider);
+  code = code.replaceAll('PACKAGE', package);
+
+  String dataset = ref.read(datasetProvider);
+  code = code.replaceAll('DATASET', dataset);
 
   ////////////////////////////////////////////////////////////////////////
 

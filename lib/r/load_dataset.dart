@@ -31,10 +31,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/app.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/utils/from_package.dart';
 
 /// Load the specified dataset using the appropriate R script.
 ///
@@ -51,6 +53,10 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   // or an R package dataset.
 
   String path = ref.read(pathProvider);
+  String dataset = ref.read(datasetProvider);
+  String package = ref.read(packageProvider);
+
+  debugPrint("path is $path when rLoadDataset");
 
   // TODO 20231018 gjw IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET
   // PROCESSED (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT
@@ -66,17 +72,22 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   String ss = 'session_setup';
   String dw = 'dataset_load_weather';
+  String dfp = 'dataset_load_from_package';
   String dc = 'dataset_load_csv';
   String dx = 'dataset_load_txt';
   String dp = 'dataset_prep'; // Dataset cleaning and prepartion pre-template.
 
-  if (path == '' || path == weatherDemoFile) {
+  if (path == '' && dataset.isEmpty && package.isEmpty) {
     // 20241007 gjw If no path is specified then we load the sample dataset from
     // Rattle. At this time through the GUI we do not have an empty path nor are
     // we using the rattle::weather dataset which is rather dated. So this
     // option is not currently utilised.
+    path = weatherDemoFile;
+  }
 
-    if (context.mounted) await rSource(context, ref, [ss, dw, dp]);
+  if (isFromPackage(path)) {
+    // load from package first
+    if (context.mounted) await rSource(context, ref, [ss, dfp, dp]);
   } else if (path.endsWith('.csv')) {
     // 20241007 gjw We will load a CSV file into the R process. Note that we do
     // not yet run the DATA TEMPLATE as we need to first set up the ROLES. The

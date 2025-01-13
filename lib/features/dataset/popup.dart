@@ -35,6 +35,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -53,11 +54,13 @@ class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
 
   // Function to show package options
-  void showPackageDialog(
+  Future<String> datasetSelectPackage(
     BuildContext context,
     Map<String, List<String>> packageMap,
-  ) {
-    showDialog(
+    WidgetRef ref,
+  ) async {
+    String path = '';
+    await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -76,9 +79,23 @@ class DatasetPopup extends ConsumerWidget {
                         '${entry.key} - $dataset',
                       ), // Display package name and dataset
                       onTap: () {
+                        ref.read(pathProvider.notifier).state =
+                            '${entry.key}::$dataset';
+                        debugPrint(
+                          'update path provider to ${ref.read(pathProvider)}',
+                        );
+
+                        ref.read(datasetProvider.notifier).state = '$dataset';
+                        ref.read(packageProvider.notifier).state =
+                            '${entry.key}';
+
+                        path = ref.read(pathProvider);
+
+                        Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         debugPrint(
-                            'Selected Package: ${entry.key}, Dataset: $dataset');
+                          'Selected Package: ${entry.key}, Dataset: $dataset',
+                        );
                       },
                     );
                   }).toList();
@@ -97,6 +114,7 @@ class DatasetPopup extends ConsumerWidget {
         );
       },
     );
+    return path;
   }
 
   @override
@@ -187,7 +205,7 @@ class DatasetPopup extends ConsumerWidget {
               buttonGap,
 
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // 20240109 yyx might not work for the first click need to wait it?
                   // await rSource(context, ref, ['list_package_dataset']);
                   // scrape the packages
@@ -196,15 +214,22 @@ class DatasetPopup extends ConsumerWidget {
                       rExtract(stdout, '> package_datasets_cleaned');
                   // debugPrint('content is $content');
                   Map<String, List<String>> map = parsePackage(content);
-                  debugPrint(
-                    'map from package to dataset is ${map.toString()}',
-                  );
+                  // debugPrint(
+                  //   'map from package to dataset is ${map.toString()}',
+                  // );
 
-                  showPackageDialog(context, map);
+                  String path = await datasetSelectPackage(context, map, ref);
+                  debugPrint('path is $path');
+                  if (path.isNotEmpty) {
+                    // ref.read(pathProvider.notifier).state = path;
+                    if (context.mounted) await rLoadDataset(context, ref);
+                    setStatus(ref, statusChooseVariableRoles);
+                    datasetLoadedUpdate(ref);
+                  }
+                  if (!context.mounted) return;
                   // TODO 20231018 gjw datasetSelectPackage();
                   // Navigator.pop(context, 'Package');
                   // showUnderConstruction(context);
-                  datasetLoadedUpdate(ref);
                 },
                 child: const MarkdownTooltip(
                   message: '''

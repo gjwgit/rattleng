@@ -1,4 +1,4 @@
-# Get a list of datasets in the installed packages.
+# Load a dataset from a package
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
@@ -24,28 +24,16 @@
 #
 # Author: Yixiang Yin
 
-# Get list of installed packages
+# Install the rattle package if not already installed
+# install.packages("PACKAGE")
 
-installed_pkgs <- installed.packages()  
+# Load the rattle package
+# library(PACKAGE)
 
-# Loop over packages and collect datasets
+DATASET <- PACKAGE::DATASET
 
-package_datasets <- lapply(installed_pkgs[, "Package"], function(pkg) {
-tryCatch({
-    datasets <- data(package = pkg)$results[, 3]  # Dataset names from the package
-    return(datasets)
-}, error = function(e) NULL)
-})
+dsname <- "DATASET"
 
-# Create a named list where each element is a package's datasets
+ds <- get(dsname)
 
-names(package_datasets) <- installed_pkgs[, "Package"]
-
-# filter out package with no datasets
-
-package_datasets_cleaned <- package_datasets[sapply(package_datasets, function(x) length(x) > 0)]
-
-package_datasets_cleaned
-# all_datasets <- unlist(package_datasets)
-
-# all_datasets
+vnames <- names(ds)
