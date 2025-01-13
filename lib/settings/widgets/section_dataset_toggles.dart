@@ -1,4 +1,4 @@
-/// Dataset toggles section.
+/// Dataset section.
 //
 // Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
@@ -97,7 +97,7 @@ class DatasetToggles extends ConsumerWidget {
 
               ''',
               child: const Text(
-                'Dataset Toggles',
+                'Dataset',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
