@@ -118,7 +118,8 @@ class DatasetToggles extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            //  Add a text label at the beginning of the  row called  'Toggles'
+            //  Toggles section.
+
             const Text(
               'Toggles',
               style: TextStyle(
@@ -277,7 +278,7 @@ class DatasetToggles extends ConsumerWidget {
                     'Ignore observations with missing target',
                     style: TextStyle(fontSize: 16),
                   ),
-                  const SizedBox(width: 10),
+                  configRowGap,
                   Switch(
                     value: ignoreMissingTarget,
                     onChanged: (value) async {
