@@ -91,8 +91,9 @@ String get shell {
   }
   if (Platform.isAndroid) {
     // 20250113 gjw Trying a UserLand install of R on Android.
-    
+
     return '/data/data/tech.ula/files/support/busybox run-parts /data/data/tech.ula/files/support/executables -- /usr/bin/R';
   }
+
   return '/usr/bin/R';
 }
