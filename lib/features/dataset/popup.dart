@@ -35,6 +35,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -104,6 +105,15 @@ class DatasetPopup extends ConsumerWidget {
                     if (context.mounted) await rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
                     datasetLoadedUpdate(ref);
+
+                    // Save the dataset name in lowercase to the datasetNameProvider from the path.
+
+                    ref.read(datasetNameProvider.notifier).state = path
+                        .split(RegExp(r'[/\\]'))
+                        .last
+                        .split('.')
+                        .first
+                        .toLowerCase();
                   }
 
                   // Avoid the "Do not use BuildContexts across async gaps."
@@ -361,6 +371,10 @@ Future<void> loadDemoDataset(
   String assetPath,
   String datasetName,
 ) async {
+  // Save the dataset name in lowercase to the datasetNameProvider.
+
+  ref.read(datasetNameProvider.notifier).state = datasetName.toLowerCase();
+
   // Copy the asset to a temporary directory.
 
   String dest = await copyAssetToTempDir(asset: assetPath);
