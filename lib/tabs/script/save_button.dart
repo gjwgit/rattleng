@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Friday 2025-01-10 14:41:06 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-01-13 16:08:18 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -72,9 +72,14 @@ class ScriptSaveButton extends ConsumerWidget {
   // Display a dialog for the user to enter the file name.
 
   Future<void> _showFileNameDialog(BuildContext context, WidgetRef ref) async {
+    final String dsname = ref.read(datasetNameProvider);
+
     String? outputPath = await FilePicker.platform.saveFile(
-      dialogTitle: 'Provide a .R filename to save the R script to',
-      fileName: '${ref.read(datasetNameProvider)}_script.R',
+      dialogTitle: 'Provide a .R filename to save the R script to.',
+      // 20250113 gjw If there is not yet a dataset laoded then we need to make
+      // sure the resulting saved filename is `script.R` and not `_script.R`.
+
+      fileName: '${dsname}${dsname.isNotEmpty ? "_" : ""}script.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
     );
