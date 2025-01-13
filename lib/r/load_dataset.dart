@@ -56,8 +56,6 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   String dataset = ref.read(datasetProvider);
   String package = ref.read(packageProvider);
 
-  debugPrint("path is $path when rLoadDataset");
-
   // TODO 20231018 gjw IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET
   // PROCESSED (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT
   // AND IF SO DO SO OTHERWISE DO NOTHING.
@@ -71,7 +69,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   // R Scripts.
 
   String ss = 'session_setup';
-  String dw = 'dataset_load_weather';
+  // String dw = 'dataset_load_weather';
   String dfp = 'dataset_load_from_package';
   String dc = 'dataset_load_csv';
   String dx = 'dataset_load_txt';

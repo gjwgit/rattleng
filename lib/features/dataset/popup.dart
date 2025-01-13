@@ -219,7 +219,6 @@ class DatasetPopup extends ConsumerWidget {
                   // );
 
                   String path = await datasetSelectPackage(context, map, ref);
-                  debugPrint('path is $path');
                   if (path.isNotEmpty) {
                     // ref.read(pathProvider.notifier).state = path;
                     if (context.mounted) await rLoadDataset(context, ref);
