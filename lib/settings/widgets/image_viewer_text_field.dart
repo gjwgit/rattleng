@@ -1,6 +1,6 @@
 /// Image viewer text field.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-01-13 16:17:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -48,8 +48,10 @@ class ImageViewerTextField extends ConsumerWidget {
       message: '''
 
       **Image Viewer Application Setting:** This setting determines the default
-      command to open image files. The default is "open" on Linux/MacOS and "start"
-      on Windows. You can customise it to match your preferred image viewer.
+      command to open image files. The default is "open" on Linux/MacOS and
+      "start" on Windows. You can customise it to match your preferred image
+      viewer. A good choice is **inkscape** which will allow editting the plot
+      as a native SVG.
 
       ''',
       child: Row(

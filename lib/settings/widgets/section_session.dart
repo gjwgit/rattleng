@@ -22,7 +22,6 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,12 +45,21 @@ class Session extends ConsumerWidget {
 
   /// Reset session control settings
   void resetSessionControl(WidgetRef ref) {
+    // Reset the ask on exit setting.
+
     ref.invalidate(askOnExitProvider);
+
+    // Save the ask on exit setting to shared_preferences.
+
     saveAskOnExit(true);
 
-    final defaultApp = Platform.isWindows ? 'start' : 'open';
-    ref.read(imageViewerSettingProvider.notifier).state = defaultApp;
-    saveImageViewerApp(defaultApp);
+    // Reset the image viewer app setting.
+
+    ref.invalidate(imageViewerSettingProvider);
+
+    // Save the image viewer app setting to shared_preferences.
+
+    saveImageViewerApp(ref.read(imageViewerSettingProvider));
   }
 
   @override
