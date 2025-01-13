@@ -82,13 +82,20 @@ final ptyProvider = StateProvider<Pty>((ref) {
 /// Linux and MacOS desktops initiate R simply through the R command. Windows
 /// does an R.exe.
 
+// Rewrite code to remove nesting to pass the DCM  test.
 String get shell {
-  return Platform.isWindows
-      ? 'R.exe'
-      : Platform.isMacOS
-          ? '/usr/local/bin/R'
-          : Platform.isAndroid
-              // 20250113 gjw Trying a UserLand install of R on Android.
-              ? '/data/data/tech.ula/files/support/busybox run-parts /data/data/tech.ula/files/support/executables -- /usr/bin/R'
-              : '/usr/bin/R';
+  if (Platform.isWindows) {
+    return 'R.exe';
+  }
+
+  if (Platform.isMacOS) {
+    return '/usr/local/bin/R';
+  }
+
+  if (Platform.isAndroid) {
+    // 20250113 gjw Trying a UserLand install of R on Android.
+    return '/data/data/tech.ula/files/support/busybox run-parts /data/data/tech.ula/files/support/executables -- /usr/bin/R';
+  }
+
+  return '/usr/bin/R';
 }
