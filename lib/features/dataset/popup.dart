@@ -105,6 +105,15 @@ class DatasetPopup extends ConsumerWidget {
                     if (context.mounted) await rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
                     datasetLoadedUpdate(ref);
+
+                    // Save the dataset name in lowercase to the datasetNameProvider from the path.
+
+                    ref.read(datasetNameProvider.notifier).state = path
+                        .split(RegExp(r'[/\\]'))
+                        .last
+                        .split('.')
+                        .first
+                        .toLowerCase();
                   }
 
                   // Avoid the "Do not use BuildContexts across async gaps."
