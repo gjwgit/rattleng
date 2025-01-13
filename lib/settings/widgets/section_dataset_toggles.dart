@@ -131,6 +131,16 @@ class DatasetToggles extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //  Add a text label at the beginning of the  row called  'Toggles'
+            const Text(
+              'Toggles',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            configRowGap,
+
             Expanded(
               child: ToggleRow(
                 label: 'Cleanse',
