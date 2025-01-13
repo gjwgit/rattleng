@@ -59,18 +59,21 @@ if (!is.null(target)) {
   # target. For predictive modelling we would only use data that has a
   # target value.
 
-  tcds <- ds[!is.na(ds[[target]]),]
-
+  tcds <- ds[!is.na(ds[[target]]), ]
 } else {
-
   form <- formula("~ .")
 
   # If no TARGET variable is identified then we still want to start
   # with a `tcds` for processing.
 
   tcds <- ds
-
 }
+
+# ctree() from the party package cannot handle predictors of type character.
+# Convert character columns to factors.
+
+tcds <- tcds %>%
+  mutate(across(where(is.character), as.factor))
 
 print(form)
 
@@ -135,10 +138,18 @@ if (!is.null(risk)) {
 }
 
 # Retain only the columns that we need for the predictive modelling.
+# ctree() from the party package cannot handle predictors of type character.
+# Convert character columns to factors.
 
 trds <- tcds[tr, setdiff(vars, ignore)]
+trds <- trds %>%
+  mutate(across(where(is.character), as.factor))
 tuds <- tcds[tu, setdiff(vars, ignore)]
+tuds <- tuds %>%
+  mutate(across(where(is.character), as.factor))
 teds <- tcds[te, setdiff(vars, ignore)]
+teds <- teds %>%
+  mutate(across(where(is.character), as.factor))
 
 # Check if the target variable exists and create `actual_tc`.
 
