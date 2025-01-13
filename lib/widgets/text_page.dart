@@ -165,8 +165,8 @@ class TextPage extends StatelessWidget {
                           // Extract the selected text using the selection range.
 
                           final selectedText = content.substring(
-                            selection?.start ?? 0,
-                            selection?.end ?? 0,
+                            selection.start,
+                            selection.end,
                           );
                           // If text was actually selected, copy it to clipboard.
 
