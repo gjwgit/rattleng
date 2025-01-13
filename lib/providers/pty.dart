@@ -83,12 +83,16 @@ final ptyProvider = StateProvider<Pty>((ref) {
 /// does an R.exe.
 
 String get shell {
-  return Platform.isWindows
-      ? 'R.exe'
-      : Platform.isMacOS
-          ? '/usr/local/bin/R'
-          : Platform.isAndroid
-              // 20250113 gjw Trying a UserLand install of R on Android.
-              ? '/data/data/tech.ula/files/support/busybox run-parts /data/data/tech.ula/files/support/executables -- /usr/bin/R'
-              : '/usr/bin/R';
+  if (Platform.isWindows) {
+    return 'R.exe';
+  }
+  if (Platform.isMacOS) {
+    return '/usr/local/bin/R';
+  }
+  if (Platform.isAndroid) {
+    // 20250113 gjw Trying a UserLand install of R on Android.
+    
+    return '/data/data/tech.ula/files/support/busybox run-parts /data/data/tech.ula/files/support/executables -- /usr/bin/R';
+  }
+  return '/usr/bin/R';
 }
