@@ -1,4 +1,4 @@
-/// Dataset toggles section.
+/// Dataset section.
 //
 // Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:rattle/settings/widgets/section_partition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -49,6 +50,7 @@ class DatasetToggles extends ConsumerWidget {
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final useValidation = ref.watch(useValidationSettingProvider);
+    final ignoreMissingTarget = ref.watch(ignoreMissingTargetProvider);
 
     Future<void> _saveToggleStates() async {
       final prefs = await SharedPreferences.getInstance();
@@ -97,30 +99,14 @@ class DatasetToggles extends ConsumerWidget {
 
               ''',
               child: const Text(
-                'Dataset Toggles',
+                'Dataset',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-
             configRowGap,
-
-            // Reset Dataset Toggles to default button.
-
-            MarkdownTooltip(
-              message: '''
-
-              **Reset Toggles:** Tap here to reset the Dataset Toggles
-                setting to the default for Rattle.
-
-              ''',
-              child: ElevatedButton(
-                onPressed: _resetToggleStates,
-                child: const Text('Reset'),
-              ),
-            ),
           ],
         ),
 
@@ -131,6 +117,17 @@ class DatasetToggles extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //  Toggles section.
+
+            const Text(
+              'Toggles',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            configRowGap,
+
             Expanded(
               child: ToggleRow(
                 label: 'Cleanse',
@@ -235,9 +232,68 @@ class DatasetToggles extends ConsumerWidget {
                 },
               ),
             ),
+
+            configRowGap,
+
+            // Reset Dataset Toggles to default button.
+
+            MarkdownTooltip(
+              message: '''
+
+              **Reset Toggles:** Tap here to reset the Dataset Toggles
+                setting to the default for Rattle.
+
+              ''',
+              child: ElevatedButton(
+                onPressed: _resetToggleStates,
+                child: const Text('Reset'),
+              ),
+            ),
           ],
         ),
         settingsGroupGap,
+        Partition(),
+        settingsGroupGap,
+
+        // Ignore Missing Target row.
+
+        Row(
+          spacing: configRowSpace,
+          children: [
+            MarkdownTooltip(
+              message: '''
+              *Note: This setting is not yet having any effect.*
+
+
+              **Ignore Missing Target:**
+              
+              - **On:** Exclude observations with missing target values from analysis.
+              
+              - **Off:** Include all observations, even those with missing target values.
+              ''',
+              child: Row(
+                children: [
+                  const Text(
+                    'Ignore observations with missing target',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  configRowGap,
+                  Switch(
+                    value: ignoreMissingTarget,
+                    onChanged: (value) async {
+                      ref.read(ignoreMissingTargetProvider.notifier).state =
+                          value;
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('ignoreMissingTarget', value);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        settingsGroupGap,
+
         Divider(),
       ],
     );
