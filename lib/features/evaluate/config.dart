@@ -38,6 +38,7 @@ import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EvaluateConfig extends ConsumerStatefulWidget {
   const EvaluateConfig({super.key});
@@ -236,6 +237,22 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
       await rSource(context, ref, selectedParameters.cast<String>());
     }
+  }
+
+  // Load settings from shared preferences and update providers.
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Load useValidation setting from shared preferences.
+
+    ref.read(useValidationSettingProvider.notifier).state =
+        prefs.getBool('useValidation') ?? false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
   }
 
   @override
