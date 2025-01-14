@@ -1,11 +1,11 @@
-# Using `actual` and `predicted` generate error matrix with `rattle::errorMatrix()`.
+# Using `actual` and `predicted` generate error matrix.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-01-06 06:59:55 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:16:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -29,23 +29,11 @@
 # References:
 #
 # @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
-
-## #########################################################################
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
 
 # Load required packages from the local library into the R session.
 
 library(rattle)       # Generate an error matrix.
-
-####################################
 
 em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
 ##

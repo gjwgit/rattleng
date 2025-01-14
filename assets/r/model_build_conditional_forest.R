@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-12-03 12:39:21 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:22:06 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,8 +35,6 @@
 
 # Load required packages.
 
-library(ggplot2)
-library(ggtext)       # Support markdown in ggplot titles.
 library(kernlab)
 library(party)
 library(rattle)
