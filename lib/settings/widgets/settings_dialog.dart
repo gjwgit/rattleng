@@ -36,7 +36,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/settings/widgets/section_dataset_toggles.dart';
 import 'package:rattle/settings/widgets/section_graphic_theme.dart';
-import 'package:rattle/settings/widgets/section_partition.dart';
 import 'package:rattle/settings/widgets/section_random_seed.dart';
 import 'package:rattle/settings/widgets/section_session.dart';
 import 'package:rattle/providers/cleanse.dart';
@@ -113,6 +112,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(stripCommentsProvider.notifier).state =
         prefs.getBool('stripComments') ?? false;
+
+    // Load ignore missing target setting from shared preferences.
+
+    ref.read(ignoreMissingTargetProvider.notifier).state =
+        prefs.getBool('ignoreMissingTarget') ?? true;
   }
 
   Future<void> _loadRandomSeed() async {
@@ -175,7 +179,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       Divider(),
                       DatasetToggles(),
                       GraphicTheme(),
-                      Partition(),
                       RandomSeed(),
                       Session(),
                       Script(),

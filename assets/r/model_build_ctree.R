@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-02 08:42:13 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:01:40 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,8 +35,6 @@
 
 # Load required packages from the local library into the R session.
 
-library(ggtext)       # Support markdown in ggplot titles.
-library(hmeasure)
 library(party)        # Conditional inference trees
 library(partykit)     # Enhanced visualization and interpretation
 

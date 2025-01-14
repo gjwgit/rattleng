@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:48:51 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:17:41 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,6 @@
 #
 # Author: Zheyuan Xu
 
-library(ggtext) # Support markdown in ggplot titles.
 library(neuralnet)
 library(caret)
 library(NeuralNetTools)  # For neural network plotting
@@ -93,16 +92,16 @@ if (length(target_levels) == 2) {
   # Map target variable to 0 and 1.
 
   tds$target_num <- ifelse(tds[[target]] == target_levels[1], 0, 1)
-  
+
   # Combine predictors and target.
 
   ds_final <- cbind(predictors_combined, target_num = tds$target_num)
-  
+
   # Create formula.
 
   predictor_vars <- names(predictors_combined)
   formula_nn <- as.formula(paste('target_num ~', paste(predictor_vars, collapse = ' + ')))
-  
+
   # Train neural network.
 
   model_neuralnet <- neuralnet(
@@ -121,11 +120,11 @@ if (length(target_levels) == 2) {
 
   dmy_target <- dummyVars(~ ., data = tds[target])
   target_onehot <- as.data.frame(predict(dmy_target, newdata = tds[target]))
-  
+
   # Combine predictors and target.
 
   ds_final <- cbind(predictors_combined, target_onehot)
-  
+
   # Create formula.
 
   predictor_vars <- names(predictors_combined)
@@ -135,7 +134,7 @@ if (length(target_levels) == 2) {
     '~',
     paste(predictor_vars, collapse = ' + ')
   ))
-  
+
   # Train neural network.
 
   model_neuralnet <- neuralnet(

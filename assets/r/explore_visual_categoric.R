@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-12-10 17:23:55 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:23:11 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,8 +32,6 @@
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Load required packages from the local library into the R session.
-
-library(ggplot2)
 
 # Preprocess the dataset to generate a temporary dataset `tds` for the
 # plots.

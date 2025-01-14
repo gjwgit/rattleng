@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 21:23:01 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-01-14 13:27:09 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_evaluate.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -60,6 +61,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
+    bool useV = ref.watch(useValidationSettingProvider);
+    if (datasetType == 'Tuning' && useV) datasetType = 'Validation';
 
     List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
 
@@ -72,7 +75,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     if (showContentMaterial) {
       pages.add(
         TextPage(
-          title: '# Error Matrix\n\n',
+          title: '''
+                 # Error Matrix\n
+                 Built using [errorMatrix::errorMatrix](https://www.rdocumentation.org/packages/rattle/topics/errorMatrix)
+                 ''',
           content: '\n$content',
         ),
       );
@@ -93,13 +99,13 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String rocXGBoostImage = '$tempDir/model_evaluate_roc_xgboost_$dtype.svg';
 
     String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
-    String handCtreeImage = '$tempDir/model_evaluate_hand_ctree_$dtype.svg';
-    String handAdaBoostImage = '$tempDir/model_evaluate_hand_ada_$dtype.svg';
 
     List<String> existingImages = [];
     List<String> imagesTitles = [];
     List<String> rocImages = [];
     List<String> rocImagesTitles = [];
+    List<String> handImages = [];
+    List<String> handImagesTitles = [];
 
     // List of image-title pairs for ROC data.
 
@@ -115,6 +121,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {'image': rocXGBoostImage, 'title': 'XGBoost'},
     ];
 
+    // List of image-title pairs for Hand plot.
+
+    final handImageData = [
+      {'image': handRpartImage, 'title': 'RPART'},
+    ];
+
     // Iterate through each image-title pair.
 
     for (var data in rocImageData) {
@@ -124,19 +136,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       }
     }
 
-    if (imageExists(handRpartImage)) {
-      existingImages.add(handRpartImage);
-      imagesTitles.add('RPART');
-    }
-
-    if (imageExists(handCtreeImage)) {
-      existingImages.add(handCtreeImage);
-      imagesTitles.add('CTREE');
-    }
-
-    if (imageExists(handAdaBoostImage)) {
-      existingImages.add(handAdaBoostImage);
-      imagesTitles.add('ADA BOOST');
+    for (var data in handImageData) {
+      if (imageExists(data['image']!)) {
+        handImages.add(data['image']!);
+        handImagesTitles.add(data['title']!);
+      }
     }
 
     if (rocImages.isNotEmpty) {
@@ -144,7 +148,22 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         MultiImagePage(
           titles: rocImagesTitles,
           paths: rocImages,
-          appBarImage: 'ROC',
+          appBarImage:
+              'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
+          buildHyperLink:
+              'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
+        ),
+      );
+    }
+
+    if (handImages.isNotEmpty) {
+      pages.add(
+        MultiImagePage(
+          titles: handImagesTitles,
+          paths: handImages,
+          appBarImage: 'H-Measure --- Coherent Alternative to the AUC',
+          buildHyperLink:
+              'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
         ),
       );
     }
