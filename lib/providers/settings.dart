@@ -25,6 +25,8 @@
 
 library;
 
+import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -73,7 +75,8 @@ final settingsGraphicThemeProvider =
 
 final randomSeedSettingProvider = StateProvider<int>((ref) => 42);
 
-final imageViewerSettingProvider = StateProvider<String>((ref) => '');
+final imageViewerSettingProvider =
+    StateProvider<String>((ref) => Platform.isWindows ? 'start' : 'open');
 
 final randomPartitionSettingProvider = StateProvider<bool>((ref) => false);
 
@@ -96,3 +99,9 @@ final partitionTrainProvider = StateProvider<int>((ref) => 70);
 final partitionTuneProvider = StateProvider<int>((ref) => 15);
 
 final partitionTestProvider = StateProvider<int>((ref) => 15);
+
+final stripCommentsProvider = StateProvider<bool>((ref) => false);
+
+// Settings provider for the session control.
+
+final askOnExitProvider = StateProvider<bool>((ref) => true);

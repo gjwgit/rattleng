@@ -42,6 +42,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_text.dart';
@@ -54,6 +55,10 @@ void main() {
     await tester.pumpAndSettle();
 
     await loadDemoDataset(tester, 'Audit');
+
+    // TODO 20250110 gjw SET adjustment AS THE risk VARIABLE.
+
+    await setDatasetRole(tester, 'adjustment', 'Risk');
 
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree', TreePanel);
@@ -71,18 +76,10 @@ void main() {
         // adjustment is actually an output variable.
 
         '1) root 1400 319 0 (0.77214286 0.22785714)',
-        '2) adjustment< 123.5 1126  45 0 (0.96003552 0.03996448) *',
-        '3) adjustment>=123.5 274   0 1 (0.00000000 1.00000000) *',
-
-        // 20250110 gjw Do we always get the same values for the CP table?
-
-        '2 0.01000      1   0.14107 0.14107 0.020688',
+        '2) marital=Absent,Divorced,Married-spouse-absent,Unmarried,Widowed 769  44 0 (0.94278283 0.05721717) *',
+        '3) marital=Married 631 275 0 (0.56418384 0.43581616)',
       ],
     );
-
-    // TODO 20250110 gjw SET adjustment AS THE risk VARIABLE.
-
-    // setDatasetRole('Risk')
 
     // // Tap the right arrow to go to the second page.
 

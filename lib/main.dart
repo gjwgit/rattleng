@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Wednesday 2024-11-20 16:35:07 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-01-13 14:01:10 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -28,6 +28,7 @@ library;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/utils/show_error.dart';
@@ -40,6 +41,11 @@ import 'package:rattle/utils/is_production.dart';
 
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
+
+  // 20250113 gjw Exploring Andriod deployment. For no ignore the check for R
+  // installed.
+
+  if (Platform.isAndroid) return true;
 
   try {
     final result = await Process.run('R', ['--version']);
@@ -75,14 +81,14 @@ Future<void> main() async {
               () => showError(
                 content: '''
 
-                R is **not installed** or it was not found in the **PATH** environment variable. 
+                R is **not installed** or it was not found in the **PATH** environment variable.
 
-                Please install R and ensure it is in the PATH before using Rattle. 
+                Please install R and ensure it is in the PATH before using Rattle.
 
-                See the 
-                
-                [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html) 
-                
+                See the
+
+                [survival guide](https://survivor.togaware.com/datascience/installing-rattle.html)
+
                 for details.
 
                 ''',

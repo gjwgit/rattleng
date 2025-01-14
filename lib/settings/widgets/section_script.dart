@@ -1,4 +1,4 @@
-/// Session section.
+/// Script section.
 //
 // Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
 //
@@ -31,47 +31,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/settings/utils/save_image_viewer_app.dart';
-import 'package:rattle/settings/widgets/image_viewer_text_field.dart';
 
-class Session extends ConsumerWidget {
-  const Session({super.key});
+class Script extends ConsumerWidget {
+  const Script({super.key});
 
-  /// Save ask on exit setting.
-  Future<void> saveAskOnExit(bool value) async {
+  /// Save strip comments setting.
+  Future<void> saveStripComments(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('askOnExit', value);
+    await prefs.setBool('stripComments', value);
   }
 
   /// Reset session control settings
-  void resetSessionControl(WidgetRef ref) {
-    // Reset the ask on exit setting.
-
-    ref.invalidate(askOnExitProvider);
-
-    // Save the ask on exit setting to shared_preferences.
-
-    saveAskOnExit(true);
-
-    // Reset the image viewer app setting.
-
-    ref.invalidate(imageViewerSettingProvider);
-
-    // Save the image viewer app setting to shared_preferences.
-
-    saveImageViewerApp(ref.read(imageViewerSettingProvider));
+  void resetStripComments(WidgetRef ref) {
+    ref.invalidate(stripCommentsProvider);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final askOnExit = ref.watch(askOnExitProvider);
+    final stripComments = ref.watch(stripCommentsProvider);
 
     return Column(
       children: [
         Row(
           children: [
             const Text(
-              'Session',
+              'Script',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -81,16 +65,15 @@ class Session extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Reset Session Control:** Tap here to reset to enable a confirmation
-              popup when exiting the application.
-
-
-              **Reset Image Viewer App:** Tap here to reset the Image Viewer App setting
-              to the platform's default ("open" on Linux/MacOS, "start" on Windows).
+              **Reset Script Settings**
+              
+              Click to reset the script settings to their default values.
+              This will restore the default behavior of including comments
+              when saving scripts.
 
               ''',
               child: ElevatedButton(
-                onPressed: () => resetSessionControl(ref),
+                onPressed: () => resetStripComments(ref),
                 child: const Text('Reset'),
               ),
             ),
@@ -103,37 +86,36 @@ class Session extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Session Control:** This setting determines whether a confirmation popup
-              appears when the user tries to quit the application.
-
-              - **ON**: A popup will appear asking the user to confirm quitting.
-
-              - **OFF**: The application will exit immediately without a confirmation popup.
-
-              The default setting is **ON**.
+              **Strip Comments and Blank Lines**
+              
+              When **ON**, comments and blank lines will be removed from
+              the script when saving to file. This produces cleaner R code
+              that can be more easily compared with Rattle V5 output.
+              
+              When **OFF**, comments are preserved to maintain documentation
+              and readability of the saved scripts.
 
               ''',
               child: Row(
                 children: [
                   const Text(
-                    'Ask before exit',
+                    'Strip comments',
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
                   configRowGap,
                   Switch(
-                    value: askOnExit,
+                    value: stripComments,
                     onChanged: (value) {
-                      ref.read(askOnExitProvider.notifier).state = value;
-                      saveAskOnExit(value);
+                      ref.read(stripCommentsProvider.notifier).state = value;
+                      saveStripComments(value);
                     },
                   ),
                 ],
               ),
             ),
             configRowGap,
-            const ImageViewerTextField(),
           ],
         ),
         settingsGroupGap,

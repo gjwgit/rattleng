@@ -426,6 +426,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     return Container(
       child: SingleChildScrollView(
+        key: const Key('roles listView'),
         scrollDirection: Axis.vertical,
         child: DataTable(
           columns: [
@@ -552,6 +553,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
     return Center(
+      key: Key('role-${columnName}'),
       // Set width to fit 5 ChoiceChips in a row.
 
       child: SizedBox(
