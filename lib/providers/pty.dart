@@ -83,6 +83,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
 /// does an R.exe.
 
 // Rewrite code to remove nesting to pass the DCM  test.
+
 String get shell {
   if (Platform.isWindows) {
     return 'R.exe';
