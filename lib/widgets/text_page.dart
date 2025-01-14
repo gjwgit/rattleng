@@ -155,6 +155,28 @@ class TextPage extends StatelessWidget {
                       content,
                       style: monoTextStyle,
                       textAlign: TextAlign.left,
+                      // Handle text selection changes in the content.
+
+                      onSelectionChanged: (selection, cause) {
+                        // Only copy text when user long presses or drags to select.
+
+                        if (cause == SelectionChangedCause.longPress ||
+                            cause == SelectionChangedCause.drag) {
+                          // Extract the selected text using the selection range.
+
+                          final selectedText = content.substring(
+                            selection.start,
+                            selection.end,
+                          );
+                          // If text was actually selected, copy it to clipboard.
+
+                          if (selectedText.isNotEmpty) {
+                            Clipboard.setData(
+                              ClipboardData(text: selectedText),
+                            );
+                          }
+                        }
+                      },
                     ),
                   ),
                 ),
