@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 09:34:05 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-14 15:43:44 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,7 +34,7 @@
 # 20241220 gjw Save the model to the TEMPLATE variable `model`. This
 # will be used below and in the following evaluations as required.
 
-model <- svm_model
+model <- model_svm
 
 # 20250105 zy Redefine the model type to update the output of error
 # matrix.

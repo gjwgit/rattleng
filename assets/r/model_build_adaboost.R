@@ -1,11 +1,11 @@
-# From dataset `trds` build an `ada()` boost model.
+# From dataset `tcds` build an AdaBoost model.
 #
-# Copyright (C) 2025, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 08:57:39 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-14 15:25:47 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,6 +28,13 @@
 #
 # References:
 #
+# @williams:2017:essentials
+# https://survivor.togaware.com/datascience/ for further details.
+
+# TIMESTAMP
+#
+# References:
+#
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/ for further details.
@@ -36,9 +43,6 @@
 
 library(ada)
 library(caret)
-library(ggplot2)
-library(hmeasure)
-library(rattle) 
 library(rpart)
 
 # Define model type and description to be used in following R scripts.
@@ -56,7 +60,7 @@ ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
 # Train the AdaBoost model.
 
 model_ada <- ada(form,
-                 data    = trds, 
+                 data    = trds,
                  iter    = BOOST_ITERATIONS,
                  type    = "gentle", # Type of boosting.
                  control = ada_control)
@@ -106,7 +110,7 @@ ada_plot <- ada_plot +
 
 # Increase plot limits to make space for the labels.
 
-ada_plot <- ada_plot + 
+ada_plot <- ada_plot +
   scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
   expand_limits(y = max(importance_df$Importance) * 1.2)
 

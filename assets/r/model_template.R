@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-08 11:45:07 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-14 15:30:17 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -59,7 +59,12 @@ if (!is.null(target)) {
   # target. For predictive modelling we would only use data that has a
   # target value.
 
-  tcds <- ds[!is.na(ds[[target]]), ]
+  # 20250114 gjw We now have a SETTINGS option to include/exclude rows
+  # with missing target. It is not yet implemented here. For now, to
+  # compare with V5 we don't remove those rows yet. This will help
+  # undertaking comparison between V5 and V6.
+
+  tcds <- ds # 20250114 gjw [!is.na(ds[[target]]), ]
 } else {
   form <- formula("~ .")
 
