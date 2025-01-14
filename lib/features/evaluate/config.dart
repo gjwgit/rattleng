@@ -32,6 +32,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -218,6 +219,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     final templateMap = {
       'Training': 'evaluate_template_tr',
       'Tuning': 'evaluate_template_tu',
+      'Validation': 'evaluate_template_tu',
       'Testing': 'evaluate_template_te',
       'Complete': 'evaluate_template_tc',
     };
@@ -430,10 +432,42 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           children: [
             configLeftGap,
             Text('Evaluation Dataset: '),
+            // Widget to display dataset type selection as choice chips with tooltips.
+
             ChoiceChipTip<String>(
-              options: datasetTypes.keys.toList(),
-              selectedOption: datasetType,
-              tooltips: datasetTypes,
+              // Generate list of dataset type options, replacing 'Tuning' with 'Validation'
+              // if validation setting is enabled.
+
+              options: datasetTypes.keys
+                  .map(
+                    (key) => key == 'Tuning' &&
+                            ref.watch(useValidationSettingProvider)
+                        ? 'Validation'
+                        : key,
+                  )
+                  .toList(),
+              // Set selected option, handling Tuning/Validation text swap.
+
+              selectedOption: datasetType == 'Tuning' &&
+                      ref.watch(useValidationSettingProvider)
+                  ? 'Validation'
+                  : datasetType,
+              // Create tooltips map, replacing 'Tuning' key with 'Validation'
+              // when validation is enabled.
+
+              tooltips: Map.fromEntries(
+                datasetTypes.entries.map(
+                  (entry) => MapEntry(
+                    entry.key == 'Tuning' &&
+                            ref.watch(useValidationSettingProvider)
+                        ? 'Validation'
+                        : entry.key,
+                    entry.value,
+                  ),
+                ),
+              ),
+              // Handle selection changes by updating state and provider.
+
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {

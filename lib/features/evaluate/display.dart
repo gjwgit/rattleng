@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 21:23:01 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-01-14 13:27:09 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_evaluate.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -60,6 +61,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
+    bool useV = ref.watch(useValidationSettingProvider);
+    if (datasetType == 'Tuning' && useV) datasetType = 'Validation';
 
     List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
 
