@@ -25,10 +25,14 @@
 
 library;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:rattle/features/dataset/toggles.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/providers/cleanse.dart';
 
 import 'utils/load_demo_dataset.dart';
 import 'utils/verify_text.dart';
@@ -42,22 +46,45 @@ void main() {
 
     await loadDemoDataset(tester);
 
-    // Expect specific text in the ROLES page.
+    // Find the cleanse icon button
+    final cleanseIconFinder = find.byIcon(Icons.cleaning_services);
+    expect(cleanseIconFinder, findsOneWidget);
 
+    // Get initial cleanse state
+    final cleanseState = tester
+        .state<ConsumerState>(
+          find.byType(DatasetToggles),
+        )
+        .ref
+        .read(cleanseProvider);
+
+    // If cleanse is false, tap the icon to enable it
+    if (!cleanseState) {
+      await tester.tap(cleanseIconFinder);
+      await tester.pumpAndSettle();
+    }
+
+    // Verify cleanse is now enabled
+    final updatedCleanseState = tester
+        .state<ConsumerState>(
+          find.byType(DatasetToggles),
+        )
+        .ref
+        .read(cleanseProvider);
+    expect(updatedCleanseState, true);
+
+    // Verify dataset content
     await verifyText(
       tester,
       [
         // Verify dates in the Content Column.
-
         '2023-07-01',
         '2023-07-02',
 
         // Verify min_temp in the Content Column.
-
         '4.6',
 
         // Verify max_temp in the Content Column.
-
         '13.9',
       ],
     );
