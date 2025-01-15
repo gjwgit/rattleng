@@ -46,7 +46,16 @@ mdesc <- "Extreme Boost"
 pred_ra <- function(model, data) {
   # Retrieve the vector of possible target levels from the data.
 
-  target_levels <- unique(data[[target]])  # nolint as sourced from 'model_template.R'
+  target_levels <- unique(data[[target]]) # nolint as sourced from 'model_template.R'
+  
+  # Check if target_levels is either c("1", "0") or c("0", "1")
+  # to avoid reversed results.
+
+  if (all(target_levels %in% c("1", "0"))) {
+    # Sort target levels to ensure "0" comes before "1".
+
+    target_levels <- sort(target_levels)
+  }
   
   # Get raw numeric probabilities (assuming the model returns a single column
   # or you've already extracted the relevant column.
