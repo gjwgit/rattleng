@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-11-29 10:48:54 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:23:50 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,10 +35,8 @@
 
 # Load required packages from the local library into the R session.
 
-library(ggplot2)
-
 ########################################################################
-# Bar Plot 
+# Bar Plot
 ########################################################################
 
 svg("TEMPDIR/explore_visual_bars.svg", width=10)
@@ -55,7 +53,7 @@ ds %>%
 dev.off()
 
 ########################################################################
-# Dot Plot 
+# Dot Plot
 ########################################################################
 
 svg("TEMPDIR/explore_visual_dots.svg", width=10)
@@ -107,7 +105,7 @@ ggplot(combined_data, aes(y = SELECTED_VAR, x = Frequency)) +
 dev.off()
 
 ########################################################################
-# Mosaic Plot 
+# Mosaic Plot
 ########################################################################
 
 ## # 20241129 gjw A mosaic plot does not make sense for a single variable.

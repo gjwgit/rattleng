@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 08:57:45 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:17:41 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -123,7 +123,7 @@ if (length(target_levels) == 2) {
   # that target_num is the variable the neural network should learn to predict.
 
   formula_nn <- as.formula(paste('target_num ~', paste(predictor_vars, collapse = ' + ')))
-  
+
   # Train neural network.
 
   model_neuralnet <- neuralnet(
@@ -146,7 +146,7 @@ if (length(target_levels) == 2) {
   # Combine predictors and target.
 
   ds_final <- cbind(predictors_combined, target_onehot)
-  
+
   # Create formula.
 
   predictor_vars <- names(predictors_combined)
@@ -160,7 +160,7 @@ if (length(target_levels) == 2) {
     '~',
     paste(predictor_vars, collapse = ' + ')
   ))
-  
+
   # Train neural network.
 
   model_neuralnet <- neuralnet(

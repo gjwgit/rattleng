@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 08:57:39 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:20:38 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -48,6 +48,7 @@ if (neural_ignore_categoric) {
   training_ds <- ds[tr, ignore_categoric_vars]
 } else {
   training_ds <- ds[tr, vars]
+
 }
 
 # Train a Neural Network model using nnet.

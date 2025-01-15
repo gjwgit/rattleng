@@ -43,6 +43,7 @@
 
 library(ada)
 library(caret)
+library(rattle)
 library(rpart)
 
 # Define model type and description to be used in following R scripts.

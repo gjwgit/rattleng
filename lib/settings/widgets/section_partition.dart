@@ -70,7 +70,6 @@ class Partition extends ConsumerWidget {
           children: [
             MarkdownTooltip(
               message: '''
-
               **Dataset Partition Setting:** Configure the dataset
               partitioning ratios for the training, validation, and
               testing datasets.
@@ -83,10 +82,17 @@ class Partition extends ConsumerWidget {
               child: const Text(
                 'Partition',
                 style: TextStyle(
-                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+            ),
+            configRowGap,
+            PartitionControls(
+              onTrainChanged: _savePartitionTrain,
+              onTuneChanged: _savePartitionTune,
+              onTestChanged: _savePartitionTest,
+              onValidationChanged: _saveValidation,
+              showOutOfRangeWarning: () => showOutOfRangeWarning(context),
             ),
             configRowGap,
             MarkdownTooltip(
@@ -113,16 +119,6 @@ class Partition extends ConsumerWidget {
             ),
           ],
         ),
-        configRowGap,
-        PartitionControls(
-          onTrainChanged: _savePartitionTrain,
-          onTuneChanged: _savePartitionTune,
-          onTestChanged: _savePartitionTest,
-          onValidationChanged: _saveValidation,
-          showOutOfRangeWarning: () => showOutOfRangeWarning(context),
-        ),
-        settingsGroupGap,
-        const Divider(),
       ],
     );
   }

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 08:57:45 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:22:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,6 +30,8 @@
 #
 # @williams:2017:essentials.
 # https://survivor.togaware.com/datascience/ for further details.
+
+library(rattle)
 
 # Define model type and description to be used in following R scripts.
 

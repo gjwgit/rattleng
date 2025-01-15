@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2024-11-29 08:38:33 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:24:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,7 +35,6 @@
 # https://survivor.togaware.com/datascience/ for further details.
 
 library(dplyr)
-library(ggplot2)
 library(rattle)
 
 ########################################################################
@@ -126,7 +125,7 @@ ds %>%
 dev.off()
 
 ########################################################################
-# BENFORD'S LAW 
+# BENFORD'S LAW
 ########################################################################
 
 # Initialies the parameters.
@@ -161,7 +160,7 @@ len <- nchar(as.character(tds[1, 1]))
 svg("TEMPDIR/explore_visual_benford.svg", width=10)
 
 p <- ggplot2::ggplot(dsm,
-                     ggplot2::aes_string(x      = "digit", 
+                     ggplot2::aes_string(x      = "digit",
                                          y      = "value",
                                          colour = "variable",
                                          shape  = "variable")) +
@@ -189,7 +188,7 @@ dev.off()
 # PAIRS - REQUIRES TWO VARIABLES
 ########################################################################
 
-# Display a pairs plot for the selected variables. 
+# Display a pairs plot for the selected variables.
 
 # Use GGally's ggpairs() to do the hard work.
 
@@ -211,7 +210,7 @@ dev.off()
 ##   ggplot2::theme(panel.grid.major=ggplot2::element_blank(), legend.position="right") +
 ##   ggplot2::xlab(paste("\n\n", "TIMESTAMP", sep=""))
 
-  
+
 # ggplot2::scale_alpha_continuous(guide=FALSE) +
 #  ggplot2::scale_fill_brewer(palette=rattlePalette) +
 #  ggplot2::scale_colour_brewer(palette=rattlePalette)
