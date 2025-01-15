@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-01-06 07:15:37 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:21:45 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,9 +35,6 @@
 
 # Load required packages from the local library into the R session.
 
-library(ggtext)       # Support markdown in ggplot titles.
-library(glue)         # Format strings: glue().
-library(hmeasure)     # David Hand's classifier performance measure.
 library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 

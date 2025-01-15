@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Monday 2025-01-06 06:30:35 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2025-01-14 15:03:53 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -142,11 +142,6 @@ Future<void> rSource(
   String partitionString =
       '${partitionRatios.first}, ${partitionRatios[1]}, ${partitionRatios.last}';
 
-  // VISUAL
-
-  bool ignoreMissingGroupBy = ref.read(ignoreMissingGroupByProvider);
-  bool exploreVisualBoxplotNotch = ref.read(exploreVisualBoxplotNotchProvider);
-
   // ASSOCIATION
 
   bool associationBaskets = ref.read(basketsAssociationProvider);
@@ -196,12 +191,21 @@ Future<void> rSource(
 
   // NEURAL
 
-  int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
-  int nnetMaxit = ref.read(maxitNeuralProvider);
-  int neuralStepMax = ref.read(stepMaxNeuralProvider);
   double neuralThreshold = ref.read(thresholdNeuralProvider);
-  String neuralErrorFct = ref.read(errorFctNeuralProvider);
+
+  int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
+  int neuralStepMax = ref.read(stepMaxNeuralProvider);
+  int nnetMaxit = ref.read(maxitNeuralProvider);
+
+  String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
   String neuralActivationFct = ref.read(activationFctNeuralProvider);
+  String neuralErrorFct = ref.read(errorFctNeuralProvider);
+
+  // SETTINGS
+
+  bool useValidation = ref.read(useValidationSettingProvider);
+
+  String theme = ref.read(settingsGraphicThemeProvider);
 
   // SVM
 
@@ -212,11 +216,12 @@ Future<void> rSource(
 
   int svmDegree = ref.read(degreeSVMProvider);
 
-  String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
+  // VISUAL
+
+  bool ignoreMissingGroupBy = ref.read(ignoreMissingGroupByProvider);
+  bool exploreVisualBoxplotNotch = ref.read(exploreVisualBoxplotNotchProvider);
 
   int interval = ref.read(intervalProvider);
-
-  String theme = ref.read(settingsGraphicThemeProvider);
 
   // First obtain the text from each script and combine.
 
@@ -279,6 +284,9 @@ Future<void> rSource(
   code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
 
   code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
+
+  code =
+      code.replaceAll('TUNING_TYPE', useValidation ? 'validation' : 'tuning');
 
   ////////////////////////////////////////////////////////////////////////
 

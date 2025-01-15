@@ -102,6 +102,31 @@ class _RConsoleState extends ConsumerState<RConsole> {
         }
       }
     });
+
+    // Add a listener to the terminal controller to handle text selection.
+
+    terminalController.addListener(() {
+      // Get the current selection from the terminal controller.
+
+      final selection = terminalController.selection;
+
+      // Only proceed if there is an active selection.
+
+      if (selection != null) {
+        // Extract the selected text from the terminal buffer using the selection range.
+
+        final selectedText =
+            ref.read(terminalProvider).buffer.getText(selection);
+
+        // If text was actually selected (not empty), copy it to clipboard.
+
+        if (selectedText.isNotEmpty) {
+          // Copy the selected text to the system clipboard.
+
+          Clipboard.setData(ClipboardData(text: selectedText));
+        }
+      }
+    });
   }
 
   // There is no TerminalThemes for the black on white that I prefer and am

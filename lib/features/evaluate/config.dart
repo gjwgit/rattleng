@@ -32,11 +32,13 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EvaluateConfig extends ConsumerStatefulWidget {
   const EvaluateConfig({super.key});
@@ -218,6 +220,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     final templateMap = {
       'Training': 'evaluate_template_tr',
       'Tuning': 'evaluate_template_tu',
+      'Validation': 'evaluate_template_tu',
       'Testing': 'evaluate_template_te',
       'Complete': 'evaluate_template_tc',
     };
@@ -229,12 +232,27 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       final selectedParameters = [
         parameters.first,
         template,
-        parameters[1],
-        parameters[2],
+        ...parameters.skip(1),
       ];
 
       await rSource(context, ref, selectedParameters.cast<String>());
     }
+  }
+
+  // Load settings from shared preferences and update providers.
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Load useValidation setting from shared preferences.
+
+    ref.read(useValidationSettingProvider.notifier).state =
+        prefs.getBool('useValidation') ?? false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
   }
 
   @override
@@ -299,12 +317,13 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String em = 'evaluate_measure_error_matrix';
                 String ro = 'evaluate_measure_roc';
+                String hd = 'evaluate_measure_hand';
 
                 // Execute evaluation for rpart model if it was executed and treeExecuted is true.
 
                 await executeEvaluation(
                   executed: rpartExecuted && treeExecuted,
-                  parameters: [er, em, ro],
+                  parameters: [er, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -314,7 +333,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: ctreeExecuted && treeExecuted,
-                  parameters: [ec, em, ro],
+                  parameters: [ec, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -324,7 +343,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: randomForestExecuted && forestTicked,
-                  parameters: [erf, em, ro],
+                  parameters: [erf, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -334,7 +353,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: conditionalForestExecuted && forestTicked,
-                  parameters: [ecf, em, ro],
+                  parameters: [ecf, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -344,7 +363,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: adaBoostExecuted && boostTicked,
-                  parameters: [ea, em, ro],
+                  parameters: [ea, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -354,7 +373,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: xgBoostExecuted && boostTicked,
-                  parameters: [ex, em, ro],
+                  parameters: [ex, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -364,7 +383,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: svmExecuted,
-                  parameters: [es, em, ro],
+                  parameters: [es, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -374,7 +393,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && nnetExecuted,
-                  parameters: [en, em, ro],
+                  parameters: [en, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -384,7 +403,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && neuralNetExecuted,
-                  parameters: [ent, em, ro],
+                  parameters: [ent, em, ro, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -430,10 +449,42 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           children: [
             configLeftGap,
             Text('Evaluation Dataset: '),
+            // Widget to display dataset type selection as choice chips with tooltips.
+
             ChoiceChipTip<String>(
-              options: datasetTypes.keys.toList(),
-              selectedOption: datasetType,
-              tooltips: datasetTypes,
+              // Generate list of dataset type options, replacing 'Tuning' with 'Validation'
+              // if validation setting is enabled.
+
+              options: datasetTypes.keys
+                  .map(
+                    (key) => key == 'Tuning' &&
+                            ref.watch(useValidationSettingProvider)
+                        ? 'Validation'
+                        : key,
+                  )
+                  .toList(),
+              // Set selected option, handling Tuning/Validation text swap.
+
+              selectedOption: datasetType == 'Tuning' &&
+                      ref.watch(useValidationSettingProvider)
+                  ? 'Validation'
+                  : datasetType,
+              // Create tooltips map, replacing 'Tuning' key with 'Validation'
+              // when validation is enabled.
+
+              tooltips: Map.fromEntries(
+                datasetTypes.entries.map(
+                  (entry) => MapEntry(
+                    entry.key == 'Tuning' &&
+                            ref.watch(useValidationSettingProvider)
+                        ? 'Validation'
+                        : entry.key,
+                    entry.value,
+                  ),
+                ),
+              ),
+              // Handle selection changes by updating state and provider.
+
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {

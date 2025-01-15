@@ -1,11 +1,11 @@
-# Using `actual` and `prediction` to generate ROC/AUC plots.
+# Use `actual` and `prediction` to generate ROC/AUC plots.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-01-06 08:23:01 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:16:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -29,14 +29,10 @@
 # References:
 #
 # @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Load required packages from the local library into the R session.
 
-library(ggplot2, quietly=TRUE)
-library(glue)
 library(ROCR)
 
 ################################

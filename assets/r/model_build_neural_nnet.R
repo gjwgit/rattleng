@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-11-12 15:43:10 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:20:38 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,6 @@
 
 # Load necessary libraries
 
-library(ggtext)          # Support markdown in ggplot titles.
 library(nnet)            # Neural networks
 library(NeuralNetTools)  # For neural network plotting
 
@@ -38,9 +37,9 @@ mdesc <- "Neural NNET"
 # Conditional logic to handle categoric variables based on 'neural_ignore_categoric'.
 
 if (neural_ignore_categoric) {
-  tds <- ds[tr, ignore_categoric_vars]  
+  tds <- ds[tr, ignore_categoric_vars]
 } else {
-  tds <- ds[tr, vars]  
+  tds <- ds[tr, vars]
 }
 
 # Train a Neural Network model using nnet.

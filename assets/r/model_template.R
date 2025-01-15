@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-08 11:45:07 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-15 12:41:22 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -58,6 +58,9 @@ if (!is.null(target)) {
   # target variable, removing those rows that do not have a
   # target. For predictive modelling we would only use data that has a
   # target value.
+
+  # 20250115 gjw Note that this is different to the default for V5
+  # which leaves the missing targets in the dataset.
 
   tcds <- ds[!is.na(ds[[target]]),]
 

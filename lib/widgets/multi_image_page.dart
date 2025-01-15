@@ -52,12 +52,18 @@ class MultiImagePage extends StatelessWidget {
   final String appBarImage;
   final bool svgImage;
 
+  // If this is non-null, display it in the app bar alongside [appBarImage].
+  // The combined text is rendered as Markdown.
+
+  final String? buildHyperLink;
+
   const MultiImagePage({
     super.key,
     required this.titles,
     required this.paths,
     this.appBarImage = 'Hand',
     this.svgImage = true,
+    this.buildHyperLink,
   });
 
   Future<Uint8List?> _loadImageBytes(String path) async {
@@ -137,7 +143,34 @@ class MultiImagePage extends StatelessWidget {
     final ScrollController _scrollController = ScrollController();
 
     return Scaffold(
-      appBar: AppBar(title: Text(appBarImage)),
+      appBar: AppBar(
+        centerTitle: false,
+        title: buildHyperLink == null
+            ? Text(appBarImage)
+            : MarkdownBody(
+                data: wordWrap('''
+                      **$appBarImage**
+          
+                      $buildHyperLink
+                      '''),
+                styleSheet: MarkdownStyleSheet(
+                  // Force left alignment for paragraph text.
+
+                  p: Theme.of(context).textTheme.bodyMedium ??
+                      const TextStyle(),
+                  textAlign: WrapAlignment.start,
+                  strong: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onTapLink: (text, href, title) {
+                  if (href != null && href.isNotEmpty) {
+                    launchUrl(Uri.parse(href));
+                  }
+                },
+              ),
+      ),
       body: Column(
         children: [
           Expanded(

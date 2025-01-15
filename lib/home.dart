@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2025-01-13 05:54:58 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-01-15 16:20:02 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -247,7 +247,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
     _tabController = TabController(length: homeTabs.length, vsync: this);
 
-    // Initialize the tab widgets once in order to use IndexedStack later.
+    // Initialize the tab widgets once in order to use IndexedStack
+    // later. 20250115 gjw Note that the order here must be the same as in
+    // [homeTabs]. There should be a better way to do this without having this
+    // implicit order requirement.
 
     _tabWidgets = [
       const DatasetPanel(),

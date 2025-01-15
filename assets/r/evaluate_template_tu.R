@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-01 21:00:29 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-14 14:55:41 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,7 +45,7 @@
 
 # Identify the dataset partition that the model is applied to.
 
-dtype <- 'tuning'
+dtype <- 'TUNING_TYPE'
 
 # Store in TEMPLATE variables the actual and risk values, and the
 # predicted and probabilites, for later processing.

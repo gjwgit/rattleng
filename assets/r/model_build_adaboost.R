@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-11-27 11:39:42 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 16:24:26 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -21,16 +21,13 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
 # Load required libraries.
 
 library(ada)
 library(caret)
-library(ggplot2)
-library(ggtext)
-library(hmeasure)
-library(rattle) 
+library(rattle)
 library(rpart)
 
 # Define model type and description.
@@ -48,7 +45,7 @@ ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
 # Train the AdaBoost model.
 
 model_ada <- ada(form,
-                 data    = trds, 
+                 data    = trds,
                  iter    = BOOST_ITERATIONS,
                  type    = "gentle", # Type of boosting.
                  control = ada_control)
@@ -108,7 +105,7 @@ ada_plot <- ada_plot +
 
 # Increase plot limits to make space for the labels.
 
-ada_plot <- ada_plot + 
+ada_plot <- ada_plot +
   scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
   expand_limits(y = max(importance_df$Importance) * 1.2)
 

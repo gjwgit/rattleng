@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-01-06 06:58:47 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 15:59:18 +1100 Graham Williams>
 #
 # Rattle version VERSION.
 #
@@ -52,7 +52,9 @@
 # right button bar which will run the `packages.R` script to check and
 # install any missing packages.
 
-library(ggplot2)      # To support a local rattle theme.
+library(ggplot2) # To support a local rattle theme.
+library(ggtext)  # To support markdown text in ggplot title.
+library(glue)    # To glue strings together.
 
 ####################################
 # Default settings
