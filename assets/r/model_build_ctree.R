@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:01:40 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-16 09:24:31 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,8 +34,11 @@
 
 # Load required packages from the local library into the R session.
 
-library(hmeasure)
-library(party)        # Conditional inference trees
+# 20250116 gjw Choose to use partykit (2015) over the older party
+# (2008) package. The partykit package can do much more and is a
+# framework for supporting other tree packages including rpart, rweka,
+# and pmml.
+
 library(partykit)     # Enhanced visualization and interpretation
 
 # Define the model type and description for file paths and titles
@@ -51,7 +54,7 @@ control <- ctree_control(
 
 # Train a Conditional Inference Tree model using ctree.
 
-model_ctree <- ctree(
+model_ctree <- partykit::ctree(
   formula   = form,
   data      = trds,
   na.action = na.exclude,
@@ -67,5 +70,5 @@ cat("\n")
 # Plot the resulting Conditional Inference Tree.
 
 svg("TEMPDIR/model_tree_ctree.svg")
-plot(model_ctree, main = paste("Conditional Inference Tree", target))
+plot(model_ctree, main=paste("Conditional Inference Tree", target))
 dev.off()

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-15 12:41:22 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-16 09:24:53 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -72,11 +72,12 @@ if (!is.null(target)) {
   tcds <- ds
 }
 
-# ctree() from the party package cannot handle predictors of type character.
-# Convert character columns to factors.
+# parrty::ctree() cannot handle predictors of type character.  Convert
+# character columns to factors. 20250116 gjw This may not be the case
+# with the newer partykit package. Try not for now.
 
-tcds <- tcds %>%
-  mutate(across(where(is.character), as.factor))
+# tcds <- tcds %>%
+#   mutate(across(where(is.character), as.factor))
 
 print(form)
 
