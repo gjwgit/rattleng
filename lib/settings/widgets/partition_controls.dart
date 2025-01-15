@@ -1,6 +1,6 @@
 /// Partition controls.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-15 16:06:36 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,7 +29,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/settings/widgets/settings_number_field.dart';
+import 'package:rattle/settings/widgets/setting_number_field.dart';
 
 ///
 class PartitionControls extends ConsumerWidget {
@@ -130,7 +130,7 @@ class PartitionControls extends ConsumerWidget {
                 see it as a dataset for **validating** parameter settings. You
                 can choose your preference for the nomenclature here. The choice
                 does not have any material impact on any analysis.
-                
+
                 ''',
                 child: Row(
                   children: [

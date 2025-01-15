@@ -1,6 +1,6 @@
 /// Image viewer text field.
 //
-// Time-stamp: <Monday 2025-01-13 16:17:39 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-15 15:53:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -22,11 +22,14 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
+
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:rattle/providers/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:rattle/providers/settings.dart';
 
 class ImageViewerTextField extends ConsumerWidget {
   const ImageViewerTextField({super.key});
