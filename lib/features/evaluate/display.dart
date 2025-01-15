@@ -170,47 +170,47 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         riskChartImages.add(data['image']!);
         riskChartImagesTitles.add(data['title']!);
       }
-      for (var data in handImageData) {
-        if (imageExists(data['image']!)) {
-          handImages.add(data['image']!);
-          handImagesTitles.add(data['title']!);
-        }
+    }
+    for (var data in handImageData) {
+      if (imageExists(data['image']!)) {
+        handImages.add(data['image']!);
+        handImagesTitles.add(data['title']!);
       }
+    }
 
-      if (rocImages.isNotEmpty) {
-        pages.add(
-          MultiImagePage(
-            titles: rocImagesTitles,
-            paths: rocImages,
-            appBarImage:
-                'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
-            buildHyperLink:
-                'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
-          ),
-        );
-      }
+    if (rocImages.isNotEmpty) {
+      pages.add(
+        MultiImagePage(
+          titles: rocImagesTitles,
+          paths: rocImages,
+          appBarImage:
+              'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
+          buildHyperLink:
+              'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
+        ),
+      );
+    }
 
-      if (handImages.isNotEmpty) {
-        pages.add(
-          MultiImagePage(
-            titles: handImagesTitles,
-            paths: handImages,
-            appBarImage: 'H-Measure --- Coherent Alternative to the AUC',
-            buildHyperLink:
-                'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
-          ),
-        );
-      }
+    if (handImages.isNotEmpty) {
+      pages.add(
+        MultiImagePage(
+          titles: handImagesTitles,
+          paths: handImages,
+          appBarImage: 'H-Measure --- Coherent Alternative to the AUC',
+          buildHyperLink:
+              'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
+        ),
+      );
+    }
 
-      if (riskChartImages.isNotEmpty) {
-        pages.add(
-          MultiImagePage(
-            titles: riskChartImagesTitles,
-            paths: riskChartImages,
-            appBarImage: 'Risk Chart',
-          ),
-        );
-      }
+    if (riskChartImages.isNotEmpty) {
+      pages.add(
+        MultiImagePage(
+          titles: riskChartImagesTitles,
+          paths: riskChartImages,
+          appBarImage: 'Risk Chart',
+        ),
+      );
     }
 
     // 20250105 gjw Considered displaying a No Image Available graphic. Not
