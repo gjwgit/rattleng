@@ -1,6 +1,6 @@
 /// Verify the content of the page.
 //
-// Time-stamp: <Friday 2024-12-27 13:45:53 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-10 08:26:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -26,6 +26,9 @@
 library;
 
 import 'package:flutter_test/flutter_test.dart';
+
+/// Check that the expected title for the page is found and optionally some text
+/// value on the page can be found.
 
 Future<void> verifyPage(
   String title, [

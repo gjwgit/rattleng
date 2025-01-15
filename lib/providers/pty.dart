@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Saturday 2024-08-03 20:54:20 +1000 Graham Williams>
+/// Time-stamp: <Monday 2025-01-13 13:42:08 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -26,6 +26,8 @@ library;
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -39,6 +41,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
   // Create a pseudo termminal provider.
 
   Terminal terminal = ref.watch(terminalProvider);
+  debugPrint('Attempt to start `$shell`');
   Pty pty = Pty.start(shell, arguments: ['--no-save']);
 
   // Options
@@ -84,5 +87,8 @@ String get shell {
       ? 'R.exe'
       : Platform.isMacOS
           ? '/usr/local/bin/R'
-          : '/usr/bin/R';
+          : Platform.isAndroid
+              // 20250113 gjw Trying a UserLand install of R on Android.
+              ? '/data/data/tech.ula/files/support/busybox run-parts /data/data/tech.ula/files/support/executables -- /usr/bin/R'
+              : '/usr/bin/R';
 }

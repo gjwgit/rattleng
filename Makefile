@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2024-10-24 08:14:35 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-01-12 10:12:39 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -24,6 +24,11 @@ DATE=$(shell date +%Y-%m-%d)
 # Identify a destination used by install.mk
 
 DEST=/var/www/html/$(APP)
+
+# The host for the repository of packages.
+
+REPO=togaware.com
+RLOC=apps/access
 
 ########################################################################
 # Supported Makefile modules.
@@ -92,7 +97,7 @@ snap:
 
 .PHONY: isnap
 isnap:
-	snap install --dangerous rattle_0.0.1_amd64.snap 
+	snap install --dangerous rattle_0.0.1_amd64.snap
 
 rattle.zip:
 	rm -f rattle.zip
@@ -103,8 +108,18 @@ rattle.zip:
 
 OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 
-# 20241024 gjw A ginstall of the built bundles from github, installed
-# to togaware.com and moved into ARCHIVE.
+# Make apk on this machine to deal with signing. Then a ginstall of
+# the built bundles from github, installed to solidcommunity.au and
+# moved into ARCHIVE.
 
-ginstall:
+apk::
+	rsync -avzh installers/$(APP).apk $(REPO):$(RLOC)
+	ssh $(REPO) chmod a+r $(RLOC)/$(APP).apk
+	mv -f installers/$(APP)-*.apk installers/ARCHIVE
+	rm -f installers/$(APP).apk
+
+# 20250110 gjw A ginstall of the github built bundles, and the locally
+# built apk installed to the repository and moved into ARCHIVE.
+
+ginstall: apk
 	(cd installers; make $@)

@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2024-12-13 15:55:29 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-01-13 06:48:59 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -172,6 +172,15 @@ class DatasetPopup extends ConsumerWidget {
                     if (context.mounted) await rLoadDataset(context, ref);
                     setStatus(ref, statusChooseVariableRoles);
                     datasetLoadedUpdate(ref);
+
+                    // Save the dataset name in lowercase to the datasetNameProvider from the path.
+
+                    ref.read(datasetNameProvider.notifier).state = path
+                        .split(RegExp(r'[/\\]'))
+                        .last
+                        .split('.')
+                        .first
+                        .toLowerCase();
                   }
 
                   // Avoid the "Do not use BuildContexts across async gaps."
@@ -190,7 +199,7 @@ class DatasetPopup extends ConsumerWidget {
                         curve: Curves.easeInOut,
                       );
                 },
-                child: const MarkdownTooltip(
+                child: MarkdownTooltip(
                   message: '''
 
                   **Filename for Dataset** Tap here to popup a window to browse
@@ -226,7 +235,6 @@ class DatasetPopup extends ConsumerWidget {
                     datasetLoadedUpdate(ref);
                   }
                   if (!context.mounted) return;
-                  // TODO 20231018 gjw datasetSelectPackage();
                   // Navigator.pop(context, 'Package');
                   // showUnderConstruction(context);
                 },
@@ -246,7 +254,7 @@ class DatasetPopup extends ConsumerWidget {
 
           configRowGap,
 
-          const MarkdownTooltip(
+          MarkdownTooltip(
             message: '''
 
                   **Demo Datasets** Rattle provides a number of small datasets
@@ -423,7 +431,7 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   Navigator.pop(context, 'Cancel');
                 },
-                child: const MarkdownTooltip(
+                child: MarkdownTooltip(
                   message: '''
 
                   **Cancel** Tap here to **not** proceed with loading a new
@@ -447,6 +455,10 @@ Future<void> loadDemoDataset(
   String assetPath,
   String datasetName,
 ) async {
+  // Save the dataset name in lowercase to the datasetNameProvider.
+
+  ref.read(datasetNameProvider.notifier).state = datasetName.toLowerCase();
+
   // Copy the asset to a temporary directory.
 
   String dest = await copyAssetToTempDir(asset: assetPath);

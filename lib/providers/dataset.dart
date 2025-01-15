@@ -22,10 +22,13 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Yixiang Yin, Kevin Wang
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
 final datasetProvider = StateProvider<String>((ref) => '');
 final packageProvider = StateProvider<String>((ref) => '');
+
+final datasetNameProvider = StateProvider<String>((ref) => '');

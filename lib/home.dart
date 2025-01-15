@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2025-01-08 20:17:57 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-01-13 05:54:58 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -70,7 +70,7 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
-import 'package:rattle/utils/show_settings_dialog.dart';
+import 'package:rattle/settings/dialog.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 // Define the [NavigationRail] tabs for the home page.
@@ -152,7 +152,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
   }
 
   Future<void> checkForUpdate(String currentVersion) async {
-    debugText('   VERSION', 'Current   $currentVersion');
+    debugText('  VERSION', 'Current   $currentVersion');
 
     // GitHub raw file URL
     final url = Uri.parse(
@@ -170,7 +170,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Extract the version field excluding the + sign and anything after
         final latestVersion =
             yamlContent['version'].toString().split('+').first;
-        debugText('   VERSION', 'Available $latestVersion');
+        debugText('  VERSION', 'Available $latestVersion');
 
         // Compare with the current version
         if (currentVersion != latestVersion) {
@@ -353,17 +353,27 @@ Xu, Yixiang Yin, Bo Zhang.
               height: 40,
             ),
             configWidgetGap,
-            const Text(appTitle),
+            MarkdownBody(
+              data: appTitle,
+              onTapLink: (text, href, title) {
+                final Uri url = Uri.parse(href ?? '');
+                launchUrl(url);
+              },
+              styleSheet: MarkdownStyleSheet(
+                p: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                a: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
         ),
 
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
-          // While the version number is reported in the About popup but for
-          // screenshots, during development it is useful to have the version
-          // visiable at all times, particularly for a screenshot, so place it
-          // on the title bar for now.
+          // 20250113 gjw The version number is reported in the About popup but
+          // for screenshots, during development it is useful to have the
+          // version visiable at all times so place it on the title bar. Users
+          // have also noted it and seems useful to have it exposed.
 
           MarkdownTooltip(
             message: '''
