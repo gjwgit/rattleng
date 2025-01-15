@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/settings/widgets/section_partition.dart';
+import 'package:rattle/settings/widgets/section_random_seed.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -252,6 +253,10 @@ class DatasetToggles extends ConsumerWidget {
           ],
         ),
         settingsGroupGap,
+        RandomSeed(),
+
+        settingsGroupGap,
+
         Partition(),
         settingsGroupGap,
 
