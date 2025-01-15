@@ -62,6 +62,8 @@ class RandomSeed extends ConsumerWidget {
       children: [
         Row(
           children: [
+            // Title.
+
             MarkdownTooltip(
               message: '''
 
@@ -76,9 +78,51 @@ class RandomSeed extends ConsumerWidget {
               child: const Text(
                 'Random Seed',
                 style: TextStyle(
-                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+            ),
+            configRowGap,
+            RandomSeedRow(
+              randomSeed: randomSeed,
+              updateSeed: (newSeed) {
+                ref.read(randomSeedSettingProvider.notifier).state = newSeed;
+                _saveRandomSeed(newSeed);
+              },
+            ),
+            configRowGap,
+
+            MarkdownTooltip(
+              message: '''
+
+
+
+              ''',
+              child: const Text(
+                'Random Partition each Model Build',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            configRowGap,
+
+            MarkdownTooltip(
+              message: '''
+
+              **Random Partition each Model Build:**
+              When enabled, the partition will be randomised each time a model is built.
+              This is useful if you want to ensure that the model is not biased towards a specific partition.
+
+              ''',
+              child: Switch(
+                value: randomPartition,
+                onChanged: (value) {
+                  ref
+                      .read(
+                        randomPartitionSettingProvider.notifier,
+                      )
+                      .state = value;
+                  _saveRandomPartition(value);
+                },
               ),
             ),
             configRowGap,
@@ -107,51 +151,6 @@ class RandomSeed extends ConsumerWidget {
             ),
           ],
         ),
-        configRowGap,
-        Row(
-          children: [
-            RandomSeedRow(
-              randomSeed: randomSeed,
-              updateSeed: (newSeed) {
-                ref.read(randomSeedSettingProvider.notifier).state = newSeed;
-                _saveRandomSeed(newSeed);
-              },
-            ),
-            MarkdownTooltip(
-              message: '''
-
-
-
-              ''',
-              child: const Text(
-                'Random Partition each Model Build',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            MarkdownTooltip(
-              message: '''
-
-              **Random Partition each Model Build:**
-              When enabled, the partition will be randomised each time a model is built.
-              This is useful if you want to ensure that the model is not biased towards a specific partition.
-
-              ''',
-              child: Switch(
-                value: randomPartition,
-                onChanged: (value) {
-                  ref
-                      .read(
-                        randomPartitionSettingProvider.notifier,
-                      )
-                      .state = value;
-                  _saveRandomPartition(value);
-                },
-              ),
-            ),
-          ],
-        ),
-        settingsGroupGap,
-        const Divider(),
       ],
     );
   }

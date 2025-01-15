@@ -179,7 +179,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       Divider(),
                       DatasetToggles(),
                       GraphicTheme(),
-                      RandomSeed(),
                       Session(),
                       Script(),
                     ],
