@@ -1,6 +1,6 @@
 /// Dataset section.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-15 16:05:18 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,7 +39,7 @@ import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/settings/widgets/settings_toggle_row.dart';
+import 'package:rattle/settings/widgets/toggle_row.dart';
 
 class DatasetToggles extends ConsumerWidget {
   const DatasetToggles({super.key});
@@ -271,9 +271,9 @@ class DatasetToggles extends ConsumerWidget {
 
 
               **Ignore Missing Target:**
-              
+
               - **On:** Exclude observations with missing target values from analysis.
-              
+
               - **Off:** Include all observations, even those with missing target values.
               ''',
               child: Row(
