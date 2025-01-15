@@ -268,6 +268,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
                 String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
+                bool linearExecuted = ref.watch(linearEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralEvaluateProvider);
@@ -286,6 +287,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String ea = 'evaluate_model_adaboost';
                 String ec = 'evaluate_model_ctree';
+                String el = 'evaluate_model_linear';
                 String en = 'evaluate_model_nnet';
                 String er = 'evaluate_model_rpart';
                 String es = 'evaluate_model_svm';
@@ -367,6 +369,16 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 await executeEvaluation(
                   executed: svmExecuted,
                   parameters: [es, em, ro, erc],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
+
+                // Execute evaluation for linear model if executed.
+
+                await executeEvaluation(
+                  executed: linearExecuted,
+                  parameters: [el, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
