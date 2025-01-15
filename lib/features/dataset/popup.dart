@@ -35,6 +35,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
+import 'package:rattle/features/dataset/select_package.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
@@ -53,69 +54,7 @@ void datasetLoadedUpdate(WidgetRef ref) {
 class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
 
-  // Function to show package options
-  Future<String> datasetSelectPackage(
-    BuildContext context,
-    Map<String, List<String>> packageMap,
-    WidgetRef ref,
-  ) async {
-    String path = '';
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Available Packages'),
-          content: SizedBox(
-            width:
-                double.maxFinite, // Ensures the dialog expands to fit content
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: packageMap.entries.expand((entry) {
-                  // Expand each package into a list of ListTile widgets
-                  return entry.value.map((dataset) {
-                    return ListTile(
-                      title: Text(
-                        '${entry.key} - $dataset',
-                      ), // Display package name and dataset
-                      onTap: () {
-                        ref.read(pathProvider.notifier).state =
-                            '${entry.key}::$dataset';
-                        debugPrint(
-                          'update path provider to ${ref.read(pathProvider)}',
-                        );
 
-                        ref.read(datasetProvider.notifier).state = '$dataset';
-                        ref.read(packageProvider.notifier).state =
-                            '${entry.key}';
-
-                        path = ref.read(pathProvider);
-
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                        debugPrint(
-                          'Selected Package: ${entry.key}, Dataset: $dataset',
-                        );
-                      },
-                    );
-                  }).toList();
-                }).toList(),
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-    return path;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -215,18 +154,11 @@ class DatasetPopup extends ConsumerWidget {
 
               ElevatedButton(
                 onPressed: () async {
-                  // 20240109 yyx might not work for the first click need to wait it?
-                  // await rSource(context, ref, ['list_package_dataset']);
                   // scrape the packages
                   String stdout = ref.read(stdoutProvider);
                   String content =
                       rExtract(stdout, '> package_datasets_cleaned');
-                  // debugPrint('content is $content');
                   Map<String, List<String>> map = parsePackage(content);
-                  // debugPrint(
-                  //   'map from package to dataset is ${map.toString()}',
-                  // );
-
                   String path = await datasetSelectPackage(context, map, ref);
                   if (path.isNotEmpty) {
                     // ref.read(pathProvider.notifier).state = path;
@@ -235,8 +167,17 @@ class DatasetPopup extends ConsumerWidget {
                     datasetLoadedUpdate(ref);
                   }
                   if (!context.mounted) return;
-                  // Navigator.pop(context, 'Package');
-                  // showUnderConstruction(context);
+                  Navigator.pop(context, 'Package');
+                  
+                  // Access the PageController via Riverpod and move to the second page.
+
+                  ref.read(pageControllerProvider).animateToPage(
+                        // Index of the second page.
+
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                 },
                 child: const MarkdownTooltip(
                   message: '''
