@@ -70,7 +70,6 @@ import 'package:rattle/providers/path.dart';
                         path = ref.read(pathProvider);
 
                         Navigator.of(context).pop();
-                        // Navigator.of(context).pop();
                         debugPrint(
                           'Selected Package: ${entry.key}, Dataset: $dataset',
                         );
