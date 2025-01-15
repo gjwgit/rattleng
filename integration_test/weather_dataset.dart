@@ -44,8 +44,6 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    await loadDemoDataset(tester);
-
     // Find the cleanse icon button
     final cleanseIconFinder = find.byIcon(Icons.cleaning_services);
     expect(cleanseIconFinder, findsOneWidget);
@@ -73,6 +71,13 @@ void main() {
         .read(cleanseProvider);
     expect(updatedCleanseState, true);
 
+    //print yes to console
+    print('yes');
+
+    await tester.pumpAndSettle();
+
+    await loadDemoDataset(tester);
+
     // Verify dataset content
     await verifyText(
       tester,
@@ -86,6 +91,10 @@ void main() {
 
         // Verify max_temp in the Content Column.
         '13.9',
+
+        '365',
+
+        '192',
       ],
     );
   });
