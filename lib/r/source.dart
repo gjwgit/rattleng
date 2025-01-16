@@ -534,7 +534,9 @@ Future<void> rSource(
   code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
   if (neuralActivationFct != 'relu') {
     code = code.replaceAll(
-        'NEURAL_ACT_FCT', '"${neuralActivationFct.toString()}"',);
+      'NEURAL_ACT_FCT',
+      '"${neuralActivationFct.toString()}"',
+    );
   } else if (neuralActivationFct == 'relu') {
     // relu corresponds to the ReLU function from the sigmoid package in R.
 
