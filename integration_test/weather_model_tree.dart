@@ -138,12 +138,7 @@ void main() {
       await tester.pump(delay);
       await gotoNextPage(tester);
 
-      // TODO 20241008 gjw DOUBLE TAP BUILD FOR TREE.
-
       await verifyPage('Decision Tree Model');
-
-      // App may raise bugs in loading textPage. Thus, test does not target
-      // at content.
 
       await verifyExist(TextPage);
 
