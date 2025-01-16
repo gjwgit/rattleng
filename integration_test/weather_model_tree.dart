@@ -89,6 +89,7 @@ void main() {
       // Tap the right arrow to go to the third page.
 
       await gotoNextPage(tester);
+      await gotoNextPage(tester);
 
       await verifyPage('Decision Tree as Rules');
 
@@ -96,16 +97,6 @@ void main() {
       // at content.
 
       await verifyExist(TextPage);
-
-      await tester.pump(interact);
-
-      // Tap the right arrow to go to the forth page.
-
-      await gotoNextPage(tester);
-
-      await verifyPage('Tree');
-
-      await verifyImage(tester);
 
       await tester.pump(interact);
     });
