@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattle/widgets/image_page.dart';
 
 /// Check that the expected title for the page is found and optionally some text
 /// value on the page can be found.
@@ -41,4 +42,9 @@ Future<void> verifyPage(
     final valueFinder = find.textContaining(value);
     expect(valueFinder, findsOneWidget);
   }
+}
+
+Future<void> verifyImage(WidgetTester tester) async {
+  final imageFinder = find.byType(ImagePage);
+  expect(imageFinder, findsOneWidget);
 }
