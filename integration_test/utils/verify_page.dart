@@ -25,6 +25,7 @@
 
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattle/widgets/image_page.dart';
 
@@ -47,4 +48,11 @@ Future<void> verifyPage(
 Future<void> verifyImage(WidgetTester tester) async {
   final imageFinder = find.byType(ImagePage);
   expect(imageFinder, findsOneWidget);
+}
+
+/// Verify that the markdown content is loaded.
+
+Future<void> verifyMarkdown(WidgetTester tester) async {
+  final markdownContent = find.byKey(const Key('markdown_file'));
+  expect(markdownContent, findsOneWidget);
 }
