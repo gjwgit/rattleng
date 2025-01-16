@@ -77,39 +77,19 @@ void main() {
       // Tap the right arrow to go to the second page.
       await gotoNextPage(tester);
 
-      // Check if SelectableText contains the expected content.
-
-      final modelDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains(
-                  'Neuralnet(formula = formula_nn, data = ds_final, hidden =',
-                ) ==
-                true,
+      await verifySelectableText(
+        'Neuralnet(formula = formula_nn, data = ds_final, hidden =',
       );
 
-      // Ensure the SelectableText widget with the expected content exists.
-
-      expect(modelDescriptionFinder, findsOneWidget);
-
       await tester.pump(interact);
 
-      // Tap the right arrow to go to the next page.
-
-      await tester.pumpAndSettle();
       await tester.pump(hack);
-
-      await tester.pump(interact);
 
       await gotoNextPage(tester);
 
-      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
-      expect(forthPageTitleFinder, findsOneWidget);
+      await verifyPage('Neural Net Model - Visual');
 
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-      expect(imageFinder, findsOneWidget);
+      await verifyImage(tester);
 
       await tester.pump(interact);
     });
