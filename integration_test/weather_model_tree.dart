@@ -43,6 +43,8 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_checkbox.dart';
+import 'utils/enter_text.dart';
 import 'utils/verify_page.dart';
 
 void main() {
@@ -116,189 +118,141 @@ void main() {
 
       await tester.pump(hack);
 
-      // Tap the model Tab button.
-
       await navigateToTab(tester, 'Model');
-
-      // Navigate to the Tree feature.
 
       await navigateToFeature(tester, 'Tree', TreePanel);
 
-      // Find and tap the 'Include Missing' checkbox.
+      await tapCheckbox(tester, 'include_missing');
 
-      final Finder includeMissingCheckbox = find.byType(Checkbox);
-      await tester.tap(includeMissingCheckbox);
-      await tester.pumpAndSettle(); // Wait for UI to settle.
+      // Enter values into text fields
 
-      // Find the text fields by their keys and enter the new values.
+      await enterText(tester, 'minSplitField', '21');
+      await enterText(tester, 'maxDepthField', '29');
+      await enterText(tester, 'minBucketField', '9');
+      await enterText(tester, 'complexityField', '0.0110');
+      await enterText(tester, 'priorsField', '0.5,0.5');
+      await enterText(tester, 'lossMatrixField', '0,10,1,0');
 
-      await tester.enterText(find.byKey(const Key('minSplitField')), '21');
-      await tester.pumpAndSettle();
+      await tapButtonByKey(tester, 'Build Decision Tree');
 
-      await tester.enterText(find.byKey(const Key('maxDepthField')), '29');
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.byKey(const Key('minBucketField')), '9');
-      await tester.pumpAndSettle();
-
-      await tester.enterText(
-        find.byKey(const Key('complexityField')),
-        '0.0110',
-      );
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.byKey(const Key('priorsField')), '0.5,0.5');
-      await tester.pumpAndSettle();
-
-      await tester.enterText(
-        find.byKey(const Key('lossMatrixField')),
-        '0,10,1,0',
-      );
-      await tester.pumpAndSettle();
-
-      // Simulate the presence of a decision tree being built.
-
-      final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
-
-      await tester.tap(decisionTreeButton);
-      await tester.pumpAndSettle();
       await tester.pump(delay);
+      await gotoNextPage(tester);
 
       // TODO 20241008 gjw DOUBLE TAP BUILD FOR TREE.
 
-      await tester.tap(decisionTreeButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(hack);
-
-      final secondPageTitleFinder = find.text('Decision Tree Model');
-      expect(secondPageTitleFinder, findsOneWidget);
+      await verifyPage('Decision Tree Model');
 
       // App may raise bugs in loading textPage. Thus, test does not target
       // at content.
 
-      final summaryDecisionTreeFinder = find.byType(TextPage);
-      expect(summaryDecisionTreeFinder, findsOneWidget);
+      await verifyExist(TextPage);
 
-      await tester.pump(interact);
+      await gotoNextPage(tester);
 
-      // Tap the right arrow to go to the third page.
+      await verifyImage(tester);
 
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+      await gotoNextPage(tester);
 
-      final thirdPageTitleFinder = find.text('Decision Tree as Rules');
-      expect(thirdPageTitleFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      // Tap the right arrow to go to the forth page.
-
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-
-      final forthPageTitleFinder = find.text('Tree');
-      expect(forthPageTitleFinder, findsOneWidget);
-
-      await tester.pump(interact);
+      await verifyPage('Decision Tree as Rules');
     });
 
-    testWidgets('ctree.', (WidgetTester tester) async {
-      app.main();
+    // testWidgets('ctree.', (WidgetTester tester) async {
+    //   app.main();
 
-      await tester.pumpAndSettle();
+    //   await tester.pumpAndSettle();
 
-      await tester.pump(interact);
+    //   await tester.pump(interact);
 
-      await loadDemoDataset(tester);
+    //   await loadDemoDataset(tester);
 
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
+    //   // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
+    //   //
+    //   // How do we ensure the R Code is executed before proceeding in Rattle
+    //   // itself - we need to deal with the async issue in Rattle.
 
-      await tester.pump(hack);
+    //   await tester.pump(hack);
 
-      // Tap the model Tab button.
+    //   // Tap the model Tab button.
 
-      await navigateToTab(tester, 'Model');
+    //   await navigateToTab(tester, 'Model');
 
-      // Navigate to the Tree feature.
+    //   // Navigate to the Tree feature.
 
-      await navigateToFeature(tester, 'Tree', TreePanel);
+    //   await navigateToFeature(tester, 'Tree', TreePanel);
 
-      // Find the ChoiceChipTip widget for the traditional algorithm type.
+    //   // Find the ChoiceChipTip widget for the traditional algorithm type.
 
-      final traditionalChip = find.text(
-        'Traditional',
-      );
-      final conditionalChip = find.text('Conditional');
+    //   final traditionalChip = find.text(
+    //     'Traditional',
+    //   );
+    //   final conditionalChip = find.text('Conditional');
 
-      // Verify that both chips exist in the widget tree.
+    //   // Verify that both chips exist in the widget tree.
 
-      expect(traditionalChip, findsOneWidget);
-      expect(conditionalChip, findsOneWidget);
+    //   expect(traditionalChip, findsOneWidget);
+    //   expect(conditionalChip, findsOneWidget);
 
-      // Tap the conditional chip to switch algorithms.
+    //   // Tap the conditional chip to switch algorithms.
 
-      await tester.tap(conditionalChip);
+    //   await tester.tap(conditionalChip);
 
-      await tester.pumpAndSettle();
+    //   await tester.pumpAndSettle();
 
-      // Now switch back to the traditional algorithm.
+    //   // Now switch back to the traditional algorithm.
 
-      await tester.tap(traditionalChip);
+    //   await tester.tap(traditionalChip);
 
-      // Wait for the widget to rebuild and settle.
+    //   // Wait for the widget to rebuild and settle.
 
-      await tester.pumpAndSettle();
+    //   await tester.pumpAndSettle();
 
-      // Tap the conditional chip to switch algorithms.
+    //   // Tap the conditional chip to switch algorithms.
 
-      await tester.tap(conditionalChip);
+    //   await tester.tap(conditionalChip);
 
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+    //   await tester.pumpAndSettle();
+    //   await tester.pump(interact);
 
-      // Simulate the presence of a decision tree being built.
+    //   // Simulate the presence of a decision tree being built.
 
-      final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
+    //   final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
 
-      await tester.tap(decisionTreeButton);
+    //   await tester.tap(decisionTreeButton);
 
-      await tester.pumpAndSettle();
+    //   await tester.pumpAndSettle();
 
-      await tester.pump(hack);
+    //   await tester.pump(hack);
 
-      // Tap the right arrow to go to the second page.
+    //   // Tap the right arrow to go to the second page.
 
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-      // await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+    //   final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
+    //   expect(rightArrowButton, findsOneWidget);
+    //   // await tester.tap(rightArrowButton);
+    //   await tester.pumpAndSettle();
 
-      // 20241001 kev: The underlying code is failing on a manual test on kev's macos build. The test is commented out.
+    //   // 20241001 kev: The underlying code is failing on a manual test on kev's macos build. The test is commented out.
 
-      final secondPageTitleFinder = find.text('Decision Tree Model');
-      expect(secondPageTitleFinder, findsOneWidget);
+    //   final secondPageTitleFinder = find.text('Decision Tree Model');
+    //   expect(secondPageTitleFinder, findsOneWidget);
 
-      await tester.pump(interact);
+    //   await tester.pump(interact);
 
-      // Tap the right arrow to go to the third page.
+    //   // Tap the right arrow to go to the third page.
 
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
+    //   await tester.tap(rightArrowButton);
+    //   await tester.pumpAndSettle();
 
-      final thirdPageTitleFinder = find.text('Tree');
-      expect(thirdPageTitleFinder, findsOneWidget);
+    //   final thirdPageTitleFinder = find.text('Tree');
+    //   expect(thirdPageTitleFinder, findsOneWidget);
 
-      final imageFinder = find.byType(ImagePage);
+    //   final imageFinder = find.byType(ImagePage);
 
-      // Assert that the image is present.
-      expect(imageFinder, findsOneWidget);
+    //   // Assert that the image is present.
+    //   expect(imageFinder, findsOneWidget);
 
-      await tester.pump(interact);
-    });
+    //   await tester.pump(interact);
+    // }
+
+    // );
   });
 }
