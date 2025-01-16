@@ -25,14 +25,10 @@
 
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/features/dataset/toggles.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/providers/cleanse.dart';
 
 import 'utils/load_demo_dataset.dart';
 import 'utils/press_unify_icon.dart';
@@ -42,78 +38,78 @@ import 'utils/press_cleanse_icon.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  // testWidgets('Load Weather Dataset and test when celanse is on.',
-  //     (WidgetTester tester) async {
-  //   app.main();
-  //   await tester.pumpAndSettle();
+  testWidgets('Load Weather Dataset and test when cleanse is on.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  //   await pressCleanseIconOn(tester);
+    await pressCleanseIconOn(tester);
 
-  //   await loadDemoDataset(tester);
+    await loadDemoDataset(tester);
 
-  //   // Verify dataset content.
+    // Verify dataset content.
 
-  //   await verifyText(
-  //     tester,
-  //     [
-  //       // Verify dates in the Sample Column for date Variable.
+    await verifyText(
+      tester,
+      [
+        // Verify dates in the Sample Column for date Variable.
 
-  //       '2023-07-01',
-  //       '2023-07-02',
+        '2023-07-01',
+        '2023-07-02',
 
-  //       // Verify min_temp in the Sample Column.
+        // Verify min_temp in the Sample Column.
 
-  //       '4.6',
+        '4.6',
 
-  //       // Verify max_temp in the Content Column.
+        // Verify max_temp in the Content Column.
 
-  //       '13.9',
-  //     ],
-  //   );
+        '13.9',
+      ],
+    );
 
-  //   await verifyTextMultiple(
-  //     tester,
-  //     [
-  //       // Verify Unique Values for date Variable.
+    await verifyTextMultiple(
+      tester,
+      [
+        // Verify Unique Values for date Variable.
 
-  //       '365',
+        '365',
 
-  //       // Verify Unique Values for min_temp Variable.
+        // Verify Unique Values for min_temp Variable.
 
-  //       '192',
+        '192',
 
-  //       // Verify Type Values for wind_speed_9am Variable.
+        // Verify Type Values for wind_speed_9am Variable.
 
-  //       'fct',
-  //     ],
-  //   );
-  // });
+        'fct',
+      ],
+    );
+  });
 
-  // testWidgets('Load Weather Dataset and test when celanse is off.',
-  //     (WidgetTester tester) async {
-  //   app.main();
-  //   await tester.pumpAndSettle();
+  testWidgets('Load Weather Dataset and test when cleanse is off.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  //   await pressCleanseIconOff(tester);
+    await pressCleanseIconOff(tester);
 
-  //   await loadDemoDataset(tester);
+    await loadDemoDataset(tester);
 
-  //   await verifyTextMultiple(
-  //     tester,
-  //     [
-  //       // Verify Sample Values for location Variable.
+    await verifyTextMultiple(
+      tester,
+      [
+        // Verify Sample Values for location Variable.
 
-  //       'Canberra',
+        'Canberra',
 
-  //       // Verify Type Values for wind_dir_9am Variable.
+        // Verify Type Values for wind_dir_9am Variable.
 
-  //       'chr',
-  //     ],
-  //   );
-  // });
+        'chr',
+      ],
+    );
+  });
 
   testWidgets(
-      'Load Weather Dataset and test when celanse is on and unify is on.',
+      'Load Weather Dataset and test when cleanse is on and unify is on.',
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
@@ -134,7 +130,7 @@ void main() {
   });
 
   testWidgets(
-      'Load Weather Dataset and test when celanse is on and unify is off.',
+      'Load Weather Dataset and test when cleanse is on and unify is off.',
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
