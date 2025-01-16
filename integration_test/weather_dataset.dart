@@ -67,6 +67,8 @@ void main() {
       ],
     );
 
+    // These following are unique when cleanse is on.
+
     await verifyTextMultiple(
       tester,
       [
@@ -96,6 +98,8 @@ void main() {
 
     await verifyTextMultiple(
       tester,
+      // These are unique when cleanse is off.
+
       [
         // Verify Sample Values for location Variable.
 
