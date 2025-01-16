@@ -66,3 +66,8 @@ Future<void> verifySelectableText(String text) async {
   );
   expect(textFinder, findsOneWidget);
 }
+
+Future<void> verifyExist(Type widgetType) async {
+  final finder = find.byType(widgetType);
+  expect(finder, findsOneWidget);
+}

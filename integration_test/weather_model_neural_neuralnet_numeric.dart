@@ -67,6 +67,7 @@ void main() {
       await tapCheckbox(tester, 'Neural Ignore Categoric');
 
       // Simulate the presence of a neural network being built.
+
       await tapButton(tester, 'Build Neural Network');
 
       // Pause for a long time to wait for app gets stable.
@@ -74,7 +75,7 @@ void main() {
       await tester.pump(hack);
 
       await tester.pump(interact);
-      // Tap the right arrow to go to the second page.
+
       await gotoNextPage(tester);
 
       await verifySelectableText(

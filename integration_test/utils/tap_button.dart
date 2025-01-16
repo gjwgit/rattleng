@@ -26,12 +26,21 @@
 library;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 
 Future<void> tapButton(
   WidgetTester tester,
   String buttonText,
 ) async {
   final buttonFinder = find.text(buttonText);
+  expect(buttonFinder, findsOneWidget);
+
+  await tester.tap(buttonFinder);
+  await tester.pumpAndSettle();
+}
+
+Future<void> tapButtonByKey(WidgetTester tester, String key) async {
+  final buttonFinder = find.byKey(Key(key));
   expect(buttonFinder, findsOneWidget);
 
   await tester.tap(buttonFinder);
