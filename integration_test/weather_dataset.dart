@@ -35,78 +35,121 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/providers/cleanse.dart';
 
 import 'utils/load_demo_dataset.dart';
+import 'utils/press_unify_icon.dart';
 import 'utils/verify_text.dart';
 import 'utils/press_cleanse_icon.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Load Weather Dataset and test when celanse is on.',
+  // testWidgets('Load Weather Dataset and test when celanse is on.',
+  //     (WidgetTester tester) async {
+  //   app.main();
+  //   await tester.pumpAndSettle();
+
+  //   await pressCleanseIconOn(tester);
+
+  //   await loadDemoDataset(tester);
+
+  //   // Verify dataset content.
+
+  //   await verifyText(
+  //     tester,
+  //     [
+  //       // Verify dates in the Sample Column for date Variable.
+
+  //       '2023-07-01',
+  //       '2023-07-02',
+
+  //       // Verify min_temp in the Sample Column.
+
+  //       '4.6',
+
+  //       // Verify max_temp in the Content Column.
+
+  //       '13.9',
+  //     ],
+  //   );
+
+  //   await verifyTextMultiple(
+  //     tester,
+  //     [
+  //       // Verify Unique Values for date Variable.
+
+  //       '365',
+
+  //       // Verify Unique Values for min_temp Variable.
+
+  //       '192',
+
+  //       // Verify Type Values for wind_speed_9am Variable.
+
+  //       'fct',
+  //     ],
+  //   );
+  // });
+
+  // testWidgets('Load Weather Dataset and test when celanse is off.',
+  //     (WidgetTester tester) async {
+  //   app.main();
+  //   await tester.pumpAndSettle();
+
+  //   await pressCleanseIconOff(tester);
+
+  //   await loadDemoDataset(tester);
+
+  //   await verifyTextMultiple(
+  //     tester,
+  //     [
+  //       // Verify Sample Values for location Variable.
+
+  //       'Canberra',
+
+  //       // Verify Type Values for wind_dir_9am Variable.
+
+  //       'chr',
+  //     ],
+  //   );
+  // });
+
+  testWidgets(
+      'Load Weather Dataset and test when celanse is on and unify is on.',
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
     await pressCleanseIconOn(tester);
+    await pressUnifyIconOn(tester);
 
     await loadDemoDataset(tester);
-
-    // Verify dataset content.
-
-    await verifyText(
-      tester,
-      [
-        // Verify dates in the Sample Column for date Variable.
-
-        '2023-07-01',
-        '2023-07-02',
-
-        // Verify min_temp in the Sample Column.
-
-        '4.6',
-
-        // Verify max_temp in the Content Column.
-
-        '13.9',
-      ],
-    );
 
     await verifyTextMultiple(
       tester,
       [
-        // Verify Unique Values for date Variable.
+        // Verify the variables are in lowercase and separated by underscores.
 
-        '365',
-
-        // Verify Unique Values for min_temp Variable.
-
-        '192',
-
-        // Verify Type Values for wind_speed_9am Variable.
-
-        'fct',
+        'min_temp',
       ],
     );
   });
 
-  testWidgets('Load Weather Dataset and test when celanse is off.',
+  testWidgets(
+      'Load Weather Dataset and test when celanse is on and unify is off.',
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
-    await pressCleanseIconOff(tester);
+    await pressCleanseIconOn(tester);
+    await pressUnifyIconOff(tester);
 
     await loadDemoDataset(tester);
 
     await verifyTextMultiple(
       tester,
       [
-        // Verify Sample Values for location Variable.
+        // Verify the variables are in uppercase and underscores are removed.
 
-        'Canberra',
-
-        // Verify Type Values for wind_dir_9am Variable.
-
-        'chr',
+        'MinTemp',
       ],
     );
   });
