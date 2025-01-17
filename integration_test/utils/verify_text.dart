@@ -36,3 +36,15 @@ Future<void> verifyText(
     expect(valueFinder, findsOneWidget);
   }
 }
+
+//Verift text shown multiple times
+Future<void> verifyTextMultiple(
+  WidgetTester tester,
+  List<String> values,
+) async {
+  for (final value in values) {
+    final valueFinder = find.textContaining(value);
+    // find multiple times
+    expect(valueFinder, findsAtLeastNWidgets(1));
+  }
+}

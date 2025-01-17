@@ -31,34 +31,125 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/load_demo_dataset.dart';
+import 'utils/press_unify_icon.dart';
 import 'utils/verify_text.dart';
+import 'utils/press_cleanse_icon.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Load Weather Dataset.', (WidgetTester tester) async {
+  testWidgets('Load Weather Dataset and test when cleanse is on.',
+      (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
+    await pressCleanseIconOn(tester);
+
     await loadDemoDataset(tester);
 
-    // Expect specific text in the ROLES page.
+    // Verify dataset content.
 
     await verifyText(
       tester,
       [
-        // Verify dates in the Content Column.
+        // Verify dates in the Sample Column for date Variable.
 
         '2023-07-01',
         '2023-07-02',
 
-        // Verify min_temp in the Content Column.
+        // Verify min_temp in the Sample Column.
 
         '4.6',
 
         // Verify max_temp in the Content Column.
 
         '13.9',
+      ],
+    );
+
+    // These following are unique when cleanse is on.
+
+    await verifyTextMultiple(
+      tester,
+      [
+        // Verify Unique Values for date Variable.
+
+        '365',
+
+        // Verify Unique Values for min_temp Variable.
+
+        '192',
+
+        // Verify Type Values for wind_speed_9am Variable.
+
+        'fct',
+      ],
+    );
+  });
+
+  testWidgets('Load Weather Dataset and test when cleanse is off.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    await pressCleanseIconOff(tester);
+
+    await loadDemoDataset(tester);
+
+    await verifyTextMultiple(
+      tester,
+      // These are unique when cleanse is off.
+
+      [
+        // Verify Sample Values for location Variable.
+
+        'Canberra',
+
+        // Verify Type Values for wind_dir_9am Variable.
+
+        'chr',
+      ],
+    );
+  });
+
+  testWidgets(
+      'Load Weather Dataset and test when cleanse is on and unify is on.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    await pressCleanseIconOn(tester);
+    await pressUnifyIconOn(tester);
+
+    await loadDemoDataset(tester);
+
+    await verifyTextMultiple(
+      tester,
+      [
+        // Verify the variables are in lowercase and separated by underscores.
+
+        'min_temp',
+      ],
+    );
+  });
+
+  testWidgets(
+      'Load Weather Dataset and test when cleanse is on and unify is off.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    await pressCleanseIconOn(tester);
+    await pressUnifyIconOff(tester);
+
+    await loadDemoDataset(tester);
+
+    await verifyTextMultiple(
+      tester,
+      [
+        // Verify the variables are in uppercase and underscores are removed.
+
+        'MinTemp',
       ],
     );
   });
