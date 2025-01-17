@@ -1,6 +1,6 @@
 /// Choose a dataset from a package
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-17 19:32:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -90,5 +90,6 @@ Future<String> datasetSelectPackage(
       );
     },
   );
+
   return path;
 }
