@@ -52,6 +52,9 @@ String _basicTemplate(
   bool nnetExecuted = ref.watch(nnetEvaluateProvider);
   bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
 
+  // 20250117 zy There could be opportunity to reduce duplicated code
+  // but at this time it is not clear how.
+
   // Define header strings for various model error matrices (counts and proportions).
 
   String hdr =
@@ -124,6 +127,24 @@ String _basicTemplate(
   String cnp = rExtract(log, '> nnet_${evaluateDataset}_PROP');
   String cntc = rExtract(log, '> neuralnet_${evaluateDataset}_COUNT');
   String cntp = rExtract(log, '> neuralnet_${evaluateDataset}_PROP');
+  String rems =
+      rExtract(log, '> rpart_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String cems =
+      rExtract(log, '> ctree_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String aems =
+      rExtract(log, '> adaboost_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String xems =
+      rExtract(log, '> xgboost_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String rfems =
+      rExtract(log, '> randomForest_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String cfems =
+      rExtract(log, '> cforest_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String svmems =
+      rExtract(log, '> svm_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String nnems =
+      rExtract(log, '> nnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String ntems =
+      rExtract(log, '> neuralnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
 
   // Obtain the current timestamp for logging purposes.
 
@@ -135,90 +156,98 @@ String _basicTemplate(
 
   // Append RPART model results if available and executed.
 
-  if (crc != '' && crp != '' && rpartTreeExecuted) {
+  if (crc != '' && crp != '' && rpartTreeExecuted && rems != '') {
     result = result.isNotEmpty
-        ? '$result\n$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n'
-        : '$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n';
+        ? '$result\n$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n$rems\n'
+        : '$hdr\n\n\n$crc\n\n$mdr\n\n\n$crp\n\n$rems\n';
   }
 
   // Append CTREE model results if available and tree execution is confirmed.
 
-  if (cc != '' && cp != '' && cTreeExecuted) {
+  if (cc != '' && cp != '' && cTreeExecuted && cems != '') {
     result = '$result\n'
         '$hdc\n\n'
         '$cc\n\n'
         '$mdc\n\n'
-        '$cp\n\n';
+        '$cp\n\n'
+        '$cems\n\n';
   }
 
   // Append RANDOM FOREST model results if available and forest option is enabled.
 
-  if (crf != '' && prf != '' && forestExecuted) {
+  if (crf != '' && prf != '' && forestExecuted && rfems != '') {
     result = '$result\n'
         '$mdrf\n\n'
         '$crf\n\n'
         '$hdrf\n\n'
-        '$prf\n\n';
+        '$prf\n\n'
+        '$rfems\n\n';
   }
 
   // Append CONDITIONAL FOREST model results if available and forest option is enabled.
 
-  if (ccf != '' && pcf != '' && forestExecuted) {
+  if (ccf != '' && pcf != '' && forestExecuted && cfems != '') {
     result = '$result\n'
         '$mdcf\n\n'
         '$ccf\n\n'
         '$hdcf\n\n'
-        '$pcf\n\n';
+        '$pcf\n\n'
+        '$cfems\n\n';
   }
 
   // Append ADABOOST model results if available and boosting is enabled.
 
-  if (ca != '' && pa != '' && boostExecuted) {
+  if (ca != '' && pa != '' && boostExecuted && aems != '') {
     result = '$result\n'
         '$hda\n\n'
         '$ca\n\n'
         '$mda\n\n'
-        '$pa\n\n';
+        '$pa\n\n'
+        '$aems\n\n';
   }
 
   // Append XGBOOST model results if available and boosting is enabled.
 
-  if (cx != '' && px != '' && boostExecuted) {
+  if (cx != '' && px != '' && boostExecuted && xems != '') {
     result = '$result\n'
         '$hdx\n\n'
         '$cx\n\n'
         '$mdx\n\n'
-        '$px\n\n';
+        '$px\n\n'
+        '$xems\n\n';
   }
 
   // Append SVM model results if available and SVM is executed.
 
-  if (csvm != '' && psvm != '' && svmExecuted) {
+  if (csvm != '' && psvm != '' && svmExecuted && svmems != '') {
     result = '$result\n'
         '$ecsvm\n\n'
         '$csvm\n\n'
         '$epsvm\n\n'
-        '$psvm\n\n';
+        '$psvm\n\n'
+        '$svmems\n\n';
   }
 
   // Append NNET model results if available and NNET is executed.
 
-  if (cnc != '' && cnp != '' && nnetExecuted) {
+  if (cnc != '' && cnp != '' && nnetExecuted && nnems != '') {
     result = '$result\n'
         '$ennc\n\n'
         '$cnc\n\n'
         '$ennp\n\n'
-        '$cnp\n\n';
+        '$cnp\n\n'
+        '$nnems\n\n';
   }
 
   // Append NeuralNet model results if available and NeuralNet is executed.
 
-  if (cntc != '' && cntp != '' && neuralNetExecuted) {
+  if (cntc != '' && cntp != '' && neuralNetExecuted && ntems != '') {
     result = '$result\n'
         '$entc\n\n'
         '$cntc\n\n'
         '$entp\n\n'
-        '$cntp\n\n';
+        '$cntp\n\n'
+        '$ntems\n\n';
   }
 
   result = '$result\n'
