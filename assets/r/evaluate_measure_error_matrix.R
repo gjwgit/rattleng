@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:16:05 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-17 15:41:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -81,7 +81,7 @@ avg_error <- mean(class_errors, na.rm = TRUE)
 
 error_summary <- paste(
     sprintf(
-        "Missing overall and averaged error: overall = %.2f%%, average = %.2f%%",
+        "Overall Error = %.2f%%; Average Error = %.2f%%.",
         100 * overall_error, 100 * avg_error
     ),
     "\n",
@@ -94,4 +94,4 @@ rat(paste('> ', mtype, "_DATASET_TYPE_ERROR_MATRIX_SUMMARY: ", sep = ""))
 
 # Log the formatted error summary showing overall and average error rates.
 
-rat(error_summary)
+cat(error_summary)
