@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -34,26 +34,26 @@ mdesc <- "Support Vector Machine"
 
 # Define the dataset, input, and target.
 
-svm_kernel <- SVM_KERNEL
+svm_kernel <- <SVM_KERNEL>
 
 if (svm_kernel == "polydot") {
   svm_model <- ksvm(
     as.factor(trds[[target]]) ~ .,
     data       = trds,
-    kernel     = SVM_KERNEL,
-    kpar       = list("degree" = SVM_DEGREE),
+    kernel     = <SVM_KERNEL>,
+    kpar       = list("degree" = <SVM_DEGREE>),
     prob.model = TRUE
   )
 } else {
   svm_model <- ksvm(
     as.factor(trds[[target]]) ~ .,
     data       = trds,
-    kernel     = SVM_KERNEL,
+    kernel     = <SVM_KERNEL>,
     prob.model = TRUE
   )
 }
 
-# Save the model to the TEMPLATE variable `model` and the predicted
+# Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- svm_model

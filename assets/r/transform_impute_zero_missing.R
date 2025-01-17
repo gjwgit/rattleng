@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,22 +24,22 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
-# Transform "SELECTED_VAR" by replacing NA with zero or 'Missing'.
+# Transform "<SELECTED_VAR>" by replacing NA with zero or 'Missing'.
 
 library(dplyr)        # Wrangling: mutate().
 library(tidyr)        # Wrangling: replace_na().
 
-if (is.numeric(ds$SELECTED_VAR))
+if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    dplyr::mutate(IZR_SELECTED_VAR = tidyr::replace_na(SELECTED_VAR, 0))
+    dplyr::mutate(<IZR_SELECTED_VAR> = tidyr::replace_na(<SELECTED_VAR>, 0))
 } else {
   ds %<>%
-    dplyr::mutate(IZR_SELECTED_VAR = tidyr::replace_na(as.character(SELECTED_VAR),
+    dplyr::mutate(<IZR_SELECTED_VAR> = tidyr::replace_na(as.character(<SELECTED_VAR>),
                                                        'Missing'),
-                  IZR_SELECTED_VAR = factor(IZR_SELECTED_VAR))
+                  <IZR_SELECTED_VAR> = factor(<IZR_SELECTED_VAR>))
 }
 
 glimpse(ds)

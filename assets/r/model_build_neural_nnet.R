@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -47,11 +47,11 @@ if (neural_ignore_categoric) {
 model_nn <- nnet(
   form,
   data    = tds,
-  size    = NNET_HIDDEN_LAYERS,
+  size    = <NNET_HIDDEN_LAYERS>,
   skip    = TRUE,
-  MaxNWts = NEURAL_MAX_NWTS,
+  MaxNWts = <NEURAL_MAX_NWTS>,
   trace   = FALSE,
-  maxit   = NEURAL_MAXIT
+  maxit   = <NEURAL_MAXIT>
 )
 
 # Generate a textual view of the Neural Network model.
@@ -62,7 +62,7 @@ summary(model_nn)
 # Plot SVG the resulting Neural Network structure using
 # NeuralNetTools.
 
-svg("TEMPDIR/model_nn_nnet.svg")
+svg("<TEMPDIR>/model_nn_nnet.svg")
 NeuralNetTools::plotnet(model_nn,
                         cex_val    = 0.5,
                         circle_cex = 2,

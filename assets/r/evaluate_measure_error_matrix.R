@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -43,7 +43,7 @@ em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
 ## `cat()` to avoid exposing the command to the user's exported
 ## script.
 ##
-rat(paste('> ', mtype, "_DATASET_TYPE_COUNT ", sep=""))
+rat(paste('> ', mtype, "<_DATASET_TYPE_COUNT> ", sep=""))
 em_count
 
 # Generate a confusion matrix with proportions (relative frequencies)
@@ -57,5 +57,5 @@ em_prop <- rattle::errorMatrix(actual, predicted)
 ## `cat()` to avoid exposing the command to the user's exported
 ## script.
 ##
-rat(paste('> ', mtype, "_DATASET_TYPE_PROP ", sep = ""))
+rat(paste('> ', mtype, "<_DATASET_TYPE_PROP> ", sep = ""))
 em_prop

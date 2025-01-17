@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,14 +24,14 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replacing NA.
+# Transform "<SELECTED_VAR>" by replacing NA.
 
-if (is.numeric(ds$SELECTED_VAR))
+if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    mutate(IMD_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     median(SELECTED_VAR, na.rm = TRUE),
-                                     SELECTED_VAR))
+    mutate(<IMD_SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                     median(<SELECTED_VAR>, na.rm = TRUE),
+                                     <SELECTED_VAR>))
 }
 
 glimpse(ds)

@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,11 +24,11 @@
 #
 # Author: Graham Williams
 
-# The file `FILENAME` is loaded as a CSV file into the template
+# The file `<FILENAME>` is loaded as a CSV file into the template
 # variable `ds` (dataset), intialising the `dsname` (a printable name
 # for the dataset) and `vnames` (the variable names).
 #
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
@@ -38,8 +38,8 @@
 
 library(magrittr)        # Pipeline: %>%
 
-dsname <- "FILENAME" %>% basename() %>% sub(".txt$", "", .)
+dsname <- "<FILENAME>" %>% basename() %>% sub(".txt$", "", .)
 
-txt <- readLines("FILENAME")
+txt <- readLines("<FILENAME>")
 
 cat(txt, sep = "\n")

@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # Run this script after the variable `ds` (dataset) and other data
 # template variables have been defined as in `data_template.R`. This
@@ -43,18 +43,18 @@ library(stringi)      # The string concat operator %s+%.
 
 # Record basic variable roles for the templates.
 
-ignore <- c(risk, id, IGNORE_VARS)
+ignore <- c(risk, id, <IGNORE_VARS>)
 vars   <- setdiff(vars, ignore)
 inputs <- setdiff(vars, target)
 
 # Generate the formula to be used for predictive modelling which is
-# available when a TARGET variable is identified.
+# available when a <TARGET> variable is identified.
 
 if (!is.null(target)) {
   form <- formula(target %s+% " ~ .")
 
-  # 20250108 gjw Create the TARGET COMPLETE dataset (tcds).  We
-  # identify a subset of the FULL DATASET that has values for the
+  # 20250108 gjw Create the <TARGET> <COMPLETE> dataset (tcds).  We
+  # identify a subset of the FULL <DATASET> that has values for the
   # target variable, removing those rows that do not have a
   # target. For predictive modelling we would only use data that has a
   # target value.
@@ -68,7 +68,7 @@ if (!is.null(target)) {
 
   form <- formula("~ .")
 
-  # If no TARGET variable is identified then we still want to start
+  # If no <TARGET> variable is identified then we still want to start
   # with a `tcds` for processing.
 
   tcds <- ds
@@ -81,7 +81,7 @@ print(form)
 
 tcnobs <- nrow(tcds)
 
-if (SPLIT_DATASET) {
+if (<SPLIT_DATASET>) {
 
   # Split the dataset into train, tune, and test, recording the indicies
   # of the observations to be associated with each dataset. If the
@@ -93,20 +93,20 @@ if (SPLIT_DATASET) {
   # explore the impact of different dataset paritioning on the
   # resulting model.
 
-  # TODO 20241202 gjw REPLACE THE FIXED 42 WITH A SETTINGS VALUE FOR THE SEED.
+  # TODO 20241202 gjw <REPLACE> THE <FIXED> 42 WITH A <SETTINGS> <VALUE> FOR THE SEED.
 
-  # TODO 20241202 gjw ADD PROVIDER FOR RANDOM_PARTITION TO RANDOMISE EACH TIME.
+  # TODO 20241202 gjw ADD <PROVIDER> FOR <RANDOM_PARTITION> TO <RANDOMISE> EACH TIME.
 
-  # TODO 20241202 gjw MAYBE IF RANDOM_SEED IS EMPTY WE RANDOMISE EACH TIME HERE.
+  # TODO 20241202 gjw <MAYBE> IF <RANDOM_SEED> IS <EMPTY> WE <RANDOMISE> EACH TIME HERE.
 
-  if (! RANDOM_PARTITION) {
-    set.seed(RANDOM_SEED)
+  if (! <RANDOM_PARTITION>) {
+    set.seed(<RANDOM_SEED>)
   }
 
-  # Specify the three way split for the dataset: TRAINING (tr) and
-  # TUNING (tu) and TESTING (te).
+  # Specify the three way split for the dataset: <TRAINING> (tr) and
+  # <TUNING> (tu) and <TESTING> (te).
 
-  split <- c(DATA_SPLIT_TR_TU_TE)
+  split <- c(<DATA_SPLIT_TR_TU_TE>)
 
   tr <- tcnobs %>% sample(split[1]*tcnobs)
   tu <- tcnobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*tcnobs)
@@ -122,7 +122,7 @@ if (SPLIT_DATASET) {
   tr <- tu <- te <- seq_len(tcnobs)
 }
 
-# Note the actual values of the TARGET variable and the RISK variable
+# Note the actual values of the <TARGET> variable and the RISK variable
 # for use in model training and evaluation later on.
 
 if (!is.null(target)) {
@@ -183,11 +183,11 @@ if (!is.null(risk)) {
 }
 
 ####################################
-# TODO 20241202 gjw REVIEW ALL OF THE FOLLOWING - WHY HERE OR WHY NEEDED
+# TODO 20241202 gjw <REVIEW> ALL OF THE <FOLLOWING> - WHY HERE OR WHY <NEEDED>
 
 # Identify predictor variables (excluding the target variable).
 
-# TODO 20241202 gjw WHY IS THIS NEEDED - USE INPUTS
+# TODO 20241202 gjw WHY IS THIS <NEEDED> - USE <INPUTS>
 
 # predictor_vars <- setdiff(vars, target)
 
@@ -196,17 +196,17 @@ if (!is.null(risk)) {
 cat_vars <- names(Filter(function(col) is.factor(col) || is.character(col), ds[inputs]))
 num_vars <- setdiff(inputs, cat_vars)
 
-# TODO 20241112 gjw FIX THIS CLUMSY NAME
+# TODO 20241112 gjw FIX THIS <CLUMSY> NAME
 
 ignore_categoric_vars <- c(num_vars, target)
 
-# TODO 20241202 gjw THIS SEEMS OUT OF PLACE HERE
+# TODO 20241202 gjw THIS <SEEMS> OUT OF <PLACE> HERE
 
-neural_ignore_categoric <- NEURAL_IGNORE_CATEGORIC
+neural_ignore_categoric <- <NEURAL_IGNORE_CATEGORIC>
 
 # Create numeric risks vector.
 
-# TODO 20241202 gjw WHAT IS THIS USED FOR? CAN NOW BE REMOVED?
+# TODO 20241202 gjw WHAT IS THIS USED FOR? CAN NOW BE <REMOVED>?
 
 risks <- as.character(risk_tu)
 risks <- risks[!is.na(risks)]
@@ -214,7 +214,7 @@ risks <- as.numeric(risks)
 
 # Create numeric actual vector.
 
-# TODO 20241202 gjw WHAT IS THIS USED FOR? CAN NOW BE REMOVED?
+# TODO 20241202 gjw WHAT IS THIS USED FOR? CAN NOW BE <REMOVED>?
 
 actual <- as.character(actual_tu)
 actual <- actual[!is.na(actual)]

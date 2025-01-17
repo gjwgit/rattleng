@@ -14,9 +14,9 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR MORE DETAILS.
+# FOR MORE <DETAILS>.
 #
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <https://www.gnu.org/licenses/>.
@@ -37,20 +37,20 @@ mdesc <- "Adaptive Boosting (AdaBoost)"
 
 # Set parameters for the AdaBoost model.
 
-ada_control <- rpart.control(maxdepth = BOOST_MAX_DEPTH,
-                             cp       = BOOST_COMPLEXITY,
-                             minsplit = BOOST_MIN_SPLIT,
-                             xval     = BOOST_X_VALUE)
+ada_control <- rpart.control(maxdepth = <BOOST_MAX_DEPTH>,
+                             cp       = <BOOST_COMPLEXITY>,
+                             minsplit = <BOOST_MIN_SPLIT>,
+                             xval     = <BOOST_X_VALUE>)
 
 # Train the AdaBoost model.
 
 model_ada <- ada(form,
                  data    = trds,
-                 iter    = BOOST_ITERATIONS,
+                 iter    = <BOOST_ITERATIONS>,
                  type    = "gentle", # Type of boosting.
                  control = ada_control)
 
-# Save the model to the TEMPLATE variable `model` and the predicted
+# Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- model_ada
@@ -111,6 +111,6 @@ ada_plot <- ada_plot +
 
 # Save the plot to an SVG file.
 
-svg("TEMPDIR/model_ada_boost.svg")
+svg("<TEMPDIR>/model_ada_boost.svg")
 print(ada_plot)
 dev.off()

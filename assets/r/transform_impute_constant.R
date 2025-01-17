@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -26,20 +26,20 @@
 
 # TODO 20240720 gjw combine into impute_constant
 
-# Transform "SELECTED_VAR" into "IMP_SELECTED_VAR" by imputing a value.
+# Transform "<SELECTED_VAR>" into "<IMP_SELECTED_VAR>" by imputing a value.
 
-if (is.numeric(ds$SELECTED_VAR)) {
+if (is.numeric(ds$<SELECTED_VAR>)) {
   ds %<>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     IMPUTED_VALUE,
-                                     SELECTED_VAR))
+    mutate(<IMP_SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                     <IMPUTED_VALUE>,
+                                     <SELECTED_VAR>))
 } else {
   ds %<>%
-    mutate(IMP_SELECTED_VAR = as.character(SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(IMP_SELECTED_VAR),
-                                     "IMPUTED_VALUE",
-                                     IMP_SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = as.factor(IMP_SELECTED_VAR))
+    mutate(<IMP_SELECTED_VAR> = as.character(<SELECTED_VAR>)) %>%
+    mutate(<IMP_SELECTED_VAR> = ifelse(is.na(<IMP_SELECTED_VAR>),
+                                     "<IMPUTED_VALUE>",
+                                     <IMP_SELECTED_VAR>)) %>%
+    mutate(<IMP_SELECTED_VAR> = as.factor(<IMP_SELECTED_VAR>))
 }
 
 glimpse(ds)

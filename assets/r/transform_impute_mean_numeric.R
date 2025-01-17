@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,16 +24,16 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replacing NA with the mean value.
+# Transform "<SELECTED_VAR>" by replacing NA with the mean value.
 
 library(dplyr)        # Wrangling: mutate().
 
-if (is.numeric(ds$SELECTED_VAR))
+if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    mutate(IMN_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     mean(SELECTED_VAR, na.rm = TRUE),
-                                     SELECTED_VAR))
+    mutate(<IMN_SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                     mean(<SELECTED_VAR>, na.rm = TRUE),
+                                     <SELECTED_VAR>))
 }
 
 glimpse(ds)

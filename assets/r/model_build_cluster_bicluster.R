@@ -12,7 +12,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,7 +24,7 @@
 
 # Cluster analysis using BiCluster
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -43,7 +43,7 @@ mdesc <- "BiCluster cluster analysis"
 
 # Set whether the data should be rescaled.
 
-rescale <- CLUSTER_RESCALE
+rescale <- <CLUSTER_RESCALE>
 
 # Prepare the data for bi-clustering based on the value of rescale.
 
@@ -61,7 +61,7 @@ tds <- as.matrix(tds)
 
 # Perform bi-clustering using the biclust function.
 
-model_biclust <- biclust(tds, method=BCCC(), number=CLUSTER_NUM)
+model_biclust <- biclust(tds, method=BCCC(), number=<CLUSTER_NUM>)
 
 # Extract row and column clusters.
 

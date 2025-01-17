@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -27,7 +27,7 @@
 # Various summaries that are provided by R and different pacakges are
 # generated to obtain some insight into the dataset we are looking at.
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -72,7 +72,7 @@ timeDate::skewness(ds[numc], na.rm=TRUE)
 # qite costly, and memory hungry, for a 20,000 observation dataset so
 # by default we do not build the cross tabulation. 
 
-if (SUMMARY_CROSS_TAB) {
+if (<SUMMARY_CROSS_TAB>) {
   for (i in catc) {
     cat(sprintf("CrossTab of %s by target variable %s\n\n", i, target))
     print(descr::CrossTable(ds[[i]], ds[[target]], expected=TRUE, format="SAS"))

@@ -1,4 +1,4 @@
-# TODO 20241212 gjw IS THIS USED ANYWHERE NOW?
+# TODO 20241212 gjw IS THIS USED <ANYWHERE> NOW?
 #
 #
 # Rattle Scripts: Reset the data variables.
@@ -17,7 +17,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -29,7 +29,7 @@
 
 vnames <- names(ds)
 
-# TODO 20241212 gjw WHY REDEFINE unique_columns HERE. SEE session_setup.R
+# TODO 20241212 gjw WHY <REDEFINE> unique_columns HERE. SEE session_setup.R
 
 ## unique_columns <- function(df) {
 ##   col_names <- names(df)

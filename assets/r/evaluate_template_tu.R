@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
@@ -36,7 +36,7 @@
 ## #########################################################################
 ## #########################################################################
 ## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+## 20241220 gjw DO NOT <MODIFY> THIS FILE <WITHOUT> <DISCUSSION>
 ## #########################################################################
 ## #########################################################################
 ## #########################################################################
@@ -45,9 +45,9 @@
 
 # Identify the dataset partition that the model is applied to.
 
-dtype <- 'TUNING_TYPE'
+dtype <- '<TUNING_TYPE>'
 
-# Store in TEMPLATE variables the actual and risk values, and the
+# Store in <TEMPLATE> variables the actual and risk values, and the
 # predicted and probabilites, for later processing.
 
 actual      <- actual_tu

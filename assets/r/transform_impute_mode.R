@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,23 +24,23 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replacing NA with the mode value.
+# Transform "<SELECTED_VAR>" by replacing NA with the mode value.
 
 library(dplyr)        # Wrangling: mutate().
 library(tidyr)        # Wrangling: replace_na().
 
-if (is.numeric(ds$SELECTED_VAR))
+if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    dplyr::mutate(IMO_SELECTED_VAR =
-                    tidyr::replace_na(SELECTED_VAR,
-                                      rattle::modalvalue(ds$SELECTED_VAR, na.rm=TRUE)))
+    dplyr::mutate(<IMO_SELECTED_VAR> =
+                    tidyr::replace_na(<SELECTED_VAR>,
+                                      rattle::modalvalue(ds$<SELECTED_VAR>, na.rm=TRUE)))
 } else {
   ds %<>%
-    dplyr::mutate(IMO_SELECTED_VAR =
-                    tidyr::replace_na(as.character(SELECTED_VAR),
-                                      rattle::modalvalue(SELECTED_VAR, na.rm=TRUE)),
-                  IMO_SELECTED_VAR = factor(IMO_SELECTED_VAR))
+    dplyr::mutate(<IMO_SELECTED_VAR> =
+                    tidyr::replace_na(as.character(<SELECTED_VAR>),
+                                      rattle::modalvalue(<SELECTED_VAR>, na.rm=TRUE)),
+                  <IMO_SELECTED_VAR> = factor(<IMO_SELECTED_VAR>))
 }
   
 

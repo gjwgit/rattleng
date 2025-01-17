@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -28,7 +28,7 @@
 
 # Turn a factor into indicator variables.
 
-ds[, make.names(paste("TIN_SELECTED_VAR", levels(ds[["SELECTED_VAR"]]), sep=""))] <- diag(nlevels(ds[["SELECTED_VAR"]]))[ds[["SELECTED_VAR"]],]
+ds[, make.names(paste("<TIN_SELECTED_VAR>", levels(ds[["<SELECTED_VAR>"]]), sep=""))] <- diag(nlevels(ds[["<SELECTED_VAR>"]]))[ds[["<SELECTED_VAR>"]],]
 
 glimpse(ds)
 summary(ds)

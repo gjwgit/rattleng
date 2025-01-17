@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -31,12 +31,12 @@
 
 # Transform into a factor.
 
-ds[["TFC_SELECTED_VAR"]] <- as.factor(ds[["SELECTED_VAR"]])
+ds[["<TFC_SELECTED_VAR>"]] <- as.factor(ds[["<SELECTED_VAR>"]])
 
-ol <- levels(ds[["TFC_SELECTED_VAR"]])
+ol <- levels(ds[["<TFC_SELECTED_VAR>"]])
 lol <- length(ol)
 nl <- c(sprintf("[%s,%s]", ol[1], ol[1]), sprintf("(%s,%s]", ol[-lol], ol[-1]))
-levels(ds[["TFC_SELECTED_VAR"]]) <- nl
+levels(ds[["<TFC_SELECTED_VAR>"]]) <- nl
 
 #=======================================================================
 #=======================================================================

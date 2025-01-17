@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -26,7 +26,7 @@
 
 # Visual presentation of variables.
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -39,16 +39,16 @@
 # Bar Plot
 ########################################################################
 
-svg("TEMPDIR/explore_visual_bars.svg", width=10)
+svg("<TEMPDIR>/explore_visual_bars.svg", width=10)
 
 ds %>%
-  ggplot(aes(x = SELECTED_VAR)) +
+  ggplot(aes(x = <SELECTED_VAR>)) +
   geom_bar(position = "dodge") +
-  labs(title = "Distribution of SELECTED_VAR",
-       sub = paste("TIMESTAMP", username),
-       x = "SELECTED_VAR",
+  labs(title = "Distribution of <SELECTED_VAR>",
+       sub = paste("<TIMESTAMP>", username),
+       x = "<SELECTED_VAR>",
        y = "Frequency") +
-  SETTINGS_GRAPHIC_THEME()
+  <SETTINGS_GRAPHIC_THEME>()
 
 dev.off()
 
@@ -56,32 +56,32 @@ dev.off()
 # Dot Plot
 ########################################################################
 
-svg("TEMPDIR/explore_visual_dots.svg", width=10)
+svg("<TEMPDIR>/explore_visual_dots.svg", width=10)
 
-overall_freq <- as.data.frame(table(ds$SELECTED_VAR))
-colnames(overall_freq) <- c("SELECTED_VAR", "Frequency")
+overall_freq <- as.data.frame(table(ds$<SELECTED_VAR>))
+colnames(overall_freq) <- c("<SELECTED_VAR>", "Frequency")
 
 # Calculate grouped frequencies
-#grouped_freq <- as.data.frame(table(ds$SELECTED_VAR))
-#colnames(grouped_freq) <- c("SELECTED_VAR", "Frequency")
+#grouped_freq <- as.data.frame(table(ds$<SELECTED_VAR>))
+#colnames(grouped_freq) <- c("<SELECTED_VAR>", "Frequency")
 
 # Combine datasets
 combined_data <- overall_freq
 
 # Create the dot plot
-ggplot(combined_data, aes(y = SELECTED_VAR, x = Frequency)) +
+ggplot(combined_data, aes(y = <SELECTED_VAR>, x = Frequency)) +
   geom_dotplot(binaxis = 'y', stackdir = 'center', position = position_dodge(0.8), dotsize = 0.5) +
-  labs(title = "Frequency of SELECTED_VAR",
-       y = "SELECTED_VAR",
+  labs(title = "Frequency of <SELECTED_VAR>",
+       y = "<SELECTED_VAR>",
        x = "Frequency",
        fill = "Legend") +
-  SETTINGS_GRAPHIC_THEME()
+  <SETTINGS_GRAPHIC_THEME>()
 
 ## # Generate the summary data for the plot.
 
-## tds <- rbind(summary(na.omit(ds$SELECTED_VAR)),
-##     summary(na.omit(ds[ds$GROUP_BY_VAR=="No",]$SELECTED_VAR)),
-##     summary(na.omit(ds[ds$GROUP_BY_VAR=="Yes",]$SELECTED_VAR)))
+## tds <- rbind(summary(na.omit(ds$<SELECTED_VAR>)),
+##     summary(na.omit(ds[ds$<GROUP_BY_VAR>=="No",]$<SELECTED_VAR>)),
+##     summary(na.omit(ds[ds$<GROUP_BY_VAR>=="Yes",]$<SELECTED_VAR>)))
 
 ## # Sort the entries.
 
@@ -90,12 +90,12 @@ ggplot(combined_data, aes(y = SELECTED_VAR, x = Frequency)) +
 ## # Plot the data.
 
 ## dotchart(tds[nrow(tds):1,ord],
-##          main   = "Distribution of SELECTED_VAR (sample)\nby GROUP_BY_VAR",
-##          sub    = "TIMESTAMP",
+##          main   = "Distribution of <SELECTED_VAR> (sample)\nby <GROUP_BY_VAR>",
+##          sub    = "<TIMESTAMP>",
 ##          col    = rev(colorspace::rainbow_hcl(3)),
 ##          labels = "",
 ##          xlab   = "Frequency",
-##          ylab   = "SELECTED_VAR",
+##          ylab   = "<SELECTED_VAR>",
 ##          pch    = c(1:2, 19))
 
 ## # Add a legend.
@@ -114,11 +114,11 @@ dev.off()
 ## library(vcd)
 ## library(ggplotify)
 
-## svg("TEMPDIR/explore_visual_mosaic.svg", width=10)
+## svg("<TEMPDIR>/explore_visual_mosaic.svg", width=10)
 
 ## # Generate the table data for plotting.
 
-## tds <- table(ds$SELECTED_VAR)
+## tds <- table(ds$<SELECTED_VAR>)
 
 ## # Sort the entries.
 
@@ -127,10 +127,10 @@ dev.off()
 ## # Plot the data.
 
 ## mosaicplot(tds[ord,],
-##            main  = "Mosaic of SELECTED_VAR",
-##            sub   = paste("TIMESTAMP", username),
+##            main  = "Mosaic of <SELECTED_VAR>",
+##            sub   = paste("<TIMESTAMP>", username),
 ##            color = colorspace::rainbow_hcl(3)[-1],
 ##            cex   = 0.7,
-##            xlab  = "SELECTED_VAR")
+##            xlab  = "<SELECTED_VAR>")
 
 ## dev.off()

@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,11 +24,11 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" into "R01_SELETED_VAR" by rescaling values
+# Transform "<SELECTED_VAR>" into "R01<_SELETED_VAR>" by rescaling values
 # to be in the range 0-1.
 
 ds %<>%
-  mutate(R01_SELECTED_VAR = reshape::rescaler(SELECTED_VAR, "range"))
+  mutate(R01<_SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "range"))
 
 glimpse(ds)
 summary(ds)

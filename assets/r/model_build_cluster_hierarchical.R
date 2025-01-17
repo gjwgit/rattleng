@@ -12,7 +12,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,7 +24,7 @@
 
 # Cluster using Hierarchical
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -37,7 +37,7 @@
 # demonstrate that each time we get a different random start and then
 # a different model.
 
-# set.seed(RANDOM_SEED)
+# set.seed(<RANDOM_SEED>)
 
 # Load required packages from the local library into the R session.
 # The 'reshape' package provides the 'rescaler' function.
@@ -49,7 +49,7 @@ mtype <- "hierarchical_amap"
 mdesc <- "Hierarchical Clustering using amap package"
 
 # Set whether the data should be rescaled
-rescale <- CLUSTER_RESCALE
+rescale <- <CLUSTER_RESCALE>
 
 # Prepare the data for clustering based on the value of rescale.
 
@@ -71,11 +71,11 @@ tds <- as.matrix(tds)
 
 # Perform hierarchical clustering using the hcluster function from the amap package.
 
-model_hclust <- hcluster(tds, method=CLUSTER_DISTANCE, link=CLUSTER_LINK, nbproc=CLUSTER_PROCESSOR)
+model_hclust <- hcluster(tds, method=<CLUSTER_DISTANCE>, link=<CLUSTER_LINK>, nbproc=<CLUSTER_PROCESSOR>)
 
 # Cut the dendrogram to get the specified number of clusters.
 
-cluster_assignments <- cutree(model_hclust, k = CLUSTER_NUM)
+cluster_assignments <- cutree(model_hclust, k = <CLUSTER_NUM>)
 
 # Add the cluster assignments to the data frame (optional).
 
@@ -114,7 +114,7 @@ cat("\n")
 
 # Plot the dendrogram plot.
 
-svg("TEMPDIR/model_cluster_hierarchical.svg", width = 20, height = 9)  # Adjust width and height as needed
+svg("<TEMPDIR>/model_cluster_hierarchical.svg", width = 20, height = 9)  # Adjust width and height as needed
 
 # Convert the hcluster object to an hclust object if necessary.
 # This ensures compatibility with the plot function.

@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
@@ -48,12 +48,12 @@ mdesc <- "Conditional Inference Tree"
 
 # Define the formula for the model
 
-# TODO 20240930 gjw SHOULDN'T THIS BE FRO `model_template.r`
+# TODO 20240930 gjw <SHOULDN>'T THIS BE FRO `model_template.r`
 
 form <- as.formula(paste(target, "~ ."))
 
 control <- ctree_control(
-  MINSPLIT, MINBUCKET, MAXDEPTH
+  <MINSPLIT>, <MINBUCKET>, <MAXDEPTH>
 )
 
 # Train a Conditional Inference Tree model using ctree.
@@ -65,7 +65,7 @@ model_ctree <- ctree(
   control   = control
 )
 
-# Save the model to the TEMPLATE variable `model` and the predicted
+# Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- model_ctree
@@ -82,6 +82,6 @@ cat("\n")
 
 # Plot the resulting Conditional Inference Tree.
 
-svg("TEMPDIR/model_tree_ctree.svg")
+svg("<TEMPDIR>/model_tree_ctree.svg")
 plot(model_ctree, main = paste("Conditional Inference Tree", target))
 dev.off()

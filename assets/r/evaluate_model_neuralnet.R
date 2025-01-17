@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,14 +24,14 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# 20241220 gjw Save the model to the <TEMPLATE> variable `model`. This
 # will be used below and in the following evaluations as required.
 
 model <- model_neuralnet

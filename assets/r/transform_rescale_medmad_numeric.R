@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -25,14 +25,14 @@
 # Author: Graham Williams
 # Transform variables by rescaling. 
 
-# Transform "SELECTED_VAR" into "RMD_SELETED_VAR" using median/mad or
+# Transform "<SELECTED_VAR>" into "<RMD_SELETED_VAR>" using median/mad or
 # robust rescaling. The rescaling happens by subtracting the median
 # and dividing by median abs deviation.
 
 library(reshape)
 
 ds %<>%
-  mutate(RMD_SELECTED_VAR = reshape::rescaler(SELECTED_VAR, "robust"))
+  mutate(<RMD_SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "robust"))
 
 glimpse(ds)
 summary(ds)

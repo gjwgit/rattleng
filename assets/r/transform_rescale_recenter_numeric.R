@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,11 +24,11 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" into "RRC_SELETED_VAR" by recenering the
+# Transform "<SELECTED_VAR>" into "<RRC_SELETED_VAR>" by recenering the
 # values and rescaling around 0 so that the mean is 0 and the standard
 # deviation is 1.
 
-ds %<>% mutate(RRC_SELECTED_VAR = scale(SELECTED_VAR)[,1])
+ds %<>% mutate(<RRC_SELECTED_VAR> = scale(<SELECTED_VAR>)[,1])
 
 glimpse(ds)
 summary(ds)

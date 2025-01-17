@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -107,12 +107,12 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula       = formula_nn,
     data          = ds_final,
-    hidden        = NEURAL_HIDDEN_LAYERS,
-    act.fct       = NEURAL_ACT_FCT,
-    err.fct       = NEURAL_ERROR_FCT,
+    hidden        = <NEURAL_HIDDEN_LAYERS>,
+    act.fct       = <NEURAL_ACT_FCT>,
+    err.fct       = <NEURAL_ERROR_FCT>,
     linear.output = FALSE,
-    threshold     = NEURAL_THRESHOLD,
-    stepmax       = NEURAL_STEP_MAX,
+    threshold     = <NEURAL_THRESHOLD>,
+    stepmax       = <NEURAL_STEP_MAX>,
   )
 } else {
   # Multiclass Classification
@@ -140,16 +140,16 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula = formula_nn,
     data = ds_final,
-    hidden = NEURAL_HIDDEN_LAYERS,
-    act.fct = NEURAL_ACT_FCT,
-    err.fct = NEURAL_ERROR_FCT,
+    hidden = <NEURAL_HIDDEN_LAYERS>,
+    act.fct = <NEURAL_ACT_FCT>,
+    err.fct = <NEURAL_ERROR_FCT>,
     linear.output = FALSE,
-    threshold = NEURAL_THRESHOLD,
-    stepmax = NEURAL_STEP_MAX,
+    threshold = <NEURAL_THRESHOLD>,
+    stepmax = <NEURAL_STEP_MAX>,
   )
 }
 
-# Save the model to the TEMPLATE variable `model` and the predicted
+# Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- model_neuralnet
@@ -165,7 +165,7 @@ summary(model_neuralnet)
 
 # Save the plot as an SVG file.
 
-svg("TEMPDIR/model_neuralnet.svg")
+svg("<TEMPDIR>/model_neuralnet.svg")
 NeuralNetTools::plotnet(model_neuralnet,
                         cex_val    = 0.5,
                         circle_cex = 2,

@@ -14,7 +14,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
+# This program is distributed in the hope that it will be useful, but <WITHOUT>
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
@@ -24,12 +24,12 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# Bin the SELECTED_VAR into NUMBER bins using kmeans with the
+# Bin the <SELECTED_VAR> into <NUMBER> bins using kmeans with the
 # rattle::binning function.
 
-ds[["BKM_SELECTED_VAR_NUMBER"]] <-
-  rattle::binning(ds[["SELECTED_VAR"]],
-                  NUMBER,
+ds[["<BKM_SELECTED_VAR_NUMBER>"]] <-
+  rattle::binning(ds[["<SELECTED_VAR>"]],
+                  <NUMBER>,
                   method  = "kmeans",
                   ordered = FALSE)
 
