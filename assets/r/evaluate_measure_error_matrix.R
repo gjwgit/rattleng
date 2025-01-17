@@ -59,3 +59,28 @@ em_prop <- rattle::errorMatrix(actual, predicted)
 ##
 rat(paste('> ', mtype, "_DATASET_TYPE_PROP ", sep = ""))
 em_prop
+
+# Calculate and display the missing overall and averaged error in percentage form.
+
+overall_error <- 1 - sum(diag(em_count)) / sum(em_count)  # e.g. 0.636
+class_errors  <- 1 - diag(em_count) / rowSums(em_count)
+avg_error <- mean(class_errors, na.rm = TRUE) # e.g. 0.517
+
+# Format error rates into a summary string.
+
+error_summary <- paste(
+    sprintf(
+        "Missing overall and averaged error: overall = %.2f%%, average = %.2f%%",
+        100 * overall_error, 100 * avg_error
+    ),
+    "\n",
+    sep = ""
+)
+
+# Log the error matrix type identifier.
+
+rat(paste('> ', mtype, "_DATASET_TYPE_ERROR_MATRIX_SUMMARY: ", sep = ""))
+
+# Log the formatted error summary showing overall and average error rates.
+
+rat(error_summary)
