@@ -35,11 +35,11 @@ final boostEvaluateProvider = StateProvider<bool>((ref) => false);
 final conditionalForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
 
-// If useValidation is enabled, use "Validation";
-// otherwise, use "Tuning" for the dataset type.
+// Using `ref.watch` ensures that this provider automatically rebuilds whenever 
+// the watched provider (`useValidationSettingProvider`) changes.
 
 final datasetTypeProvider = StateProvider<String>(
-  (ref) => ref.read(useValidationSettingProvider) ? 'Validation' : 'Tuning',
+  (ref) => ref.watch(useValidationSettingProvider) ? 'Validation' : 'Tuning',
 );
 final forestEvaluateProvider = StateProvider<bool>((ref) => false);
 final hClusterEvaluateProvider = StateProvider<bool>((ref) => false);
