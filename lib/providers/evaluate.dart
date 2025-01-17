@@ -1,6 +1,6 @@
 /// A provider for the parameters for evaluate.
 ///
-/// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-17 13:34:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -36,11 +36,13 @@ final conditionalForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
 
 // Using `ref.watch` ensures that this provider automatically rebuilds whenever
-// the watched provider (`useValidationSettingProvider`) changes.
+// the watched provider (`useValidationSettingProvider`) changes. 20250117 gjw
+// Docs suggest using a watch() over a read() in general.
 
 final datasetTypeProvider = StateProvider<String>(
   (ref) => ref.watch(useValidationSettingProvider) ? 'Validation' : 'Tuning',
 );
+
 final forestEvaluateProvider = StateProvider<bool>((ref) => false);
 final hClusterEvaluateProvider = StateProvider<bool>((ref) => false);
 final kMeansEvaluateProvider = StateProvider<bool>((ref) => false);
