@@ -60,11 +60,22 @@ em_prop <- rattle::errorMatrix(actual, predicted)
 rat(paste('> ', mtype, "_DATASET_TYPE_PROP ", sep = ""))
 em_prop
 
-# Calculate and display the missing overall and averaged error in percentage form.
+# Exclude the "Error" column in the confusion matrix if it exists
+# Assuming the confusion matrix is a data frame with the last column as "Error".
 
-overall_error <- 1 - sum(diag(em_count)) / sum(em_count)  # e.g. 0.636
-class_errors  <- 1 - diag(em_count) / rowSums(em_count)
-avg_error <- mean(class_errors, na.rm = TRUE) # e.g. 0.517
+main_matrix <- em_count[, -ncol(em_count)]  # Remove the "Error" column
+
+# Calculate the overall error.
+
+overall_error <- 1 - sum(diag(main_matrix)) / sum(main_matrix)
+
+# Calculate class-specific errors.
+
+class_errors <- 1 - diag(main_matrix) / rowSums(main_matrix)
+
+# Calculate the averaged error (mean of class-specific errors).
+
+avg_error <- mean(class_errors, na.rm = TRUE)
 
 # Format error rates into a summary string.
 
