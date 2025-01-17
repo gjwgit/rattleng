@@ -100,6 +100,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
 
+    bool treeBoxTicked = ref.watch(treeEvaluateProvider);
+    bool forestBoxTicked = ref.watch(forestEvaluateProvider);
+    bool boostBoxTicked = ref.watch(boostEvaluateProvider);
+    bool svmBoxTicked = ref.watch(svmEvaluateProvider);
+    bool neuralBoxTicked = ref.watch(neuralEvaluateProvider);
+
     List<String> existingImages = [];
     List<String> imagesTitles = [];
     List<String> rocImages = [];
@@ -110,15 +116,31 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // List of image-title pairs for ROC data.
 
     final rocImageData = [
-      {'image': rocAdaBoostImage, 'title': 'AdaBoost'},
-      {'image': rocRpartImage, 'title': 'RPART'},
-      {'image': rocCtreeImage, 'title': 'CTREE'},
-      {'image': rocNNETImage, 'title': 'NNET'},
-      {'image': rocNeuralNetImage, 'title': 'NEURALNET'},
-      {'image': rocRforestImage, 'title': 'RANDOM FOREST'},
-      {'image': rocSVMImage, 'title': 'SVM'},
-      {'image': rocCforestImage, 'title': 'CONDITIONAL FOREST'},
-      {'image': rocXGBoostImage, 'title': 'XGBoost'},
+      {
+        'image': rocAdaBoostImage,
+        'title': 'AdaBoost',
+        'ticked': boostBoxTicked,
+      },
+      {'image': rocRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
+      {'image': rocCtreeImage, 'title': 'CTREE', 'ticked': treeBoxTicked},
+      {'image': rocNNETImage, 'title': 'NNET', 'ticked': neuralBoxTicked},
+      {
+        'image': rocNeuralNetImage,
+        'title': 'NEURALNET',
+        'ticked': neuralBoxTicked,
+      },
+      {
+        'image': rocRforestImage,
+        'title': 'RANDOM FOREST',
+        'ticked': forestBoxTicked,
+      },
+      {'image': rocSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
+      {
+        'image': rocCforestImage,
+        'title': 'CONDITIONAL FOREST',
+        'ticked': forestBoxTicked,
+      },
+      {'image': rocXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
     ];
 
     // List of image-title pairs for Hand plot.
@@ -130,14 +152,14 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // Iterate through each image-title pair.
 
     for (var data in rocImageData) {
-      if (imageExists(data['image']!)) {
-        rocImages.add(data['image']!);
-        rocImagesTitles.add(data['title']!);
+      if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
+        rocImages.add(data['image']!.toString());
+        rocImagesTitles.add(data['title']!.toString());
       }
     }
 
     for (var data in handImageData) {
-      if (imageExists(data['image']!)) {
+      if (imageExists(data['image']!) && data['ticked'] == true) {
         handImages.add(data['image']!);
         handImagesTitles.add(data['title']!);
       }
