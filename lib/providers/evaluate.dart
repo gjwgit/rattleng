@@ -35,7 +35,8 @@ final boostEvaluateProvider = StateProvider<bool>((ref) => false);
 final conditionalForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
 final datasetTypeProvider = StateProvider<String>(
-    (ref) => ref.watch(useValidationSettingProvider) ? 'Validation' : 'Tuning',);
+  (ref) => ref.watch(useValidationSettingProvider) ? 'Validation' : 'Tuning',
+);
 final forestEvaluateProvider = StateProvider<bool>((ref) => false);
 final hClusterEvaluateProvider = StateProvider<bool>((ref) => false);
 final kMeansEvaluateProvider = StateProvider<bool>((ref) => false);
