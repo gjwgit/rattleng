@@ -1,6 +1,6 @@
 /// A provider for the parameters for evaluate.
 ///
-/// Time-stamp: <Tuesday 2024-10-15 15:43:59 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-17 13:54:49 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -34,9 +34,22 @@ final adaBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 final boostEvaluateProvider = StateProvider<bool>((ref) => false);
 final conditionalForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
+
+// 20250117 zy Using `ref.watch` ensures that this provider automatically
+// rebuilds whenever the watched provider (`useValidationSettingProvider`)
+// changes. 20250117 gjw Docs suggest using a watch() over a read() in
+// general. In this way when useValidation changes then the default datasetType
+// is set back to Validation/Tuning as the default irrespective of where it was
+// previously. This then also captures the fact that useValidation seems to be
+// set on startup after datasetType is set. With a read() instead of watch() the
+// default value of datasetType remains unset on startup and so no default is
+// seen in the UI (unless we change useValidation in SETTINGS). In short,
+// watch() seems to work
+
 final datasetTypeProvider = StateProvider<String>(
   (ref) => ref.watch(useValidationSettingProvider) ? 'Validation' : 'Tuning',
 );
+
 final forestEvaluateProvider = StateProvider<bool>((ref) => false);
 final hClusterEvaluateProvider = StateProvider<bool>((ref) => false);
 final kMeansEvaluateProvider = StateProvider<bool>((ref) => false);
