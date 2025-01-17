@@ -550,6 +550,17 @@ Future<void> rSource(
     '<NEURAL_ACT_FCT>',
     '"${neuralActivationFct.toString()}"',
   );
+  if (neuralActivationFct != 'relu') {
+    code = code.replaceAll(
+      '<NEURAL_ACT_FCT>',
+      '"${neuralActivationFct.toString()}"',
+    );
+  } else if (neuralActivationFct == 'relu') {
+    // relu corresponds to the ReLU function from the sigmoid package in R.
+
+    code = code.replaceAll('<NEURAL_ACT_FCT>', 'relu');
+  }
+
   code = code.replaceAll('<NEURAL_THRESHOLD>', neuralThreshold.toString());
   code = code.replaceAll('<NEURAL_STEP_MAX>', neuralStepMax.toString());
 
@@ -582,9 +593,8 @@ Future<void> rSource(
     code = code.replaceAll('maxsurrogate=0', '');
   }
 
-  code =
-      code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
-  code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
+  code = code.replaceAll('NNET_TRACE', nnetTrace ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('NNET_SKIP', nnetSkip ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 

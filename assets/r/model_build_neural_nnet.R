@@ -48,9 +48,9 @@ model_nn <- nnet(
   form,
   data    = tds,
   size    = <NNET_HIDDEN_LAYERS>,
-  skip    = TRUE,
+  skip    = <NNET_SKIP>,
   MaxNWts = <NEURAL_MAX_NWTS>,
-  trace   = FALSE,
+  trace   = <NNET_TRACE>,
   maxit   = <NEURAL_MAXIT>
 )
 

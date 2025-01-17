@@ -113,6 +113,7 @@ pkgs <- c(
   'readr',
   'reshape',
   'rpart',
+  'sigmoid',
   'skimr',
   'tidyverse',
   'tm',

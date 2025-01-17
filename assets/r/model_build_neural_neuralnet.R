@@ -28,6 +28,7 @@ library(neuralnet)
 library(caret)
 library(NeuralNetTools)  # For neural network plotting
 library(rattle)
+library(sigmoid)
 
 # Define the model type and description for file paths and titles.
 
