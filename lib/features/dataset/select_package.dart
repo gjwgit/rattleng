@@ -23,7 +23,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Yixiang Yin
-/// 
+///
 
 library;
 
@@ -31,65 +31,64 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/path.dart';
-  // Function to show package options
-  Future<String> datasetSelectPackage(
-    BuildContext context,
-    Map<String, List<String>> packageMap,
-    WidgetRef ref,
-  ) async {
-    String path = '';
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Available Packages'),
-          content: SizedBox(
-            width:
-                double.maxFinite, 
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: packageMap.entries.expand((entry) {
-                  // Expand each package into a list of ListTile widgets
-                  return entry.value.map((dataset) {
-                    return ListTile(
-                      title: Text(
-                        '${entry.key} - $dataset',
-                      ), 
-                      onTap: () {
-                        ref.read(pathProvider.notifier).state =
-                            '${entry.key}::$dataset';
-                        debugPrint(
-                          'update path provider to ${ref.read(pathProvider)}',
-                        );
 
-                        ref.read(datasetProvider.notifier).state = '$dataset';
-                        ref.read(packageProvider.notifier).state =
-                            '${entry.key}';
+// Function to show package options
+Future<String> datasetSelectPackage(
+  BuildContext context,
+  Map<String, List<String>> packageMap,
+  WidgetRef ref,
+) async {
+  String path = '';
+  await showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Available Packages'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: packageMap.entries.expand((entry) {
+                // Expand each package into a list of ListTile widgets
+                return entry.value.map((dataset) {
+                  return ListTile(
+                    title: Text(
+                      '${entry.key} - $dataset',
+                    ),
+                    onTap: () {
+                      ref.read(pathProvider.notifier).state =
+                          '${entry.key}::$dataset';
+                      debugPrint(
+                        'update path provider to ${ref.read(pathProvider)}',
+                      );
 
-                        path = ref.read(pathProvider);
+                      ref.read(datasetProvider.notifier).state = '$dataset';
+                      ref.read(packageProvider.notifier).state = '${entry.key}';
 
-                        Navigator.of(context).pop();
-                        debugPrint(
-                          'Selected Package: ${entry.key}, Dataset: $dataset',
-                        );
-                      },
-                    );
-                  }).toList();
-                }).toList(),
-              ),
+                      path = ref.read(pathProvider);
+
+                      Navigator.of(context).pop();
+                      debugPrint(
+                        'Selected Package: ${entry.key}, Dataset: $dataset',
+                      );
+                    },
+                  );
+                }).toList();
+              }).toList(),
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); 
-              },
-              child: Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-    return path;
-  }
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Close'),
+          ),
+        ],
+      );
+    },
+  );
+  return path;
+}

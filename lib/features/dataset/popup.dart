@@ -54,8 +54,6 @@ void datasetLoadedUpdate(WidgetRef ref) {
 class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
 
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // 20240809 gjw Delay the rStart() until we begin to load the dataset. This
@@ -168,7 +166,7 @@ class DatasetPopup extends ConsumerWidget {
                   }
                   if (!context.mounted) return;
                   Navigator.pop(context, 'Package');
-                  
+
                   // Access the PageController via Riverpod and move to the second page.
 
                   ref.read(pageControllerProvider).animateToPage(

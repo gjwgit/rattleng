@@ -23,11 +23,10 @@
 ///
 /// Authors: Yixiang Yin
 
-
 bool isFromPackage(String input) {
   // Define the regular expression pattern: a string followed by '::' followed by another string
   RegExp regExp = RegExp(r'^[^:]+::[^:]+$');
-  
+
   // Use the RegExp to check if the input matches the pattern
   return regExp.hasMatch(input);
 }

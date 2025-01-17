@@ -478,7 +478,9 @@ Future<void> rSource(
   );
 
   code = code.replaceAll(
-      '<ASSOCIATION_RULES_SORT_BY>', '"$associationRulesSortBy"');
+    '<ASSOCIATION_RULES_SORT_BY>',
+    '"$associationRulesSortBy"',
+  );
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -545,7 +547,9 @@ Future<void> rSource(
   code =
       code.replaceAll('<NEURAL_ERROR_FCT>', '"${neuralErrorFct.toString()}"');
   code = code.replaceAll(
-      '<NEURAL_ACT_FCT>', '"${neuralActivationFct.toString()}"');
+    '<NEURAL_ACT_FCT>',
+    '"${neuralActivationFct.toString()}"',
+  );
   code = code.replaceAll('<NEURAL_THRESHOLD>', neuralThreshold.toString());
   code = code.replaceAll('<NEURAL_STEP_MAX>', neuralStepMax.toString());
 
@@ -591,7 +595,9 @@ Future<void> rSource(
   // Cross tabulation summary.
 
   code = code.replaceAll(
-      '<SUMMARY_CROSS_TAB>', includeCrossTab ? 'TRUE' : 'FALSE');
+    '<SUMMARY_CROSS_TAB>',
+    includeCrossTab ? 'TRUE' : 'FALSE',
+  );
 
   ////////////////////////////////////////////////////////////////////////
 
