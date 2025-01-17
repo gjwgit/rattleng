@@ -83,6 +83,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
   List<String> activationFunction = [
     'logistic',
     'tanh',
+    'relu',
   ];
 
   // Controllers for the input fields.
