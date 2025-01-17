@@ -34,6 +34,10 @@ final adaBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 final boostEvaluateProvider = StateProvider<bool>((ref) => false);
 final conditionalForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
+
+// Using `ref.watch` ensures that this provider automatically rebuilds whenever
+// the watched provider (`useValidationSettingProvider`) changes.
+
 final datasetTypeProvider = StateProvider<String>(
   (ref) => ref.watch(useValidationSettingProvider) ? 'Validation' : 'Tuning',
 );
