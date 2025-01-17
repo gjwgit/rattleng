@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-17 15:41:33 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-17 19:45:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -43,7 +43,7 @@ em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
 ## `cat()` to avoid exposing the command to the user's exported
 ## script.
 ##
-rat(paste('> ', mtype, "<_DATASET_TYPE_COUNT> ", sep=""))
+rat(paste('> ', mtype, "_<DATASET_TYPE>_COUNT ", sep=""))
 em_count
 
 # Generate a confusion matrix with proportions (relative frequencies)
@@ -57,7 +57,7 @@ em_prop <- rattle::errorMatrix(actual, predicted)
 ## `cat()` to avoid exposing the command to the user's exported
 ## script.
 ##
-rat(paste('> ', mtype, "<_DATASET_TYPE_PROP> ", sep = ""))
+rat(paste('> ', mtype, "_<DATASET_TYPE>_PROP ", sep = ""))
 em_prop
 
 # Exclude the "Error" column in the confusion matrix if it exists
@@ -90,7 +90,7 @@ error_summary <- paste(
 
 # Log the error matrix type identifier.
 
-rat(paste('> ', mtype, "_DATASET_TYPE_ERROR_MATRIX_SUMMARY: ", sep = ""))
+rat(paste('> ', mtype, "_<DATASET_TYPE>_ERROR_MATRIX_SUMMARY: ", sep = ""))
 
 # Log the formatted error summary showing overall and average error rates.
 
