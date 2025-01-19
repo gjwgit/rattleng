@@ -593,8 +593,8 @@ Future<void> rSource(
     code = code.replaceAll('maxsurrogate=0', '');
   }
 
-  code = code.replaceAll('NNET_TRACE', nnetTrace ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('NNET_SKIP', nnetSkip ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<NNET_TRACE>', nnetTrace ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<NNET_SKIP>', nnetSkip ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 
