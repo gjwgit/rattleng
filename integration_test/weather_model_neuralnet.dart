@@ -41,6 +41,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/press_unify_icon.dart';
 import 'utils/tap_button.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
@@ -60,6 +61,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
+      await pressUnifyIconOn(tester);
 
       await loadDemoDataset(tester);
 
