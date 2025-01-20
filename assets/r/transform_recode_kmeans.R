@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-01-20 13:48:05 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-01-20 14:45:04 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -27,7 +27,7 @@
 # Bin the <SELECTED_VAR> into <NUMBER> bins using kmeans with the
 # rattle::binning function.
 
-ds[["BKM<NUMBER>_<SELECTED_VAR>"]] <-
+ds[["BKM_<SELECTED_VAR>_<NUMBER>"]] <-
   rattle::binning(ds[["<SELECTED_VAR>"]],
                   <NUMBER>,
                   method  = "kmeans",
