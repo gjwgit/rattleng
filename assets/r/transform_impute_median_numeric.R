@@ -29,7 +29,7 @@
 if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    mutate(<IMD_SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+    mutate(IMD_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
                                      median(<SELECTED_VAR>, na.rm = TRUE),
                                      <SELECTED_VAR>))
 }

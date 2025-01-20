@@ -31,12 +31,12 @@
 
 # Transform into a factor.
 
-ds[["<TFC_SELECTED_VAR>"]] <- as.factor(ds[["<SELECTED_VAR>"]])
+ds[["TFC_<SELECTED_VAR>"]] <- as.factor(ds[["<SELECTED_VAR>"]])
 
-ol <- levels(ds[["<TFC_SELECTED_VAR>"]])
+ol - levels(ds[["<TFC_<SELECTED_VAR>"]])
 lol <- length(ol)
 nl <- c(sprintf("[%s,%s]", ol[1], ol[1]), sprintf("(%s,%s]", ol[-lol], ol[-1]))
-levels(ds[["<TFC_SELECTED_VAR>"]]) <- nl
+levels(ds[["TFC_<SELECTED_VAR>"]]) <- nl
 
 #=======================================================================
 #=======================================================================

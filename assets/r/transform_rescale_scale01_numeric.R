@@ -28,7 +28,7 @@
 # to be in the range 0-1.
 
 ds %<>%
-  mutate(R01<_SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "range"))
+  mutate(R01_<SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "range"))
 
 glimpse(ds)
 summary(ds)

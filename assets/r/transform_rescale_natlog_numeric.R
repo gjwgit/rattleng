@@ -27,9 +27,9 @@
 # Transform "<SELECTED_VAR>" into "<RLG_SELETED_VAR>" by applying log().
 
 ds %<>%
-  mutate(<RLG_SELECTED_VAR> = log(<SELECTED_VAR>),
-         <RLG_SELECTED_VAR> = ifelse(is.infinite(<RLG_SELECTED_VAR>),
-                                   NA, <RLG_SELECTED_VAR>)) 
+  mutate(RLG_<SELECTED_VAR> = log(<SELECTED_VAR>),
+         RLG_<SELECTED_VAR> = ifelse(is.infinite(RLG_<SELECTED_VAR>),
+                                   NA, RLG_<SELECTED_VAR>)) 
 
 glimpse(ds)
 summary(ds)

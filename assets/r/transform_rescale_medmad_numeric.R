@@ -32,7 +32,7 @@
 library(reshape)
 
 ds %<>%
-  mutate(<RMD_SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "robust"))
+  mutate(RMD_<SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "robust"))
 
 glimpse(ds)
 summary(ds)

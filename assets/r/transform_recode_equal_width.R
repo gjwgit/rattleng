@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-19 08:47:35 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-01-20 13:48:25 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 
 # Bin the <SELECTED_VAR> into <NUMBER> bins using equal widths.
 
-ds[["<BEQ_SELECTED_VAR_NUMBER>"]] <- cut(ds[["<SELECTED_VAR>"]], <NUMBER>)
+ds[["BEQ<NUMBER>_<SELECTED_VAR>"]] <- cut(ds[["<SELECTED_VAR>"]], <NUMBER>)
 
 glimpse(ds)
 summary(ds)

@@ -34,12 +34,12 @@ library(tidyr)        # Wrangling: replace_na().
 if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    dplyr::mutate(<IZR_SELECTED_VAR> = tidyr::replace_na(<SELECTED_VAR>, 0))
+    dplyr::mutate(IZR_<SELECTED_VAR> = tidyr::replace_na(<SELECTED_VAR>, 0))
 } else {
   ds %<>%
-    dplyr::mutate(<IZR_SELECTED_VAR> = tidyr::replace_na(as.character(<SELECTED_VAR>),
+    dplyr::mutate(IZR_<SELECTED_VAR> = tidyr::replace_na(as.character(<SELECTED_VAR>),
                                                        'Missing'),
-                  <IZR_SELECTED_VAR> = factor(<IZR_SELECTED_VAR>))
+                  IZR_<SELECTED_VAR> = factor(IZR_<SELECTED_VAR>))
 }
 
 glimpse(ds)

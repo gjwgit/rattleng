@@ -32,7 +32,7 @@
 
 # Transform into a numeric.
 
-ds[["<TNM_SELECTED_VAR>"]] <- as.numeric(ds[["<SELECTED_VAR>"]])
+ds[["TNM_<SELECTED_VAR>"]] <- as.numeric(ds[["<SELECTED_VAR>"]])
 
 #=======================================================================
 glimpse(ds)

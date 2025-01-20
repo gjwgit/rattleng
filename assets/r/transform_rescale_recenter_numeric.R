@@ -28,7 +28,7 @@
 # values and rescaling around 0 so that the mean is 0 and the standard
 # deviation is 1.
 
-ds %<>% mutate(<RRC_SELECTED_VAR> = scale(<SELECTED_VAR>)[,1])
+ds %>% mutate(<RRC_<SELECTED_VAR> = scale(<SELECTED_VAR>)[,1])
 
 glimpse(ds)
 summary(ds)

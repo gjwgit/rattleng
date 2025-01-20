@@ -1,14 +1,12 @@
-# The 'reshape' package provides the 'rescaler' function.
-
-# library(reshape, quietly=TRUE)
+library(reshape)   # Use the 'rescaler' function.
 
 # Rescale <SELECTED_VAR>.
 
-ds[["<RIN_SELECTED_VAR_INTERVAL>"]] <- ds[["<SELECTED_VAR>"]]
+ds[["RIN<INTERVAL>_<SELECTED_VAR>"]] <- ds[["<SELECTED_VAR>"]]
 
 # Rescale to 0 to <INTERVAL> within each group.
 
-ds[["<RIN_SELECTED_VAR_INTERVAL>"]] <-
+ds[["RIN<INTERVAL>_<SELECTED_VAR>"]] <-
     rattle::rescale.by.group(ds[["<SELECTED_VAR>"]], type="irank", itop=<INTERVAL>)
 
 glimpse(ds)

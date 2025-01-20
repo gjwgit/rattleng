@@ -31,7 +31,7 @@ library(dplyr)        # Wrangling: mutate().
 if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    mutate(<IMN_SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+    mutate(IMN_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
                                      mean(<SELECTED_VAR>, na.rm = TRUE),
                                      <SELECTED_VAR>))
 }

@@ -28,9 +28,9 @@
 # Treat -Inf as NA.
 
 ds %<>%
-  mutate(R10<_SELECTED_VAR> = log10(<SELECTED_VAR>),
-         R10<_SELECTED_VAR> = ifelse(is.infinite(R10<_SELECTED_VAR>),
-                                   NA, R10<_SELECTED_VAR>))
+  mutate(R10_<SELECTED_VAR> = log10(<SELECTED_VAR>),
+         R10_<SELECTED_VAR> = ifelse(is.infinite(R10_<SELECTED_VAR>),
+                                   NA, R10_<SELECTED_VAR>))
 
 glimpse(ds)
 summary(ds)
