@@ -41,13 +41,13 @@ Future<void> verifyText(
 
 Future<void> verifySelectableText(
   WidgetTester tester,
-  List<String> texts, {
+  String text, {
   bool multi = false,
 }) async {
-  for (final text in texts) {
-    final textFinder = find.byWidgetPredicate(
-      (widget) => widget is SelectableText && widget.data == text,
-    );
-    expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
-  }
+  final textFinder = find.byWidgetPredicate(
+    (widget) =>
+        (widget is SelectableText && widget.data == text) ||
+        (widget is Text && widget.data == text),
+  );
+  expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
 }

@@ -215,6 +215,7 @@ void main() {
     await partitionOff(tester);
 
     await loadDemoDataset(tester);
+    await Future.delayed(const Duration(seconds: 5));
 
     // Tap the model Tab button.
 
@@ -232,6 +233,10 @@ void main() {
 
     await gotoNextPage(tester);
 
+    //wait for 1 second
+
+    await Future.delayed(const Duration(seconds: 5));
+
     // scroll down to the bottom
 
     // await scrollDown(tester);
@@ -240,11 +245,15 @@ void main() {
 
     await verifySelectableText(
       tester,
-      ['363'],
-      multi: true,
+      '363',
     );
 
-    // await verifyText(tester, ['363', 'Decision Tree Model'], multi: true);
+    // await verifyText(
+    //   tester,
+    //   [
+    //     '363',
+    //   ],
+    // );
   });
 }
 
