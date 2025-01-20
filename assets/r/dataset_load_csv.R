@@ -24,13 +24,13 @@
 #
 # Author: Graham Williams
 
-# The file `FILENAME` is loaded as a CSV file into the template
+# The file `<FILENAME>` is loaded as a CSV file into the template
 # variable `ds` (dataset), intialising the `dsname` (a printable name
 # for the dataset) and `vnames` (the variable names).
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
-# The data contained in the file `FILENAME`
+# The data contained in the file `<FILENAME>`
 # is loaded as a CSV file into the template variable `ds` (dataset),
 # intialising the `dsname` (a printable name for the dataset) and
 # `vnames` (the variable names).
@@ -44,9 +44,9 @@
 library(magrittr)
 library(readr)        # Read/write delimited data: read_csv().
 
-dsname <- "FILENAME" %>% basename() %>% sub(".csv$", "", .)
+dsname <- "<FILENAME>" %>% basename() %>% sub(".csv$", "", .)
 
-assign(dsname, readr::read_csv("FILENAME"))
+assign(dsname, readr::read_csv("<FILENAME>"))
 
 ds <- get(dsname)
 

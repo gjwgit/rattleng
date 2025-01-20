@@ -34,7 +34,9 @@ void showSettingsDialog(BuildContext context) {
     context: context,
     barrierLabel: 'Settings',
     barrierDismissible: true,
-    barrierColor: Colors.black54, // Darken the background
+    // Darken the background.
+
+    barrierColor: Colors.black54,
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, anim1, anim2) {
       return const Align(

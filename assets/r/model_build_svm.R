@@ -42,21 +42,21 @@ mdesc <- "Support Vector Machine"
 
 # Define the dataset, input, and target.
 
-svm_kernel <- SVM_KERNEL
+svm_kernel <- <SVM_KERNEL>
 
 if (svm_kernel == "polydot") {
   model_svm <- ksvm(
     form,
     data       = trds,
-    kernel     = svm_kernel,
-    kpar       = list("degree" = SVM_DEGREE),
+    kernel     = <SVM_KERNEL>,
+    kpar       = list("degree" = <SVM_DEGREE>),
     prob.model = TRUE
   )
 } else {
   model_svm <- ksvm(
     form,
     data       = trds,
-    kernel     = svm_kernel,
+    kernel     = <SVM_KERNEL>,
     prob.model = TRUE
   )
 }

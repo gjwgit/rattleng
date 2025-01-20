@@ -24,13 +24,13 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # Run this after the variable `ds` (dataset) has been loaded into
 # Rattle and the dataset cleansed and prepared with roles
 # assigned. The actions here in `dataset_template.R` will also setup
 # the data after a dataset has changed, which may be called after, for
-# example, a TRANSFORM.
+# example, a <TRANSFORM>.
 #
 # References:
 #
@@ -65,20 +65,20 @@ large_factor_vars
 
 # Identify variable roles.
 
-target <- "TARGET_VAR"
-ident  <- "IDENT_VAR"
-risk   <- "RISK_VAR"
-id     <- c(ID_VARS)
+target <- "<TARGET_VAR>"
+ident  <- "<IDENT_VAR>"
+risk   <- "<RISK_VAR>"
+id     <- c(<ID_VARS>)
 
 # Identify variables to ignore.
 
-ignore <- IGNORE_VARS
+ignore <- <IGNORE_VARS>
 
 ## 20240829 gjw Ideally remove the ignored variables from ds for now as
-## a bug fix to support the CORRELATION feature for selected
+## a bug fix to support the <CORRELATION> feature for selected
 ## variables. In future this dataset template will reload the dataset
 ## into ds from `get(dsname)` each time it is run afresh. FOR NOW do
-## this for CORRELATION only.
+## this for <CORRELATION> only.
 ##
 ## ds <- ds[setdiff(names(ds), ignore)]
 ##
@@ -151,7 +151,7 @@ nmobs <- sum(apply(ds, 1, anyNA))
 
 nmobs
 
-## # 20240916 gjw This is required for building the ROLES table but will
+## # 20240916 gjw This is required for building the <ROLES> table but will
 ## # eventually be replaced by the meta data.
 ##
 ## # 20241008 gjw I don't think these are required here now.
@@ -162,9 +162,9 @@ nmobs
 ## # 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
 ##
 ## # 20241008 gjw I think we now move this to PREP rather than
-## # here. 20241212 gjw However this is required to update the DATASET
-## # view of the data, particularly after a TRANSFORM. So add it back in
-## # here. Without this the DATASET will not show that an imputed
+## # here. 20241212 gjw However this is required to update the <DATASET>
+## # view of the data, particularly after a <TRANSFORM>. So add it back in
+## # here. Without this the <DATASET> will not show that an imputed
 ## # IMN_rainfull, for example, has 54 unique values (it is 0 when
 ## # IMN_rainfall does not appear in metaData).
 

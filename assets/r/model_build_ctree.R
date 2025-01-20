@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
@@ -106,8 +106,10 @@ mdesc <- "Conditional Inference Tree"
 
 # 20250108 gjw Setup the model build parameters.
 
+form <- as.formula(paste(target, "~ ."))
+
 control <- partykit::ctree_control(
-  MINSPLIT, MINBUCKET, MAXDEPTH
+  <MINSPLIT>, <MINBUCKET>, <MAXDEPTH>
 )
 
 # Train a Conditional Inference Tree model using ctree.
@@ -127,6 +129,6 @@ cat("\n")
 
 # Plot the resulting Conditional Inference Tree.
 
-svg("TEMPDIR/model_tree_ctree.svg")
-plot(model_ctree, main=paste("Conditional Inference Tree", target))
+svg("<TEMPDIR>/model_tree_ctree.svg")
+plot(model_ctree, main = paste("Conditional Inference Tree", target))
 dev.off()

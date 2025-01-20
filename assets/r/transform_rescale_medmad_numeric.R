@@ -25,14 +25,14 @@
 # Author: Graham Williams
 # Transform variables by rescaling. 
 
-# Transform "SELECTED_VAR" into "RMD_SELETED_VAR" using median/mad or
+# Transform "<SELECTED_VAR>" into "<RMD_SELETED_VAR>" using median/mad or
 # robust rescaling. The rescaling happens by subtracting the median
 # and dividing by median abs deviation.
 
 library(reshape)
 
 ds %<>%
-  mutate(RMD_SELECTED_VAR = reshape::rescaler(SELECTED_VAR, "robust"))
+  mutate(RMD_<SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "robust"))
 
 glimpse(ds)
 summary(ds)

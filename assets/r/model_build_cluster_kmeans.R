@@ -26,7 +26,7 @@
 
 # Cluster using KMeans
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -39,7 +39,7 @@
 # demonstrate that each time we get a different random start and then
 # a different model.
 
-# set.seed(RANDOM_SEED)
+# set.seed(<RANDOM_SEED>)
 
 # Load required packages from the local library into the R session.
 
@@ -53,7 +53,7 @@ mdesc <- "Cluster"
 # Set whether the data should be rescaled. For cluster analysis this
 # is usually recommended.
 
-rescale <- CLUSTER_RESCALE
+rescale <- <CLUSTER_RESCALE>
 
 # Prepare the data for clustering based on the value of rescale.
 
@@ -75,8 +75,8 @@ if (rescale) {
 # Generate a kmeans cluster of size 10.
 
 model_kmeans <- kmeans(tds,
-                       centers=CLUSTER_NUM,
-                       nstart=CLUSTER_RUN)
+                       centers=<CLUSTER_NUM>,
+                       nstart=<CLUSTER_RUN>)
 
 # Report on the cluster characteristics. 
 
@@ -100,7 +100,7 @@ cat("\n")
 
 # Plot the first two principal components, which serve as discriminant coordinates.
 
-svg("TEMPDIR/model_cluster_discriminant.svg")
+svg("<TEMPDIR>/model_cluster_discriminant.svg")
 
 # Generate a discriminant coordinates plot.
 

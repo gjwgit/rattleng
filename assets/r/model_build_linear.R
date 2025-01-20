@@ -43,7 +43,7 @@ mdesc <- "Linear Model"
 model_glm <- glm(
   form,
   data   = trds,
-  family = binomial(link = LINEAR_FAMILY),
+  family = binomial(link = <LINEAR_FAMILY>),
 )
 
 # Output a textual view of the model for review.
@@ -63,13 +63,13 @@ cat(sprintf("Null/Residual deviance difference: %.3f (%d df)\n",
 cat(sprintf("Pseudo R-Square (optimistic): %.8f\n",
              cor(model_glm$y, model_glm$fitted.values)))
 
-cat('\n==== ANOVA ====\n\n')
+cat('\n==== <ANOVA> ====\n\n')
 print(anova(model_glm, test = "Chisq"))
 cat("\n")
 
 # Display diagnostics the model for review.
 
-svg("TEMPDIR/model_glm_diagnostic_plots.svg")
+svg("<TEMPDIR>/model_glm_diagnostic_plots.svg")
 par(mfrow = c(2, 2))
 plot(model_glm)
 dev.off()

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-03 14:27:49 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-01-20 13:55:59 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,13 +24,13 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# Remap variables. 
+# Remap variables.
 
 # Turn two factors into one factor.
 
-ds[, "TJN_SELECTED_VAR_SELECTED_2_VAR"] <- interaction(paste(ds[["SELECTED_VAR"]], "_",ds[["SELECTED_2_VAR"]], sep=""))
-ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]][grepl("^NA_|_NA$", ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]])] <- NA
-ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]] <- as.factor(as.character(ds[["TJN_SELECTED_VAR_SELECTED_2_VAR"]]))
+ds[,"TJN_<SELECTED_VAR>__<SELECTED_2_VAR>"] <- interaction(paste(ds[["<SELECTED_VAR>"]], "_",ds[["<SELECTED_2_VAR>"]], sep=""))
+ds[["TJN_<SELECTED_VAR>__<SELECTED_2_VAR>"]][grepl("^NA_|_NA$", ds[["TJN_<SELECTED_VAR>__<SELECTED_2_VAR>"]])] <- NA
+ds[["TJN_<SELECTED_VAR>__<SELECTED_2_VAR>"]] <- as.factor(as.character(ds[["TJN_<SELECTED_VAR>__<SELECTED_2_VAR>"]]))
 
 glimpse(ds)
 summary(ds)

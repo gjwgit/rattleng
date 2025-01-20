@@ -312,6 +312,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // calling a function, etc.
       }
     });
+    rSource(context, ref, ['list_package_dataset']);
   }
 
   @override

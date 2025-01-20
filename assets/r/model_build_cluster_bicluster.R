@@ -24,7 +24,7 @@
 
 # Cluster analysis using BiCluster
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -43,7 +43,7 @@ mdesc <- "BiCluster cluster analysis"
 
 # Set whether the data should be rescaled.
 
-rescale <- CLUSTER_RESCALE
+rescale <- <CLUSTER_RESCALE>
 
 # Prepare the data for bi-clustering based on the value of rescale.
 
@@ -61,7 +61,7 @@ tds <- as.matrix(tds)
 
 # Perform bi-clustering using the biclust function.
 
-model_biclust <- biclust(tds, method=BCCC(), number=CLUSTER_NUM)
+model_biclust <- biclust(tds, method=BCCC(), number=<CLUSTER_NUM>)
 
 # Extract row and column clusters.
 

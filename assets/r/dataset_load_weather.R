@@ -26,7 +26,7 @@
 
 # Load the demo weather dataset from rattle as per templates.
 #
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #

@@ -37,6 +37,7 @@ library(neuralnet)
 library(caret)
 library(NeuralNetTools)  # For neural network plotting
 library(rattle)
+library(sigmoid)
 
 # Define the model type and description for file paths and titles.
 
@@ -129,12 +130,12 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula       = formula_nn,
     data          = ds_final,
-    hidden        = NEURAL_HIDDEN_LAYERS,
-    act.fct       = NEURAL_ACT_FCT,
-    err.fct       = NEURAL_ERROR_FCT,
+    hidden        = <NEURAL_HIDDEN_LAYERS>,
+    act.fct       = <NEURAL_ACT_FCT>,
+    err.fct       = <NEURAL_ERROR_FCT>,
     linear.output = FALSE,
-    threshold     = NEURAL_THRESHOLD,
-    stepmax       = NEURAL_STEP_MAX,
+    threshold     = <NEURAL_THRESHOLD>,
+    stepmax       = <NEURAL_STEP_MAX>,
   )
 } else {
   # Multiclass Classification
@@ -166,12 +167,12 @@ if (length(target_levels) == 2) {
   model_neuralnet <- neuralnet(
     formula       = formula_nn,
     data          = ds_final,
-    hidden        = NEURAL_HIDDEN_LAYERS,
-    act.fct       = NEURAL_ACT_FCT,
-    err.fct       = NEURAL_ERROR_FCT,
+    hidden        = <NEURAL_HIDDEN_LAYERS>,
+    act.fct       = <NEURAL_ACT_FCT>,
+    err.fct       = <NEURAL_ERROR_FCT>,
     linear.output = FALSE,
-    threshold     = NEURAL_THRESHOLD,
-    stepmax       = NEURAL_STEP_MAX,
+    threshold     = <NEURAL_THRESHOLD>,
+    stepmax       = <NEURAL_STEP_MAX>,
   )
 }
 
@@ -182,7 +183,7 @@ summary(model_neuralnet)
 
 # Save the plot as an SVG file.
 
-svg("TEMPDIR/model_neuralnet.svg")
+svg("<TEMPDIR>/model_neuralnet.svg")
 NeuralNetTools::plotnet(model_neuralnet,
                         cex_val    = 0.5,
                         circle_cex = 2,
