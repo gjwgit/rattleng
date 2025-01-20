@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-03 14:27:49 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-01-20 13:50:57 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,11 +24,14 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# Remap variables. 
+# Remap variables.
 
 # Turn a factor into indicator variables.
 
-ds[, make.names(paste("TIN_SELECTED_VAR", levels(ds[["SELECTED_VAR"]]), sep=""))] <- diag(nlevels(ds[["SELECTED_VAR"]]))[ds[["SELECTED_VAR"]],]
+ds[, make.names(paste("TIN_<SELECTED_VAR>_",
+                      levels(ds[["<SELECTED_VAR>"]]),
+                      sep=""))] <-
+  diag(nlevels(ds[["<SELECTED_VAR>"]]))[ds[["<SELECTED_VAR>"]],]
 
 glimpse(ds)
 summary(ds)

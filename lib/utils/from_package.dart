@@ -1,6 +1,6 @@
-/// Query the roles provider for the list of variables in play.
+/// Support untility for checking if a string is a dataset from a pacakge
 //
-// Time-stamp: <Wednesday 2025-01-15 16:25:50 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-12-20 16:37:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,30 +21,12 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
+/// Authors: Yixiang Yin
 
-// ignore_for_file: check-unused-files
+bool isFromPackage(String input) {
+  // Define the regular expression pattern: a string followed by '::' followed by another string
+  RegExp regExp = RegExp(r'^[^:]+::[^:]+$');
 
-library;
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:rattle/providers/vars/roles.dart';
-
-List<String> getVars(WidgetRef ref) {
-  // The rolesProvider lists the roles for the different variables which we
-  // need to know for parsing the R scripts.
-
-  Map<String, Role> roles = ref.read(rolesProvider);
-
-  // Extract the input variable from the rolesProvider.
-
-  List<String> vars = [];
-  roles.forEach((key, value) {
-    if (value == Role.input || value == Role.risk || value == Role.target) {
-      vars.add(key);
-    }
-  });
-
-  return vars;
+  // Use the RegExp to check if the input matches the pattern
+  return regExp.hasMatch(input);
 }

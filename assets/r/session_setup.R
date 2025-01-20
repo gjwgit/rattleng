@@ -5,9 +5,9 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 15:59:18 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-17 16:12:21 +1100 Graham Williams>
 #
-# Rattle version VERSION.
+# Rattle version <VERSION>.
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -26,7 +26,7 @@
 #
 # Author: Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # The concept of templates for data science was introduced in The
 # Essentials of Data Science, 2017, CRC Press, referenced throughout
@@ -48,7 +48,7 @@
 # 20241007 gjw Loading packages requires they are already installed
 # into a local library. The RattleNG installation instructions
 # recommends installing these packages before running rattle for the
-# first time. From within RattleNG, tap the DOWNLOAD button in the top
+# first time. From within RattleNG, tap the <DOWNLOAD> button in the top
 # right button bar which will run the `packages.R` script to check and
 # install any missing packages.
 
@@ -63,11 +63,11 @@ library(glue)    # To glue strings together.
 # The crayon package in R is used to produce highlighted and
 # emboldened output to the console. We turn off the fancy terminal
 # escape sequences here. These tend to make the parsing of the text
-# output presented to STDOUT somewhat challenging for Rattle.
+# output presented to <STDOUT> somewhat challenging for Rattle.
 
 options(crayon.enabled = FALSE)
 
-# TODO 20241007 gjw MOVE WIDTH LITERAL INTO SETTINGS
+# TODO 20241007 gjw MOVE <WIDTH> <LITERAL> INTO <SETTINGS>
 
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
@@ -75,7 +75,7 @@ options(crayon.enabled = FALSE)
 
 options(width=120)
 
-# TODO 20241007 gjw MOVE SEED LITERAL INTO SETTINGS
+# TODO 20241007 gjw MOVE SEED <LITERAL> INTO <SETTINGS>
 
 # A pre-defined value for the random seed. Setting the random seed to
 # a specific known value ensures that the processing and analyses
@@ -83,13 +83,13 @@ options(width=120)
 # different random seed each time R starts up we get different
 # results, like different partitioning, differe trees, etc.
 
-set.seed(RANDOM_SEED)
+set.seed(<RANDOM_SEED>)
 
 ####################################
 # Support Functions
 ####################################
 
-# TODO 20241007 gjw MOVE R SUPPORT FUNCTIONS INTO RATTLE R PACKAGE
+# TODO 20241007 gjw MOVE R <SUPPORT> <FUNCTIONS> INTO <RATTLE> R <PACKAGE>
 #
 # Or else are there equivalent functions in other packages.
 
@@ -159,7 +159,7 @@ meta_data <- function(df) {
 
 username <- Sys.getenv("USER")  # On Linux/MacOS
 if (username == "") {
-  username <- Sys.getenv("USERNAME")  # On Windows
+  username <- Sys.getenv("<USERNAME>")  # On Windows
 }
 ##
 ## 20250106 gjw Introduce the `rat()` command as being excatly the
@@ -196,7 +196,7 @@ check_unique <- function(x) {
 }
 
 # Check if the numbers in the column are real numbers and if so return
-# FALSe so they are not included in the potentiasl IDENT.
+# FALSe so they are not included in the potentiasl <IDENT>.
 
 check_not_real <- function(x) {
   if (! is.numeric(x)) {
@@ -274,5 +274,5 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 
 # theme_rattle <- theme_economist
 
-## MOVED TO USING SETTINGS_GRAPHIC_THEME IN SCRIPTS
+## <MOVED> TO <USING> <SETTINGS_GRAPHIC_THEME> IN <SCRIPTS>
 ## theme_default <- theme_rattle

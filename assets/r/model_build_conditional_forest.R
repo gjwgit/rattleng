@@ -26,7 +26,7 @@
 
 # Random Forest using cforest()
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -46,11 +46,11 @@ mdesc <- "Random Forest"
 model_conditionalForest <- cforest(
   form,
   data    = trds,
-  controls= cforest_unbiased(ntree = RF_NUM_TREES,
-                             mtry  = RF_MTRY,)
+  controls= cforest_unbiased(ntree = <RF_NUM_TREES>,
+                             mtry  = <RF_MTRY>,)
 )
 
-# Save the model to the TEMPLATE variable `model` and the predicted
+# Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- model_conditionalForest
@@ -82,9 +82,9 @@ print(importance_df)
 
 # Display tree number.
 
-prettytree(model_conditionalForest@ensemble[[RF_NO_TREE]], names(model_conditionalForest@data@get("input")))
+prettytree(model_conditionalForest@ensemble[[<RF_NO_TREE>]], names(model_conditionalForest@data@get("input")))
 
-svg("TEMPDIR/model_conditional_forest.svg")
+svg("<TEMPDIR>/model_conditional_forest.svg")
 ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +

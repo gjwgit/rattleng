@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-12-23 14:37:25 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-01-20 14:45:23 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,11 +24,11 @@
 #
 # Author: Graham Williams, Yixiang Yin
 
-# Bin the SELECTED_VAR into NUMBER bins using quantiles.
+# Bin the <SELECTED_VAR> into <NUMBER> bins using quantiles.
 
-ds[["BQT_SELECTED_VAR_NUMBER"]] <-
-  rattle::binning(ds[["SELECTED_VAR"]],
-                  NUMBER,
+ds[["BQT_<SELECTED_VAR>_<NUMBER>"]] <-
+  rattle::binning(ds[["<SELECTED_VAR>"]],
+                  <NUMBER>,
                   method  = "quantile",
                   ordered = FALSE)
 

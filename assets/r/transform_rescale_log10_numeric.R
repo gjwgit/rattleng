@@ -24,13 +24,13 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" into "R10_SELETED_VAR" by applying log10().
+# Transform "<SELECTED_VAR>" into "R10<_SELETED_VAR>" by applying log10().
 # Treat -Inf as NA.
 
 ds %<>%
-  mutate(R10_SELECTED_VAR = log10(SELECTED_VAR),
-         R10_SELECTED_VAR = ifelse(is.infinite(R10_SELECTED_VAR),
-                                   NA, R10_SELECTED_VAR))
+  mutate(R10_<SELECTED_VAR> = log10(<SELECTED_VAR>),
+         R10_<SELECTED_VAR> = ifelse(is.infinite(R10_<SELECTED_VAR>),
+                                   NA, R10_<SELECTED_VAR>))
 
 glimpse(ds)
 summary(ds)

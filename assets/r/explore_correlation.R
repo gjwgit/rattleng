@@ -26,7 +26,7 @@
 
 # Correlation Analysis
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -54,7 +54,7 @@ print(round(cor,2))
 
 # Generate the chart.
 
-svg("TEMPDIR/explore_correlation.svg")
+svg("<TEMPDIR>/explore_correlation.svg")
 corrplot::corrplot(cor,
                    method = 'ellipse',
                    order  = 'AOE',
@@ -62,11 +62,11 @@ corrplot::corrplot(cor,
                    tl.srt = 45,
                    mar    = c(0,0,1,0))
 title(main = "Correlation weather.csv using Pearson",
-      sub  = paste("TIMESTAMP", username))
+      sub  = paste("<TIMESTAMP>", username))
 dev.off()
 
-## GGCORRPLOT
+## <GGCORRPLOT>
 
-svg("TEMPDIR/explore_correlation_ggcorrplot.svg")
+svg("<TEMPDIR>/explore_correlation_ggcorrplot.svg")
 ggcorrplot::ggcorrplot(cor, method='circle')
 dev.off()

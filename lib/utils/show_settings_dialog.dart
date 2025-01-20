@@ -1,6 +1,6 @@
-/// Promote the user to pick a location to save the file
+/// Show the settings dialog.
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-15 15:50:09 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,23 +21,34 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin, Graham Williams
-///
+/// Authors: Graham Williams, Kevin Wang
+
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-// import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 
-// Future<String?> selectFile() async {
-//   // Use the [FilePicker] to select a file asynchronously so as not to block the
-//   // main UI thread.
+import 'package:rattle/settings/dialog.dart';
 
-//   String? result = await FilePicker.platform.saveFile(
-//     dialogTitle: 'pick a location to save the file',
-//     // TODO 20240604 gjw THE DEFAULT FILE NAME DOES NOT APPEAR IN THE DIALOG ON
-//     // LINUX. COULD BE A PACKAGE BUG? SHOULD REPORT IF SO.
-//     fileName: 'wordcloud.png',
-//   );
+void showSettingsDialog(BuildContext context) {
+  showGeneralDialog(
+    context: context,
+    barrierLabel: 'Settings',
+    barrierDismissible: true,
+    // Darken the background.
 
-//   return result;
-// }
+    barrierColor: Colors.black54,
+    transitionDuration: const Duration(milliseconds: 300),
+    pageBuilder: (context, anim1, anim2) {
+      return const Align(
+        alignment: Alignment.center,
+        child: SettingsDialog(),
+      );
+    },
+    transitionBuilder: (context, anim1, anim2, child) {
+      return FadeTransition(
+        opacity: CurvedAnimation(parent: anim1, curve: Curves.easeOut),
+        child: child,
+      );
+    },
+  );
+}

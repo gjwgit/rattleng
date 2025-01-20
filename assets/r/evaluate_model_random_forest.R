@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu
 
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
@@ -32,7 +32,7 @@
 # https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# 20241220 gjw Save the model to the <TEMPLATE> variable `model`. This
 # will be used below and in the following evaluations as required.
 
 model <- model_randomForest
@@ -52,7 +52,7 @@ pred_ra <- function(model, data) {
   prob_matrix <- predict(model, newdata = data, type = "prob")
   
   # For each row, decide which column is higher, or NA if both are NA.
-  # 'apply' with MARGIN=1 loops over rows.
+  # 'apply' with <MARGIN>=1 loops over rows.
 
   pred_vec <- apply(prob_matrix, 1, function(prob_row) {
     # If both values are NA, return NA.

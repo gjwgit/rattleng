@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -43,14 +43,14 @@ mdesc <- "Association Rules"
 
 # Depending on whether we consider the dataset `ds` as a collection of
 # baskets or not, we build our transactions dataset. For `ds` as a
-# basket it will have two columns, one (IDENT) identifying the basket
-# and the other (TARGET) identifying an item contained in the basket.
+# basket it will have two columns, one (<IDENT>) identifying the basket
+# and the other (<TARGET>) identifying an item contained in the basket.
 
-if(ASSOCIATION_BASKETS) {
-  # We need to get the IDENT variable from ds since all IDENTs are
+if(<ASSOCIATION_BASKETS>) {
+  # We need to get the <IDENT> variable from ds since all <IDENT>s are
   # removed from trds.
 
-  transactions <- as(split(trds$TARGET_VAR, ds[tr, "IDENT_VAR"]), "transactions")
+  transactions <- as(split(trds$<TARGET_VAR>, ds[tr, "<IDENT_VAR>"]), "transactions")
 
 } else {
 
@@ -62,9 +62,9 @@ if(ASSOCIATION_BASKETS) {
 
 model_arules <- apriori(
   data      = transactions,
-  parameter = list(support    = ASSOCIATION_SUPPORT,
-                   confidence = ASSOCIATION_CONFIDENCE,
-                   minlen     = ASSOCIATION_MIN_LENGTH)
+  parameter = list(support    = <ASSOCIATION_SUPPORT>,
+                   confidence = <ASSOCIATION_CONFIDENCE>,
+                   minlen     = <ASSOCIATION_MIN_LENGTH>)
 )
 
 # Generate textual output of the 'Association Rules' model.
@@ -75,8 +75,8 @@ print(summary(model_arules))
 # measures. Generally this can be very large and if so the `inspect()`
 # will be very time consuming and it appears the app has frozen.
 
-top_rules <- sort(model_arules, by = ASSOCIATION_RULES_SORT_BY)
-top_rules <- top_rules[1:min(length(top_rules), ASSOCIATION_INTEREST_MEASURE)]
+top_rules <- sort(model_arules, by = <ASSOCIATION_RULES_SORT_BY>)
+top_rules <- top_rules[1:min(length(top_rules), <ASSOCIATION_INTEREST_MEASURE>)]
 
 # Show the rules identified.
 
@@ -101,17 +101,17 @@ print(measures)
 # be to go with PNG for
 # now. https://github.com/dnfield/flutter_svg/issues/53
 
-# svg("TEMPDIR/model_arules_viz.svg")
-png("TEMPDIR/model_arules_viz.png")
+# svg("<TEMPDIR>/model_arules_viz.svg")
+png("<TEMPDIR>/model_arules_viz.png")
 plot(model_arules, method="graph")
 dev.off()
 
-svg("TEMPDIR/model_arules_para.svg")
+svg("<TEMPDIR>/model_arules_para.svg")
 plot(model_arules, method="paracoord")
 dev.off()
 
 # Plot the relative importance of the rules using arulesViz.
 
-svg("TEMPDIR/model_arules_item_frequency.svg")
+svg("<TEMPDIR>/model_arules_item_frequency.svg")
 itemFrequencyPlot(transactions, topN = 10, type = "relative")
 dev.off()

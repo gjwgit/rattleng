@@ -16,7 +16,7 @@
 #
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR MORE DETAILS.
+# FOR MORE <DETAILS>.
 #
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <https://www.gnu.org/licenses/>.
@@ -37,15 +37,15 @@ mdesc <- "XGBoost"
 
 model_xgb <- rattle::xgboost(form,
                      data              = trds,
-                     max_depth         = BOOST_MAX_DEPTH,     # Maximum depth of a tree
-                     eta               = BOOST_LEARNING_RATE, # Learning rate
-                     nthread           = BOOST_THREADS,       # Set the number of threads
+                     max_depth         = <BOOST_MAX_DEPTH>,     # Maximum depth of a tree
+                     eta               = <BOOST_LEARNING_RATE>, # Learning rate
+                     nthread           = <BOOST_THREADS>,       # Set the number of threads
                      num_parallel_tree = 1,
-                     nrounds           = BOOST_ITERATIONS,
+                     nrounds           = <BOOST_ITERATIONS>,
                      metrics           = 'error',
-                     objective         = BOOST_OBJECTIVE, )
+                     objective         = <BOOST_OBJECTIVE>, )
 
-# Save the model to the TEMPLATE variable `model` and the predicted
+# Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- model_xgb
@@ -61,7 +61,7 @@ summary(model_xgb)
 
 # Feature Importance Plot.
 
-svg("TEMPDIR/model_xgb_importance.svg")
+svg("<TEMPDIR>/model_xgb_importance.svg")
 importance_matrix <- xgb.importance(model = model_xgb)
 
 # Create a ggplot-based importance plot.

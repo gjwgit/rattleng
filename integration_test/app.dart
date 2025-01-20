@@ -1,6 +1,6 @@
 /// Test APP starts up.
 //
-// Time-stamp: <Friday 2024-12-27 15:33:16 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-17 16:30:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -63,7 +63,7 @@ void main() {
     // Confirm the Markdown widgets.
 
     final welcomeMarkdownFinder = find.byType(Markdown);
-    expect(welcomeMarkdownFinder, findsNWidgets(3));
+    expect(welcomeMarkdownFinder, findsNWidgets(2));
 
     // The first Markdown widget is the first panel of the welcome widget with
     // text frm welcome1.md that we can check is the same as dislayed by reading

@@ -24,14 +24,14 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
+# 20241220 gjw Save the model to the <TEMPLATE> variable `model`. This
 # will be used below and in the following evaluations as required.
 
 model <- model_nn

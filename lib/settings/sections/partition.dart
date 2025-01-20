@@ -1,6 +1,6 @@
 /// Partition section.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-15 16:05:52 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,7 +30,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/settings/widgets/settings_partition_controls.dart';
+import 'package:rattle/settings/widgets/partition_controls.dart';
 import 'package:rattle/settings/utils/out_of_range_warning.dart';
 
 class Partition extends ConsumerWidget {

@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Tuesday 2025-01-14 15:03:53 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-17 16:18:11 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rattle/providers/dataset.dart';
 
 import 'package:universal_io/io.dart' show Platform;
 
@@ -246,21 +247,27 @@ Future<void> rSource(
   // Replace Global template patterns with their values. These are not specific
   // to any particular feature,
 
-  code = code.replaceAll('TIMESTAMP', 'RattleNG ${timestamp()}');
+  code = code.replaceAll('<TIMESTAMP>', 'RattleNG ${timestamp()}');
 
   PackageInfo info = await PackageInfo.fromPlatform();
 
-  code = code.replaceAll('VERSION', info.version);
+  code = code.replaceAll('<VERSION>', info.version);
 
   // 20240825 lutra Fix the path to the dataset to ensure that the Windows path
   // has been correctly converted to a Unix path for R.
 
   if (Platform.isWindows) {
-    path = path.replaceAll(r'\', '/');
+    path = path.replaceAll(r'\>', '/');
   }
-  code = code.replaceAll('FILENAME', path);
+  code = code.replaceAll('<FILENAME>', path);
 
-  code = code.replaceAll('TEMPDIR', tempDir);
+  code = code.replaceAll('<TEMPDIR>', tempDir);
+
+  String package = ref.read(packageProvider);
+  code = code.replaceAll('<PACKAGE>', package);
+
+  String dataset = ref.read(datasetProvider);
+  code = code.replaceAll('<DATASET>', dataset);
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -268,53 +275,53 @@ Future<void> rSource(
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
 
-  code = code.replaceAll('MAXFACTOR', '20');
+  code = code.replaceAll('<MAXFACTOR>', '20');
 
   code = code.replaceAll(
-    'RANDOM_PARTITION',
+    '<RANDOM_PARTITION>',
     randomPartitionSetting.toString().toUpperCase(),
   );
-  code = code.replaceAll('RANDOM_SEED', randomSeedSetting.toString());
+  code = code.replaceAll('<RANDOM_SEED>', randomSeedSetting.toString());
 
-  code = code.replaceAll('SETTINGS_GRAPHIC_THEME', theme);
+  code = code.replaceAll('<SETTINGS_GRAPHIC_THEME>', theme);
 
   code =
-      code.replaceAll('TUNING_TYPE', useValidation ? 'validation' : 'tuning');
+      code.replaceAll('<TUNING_TYPE>', useValidation ? 'validation' : 'tuning');
 
   ////////////////////////////////////////////////////////////////////////
 
   // BOOST
 
-  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
-  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
-  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
-  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
-  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
-  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
-  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
-  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
+  code = code.replaceAll('<BOOST_MAX_DEPTH>', boostMaxDepth.toString());
+  code = code.replaceAll('<BOOST_MIN_SPLIT>', boostMinSplit.toString());
+  code = code.replaceAll('<BOOST_X_VALUE>', boostXVal.toString());
+  code = code.replaceAll('<BOOST_LEARNING_RATE>', boostLearningRate.toString());
+  code = code.replaceAll('<BOOST_COMPLEXITY>', boostComplexity.toString());
+  code = code.replaceAll('<BOOST_THREADS>', boostThreads.toString());
+  code = code.replaceAll('<BOOST_ITERATIONS>', boostIterations.toString());
+  code = code.replaceAll('<BOOST_OBJECTIVE>', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
 
   // LINEAR
 
-  code = code.replaceAll('LINEAR_FAMILY', '"$linearFamily"');
+  code = code.replaceAll('<LINEAR_FAMILY>', '"$linearFamily"');
 
   // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
 
   List<String> ignoredVars = getIgnored(ref);
   String ignoredVarsString = toRVector(ignoredVars);
-  code = code.replaceAll('IGNORE_VARS', ignoredVarsString);
+  code = code.replaceAll('<IGNORE_VARS>', ignoredVarsString);
 
   List<String> result = getMissing(ref);
-  code = code.replaceAll('MISSING_VARS', toRVector(result));
+  code = code.replaceAll('<MISSING_VARS>', toRVector(result));
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
   // Windows.
 
   // String needsInit = 'FALSE';
   // if (Platform.isWindows) needsInit = 'TRUE';
 
-  // code = code.replaceAll('NEEDS_INIT', needsInit);
+  // code = code.replaceAll('<NEEDS_INIT>', needsInit);
 
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
@@ -324,17 +331,17 @@ Future<void> rSource(
   // Do we split the dataset? The option is presented on the DATASET GUI, and if
   // set we split the dataset.
 
-  code = code.replaceAll('SPLIT_DATASET', partition ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<SPLIT_DATASET>', partition ? 'TRUE' : 'FALSE');
 
   // Do we want to normalise the dataset? The option is presented on the DATASET
   // GUI, and if set we normalise the dataset's variable names.
 
-  code = code.replaceAll('NORMALISE_NAMES', normalise ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<NORMALISE_NAMES>', normalise ? 'TRUE' : 'FALSE');
 
   // Do we want to cleanse the dataset? The option is presented on the DATASET
   // GUI, and if it is set we will cleanse the dataset columns.
 
-  code = code.replaceAll('CLEANSE_DATASET', cleanse ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<CLEANSE_DATASET>', cleanse ? 'TRUE' : 'FALSE');
 
   // TODO 20231016 gjw THESE SHOULD BE SET IN THE DATASET TAB AND ACCESS THROUGH
   // PROVIDERS.
@@ -375,16 +382,16 @@ Future<void> rSource(
   // as usual.
 
   if (target == 'NULL' || target.isEmpty || target == '\"\"') {
-    code = code.replaceAll('"TARGET_VAR"', target);
+    code = code.replaceAll('<"TARGET_VAR">', target);
   }
-  code = code.replaceAll('TARGET_VAR', target);
+  code = code.replaceAll('<TARGET_VAR>', target);
 
   if (ident == 'NULL') {
-    code = code.replaceAll('"IDENT_VAR"', ident);
+    code = code.replaceAll('<"IDENT_VAR">', ident);
   }
-  code = code.replaceAll('IDENT_VAR', ident);
+  code = code.replaceAll('<IDENT_VAR>', ident);
 
-  //code = code.replaceAll('TARGET_VAR', ref.read(rolesProvider));
+  //code = code.replaceAll('<TARGET_VAR>', ref.read(rolesProvider));
 
   // Extract the risk variable from the rolesProvider and use that for now as
   // the variable to visualise.
@@ -396,19 +403,20 @@ Future<void> rSource(
     }
   });
 
-  code = code.replaceAll('INTERVAL', interval.toString());
-  code = code.replaceAll('NUMBER', ref.read(numberProvider).toString());
-  code = code.replaceAll('SELECTED_VAR', selected);
+  code = code.replaceAll('<INTERVAL>', interval.toString());
+  code = code.replaceAll('<NUMBER>', ref.read(numberProvider).toString());
+  code = code.replaceAll('<SELECTED_VAR>', selected);
 
-  code = code.replaceAll('SELECTED_2_VAR', selected2);
+  code = code.replaceAll('<SELECTED_2_VAR>', selected2);
 
-  code = code.replaceAll('GROUP_BY_VAR', groupBy == 'None' ? 'NULL' : groupBy);
+  code =
+      code.replaceAll('<GROUP_BY_VAR>', groupBy == 'None' ? 'NULL' : groupBy);
 
-  code = code.replaceAll('IMPUTED_VALUE', imputed);
+  code = code.replaceAll('<IMPUTED_VALUE>', imputed);
 
   //    normalise ? "rain_tomorrow" : "RainTomorrow",
 //  );
-  code = code.replaceAll('RISK_VAR', risk);
+  code = code.replaceAll('<RISK_VAR>', risk);
 
   // Extract the IDENT variables from the rolesProvider.
 
@@ -419,11 +427,11 @@ Future<void> rSource(
     }
   });
 
-  code = code.replaceAll('ID_VARS', ids);
+  code = code.replaceAll('<ID_VARS>', ids);
 
   // Replace DATA_SPLIT_TR_TU_TE with the current values from partitionSettingProvider.
 
-  code = code.replaceAll('DATA_SPLIT_TR_TU_TE', partitionString);
+  code = code.replaceAll('<DATA_SPLIT_TR_TU_TE>', partitionString);
 
   // TODO if (script == 'model_build_rpart')) {
 
@@ -431,133 +439,152 @@ Future<void> rSource(
   // REPLACED WITHING model_build_rpart.R
 
   code = code.replaceAll(
-    ' PRIORS',
+    ' <PRIORS>',
     priors.isNotEmpty ? ', prior = c($priors)' : '',
   );
   code = code.replaceAll(
-    ' LOSS',
+    ' <LOSS>',
     lossMatrix.isNotEmpty ? ', loss = matrix(c($lossMatrix))' : '',
   );
-  code = code.replaceAll(' MAXDEPTH', ' maxdepth = ${maxDepth.toString()}');
-  code = code.replaceAll(' MINSPLIT', ' minsplit = ${minSplit.toString()}');
-  code = code.replaceAll(' MINBUCKET', ' minbucket = ${minBucket.toString()}');
-  code = code.replaceAll(' CP', ' cp = ${complexity.toString()}');
+  code = code.replaceAll(' <MAXDEPTH>', ' maxdepth = ${maxDepth.toString()}');
+  code = code.replaceAll(' <MINSPLIT>', ' minsplit = ${minSplit.toString()}');
+  code =
+      code.replaceAll(' <MINBUCKET>', ' minbucket = ${minBucket.toString()}');
+  code = code.replaceAll(' <CP>', ' cp = ${complexity.toString()}');
 
   ////////////////////////////////////////////////////////////////////////
   // ASSOCIATE
 
   code = code.replaceAll(
-    'ASSOCIATION_BASKETS',
+    '<ASSOCIATION_BASKETS>',
     associationBaskets ? 'TRUE' : 'FALSE',
   );
   code = code.replaceAll(
-    'ASSOCIATION_SUPPORT',
+    '<ASSOCIATION_SUPPORT>',
     associationSupport.toString(),
   );
   code = code.replaceAll(
-    'ASSOCIATION_CONFIDENCE',
+    '<ASSOCIATION_CONFIDENCE>',
     associationConfidence.toString(),
   );
   code = code.replaceAll(
-    'ASSOCIATION_MIN_LENGTH',
+    '<ASSOCIATION_MIN_LENGTH>',
     associationMinLength.toString(),
   );
 
   code = code.replaceAll(
-    'ASSOCIATION_INTEREST_MEASURE',
+    '<ASSOCIATION_INTEREST_MEASURE>',
     associationInterestMeasureLimit.toString(),
   );
 
-  code =
-      code.replaceAll('ASSOCIATION_RULES_SORT_BY', '"$associationRulesSortBy"');
+  code = code.replaceAll(
+    '<ASSOCIATION_RULES_SORT_BY>',
+    '"$associationRulesSortBy"',
+  );
 
   ////////////////////////////////////////////////////////////////////////
 
   // BOOST
 
-  code = code.replaceAll('BOOST_MAX_DEPTH', boostMaxDepth.toString());
-  code = code.replaceAll('BOOST_MIN_SPLIT', boostMinSplit.toString());
-  code = code.replaceAll('BOOST_X_VALUE', boostXVal.toString());
-  code = code.replaceAll('BOOST_LEARNING_RATE', boostLearningRate.toString());
-  code = code.replaceAll('BOOST_COMPLEXITY', boostComplexity.toString());
-  code = code.replaceAll('BOOST_THREADS', boostThreads.toString());
-  code = code.replaceAll('BOOST_ITERATIONS', boostIterations.toString());
-  code = code.replaceAll('BOOST_OBJECTIVE', '"$boostObjective"');
+  code = code.replaceAll('<BOOST_MAX_DEPTH>', boostMaxDepth.toString());
+  code = code.replaceAll('<BOOST_MIN_SPLIT>', boostMinSplit.toString());
+  code = code.replaceAll('<BOOST_X_VALUE>', boostXVal.toString());
+  code = code.replaceAll('<BOOST_LEARNING_RATE>', boostLearningRate.toString());
+  code = code.replaceAll('<BOOST_COMPLEXITY>', boostComplexity.toString());
+  code = code.replaceAll('<BOOST_THREADS>', boostThreads.toString());
+  code = code.replaceAll('<BOOST_ITERATIONS>', boostIterations.toString());
+  code = code.replaceAll('<BOOST_OBJECTIVE>', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
   // CLUSTER
 
-  code = code.replaceAll('CLUSTER_NUM', clusterNum.toString());
-  code = code.replaceAll('CLUSTER_RUN', clusterRun.toString());
-  code = code.replaceAll('CLUSTER_RESCALE', clusterReScale ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('CLUSTER_TYPE', '"${clusterType.toString()}"');
-  code = code.replaceAll('CLUSTER_DISTANCE', '"${clusterDistance.toString()}"');
-  code = code.replaceAll('CLUSTER_LINK', '"${clusterLink.toString()}"');
-  code = code.replaceAll('CLUSTER_PROCESSOR', clusterProcessor.toString());
+  code = code.replaceAll('<CLUSTER_NUM>', clusterNum.toString());
+  code = code.replaceAll('<CLUSTER_RUN>', clusterRun.toString());
+  code =
+      code.replaceAll('<CLUSTER_RESCALE>', clusterReScale ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<CLUSTER_TYPE>', '"${clusterType.toString()}"');
+  code =
+      code.replaceAll('<CLUSTER_DISTANCE>', '"${clusterDistance.toString()}"');
+  code = code.replaceAll('<CLUSTER_LINK>', '"${clusterLink.toString()}"');
+  code = code.replaceAll('<CLUSTER_PROCESSOR>', clusterProcessor.toString());
 
   ////////////////////////////////////////////////////////////////////////
   // EXPLORE - VISUAL - BOXPLOT
 
   code = code.replaceAll(
-    'BOXPLOT_NOTCH',
+    '<BOXPLOT_NOTCH>',
     exploreVisualBoxplotNotch.toString().toUpperCase(),
   );
 
   code = code.replaceAll(
-    'IGNORE_MISSING_GROUP_BY',
+    '<IGNORE_MISSING_GROUP_BY>',
     ignoreMissingGroupBy.toString().toUpperCase(),
   );
 
   // EVALUATE
 
-  code = code.replaceAll('DATASET_TYPE', chosenDataType.toUpperCase());
+  code = code.replaceAll('<DATASET_TYPE>', chosenDataType.toUpperCase());
 
   ////////////////////////////////////////////////////////////////////////
   // FOREST
 
-  code = code.replaceAll('RF_NUM_TREES', forestTrees.toString());
-  code = code.replaceAll('RF_MTRY', forestPredictorNum.toString());
-  code = code.replaceAll('RF_NO_TREE', forestNo.toString());
+  code = code.replaceAll('<RF_NUM_TREES>', forestTrees.toString());
+  code = code.replaceAll('<RF_MTRY>', forestPredictorNum.toString());
+  code = code.replaceAll('<RF_NO_TREE>', forestNo.toString());
   code = code.replaceAll(
-    'RF_NA_ACTION',
+    '<RF_NA_ACTION>',
     forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
   );
 
   ////////////////////////////////////////////////////////////////////////
   // NEURAL
 
-  code = code.replaceAll('NNET_HIDDEN_LAYERS', hiddenLayerSizes.toString());
+  code = code.replaceAll('<NNET_HIDDEN_LAYERS>', hiddenLayerSizes.toString());
 
-  code = code.replaceAll('NEURAL_HIDDEN_LAYERS', 'c($hiddenNeurons)');
-  code = code.replaceAll('NEURAL_MAXIT', nnetMaxit.toString());
-  code = code.replaceAll('NEURAL_MAX_NWTS', nnetMaxNWts.toString());
-  code = code.replaceAll('NEURAL_ERROR_FCT', '"${neuralErrorFct.toString()}"');
+  code = code.replaceAll('<NEURAL_HIDDEN_LAYERS>', 'c($hiddenNeurons)');
+  code = code.replaceAll('<NEURAL_MAXIT>', nnetMaxit.toString());
+  code = code.replaceAll('<NEURAL_MAX_NWTS>', nnetMaxNWts.toString());
   code =
-      code.replaceAll('NEURAL_ACT_FCT', '"${neuralActivationFct.toString()}"');
-  code = code.replaceAll('NEURAL_THRESHOLD', neuralThreshold.toString());
-  code = code.replaceAll('NEURAL_STEP_MAX', neuralStepMax.toString());
+      code.replaceAll('<NEURAL_ERROR_FCT>', '"${neuralErrorFct.toString()}"');
+  code = code.replaceAll(
+    '<NEURAL_ACT_FCT>',
+    '"${neuralActivationFct.toString()}"',
+  );
+  if (neuralActivationFct != 'relu') {
+    code = code.replaceAll(
+      '<NEURAL_ACT_FCT>',
+      '"${neuralActivationFct.toString()}"',
+    );
+  } else if (neuralActivationFct == 'relu') {
+    // relu corresponds to the ReLU function from the sigmoid package in R.
+
+    code = code.replaceAll('<NEURAL_ACT_FCT>', 'relu');
+  }
+
+  code = code.replaceAll('<NEURAL_THRESHOLD>', neuralThreshold.toString());
+  code = code.replaceAll('<NEURAL_STEP_MAX>', neuralStepMax.toString());
 
   code = code.replaceAll(
-    'NEURAL_IGNORE_CATEGORIC',
+    '<NEURAL_IGNORE_CATEGORIC>',
     neuralIgnoreCategoric.toString().toUpperCase(),
   );
 
   ////////////////////////////////////////////////////////////////////////
   // SVM
 
-  code = code.replaceAll('SVM_KERNEL', '"${svmKernel.toString()}"');
-  code = code.replaceAll('SVM_DEGREE', svmDegree.toString());
+  code = code.replaceAll('<SVM_KERNEL>', '"${svmKernel.toString()}"');
+  code = code.replaceAll('<SVM_DEGREE>', svmDegree.toString());
 
   ////////////////////////////////////////////////////////////////////////
   // WORD CLOUD
 
-  code = code.replaceAll('RANDOMORDER', checkbox.toString().toUpperCase());
-  code = code.replaceAll('STEM', stem ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('PUNCTUATION', punctuation ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('STOPWORD', stopword ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('LANGUAGE', language);
-  code = code.replaceAll('MINFREQ', minFreq);
-  code = code.replaceAll('MAXWORD', maxWord);
+  code = code.replaceAll('<RANDOMORDER>', checkbox.toString().toUpperCase());
+  code = code.replaceAll('<STEM>', stem ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<PUNCTUATION>', punctuation ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<STOPWORD>', stopword ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<LANGUAGE>', language);
+  code = code.replaceAll('<MINFREQ>', minFreq);
+  code = code.replaceAll('<MAXWORD>', maxWord);
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -566,9 +593,8 @@ Future<void> rSource(
     code = code.replaceAll('maxsurrogate=0', '');
   }
 
-  code =
-      code.replaceAll('trace=FALSE', nnetTrace ? 'trace=TRUE' : 'trace=FALSE');
-  code = code.replaceAll('skip=TRUE', nnetSkip ? 'skip=TRUE' : 'skip=FALSE');
+  code = code.replaceAll('<NNET_TRACE>', nnetTrace ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<NNET_SKIP>', nnetSkip ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -578,8 +604,10 @@ Future<void> rSource(
 
   // Cross tabulation summary.
 
-  code =
-      code.replaceAll('SUMMARY_CROSS_TAB', includeCrossTab ? 'TRUE' : 'FALSE');
+  code = code.replaceAll(
+    '<SUMMARY_CROSS_TAB>',
+    includeCrossTab ? 'TRUE' : 'FALSE',
+  );
 
   ////////////////////////////////////////////////////////////////////////
 
