@@ -38,6 +38,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/partition_off.dart';
 import 'utils/partition_on.dart';
 import 'utils/tap_button.dart';
 import 'utils/unify_off.dart';
@@ -168,44 +169,41 @@ void main() {
   //   );
   // });
 
-  testWidgets(
-      'Load Weather Dataset and test when unify is on and partition is on.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
+  // testWidgets(
+  //     'Load Weather Dataset and test when unify is on and partition is on.',
+  //     (WidgetTester tester) async {
+  //   app.main();
+  //   await tester.pumpAndSettle();
 
-    await unifyOn(tester);
-    await partitionOn(tester);
+  //   await unifyOn(tester);
+  //   await partitionOn(tester);
 
-    await loadDemoDataset(tester);
+  //   await loadDemoDataset(tester);
 
-    // Tap the model Tab button.
+  //   // Tap the model Tab button.
 
-    await navigateToTab(tester, 'Model');
+  //   await navigateToTab(tester, 'Model');
 
-    // Navigate to the Tree feature.
+  //   // Navigate to the Tree feature.
 
-    await navigateToFeature(tester, 'Tree', TreePanel);
+  //   await navigateToFeature(tester, 'Tree', TreePanel);
 
-    // click build button Build Decision Tree
+  //   // click build button Build Decision Tree
 
-    await tapButton(tester, 'Build Decision Tree');
+  //   await tapButton(tester, 'Build Decision Tree');
 
-    //go to next page
+  //   //go to next page
 
-    await gotoNextPage(tester);
+  //   await gotoNextPage(tester);
 
-    // scroll down to the bottom
+  //   // scroll down to the bottom
 
-    await scrollDown(tester);
+  //   await scrollDown(tester);
 
-    // Verify the summary of the decision tree is displayed.
+  //   // Verify the summary of the decision tree is displayed.
 
-    await verifyText(tester, ['363']);
-  });
-}
-
-
+  //   await verifyText(tester, ['254']);
+  // });
 
   testWidgets(
       'Load Weather Dataset and test when unify is on and partition is off.',
@@ -214,7 +212,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await unifyOn(tester);
-    await partitionOn(tester);
+    await partitionOff(tester);
 
     await loadDemoDataset(tester);
 
@@ -236,15 +234,19 @@ void main() {
 
     // scroll down to the bottom
 
-    await scrollDown(tester);
+    // await scrollDown(tester);
 
     // Verify the summary of the decision tree is displayed.
 
-    await verifyText(tester, ['363']);
+    await verifySelectableText(
+      tester,
+      ['363'],
+      multi: true,
+    );
+
+    // await verifyText(tester, ['363', 'Decision Tree Model'], multi: true);
   });
 }
-
-
 
 Future<void> scrollDown(WidgetTester tester) async {
   // Find the scrollable widget

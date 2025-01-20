@@ -25,12 +25,29 @@
 
 library;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> verifyText(WidgetTester tester, List<String> texts,
-    {bool multi = false}) async {
+Future<void> verifyText(
+  WidgetTester tester,
+  List<String> texts, {
+  bool multi = false,
+}) async {
   for (final text in texts) {
     final textFinder = find.text(text);
+    expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
+  }
+}
+
+Future<void> verifySelectableText(
+  WidgetTester tester,
+  List<String> texts, {
+  bool multi = false,
+}) async {
+  for (final text in texts) {
+    final textFinder = find.byWidgetPredicate(
+      (widget) => widget is SelectableText && widget.data == text,
+    );
     expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
   }
 }
