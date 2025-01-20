@@ -11,8 +11,13 @@ Binaries to download latest version:
 [**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
 [**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
+## 6.5 LATEST UPDATES
+
++ Migrate to using delimited PARAMETERS in R templates [6.4.0 20250120 gjw]
+
 ## 6.4 LATEST UPDATES
 
++ Add PACKAGES list to available DATASETS [6.3.54 20250120 yyx]
 + Support links in tooltips [6.3.53 20250113 gjw]
 + Linking title and status bar text to web pages [6.3.52 20250112 gjw]
 + Refactor SETTINGS and add Strip Script Comments [6.3.51 20250110 kev]
