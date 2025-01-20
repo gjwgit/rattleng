@@ -175,7 +175,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // List of image-title pairs for Hand plot.
 
     final handImageData = [
-      {'image': handRpartImage, 'title': 'RPART'},
+      {'image': handRpartImage, 'title': 'RPART','ticked': treeBoxTicked},
     ];
 
     // Iterate through each image-title pair.
@@ -194,9 +194,9 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       }
     }
     for (var data in handImageData) {
-      if (imageExists(data['image']!) && data['ticked'] == true) {
-        handImages.add(data['image']!);
-        handImagesTitles.add(data['title']!);
+      if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
+        handImages.add(data['image']!.toString());
+        handImagesTitles.add(data['title']!.toString());
       }
     }
 
