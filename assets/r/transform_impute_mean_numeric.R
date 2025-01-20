@@ -24,16 +24,16 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replacing NA with the mean value.
+# Transform "<SELECTED_VAR>" by replacing NA with the mean value.
 
 library(dplyr)        # Wrangling: mutate().
 
-if (is.numeric(ds$SELECTED_VAR))
+if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    mutate(IMN_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     mean(SELECTED_VAR, na.rm = TRUE),
-                                     SELECTED_VAR))
+    mutate(IMN_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                     mean(<SELECTED_VAR>, na.rm = TRUE),
+                                     <SELECTED_VAR>))
 }
 
 glimpse(ds)

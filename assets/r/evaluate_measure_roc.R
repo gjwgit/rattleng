@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -39,8 +39,8 @@ library(ROCR)
 
 title <- glue(
     "ROC Curve &#8212; {mdesc} &#8212; ",
-    "{mtype} {basename('FILENAME')} ",
-    "*{dtype}* TARGET_VAR"
+    "{mtype} {basename('<FILENAME>')} ",
+    "*{dtype}* <TARGET_VAR>"
 )
 
 # Remove observations with missing target values.
@@ -113,7 +113,7 @@ pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
 ## separate fname definitino all by itself looks a little odd and is
 ## not required.
 ##
-svg(glue("TEMPDIR/model_evaluate_roc_{mtype}_{dtype}.svg"), width = 11)
+svg(glue("<TEMPDIR>/model_evaluate_roc_{mtype}_{dtype}.svg"), width = 11)
 
 # Now render the ROC curve with the FPR and TPR data.  The red line
 # represent the ROC curve while the diagonal grey reference line
@@ -134,6 +134,6 @@ pd %>%
            vjust = 0,
            size  = 5,
            label = sprintf('AUC = %.2f', au)) +
-  SETTINGS_GRAPHIC_THEME() +
+  <SETTINGS_GRAPHIC_THEME>() +
   theme(plot.title = element_markdown())
 dev.off()

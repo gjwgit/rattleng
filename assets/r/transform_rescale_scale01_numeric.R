@@ -24,11 +24,11 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" into "R01_SELETED_VAR" by rescaling values
+# Transform "<SELECTED_VAR>" into "R01<_SELETED_VAR>" by rescaling values
 # to be in the range 0-1.
 
 ds %<>%
-  mutate(R01_SELECTED_VAR = reshape::rescaler(SELECTED_VAR, "range"))
+  mutate(R01_<SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "range"))
 
 glimpse(ds)
 summary(ds)

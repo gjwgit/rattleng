@@ -47,11 +47,11 @@ if (neural_ignore_categoric) {
 model_nn <- nnet(
   form,
   data    = tds,
-  size    = NNET_HIDDEN_LAYERS,
-  skip    = NNET_SKIP,
-  MaxNWts = NEURAL_MAX_NWTS,
-  trace   = NNET_TRACE,
-  maxit   = NEURAL_MAXIT
+  size    = <NNET_HIDDEN_LAYERS>,
+  skip    = <NNET_SKIP>,
+  MaxNWts = <NEURAL_MAX_NWTS>,
+  trace   = <NNET_TRACE>,
+  maxit   = <NEURAL_MAXIT>
 )
 
 # Generate a textual view of the Neural Network model.
@@ -62,7 +62,7 @@ summary(model_nn)
 # Plot SVG the resulting Neural Network structure using
 # NeuralNetTools.
 
-svg("TEMPDIR/model_nn_nnet.svg")
+svg("<TEMPDIR>/model_nn_nnet.svg")
 NeuralNetTools::plotnet(model_nn,
                         cex_val    = 0.5,
                         circle_cex = 2,
