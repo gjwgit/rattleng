@@ -457,7 +457,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
               options: datasetTypes.keys
                   .where(
-                      (key) => ref.read(partitionProvider) || key == 'Complete')
+                    (key) => ref.read(partitionProvider) || key == 'Complete',
+                  )
                   .map(
                     (key) => key == 'Tuning' &&
                             ref.watch(useValidationSettingProvider)
@@ -476,8 +477,11 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
               tooltips: Map.fromEntries(
                 datasetTypes.entries
-                    .where((entry) =>
-                        ref.read(partitionProvider) || entry.key == 'Complete')
+                    .where(
+                      (entry) =>
+                          ref.read(partitionProvider) ||
+                          entry.key == 'Complete',
+                    )
                     .map(
                       (entry) => MapEntry(
                         entry.key == 'Tuning' &&
