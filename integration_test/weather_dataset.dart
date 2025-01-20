@@ -30,10 +30,12 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/cleanse_off.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/press_unify_icon.dart';
+import 'utils/unify_off.dart';
+import 'utils/unify_on.dart';
 import 'utils/verify_text.dart';
-import 'utils/press_cleanse_icon.dart';
+import 'utils/cleanse_on.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +45,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    await pressCleanseIconOn(tester);
+    await cleanseOn(tester);
 
     await loadDemoDataset(tester);
 
@@ -93,7 +95,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    await pressCleanseIconOff(tester);
+    await cleanseOff(tester);
 
     await loadDemoDataset(tester);
 
@@ -120,8 +122,8 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    await pressCleanseIconOn(tester);
-    await pressUnifyIconOn(tester);
+    await cleanseOn(tester);
+    await unifyOn(tester);
 
     await loadDemoDataset(tester);
 
@@ -142,8 +144,8 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
 
-    await pressCleanseIconOn(tester);
-    await pressUnifyIconOff(tester);
+    await cleanseOn(tester);
+    await unifyOff(tester);
 
     await loadDemoDataset(tester);
 
