@@ -27,24 +27,10 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> verifyText(
-  WidgetTester tester,
-  List<String> values,
-) async {
-  for (final value in values) {
-    final valueFinder = find.textContaining(value);
-    expect(valueFinder, findsOneWidget);
-  }
-}
-
-//Verift text shown multiple times
-Future<void> verifyTextMultiple(
-  WidgetTester tester,
-  List<String> values,
-) async {
-  for (final value in values) {
-    final valueFinder = find.textContaining(value);
-    // find multiple times
-    expect(valueFinder, findsAtLeastNWidgets(1));
+Future<void> verifyText(WidgetTester tester, List<String> texts,
+    {bool multi = false}) async {
+  for (final text in texts) {
+    final textFinder = find.text(text);
+    expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
   }
 }

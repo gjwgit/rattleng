@@ -69,7 +69,7 @@ void main() {
 
     // These following are unique when cleanse is on.
 
-    await verifyTextMultiple(
+    await verifyText(
       tester,
       [
         // Verify Unique Values for date Variable.
@@ -84,6 +84,7 @@ void main() {
 
         'fct',
       ],
+      multi: true,
     );
   });
 
@@ -96,7 +97,7 @@ void main() {
 
     await loadDemoDataset(tester);
 
-    await verifyTextMultiple(
+    await verifyText(
       tester,
       // These are unique when cleanse is off.
 
@@ -109,6 +110,7 @@ void main() {
 
         'chr',
       ],
+      multi: true,
     );
   });
 
@@ -123,13 +125,14 @@ void main() {
 
     await loadDemoDataset(tester);
 
-    await verifyTextMultiple(
+    await verifyText(
       tester,
       [
         // Verify the variables are in lowercase and separated by underscores.
 
         'min_temp',
       ],
+      multi: true,
     );
   });
 
@@ -144,13 +147,14 @@ void main() {
 
     await loadDemoDataset(tester);
 
-    await verifyTextMultiple(
+    await verifyText(
       tester,
       [
         // Verify the variables are in uppercase and underscores are removed.
 
         'MinTemp',
       ],
+      multi: true,
     );
   });
 }
