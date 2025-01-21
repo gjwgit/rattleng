@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:20:38 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-21 20:53:12 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,29 +33,29 @@
 
 # Load required packages from the local library into the R session.
 
-library(nnet)            # Neural networks
-library(NeuralNetTools)  # For neural network plotting
+# library(nnet)            # Neural networks
+# library(NeuralNetTools)  # For neural network plotting
 
 # Define model type and description to be used in following R scripts.
 
 mtype <- "nnet"
 mdesc <- "Neural NNET"
 
-# training_ds is set to replace trds in handling situations of
-# Ignore Categoric and Not Ignore Categoric.
+# 20250121 gjw The tds is set to replace trds in handling situations
+# of ignoring the categoric variables (TREU) or not (FALSE). We simply
+# toggle the TRUE/FALSE here approriately.
 
-if (neural_ignore_categoric) {
-  training_ds <- ds[tr, ignore_categoric_vars]
+if (<NEURAL_IGNORE_CATEGORIC>) {
+  tds <- trds[setdiff(c(numc, target), ignore)]
 } else {
-  training_ds <- ds[tr, vars]
-
+  tds <- trds
 }
 
 # Train a Neural Network model using nnet.
 
-model_nn <- nnet(
+model_nn <- nnet::nnet(
   form,
-  data    = training_ds,
+  data    = tds,
   size    = <NNET_HIDDEN_LAYERS>,
   skip    = <NNET_SKIP>,
   MaxNWts = <NEURAL_MAX_NWTS>,
