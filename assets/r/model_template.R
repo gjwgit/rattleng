@@ -112,6 +112,8 @@ if (<SPLIT_DATASET>) {
 
   split <- c(<DATA_SPLIT_TR_TU_TE>)
   
+  # tc is added to store the complete dataset indices for later use.
+
   tc <- tcnobs %>% sample(tcnobs)
   tr <- tcnobs %>% sample(split[1]*tcnobs)
   tu <- tcnobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*tcnobs)
@@ -156,6 +158,9 @@ tuds <- tuds %>%
 teds <- tcds[te, setdiff(vars, ignore)]
 teds <- teds %>%
   mutate(across(where(is.character), as.factor))
+
+# Retain the complete dataset for later use.
+
 tcds <- tcds[tc, setdiff(vars, ignore)]
 tcds <- tcds %>%
   mutate(across(where(is.character), as.factor))

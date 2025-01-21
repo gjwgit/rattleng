@@ -46,6 +46,7 @@ predicted_numeric <- as.numeric(factor(predicted)) - 1
 actual_numeric <- as.numeric(factor(actual)) - 1
 
 # Combine logical NA checks for both vectors.
+# This will be used to filter out invalid indices.
 
 valid_indices <- !is.na(predicted_numeric) & !is.na(actual_numeric)
 
