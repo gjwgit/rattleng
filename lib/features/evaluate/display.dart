@@ -175,7 +175,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // List of image-title pairs for Hand plot.
 
     final handImageData = [
-      {'image': handRpartImage, 'title': 'RPART','ticked': treeBoxTicked},
+      {'image': handRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
     ];
 
     // Iterate through each image-title pair.
