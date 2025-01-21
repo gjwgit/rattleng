@@ -45,9 +45,19 @@ library(rattle)       # Generate a risk chart.
 predicted_numeric <- as.numeric(factor(predicted)) - 1
 actual_numeric <- as.numeric(factor(actual)) - 1
 
+# Combine logical NA checks for both vectors.
+
+valid_indices <- !is.na(predicted_numeric) & !is.na(actual_numeric)
+
+# Filter the vectors based on valid indices.
+
+filtered_predicted_numeric <- predicted_numeric[valid_indices]
+filtered_actual_numeric <- actual_numeric[valid_indices]
+
+
 # Use rattle's evaluateRisk to generate data required for a Risk Chart.
 
-eval <- rattle::evaluateRisk(predicted_numeric, actual_numeric, risk)
+eval <- rattle::evaluateRisk(filtered_predicted_numeric, filtered_actual_numeric, risk)
 
 # Build title string.
 

@@ -111,7 +111,8 @@ if (<SPLIT_DATASET>) {
   # <TUNING> (tu) and <TESTING> (te).
 
   split <- c(<DATA_SPLIT_TR_TU_TE>)
-
+  
+  tc <- tcnobs %>% sample(tcnobs)
   tr <- tcnobs %>% sample(split[1]*tcnobs)
   tu <- tcnobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*tcnobs)
   te <- tcnobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
@@ -139,6 +140,7 @@ if (!is.null(risk)) {
   risk_tr <- tcds %>% dplyr::slice(tr) %>% pull(risk)
   risk_tu <- tcds %>% dplyr::slice(tu) %>% pull(risk)
   risk_te <- tcds %>% dplyr::slice(te) %>% pull(risk)
+  risk_tc <- tcds %>% dplyr::slice(tc) %>% pull(risk)
 }
 
 # Retain only the columns that we need for the predictive modelling.
@@ -153,6 +155,9 @@ tuds <- tuds %>%
   mutate(across(where(is.character), as.factor))
 teds <- tcds[te, setdiff(vars, ignore)]
 teds <- teds %>%
+  mutate(across(where(is.character), as.factor))
+tcds <- tcds[tc, setdiff(vars, ignore)]
+tcds <- tcds %>%
   mutate(across(where(is.character), as.factor))
 
 # Check if the target variable exists and create `actual_tc`.
