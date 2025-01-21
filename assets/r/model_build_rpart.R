@@ -1,4 +1,4 @@
-# From dataset `tcds` build an `rpart()` decision tree.
+# From dataset `trds` build an `rpart()` decision tree.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
@@ -35,10 +35,11 @@
 
 # Load required packages from the local library into the R session.
 
+library(glue)         # Format strings: glue().
 library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 
-# Define the model type and description for file paths and titles.
+# Define model type and description to be used in following R scripts.
 
 mtype <- "rpart"
 mdesc <- "Decision Tree"
@@ -62,7 +63,7 @@ model_rpart <- rpart(
                           <MINSPLIT>, <MINBUCKET>, <MAXDEPTH>, <CP>),
   model   = TRUE)
 
-# Output a textual view of the Decision Tree model for review.
+# Output a textual view of themodel for review.
 
 print(model_rpart)
 printcp(model_rpart)
@@ -72,8 +73,7 @@ cat("\n")
 
 rattle::asRules(model_rpart)
 
-# Plot the resulting Decision Tree using the rpart.plot package via
-# rattle::fancyRpartPlot().
+# Display the model visually for review.
 
 svg(glue("<TEMPDIR>/model_tree_{mtype}.svg"))
 rattle::fancyRpartPlot(model_rpart,

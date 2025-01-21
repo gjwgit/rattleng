@@ -1,6 +1,6 @@
-# Build a neuralnet() network.
+# From dataset `trds` build a `neuralnet()` neural model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -22,7 +22,16 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
+
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials.
+# https://survivor.togaware.com/datascience/ for further details.
+
+# Load required packages from the local library into the R session.
 
 library(neuralnet)
 library(caret)
@@ -35,6 +44,9 @@ library(sigmoid)
 mtype <- "neuralnet"
 mdesc <- "Neural Neuralnet"
 
+# training_ds is set to replace trds in handling situations of
+# Ignore Categoric and Not Ignore Categoric.
+
 # Subset the training data.
 
 if (neural_ignore_categoric) {
@@ -42,27 +54,29 @@ if (neural_ignore_categoric) {
   # Only use numeric variables when ignoring categoric.
 
   vars_to_use <- num_vars
-  tds <- ds[tr, c(num_vars, target)]
+  training_ds <- ds[tr, c(num_vars, target)]
 
 } else {
 
   vars_to_use <- vars
-  tds <- ds[tr, vars]
+  training_ds <- trds
 
 }
 
+# neuralnet() do not handle missing data automatically.
 # Remove rows with missing values in predictors or target variable.
 
-tds <- tds[complete.cases(tds), ]
+training_ds <- training_ds[complete.cases(training_ds),]
 
 # Initialize empty data frame for predictors.
 
 predictors_combined <- data.frame()
 
 # Handle numeric variables scaling.
+# Neural networks often perform better when all input features are on a similar scale.
 
 if (length(num_vars) > 0) {
-  predictors_numeric_scaled <- scale(tds[num_vars])
+  predictors_numeric_scaled <- scale(training_ds[num_vars])
   predictors_combined <- as.data.frame(predictors_numeric_scaled)
 }
 
@@ -71,8 +85,12 @@ if (length(num_vars) > 0) {
 if (!neural_ignore_categoric && length(cat_vars) > 0) {
   # Create dummy variables for categoric predictors.
 
-  dmy_predictors <- dummyVars(~ ., data = tds[cat_vars])
-  predictors_categoric <- as.data.frame(predict(dmy_predictors, newdata = tds[cat_vars]))
+  dmy_predictors <- dummyVars(~ ., data = training_ds[cat_vars])
+  
+  # Use the dummyVars model to transform the original categorical predictors
+  # into dummy/indicator columns.
+
+  predictors_categoric <- as.data.frame(predict(dmy_predictors, newdata = training_ds[cat_vars]))
 
   # Combine with numeric predictors if they exist.
 
@@ -85,22 +103,26 @@ if (!neural_ignore_categoric && length(cat_vars) > 0) {
 
 # Handle Target Variable Encoding.
 
-target_levels <- unique(tds[[target]])
+target_levels <- unique(training_ds[[target]])
 target_levels <- target_levels[!is.na(target_levels)]  # Remove NA if present
 
 if (length(target_levels) == 2) {
   # Binary Classification
   # Map target variable to 0 and 1.
 
-  tds$target_num <- ifelse(tds[[target]] == target_levels[1], 0, 1)
-
+  training_ds$target_num <- ifelse(training_ds[[target]] == target_levels[1], 0, 1)
+  
   # Combine predictors and target.
 
-  ds_final <- cbind(predictors_combined, target_num = tds$target_num)
-
+  ds_final <- cbind(predictors_combined, target_num = training_ds$target_num)
+  
   # Create formula.
 
   predictor_vars <- names(predictors_combined)
+
+  # Putting target_num to the left of ~ tells the model
+  # that target_num is the variable the neural network should learn to predict.
+
   formula_nn <- as.formula(paste('target_num ~', paste(predictor_vars, collapse = ' + ')))
 
   # Train neural network.
@@ -119,9 +141,9 @@ if (length(target_levels) == 2) {
   # Multiclass Classification
   # One-Hot Encode the Target Variable.
 
-  dmy_target <- dummyVars(~ ., data = tds[target])
-  target_onehot <- as.data.frame(predict(dmy_target, newdata = tds[target]))
-
+  dmy_target <- dummyVars(~ ., data = training_ds[target])
+  target_onehot <- as.data.frame(predict(dmy_target, newdata = training_ds[target]))
+  
   # Combine predictors and target.
 
   ds_final <- cbind(predictors_combined, target_onehot)
@@ -129,7 +151,11 @@ if (length(target_levels) == 2) {
   # Create formula.
 
   predictor_vars <- names(predictors_combined)
-  target_vars    <- names(target_onehot)
+  target_vars <- names(target_onehot)
+  
+  # Build a formula where the target side (left of ~) may include multiple columns 
+  # because one-hot encoding creates a column for each category/class (e.g., ClassA, ClassB, ...).
+
   formula_nn     <- as.formula(paste(
     paste(target_vars, collapse = ' + '),
     '~',
@@ -139,25 +165,16 @@ if (length(target_levels) == 2) {
   # Train neural network.
 
   model_neuralnet <- neuralnet(
-    formula = formula_nn,
-    data = ds_final,
-    hidden = <NEURAL_HIDDEN_LAYERS>,
-    act.fct = <NEURAL_ACT_FCT>,
-    err.fct = <NEURAL_ERROR_FCT>,
+    formula       = formula_nn,
+    data          = ds_final,
+    hidden        = <NEURAL_HIDDEN_LAYERS>,
+    act.fct       = <NEURAL_ACT_FCT>,
+    err.fct       = <NEURAL_ERROR_FCT>,
     linear.output = FALSE,
-    threshold = <NEURAL_THRESHOLD>,
-    stepmax = <NEURAL_STEP_MAX>,
+    threshold     = <NEURAL_THRESHOLD>,
+    stepmax       = <NEURAL_STEP_MAX>,
   )
 }
-
-# Save the model to the <TEMPLATE> variable `model` and the predicted
-# values appropriately.
-
-model <- model_neuralnet
-
-predicted_tr <- predict(model, newdata = trds)
-predicted_tu <- predict(model, newdata = tuds)
-predicted_te <- predict(model, newdata = teds)
 
 # Generate a textual view of the Neural Network model.
 

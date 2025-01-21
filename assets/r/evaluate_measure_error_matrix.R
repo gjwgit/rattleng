@@ -35,6 +35,25 @@
 
 library(rattle)       # Generate an error matrix.
 
+####################################
+
+# 20250108 zy Add a check to ensure that the actual and
+# predicted have the same levels. To avoid every pred_ra
+# function to do this check, we do it here.
+
+# Combine the levels from both vectors.
+
+all_levels <- union(levels(actual), levels(predicted))
+
+# (Optional) Sort them if you want a consistent order.
+
+all_levels <- sort(all_levels)
+
+# Force both factors to share these levels.
+
+actual    <- factor(actual,    levels = all_levels)
+predicted <- factor(predicted, levels = all_levels)
+
 em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
 ##
 ## 20241229 zy Capture the output of the error matrix and print it to

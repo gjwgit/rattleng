@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-15 12:41:22 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-16 09:24:53 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -63,17 +63,21 @@ if (!is.null(target)) {
   # which leaves the missing targets in the dataset.
 
   tcds <- ds[!is.na(ds[[target]]),]
-
 } else {
-
   form <- formula("~ .")
 
   # If no <TARGET> variable is identified then we still want to start
   # with a `tcds` for processing.
 
   tcds <- ds
-
 }
+
+# parrty::ctree() cannot handle predictors of type character.  Convert
+# character columns to factors. 20250116 gjw This may not be the case
+# with the newer partykit package. Try not for now.
+
+# tcds <- tcds %>%
+#   mutate(across(where(is.character), as.factor))
 
 print(form)
 
@@ -138,10 +142,18 @@ if (!is.null(risk)) {
 }
 
 # Retain only the columns that we need for the predictive modelling.
+# ctree() from the party package cannot handle predictors of type character.
+# Convert character columns to factors.
 
 trds <- tcds[tr, setdiff(vars, ignore)]
+trds <- trds %>%
+  mutate(across(where(is.character), as.factor))
 tuds <- tcds[tu, setdiff(vars, ignore)]
+tuds <- tuds %>%
+  mutate(across(where(is.character), as.factor))
 teds <- tcds[te, setdiff(vars, ignore)]
+teds <- teds %>%
+  mutate(across(where(is.character), as.factor))
 
 # Check if the target variable exists and create `actual_tc`.
 
