@@ -466,12 +466,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                         : key,
                   )
                   .toList(),
-              // Set selected option, handling Tuning/Validation text swap.
+              // Set selected option, handling Tuning/Validation text swap and defaulting to Complete when partitions disabled.
 
-              selectedOption: datasetType == 'Tuning' &&
-                      ref.watch(useValidationSettingProvider)
-                  ? 'Validation'
-                  : datasetType,
+              selectedOption: !ref.read(partitionProvider)
+                  ? 'Complete'
+                  : (datasetType == 'Tuning' &&
+                          ref.watch(useValidationSettingProvider)
+                      ? 'Validation'
+                      : datasetType),
               // Create tooltips map, replacing 'Tuning' key with 'Validation'
               // when validation is enabled and filtering based on partition setting.
 
