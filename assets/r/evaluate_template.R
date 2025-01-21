@@ -1,3 +1,6 @@
+
+####################################
+## CONSIDER MOVING THESE FUNCTION DEFINITIONS TO SESSION START AND THEN INTO THE Rattle PACKAGE
 ####################################
 
 # 20250121 gjw These migrated from model_template.R as not required
