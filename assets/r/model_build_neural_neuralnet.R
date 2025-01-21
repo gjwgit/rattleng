@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-01-21 20:52:01 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-21 20:54:27 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -45,7 +45,7 @@ mtype <- "neuralnet"
 mdesc <- "Neural Neuralnet"
 
 # 20250121 gjw The tds is set to replace trds in handling situations
-# of ignoring the categoric variables (TREU) or not (FALSE). We simply
+# of ignoring the categoric variables (TRUE) or not (FALSE). We simply
 # toggle the TRUE/FALSE here approriately.
 
 if (<NEURAL_IGNORE_CATEGORIC>) {
