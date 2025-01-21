@@ -268,6 +268,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     if (selected != null) {
                       selectedAlgorithm = selected;
                       ref.read(treeAlgorithmProvider.notifier).state = selected;
+
+                      //TODO kevin , pageControllerProvider should not change anything when setState is called
                     }
                   });
                 },
