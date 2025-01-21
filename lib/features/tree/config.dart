@@ -241,6 +241,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     String mbc = 'model_build_ctree';
                     String mbr = 'model_build_rpart';
 
+                    //Test Kevin
+
+                    // ref.invalidate(treePageControllerProvider);
+
                     if (selectedAlgorithm == AlgorithmType.conditional) {
                       await rSource(context, ref, [mt, mbc]);
                       ref.read(cTreeEvaluateProvider.notifier).state = true;
@@ -253,6 +257,40 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     // automatically selected after the model build.
 
                     ref.read(treeEvaluateProvider.notifier).state = true;
+
+                    // if (pageControllerProvider != null) {
+                    //   // Access the PageController directly from the StateProvider.
+
+                    final pageController =
+                        ref.read(treePageControllerProvider!);
+
+                    // Check the current page index before navigating. 20241220 gjw
+                    // Comment it out for now since we are not using it to find the
+                    // target page for now.
+
+                    // final currentPage = pageController.page?.round() ?? 0;
+
+                    // Determine the target page index based on the current
+                    // page. 20241220 gjw Currently if the current page is larger than
+                    // the number of pages that will result after the activity, the
+                    // logic here does not work. The target page is too large. Until
+                    // we get the navigation logic working better perhaps always go to
+                    // the second page (the first after the overview page). That
+                    // should always exist and will avoid some of the odd navigation
+                    // issues we currently have. It is not clear that we can actually
+                    // know the number of available pages in here?
+
+                    // int targetPage = currentPage == 0 ? 1 : currentPage;
+
+                    // int targetPage = 1;
+
+                    // // Navigate to the target page.
+
+                    pageController.animateToPage(
+                      0,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
                   }
                 },
                 child: const Text('Build Decision Tree'),
@@ -270,6 +308,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                       ref.read(treeAlgorithmProvider.notifier).state = selected;
 
                       //TODO kevin , pageControllerProvider should not change anything when setState is called
+                      ref.invalidate(treePageControllerProvider);
                     }
                   });
                 },

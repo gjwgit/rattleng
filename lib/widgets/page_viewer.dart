@@ -47,6 +47,7 @@ class PageViewerState extends State<PageViewer> {
 
   @override
   Widget build(BuildContext context) {
+    print("_currentPage: $_currentPage");
     return Column(
       children: [
         // PageView takes up most of the space.
@@ -72,6 +73,7 @@ class PageViewerState extends State<PageViewer> {
           // Total number of pages.
           numOfPages: widget.pages.length,
           onUpdateCurrentPageIndex: (index) {
+            debugPrint('\x1B[32mindex: $index\x1B[0m');
             setState(() {
               // Update the current page index.
               _currentPage = index;
