@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-16 09:24:09 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-21 17:21:32 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,15 +36,10 @@
 
 # Load required packages from the local library into the R session.
 
-# 20250116 gjw Choose to use partykit (2015) over the older party
-# (2008) package. The partykit package can do much more and is a
-# framework for supporting other tree packages including rpart, rweka,
-# and pmml.
-
-library(kernlab)
-library(partykit)
-library(rattle)
-library(reshape2)
+# 20250116 gjw Eventually we will use use partykit (2015) over the
+# older party (2008) package. The partykit package can do much more
+# and is a framework for supporting other tree packages including
+# rpart, rweka, and pmml.
 
 # Define model type and description to be used in following R scripts.
 
@@ -53,11 +48,11 @@ mdesc <- "Random Forest"
 
 # Train a conditional model based on the training dataset.
 
-model_conditionalForest <- cforest(
+model_conditionalForest <- party::cforest(
   form,
   data    = trds,
-  controls= cforest_unbiased(ntree = <RF_NUM_TREES>,
-                             mtry  = <RF_MTRY>,)
+  controls= party::cforest_unbiased(ntree = <RF_NUM_TREES>,
+                                    mtry  = <RF_MTRY>,)
 )
 
 # Save the model to the <TEMPLATE> variable `model` and the predicted
@@ -82,7 +77,8 @@ print(importance_df)
 
 # Display tree number.
 
-prettytree(model_conditionalForest@ensemble[[<RF_NO_TREE>]], names(model_conditionalForest@data@get("input")))
+party::prettytree(model_conditionalForest@ensemble[[<RF_NO_TREE>]],
+                  names(model_conditionalForest@data@get("input")))
 
 svg("<TEMPDIR>/model_conditional_forest.svg")
 ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
