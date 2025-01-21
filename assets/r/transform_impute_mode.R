@@ -24,23 +24,23 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replacing NA with the mode value.
+# Transform "<SELECTED_VAR>" by replacing NA with the mode value.
 
 library(dplyr)        # Wrangling: mutate().
 library(tidyr)        # Wrangling: replace_na().
 
-if (is.numeric(ds$SELECTED_VAR))
+if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    dplyr::mutate(IMO_SELECTED_VAR =
-                    tidyr::replace_na(SELECTED_VAR,
-                                      rattle::modalvalue(ds$SELECTED_VAR, na.rm=TRUE)))
+    dplyr::mutate(IMO_<SELECTED_VAR> =
+                    tidyr::replace_na(<SELECTED_VAR>,
+                                      rattle::modalvalue(ds$<SELECTED_VAR>, na.rm=TRUE)))
 } else {
   ds %<>%
-    dplyr::mutate(IMO_SELECTED_VAR =
-                    tidyr::replace_na(as.character(SELECTED_VAR),
-                                      rattle::modalvalue(SELECTED_VAR, na.rm=TRUE)),
-                  IMO_SELECTED_VAR = factor(IMO_SELECTED_VAR))
+    dplyr::mutate(IMO_<SELECTED_VAR> =
+                    tidyr::replace_na(as.character(<SELECTED_VAR>),
+                                      rattle::modalvalue(<SELECTED_VAR>, na.rm=TRUE)),
+                  IMO_<SELECTED_VAR> = factor(IMO_<SELECTED_VAR>))
 }
   
 

@@ -24,9 +24,9 @@
 #
 # Author: Graham Williams
 
-# Summary of MISSING in the dataset.
+# Summary of <MISSING> in the dataset.
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -34,25 +34,25 @@
 #
 # https://survivor.togaware.com/datascience/
 
-# TODO 20240829 gjw TEMP FIX FOR IGNORE HANDLING
+# TODO 20240829 gjw TEMP FIX FOR <IGNORE> <HANDLING>
 
 tds <- ds[setdiff(vars,ignore)]
 
 ####################################
-## MICE :: MD.PATTERNS
+## MICE :: MD.<PATTERNS>
 ####################################
 
 # Generate a summary of the missing values in the dataset. 20240718
 
-svg("TEMPDIR/explore_missing_mice.svg")
+svg("<TEMPDIR>/explore_missing_mice.svg")
 mice::md.pattern(tds, rotate.names=TRUE)
 dev.off()
 
 ####################################
-## VIM :: AGGREGATION
+## VIM :: <AGGREGATION>
 ####################################
 
-svg("TEMPDIR/explore_missing_vim.svg", width=16)
+svg("<TEMPDIR>/explore_missing_vim.svg", width=16)
 VIM::aggr(tds,
           bars  = TRUE,
           numbers=TRUE,
@@ -71,12 +71,12 @@ VIM::aggr(tds,
 dev.off()
 
 ####################################
-## NANIAR
+## <NANIAR>
 ####################################
 
 # Visualize a heatmap of missing values
 
-svg("TEMPDIR/explore_missing_naniar_vismiss.svg", width=16)
+svg("<TEMPDIR>/explore_missing_naniar_vismiss.svg", width=16)
 tds %>%
   naniar::vis_miss()
 dev.off()
@@ -85,12 +85,12 @@ dev.off()
 # variable. We could add a configuration here to display percentages
 # rather than counts. `show_pct=TRUE`
 
-svg("TEMPDIR/explore_missing_naniar_ggmissvar.svg", width=16)
+svg("<TEMPDIR>/explore_missing_naniar_ggmissvar.svg", width=16)
 naniar::gg_miss_var(tds)
 dev.off()
 
 # Visualize missing data using an UpSet plot
 
-svg("TEMPDIR/explore_missing_naniar_ggmissupset.svg", width=16)
+svg("<TEMPDIR>/explore_missing_naniar_ggmissupset.svg", width=16)
 naniar::gg_miss_upset(tds)
 dev.off()

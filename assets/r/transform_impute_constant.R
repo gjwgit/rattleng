@@ -26,20 +26,20 @@
 
 # TODO 20240720 gjw combine into impute_constant
 
-# Transform "SELECTED_VAR" into "IMP_SELECTED_VAR" by imputing a value.
+# Transform "SELECTED_VAR>" into "<IMP_<SELECTED_VAR>" by imputing a value.
 
-if (is.numeric(ds$SELECTED_VAR)) {
+if (is.numeric(ds$<SELECTED_VAR>)) {
   ds %<>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     IMPUTED_VALUE,
-                                     SELECTED_VAR))
+    mutate(IMP_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                     <IMPUTED_VALUE>,
+                                     <SELECTED_VAR>))
 } else {
   ds %<>%
-    mutate(IMP_SELECTED_VAR = as.character(SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = ifelse(is.na(IMP_SELECTED_VAR),
-                                     "IMPUTED_VALUE",
-                                     IMP_SELECTED_VAR)) %>%
-    mutate(IMP_SELECTED_VAR = as.factor(IMP_SELECTED_VAR))
+    mutate(IMP_<SELECTED_VAR> = as.character(<SELECTED_VAR>)) %>%
+    mutate(IMP_<SELECTED_VAR> = ifelse(is.na(IMP_<SELECTED_VAR>),
+                                     "<IMPUTED_VALUE>",
+                                     IMP_<SELECTED_VAR>)) %>%
+    mutate(IMP_<SELECTED_VAR> = as.factor(IMP_<SELECTED_VAR>))
 }
 
 glimpse(ds)

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:16:05 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-17 19:45:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -43,7 +43,7 @@ em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
 ## `cat()` to avoid exposing the command to the user's exported
 ## script.
 ##
-rat(paste('> ', mtype, "_DATASET_TYPE_COUNT ", sep=""))
+rat(paste('> ', mtype, "_<DATASET_TYPE>_COUNT ", sep=""))
 em_count
 
 # Generate a confusion matrix with proportions (relative frequencies)
@@ -57,5 +57,41 @@ em_prop <- rattle::errorMatrix(actual, predicted)
 ## `cat()` to avoid exposing the command to the user's exported
 ## script.
 ##
-rat(paste('> ', mtype, "_DATASET_TYPE_PROP ", sep = ""))
+rat(paste('> ', mtype, "_<DATASET_TYPE>_PROP ", sep = ""))
 em_prop
+
+# Exclude the "Error" column in the confusion matrix if it exists
+# Assuming the confusion matrix is a data frame with the last column as "Error".
+
+main_matrix <- em_count[, -ncol(em_count)]  # Remove the "Error" column
+
+# Calculate the overall error.
+
+overall_error <- 1 - sum(diag(main_matrix)) / sum(main_matrix)
+
+# Calculate class-specific errors.
+
+class_errors <- 1 - diag(main_matrix) / rowSums(main_matrix)
+
+# Calculate the averaged error (mean of class-specific errors).
+
+avg_error <- mean(class_errors, na.rm = TRUE)
+
+# Format error rates into a summary string.
+
+error_summary <- paste(
+    sprintf(
+        "Overall Error = %.2f%%; Average Error = %.2f%%.",
+        100 * overall_error, 100 * avg_error
+    ),
+    "\n",
+    sep = ""
+)
+
+# Log the error matrix type identifier.
+
+rat(paste('> ', mtype, "_<DATASET_TYPE>_ERROR_MATRIX_SUMMARY: ", sep = ""))
+
+# Log the formatted error summary showing overall and average error rates.
+
+cat(error_summary)

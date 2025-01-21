@@ -26,7 +26,7 @@
 
 # Random Forest using randomForest()
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -48,13 +48,13 @@ mdesc <- "Random Forest"
 model_randomForest <- randomForest(
   form,
   data       = trds,
-  ntree      = RF_NUM_TREES,
-  mtry       = RF_MTRY,
+  ntree      = <RF_NUM_TREES>,
+  mtry       = <RF_MTRY>,
   importance = TRUE,
-  na.action  = RF_NA_ACTION,
+  na.action  = <RF_NA_ACTION>,
   replace    = FALSE)
 
-# Save the model to the TEMPLATE variable `model` and the predicted
+# Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- model_randomForest
@@ -87,11 +87,11 @@ rn[order(rn[,3], decreasing=TRUE),]
 
 # Display tree number 1.
 
-printRandomForests(model_randomForest, RF_NO_TREE)
+printRandomForests(model_randomForest, <RF_NO_TREE>)
 
 # Plot the relative importance of the variables.
 
-svg("TEMPDIR/model_random_forest_varimp.svg")
+svg("<TEMPDIR>/model_random_forest_varimp.svg")
 
 # Assuming `model_randomForest` is already trained.
 # Extract variable importance for each class.
@@ -128,7 +128,7 @@ dev.off()
 
 # Plot the error rate against the number of trees.
 
-svg("TEMPDIR/model_random_forest_error_rate.svg")
+svg("<TEMPDIR>/model_random_forest_error_rate.svg")
 
 plot(model_randomForest, main="")
 legend("topright", c("OOB", "No", "Yes"),
@@ -142,7 +142,7 @@ dev.off()
 
 # Plot the OOB ROC curve.
 
-svg("TEMPDIR/model_random_forest_oob_roc_curve.svg")
+svg("<TEMPDIR>/model_random_forest_oob_roc_curve.svg")
 
 # Extract observed class labels from the Random Forest model.
 

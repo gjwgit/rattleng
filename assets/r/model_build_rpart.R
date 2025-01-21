@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:21:45 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-17 16:18:37 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -56,10 +56,10 @@ model_rpart <- rpart(
   form,
   data    = trds,
   method  = method,
-  parms   = list(split="information" PRIORS LOSS),
+  parms   = list(split="information" <PRIORS> <LOSS>),
   control = rpart.control(usesurrogate = 0,
                           maxsurrogate = 0,
-                          MINSPLIT, MINBUCKET, MAXDEPTH, CP),
+                          <MINSPLIT>, <MINBUCKET>, <MAXDEPTH>, <CP>),
   model   = TRUE)
 
 # Output a textual view of the Decision Tree model for review.
@@ -75,8 +75,8 @@ rattle::asRules(model_rpart)
 # Plot the resulting Decision Tree using the rpart.plot package via
 # rattle::fancyRpartPlot().
 
-svg(glue("TEMPDIR/model_tree_{mtype}.svg"))
+svg(glue("<TEMPDIR>/model_tree_{mtype}.svg"))
 rattle::fancyRpartPlot(model_rpart,
-                       main = glue("Decision Tree {basename('FILENAME')} $ TARGET_VAR"),
-                       sub  = paste("TIMESTAMP", username))
+                       main = glue("Decision Tree {basename('<FILENAME>')} $ <TARGET_VAR>"),
+                       sub  = paste("<TIMESTAMP>", username))
 dev.off()

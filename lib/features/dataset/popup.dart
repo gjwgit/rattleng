@@ -35,10 +35,14 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
+import 'package:rattle/features/dataset/select_package.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_package.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
@@ -147,14 +151,33 @@ class DatasetPopup extends ConsumerWidget {
               buttonGap,
 
               ElevatedButton(
-                onPressed: null,
-                // onPressed: () {
-                //   // TODO 20231018 gjw datasetSelectPackage();
-                //   Navigator.pop(context, 'Package');
-                //   showUnderConstruction(context);
-                //   datasetLoadedUpdate(ref);
-                // },
-                child: MarkdownTooltip(
+                onPressed: () async {
+                  // scrape the packages
+                  String stdout = ref.read(stdoutProvider);
+                  String content =
+                      rExtract(stdout, '> package_datasets_cleaned');
+                  Map<String, List<String>> map = parsePackage(content);
+                  String path = await datasetSelectPackage(context, map, ref);
+                  if (path.isNotEmpty) {
+                    // ref.read(pathProvider.notifier).state = path;
+                    if (context.mounted) await rLoadDataset(context, ref);
+                    setStatus(ref, statusChooseVariableRoles);
+                    datasetLoadedUpdate(ref);
+                  }
+                  if (!context.mounted) return;
+                  Navigator.pop(context, 'Package');
+
+                  // Access the PageController via Riverpod and move to the second page.
+
+                  ref.read(pageControllerProvider).animateToPage(
+                        // Index of the second page.
+
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                },
+                child: const MarkdownTooltip(
                   message: '''
 
                   **Under Development** Eventually you will be able to tap here

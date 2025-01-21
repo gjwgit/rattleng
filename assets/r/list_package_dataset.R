@@ -1,14 +1,11 @@
-# TODO 20241212 gjw IS THIS USED <ANYWHERE> NOW?
-#
-#
-# Rattle Scripts: Reset the data variables.
+# Get a list of datasets in the installed packages.
 #
 # Copyright (C) 2023-2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-12-12 05:28:03 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-10-12 20:40:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,40 +22,30 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Graham Williams
+# Author: Yixiang Yin
 
-vnames <- names(ds)
+# Get list of installed packages
 
-# TODO 20241212 gjw WHY <REDEFINE> unique_columns HERE. SEE session_setup.R
+installed_pkgs <- installed.packages()  
 
-## unique_columns <- function(df) {
-##   col_names <- names(df)
-##   unique_cols <- col_names[sapply(df, check_unique)]
-##   return(unique_cols)
-## }
+# Loop over packages and collect datasets
 
-unique_columns(ds)
+package_datasets <- lapply(installed_pkgs[, "Package"], function(pkg) {
+tryCatch({
+    datasets <- data(package = pkg)$results[, 3]  # Dataset names from the package
+    return(datasets)
+}, error = function(e) NULL)
+})
 
-names(vnames) <- names(ds)
+# Create a named list where each element is a package's datasets
 
-names(ds)
+names(package_datasets) <- installed_pkgs[, "Package"]
 
-glimpse(ds)
-summary(ds)
+# filter out package with no datasets
 
+package_datasets_cleaned <- package_datasets[sapply(package_datasets, function(x) length(x) > 0)]
 
-# Filter the variables in the dataset that are factors or ordered factors with more than 20 levels.
+package_datasets_cleaned
+# all_datasets <- unlist(package_datasets)
 
-large_factors <- sapply(ds, is_large_factor)
-
-# Get the names of those variables.
-
-large_factor_vars <- names(large_factors)[large_factors]
-
-# Print the variable names.
-
-large_factor_vars
-
-# 20241212 gjw Regenerate the dataset meta data.
-
-meta_data(ds)
+# all_datasets

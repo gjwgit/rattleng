@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -42,7 +42,7 @@ results <- hmeasure::HMeasure(true.class = actual, scores = probability)
 
 # Create a single SVG file that displays all 4 plots.
 
-svg(filename = glue("TEMPDIR/model_evaluate_hand_{mtype}_{dtype}.svg"), 
+svg(filename = glue("<TEMPDIR>/model_evaluate_hand_{mtype}_{dtype}.svg"), 
     width = 11, 
     height = 8)
 

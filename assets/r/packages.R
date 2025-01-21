@@ -7,7 +7,7 @@
 #
 # Time-stamp: <Saturday 2024-11-30 09:09:36 +1100 Graham Williams>
 #
-# Rattle version VERSION.
+# Rattle version <VERSION>.
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -53,7 +53,7 @@ install_if_missing <- function(pkg) {
     # (/home/fred/R/x86_64-pc-linux-gnu-library/4.4), Windows11
     # (C:\\Users\\fred\\AppData\\Local/R/win-library/4.4).
 
-    lib_dir <- Sys.getenv("R_LIBS_USER")
+    lib_dir <- Sys.getenv("<R_LIBS_USER>")
 
     # Make sure the directory already exists so we won't be prompted
     # to create it.
@@ -71,8 +71,8 @@ install_if_missing <- function(pkg) {
 
 # We install all packages up front so that in all likelihood any large
 # install of packages happens just once and on the first startup. This
-# will result in the ROLES page being blank while this happens. We
-# need to pop up a message to say to check the CONSOLE as Rattle may
+# will result in the <ROLES> page being blank while this happens. We
+# need to pop up a message to say to check the <CONSOLE> as Rattle may
 # be installing the required packages. For documentation suggest the
 # user does the installation of the R package prior to starting
 # Rattle.
@@ -113,6 +113,7 @@ pkgs <- c(
   'readr',
   'reshape',
   'rpart',
+  'sigmoid',
   'skimr',
   'tidyverse',
   'tm',

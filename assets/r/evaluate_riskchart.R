@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -46,20 +46,20 @@ eval <- rattle::evaluateRisk(predicted, actual, risk)
 # Build title string.
 
 title <- glue("Risk Chart &#8212; {mdesc} &#8212; ",
-              "{mtype} {basename('FILENAME')} ",
-              "*{dtype}* TARGET_VAR")
+              "{mtype} {basename('<FILENAME>')} ",
+              "*{dtype}* <TARGET_VAR>")
 title
 
 # Generate the risk chart.
 
-svg(glue("TEMPDIR/model_{mtype}_riskchart_{dtype}.svg"), width=11)
+svg(glue("<TEMPDIR>/model_{mtype}_riskchart_{dtype}.svg"), width=11)
 rattle::riskchart(predicted, actual, risk,
                   title          = title,
-                  risk.name      = "RISK_VAR",
-                  recall.name    = "TARGET_VAR",
+                  risk.name      = "<RISK_VAR>",
+                  recall.name    = "<TARGET_VAR>",
                   show.lift      = TRUE,
                   show.precision = TRUE,
                   legend.horiz   = FALSE) +
-  SETTINGS_GRAPHIC_THEME() +
+  <SETTINGS_GRAPHIC_THEME>() +
   theme(plot.title = element_markdown())
 dev.off()

@@ -24,14 +24,14 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" by replacing NA.
+# Transform "<SELECTED_VAR>" by replacing NA.
 
-if (is.numeric(ds$SELECTED_VAR))
+if (is.numeric(ds$<SELECTED_VAR>))
 {
   ds %<>%
-    mutate(IMD_SELECTED_VAR = ifelse(is.na(SELECTED_VAR),
-                                     median(SELECTED_VAR, na.rm = TRUE),
-                                     SELECTED_VAR))
+    mutate(IMD_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                     median(<SELECTED_VAR>, na.rm = TRUE),
+                                     <SELECTED_VAR>))
 }
 
 glimpse(ds)

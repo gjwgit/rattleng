@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-12 15:48:46 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-01-20 15:45:22 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,11 +24,11 @@
 #
 # Author: Graham Williams
 
-# Transform "SELECTED_VAR" into "RRC_SELETED_VAR" by recenering the
+# Transform "<SELECTED_VAR>" into "<RRC_SELETED_VAR>" by recenering the
 # values and rescaling around 0 so that the mean is 0 and the standard
 # deviation is 1.
 
-ds %<>% mutate(RRC_SELECTED_VAR = scale(SELECTED_VAR)[,1])
+ds %<>% mutate(RRC_<SELECTED_VAR> = scale(<SELECTED_VAR>)[,1])
 
 glimpse(ds)
 summary(ds)

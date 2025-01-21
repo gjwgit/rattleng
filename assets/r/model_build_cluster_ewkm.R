@@ -24,7 +24,7 @@
 
 # Cluster using KMeans
 #
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -37,7 +37,7 @@
 # demonstrate that each time we get a different random start and then
 # a different model.
 
-# set.seed(RANDOM_SEED)
+# set.seed(<RANDOM_SEED>)
 
 # Load required packages from the local library into the R session.
 # The 'reshape' package provides the 'rescaler' function.
@@ -51,7 +51,7 @@ mdesc <- "Entropy Weighted K-Means Cluster"
 # Set whether the data should be rescaled. For cluster analysis this
 # is usually recommended.
 
-rescale <- CLUSTER_RESCALE
+rescale <- <CLUSTER_RESCALE>
 
 # Prepare the data for clustering based on the value of rescale.
 
@@ -73,7 +73,7 @@ tds <- as.matrix(tds)
 
 # Generate an EWKM cluster model.
 
-model_ewkm <- ewkm(tds, centers=CLUSTER_NUM)
+model_ewkm <- ewkm(tds, centers=<CLUSTER_NUM>)
 
 # Report on the cluster characteristics.
 
@@ -97,7 +97,7 @@ cat("\n")
 
 # Plot the first two principal components, which serve as discriminant coordinates.
 
-svg("TEMPDIR/model_cluster_ewkm.svg")
+svg("<TEMPDIR>/model_cluster_ewkm.svg")
 
 # Generate a discriminant coordinates plot.
 
@@ -112,7 +112,7 @@ cluster::clusplot(tds_matrix, model_ewkm$cluster, color=TRUE, shade=TRUE,
 
 dev.off()
 
-svg("TEMPDIR/model_cluster_ewkm_weights.svg")
+svg("<TEMPDIR>/model_cluster_ewkm_weights.svg")
 
 
 # Create a bar plot of cluster weights.

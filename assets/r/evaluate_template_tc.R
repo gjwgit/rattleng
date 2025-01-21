@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams, Zheyuan Xu
 
-# Rattle timestamp: TIMESTAMP
+# Rattle timestamp: <TIMESTAMP>
 #
 # References:
 #
@@ -47,7 +47,7 @@
 
 dtype <- 'complete'
 
-# Store in TEMPLATE variables the actual and risk values, and the
+# Store in <TEMPLATE> variables the actual and risk values, and the
 # predicted and probabilites, for later processing.
 
 actual      <- actual_tc
