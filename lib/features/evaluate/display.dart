@@ -121,6 +121,9 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String handAdaBoostImage = '$tempDir/model_evaluate_hand_adaboost_$dtype.svg';
     String handSVMImage = '$tempDir/model_evaluate_hand_svm_$dtype.svg';
     String handLinearImage = '$tempDir/model_evaluate_hand_linear_$dtype.svg';
+    String handNNETImage = '$tempDir/model_evaluate_hand_nnet_$dtype.svg';
+    String handNeuralNetImage = '$tempDir/model_evaluate_hand_neuralnet_$dtype.svg';
+
 
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
@@ -199,6 +202,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {'image': handXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
       {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
       {'image': handLinearImage, 'title': 'LINEAR', 'ticked': svmBoxTicked},
+      {'image': handNNETImage, 'title': 'NNET', 'ticked': neuralBoxTicked},
+      {
+        'image': handNeuralNetImage,
+        'title': 'NEURALNET',
+        'ticked': neuralBoxTicked,
+      },
     ];
 
     // Iterate through each image-title pair.

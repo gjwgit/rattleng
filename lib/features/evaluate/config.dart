@@ -408,7 +408,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && nnetExecuted,
-                  parameters: [en, em, ro, erc],
+                  parameters: [en, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -418,7 +418,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && neuralNetExecuted,
-                  parameters: [ent, em, ro, erc],
+                  parameters: [ent, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
