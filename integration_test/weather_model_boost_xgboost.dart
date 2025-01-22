@@ -51,35 +51,28 @@ void main() {
       await tester.pump(interact);
 
       await loadDemoDataset(tester);
+      await tester.pump(delay);
 
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Boost', BoostPanel);
 
       await tapButton(tester, 'Build Boosted Trees');
-      await tester.pump(longHack);
 
-      await tapButton(tester, 'Build Boosted Trees');
+      await tester.pump(delay);
+
+      await gotoNextPage(tester);
 
       // Verify the content of the page.
 
       await verifyPage(
         'XGBoost - Summary',
-        'Feature         Gain        Cover    Frequency   Importance',
       );
 
       await gotoNextPage(tester);
-      await tester.pump(hack);
 
-      final imagePageTitleFinder = find.text('Variable Importance');
-      expect(imagePageTitleFinder, findsOneWidget);
+      await verifyPage('Variable Importance');
 
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
-
-      await tester.pump(interact);
+      await verifyImage(tester);
     });
   });
 }
