@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-01-21 19:20:27 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-22 21:07:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -111,11 +111,11 @@ if (<SPLIT_DATASET>) {
   # <TUNING> (tu) and <TESTING> (te).
 
   split <- c(<DATA_SPLIT_TR_TU_TE>)
-  
-  # tc is added to store the complete dataset indices.
-  # tc will be used to update tcds.
 
-  tc <- tcnobs %>% sample(tcnobs)
+  # 20250122 gjw Build the indicies for the different datasets:
+  # complete, train, tune, and test.
+
+  tc <- 1:tcnobs
   tr <- tcnobs %>% sample(split[1]*tcnobs)
   tu <- tcnobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*tcnobs)
   te <- tcnobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
@@ -127,59 +127,52 @@ if (<SPLIT_DATASET>) {
   # good practice as the tuning and testing will deliver very
   # optimistic estimates of the model performance.
 
-  tr <- tu <- te <- seq_len(tcnobs)
+  tc <- tr <- tu <- te <- 1:tcnobs
 }
 
 # Note the actual values of the <TARGET> variable and the RISK variable
 # for use in model training and evaluation later on.
 
 if (!is.null(target)) {
+  actual_tc <- tcds %>% dplyr::slice(tc) %>% pull(target)
   actual_tr <- tcds %>% dplyr::slice(tr) %>% pull(target)
   actual_tu <- tcds %>% dplyr::slice(tu) %>% pull(target)
   actual_te <- tcds %>% dplyr::slice(te) %>% pull(target)
 }
 
 if (!is.null(risk)) {
+  risk_tc <- tcds %>% dplyr::slice(tc) %>% pull(risk)
   risk_tr <- tcds %>% dplyr::slice(tr) %>% pull(risk)
   risk_tu <- tcds %>% dplyr::slice(tu) %>% pull(risk)
   risk_te <- tcds %>% dplyr::slice(te) %>% pull(risk)
-  risk_tc <- tcds %>% dplyr::slice(tc) %>% pull(risk)
 }
 
 # Retain only the columns that we need for the predictive modelling.
-# ctree() from the party package cannot handle predictors of type character.
-# Convert character columns to factors.
-
-trds <- tcds[tr, setdiff(vars, ignore)]
-trds <- trds %>%
-  mutate(across(where(is.character), as.factor))
-tuds <- tcds[tu, setdiff(vars, ignore)]
-tuds <- tuds %>%
-  mutate(across(where(is.character), as.factor))
-teds <- tcds[te, setdiff(vars, ignore)]
-teds <- teds %>%
-  mutate(across(where(is.character), as.factor))
-
-# Retain the complete dataset for later use.
-# The updates make feature names stored in 
-# `object` and `newdata` are the same.
+# ctree() from the party package cannot handle predictors of type
+# character so convert character columns to factors.  The aim is to
+# ensure feature names stored in `object` and `newdata` are the same.
 
 tcds <- tcds[tc, setdiff(vars, ignore)] %>%
   mutate(across(where(is.character), as.factor))
 
-# Check if the target variable exists and create `actual_tc`.
+trds <- tcds[tr, setdiff(vars, ignore)] %>%
+  mutate(across(where(is.character), as.factor))
+
+tuds <- tcds[tu, setdiff(vars, ignore)] %>%
+  mutate(across(where(is.character), as.factor))
+
+teds <- tcds[te, setdiff(vars, ignore)] %>%
+  mutate(across(where(is.character), as.factor))
+
+# TODO 20250122 gjw REVIEW WHY IT IS NEEDED AND EXPLAIN IT.
 
 if (!is.null(target)) {
-  # Retrieve the actual target values for the complete dataset.
-
-  actual_tc <- tcds %>%
-    pull(target) %>%
-    as.character()
 
   # Convert to numeric (binary if applicable).
 
   levels_actual <- unique(actual_tc)
   actual_numeric_tc <- ifelse(actual_tc == levels_actual[1], 0, 1)
+
 } else {
   # If no target, set `actual_tc` to NULL.
 
