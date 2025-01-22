@@ -338,7 +338,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: ctreeExecuted && treeExecuted,
-                  parameters: [ec, em, ro, erc],
+                  parameters: [ec, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,

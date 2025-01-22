@@ -114,6 +114,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         '$tempDir/model_xgboost_riskchart_$dtype.svg';
 
     String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
+    String handCtreeImage = '$tempDir/model_evaluate_hand_ctree_$dtype.svg';
+
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
     bool forestBoxTicked = ref.watch(forestEvaluateProvider);
@@ -176,6 +178,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     final handImageData = [
       {'image': handRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
+      {'image': handCtreeImage, 'title': 'CTREE', 'ticked': treeBoxTicked},
     ];
 
     // Iterate through each image-title pair.
