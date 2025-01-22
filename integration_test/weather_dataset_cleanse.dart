@@ -68,24 +68,6 @@ void main() {
       ],
     );
 
-    // await verifyText(
-    //   tester,
-    //   [
-    //     // Verify dates in the Sample Column for date Variable.
-
-    //     '2023-07-01',
-    //     '2023-07-02',
-
-    //     // Verify min_temp in the Sample Column.
-
-    //     '4.6',
-
-    //     // Verify max_temp in the Content Column.
-
-    //     '13.9',
-    //   ],
-    // );
-
     // // These following are unique when cleanse is on.
 
     await verifyText(
@@ -124,11 +106,17 @@ void main() {
         // Verify Sample Values for location Variable.
 
         'Canberra',
+      ],
+    );
 
+    await verifyText(
+      tester,
+      [
         // Verify Type Values for wind_dir_9am Variable.
 
         'chr',
       ],
+      multi: true,
     );
   });
 }
