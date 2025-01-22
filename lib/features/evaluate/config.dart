@@ -388,7 +388,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: svmExecuted,
-                  parameters: [es, em, ro, erc],
+                  parameters: [es, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -398,7 +398,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: linearExecuted,
-                  parameters: [el, em, ro, erc],
+                  parameters: [el, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,

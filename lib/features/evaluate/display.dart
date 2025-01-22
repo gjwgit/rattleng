@@ -119,6 +119,9 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String handCForestImage = '$tempDir/model_evaluate_hand_cforest_$dtype.svg';
     String handXGBoostImage = '$tempDir/model_evaluate_hand_xgboost_$dtype.svg';
     String handAdaBoostImage = '$tempDir/model_evaluate_hand_adaboost_$dtype.svg';
+    String handSVMImage = '$tempDir/model_evaluate_hand_svm_$dtype.svg';
+    String handLinearImage = '$tempDir/model_evaluate_hand_linear_$dtype.svg';
+
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
     bool forestBoxTicked = ref.watch(forestEvaluateProvider);
@@ -162,6 +165,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'ticked': forestBoxTicked,
       },
       {'image': rocXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
+      {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
+      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': svmBoxTicked},
     ];
 
     // List of image-title pairs for ROC data.
