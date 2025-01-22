@@ -116,7 +116,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
     String handCtreeImage = '$tempDir/model_evaluate_hand_ctree_$dtype.svg';
     String handRForestImage = '$tempDir/model_evaluate_hand_randomForest_$dtype.svg';
-
+    String handCForestImage = '$tempDir/model_evaluate_hand_cforest_$dtype.svg';
 
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
@@ -184,6 +184,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {
         'image': handRForestImage,
         'title': 'RANDOM FOREST',
+        'ticked': forestBoxTicked,
+      },
+      {
+        'image': handCForestImage,
+        'title': 'CONDITIONAL FOREST',
         'ticked': forestBoxTicked,
       },
     ];

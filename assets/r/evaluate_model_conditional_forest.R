@@ -32,6 +32,11 @@
 # https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/ for further details.
 
+# Source the file containing generate_predictions.
+# Add the path to handle error of 'could not find function "generate_predictions"'.
+
+source("assets/r/evaluate_template.R", local = TRUE)
+
 # 20241220 gjw Save the model to the <TEMPLATE> variable `model`. This
 # will be used below and in the following evaluations as required.
 
