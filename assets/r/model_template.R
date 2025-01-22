@@ -162,7 +162,7 @@ teds <- teds %>%
 
 # Retain the complete dataset for later use.
 # The updates make feature names stored in 
-# `object` and `newdata` are same.
+# `object` and `newdata` are the same.
 
 tcds <- tcds[tc, setdiff(vars, ignore)] %>%
   mutate(across(where(is.character), as.factor))
