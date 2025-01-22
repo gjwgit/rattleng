@@ -31,7 +31,6 @@ import 'package:rattle/features/tree/panel.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/cleanse_off.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
@@ -39,133 +38,11 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/partition_off.dart';
 import 'utils/partition_on.dart';
 import 'utils/tap_button.dart';
-import 'utils/unify_off.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_text.dart';
-import 'utils/cleanse_on.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-  testWidgets('Load Weather Dataset and test when cleanse is on.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-
-    await cleanseOn(tester);
-
-    await loadDemoDataset(tester);
-
-    // Verify dataset content.
-
-    await verifyText(
-      tester,
-      [
-        // Verify dates in the Sample Column for date Variable.
-
-        '2023-07-01',
-        '2023-07-02',
-
-        // Verify min_temp in the Sample Column.
-
-        '4.6',
-
-        // Verify max_temp in the Content Column.
-
-        '13.9',
-      ],
-    );
-
-    // These following are unique when cleanse is on.
-
-    await verifyText(
-      tester,
-      [
-        // Verify Unique Values for date Variable.
-
-        '365',
-
-        // Verify Unique Values for min_temp Variable.
-
-        '192',
-
-        // Verify Type Values for wind_speed_9am Variable.
-
-        'fct',
-      ],
-      multi: true,
-    );
-  });
-
-  testWidgets('Load Weather Dataset and test when cleanse is off.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-
-    await cleanseOff(tester);
-
-    await loadDemoDataset(tester);
-
-    await verifyText(
-      tester,
-      // These are unique when cleanse is off.
-
-      [
-        // Verify Sample Values for location Variable.
-
-        'Canberra',
-
-        // Verify Type Values for wind_dir_9am Variable.
-
-        'chr',
-      ],
-      multi: true,
-    );
-  });
-
-  testWidgets(
-      'Load Weather Dataset and test when cleanse is on and unify is on.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-
-    await cleanseOn(tester);
-    await unifyOn(tester);
-
-    await loadDemoDataset(tester);
-
-    await verifyText(
-      tester,
-      [
-        // Verify the variables are in lowercase and separated by underscores.
-
-        'min_temp',
-      ],
-      multi: true,
-    );
-  });
-
-  testWidgets(
-      'Load Weather Dataset and test when cleanse is on and unify is off.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-
-    await cleanseOn(tester);
-    await unifyOff(tester);
-
-    await loadDemoDataset(tester);
-
-    await verifyText(
-      tester,
-      [
-        // Verify the variables are in uppercase and underscores are removed.
-
-        'MinTemp',
-      ],
-      multi: true,
-    );
-  });
 
   testWidgets(
       'Load Weather Dataset and test when unify is on and partition is on.',
