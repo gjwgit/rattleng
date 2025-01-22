@@ -51,3 +51,50 @@ Future<void> verifySelectableText(
   );
   expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
 }
+
+/// Verifies that a given text string exists within any SelectableText widget on the screen
+///
+/// [tester] The widget tester used to interact with the UI
+/// [text] The text string to search for within SelectableText widgets
+///
+/// This function:
+/// 1. Finds all SelectableText widgets in the widget tree
+/// 2. Checks each widget's text content to see if it contains the search string
+/// 3. Fails the test if the text is not found in any widget
+Future<void> verifySelectableTextContains(
+  WidgetTester tester,
+  String text,
+) async {
+  // Find all SelectableText widgets in the widget tree.
+
+  final textFinder = find.byType(SelectableText);
+  expect(textFinder, findsWidgets);
+
+  // Track whether we found the text in any widget.
+
+  bool foundText = false;
+
+  // Iterate through all found SelectableText widgets.
+
+  for (final element in textFinder.evaluate()) {
+    final widget = element.widget as SelectableText;
+    // Check if widget has non-null text data.
+
+    if (widget.data != null) {
+      // Check if widget text contains our search string.
+
+      if (widget.data!.contains(text)) {
+        foundText = true;
+        break;
+      }
+    }
+  }
+
+  // Fail test if text wasn't found in any widget.
+
+  expect(
+    foundText,
+    true,
+    reason: 'Text "$text" not found in any SelectableText widget',
+  );
+}

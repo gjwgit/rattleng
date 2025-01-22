@@ -25,13 +25,11 @@
 
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/tree/panel.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/cleanse_off.dart';
 import 'utils/goto_next_page.dart';
@@ -49,161 +47,155 @@ import 'utils/cleanse_on.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  // testWidgets('Load Weather Dataset and test when cleanse is on.',
-  //     (WidgetTester tester) async {
-  //   app.main();
-  //   await tester.pumpAndSettle();
+  testWidgets('Load Weather Dataset and test when cleanse is on.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  //   await cleanseOn(tester);
+    await cleanseOn(tester);
 
-  //   await loadDemoDataset(tester);
+    await loadDemoDataset(tester);
 
-  //   // Verify dataset content.
+    // Verify dataset content.
 
-  //   await verifyText(
-  //     tester,
-  //     [
-  //       // Verify dates in the Sample Column for date Variable.
+    await verifyText(
+      tester,
+      [
+        // Verify dates in the Sample Column for date Variable.
 
-  //       '2023-07-01',
-  //       '2023-07-02',
+        '2023-07-01',
+        '2023-07-02',
 
-  //       // Verify min_temp in the Sample Column.
+        // Verify min_temp in the Sample Column.
 
-  //       '4.6',
+        '4.6',
 
-  //       // Verify max_temp in the Content Column.
+        // Verify max_temp in the Content Column.
 
-  //       '13.9',
-  //     ],
-  //   );
+        '13.9',
+      ],
+    );
 
-  //   // These following are unique when cleanse is on.
+    // These following are unique when cleanse is on.
 
-  //   await verifyText(
-  //     tester,
-  //     [
-  //       // Verify Unique Values for date Variable.
+    await verifyText(
+      tester,
+      [
+        // Verify Unique Values for date Variable.
 
-  //       '365',
+        '365',
 
-  //       // Verify Unique Values for min_temp Variable.
+        // Verify Unique Values for min_temp Variable.
 
-  //       '192',
+        '192',
 
-  //       // Verify Type Values for wind_speed_9am Variable.
+        // Verify Type Values for wind_speed_9am Variable.
 
-  //       'fct',
-  //     ],
-  //     multi: true,
-  //   );
-  // });
+        'fct',
+      ],
+      multi: true,
+    );
+  });
 
-  // testWidgets('Load Weather Dataset and test when cleanse is off.',
-  //     (WidgetTester tester) async {
-  //   app.main();
-  //   await tester.pumpAndSettle();
+  testWidgets('Load Weather Dataset and test when cleanse is off.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  //   await cleanseOff(tester);
+    await cleanseOff(tester);
 
-  //   await loadDemoDataset(tester);
+    await loadDemoDataset(tester);
 
-  //   await verifyText(
-  //     tester,
-  //     // These are unique when cleanse is off.
+    await verifyText(
+      tester,
+      // These are unique when cleanse is off.
 
-  //     [
-  //       // Verify Sample Values for location Variable.
+      [
+        // Verify Sample Values for location Variable.
 
-  //       'Canberra',
+        'Canberra',
 
-  //       // Verify Type Values for wind_dir_9am Variable.
+        // Verify Type Values for wind_dir_9am Variable.
 
-  //       'chr',
-  //     ],
-  //     multi: true,
-  //   );
-  // });
+        'chr',
+      ],
+      multi: true,
+    );
+  });
 
-  // testWidgets(
-  //     'Load Weather Dataset and test when cleanse is on and unify is on.',
-  //     (WidgetTester tester) async {
-  //   app.main();
-  //   await tester.pumpAndSettle();
+  testWidgets(
+      'Load Weather Dataset and test when cleanse is on and unify is on.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  //   await cleanseOn(tester);
-  //   await unifyOn(tester);
+    await cleanseOn(tester);
+    await unifyOn(tester);
 
-  //   await loadDemoDataset(tester);
+    await loadDemoDataset(tester);
 
-  //   await verifyText(
-  //     tester,
-  //     [
-  //       // Verify the variables are in lowercase and separated by underscores.
+    await verifyText(
+      tester,
+      [
+        // Verify the variables are in lowercase and separated by underscores.
 
-  //       'min_temp',
-  //     ],
-  //     multi: true,
-  //   );
-  // });
+        'min_temp',
+      ],
+      multi: true,
+    );
+  });
 
-  // testWidgets(
-  //     'Load Weather Dataset and test when cleanse is on and unify is off.',
-  //     (WidgetTester tester) async {
-  //   app.main();
-  //   await tester.pumpAndSettle();
+  testWidgets(
+      'Load Weather Dataset and test when cleanse is on and unify is off.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  //   await cleanseOn(tester);
-  //   await unifyOff(tester);
+    await cleanseOn(tester);
+    await unifyOff(tester);
 
-  //   await loadDemoDataset(tester);
+    await loadDemoDataset(tester);
 
-  //   await verifyText(
-  //     tester,
-  //     [
-  //       // Verify the variables are in uppercase and underscores are removed.
+    await verifyText(
+      tester,
+      [
+        // Verify the variables are in uppercase and underscores are removed.
 
-  //       'MinTemp',
-  //     ],
-  //     multi: true,
-  //   );
-  // });
+        'MinTemp',
+      ],
+      multi: true,
+    );
+  });
 
-  // testWidgets(
-  //     'Load Weather Dataset and test when unify is on and partition is on.',
-  //     (WidgetTester tester) async {
-  //   app.main();
-  //   await tester.pumpAndSettle();
+  testWidgets(
+      'Load Weather Dataset and test when unify is on and partition is on.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-  //   await unifyOn(tester);
-  //   await partitionOn(tester);
+    await unifyOn(tester);
+    await partitionOn(tester);
 
-  //   await loadDemoDataset(tester);
+    await loadDemoDataset(tester);
 
-  //   // Tap the model Tab button.
+    // Tap the model Tab button.
 
-  //   await navigateToTab(tester, 'Model');
+    await navigateToTab(tester, 'Model');
 
-  //   // Navigate to the Tree feature.
+    // Navigate to the Tree feature.
 
-  //   await navigateToFeature(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree', TreePanel);
 
-  //   // click build button Build Decision Tree
+    // click build button Build Decision Tree
 
-  //   await tapButton(tester, 'Build Decision Tree');
+    await tapButton(tester, 'Build Decision Tree');
 
-  //   //go to next page
+    //go to next page
 
-  //   await gotoNextPage(tester);
+    await gotoNextPage(tester);
 
-  //   // scroll down to the bottom
-
-  //   await scrollDown(tester);
-
-  //   // Verify the summary of the decision tree is displayed.
-
-  //   await verifyText(tester, ['254']);
-  // });
+    await verifySelectableTextContains(tester, '254');
+  });
 
   testWidgets(
       'Load Weather Dataset and test when unify is on and partition is off.',
@@ -232,29 +224,6 @@ void main() {
 
     await gotoNextPage(tester);
 
-    //wait for 1 second
-
-    await Future.delayed(const Duration(seconds: 2));
-
-    // scroll down to the bottom
-
-    // await scrollDown(tester);
-    // Verify the summary of the decision tree is displayed.
-    final textFinder = find.byType(SelectableText);
-    expect(textFinder, findsWidgets);
-
-    // Print data from all SelectableText widgets found
-    bool found363 = false;
-    for (final element in textFinder.evaluate()) {
-      final widget = element.widget as SelectableText;
-      if (widget.data != null) {
-        if (widget.data!.contains('363')) {
-          found363 = true;
-          break;
-        }
-      }
-    }
-    expect(found363, true,
-        reason: 'Text "363" not found in any SelectableText widget');
+    await verifySelectableTextContains(tester, '363');
   });
 }
