@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-01-14 13:27:09 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:17:44 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -114,6 +114,18 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         '$tempDir/model_xgboost_riskchart_$dtype.svg';
 
     String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
+    String handCtreeImage = '$tempDir/model_evaluate_hand_ctree_$dtype.svg';
+    String handRForestImage =
+        '$tempDir/model_evaluate_hand_randomForest_$dtype.svg';
+    String handCForestImage = '$tempDir/model_evaluate_hand_cforest_$dtype.svg';
+    String handXGBoostImage = '$tempDir/model_evaluate_hand_xgboost_$dtype.svg';
+    String handAdaBoostImage =
+        '$tempDir/model_evaluate_hand_adaboost_$dtype.svg';
+    String handSVMImage = '$tempDir/model_evaluate_hand_svm_$dtype.svg';
+    String handLinearImage = '$tempDir/model_evaluate_hand_linear_$dtype.svg';
+    String handNNETImage = '$tempDir/model_evaluate_hand_nnet_$dtype.svg';
+    String handNeuralNetImage =
+        '$tempDir/model_evaluate_hand_neuralnet_$dtype.svg';
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
     bool forestBoxTicked = ref.watch(forestEvaluateProvider);
@@ -176,6 +188,31 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     final handImageData = [
       {'image': handRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
+      {'image': handCtreeImage, 'title': 'CTREE', 'ticked': treeBoxTicked},
+      {
+        'image': handRForestImage,
+        'title': 'RANDOM FOREST',
+        'ticked': forestBoxTicked,
+      },
+      {
+        'image': handCForestImage,
+        'title': 'CONDITIONAL FOREST',
+        'ticked': forestBoxTicked,
+      },
+      {
+        'image': handAdaBoostImage,
+        'title': 'AdaBoost',
+        'ticked': boostBoxTicked,
+      },
+      {'image': handXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
+      {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
+      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': svmBoxTicked},
+      {'image': handNNETImage, 'title': 'NNET', 'ticked': neuralBoxTicked},
+      {
+        'image': handNeuralNetImage,
+        'title': 'NEURALNET',
+        'ticked': neuralBoxTicked,
+      },
     ];
 
     // Iterate through each image-title pair.

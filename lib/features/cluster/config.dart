@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2024-12-14 21:26:13 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:07:54 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -99,10 +99,10 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 // cluster analysis.
 
                 String mt = 'model_template';
-                String km = 'model_build_cluster_kmeans';
-                String ew = 'model_build_cluster_ewkm';
-                String hi = 'model_build_cluster_hierarchical';
-                String bi = 'model_build_cluster_bicluster';
+                String km = 'model_build_kmeans';
+                String ew = 'model_build_ewkm';
+                String hi = 'model_build_hclust';
+                String bi = 'model_build_bicluster';
 
                 if (type == 'KMeans') {
                   if (context.mounted) await rSource(context, ref, [mt, km]);
