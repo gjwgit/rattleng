@@ -42,6 +42,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
+import 'utils/unify_on.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
@@ -60,6 +61,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
+      await unifyOn(tester);
 
       await loadDemoDataset(tester);
 
