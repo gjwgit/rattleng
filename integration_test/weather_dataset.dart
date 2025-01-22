@@ -256,31 +256,5 @@ void main() {
     }
     expect(found363, true,
         reason: 'Text "363" not found in any SelectableText widget');
-
-    // await verifySelectableText(
-    //   tester,
-    //   '363',
-    // );
-
-    // await verifyText(
-    //   tester,
-    //   [
-    //     '363',
-    //   ],
-    // );
   });
-}
-
-Future<void> scrollDown(WidgetTester tester) async {
-  // Find the scrollable widget
-  final scrollable = find.byType(TextPage);
-  expect(scrollable, findsOneWidget);
-
-  // Scroll to the bottom
-  await tester.fling(
-    scrollable,
-    const Offset(0, -500), // Negative offset scrolls down
-    3000, // Velocity
-  );
-  await tester.pumpAndSettle();
 }
