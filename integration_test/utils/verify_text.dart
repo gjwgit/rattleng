@@ -25,7 +25,6 @@
 
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<void> verifyText(
@@ -39,15 +38,17 @@ Future<void> verifyText(
   }
 }
 
-Future<void> verifySelectableText(
-  WidgetTester tester,
-  String text, {
-  bool multi = false,
-}) async {
-  final textFinder = find.byWidgetPredicate(
-    (widget) =>
-        (widget is SelectableText && widget.data == text) ||
-        (widget is Text && widget.data == text),
-  );
-  expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
-}
+// TODO Kevin leave this here in case we need it in the future.
+
+// Future<void> verifySelectableText(
+//   WidgetTester tester,
+//   String text, {
+//   bool multi = false,
+// }) async {
+//   final textFinder = find.byWidgetPredicate(
+//     (widget) =>
+//         (widget is SelectableText && widget.data == text) ||
+//         (widget is Text && widget.data == text),
+//   );
+//   expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
+// }

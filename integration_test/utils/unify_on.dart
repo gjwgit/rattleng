@@ -8,28 +8,31 @@ Future<void> unifyOn(WidgetTester tester) async {
   final iconFinder = find.byIcon(Icons.auto_fix_high_outlined);
   expect(iconFinder, findsOneWidget);
 
-  // Get initial normalise state
-  final cleanseState = tester
+  // Get initial normalise state.
+
+  final unifyState = tester
       .state<ConsumerState>(
         find.byType(DatasetToggles),
       )
       .ref
       .read(normaliseProvider);
 
-  // If normalise is false, tap the icon to enable it
-  if (!cleanseState) {
+  // If normalise is false, tap the icon to enable it.
+
+  if (!unifyState) {
     await tester.tap(iconFinder);
     await tester.pumpAndSettle();
   }
 
-  // Verify normalise is now enabled
-  final updatedCleanseState = tester
+  // Verify normalise is now enabled.
+
+  final updatedUnifyState = tester
       .state<ConsumerState>(
         find.byType(DatasetToggles),
       )
       .ref
       .read(normaliseProvider);
-  expect(updatedCleanseState, true);
+  expect(updatedUnifyState, true);
 
   await tester.pumpAndSettle();
 }
