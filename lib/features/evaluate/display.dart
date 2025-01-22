@@ -165,8 +165,6 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'ticked': forestBoxTicked,
       },
       {'image': rocXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
-      {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
-      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': svmBoxTicked},
     ];
 
     // List of image-title pairs for ROC data.
@@ -199,6 +197,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       },
       {'image': handAdaBoostImage, 'title': 'AdaBoost', 'ticked': boostBoxTicked},
       {'image': handXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
+      {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
+      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': svmBoxTicked},
     ];
 
     // Iterate through each image-title pair.

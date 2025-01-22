@@ -60,5 +60,5 @@ prob_ra <- function(model, data){
   # 'm = 1' generates one complete dataset; other missing data handling methods can be specified in `method`.
   
   tuds_imputed <- complete(mice(data, m = 1))
-  predict(model, newdata=data, type="prob")[,2]
+  predict(model, newdata=tuds_imputed, type="prob")[,2]
 } 
