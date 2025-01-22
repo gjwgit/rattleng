@@ -50,8 +50,8 @@ pred_ra <- function(model, data){
   # Impute missing values in the input dataset using the mice package.
   # 'm = 1' generates one complete dataset; other missing data handling methods can be specified in `method`.
 
-  tuds_imputed <- complete(mice(data, m = 1))
-  predict(model, newdata=tuds_imputed,)
+  data_imputed <- complete(mice(data, m = 1))
+  predict(model, newdata=data_imputed,)
 }
 
 prob_ra <- function(model, data){
@@ -59,6 +59,6 @@ prob_ra <- function(model, data){
   # Impute missing values in the input dataset using the mice package.
   # 'm = 1' generates one complete dataset; other missing data handling methods can be specified in `method`.
   
-  tuds_imputed <- complete(mice(data, m = 1))
-  predict(model, newdata=data, type="prob")[,2]
+  data_imputed <- complete(mice(data, m = 1))
+  predict(model, newdata=data_imputed, type="prob")[,2]
 } 
