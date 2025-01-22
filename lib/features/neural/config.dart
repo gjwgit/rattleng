@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 21:24:46 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:06:44 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -189,8 +189,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                   // Run the R scripts.
 
                   String mt = 'model_template';
-                  String mbn = 'model_build_neural_neuralnet';
-                  String mbnn = 'model_build_neural_nnet';
+                  String mbn = 'model_build_neuralnet';
+                  String mbnn = 'model_build_nnet';
 
                   if (context.mounted) {
                     if (algorithm == 'nnet') {

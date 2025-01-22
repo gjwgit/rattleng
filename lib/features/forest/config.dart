@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 21:24:23 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:07:22 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -117,8 +117,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                 // Run the R scripts.
 
                 String mt = 'model_template';
-                String mbrf = 'model_build_random_forest';
-                String mbcf = 'model_build_conditional_forest';
+                String mbrf = 'model_build_rforest';
+                String mbcf = 'model_build_cforest';
 
                 selectedAlgorithm == AlgorithmType.traditional
                     ? await rSource(

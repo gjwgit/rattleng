@@ -1,11 +1,11 @@
-# Define `pred_ra` and `prob_ra` for a conditional forest model.
+# Define `pred_ra` and `prob_ra` for a linear model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-01-05 06:46:54 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-10 09:50:30 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu
 
-# Rattle timestamp: <TIMESTAMP>
+# Rattle timestamp: TIMESTAMP
 #
 # References:
 #
@@ -32,23 +32,29 @@
 # https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# 20241220 gjw Save the model to the <TEMPLATE> variable `model`. This
+## #########################################################################
+## #########################################################################
+## #########################################################################
+## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
+## #########################################################################
+## #########################################################################
+## #########################################################################
+
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
 # will be used below and in the following evaluations as required.
 
-model <- model_conditionalForest
+model <- model_glm
 
 # 20250105 zy Redefine the model type to update the output of error
 # matrix.
 
-mtype <- "cforest"
-mdesc <- "Random Forest"
+mtype <- "linear"
+mdesc <- "Linear Model"
 
 # 20250101 gjw Define the template functions to generate the
-# predications and the probabilities for any dataset.
+# predications and the probabilities.
+# dataset.
 
-pred_ra <- function(model, data) predict(model, newdata=data, )
+pred_ra <- function(model, data) predict(model, newdata=data,)
 
-prob_ra <- function(model, data) {
-  prob_matrix <- predict(model, newdata=data, type="prob")
-  generate_predictions(prob_matrix) # nolint as sourced from 'model_template.R'
-}
+prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]

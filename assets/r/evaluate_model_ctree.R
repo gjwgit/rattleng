@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2024-12-25 17:17:19 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-08 14:38:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,7 +47,7 @@ mdesc <- "Conditional Inference Tree"
 # predications and the probabilities for any dataset.
 
 pred_ra <- function(model, data) {
-  # Get the probability matrix from the model.
+  # Get the probability matrix from the ctree model.
 
   prob_matrix <- predict(model, newdata=data, type="prob")
 

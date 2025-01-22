@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-30 09:09:36 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-16 05:18:59 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -57,7 +57,7 @@ install_if_missing <- function(pkg) {
 
     # Make sure the directory already exists so we won't be prompted
     # to create it.
-    
+
     if (!dir.exists(lib_dir)) {
       dir.create(lib_dir, recursive=TRUE)
       message("Package Library Created: ", lib_dir)
@@ -107,7 +107,7 @@ pkgs <- c(
   'naniar',
   'neuralnet',
   'nnet',
-  'party',
+  'partykit',
   'randomForest',
   'rattle',
   'readr',

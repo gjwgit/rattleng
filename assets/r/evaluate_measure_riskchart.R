@@ -35,13 +35,31 @@
 
 # Load required packages from the local library into the R session.
 
+library(glue)         # Format strings: glue().
 library(rattle)       # Generate a risk chart.
 
 ####################################
 
+# Convert factors to characters, then to numeric.
+
+predicted_numeric <- as.numeric(factor(predicted)) - 1
+actual_numeric <- as.numeric(factor(actual)) - 1
+
+# Combine logical NA checks for both vectors.
+
+valid_indices <- !is.na(predicted_numeric) & !is.na(actual_numeric)
+
+# Filter the vectors based on no NAs indices.
+# With this step, the error will be reduced if vectors 
+# does not contain NAs.
+
+filtered_predicted_numeric <- predicted_numeric[valid_indices]
+filtered_actual_numeric <- actual_numeric[valid_indices]
+filtered_risk <- risk[valid_indices]
+
 # Use rattle's evaluateRisk to generate data required for a Risk Chart.
 
-eval <- rattle::evaluateRisk(predicted, actual, risk)
+eval <- rattle::evaluateRisk(filtered_predicted_numeric, filtered_actual_numeric, filtered_risk)
 
 # Build title string.
 
@@ -53,7 +71,7 @@ title
 # Generate the risk chart.
 
 svg(glue("<TEMPDIR>/model_{mtype}_riskchart_{dtype}.svg"), width=11)
-rattle::riskchart(predicted, actual, risk,
+rattle::riskchart(filtered_predicted_numeric, filtered_actual_numeric, filtered_risk,
                   title          = title,
                   risk.name      = "<RISK_VAR>",
                   recall.name    = "<TARGET_VAR>",

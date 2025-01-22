@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-31 13:46:27 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:13:25 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
@@ -229,6 +230,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       final template = templateMap[datasetSplitType] ??
           (throw Exception('Invalid datasetSplitType: $datasetSplitType'));
 
+      // Insert 'template' as the second item in the parameters list.
+
       final selectedParameters = [
         parameters.first,
         template,
@@ -285,6 +288,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
                 String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
+                bool linearExecuted = ref.watch(linearEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralEvaluateProvider);
@@ -303,27 +307,29 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String ea = 'evaluate_model_adaboost';
                 String ec = 'evaluate_model_ctree';
+                String el = 'evaluate_model_linear';
                 String en = 'evaluate_model_nnet';
                 String er = 'evaluate_model_rpart';
                 String es = 'evaluate_model_svm';
                 String ex = 'evaluate_model_xgboost';
                 String ent = 'evaluate_model_neuralnet';
 
-                String ecf = 'evaluate_model_conditional_forest';
-                String erf = 'evaluate_model_random_forest';
+                String ecf = 'evaluate_model_cforest';
+                String erf = 'evaluate_model_rforest';
 
                 // 20241220 gjw Finally we will run the generic templates for
                 // the various performance measures.
 
                 String em = 'evaluate_measure_error_matrix';
                 String ro = 'evaluate_measure_roc';
+                String erc = 'evaluate_measure_riskchart';
                 String hd = 'evaluate_measure_hand';
 
                 // Execute evaluation for rpart model if it was executed and treeExecuted is true.
 
                 await executeEvaluation(
                   executed: rpartExecuted && treeExecuted,
-                  parameters: [er, em, ro, hd],
+                  parameters: [er, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -333,7 +339,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: ctreeExecuted && treeExecuted,
-                  parameters: [ec, em, ro, hd],
+                  parameters: [ec, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -343,7 +349,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: randomForestExecuted && forestTicked,
-                  parameters: [erf, em, ro, hd],
+                  parameters: [erf, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -353,7 +359,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: conditionalForestExecuted && forestTicked,
-                  parameters: [ecf, em, ro, hd],
+                  parameters: [ecf, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -363,7 +369,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: adaBoostExecuted && boostTicked,
-                  parameters: [ea, em, ro, hd],
+                  parameters: [ea, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -373,7 +379,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: xgBoostExecuted && boostTicked,
-                  parameters: [ex, em, ro, hd],
+                  parameters: [ex, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -383,7 +389,17 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: svmExecuted,
-                  parameters: [es, em, ro, hd],
+                  parameters: [es, em, ro, erc, hd],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
+
+                // Execute evaluation for linear model if executed.
+
+                await executeEvaluation(
+                  executed: linearExecuted,
+                  parameters: [el, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -393,7 +409,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && nnetExecuted,
-                  parameters: [en, em, ro, hd],
+                  parameters: [en, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -403,7 +419,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && neuralNetExecuted,
-                  parameters: [ent, em, ro, hd],
+                  parameters: [ent, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -452,10 +468,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             // Widget to display dataset type selection as choice chips with tooltips.
 
             ChoiceChipTip<String>(
-              // Generate list of dataset type options, replacing 'Tuning' with 'Validation'
-              // if validation setting is enabled.
+              // Generate list of dataset type options, filtering based on partition toggles.
 
               options: datasetTypes.keys
+                  .where(
+                    (key) => ref.read(partitionProvider) || key == 'Complete',
+                  )
                   .map(
                     (key) => key == 'Tuning' &&
                             ref.watch(useValidationSettingProvider)
@@ -463,25 +481,33 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                         : key,
                   )
                   .toList(),
-              // Set selected option, handling Tuning/Validation text swap.
+              // Set selected option, handling Tuning/Validation text swap and defaulting to Complete when partitions disabled.
 
-              selectedOption: datasetType == 'Tuning' &&
-                      ref.watch(useValidationSettingProvider)
-                  ? 'Validation'
-                  : datasetType,
+              selectedOption: !ref.read(partitionProvider)
+                  ? 'Complete'
+                  : (datasetType == 'Tuning' &&
+                          ref.watch(useValidationSettingProvider)
+                      ? 'Validation'
+                      : datasetType),
               // Create tooltips map, replacing 'Tuning' key with 'Validation'
-              // when validation is enabled.
+              // when validation is enabled and filtering based on partition setting.
 
               tooltips: Map.fromEntries(
-                datasetTypes.entries.map(
-                  (entry) => MapEntry(
-                    entry.key == 'Tuning' &&
-                            ref.watch(useValidationSettingProvider)
-                        ? 'Validation'
-                        : entry.key,
-                    entry.value,
-                  ),
-                ),
+                datasetTypes.entries
+                    .where(
+                      (entry) =>
+                          ref.read(partitionProvider) ||
+                          entry.key == 'Complete',
+                    )
+                    .map(
+                      (entry) => MapEntry(
+                        entry.key == 'Tuning' &&
+                                ref.watch(useValidationSettingProvider)
+                            ? 'Validation'
+                            : entry.key,
+                        entry.value,
+                      ),
+                    ),
               ),
               // Handle selection changes by updating state and provider.
 

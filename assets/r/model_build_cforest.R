@@ -1,11 +1,11 @@
-# Rattle Scripts: From dataset `ds` build a conditional forest model.
+# From dataset `trds` build an `cforest()` conditional forest.
 #
-# Copyright (C) 2023-2024, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:22:06 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-21 17:21:32 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,40 +30,35 @@
 #
 # References:
 #
-# @williams:2017:essentials Chapter 8.
+# @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages.
+# Load required packages from the local library into the R session.
 
-library(kernlab)
-library(party)
-library(rattle)
-library(reshape2)
+# 20250116 gjw Eventually we will use use partykit (2015) over the
+# older party (2008) package. The partykit package can do much more
+# and is a framework for supporting other tree packages including
+# rpart, rweka, and pmml.
+
+# Define model type and description to be used in following R scripts.
 
 mtype <- "cforest"
 mdesc <- "Random Forest"
 
-model_conditionalForest <- cforest(
+# Train a conditional model based on the training dataset.
+
+model_conditionalForest <- party::cforest(
   form,
   data    = trds,
-  controls= cforest_unbiased(ntree = <RF_NUM_TREES>,
-                             mtry  = <RF_MTRY>,)
+  controls= party::cforest_unbiased(ntree = <RF_NUM_TREES>,
+                                    mtry  = <RF_MTRY>,)
 )
 
 # Save the model to the <TEMPLATE> variable `model` and the predicted
 # values appropriately.
 
 model <- model_conditionalForest
-
-predicted_tr <- predict(model, newdata = trds, type = "prob")
-predicted_tu <- predict(model, newdata = tuds, type = "prob")
-predicted_te <- predict(model, newdata = teds, type = "prob")
-
-# The predictions need to be converted to percentages/probabilities.
-
-predicted_tr <- generate_predictions(predicted_tr)
-predicted_tu <- generate_predictions(predicted_tu)
-predicted_te <- generate_predictions(predicted_te)
 
 # Generate textual output of the 'Conditional Random Forest' model.
 
@@ -82,7 +77,8 @@ print(importance_df)
 
 # Display tree number.
 
-prettytree(model_conditionalForest@ensemble[[<RF_NO_TREE>]], names(model_conditionalForest@data@get("input")))
+party::prettytree(model_conditionalForest@ensemble[[<RF_NO_TREE>]],
+                  names(model_conditionalForest@data@get("input")))
 
 svg("<TEMPDIR>/model_conditional_forest.svg")
 ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +

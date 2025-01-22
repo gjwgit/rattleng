@@ -1,6 +1,6 @@
 /// Test AUDIT dataset TREE model RPART.
 //
-// Time-stamp: <Friday 2025-01-10 12:03:35 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-01-21 21:12:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -24,10 +24,6 @@
 /// Authors: Graham Williams
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
-//import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -75,9 +71,9 @@ void main() {
         // 20250110 gjw We get a trivial decision tree initially since
         // adjustment is actually an output variable.
 
-        '1) root 1400 319 0 (0.77214286 0.22785714)',
-        '2) marital=Absent,Divorced,Married-spouse-absent,Unmarried,Widowed 769  44 0 (0.94278283 0.05721717) *',
-        '3) marital=Married 631 275 0 (0.56418384 0.43581616)',
+        '1) root 1400 319 No (0.77214286 0.22785714)',
+        '2) marital=Absent,Divorced,Married-spouse-absent,Unmarried,Widowed 769  44 No (0.94278283 0.05721717) *',
+        '3) marital=Married 631 275 No (0.56418384 0.43581616)',
       ],
     );
 

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-01-14 13:27:09 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:17:44 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -98,7 +98,34 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         '$tempDir/model_evaluate_roc_randomForest_$dtype.svg';
     String rocXGBoostImage = '$tempDir/model_evaluate_roc_xgboost_$dtype.svg';
 
+    String riskChartRpartImage = '$tempDir/model_rpart_riskchart_$dtype.svg';
+    String riskChartCtreeImage = '$tempDir/model_ctree_riskchart_$dtype.svg';
+    String riskChartAdaBoostImage =
+        '$tempDir/model_adaboost_riskchart_$dtype.svg';
+    String riskChartNNETImage = '$tempDir/model_nnet_riskchart_$dtype.svg';
+    String riskChartNeuralNetImage =
+        '$tempDir/model_neuralnet_riskchart_$dtype.svg';
+    String riskChartSVMImage = '$tempDir/model_svm_riskchart_$dtype.svg';
+    String riskChartCforestImage =
+        '$tempDir/model_cforest_riskchart_$dtype.svg';
+    String riskChartRforestImage =
+        '$tempDir/model_randomForest_riskchart_$dtype.svg';
+    String riskChartXGBoostImage =
+        '$tempDir/model_xgboost_riskchart_$dtype.svg';
+
     String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
+    String handCtreeImage = '$tempDir/model_evaluate_hand_ctree_$dtype.svg';
+    String handRForestImage =
+        '$tempDir/model_evaluate_hand_randomForest_$dtype.svg';
+    String handCForestImage = '$tempDir/model_evaluate_hand_cforest_$dtype.svg';
+    String handXGBoostImage = '$tempDir/model_evaluate_hand_xgboost_$dtype.svg';
+    String handAdaBoostImage =
+        '$tempDir/model_evaluate_hand_adaboost_$dtype.svg';
+    String handSVMImage = '$tempDir/model_evaluate_hand_svm_$dtype.svg';
+    String handLinearImage = '$tempDir/model_evaluate_hand_linear_$dtype.svg';
+    String handNNETImage = '$tempDir/model_evaluate_hand_nnet_$dtype.svg';
+    String handNeuralNetImage =
+        '$tempDir/model_evaluate_hand_neuralnet_$dtype.svg';
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
     bool forestBoxTicked = ref.watch(forestEvaluateProvider);
@@ -106,12 +133,13 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     bool svmBoxTicked = ref.watch(svmEvaluateProvider);
     bool neuralBoxTicked = ref.watch(neuralEvaluateProvider);
 
-    List<String> existingImages = [];
-    List<String> imagesTitles = [];
     List<String> rocImages = [];
     List<String> rocImagesTitles = [];
     List<String> handImages = [];
     List<String> handImagesTitles = [];
+
+    List<String> riskChartImages = [];
+    List<String> riskChartImagesTitles = [];
 
     // List of image-title pairs for ROC data.
 
@@ -143,10 +171,48 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {'image': rocXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
     ];
 
+    // List of image-title pairs for ROC data.
+
+    final riskChartImageData = [
+      {'image': riskChartRpartImage, 'title': 'RPART'},
+      {'image': riskChartCtreeImage, 'title': 'CTREE'},
+      {'image': riskChartAdaBoostImage, 'title': 'AdaBoost'},
+      {'image': riskChartNNETImage, 'title': 'NNET'},
+      {'image': riskChartNeuralNetImage, 'title': 'NEURALNET'},
+      {'image': riskChartRforestImage, 'title': 'RANDOM FOREST'},
+      {'image': riskChartSVMImage, 'title': 'SVM'},
+      {'image': riskChartCforestImage, 'title': 'CONDITIONAL FOREST'},
+      {'image': riskChartXGBoostImage, 'title': 'XGBoost'},
+    ];
     // List of image-title pairs for Hand plot.
 
     final handImageData = [
-      {'image': handRpartImage, 'title': 'RPART'},
+      {'image': handRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
+      {'image': handCtreeImage, 'title': 'CTREE', 'ticked': treeBoxTicked},
+      {
+        'image': handRForestImage,
+        'title': 'RANDOM FOREST',
+        'ticked': forestBoxTicked,
+      },
+      {
+        'image': handCForestImage,
+        'title': 'CONDITIONAL FOREST',
+        'ticked': forestBoxTicked,
+      },
+      {
+        'image': handAdaBoostImage,
+        'title': 'AdaBoost',
+        'ticked': boostBoxTicked,
+      },
+      {'image': handXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
+      {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
+      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': svmBoxTicked},
+      {'image': handNNETImage, 'title': 'NNET', 'ticked': neuralBoxTicked},
+      {
+        'image': handNeuralNetImage,
+        'title': 'NEURALNET',
+        'ticked': neuralBoxTicked,
+      },
     ];
 
     // Iterate through each image-title pair.
@@ -158,10 +224,16 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       }
     }
 
+    for (var data in riskChartImageData) {
+      if (imageExists(data['image']!)) {
+        riskChartImages.add(data['image']!);
+        riskChartImagesTitles.add(data['title']!);
+      }
+    }
     for (var data in handImageData) {
-      if (imageExists(data['image']!) && data['ticked'] == true) {
-        handImages.add(data['image']!);
-        handImagesTitles.add(data['title']!);
+      if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
+        handImages.add(data['image']!.toString());
+        handImagesTitles.add(data['title']!.toString());
       }
     }
 
@@ -190,19 +262,21 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       );
     }
 
-    if (existingImages.isNotEmpty) {
+    if (riskChartImages.isNotEmpty) {
       pages.add(
         MultiImagePage(
-          titles: imagesTitles,
-          paths: existingImages,
+          titles: riskChartImagesTitles,
+          paths: riskChartImages,
+          appBarImage: 'Risk Chart',
         ),
       );
-      // 20250105 gjw Considered displaying a No Image Available graphic. Not
-      // quite working yet so comment it out for now.
-      //
-      // } else {
-      //   pages.add(NoImagePage());
     }
+
+    // 20250105 gjw Considered displaying a No Image Available graphic. Not
+    // quite working yet so comment it out for now.
+    //
+    // } else {
+    //   pages.add(NoImagePage());
 
     return PageViewer(
       pageController: pageController,

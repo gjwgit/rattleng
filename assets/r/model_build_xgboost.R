@@ -27,6 +27,7 @@
 
 library(Ckmeans.1d.dp)  # For ggplot.
 library(data.table)     # Display data as a nicely formatted table.
+library(hmeasure)
 library(rattle)         # Provides a convenient wrapper for xgboost.
 library(xgboost)        # For XGBoost model.
 
@@ -49,10 +50,6 @@ model_xgb <- rattle::xgboost(form,
 # values appropriately.
 
 model <- model_xgb
-
-predicted_tr <- predict(model, newdata = trds)
-predicted_tu <- predict(model, newdata = tuds)
-predicted_te <- predict(model, newdata = teds)
 
 # Print the summary of the trained model.
 

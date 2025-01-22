@@ -1,6 +1,6 @@
-# Rattle Scripts: From dataset ds build a random forest model.
+# From dataset `trds` build a `randomForest()` forest model.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -35,10 +35,11 @@
 
 # Load required packages from the local library into the R session.
 
-library(rattle)
-library(randomForest) # ML: randomForest() na.roughfix() for missing data.
+library(ggplot2)
+library(glue)         # Format strings: glue().
 library(kernlab)
 library(rattle)
+library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 library(reshape2)
 library(verification)
 
@@ -53,15 +54,6 @@ model_randomForest <- randomForest(
   importance = TRUE,
   na.action  = <RF_NA_ACTION>,
   replace    = FALSE)
-
-# Save the model to the <TEMPLATE> variable `model` and the predicted
-# values appropriately.
-
-model <- model_randomForest
-
-predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
-predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
-predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
 
 ########################################################################
 
