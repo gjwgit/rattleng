@@ -202,7 +202,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {
         'image': handAdaBoostImage,
         'title': 'AdaBoost',
-        'ticked': boostBoxTicked
+        'ticked': boostBoxTicked,
       },
       {'image': handXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
       {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
