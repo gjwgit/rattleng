@@ -1,11 +1,11 @@
-# Build a neural network.
+# From dataset `trds` build a `nnet()` nerual model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:20:38 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-21 20:54:34 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,27 +24,36 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# Load necessary libraries
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials.
+# https://survivor.togaware.com/datascience/ for further details.
 
-library(nnet)            # Neural networks
-library(NeuralNetTools)  # For neural network plotting
+# Load required packages from the local library into the R session.
 
-# Define model type and description.
+# library(nnet)            # Neural networks
+# library(NeuralNetTools)  # For neural network plotting
+
+# Define model type and description to be used in following R scripts.
 
 mtype <- "nnet"
 mdesc <- "Neural NNET"
 
-# Conditional logic to handle categoric variables based on 'neural_ignore_categoric'.
+# 20250121 gjw The tds is set to replace trds in handling situations
+# of ignoring the categoric variables (TRUE) or not (FALSE). We simply
+# toggle the TRUE/FALSE here approriately.
 
-if (neural_ignore_categoric) {
-  tds <- ds[tr, ignore_categoric_vars]
+if (<NEURAL_IGNORE_CATEGORIC>) {
+  tds <- trds[setdiff(c(numc, target), ignore)]
 } else {
-  tds <- ds[tr, vars]
+  tds <- trds
 }
 
 # Train a Neural Network model using nnet.
 
-model_nn <- nnet(
+model_nn <- nnet::nnet(
   form,
   data    = tds,
   size    = <NNET_HIDDEN_LAYERS>,

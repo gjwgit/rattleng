@@ -1,6 +1,6 @@
-# Define `pred_ra` and `prob_ra` for an rpart model.
+# Define `pred_ra` and `prob_ra` for a linear model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -22,15 +22,14 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu, Graham Williams
+# Author: Zheyuan Xu
 
-# Rattle timestamp: <TIMESTAMP>
+# Rattle timestamp: TIMESTAMP
 #
 # References:
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
 ## #########################################################################
@@ -41,21 +40,21 @@
 ## #########################################################################
 ## #########################################################################
 
-# 20241220 gjw Save the model to the <TEMPLATE> variable `model`. This
+# 20241220 gjw Save the model to the TEMPLATE variable `model`. This
 # will be used below and in the following evaluations as required.
 
-model <- model_rpart
+model <- model_glm
 
 # 20250105 zy Redefine the model type to update the output of error
 # matrix.
 
-mtype <- "rpart"
-mdesc <- "Decision Tree"
+mtype <- "linear"
+mdesc <- "Linear Model"
 
 # 20250101 gjw Define the template functions to generate the
 # predications and the probabilities.
 # dataset.
 
-pred_ra <- function(model, data) predict(model, newdata=data, type="class")
+pred_ra <- function(model, data) predict(model, newdata=data,)
 
 prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]

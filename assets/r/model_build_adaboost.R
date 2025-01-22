@@ -1,11 +1,11 @@
-# Build an AdaBoost model.
+# From dataset `tcds` build an AdaBoost model.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:24:26 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-01-14 15:25:47 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -19,18 +19,33 @@
 # FOR MORE <DETAILS>.
 #
 # You should have received a copy of the GNU General Public License along with
-# this program. If not, see <https://www.gnu.org/licenses/>.
+# this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# Load required libraries.
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials
+# https://survivor.togaware.com/datascience/ for further details.
+
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials Chapter 7.
+# https://survivor.togaware.com/datascience/dtrees.html
+# https://survivor.togaware.com/datascience/ for further details.
+
+# Load required packages from the local library into the R session.
 
 library(ada)
 library(caret)
 library(rattle)
 library(rpart)
 
-# Define model type and description.
+# Define model type and description to be used in following R scripts.
 
 mtype <- "adaboost"
 mdesc <- "Adaptive Boosting (AdaBoost)"
@@ -54,11 +69,6 @@ model_ada <- ada(form,
 # values appropriately.
 
 model <- model_ada
-
-predicted_tr <- predict(model, newdata = trds, type = "prob")[,2]
-predicted_tu <- predict(model, newdata = tuds, type = "prob")[,2]
-predicted_te <- predict(model, newdata = teds, type = "prob")[,2]
-
 
 # Print the summary of the trained model.
 

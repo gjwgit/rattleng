@@ -1,6 +1,6 @@
-# Rattle Scripts: From dataset ds build a SVM model.
+# From dataset `trds` build a `ksvm()` support vector machine.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -22,10 +22,18 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
+
+# TIMESTAMP
+#
+# References:
+#
+# @williams:2017:essentials.
+# https://survivor.togaware.com/datascience/ for further details.
+
+# Load required packages from the local library into the R session.
 
 library(kernlab)
-library(rattle)
 
 # Define the model type and description for file paths and titles.
 
@@ -37,43 +45,22 @@ mdesc <- "Support Vector Machine"
 svm_kernel <- <SVM_KERNEL>
 
 if (svm_kernel == "polydot") {
-  svm_model <- ksvm(
-    as.factor(trds[[target]]) ~ .,
+  model_svm <- ksvm(
+    form,
     data       = trds,
     kernel     = <SVM_KERNEL>,
     kpar       = list("degree" = <SVM_DEGREE>),
     prob.model = TRUE
   )
 } else {
-  svm_model <- ksvm(
-    as.factor(trds[[target]]) ~ .,
+  model_svm <- ksvm(
+    form,
     data       = trds,
     kernel     = <SVM_KERNEL>,
     prob.model = TRUE
   )
 }
 
-# Save the model to the <TEMPLATE> variable `model` and the predicted
-# values appropriately.
+# Output a summary of the trained SVM model.
 
-model <- svm_model
-
-predicted_tr <- predict(model, newdata = trds, type = "probabilities")[,2]
-predicted_tu <- predict(model, newdata = tuds, type = "probabilities")[,2]
-predicted_te <- predict(model, newdata = teds, type = "probabilities")[,2]
-
-predicted_tr <- prepare_predictions(predicted_tr, actual, risks)[[1]]
-predicted_tu <- prepare_predictions(predicted_tu, actual, risks)[[1]]
-predicted_te <- prepare_predictions(predicted_te, actual, risks)[[1]]
-
-actual_tr <- prepare_predictions(predicted_tr, actual, risks)[[2]]
-actual_tu <- prepare_predictions(predicted_tu, actual, risks)[[2]]
-actual_te <- prepare_predictions(predicted_te, actual, risks)[[2]]
-
-risk_tr <- prepare_predictions(predicted_tr, actual, risks)[[3]]
-risk_tu <- prepare_predictions(predicted_tu, actual, risks)[[3]]
-risk_te <- prepare_predictions(predicted_te, actual, risks)[[3]]
-
-# Print a summary of the trained SVM model.
-
-print(svm_model)
+print(model_svm)

@@ -230,6 +230,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       final template = templateMap[datasetSplitType] ??
           (throw Exception('Invalid datasetSplitType: $datasetSplitType'));
 
+      // Insert 'template' as the second item in the parameters list.
+
       final selectedParameters = [
         parameters.first,
         template,
@@ -286,6 +288,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
                 String datasetSplitType = ref.watch(datasetTypeProvider);
                 bool forestTicked = ref.watch(forestEvaluateProvider);
+                bool linearExecuted = ref.watch(linearEvaluateProvider);
                 bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                 bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
                 bool neuralTicked = ref.watch(neuralEvaluateProvider);
@@ -304,6 +307,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String ea = 'evaluate_model_adaboost';
                 String ec = 'evaluate_model_ctree';
+                String el = 'evaluate_model_linear';
                 String en = 'evaluate_model_nnet';
                 String er = 'evaluate_model_rpart';
                 String es = 'evaluate_model_svm';
@@ -318,13 +322,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 String em = 'evaluate_measure_error_matrix';
                 String ro = 'evaluate_measure_roc';
+                String erc = 'evaluate_riskchart';
                 String hd = 'evaluate_measure_hand';
 
                 // Execute evaluation for rpart model if it was executed and treeExecuted is true.
 
                 await executeEvaluation(
                   executed: rpartExecuted && treeExecuted,
-                  parameters: [er, em, ro, hd],
+                  parameters: [er, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -334,7 +339,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: ctreeExecuted && treeExecuted,
-                  parameters: [ec, em, ro, hd],
+                  parameters: [ec, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -344,7 +349,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: randomForestExecuted && forestTicked,
-                  parameters: [erf, em, ro, hd],
+                  parameters: [erf, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -354,7 +359,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: conditionalForestExecuted && forestTicked,
-                  parameters: [ecf, em, ro, hd],
+                  parameters: [ecf, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -364,7 +369,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: adaBoostExecuted && boostTicked,
-                  parameters: [ea, em, ro, hd],
+                  parameters: [ea, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -374,7 +379,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: xgBoostExecuted && boostTicked,
-                  parameters: [ex, em, ro, hd],
+                  parameters: [ex, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -384,7 +389,17 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: svmExecuted,
-                  parameters: [es, em, ro, hd],
+                  parameters: [es, em, ro, erc],
+                  datasetSplitType: datasetSplitType,
+                  context: context,
+                  ref: ref,
+                );
+
+                // Execute evaluation for linear model if executed.
+
+                await executeEvaluation(
+                  executed: linearExecuted,
+                  parameters: [el, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -394,7 +409,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && nnetExecuted,
-                  parameters: [en, em, ro, hd],
+                  parameters: [en, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -404,7 +419,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && neuralNetExecuted,
-                  parameters: [ent, em, ro, hd],
+                  parameters: [ent, em, ro, erc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,

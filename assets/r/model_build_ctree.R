@@ -1,11 +1,11 @@
-# Using the dataset `ds` build a `ctree()` decision tree.
+# From dataset `trds` build a `ctree()` conditional tree.
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:01:40 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-01-16 09:25:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -29,50 +29,97 @@
 # References:
 #
 # @williams:2017:essentials Chapter 7.
-# https://survivor.togaware.com/datascience/dtrees.html
-# https://survivor.togaware.com/datascience/rpart.html
+# https://survivor.togaware.com/datascience/conditional-decision-tree.html
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Load required packages from the local library into the R session.
+##
+## 20250116 gjw Choose to use partykit (2015) over the older party
+## (2008) package. The partykit package can do much more and is a
+## framework for supporting other tree packages including rpart, rweka,
+## and pmml. It's ctree is a new and improved reimplementations of
+## conditional inference trees. See
+## https://cran.r-project.org/web/packages/partykit/partykit.pdf and
+## https://cran.r-project.org/web/packages/party/party.pdf.
+##
+## 20250116 gjw From Leo
+##
+## The ctree function is available in both the party and partykit
+## packages in R. While both packages provide similar functionality for
+## conditional inference trees, there are some differences between them.
+##
+## Party Package: The party package is an older package that provides a
+## basic implementation of conditional inference trees. It uses a
+## recursive partitioning approach to build trees and provides a simple
+## way to visualize and interpret the results.  Partykit Package: The
+## partykit package is a more recent package that provides a more
+## comprehensive and flexible implementation of conditional inference
+## trees. It includes additional features such as support for
+## multivariate responses, improved visualization tools, and the ability
+## to handle larger datasets. The partykit package also provides a more
+## robust and efficient algorithm for building trees, which can handle
+## complex interactions and non-linear relationships between variables.
+## In terms of the ctree function specifically, the partykit package
+## provides a more flexible and customizable implementation. The ctree
+## function in partykit allows users to specify a wide range of options,
+## including the test statistic, splitting criterion, and pruning
+## method. Additionally, the partykit package provides a range of
+## visualization tools, including plots of the tree structure, node
+## information, and predicted probabilities.
+##
+## Overall, while both packages provide similar functionality, the
+## partykit package is generally considered to be more comprehensive and
+## flexible, and is likely to be the better choice for most
+## users. However, the party package may still be useful for simple
+## applications or for users who are already familiar with its
+## functionality.
+##
+## It’s worth noting that the partykit package is designed to be backward
+## compatible with the party package, so users who have existing code
+## that uses the party package can easily transition to using the
+## partykit package.
+##
+## In summary, the main differences between the party and partykit
+## packages are:
+##
+## Flexibility: The partykit package provides a more flexible and
+## customizable implementation of conditional inference trees.
+##
+## Visualization: The partykit package provides a range of
+## visualization tools, including plots of the tree structure, node
+## information, and predicted probabilities.
+##
+## Robustness: The partykit package provides a more robust and
+## efficient algorithm for building trees, which can handle complex
+## interactions and non-linear relationships between variables.
+##
+## Compatibility: The partykit package is designed to be backward
+## compatible with the party package, making it easy for users to
+## transition to the new package.
 
-library(party)        # Conditional inference trees
-library(partykit)     # Enhanced visualization and interpretation
+library(partykit)     # Conditional decision tree.
 
 # Define the model type and description for file paths and titles
 
 mtype <- "ctree"
 mdesc <- "Conditional Inference Tree"
 
-# Determine what type of model to build based on the number of values of the target variable
-# Not needed for ctree as it automatically handles the data type
-
-# Define the formula for the model
-
-# TODO 20240930 gjw <SHOULDN>'T THIS BE FRO `model_template.r`
+# 20250108 gjw Setup the model build parameters.
 
 form <- as.formula(paste(target, "~ ."))
 
-control <- ctree_control(
+control <- partykit::ctree_control(
   <MINSPLIT>, <MINBUCKET>, <MAXDEPTH>
 )
 
 # Train a Conditional Inference Tree model using ctree.
 
-model_ctree <- ctree(
+model_ctree <- partykit::ctree(
   formula   = form,
   data      = trds,
   na.action = na.exclude,
   control   = control
 )
-
-# Save the model to the <TEMPLATE> variable `model` and the predicted
-# values appropriately.
-
-model <- model_ctree
-
-predicted_tr <- predict(model_ctree, newdata = trds, type = "prob")
-predicted_tu <- predict(model_ctree, newdata = tuds, type = "prob")
-predicted_te <- predict(model_ctree, newdata = teds, type = "prob")
 
 # Output a textual view of the Conditional Inference Tree model.
 
