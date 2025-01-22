@@ -32,6 +32,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
@@ -467,10 +468,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             // Widget to display dataset type selection as choice chips with tooltips.
 
             ChoiceChipTip<String>(
-              // Generate list of dataset type options, replacing 'Tuning' with 'Validation'
-              // if validation setting is enabled.
+              // Generate list of dataset type options, filtering based on partition toggles.
 
               options: datasetTypes.keys
+                  .where(
+                    (key) => ref.read(partitionProvider) || key == 'Complete',
+                  )
                   .map(
                     (key) => key == 'Tuning' &&
                             ref.watch(useValidationSettingProvider)
@@ -478,25 +481,33 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                         : key,
                   )
                   .toList(),
-              // Set selected option, handling Tuning/Validation text swap.
+              // Set selected option, handling Tuning/Validation text swap and defaulting to Complete when partitions disabled.
 
-              selectedOption: datasetType == 'Tuning' &&
-                      ref.watch(useValidationSettingProvider)
-                  ? 'Validation'
-                  : datasetType,
+              selectedOption: !ref.read(partitionProvider)
+                  ? 'Complete'
+                  : (datasetType == 'Tuning' &&
+                          ref.watch(useValidationSettingProvider)
+                      ? 'Validation'
+                      : datasetType),
               // Create tooltips map, replacing 'Tuning' key with 'Validation'
-              // when validation is enabled.
+              // when validation is enabled and filtering based on partition setting.
 
               tooltips: Map.fromEntries(
-                datasetTypes.entries.map(
-                  (entry) => MapEntry(
-                    entry.key == 'Tuning' &&
-                            ref.watch(useValidationSettingProvider)
-                        ? 'Validation'
-                        : entry.key,
-                    entry.value,
-                  ),
-                ),
+                datasetTypes.entries
+                    .where(
+                      (entry) =>
+                          ref.read(partitionProvider) ||
+                          entry.key == 'Complete',
+                    )
+                    .map(
+                      (entry) => MapEntry(
+                        entry.key == 'Tuning' &&
+                                ref.watch(useValidationSettingProvider)
+                            ? 'Validation'
+                            : entry.key,
+                        entry.value,
+                      ),
+                    ),
               ),
               // Handle selection changes by updating state and provider.
 
