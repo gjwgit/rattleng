@@ -39,6 +39,7 @@ import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/unify_on.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with neuralnet.
@@ -57,6 +58,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
+      await unifyOn(tester);
 
       await loadDemoDataset(tester);
 
