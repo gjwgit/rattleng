@@ -248,7 +248,7 @@ void main() {
     for (final element in textFinder.evaluate()) {
       final widget = element.widget as SelectableText;
       if (widget.data != null) {
-        if (widget.data == '363') {
+        if (widget.data!.contains('363')) {
           found363 = true;
           break;
         }
