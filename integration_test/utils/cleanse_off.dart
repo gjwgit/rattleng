@@ -8,7 +8,8 @@ Future<void> cleanseOff(WidgetTester tester) async {
   final iconFinder = find.byIcon(Icons.cleaning_services);
   expect(iconFinder, findsOneWidget);
 
-  // Get initial cleanse state
+  // Get initial cleanse state.
+
   final cleanseState = tester
       .state<ConsumerState>(
         find.byType(DatasetToggles),
@@ -16,13 +17,15 @@ Future<void> cleanseOff(WidgetTester tester) async {
       .ref
       .read(cleanseProvider);
 
-  // If cleanse is true, tap the icon to disable it
+  // If cleanse is true, tap the icon to disable it.
+
   if (cleanseState) {
     await tester.tap(iconFinder);
     await tester.pumpAndSettle();
   }
 
-  // Verify cleanse is now disabled
+  // Verify cleanse is now disabled.
+
   final updatedCleanseState = tester
       .state<ConsumerState>(
         find.byType(DatasetToggles),

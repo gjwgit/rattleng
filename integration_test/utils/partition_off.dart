@@ -8,7 +8,8 @@ Future<void> partitionOff(WidgetTester tester) async {
   final iconFinder = find.byIcon(Icons.horizontal_split);
   expect(iconFinder, findsOneWidget);
 
-  // Get initial partition state
+  // Get initial partition state.
+
   final partitionState = tester
       .state<ConsumerState>(
         find.byType(DatasetToggles),
@@ -16,13 +17,15 @@ Future<void> partitionOff(WidgetTester tester) async {
       .ref
       .read(partitionProvider);
 
-  // If partition is true, tap the icon to disable it
+  // If partition is true, tap the icon to disable it.
+
   if (partitionState) {
     await tester.tap(iconFinder);
     await tester.pumpAndSettle();
   }
 
-  // Verify partition is now disabled
+  // Verify partition is now disabled.
+
   final updatedPartitionState = tester
       .state<ConsumerState>(
         find.byType(DatasetToggles),
