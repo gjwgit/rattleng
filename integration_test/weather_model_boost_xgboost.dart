@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/boost/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';

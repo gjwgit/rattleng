@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/boost/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
@@ -38,6 +37,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 
 void main() {
@@ -52,24 +52,18 @@ void main() {
 
       await loadDemoDataset(tester);
 
+      await tester.pump(delay);
+
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Boost', BoostPanel);
 
-      // Find the ChoiceChipTip widget for the algorithm type.
-
-      final adaChip = find.text('Adaptive');
-
-      // Tap the adaptive chip to switch algorithm.
-
-      await tester.tap(adaChip);
-
-      await tester.pumpAndSettle();
+      await tapChip(tester, 'Adaptive');
 
       await tapButton(tester, 'Build Boosted Trees');
 
       await tester.pump(delay);
 
-      await tapButton(tester, 'Build Boosted Trees');
+      await gotoNextPage(tester);
 
       // Verify the content of the page.
 
@@ -86,15 +80,11 @@ void main() {
 
       await tester.pump(interact);
 
-      final imagePageTitleFinder = find.text('Variable Importance');
-      expect(imagePageTitleFinder, findsOneWidget);
+      await verifyPage('Variable Importance');
 
       // Find a single ImagePage being displayed.
 
-      final imageFinder = find.byType(ImagePage);
-      expect(imageFinder, findsOneWidget);
-
-      await tester.pump(interact);
+      await verifyImage(tester);
     });
   });
 }
