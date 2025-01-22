@@ -348,7 +348,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: randomForestExecuted && forestTicked,
-                  parameters: [erf, em, ro, erc],
+                  parameters: [erf, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
