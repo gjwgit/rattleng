@@ -55,11 +55,12 @@ valid_indices <- !is.na(predicted_numeric) & !is.na(actual_numeric)
 
 filtered_predicted_numeric <- predicted_numeric[valid_indices]
 filtered_actual_numeric <- actual_numeric[valid_indices]
+filtered_risk <- risk[valid_indices]
 
 
 # Use rattle's evaluateRisk to generate data required for a Risk Chart.
 
-eval <- rattle::evaluateRisk(filtered_predicted_numeric, filtered_actual_numeric, risk)
+eval <- rattle::evaluateRisk(filtered_predicted_numeric, filtered_actual_numeric, filtered_risk)
 
 # Build title string.
 

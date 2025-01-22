@@ -368,7 +368,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: adaBoostExecuted && boostTicked,
-                  parameters: [ea, em, ro, erc],
+                  parameters: [ea, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -378,7 +378,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: xgBoostExecuted && boostTicked,
-                  parameters: [ex, em, ro, erc],
+                  parameters: [ex, em, ro, erc, hd],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
