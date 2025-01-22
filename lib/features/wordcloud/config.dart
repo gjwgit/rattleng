@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Friday 2024-12-20 16:01:13 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:06:18 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -118,7 +118,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 // The main action here is to run the R script to build the word
                 // cloud itself whic is saved into an SVG file.
 
-                rSource(context, ref, ['model_build_word_cloud']);
+                rSource(context, ref, ['model_build_wordcloud']);
 
                 // Toggle the state to trigger rebuild.
 

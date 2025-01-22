@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2024-12-31 13:46:27 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 09:13:25 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -313,15 +313,15 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ex = 'evaluate_model_xgboost';
                 String ent = 'evaluate_model_neuralnet';
 
-                String ecf = 'evaluate_model_conditional_forest';
-                String erf = 'evaluate_model_random_forest';
+                String ecf = 'evaluate_model_cforest';
+                String erf = 'evaluate_model_rforest';
 
                 // 20241220 gjw Finally we will run the generic templates for
                 // the various performance measures.
 
                 String em = 'evaluate_measure_error_matrix';
                 String ro = 'evaluate_measure_roc';
-                String erc = 'evaluate_riskchart';
+                String erc = 'evaluate_measure_riskchart';
                 String hd = 'evaluate_measure_hand';
 
                 // Execute evaluation for rpart model if it was executed and treeExecuted is true.
