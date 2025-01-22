@@ -1,4 +1,4 @@
-/// Test WEATHER dataset loads properly.
+/// Test WEATHER dataset loads properly when unify is on/off.
 //
 // Time-stamp: <Friday 2025-01-10 08:45:30 +1100 Graham Williams>
 //
@@ -31,35 +31,56 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/load_demo_dataset.dart';
+
+import 'utils/unify_off.dart';
+import 'utils/unify_on.dart';
 import 'utils/verify_text.dart';
+import 'utils/cleanse_on.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Load Weather Dataset.', (WidgetTester tester) async {
+  testWidgets(
+      'Load Weather Dataset and test when cleanse is on and unify is on.',
+      (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
-    await loadDemoDataset(tester);
+    await cleanseOn(tester);
+    await unifyOn(tester);
 
-    // Expect specific text in the ROLES page.
+    await loadDemoDataset(tester);
 
     await verifyText(
       tester,
       [
-        // Verify dates in the Content Column.
+        // Verify the variables are in lowercase and separated by underscores.
 
-        '2023-07-01',
-        '2023-07-02',
-
-        // Verify min_temp in the Content Column.
-
-        '4.6',
-
-        // Verify max_temp in the Content Column.
-
-        '13.9',
+        'min_temp',
       ],
+      multi: true,
+    );
+  });
+
+  testWidgets(
+      'Load Weather Dataset and test when cleanse is on and unify is off.',
+      (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    await cleanseOn(tester);
+    await unifyOff(tester);
+
+    await loadDemoDataset(tester);
+
+    await verifyText(
+      tester,
+      [
+        // Verify the variables are in uppercase and underscores are removed.
+
+        'MinTemp',
+      ],
+      multi: true,
     );
   });
 }
