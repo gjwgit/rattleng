@@ -215,7 +215,6 @@ void main() {
     await partitionOff(tester);
 
     await loadDemoDataset(tester);
-    await Future.delayed(const Duration(seconds: 5));
 
     // Tap the model Tab button.
 
@@ -235,18 +234,33 @@ void main() {
 
     //wait for 1 second
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
 
     // scroll down to the bottom
 
     // await scrollDown(tester);
-
     // Verify the summary of the decision tree is displayed.
+    final textFinder = find.byType(SelectableText);
+    expect(textFinder, findsWidgets);
 
-    await verifySelectableText(
-      tester,
-      '363',
-    );
+    // Print data from all SelectableText widgets found
+    bool found363 = false;
+    for (final element in textFinder.evaluate()) {
+      final widget = element.widget as SelectableText;
+      if (widget.data != null) {
+        if (widget.data == '363') {
+          found363 = true;
+          break;
+        }
+      }
+    }
+    expect(found363, true,
+        reason: 'Text "363" not found in any SelectableText widget');
+
+    // await verifySelectableText(
+    //   tester,
+    //   '363',
+    // );
 
     // await verifyText(
     //   tester,
