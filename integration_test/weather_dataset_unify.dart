@@ -1,4 +1,4 @@
-/// Test WEATHER dataset loads properly.
+/// Test WEATHER dataset loads properly when unify is on/off.
 //
 // Time-stamp: <Friday 2025-01-10 08:45:30 +1100 Graham Williams>
 //

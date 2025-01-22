@@ -1,4 +1,4 @@
-/// Test WEATHER dataset loads properly.
+/// Test WEATHER dataset loads properly when partition is on/off.
 //
 // Time-stamp: <Friday 2025-01-10 08:45:30 +1100 Graham Williams>
 //
@@ -39,7 +39,7 @@ import 'utils/partition_off.dart';
 import 'utils/partition_on.dart';
 import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
