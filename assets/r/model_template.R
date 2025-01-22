@@ -112,6 +112,9 @@ if (<SPLIT_DATASET>) {
 
   split <- c(<DATA_SPLIT_TR_TU_TE>)
   
+  # tc is added to store the complete dataset indices.
+  # tc will be used to update tcds.
+
   tc <- tcnobs %>% sample(tcnobs)
   tr <- tcnobs %>% sample(split[1]*tcnobs)
   tu <- tcnobs %>% seq_len() %>% setdiff(tr) %>% sample(split[2]*tcnobs)
@@ -156,8 +159,12 @@ tuds <- tuds %>%
 teds <- tcds[te, setdiff(vars, ignore)]
 teds <- teds %>%
   mutate(across(where(is.character), as.factor))
-tcds <- tcds[tc, setdiff(vars, ignore)]
-tcds <- tcds %>%
+
+# Retain the complete dataset for later use.
+# The updates make feature names stored in 
+# `object` and `newdata` are the same.
+
+tcds <- tcds[tc, setdiff(vars, ignore)] %>%
   mutate(across(where(is.character), as.factor))
 
 # Check if the target variable exists and create `actual_tc`.

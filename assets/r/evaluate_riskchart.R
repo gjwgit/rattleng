@@ -49,7 +49,9 @@ actual_numeric <- as.numeric(factor(actual)) - 1
 
 valid_indices <- !is.na(predicted_numeric) & !is.na(actual_numeric)
 
-# Filter the vectors based on valid indices.
+# Filter the vectors based on no NAs indices.
+# With this step, the error will be reduced if vectors 
+# does not contain NAs.
 
 filtered_predicted_numeric <- predicted_numeric[valid_indices]
 filtered_actual_numeric <- actual_numeric[valid_indices]
