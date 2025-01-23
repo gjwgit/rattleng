@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Tuesday 2024-10-15 19:21:41 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 17:18:06 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -42,55 +42,59 @@ import 'utils/verify_page.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Tab:', () {
-    testWidgets('Large Dataset, Explore, Missing.', (
-      WidgetTester tester,
-    ) async {
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+  testWidgets('Large Dataset, Explore, Missing.', (
+    WidgetTester tester,
+  ) async {
+    app.main();
+    await tester.pumpAndSettle();
+    await tester.pump(interact);
 
-      await loadDatasetByPath(tester, 'integration_test/medical.csv');
-      await navigateToTab(tester, 'Explore');
+    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await navigateToTab(tester, 'Explore');
 
-      await navigateToFeature(tester, 'Missing', MissingPanel);
+    await navigateToFeature(tester, 'Missing', MissingPanel);
 
-      await tapButton(tester, 'Perform Missing Analysis');
-      await gotoNextPage(tester);
+    await tapButton(tester, 'Perform Missing Analysis');
 
-      await verifyPage('Patterns of Missing Data - Textual');
+    // 20250123 gjw I had to add this delay in order to ensure the R script had
+    // finsihed generating the various analyses.
 
-      await gotoNextPage(tester);
+    await tester.pump(delay);
 
-      await verifyPage('Patterns of Missing Values');
+    await gotoNextPage(tester);
 
-      await gotoNextPage(tester);
+    await verifyPage('Patterns of Missing Data - Textual');
 
-      await verifyPage(
-        'Aggregation of Missing Values',
-      );
+    await gotoNextPage(tester);
 
-      await gotoNextPage(tester);
+    await verifyPage('Patterns of Missing Values');
 
-      await verifyPage(
-        'Aggregation of Missing Values',
-      );
+    await gotoNextPage(tester);
 
-      await gotoNextPage(tester);
+    await verifyPage(
+      'Aggregation of Missing Values',
+    );
 
-      await verifyPage(
-        'Visualisation of Observations with Missing Values',
-      );
+    await gotoNextPage(tester);
 
-      await gotoNextPage(tester);
+    await verifyPage(
+      'Aggregation of Missing Values',
+    );
 
-      await verifyPage(
-        'Comparison of Counts of Missing Values',
-      );
+    await gotoNextPage(tester);
 
-      await gotoNextPage(tester);
+    await verifyPage(
+      'Visualisation of Observations with Missing Values',
+    );
 
-      await verifyPage('Patterns of Missingness');
-    });
+    await gotoNextPage(tester);
+
+    await verifyPage(
+      'Comparison of Counts of Missing Values',
+    );
+
+    await gotoNextPage(tester);
+
+    await verifyPage('Patterns of Missingness');
   });
 }
