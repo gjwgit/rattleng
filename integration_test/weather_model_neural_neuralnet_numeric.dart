@@ -1,6 +1,6 @@
 /// Test neuralnet() with numeric demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 15:00:27 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 15:46:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -75,7 +75,7 @@ void main() {
 
       await gotoNextPage(tester);
 
-      await verifySelectableText(
+      await verifyPageSelectableText(
         'Neuralnet(formula = formula_nn, data = ds_final, hidden =',
       );
 

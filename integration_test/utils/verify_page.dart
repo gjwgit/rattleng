@@ -1,6 +1,6 @@
 /// Verify the content of the page.
 //
-// Time-stamp: <Friday 2025-01-10 08:26:05 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 15:46:23 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -59,7 +59,7 @@ Future<void> verifyMarkdown(WidgetTester tester) async {
 
 /// Verify that the selectable text contains the expected content.
 
-Future<void> verifySelectableText(String text) async {
+Future<void> verifyPageSelectableText(String text) async {
   final textFinder = find.byWidgetPredicate(
     (widget) => widget is SelectableText && widget.data?.contains(text) == true,
   );

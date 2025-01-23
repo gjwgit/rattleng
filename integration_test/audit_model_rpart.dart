@@ -1,6 +1,6 @@
 /// Test AUDIT dataset TREE model RPART.
 //
-// Time-stamp: <Tuesday 2025-01-21 21:12:11 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 15:44:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -41,7 +41,7 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +65,7 @@ void main() {
     await gotoNextPage(tester);
     await verifyPage('Decision Tree Model', 'Observations = 1400');
 
-    await verifyText(
+    await verifySelectableText(
       tester,
       [
         // 20250110 gjw We get a trivial decision tree initially since
