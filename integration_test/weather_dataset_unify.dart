@@ -30,10 +30,12 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 
 import 'utils/unify_off.dart';
 import 'utils/unify_on.dart';
+import 'utils/verify_role.dart';
 import 'utils/verify_text.dart';
 import 'utils/cleanse_on.dart';
 
@@ -51,6 +53,8 @@ void main() {
 
     await loadDemoDataset(tester);
 
+    await tester.pump(interact);
+
     await verifyText(
       tester,
       [
@@ -60,6 +64,9 @@ void main() {
       ],
       multi: true,
     );
+
+    await verifyRole('date', 'Ident');
+    await verifyRole('min_temp', 'Input');
   });
 
   testWidgets(
@@ -70,6 +77,8 @@ void main() {
 
     await cleanseOn(tester);
     await unifyOff(tester);
+
+    await tester.pump(interact);
 
     await loadDemoDataset(tester);
 
