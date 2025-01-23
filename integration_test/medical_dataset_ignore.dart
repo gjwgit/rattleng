@@ -1,6 +1,6 @@
 /// Test MEDICAL dataset IGNORE roles.
 //
-// Time-stamp: <Thursday 2025-01-23 13:43:13 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-24 10:37:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -25,7 +25,7 @@
 
 library;
 
-// import 'dart:math';
+import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -34,6 +34,7 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/load_dataset_by_path.dart';
 import 'utils/set_dataset_role.dart';
+import 'utils/verify_role.dart';
 
 /// List of specific variables that should have their role automatically set to
 /// 'Ignore' in the DEMO and the LARGE datasets.
@@ -66,20 +67,18 @@ void main() {
 
     // TODO 20250123 gjw VERIFY ROLES
 
-    // verifyRole('rec_id', 'Ident');
-    // verifyRole('ssn', 'Ident');
-    // verifyRole('gender', 'Target');
+    verifyRole('rec_id', 'Ident');
+    verifyRole('ssn', 'Ident');
+    verifyRole('gender', 'Target');
 
     for (final v in varsToIgnore) {
       await setDatasetRole(tester, v, 'Ignore');
     }
 
-//    final random = Random();
-//    String randomItem = varsToIgnore[random.nextInt(varsToIgnore.length)];
+    final random = Random();
+    String randomItem = varsToIgnore[random.nextInt(varsToIgnore.length)];
 
-    // TODO 20250123 gjw VERIFY ROLES
-
-    // verifyRole(randomItem, 'Ignore');
-    // verifyRole('gender', 'Target');
+    verifyRole(randomItem, 'Ignore');
+    verifyRole('gender', 'Target');
   });
 }
