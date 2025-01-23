@@ -1,6 +1,6 @@
 /// Verify selectable text content in the widget.
 //
-// Time-stamp: <Thursday 2025-01-23 14:18:11 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 14:21:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
 /// Verify all [texts] exist within SelectableText widgets on the screen.
