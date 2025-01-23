@@ -1,6 +1,6 @@
 /// Test AUDIT dataset loads properly.
 //
-// Time-stamp: <Friday 2025-01-10 08:13:20 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 14:14:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/load_demo_dataset.dart';
+import 'utils/verify_selectable_text.dart';
 import 'utils/verify_text.dart';
 
 void main() {
@@ -42,18 +43,17 @@ void main() {
 
     await loadDemoDataset(tester, 'Audit');
 
-    // 20250110 gjw On first attempt of the test I had to wait a bit longer. But
-    // repeated testing worked just fine without a delay.
-
-    // await tester.pump(delay);
-
-    // 20250110 gjw Expect specific text in the ROLES page.
-
     await verifyText(
       tester,
       [
         'employment',
         'income',
+      ],
+    );
+
+    await verifySelectableText(
+      tester,
+      [
         '30, 50, 40',
         'Female, Male, Male',
       ],

@@ -71,7 +71,7 @@ void main() {
 
     await gotoNextPage(tester);
 
-    await verifySelectableTextContainsAll(tester, ['254']);
+    await verifySelectableText(tester, ['254']);
   });
 
   testWidgets(
@@ -101,6 +101,6 @@ void main() {
 
     await gotoNextPage(tester);
 
-    await verifySelectableTextContainsAll(tester, ['363']);
+    await verifySelectableText(tester, ['363']);
   });
 }

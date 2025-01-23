@@ -51,7 +51,7 @@ void main() {
 
     // Verify dataset content.
 
-    await verifySelectableTextContainsAll(
+    await verifySelectableText(
       tester,
       [
         // Verify dates in the Sample Column for date Variable.
@@ -99,7 +99,7 @@ void main() {
 
     await loadDemoDataset(tester);
 
-    await verifySelectableTextContainsAll(
+    await verifySelectableText(
       tester,
       // These are unique when cleanse is off.
 
