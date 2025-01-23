@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Monday 2024-09-16 14:58:52 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 16:50:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,178 +25,82 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/explore.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
+import 'utils/load_dataset_by_path.dart';
+import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/tap_button.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore large:', () {
-    testWidgets('Summary.', (WidgetTester tester) async {
-      app.main();
+  testWidgets('Summary.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-      // Trigger a frame. Finish animation and scheduled microtasks.
+    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await gotoNextPage(tester);
 
-      await tester.pumpAndSettle();
+    await navigateToTab(tester, 'Explore');
+    await navigateToFeature(tester, 'Summary', SummaryPanel);
+    await tapButton(tester, 'Generate Dataset Summary');
 
-      // Leave time to see the first page.
+    await tester.pump(hack);
 
-      await tester.pump(interact);
+    await gotoNextPage(tester);
 
-      // Locate the TextField where the file path is input.
+    // Find some expected strings.
 
-      final filePathField = find.byType(TextField);
-      expect(filePathField, findsOneWidget);
+    final ssnFinder = find.textContaining('Length:20000');
+    expect(ssnFinder, findsOneWidget);
 
-      // Enter the file path programmatically.
+    // Find the gender containing count of females".
 
-      await tester.enterText(
-        filePathField,
-        'integration_test/medical.csv',
-      );
+    final firstNameFinder = find.textContaining('f:12435');
+    expect(firstNameFinder, findsOneWidget);
 
-      // Simulate pressing the Enter key.
+    // Tap the right arrow button to go to "Dataset Glimpse" page.
 
-      await tester.testTextInput.receiveAction(TextInputAction.done);
+    await gotoNextPage(tester);
 
-      // Optionally pump the widget tree to reflect the changes.
-      await tester.pumpAndSettle();
+    // Find the text containing "20,000" as the number of rows.
 
-      await tester.pump(interact);
+    var rowsFinder = find.textContaining('Rows: 20,000');
+    expect(rowsFinder, findsOneWidget);
 
-      // Find the Explore tab by icon and tap on it.
+    // Tap the right arrow button to go to "Skim of the Dataset" page.
 
-      final exploreIconFinder = find.byIcon(Icons.insights);
-      expect(exploreIconFinder, findsOneWidget);
+    await gotoNextPage(tester);
 
-      // Tap the Explore tab.
+    // Find the text containing "20000" as the number of rows.
 
-      await tester.tap(exploreIconFinder);
-      await tester.pumpAndSettle();
+    rowsFinder = find.textContaining('20000');
+    expect(rowsFinder, findsOneWidget);
 
-      // Verify if the ExploreTabs widget is shown.
+    // Find the text containing "24" as the number of columns.
 
-      expect(find.byType(ExploreTabs), findsOneWidget);
+    final columnsFinder = find.textContaining('24');
+    expect(columnsFinder, findsNWidgets(2));
 
-      // Navigate to the Explore tab.
+    // Tap the right arrow button to go to "Kurtosis and Skewness" page.
 
-      final exploreTabFinder = find.text('Explore');
-      await tester.tap(exploreTabFinder);
-      await tester.pumpAndSettle();
+    await gotoNextPage(tester);
 
-      await tester.pump(interact);
+    // Find the text containing "2.35753359" as the weight.
 
-      // Find the Summary tab by its title.
+    final weightFinder = find.textContaining('2.12090961');
+    expect(weightFinder, findsOneWidget);
 
-      final summaryTabFinder = find.text('Summary');
-      expect(summaryTabFinder, findsOneWidget);
+    // Find the text containing "0.099352734" as the age_at_consultation.
 
-      // Tap the Summary tab.
-
-      await tester.tap(summaryTabFinder);
-      await tester.pumpAndSettle();
-
-      // Verify that the SummaryPanel is shown.
-
-      expect(find.byType(SummaryPanel), findsOneWidget);
-
-      await tester.pump(interact);
-
-      // Find the button by its text.
-
-      final generateSummaryButtonFinder = find.text('Generate Dataset Summary');
-      expect(generateSummaryButtonFinder, findsOneWidget);
-
-      // Tap the button.
-
-      await tester.tap(generateSummaryButtonFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      // Add a delay to allow the summary to be generated. This will fix the qtest failure.
-
-      await tester.pump(delay);
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Summary of the Dataset" page.
-
-      // await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      await tester.pump(hack);
-
-      // Find some expected strings.
-
-      final ssnFinder = find.textContaining('Length:20000');
-      expect(ssnFinder, findsOneWidget);
-
-      // Find the gender containing count of females".
-
-      final firstNameFinder = find.textContaining('f:12435');
-      expect(firstNameFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Dataset Glimpse" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      // Find the text containing "20,000" as the number of rows.
-
-      var rowsFinder = find.textContaining('20,000');
-      expect(rowsFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Skim of the Dataset" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      // Find the text containing "20000" as the number of rows.
-
-      rowsFinder = find.textContaining('20000');
-      expect(rowsFinder, findsOneWidget);
-
-      // Find the text containing "24" as the number of columns.
-
-      final columnsFinder = find.textContaining('24');
-      expect(columnsFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Kurtosis and Skewness" page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      // Find the text containing "2.35753359" as the weight.
-
-      final weightFinder = find.textContaining('2.12090961');
-      expect(weightFinder, findsOneWidget);
-
-      // Find the text containing "0.099352734" as the age_at_consultation.
-
-      final ageFinder = find.textContaining('0.099352734');
-      expect(ageFinder, findsOneWidget);
-    });
+    final ageFinder = find.textContaining('0.099352734');
+    expect(ageFinder, findsOneWidget);
   });
 }
