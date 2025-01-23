@@ -40,7 +40,7 @@ import 'package:rattle/widgets/image_page.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/load_dataset_by_path.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 
@@ -140,7 +140,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(interact);
 
-    await openDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/medical.csv');
 
     await navigateToPage(
       tester,

@@ -35,7 +35,7 @@ import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/load_dataset_by_path.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 
@@ -50,7 +50,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openDatasetByPath(tester, 'integration_test/medical.csv');
+      await loadDatasetByPath(tester, 'integration_test/medical.csv');
       await navigateToTab(tester, 'Explore');
 
       await navigateToFeature(tester, 'Missing', MissingPanel);

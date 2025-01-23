@@ -35,7 +35,7 @@ import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/load_dataset_by_path.dart';
 import 'utils/press_first_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_text.dart';
@@ -63,7 +63,7 @@ void main() {
 
       // Open the large dataset in the app.
 
-      await openDatasetByPath(tester, 'integration_test/medical.csv');
+      await loadDatasetByPath(tester, 'integration_test/medical.csv');
 
       // Navigate to the 'Transform' tab in the app.
 

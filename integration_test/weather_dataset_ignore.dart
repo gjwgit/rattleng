@@ -1,6 +1,6 @@
 /// Test WEATHER dataset IGNORE roles.
 //
-// Time-stamp: <Friday 2024-12-27 15:41:03 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 12:12:53 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,7 +40,7 @@ import 'utils/test_print.dart';
 // the app on loading the data to be 'Ignore'. For the DEMO dataset there are no
 // IGNORED by default.
 
-final List<String> demoVariablesToIgnore = [];
+final List<String> variablesToIgnore = [];
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -60,7 +60,7 @@ void main() {
 
     testPrint('Check for IGNORED variables.');
 
-    for (final variable in demoVariablesToIgnore) {
+    for (final variable in variablesToIgnore) {
       bool foundVariable = false;
 
       // Scroll in steps and search for the variable until it's found.

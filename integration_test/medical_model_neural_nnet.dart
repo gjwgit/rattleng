@@ -38,7 +38,7 @@ import 'package:rattle/widgets/text_page.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/load_dataset_by_path.dart';
 
 /// List of specific variables that should have their role set to 'Ignore' in
 /// large dataset. These are factors and don't play well with nnet.
@@ -69,7 +69,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openDatasetByPath(tester, 'integration_test/medical.csv');
+      await loadDatasetByPath(tester, 'integration_test/medical.csv');
 
       await tester.pump(longHack);
 

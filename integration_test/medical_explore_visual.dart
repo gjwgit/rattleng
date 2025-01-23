@@ -36,7 +36,7 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/load_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +47,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(hack);
 
-      await openDatasetByPath(tester, 'integration_test/medical.csv');
+      await loadDatasetByPath(tester, 'integration_test/medical.csv');
       await tester.pump(longHack);
 
       // Find the Explore tab by icon and tap on it.

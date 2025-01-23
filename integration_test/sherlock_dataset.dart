@@ -35,7 +35,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/open_dataset_by_path.dart';
+import 'utils/load_dataset_by_path.dart';
 
 const Duration delay = Duration(seconds: 5);
 
@@ -48,7 +48,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await openDatasetByPath(tester, 'integration_test/sherlock.txt');
+      await loadDatasetByPath(tester, 'integration_test/sherlock.txt');
 
       await gotoNextPage(tester);
 

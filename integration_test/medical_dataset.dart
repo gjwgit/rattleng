@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Monday 2024-09-16 14:52:44 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 12:29:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,86 +25,29 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
+import 'utils/load_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Dataset large:', () {
-    testWidgets('Glimpse, Roles.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+  testWidgets('Load Medical Dataset.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
 
-      // Locate the TextField where the file path is input.
+    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    // await gotoNextPage(tester);
 
-      final filePathField = find.byType(TextField);
-      expect(filePathField, findsOneWidget);
+    // Find the text containing "rec-57600".
 
-      // Enter the file path programmatically.
+    final rolesRecIDFinder = find.textContaining('rec-57600');
+    expect(rolesRecIDFinder, findsOneWidget);
 
-      await tester.enterText(
-        filePathField,
-        'integration_test/medical.csv',
-      );
-
-      // Simulate pressing the Enter key.
-
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-
-      // Optionally pump the widget tree to reflect the changes.
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      // Tap the right arrow button to go to ROLES page.
-
-      await gotoNextPage(tester);
-
-      // 20240822 TODO gjw NEEDS A WAIT FOR THE R CODE TO FINISH!!!
-      //
-      // How do we ensure the R Code is executed before proceeding in Rattle
-      // itself - we need to deal with the async issue in Rattle.
-
-      // // Tap the right arrow button to go to "Dataset Glimpse" page.
-
-      // await tester.tap(rightArrowFinder);
-      // await tester.pumpAndSettle();
-
-      // // Find the text containing the number of rows and columns.
-
-      // final glimpseRowFinder = find.textContaining('Rows: 20,000');
-      // expect(glimpseRowFinder, findsOneWidget);
-      // final glimpseColumnFinder = find.textContaining('Columns: 24');
-      // expect(glimpseColumnFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "ROLES" page.
-
-      await tester.pumpAndSettle();
-
-      // Find the text containing "rec-57600".
-
-      final rolesRecIDFinder = find.textContaining('rec-57600');
-      expect(rolesRecIDFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      // TODO 20240822 gjw FOR kevin EXTRA DATASET LARGE TESTS
-      //
-      // Check which variables are INPUT, IGNORE, TARGET
-      //
-      // Maybe load the provider to make sure the variables are assigned to
-      // the expected ROLES.
-    });
+    await tester.pump(interact);
   });
 }

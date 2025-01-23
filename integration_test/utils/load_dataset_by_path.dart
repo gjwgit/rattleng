@@ -1,8 +1,8 @@
-/// Open the a dataset from its path
+/// Load a dataset from its path.
 //
-// Time-stamp: <Friday 2024-09-20 08:07:17 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 12:27:41 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -31,7 +31,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
 
-Future<void> openDatasetByPath(WidgetTester tester, String path) async {
+Future<void> loadDatasetByPath(
+  WidgetTester tester,
+  String path,
+) async {
   // Locate the TextField where the file path is input.
 
   final filePathField = find.byType(TextField);
@@ -39,22 +42,14 @@ Future<void> openDatasetByPath(WidgetTester tester, String path) async {
 
   // Enter the file path programmatically.
 
-  await tester.enterText(
-    filePathField,
-    path,
-  );
+  await tester.enterText(filePathField, path);
 
   // Simulate pressing the Enter key.
 
   await tester.testTextInput.receiveAction(TextInputAction.done);
-
-  // Optionally pump the widget tree to reflect the changes.
-
   await tester.pumpAndSettle();
 
-  await tester.pump(interact);
+  // Additional delay to load the dataset.
 
-  // TODO 20240903 zy WE NEED TO ELIMINATE THE hack WAIT DUE TO async.
-
-  await tester.pump(hack);
+  await tester.pump(delay);
 }
