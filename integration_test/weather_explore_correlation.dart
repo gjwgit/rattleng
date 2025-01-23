@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab CORRELATION feature.
 //
-// Time-stamp: <Friday 2024-12-27 15:52:50 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-24 08:18:18 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,7 +37,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_selectable_text.dart';
 import 'utils/verify_page.dart';
 
 void main() {
@@ -47,7 +47,6 @@ void main() {
     testWidgets('Weather Explore Correlation.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(interact);
 
       await loadDemoDataset(tester);
 
@@ -60,7 +59,7 @@ void main() {
       await gotoNextPage(tester);
       await verifyPage('Correlation - Numeric Data', '1.00');
 
-      await verifyText(
+      await verifySelectableText(
         tester,
         [
           'risk_mm                -0.20        -0.22         0.06',
