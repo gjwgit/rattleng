@@ -25,20 +25,19 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/svm/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/model.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/navigate_to_page.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -52,11 +51,9 @@ void main() {
 
       await loadDemoDataset(tester);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
+      await tester.pump(interact);
+
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the SVM feature.
 
@@ -64,22 +61,24 @@ void main() {
 
       await tester.pump(interact);
 
-      await tapButton(tester, 'Build SVM Model');
-
-      await tester.pump(delay);
+      // tap build button twice to ensure it is enabled.
 
       await tapButton(tester, 'Build SVM Model');
+
+      await tapButton(tester, 'Build SVM Model');
+
+      await tester.pump(hack);
+
+      await gotoNextPage(tester);
 
       await tester.pump(interact);
 
       // Find the title of text page.
 
-      final titleFinder = find.textContaining(
-        'Support Vector Machine object of class "ksvm"',
+      await verifySelectableText(
+        tester,
+        ['Support Vector Machine object of class "ksvm"'],
       );
-      expect(titleFinder, findsOneWidget);
-
-      await tester.pump(interact);
     });
   });
 }
