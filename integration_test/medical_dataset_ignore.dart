@@ -1,6 +1,6 @@
 /// Test MEDICAL dataset IGNORE roles.
 //
-// Time-stamp: <Thursday 2025-01-23 13:37:50 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-23 13:42:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -74,8 +74,8 @@ void main() {
       await setDatasetRole(tester, v, 'Ignore');
     }
 
-    final random = Random();
-    String randomItem = varsToIgnore[random.nextInt(varsToIgnore.length)];
+//    final random = Random();
+//    String randomItem = varsToIgnore[random.nextInt(varsToIgnore.length)];
 
     // TODO 20250123 gjw VERIFY ROLES
 
