@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature LARGE dataset.
 //
-// Time-stamp: <Friday 2024-09-20 08:12:33 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-01-24 06:44:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,154 +25,40 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/explore.dart';
-import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
+import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/tap_button.dart';
+import 'utils/verify_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore tab Large dataset:', () {
-    testWidgets('Visual feature.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
+  testWidgets('Visual feature.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+    await tester.pump(hack);
 
-      await loadDatasetByPath(tester, 'integration_test/medical.csv');
-      await tester.pump(longHack);
-
-      // Find the Explore tab by icon and tap on it.
-
-      final exploreIconFinder = find.byIcon(Icons.insights);
-      expect(exploreIconFinder, findsOneWidget);
-
-      // Tap the Explore tab.
-
-      await tester.tap(exploreIconFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Verify if the ExploreTabs widget is shown.
-
-      expect(find.byType(ExploreTabs), findsOneWidget);
-
-      // Navigate to the Explore tab.
-
-      final exploreTabFinder = find.text('Explore');
-      await tester.tap(exploreTabFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(longHack);
-
-      ////////////////////////////////////////////////////////////////////////
-
-      // Visual page
-
-      final visualTabFinder = find.text('Visual');
-      expect(visualTabFinder, findsOneWidget);
-
-      // Tap the Visual tab.
-
-      await tester.tap(visualTabFinder);
-      await tester.pumpAndSettle();
-
-      // Verify that the VisualPanel is shown.
-
-      expect(find.byType(VisualPanel), findsOneWidget);
-
-      await tester.pump(interact);
-      await tester.pump(delay);
-
-      // Find the button by its text.
-
-      final generatePlotButtonFinder = find.text('Generate Plots');
-      expect(generatePlotButtonFinder, findsOneWidget);
-
-      // Tap the button.
-
-      await tester.tap(generatePlotButtonFinder);
-      await tester.pumpAndSettle();
-
-      await tester.pump(longHack);
-
-      // Find the right arrow button in the PageIndicator.
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowFinder, findsOneWidget);
-
-      // Automatically go to "Box Plot" page 2.
-
-      // Find the text containing "Box Plot".
-
-      final boxPlotFinder = find.textContaining('Box Plot');
-      expect(boxPlotFinder, findsOneWidget);
-
-      // Find the image.
-
-      final boxImageFinder = find.byType(ImagePage);
-      expect(boxImageFinder, findsOneWidget);
-
-      // TODO 20240827 gjw SOME PLOT TEST IDEAS
-      //
-      // Can we read the generated SVG file properties to ensure the plot has
-      // just been generated and the size is abuotwhat we expect it to be.
-
-      // Tap the right arrow button to go to "Density Plot of Values" page 3.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Find the text containing "Density Plot of Values".
-
-      final densityPlotFinder = find.textContaining('Density Plot of Values');
-      expect(densityPlotFinder, findsOneWidget);
-
-      // Find the image.
-
-      final densityImageFinder = find.byType(ImagePage);
-      expect(densityImageFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Cumulative Plot" page 4.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Find the text containing "Cumulative Plot".
-
-      final cumulativePlotFinder = find.textContaining('Cumulative Plot');
-      expect(cumulativePlotFinder, findsOneWidget);
-
-      // Find the image.
-
-      final cumulativeImageFinder = find.byType(ImagePage);
-      expect(cumulativeImageFinder, findsOneWidget);
-
-      // Tap the right arrow button to go to "Benford Plots" page 5.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Find the text containing "Benford Plot".
-
-      final benfordPlotFinder = find.textContaining('Benford Plot');
-      expect(benfordPlotFinder, findsOneWidget);
-
-      // Find the image.
-
-      final imageFinder = find.byType(ImagePage);
-      expect(imageFinder, findsOneWidget);
-    });
+    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await navigateToTab(tester, 'Explore');
+    await navigateToFeature(tester, 'Visual', VisualPanel);
+    await tapButton(tester, 'Generate Plots');
+    await tester.pump(delay);
+    await gotoNextPage(tester);
+    await verifyPage('Box Plot Notch');
+    await gotoNextPage(tester);
+    await verifyPage('Density Plot of Values');
+    await gotoNextPage(tester);
+    await verifyPage('Cumulative Plot');
+    await gotoNextPage(tester);
+    await verifyPage('Benford Plot');
   });
 }
