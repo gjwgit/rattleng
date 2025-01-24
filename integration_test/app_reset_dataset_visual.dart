@@ -1,6 +1,6 @@
 /// Test visual image disappear after the DATASET RESET.
 //
-// Time-stamp: <Tuesday 2024-10-15 19:24:10 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-24 16:24:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -80,9 +80,9 @@ void main() {
 
       // Tap the right arrow to go to the forth page.
 
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
+      // await tester.tap(rightArrowButton);
+      // await tester.pumpAndSettle();
+      // await tester.pump(hack);
 
       final imageFinder = find.byType(ImagePage);
 
@@ -167,9 +167,9 @@ void main() {
 
     // Tap the right arrow to go to the forth page.
 
-    await tester.tap(rightArrowButton);
-    await tester.pumpAndSettle();
-    await tester.pump(hack);
+    // await tester.tap(rightArrowButton);
+    // await tester.pumpAndSettle();
+    // await tester.pump(hack);
 
     final imageFinder = find.byType(ImagePage);
 
