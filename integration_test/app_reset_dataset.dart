@@ -1,6 +1,6 @@
 /// Test the DATASET RESET functionality.
 //
-// Time-stamp: <Monday 2024-10-14 13:34:37 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-24 14:44:12 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,7 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/load_demo_dataset.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -47,20 +47,6 @@ void main() {
       await tester.pump(interact);
 
       await loadDemoDataset(tester);
-
-      final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
-
-      // Tap the right arrow button to go to the second page.
-
-      // await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
-
-      // Tap the right arrow button to go to the third page.
-
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
 
       // Reload Demo Dataset. Not using loadDemoDataset() for now since it does
       // not handle the popup warning where we need to tap YES.
@@ -77,7 +63,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(delay);
 
-      final demoButton = find.text('Demo');
+      final demoButton = find.text('Weather');
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
       await tester.pump(delay);
@@ -100,11 +86,7 @@ void main() {
 
       // Tap the right arrow button to go to "ROLES" page.
 
-      await tester.tap(rightArrowFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
-
-      await verifyText(
+      await verifySelectableText(
         tester,
         [
           // Verify date in the Content Column.
