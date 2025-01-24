@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Friday 2025-01-24 08:53:56 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-24 17:20:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -88,10 +88,10 @@ void main() {
 
     // Find the text fields by their keys and enter the new values.
 
-    await tester.enterText(find.byKey(const Key('hidden_neurons')), '11');
+    await tester.enterText(find.byKey(const Key('hidden_layers')), '11');
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byKey(const Key('max_NWts')), '10001');
+    await tester.enterText(find.byKey(const Key('max_nwts')), '10001');
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byKey(const Key('maxit')), '101');
@@ -112,12 +112,14 @@ void main() {
 
     await tester.pump(delay);
 
+    await gotoNextPage(tester);
+
     // Check if SelectableText contains the expected content.
 
     final modelDescriptionFinder = find.byWidgetPredicate(
       (widget) =>
           widget is SelectableText &&
-          widget.data?.contains('A 20-11-1 network with 243 weights') == true,
+          widget.data?.contains('A 7-11-1 network with 100 weights') == true,
     );
 
     // Ensure the SelectableText widget with the expected content exists.
@@ -134,7 +136,7 @@ void main() {
       (widget) =>
           widget is SelectableText &&
           widget.data?.contains(
-                'Options were - entropy fitting.',
+                'Options were - entropy fitting',
               ) ==
               true,
     );
