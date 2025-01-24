@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-01-21 20:54:34 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 14:15:19 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -52,6 +52,13 @@ if (<NEURAL_IGNORE_CATEGORIC>) {
 }
 
 # Train a Neural Network model using nnet.
+##
+## 20250124 gjw We would like to specify one of linout, entropy,
+## softmax, censored, as TRUE but when we specify entropy we see an
+## error: `formal argument "entropy" matched by multiple actual
+## arguments`. It is not clear where this is coming from without
+## further research for now. These options also only apply is specific
+## situations that we need to test for. Not implemented for now.
 
 model_nn <- nnet::nnet(
   form,

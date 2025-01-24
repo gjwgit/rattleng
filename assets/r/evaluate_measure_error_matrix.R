@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-17 19:45:10 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:23:14 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,10 +30,6 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
-
-# Load required packages from the local library into the R session.
-
-library(rattle)       # Generate an error matrix.
 
 ####################################
 

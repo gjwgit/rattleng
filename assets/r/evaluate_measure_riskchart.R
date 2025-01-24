@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:21:31 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:25:52 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,11 +33,6 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
-
-library(glue)         # Format strings: glue().
-library(rattle)       # Generate a risk chart.
-
 ####################################
 
 # Convert factors to characters, then to numeric.
@@ -50,7 +45,7 @@ actual_numeric <- as.numeric(factor(actual)) - 1
 valid_indices <- !is.na(predicted_numeric) & !is.na(actual_numeric)
 
 # Filter the vectors based on no NAs indices.
-# With this step, the error will be reduced if vectors 
+# With this step, the error will be reduced if vectors
 # does not contain NAs.
 
 filtered_predicted_numeric <- predicted_numeric[valid_indices]

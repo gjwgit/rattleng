@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-17 16:12:21 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:22:09 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -55,6 +55,7 @@
 library(ggplot2) # To support a local rattle theme.
 library(ggtext)  # To support markdown text in ggplot title.
 library(glue)    # To glue strings together.
+library(rattle)  # Support functions used throughout data science.
 
 ####################################
 # Default settings

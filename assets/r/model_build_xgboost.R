@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:02:03 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:26:09 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,7 +28,6 @@
 library(Ckmeans.1d.dp)  # For ggplot.
 library(data.table)     # Display data as a nicely formatted table.
 library(hmeasure)
-library(rattle)         # Provides a convenient wrapper for xgboost.
 library(xgboost)        # For XGBoost model.
 
 # Define model type and description.

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-01-14 15:25:47 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:27:11 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,7 +42,6 @@
 
 library(ada)
 library(caret)
-library(rattle)
 library(rpart)
 
 # Define model type and description to be used in following R scripts.

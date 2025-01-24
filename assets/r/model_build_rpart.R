@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-17 16:18:37 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:24:46 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,8 +35,6 @@
 
 # Load required packages from the local library into the R session.
 
-library(glue)         # Format strings: glue().
-library(rattle)       # Support: asRules(), fancyRpartPlot().
 library(rpart)        # ML: decision tree rpart().
 
 # Define model type and description to be used in following R scripts.

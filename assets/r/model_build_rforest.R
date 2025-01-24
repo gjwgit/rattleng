@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:21:14 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:25:24 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,10 +35,7 @@
 
 # Load required packages from the local library into the R session.
 
-library(ggplot2)
-library(glue)         # Format strings: glue().
 library(kernlab)
-library(rattle)
 library(randomForest) # ML: randomForest() na.roughfix() for missing data.
 library(reshape2)
 library(verification)

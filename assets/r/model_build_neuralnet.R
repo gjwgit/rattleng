@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-01-21 20:54:27 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-24 12:26:31 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,14 +30,6 @@
 #
 # @williams:2017:essentials.
 # https://survivor.togaware.com/datascience/ for further details.
-
-# Load required packages from the local library into the R session.
-
-# library(neuralnet)
-# library(caret)
-# library(NeuralNetTools)  # For neural network plotting
-# library(rattle)
-# library(sigmoid)
 
 # Define the model type and description for file paths and titles.
 
