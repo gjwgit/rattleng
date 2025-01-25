@@ -1,6 +1,6 @@
 /// Test bicluster() cluster analysis with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:31:00 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,53 +43,33 @@ import 'utils/tap_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model BiCluster:', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+  testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+    await tester.pump(interact);
+    await loadDemoDataset(tester);
+    await navigateToPage(
+      tester,
+      Icons.model_training,
+      ModelTabs,
+    );
+    await navigateToFeature(tester, 'Cluster', ClusterPanel);
+    await tester.pump(interact);
+    final biclusterChip = find.text(
+      'BiCluster',
+    );
+    await tester.tap(biclusterChip);
+    await tester.pumpAndSettle();
+    await tapButton(tester, 'Build Clustering');
+    await tester.pump(delay);
+    await tapButton(tester, 'Build Clustering');
+    await tester.pump(interact);
 
-      await tester.pump(interact);
+    // Find the text containing the number of default clusters.
 
-      await loadDemoDataset(tester);
+    final dataFinder = find.textContaining('Cluster Means:');
+    expect(dataFinder, findsOneWidget);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
-
-      // Navigate to the Cluster feature.
-
-      await navigateToFeature(tester, 'Cluster', ClusterPanel);
-
-      await tester.pump(interact);
-
-      // Find the ChoiceChipTip widget for BiCluster type.
-
-      final biclusterChip = find.text(
-        'BiCluster',
-      );
-
-      // Tap the BiCluster chip to switch type.
-
-      await tester.tap(biclusterChip);
-
-      await tester.pumpAndSettle();
-
-      await tapButton(tester, 'Build Clustering');
-
-      await tester.pump(delay);
-
-      await tapButton(tester, 'Build Clustering');
-
-      await tester.pump(interact);
-
-      // Find the text containing the number of default clusters.
-
-      final dataFinder = find.textContaining('Cluster Means:');
-      expect(dataFinder, findsOneWidget);
-
-      await tester.pump(interact);
-    });
+    await tester.pump(interact);
   });
 }

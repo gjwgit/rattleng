@@ -1,6 +1,6 @@
 /// Test WEATHER dataset loads properly when partition is on/off.
 //
-// Time-stamp: <Friday 2025-01-10 08:45:30 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:32:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -49,28 +49,13 @@ void main() {
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await unifyOn(tester);
     await partitionOn(tester);
-
     await loadDemoDataset(tester);
-
-    // Tap the model Tab button.
-
     await navigateToTab(tester, 'Model');
-
-    // Navigate to the Tree feature.
-
     await navigateToFeature(tester, 'Tree', TreePanel);
-
-    // click build button Build Decision Tree
-
     await tapButton(tester, 'Build Decision Tree');
-
-    //go to next page
-
     await gotoNextPage(tester);
-
     await verifySelectableText(tester, ['254']);
   });
 
@@ -79,28 +64,13 @@ void main() {
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await unifyOn(tester);
     await partitionOff(tester);
-
     await loadDemoDataset(tester);
-
-    // Tap the model Tab button.
-
     await navigateToTab(tester, 'Model');
-
-    // Navigate to the Tree feature.
-
     await navigateToFeature(tester, 'Tree', TreePanel);
-
-    // click build button Build Decision Tree
-
     await tapButton(tester, 'Build Decision Tree');
-
-    //go to next page
-
     await gotoNextPage(tester);
-
     await verifySelectableText(tester, ['363']);
   });
 }

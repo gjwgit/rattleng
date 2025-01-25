@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Monday 2024-10-14 08:34:17 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:15:29 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -51,15 +51,8 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
       await loadDatasetByPath(tester, 'integration_test/medical.csv');
-
-      // Tap the model Tab button.
-
       await navigateToTab(tester, 'Model');
-
-      // Navigate to the Tree feature.
-
       await navigateToFeature(tester, 'Tree', TreePanel);
 
       // Find the ChoiceChipTip widget for the traditional algorithm type.
@@ -77,7 +70,6 @@ void main() {
       // Tap the conditional chip to switch algorithms.
 
       await tester.tap(conditionalChip);
-
       await tester.pumpAndSettle();
       await tester.pump(longHack);
 

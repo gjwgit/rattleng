@@ -1,6 +1,6 @@
 /// Test WEATHER dataset IGNORE roles.
 //
-// Time-stamp: <Thursday 2025-01-23 12:12:53 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:32:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -48,7 +48,6 @@ void main() {
   testWidgets('Weather Ignored.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDemoDataset(tester);
 
     // Find the scrollable ListView that makes up the ROLES page. This should

@@ -1,6 +1,6 @@
 /// Build BOOST model.
 //
-// Time-stamp: <Sunday 2024-10-13 12:33:29 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:27:00 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -42,36 +42,20 @@ import 'utils/verify_page.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Boost XGBoost', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
-      app.main();
-
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
-
-      await loadDemoDataset(tester);
-      await tester.pump(delay);
-
-      await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Boost', BoostPanel);
-
-      await tapButton(tester, 'Build Boosted Trees');
-
-      await tester.pump(delay);
-
-      await gotoNextPage(tester);
-
-      // Verify the content of the page.
-
-      await verifyPage(
-        'XGBoost - Summary',
-      );
-
-      await gotoNextPage(tester);
-
-      await verifyPage('Variable Importance');
-
-      await verifyImage(tester);
-    });
+  testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+    await tester.pump(interact);
+    await loadDemoDataset(tester);
+    await tester.pump(delay);
+    await navigateToTab(tester, 'Model');
+    await navigateToFeature(tester, 'Boost', BoostPanel);
+    await tapButton(tester, 'Build Boosted Trees');
+    await tester.pump(delay);
+    await gotoNextPage(tester);
+    await verifyPage('XGBoost - Summary');
+    await gotoNextPage(tester);
+    await verifyPage('Variable Importance');
+    await verifyImage(tester);
   });
 }

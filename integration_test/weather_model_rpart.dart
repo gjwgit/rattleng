@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Friday 2025-01-24 09:16:10 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:24:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -48,31 +48,13 @@ void main() {
   testWidgets('rpart.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await tester.pump(interact);
-
     await loadDemoDataset(tester);
-
-    // await tester.pump(hack);
-
     await navigateToTab(tester, 'Model');
-
     await navigateToFeature(tester, 'Tree', TreePanel);
-
     await verifyMarkdown(tester);
-
-    // Simulate the presence of a decision tree being built.
-
     await tapButtonByKey(tester, 'Build Decision Tree');
-
-    // await tester.pump(hack);
-
     await gotoNextPage(tester);
-
-    // Try tapping again as it may not have gone to the second page.
-
-    // await tester.pump(hack);
-
     await verifyPage('Decision Tree Model');
 
     // App may raise bugs in loading textPage. Thus, test does not target
@@ -81,12 +63,8 @@ void main() {
     await verifyExist(TextPage);
 
     await tester.pump(interact);
-
-    // Tap the right arrow to go to the third page.
-
     await gotoNextPage(tester);
     await gotoNextPage(tester);
-
     await verifyPage('Decision Tree as Rules');
 
     // App may raise bugs in loading textPage. Thus, test does not target

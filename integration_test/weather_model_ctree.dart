@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Friday 2025-01-24 09:16:59 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:27:36 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -47,17 +47,11 @@ void main() {
 
   testWidgets('ctree.', (WidgetTester tester) async {
     app.main();
-
     await tester.pumpAndSettle();
-
     await tester.pump(interact);
-
     await loadDemoDataset(tester);
-
     await tester.pump(hack);
-
     await navigateToTab(tester, 'Model');
-
     await navigateToFeature(tester, 'Tree', TreePanel);
 
     // Switch between traditional and conditional algorithms
@@ -67,19 +61,12 @@ void main() {
     await tapChip(tester, 'Conditional');
 
     await tapButtonByKey(tester, 'Build Decision Tree');
-
     await tester.pump(hack);
-
     await gotoNextPage(tester);
-
     await verifyPage('Decision Tree Model');
-
     await tester.pump(interact);
-
     await gotoNextPage(tester);
-
     await verifyImage(tester);
-
     await tester.pump(interact);
   });
 }

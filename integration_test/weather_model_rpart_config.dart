@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Friday 2025-01-24 09:15:38 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:25:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -51,19 +51,12 @@ void main() {
     WidgetTester tester,
   ) async {
     app.main();
-
     await tester.pumpAndSettle();
-
     await tester.pump(interact);
-
     await loadDemoDataset(tester);
-
     await tester.pump(hack);
-
     await navigateToTab(tester, 'Model');
-
     await navigateToFeature(tester, 'Tree', TreePanel);
-
     await tapCheckbox(tester, 'include_missing');
 
     // Enter values into text fields
@@ -76,20 +69,13 @@ void main() {
     await enterText(tester, 'lossMatrixField', '0,10,1,0');
 
     await tapButtonByKey(tester, 'Build Decision Tree');
-
     await tester.pump(delay);
     await gotoNextPage(tester);
-
     await verifyPage('Decision Tree Model');
-
     await verifyExist(TextPage);
-
     await gotoNextPage(tester);
-
     await verifyImage(tester);
-
     await gotoNextPage(tester);
-
     await verifyPage('Decision Tree as Rules');
   });
 }

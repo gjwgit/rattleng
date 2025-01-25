@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Thursday 2025-01-23 16:50:04 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:14:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -44,20 +44,13 @@ void main() {
   testWidgets('Summary.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDatasetByPath(tester, 'integration_test/medical.csv');
     await gotoNextPage(tester);
-
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Summary', SummaryPanel);
     await tapButton(tester, 'Generate Dataset Summary');
-
     await tester.pump(hack);
-
     await gotoNextPage(tester);
-
-    // Find some expected strings.
-
     final ssnFinder = find.textContaining('Length:20000');
     expect(ssnFinder, findsOneWidget);
 

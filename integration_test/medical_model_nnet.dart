@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Friday 2025-01-24 08:51:47 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:35:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -67,21 +67,16 @@ void main() {
   testWidgets('Load, Ignore, Navigate, Build.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDatasetByPath(tester, 'integration_test/medical.csv');
-
     for (final v in varsToIgnore) {
       await setDatasetRole(tester, v, 'Ignore');
     }
-
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Neural', NeuralPanel);
     await tapButton(tester, 'Build Neural Network');
     await tester.pump(delay);
-
     await gotoNextPage(tester);
     await verifyPage('Neural Net Model - Summary and Weights');
-
     await verifySelectableText(
       tester,
       [

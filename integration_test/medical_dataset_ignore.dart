@@ -1,6 +1,6 @@
 /// Test MEDICAL dataset IGNORE roles.
 //
-// Time-stamp: <Friday 2025-01-24 10:37:35 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:35:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -62,22 +62,15 @@ void main() {
   testWidgets('Medical Dataset Ignore Variables.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDatasetByPath(tester, 'integration_test/medical.csv');
-
-    // TODO 20250123 gjw VERIFY ROLES
-
     verifyRole('rec_id', 'Ident');
     verifyRole('ssn', 'Ident');
     verifyRole('gender', 'Target');
-
     for (final v in varsToIgnore) {
       await setDatasetRole(tester, v, 'Ignore');
     }
-
     final random = Random();
     String randomItem = varsToIgnore[random.nextInt(varsToIgnore.length)];
-
     verifyRole(randomItem, 'Ignore');
     verifyRole('gender', 'Target');
   });

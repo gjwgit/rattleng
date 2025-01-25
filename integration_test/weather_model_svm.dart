@@ -1,6 +1,6 @@
 /// Test ksvm() svm with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:26:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,43 +43,26 @@ import 'utils/tap_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model SVM:', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      await loadDemoDataset(tester);
-
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
-
-      // Navigate to the SVM feature.
-
-      await navigateToFeature(tester, 'SVM', SvmPanel);
-
-      await tester.pump(interact);
-
-      await tapButton(tester, 'Build SVM Model');
-
-      await tester.pump(delay);
-
-      await tapButton(tester, 'Build SVM Model');
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final titleFinder = find.textContaining(
-        'Support Vector Machine object of class "ksvm"',
-      );
-      expect(titleFinder, findsOneWidget);
-
-      await tester.pump(interact);
-    });
+  testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+    await tester.pump(interact);
+    await loadDemoDataset(tester);
+    await navigateToPage(
+      tester,
+      Icons.model_training,
+      ModelTabs,
+    );
+    await navigateToFeature(tester, 'SVM', SvmPanel);
+    await tester.pump(interact);
+    await tapButton(tester, 'Build SVM Model');
+    await tester.pump(delay);
+    await tapButton(tester, 'Build SVM Model');
+    await tester.pump(interact);
+    final titleFinder = find.textContaining(
+      'Support Vector Machine object of class "ksvm"',
+    );
+    expect(titleFinder, findsOneWidget);
+    await tester.pump(interact);
   });
 }
