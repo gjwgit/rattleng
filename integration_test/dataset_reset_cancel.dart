@@ -1,6 +1,6 @@
-/// Test the DATASET RESET functionality.
+/// DATASET feature.
 //
-// Time-stamp: <Sunday 2025-01-26 08:37:32 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:56:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -40,13 +40,13 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Dataset Reset:', () {
-    testWidgets('load weather; cancel load; load medical file; verify.',
+  group('DATASET RESET:', () {
+    testWidgets('load weather; cancel load; load medical file.',
         (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-      await loadDemoDataset(tester);
+      await loadDemoDataset(tester, 'Weather');
       await verifySelectableText(
         tester,
         [

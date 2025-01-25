@@ -1,6 +1,6 @@
-/// Test APP starts up.
+/// RATTLE app.
 //
-// Time-stamp: <Sunday 2025-01-26 08:19:32 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:55:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -40,8 +40,8 @@ import 'utils/delays.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Rattle App', () {
-    testWidgets('Startup.', (WidgetTester tester) async {
+  group('RATTLE:', () {
+    testWidgets('startup.', (WidgetTester tester) async {
       app.main();
 
       // Trigger a frame. Finish animation and scheduled microtasks.

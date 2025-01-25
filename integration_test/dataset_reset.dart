@@ -1,6 +1,6 @@
-/// Test the DATASET RESET functionality.
+/// DATASET feature RESET function.
 //
-// Time-stamp: <Sunday 2025-01-26 08:36:29 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:58:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -40,7 +38,7 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Dataset Reset:', () {
+  group('DATASET RESET:', () {
     testWidgets('load weather; reload weather; validate contents.',
         (WidgetTester tester) async {
       app.main();

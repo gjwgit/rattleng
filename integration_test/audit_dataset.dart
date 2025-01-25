@@ -1,6 +1,6 @@
-/// Test AUDIT dataset loads properly.
+/// AUDIT dataset.
 //
-// Time-stamp: <Thursday 2025-01-23 14:30:31 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:55:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -37,26 +37,25 @@ import 'utils/verify_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Load Audit Dataset.', (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-
-    await loadDemoDataset(tester, 'Audit');
-
-    await verifyText(
-      tester,
-      [
-        'employment',
-        'income',
-      ],
-    );
-
-    await verifySelectableText(
-      tester,
-      [
-        '30, 50, 40',
-        'Female, Male, Male',
-      ],
-    );
+  group('AUDIT:', () {
+    testWidgets('load; verify.', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await loadDemoDataset(tester, 'Audit');
+      await verifyText(
+        tester,
+        [
+          'employment',
+          'income',
+        ],
+      );
+      await verifySelectableText(
+        tester,
+        [
+          '30, 50, 40',
+          'Female, Male, Male',
+        ],
+      );
+    });
   });
 }
