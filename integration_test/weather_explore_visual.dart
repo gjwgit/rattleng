@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab VISUAL feature.
 //
-// Time-stamp: <Friday 2024-12-27 16:07:01 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:38:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,29 +44,21 @@ void main() {
   testWidgets('Weather Explore Visual.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDemoDataset(tester);
-
     await navigateToTab(tester, 'Explore');
-
     await navigateToFeature(tester, 'Visual', VisualPanel);
-
     await tapButton(tester, 'Generate Plots');
-
     await gotoNextPage(tester);
     final boxPlotFinder = find.textContaining('Box Plot');
     expect(boxPlotFinder, findsNWidgets(2)); // Title and CheckBox
     final boxImageFinder = find.byType(ImagePage);
     expect(boxImageFinder, findsOneWidget);
-
     await gotoNextPage(tester);
     final densityImageFinder = find.byType(ImagePage);
     expect(densityImageFinder, findsOneWidget);
-
     await gotoNextPage(tester);
     final cumulativeImageFinder = find.byType(ImagePage);
     expect(cumulativeImageFinder, findsOneWidget);
-
     await gotoNextPage(tester);
   });
 }
