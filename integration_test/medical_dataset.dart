@@ -1,6 +1,6 @@
 /// Basic DATASET test: LARGE.
 //
-// Time-stamp: <Thursday 2025-01-23 12:29:04 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:36:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -39,15 +39,9 @@ void main() {
   testWidgets('Load Medical Dataset.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDatasetByPath(tester, 'integration_test/medical.csv');
-    // await gotoNextPage(tester);
-
-    // Find the text containing "rec-57600".
-
     final rolesRecIDFinder = find.textContaining('rec-57600');
     expect(rolesRecIDFinder, findsOneWidget);
-
     await tester.pump(interact);
   });
 }

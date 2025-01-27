@@ -1,6 +1,6 @@
 /// Build BOOST model.
 //
-// Time-stamp: <Sunday 2024-10-13 13:19:44 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:28:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -46,40 +46,24 @@ void main() {
   group('Demo Model Boost Ada', () {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
-
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
       await loadDemoDataset(tester);
-
       await tester.pump(delay);
-
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Boost', BoostPanel);
-
       await tapChip(tester, 'Adaptive');
-
       await tapButton(tester, 'Build Boosted Trees');
-
       await tester.pump(delay);
-
       await gotoNextPage(tester);
-
-      // Verify the content of the page.
-
       await verifyPage(
         'AdaBoost - Summary',
         'Final Confusion Matrix for Data:',
       );
-
       await gotoNextPage(tester);
-
       await tester.pump(interact);
-
       await gotoNextPage(tester);
-
       await tester.pump(interact);
-
       await verifyPage('Variable Importance');
 
       // Find a single ImagePage being displayed.

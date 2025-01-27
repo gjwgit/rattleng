@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: <Monday 2025-01-13 13:42:08 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-01-26 08:04:36 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -26,8 +26,6 @@ library;
 
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:universal_io/io.dart' show Platform;
@@ -36,12 +34,13 @@ import 'package:xterm/xterm.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/terminal.dart';
 import 'package:rattle/utils/clean_string.dart';
+import 'package:rattle/utils/debug_text.dart';
 
 final ptyProvider = StateProvider<Pty>((ref) {
   // Create a pseudo termminal provider.
 
   Terminal terminal = ref.watch(terminalProvider);
-  debugPrint('Attempt to start `$shell`');
+  debugText('  STARTUP', shell);
   Pty pty = Pty.start(shell, arguments: ['--no-save']);
 
   // Options

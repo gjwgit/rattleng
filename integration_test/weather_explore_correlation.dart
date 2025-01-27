@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab CORRELATION feature.
 //
-// Time-stamp: <Friday 2025-01-24 08:18:18 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:01:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,22 +43,17 @@ import 'utils/verify_page.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Explore Demo Correlation:', () {
-    testWidgets('Weather Explore Correlation.', (WidgetTester tester) async {
+  group('Weather Explore Correlation:', () {
+    testWidgets('Check calculated correlations.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-
       await loadDemoDataset(tester);
-
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await tapButton(tester, 'Perform Correlation Analysis');
-
       await tester.pump(hack);
-
       await gotoNextPage(tester);
       await verifyPage('Correlation - Numeric Data', '1.00');
-
       await verifySelectableText(
         tester,
         [
@@ -67,7 +62,6 @@ void main() {
           'humidity_9am            0.25         0.23         1.00',
         ],
       );
-
       await gotoNextPage(tester);
       await verifyPage('Variable Correlation Plot');
       await tester.pump(interact);

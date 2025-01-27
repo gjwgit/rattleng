@@ -1,6 +1,6 @@
 /// Test hierarchical() cluster analysis with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:29:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -45,70 +45,43 @@ import 'utils/tap_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Cluster Hierarchical:', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+  testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+    await tester.pump(interact);
+    await loadDemoDataset(tester);
+    await navigateToPage(
+      tester,
+      Icons.model_training,
+      ModelTabs,
+    );
+    await navigateToFeature(tester, 'Cluster', ClusterPanel);
+    await tester.pump(interact);
 
-      await tester.pump(interact);
+    // Find the ChoiceChipTip widget for Hierarchical type.
 
-      await loadDemoDataset(tester);
+    final hierarchicalChip = find.text(
+      'Hierarchical',
+    );
+    await tester.tap(hierarchicalChip);
+    await tester.pumpAndSettle();
+    await tapButton(tester, 'Build Clustering');
+    await tester.pump(delay);
+    await tapButton(tester, 'Build Clustering');
+    await tester.pump(interact);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
+    // Find the text containing the number of default clusters.
 
-      // Navigate to the Cluster feature.
-
-      await navigateToFeature(tester, 'Cluster', ClusterPanel);
-
-      await tester.pump(interact);
-
-      // Find the ChoiceChipTip widget for Hierarchical type.
-
-      final hierarchicalChip = find.text(
-        'Hierarchical',
-      );
-
-      // Tap the Hierarchical chip to switch type.
-
-      await tester.tap(hierarchicalChip);
-
-      await tester.pumpAndSettle();
-
-      await tapButton(tester, 'Build Clustering');
-
-      await tester.pump(delay);
-
-      await tapButton(tester, 'Build Clustering');
-
-      await tester.pump(interact);
-
-      // Find the text containing the number of default clusters.
-
-      final dataFinder = find.textContaining('cluster_assignments');
-      expect(dataFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
-      expect(imagePageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
-    });
+    final dataFinder = find.textContaining('cluster_assignments');
+    expect(dataFinder, findsOneWidget);
+    await tester.pump(interact);
+    await gotoNextPage(tester);
+    await tester.pump(interact);
+    await gotoNextPage(tester);
+    await tester.pump(interact);
+    final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
+    expect(imagePageTitleFinder, findsOneWidget);
+    final imageFinder = find.byType(ImagePage);
+    expect(imageFinder, findsOneWidget);
   });
 }

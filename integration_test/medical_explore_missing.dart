@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Thursday 2025-01-23 17:18:06 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:35:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -48,53 +48,36 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await tester.pump(interact);
-
     await loadDatasetByPath(tester, 'integration_test/medical.csv');
     await navigateToTab(tester, 'Explore');
-
     await navigateToFeature(tester, 'Missing', MissingPanel);
-
     await tapButton(tester, 'Perform Missing Analysis');
 
     // 20250123 gjw I had to add this delay in order to ensure the R script had
     // finsihed generating the various analyses.
 
     await tester.pump(delay);
-
     await gotoNextPage(tester);
-
     await verifyPage('Patterns of Missing Data - Textual');
-
     await gotoNextPage(tester);
-
     await verifyPage('Patterns of Missing Values');
-
     await gotoNextPage(tester);
-
     await verifyPage(
       'Aggregation of Missing Values',
     );
-
     await gotoNextPage(tester);
-
     await verifyPage(
       'Aggregation of Missing Values',
     );
-
     await gotoNextPage(tester);
-
     await verifyPage(
       'Visualisation of Observations with Missing Values',
     );
-
     await gotoNextPage(tester);
-
     await verifyPage(
       'Comparison of Counts of Missing Values',
     );
-
     await gotoNextPage(tester);
-
     await verifyPage('Patterns of Missingness');
   });
 }

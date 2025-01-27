@@ -1,6 +1,6 @@
-/// Test APP starts up.
+/// RATTLE app.
 //
-// Time-stamp: <Friday 2025-01-17 16:30:22 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:55:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -40,66 +40,68 @@ import 'utils/delays.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('App Startup.', (WidgetTester tester) async {
-    app.main();
+  group('RATTLE:', () {
+    testWidgets('startup.', (WidgetTester tester) async {
+      app.main();
 
-    // Trigger a frame. Finish animation and scheduled microtasks.
+      // Trigger a frame. Finish animation and scheduled microtasks.
 
-    await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-    // Leave time to see the first page during an interactive test. We use a
-    // [interact] delay which for qtest is 0s and for itest is 5s. Lutra-fs
-    // notes that 0s is problematic on their testing (hence qtest
-    // failing). Perhaps then try with itest.
+      // Leave time to see the first page during an interactive test. We use a
+      // [interact] delay which for qtest is 0s and for itest is 5s. Lutra-fs
+      // notes that 0s is problematic on their testing (hence qtest
+      // failing). Perhaps then try with itest.
 
-    await tester.pump(interact);
+      await tester.pump(interact);
 
-    // Check that there is DATASET BUILD button.
+      // Check that there is DATASET BUILD button.
 
-    final datasetButtonFinder = find.byType(DatasetButton);
-    expect(datasetButtonFinder, findsOneWidget);
-    await tester.pump(interact);
+      final datasetButtonFinder = find.byType(DatasetButton);
+      expect(datasetButtonFinder, findsOneWidget);
+      await tester.pump(interact);
 
-    // Confirm the Markdown widgets.
+      // Confirm the Markdown widgets.
 
-    final welcomeMarkdownFinder = find.byType(Markdown);
-    expect(welcomeMarkdownFinder, findsNWidgets(2));
+      final welcomeMarkdownFinder = find.byType(Markdown);
+      expect(welcomeMarkdownFinder, findsNWidgets(2));
 
-    // The first Markdown widget is the first panel of the welcome widget with
-    // text frm welcome1.md that we can check is the same as dislayed by reading
-    // the file content and normalizing whitespace.
+      // The first Markdown widget is the first panel of the welcome widget with
+      // text frm welcome1.md that we can check is the same as dislayed by reading
+      // the file content and normalizing whitespace.
 
-    final welcomeWidget =
-        welcomeMarkdownFinder.evaluate().first.widget as Markdown;
+      final welcomeWidget =
+          welcomeMarkdownFinder.evaluate().first.widget as Markdown;
 
-    String expectedwelcome1Content = File('assets/markdown/welcome1.md')
-        .readAsStringSync()
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
-    String actualwelcome1Content =
-        welcomeWidget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
+      String expectedwelcome1Content = File('assets/markdown/welcome1.md')
+          .readAsStringSync()
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim();
+      String actualwelcome1Content =
+          welcomeWidget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
 
-    expect(actualwelcome1Content, expectedwelcome1Content);
+      expect(actualwelcome1Content, expectedwelcome1Content);
 
-    // The second Markdown widget should be the second part of the welcome
-    // message, with welcome2.md as the second panel of the welcome widget.
-    // Read the file content and normalize whitespace.
+      // The second Markdown widget should be the second part of the welcome
+      // message, with welcome2.md as the second panel of the welcome widget.
+      // Read the file content and normalize whitespace.
 
-    final welcome2Widget =
-        welcomeMarkdownFinder.evaluate().elementAt(1).widget as Markdown;
+      final welcome2Widget =
+          welcomeMarkdownFinder.evaluate().elementAt(1).widget as Markdown;
 
-    String expectedwelcome2Content = File('assets/markdown/welcome2.md')
-        .readAsStringSync()
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
-    String actualwelcome2Content =
-        welcome2Widget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
+      String expectedwelcome2Content = File('assets/markdown/welcome2.md')
+          .readAsStringSync()
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim();
+      String actualwelcome2Content =
+          welcome2Widget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
 
-    expect(actualwelcome2Content, expectedwelcome2Content);
+      expect(actualwelcome2Content, expectedwelcome2Content);
 
-    // Also check that we have a single status bar.
+      // Also check that we have a single status bar.
 
-    final statusBarFinder = find.byKey(statusBarKey);
-    expect(statusBarFinder, findsOneWidget);
+      final statusBarFinder = find.byKey(statusBarKey);
+      expect(statusBarFinder, findsOneWidget);
+    });
   });
 }

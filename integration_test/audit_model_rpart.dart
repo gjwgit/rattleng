@@ -1,6 +1,6 @@
-/// Test AUDIT dataset TREE model RPART.
+/// AUDIT dataset TREE model RPART feature.
 //
-// Time-stamp: <Thursday 2025-01-23 15:44:11 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:55:23 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -46,90 +46,31 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Audit Dataset Tree Model Rpart.', (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
+  group('AUDIT MODEL TREE RPART:', () {
+    testWidgets('set risk, build tree, verify.', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await loadDemoDataset(tester, 'Audit');
+      await setDatasetRole(tester, 'adjustment', 'Risk');
+      await setDatasetRole(tester, 'marital', 'Ignore');
+      await setDatasetRole(tester, 'education', 'Ignore');
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Tree', TreePanel);
+      await tapButton(tester, 'Build Decision Tree');
+      await tester.pump(hack);
+      await gotoNextPage(tester);
+      await verifyPage('Decision Tree Model', 'Observations = 1400');
+      await verifySelectableText(
+        tester,
+        [
+          // 20250110 gjw We get a trivial decision tree initially since
+          // adjustment is actually an output variable.
 
-    await loadDemoDataset(tester, 'Audit');
-
-    // TODO 20250110 gjw SET adjustment AS THE risk VARIABLE.
-
-    await setDatasetRole(tester, 'adjustment', 'Risk');
-
-    await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree', TreePanel);
-    await tapButton(tester, 'Build Decision Tree');
-
-    await tester.pump(hack);
-
-    await gotoNextPage(tester);
-    await verifyPage('Decision Tree Model', 'Observations = 1400');
-
-    await verifySelectableText(
-      tester,
-      [
-        // 20250110 gjw We get a trivial decision tree initially since
-        // adjustment is actually an output variable.
-
-        '1) root 1400 319 No (0.77214286 0.22785714)',
-        '2) marital=Absent,Divorced,Married-spouse-absent,Unmarried,Widowed 769  44 No (0.94278283 0.05721717) *',
-        '3) marital=Married 631 275 No (0.56418384 0.43581616)',
-      ],
-    );
-
-    // // Tap the right arrow to go to the second page.
-
-    // final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-    // expect(rightArrowButton, findsOneWidget);
-    // // await tester.tap(rightArrowButton);
-    // //await tester.pumpAndSettle();
-
-    // // Try tapping again as it may not have gone to the second page.
-
-    // await tester.tap(decisionTreeButton);
-
-    // await tester.pump(hack);
-
-    // final secondPageTitleFinder = find.text('Decision Tree Model');
-    // expect(secondPageTitleFinder, findsOneWidget);
-
-    // // App may raise bugs in loading textPage. Thus, test does not target
-    // // at content.
-
-    // final summaryDecisionTreeFinder = find.byType(TextPage);
-    // expect(summaryDecisionTreeFinder, findsOneWidget);
-
-    // await tester.pump(interact);
-
-    // // Tap the right arrow to go to the third page.
-
-    // await tester.tap(rightArrowButton);
-    // await tester.pumpAndSettle();
-
-    // final thirdPageTitleFinder = find.text('Decision Tree as Rules');
-    // expect(thirdPageTitleFinder, findsOneWidget);
-
-    // // App may raise bugs in loading textPage. Thus, test does not target
-    // // at content.
-
-    // final ruleNumberFinder = find.byType(TextPage);
-    // expect(ruleNumberFinder, findsOneWidget);
-
-    // await tester.pump(interact);
-
-    // // Tap the right arrow to go to the forth page.
-
-    // await tester.tap(rightArrowButton);
-    // await tester.pumpAndSettle();
-
-    // final forthPageTitleFinder = find.text('Tree');
-    // expect(forthPageTitleFinder, findsOneWidget);
-
-    // final imageFinder = find.byType(ImagePage);
-
-    // // Assert that the image is present.
-    // expect(imageFinder, findsOneWidget);
-
-    // await tester.pump(interact);
+          '1) root 1400 319 No (0.77214286 0.22785714)',
+          '2) age< 30.5 475  31 No (0.93473684 0.06526316) *',
+          '14) gender=Female 118  28 No (0.76271186 0.23728814) *',
+        ],
+      );
+    });
   });
 }

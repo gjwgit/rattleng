@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Friday 2025-01-24 17:20:59 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:34:43 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -70,13 +70,10 @@ void main() {
   ) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDatasetByPath(tester, 'integration_test/medical.csv');
-
     for (final v in varsToIgnore) {
       await setDatasetRole(tester, v, 'Ignore');
     }
-
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Neural', NeuralPanel);
 
@@ -90,10 +87,8 @@ void main() {
 
     await tester.enterText(find.byKey(const Key('hidden_layers')), '11');
     await tester.pumpAndSettle();
-
     await tester.enterText(find.byKey(const Key('max_nwts')), '10001');
     await tester.pumpAndSettle();
-
     await tester.enterText(find.byKey(const Key('maxit')), '101');
     await tester.pumpAndSettle();
 
@@ -103,19 +98,8 @@ void main() {
 
     await tester.tap(neuralNetworkButton);
     await tester.pumpAndSettle();
-
-    // await tester.pump(longHack);
-
-    // Tap the right arrow to go to the second page.
-
-    // await gotoNextPage(tester);
-
     await tester.pump(delay);
-
     await gotoNextPage(tester);
-
-    // Check if SelectableText contains the expected content.
-
     final modelDescriptionFinder = find.byWidgetPredicate(
       (widget) =>
           widget is SelectableText &&
@@ -129,7 +113,6 @@ void main() {
 
     final summaryDecisionTreeFinder = find.byType(TextPage);
     expect(summaryDecisionTreeFinder, findsOneWidget);
-
     await tester.pump(interact);
 
     final optionsDescriptionFinder = find.byWidgetPredicate(
@@ -144,23 +127,13 @@ void main() {
     // Ensure the SelectableText widget with the expected content exists.
 
     expect(optionsDescriptionFinder, findsOneWidget);
-
     await tester.pump(interact);
-
-    // Tap the right arrow to go to the forth page.
-
     await gotoNextPage(tester);
-
     await tester.pump(hack);
-
     final forthPageTitleFinder = find.text('Neural Net Model - Visual');
     expect(forthPageTitleFinder, findsOneWidget);
-
     final imageFinder = find.byType(ImagePage);
-
-    // Assert that the image is present.
     expect(imageFinder, findsOneWidget);
-
     await tester.pump(interact);
   });
 }

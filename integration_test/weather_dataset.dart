@@ -1,6 +1,6 @@
-/// Test WEATHER dataset loads properly.
+/// Test WEATHER dataset load.
 //
-// Time-stamp: <Thursday 2025-01-23 19:45:49 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 08:41:23 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,10 +39,7 @@ void main() {
   testWidgets('Load Weather Dataset.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDemoDataset(tester);
-
-    // Expect specific text in the ROLES page.
 
     await verifySelectableText(
       tester,

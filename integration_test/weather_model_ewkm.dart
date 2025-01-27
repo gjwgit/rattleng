@@ -1,6 +1,6 @@
 /// Test ewkm() cluster analysis with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:30:26 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -45,71 +45,42 @@ import 'utils/tap_button.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Cluster EWKM:', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+  testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+    await tester.pump(interact);
+    await loadDemoDataset(tester);
+    await navigateToPage(
+      tester,
+      Icons.model_training,
+      ModelTabs,
+    );
+    await navigateToFeature(tester, 'Cluster', ClusterPanel);
+    await tester.pump(interact);
+    final ewkmaChip = find.text(
+      'Ewkm',
+    );
+    await tester.tap(ewkmaChip);
+    await tester.pumpAndSettle();
+    await tapButton(tester, 'Build Clustering');
+    await tester.pump(delay);
+    await tapButton(tester, 'Build Clustering');
+    await tester.pump(interact);
 
-      await tester.pump(interact);
+    // Find the text containing the number of default clusters.
 
-      await loadDemoDataset(tester);
+    final dataFinder =
+        find.textContaining("built using 'ewkm' with 10 clusters");
+    expect(dataFinder, findsOneWidget);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
-
-      // Navigate to the Cluster feature.
-
-      await navigateToFeature(tester, 'Cluster', ClusterPanel);
-
-      await tester.pump(interact);
-
-      // Find the ChoiceChipTip widget for Ewkm type.
-
-      final ewkmaChip = find.text(
-        'Ewkm',
-      );
-
-      // Tap the ewkma chip to switch type.
-
-      await tester.tap(ewkmaChip);
-
-      await tester.pumpAndSettle();
-
-      await tapButton(tester, 'Build Clustering');
-
-      await tester.pump(delay);
-
-      await tapButton(tester, 'Build Clustering');
-
-      await tester.pump(interact);
-
-      // Find the text containing the number of default clusters.
-
-      final dataFinder =
-          find.textContaining("built using 'ewkm' with 10 clusters");
-      expect(dataFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
-      expect(imagePageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
-    });
+    await tester.pump(interact);
+    await gotoNextPage(tester);
+    await tester.pump(interact);
+    await gotoNextPage(tester);
+    await tester.pump(interact);
+    final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
+    expect(imagePageTitleFinder, findsOneWidget);
+    final imageFinder = find.byType(ImagePage);
+    expect(imageFinder, findsOneWidget);
   });
 }

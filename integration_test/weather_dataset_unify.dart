@@ -1,6 +1,6 @@
 /// Test WEATHER dataset loads properly when unify is on/off.
 //
-// Time-stamp: <Friday 2025-01-10 08:45:30 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-01-26 07:31:43 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -45,12 +45,9 @@ void main() {
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await cleanseOn(tester);
     await unifyOn(tester);
-
     await loadDemoDataset(tester);
-
     await verifyText(
       tester,
       [
@@ -67,12 +64,9 @@ void main() {
       (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await cleanseOn(tester);
     await unifyOff(tester);
-
     await loadDemoDataset(tester);
-
     await verifyText(
       tester,
       [
