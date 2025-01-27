@@ -184,3 +184,8 @@ meta_data(ds)
 ## # Print the variable names.
 ##
 ## # large_factor_vars
+
+# Convert frequency table of target variable to numeric vector.
+# It is used to check validation of sample size in building model rforest.
+
+as.numeric(table(ds[[target]]))

@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
@@ -44,6 +43,7 @@ import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree_include_missing.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -356,7 +356,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),
-              _buildTextField(
+              buildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
                 key: const Key('priorsField'),
@@ -372,11 +372,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
                 validator: (value) => _validatePriors(value),
                 inputFormatter: FilteringTextInputFormatter.allow(
-                  RegExp(r'^[0-9]+(,[0-9]+)*$'),
+                  RegExp(
+                      r'^[0-9,.\s]*$',), // Allow digits, commas, dots, whitespace.
                 ),
                 maxWidth: 10,
               ),
-              _buildTextField(
+              buildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,
                 key: const Key('lossMatrixField'),
@@ -391,7 +392,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ''',
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
                 inputFormatter: FilteringTextInputFormatter.allow(
-                  RegExp(r'^[0-9]+(,[0-9]+)*$'),
+                  RegExp(r'^[0-9,]*$'), // Allow digits and commas.
                 ),
                 validator: (value) => _validateLossMatrix(value),
                 maxWidth: 10,
@@ -446,50 +447,5 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     }
 
     return null;
-  }
-
-  // Create a text field.
-
-  Widget _buildTextField({
-    required String label,
-    required TextEditingController controller,
-    required TextStyle textStyle,
-    required String tooltip,
-    required bool enabled,
-    required String? Function(String?) validator,
-    required TextInputFormatter inputFormatter,
-    required int maxWidth,
-    required Key key,
-  }) {
-    return Expanded(
-      child: MarkdownTooltip(
-        message: tooltip,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              // Set maximum width for the input field.
-              width: maxWidth * 15.0,
-              child: TextFormField(
-                key: key,
-                controller: controller,
-                decoration: InputDecoration(
-                  labelText: label,
-                  border: const UnderlineInputBorder(),
-                  errorText: validator(controller.text),
-                  errorStyle: const TextStyle(fontSize: 10),
-                ),
-                style: textStyle,
-                // Control enable state.
-                enabled: enabled,
-                inputFormatters: [
-                  FilteringTextInputFormatter.singleLineFormatter,
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

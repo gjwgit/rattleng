@@ -43,11 +43,41 @@ library(verification)
 mtype <- "randomForest"
 mdesc <- "Random Forest"
 
+# Calculate default sample size for random forest.
+#
+# This function determines the appropriate sample size for random forest training:
+# - If input_sampsize is a character and x is a data frame:
+#   - With replacement: uses full dataset size
+#   - Without replacement: uses ~63.2% of dataset (bootstrap sample)
+# - Otherwise returns the input_sampsize value directly
+#
+# Args:
+#   x: Input data frame
+#   input_sampsize: Sample size specification (character or numeric) 
+#   replace: Whether sampling is with replacement (default: FALSE)
+#
+# Returns:
+#   Integer sample size to use for random forest.
+
+default_sampsize <- function(x, input_sampsize, replace=FALSE) {
+  if (is.character(input_sampsize)&&length(input_sampsize)) {
+    if (!is.data.frame(x)) stop("x must be a data frame")
+    if (replace) {
+      return(nrow(x))
+    } else {
+      return(ceiling(.632 * nrow(x)))
+    }
+  }else{
+    return(input_sampsize)
+  }
+}
+
 model_randomForest <- randomForest(
   form,
   data       = trds,
   ntree      = <RF_NUM_TREES>,
   mtry       = <RF_MTRY>,
+  sampsize   = default_sampsize(trds, <RF_INPUT_SAMPSIZE>, replace=FALSE),
   importance = TRUE,
   na.action  = <RF_NA_ACTION>,
   replace    = FALSE)

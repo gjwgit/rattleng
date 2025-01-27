@@ -28,14 +28,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
-
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/get_target.dart';
+import 'package:rattle/utils/get_target_frequency.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
@@ -75,6 +78,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
   final TextEditingController _treesController = TextEditingController();
   final TextEditingController _variablesController = TextEditingController();
   final TextEditingController _treeNoController = TextEditingController();
+  final TextEditingController _rfSampleSizeController = TextEditingController();
 
   @override
   void dispose() {
@@ -83,6 +87,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
     _treesController.dispose();
     _variablesController.dispose();
     _treeNoController.dispose();
+    _rfSampleSizeController.dispose();
     super.dispose();
   }
 
@@ -92,6 +97,54 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
     AlgorithmType selectedAlgorithm =
         ref.read(algorithmForestProvider.notifier).state;
+
+    _rfSampleSizeController.text = ref.watch(forestSampleSizeProvider) ?? '';
+
+    /// Validates the sample size input for forest sampling.
+    /// Returns null if valid, or an error message string if invalid.
+    /// Sample size values must be positive integers not exceeding class frequencies.
+
+    String? _validateSampleSize(String? value) {
+      // Allow empty/null values.
+
+      if (value == null || value.isEmpty) {
+        return null;
+      }
+
+      // Get target class frequencies and parse input values.
+
+      List<int> targetFreq = getTargetFrequency(ref);
+      List<String> inputs = value.split(',').map((s) => s.trim()).toList();
+
+      // Check number of input values doesn't exceed number of classes.
+
+      if (inputs.length > targetFreq.length) {
+        return 'Too many values. Maximum ${targetFreq.length} allowed';
+      }
+
+      // Validate each input value.
+
+      for (int i = 0; i < inputs.length; i++) {
+        // Check if value is a positive integer.
+
+        if (!RegExp(r'^\d+$').hasMatch(inputs[i])) {
+          return 'Only positive integers allowed';
+        }
+
+        int num = int.parse(inputs[i]);
+        if (num < 1) {
+          return 'Values must be greater than 0';
+        }
+
+        // Ensure sample size doesn't exceed class frequency.
+
+        if (num > targetFreq[i]) {
+          return 'Sample size $num at position ${i + 1} exceeds maximum class size ${targetFreq[i]}';
+        }
+      }
+
+      return null;
+    }
 
     return Column(
       spacing: configRowSpace,
@@ -114,6 +167,43 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   forestPageControllerProvider, // Optional navigation
 
               onPressed: () async {
+                String? sampleSizeError =
+                    _validateSampleSize(_rfSampleSizeController.text);
+
+                // Collect all errors and the list may be added in future use.
+
+                List<String> errors = [
+                  if (sampleSizeError != null) 'Sample Size: $sampleSizeError',
+                ];
+
+                // Check if there are any errors.
+
+                if (errors.isNotEmpty &&
+                    selectedAlgorithm == AlgorithmType.traditional) {
+                  // Show a warning dialog if validation fails.
+
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Validation Error'),
+                      content: Text(
+                        'Please ensure all input fields are valid before building '
+                        'the random forest:\n\n${errors.join('\n')}',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+
+                  return;
+                }
+
                 // Run the R scripts.
 
                 String mt = 'model_template';
@@ -134,6 +224,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
                 if (selectedAlgorithm == AlgorithmType.traditional) {
                   ref.read(randomForestEvaluateProvider.notifier).state = true;
+                  ref.read(forestSampleSizeProvider.notifier).state =
+                      _rfSampleSizeController.text;
                 } else if (selectedAlgorithm == AlgorithmType.conditional) {
                   ref.read(conditionalForestEvaluateProvider.notifier).state =
                       true;
@@ -227,6 +319,28 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: treeNoForestProvider,
+            ),
+
+            buildTextField(
+              label: 'Sample Size:',
+              controller: _rfSampleSizeController,
+              key: const Key('rfSampleSizeField'),
+              textStyle: selectedAlgorithm == AlgorithmType.conditional
+                  ? disabledTextStyle
+                  : normalTextStyle,
+              tooltip: '''
+                **Sample Size** controls observations sampled per class.
+    
+                - For binary classification: enter two numbers separated by comma.
+                - Each number must be between 1 and class size.
+               
+                ''',
+              enabled: selectedAlgorithm != AlgorithmType.conditional,
+              validator: (value) => _validateSampleSize(value),
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp('[0-9,]'),
+              ),
+              maxWidth: 10,
             ),
 
             LabelledCheckbox(
