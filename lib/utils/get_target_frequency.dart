@@ -27,7 +27,6 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/stdout.dart';
@@ -40,8 +39,6 @@ List<int> getTargetFrequency(WidgetRef ref) {
     // Extract R output using existing rExtract helper.
 
     String defineTarget = rExtract(stdout, 'as.numeric(table(ds[[target]]))');
-
-    debugPrint(defineTarget);
 
     // Remove [1] prefix if present.
 
