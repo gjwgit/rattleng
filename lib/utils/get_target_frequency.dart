@@ -46,7 +46,7 @@ List<int> getTargetFrequency(WidgetRef ref) {
         stdout,
         randomPartition
             ? '> ceiling(as.numeric(table(ds[[target]])) * split[1])'
-            : '> as.numeric(table(ds[[target]]))');
+            : '> as.numeric(table(ds[[target]]))',);
 
     // Remove [1] prefix if present.
 
