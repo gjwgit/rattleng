@@ -29,16 +29,21 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 
 List<int> getTargetFrequency(WidgetRef ref) {
   String stdout = ref.watch(stdoutProvider);
 
-  try {
-    // Extract R output using existing rExtract helper.
+  final randomPartition = ref.watch(partitionProvider);
 
-    String defineTarget = rExtract(stdout, 'as.numeric(table(ds[[target]]))');
+  try {
+
+    // Extract frequencies of target variable classes from R output.
+    // If randomPartition is true, calculate ceiling of frequencies scaled by DATA_SPLIT_TR_TU_TE.
+
+    String defineTarget = rExtract(stdout, randomPartition? '> ceiling(as.numeric(table(ds[[target]])) * split[1])':'> as.numeric(table(ds[[target]]))');
 
     // Remove [1] prefix if present.
 
