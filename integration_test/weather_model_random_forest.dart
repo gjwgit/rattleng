@@ -40,7 +40,10 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -54,11 +57,7 @@ void main() {
 
       await loadDemoDataset(tester);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Forest feature.
 
@@ -74,83 +73,113 @@ void main() {
 
       await tester.pump(interact);
 
-      // Find the title of text page.
+      // Page 1
 
-      final titleFinder = find.textContaining(
-        "Summary of the Random Forest model for Classification (built using 'randomForest'):",
+      await verifyPageSelectableText(
+        'randomForest(formula = form, data = trds, ntree = 500, mtry = 4',
       );
-      expect(titleFinder, findsOneWidget);
 
       await tester.pump(interact);
 
       await gotoNextPage(tester);
 
+      // await tester.pump(hack);
+
+      // Page 2
+
+      // await verifyPageSelectableText(
+      //     'WindGustDir IN ("ESE", "NE", "S", "SE", "SSE", "SSW", "SW")');
+
       await tester.pump(interact);
 
       await gotoNextPage(tester);
 
+      // Page 3
+
       await tester.pump(interact);
 
-      // Find the title of text page.
-
-      final dataFinder = find.textContaining(
-        'humidity_3pm',
+      await verifySelectableText(
+        tester,
+        [
+          'Humidity3pm',
+          '22.86',
+        ],
       );
-      expect(dataFinder, findsOneWidget);
 
       await tester.pump(interact);
 
       await gotoNextPage(tester);
 
+      // Page 4
+
       await tester.pump(interact);
 
-      // Find the title of text page.
+      await verifyImage(tester);
 
-      final sampleRulesFinder = find.textContaining(
-        'Random Forest Model 1 ',
+      await gotoNextPage(tester);
+
+      // Page 5
+
+      await verifyImage(tester);
+
+      await gotoNextPage(tester);
+
+      // Page 6
+
+      await verifySelectableText(
+        tester,
+        [
+          'Out of Bag ROC Curve',
+        ],
       );
-      expect(sampleRulesFinder, findsOneWidget);
 
-      await tester.pump(interact);
+      // // Find the title of text page.
 
-      await gotoNextPage(tester);
+      // final sampleRulesFinder = find.textContaining(
+      //   'Random Forest Model 1 ',
+      // );
+      // expect(sampleRulesFinder, findsOneWidget);
 
-      await tester.pump(interact);
+      // await tester.pump(interact);
 
-      final imagePageTitleFinder = find.text('VAR IMPORTANCE');
-      expect(imagePageTitleFinder, findsOneWidget);
+      // await gotoNextPage(tester);
 
-      final imageFinder = find.byType(ImagePage);
+      // await tester.pump(interact);
 
-      // Assert that the image is present.
+      // final imagePageTitleFinder = find.text('VAR IMPORTANCE');
+      // expect(imagePageTitleFinder, findsOneWidget);
 
-      expect(imageFinder, findsOneWidget);
+      // final imageFinder = find.byType(ImagePage);
 
-      await gotoNextPage(tester);
+      // // Assert that the image is present.
 
-      await tester.pump(interact);
+      // expect(imageFinder, findsOneWidget);
 
-      final secondImagePageTitleFinder = find.text('ERROR RATE');
-      expect(secondImagePageTitleFinder, findsOneWidget);
+      // await gotoNextPage(tester);
 
-      final secondImageFinder = find.byType(ImagePage);
+      // await tester.pump(interact);
 
-      // Assert that the image is present.
+      // final secondImagePageTitleFinder = find.text('ERROR RATE');
+      // expect(secondImagePageTitleFinder, findsOneWidget);
 
-      expect(secondImageFinder, findsOneWidget);
+      // final secondImageFinder = find.byType(ImagePage);
 
-      await gotoNextPage(tester);
+      // // Assert that the image is present.
 
-      await tester.pump(interact);
+      // expect(secondImageFinder, findsOneWidget);
 
-      final thirdImagePageTitleFinder = find.text('OOB ROC Curve');
-      expect(thirdImagePageTitleFinder, findsOneWidget);
+      // await gotoNextPage(tester);
 
-      final thirdImageFinder = find.byType(ImagePage);
+      // await tester.pump(interact);
 
-      // Assert that the image is present.
+      // final thirdImagePageTitleFinder = find.text('OOB ROC Curve');
+      // expect(thirdImagePageTitleFinder, findsOneWidget);
 
-      expect(thirdImageFinder, findsOneWidget);
+      // final thirdImageFinder = find.byType(ImagePage);
+
+      // // Assert that the image is present.
+
+      // expect(thirdImageFinder, findsOneWidget);
     });
   });
 }
