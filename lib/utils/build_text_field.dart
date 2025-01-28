@@ -67,7 +67,7 @@ Widget buildTextField({
               ),
               style: textStyle,
               // Control enable state.
-              
+
               enabled: enabled,
               inputFormatters: [
                 inputFormatter,

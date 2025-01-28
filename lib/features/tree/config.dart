@@ -373,7 +373,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 validator: (value) => _validatePriors(value),
                 inputFormatter: FilteringTextInputFormatter.allow(
                   RegExp(
-                      r'^[0-9,.\s]*$',), // Allow digits, commas, dots, whitespace.
+                    r'^[0-9,.\s]*$',
+                  ), // Allow digits, commas, dots, whitespace.
                 ),
                 maxWidth: 10,
               ),

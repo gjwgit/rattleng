@@ -537,8 +537,10 @@ Future<void> rSource(
     forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
   );
 
-  code = code.replaceAll('<RF_INPUT_SAMPSIZE>',
-      forestSampleSize != null ? 'c($forestSampleSize)' : '""',);
+  code = code.replaceAll(
+    '<RF_INPUT_SAMPSIZE>',
+    forestSampleSize != null ? 'c($forestSampleSize)' : '""',
+  );
 
   ////////////////////////////////////////////////////////////////////////
   // NEURAL
