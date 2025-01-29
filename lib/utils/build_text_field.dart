@@ -25,8 +25,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:rattle/providers/forest.dart';
 
 /// Creates a custom text input field with tooltip.
 ///
@@ -45,6 +47,7 @@ Widget buildTextField({
   required TextInputFormatter inputFormatter,
   required int maxWidth,
   required Key key,
+  WidgetRef? ref,
 }) {
   return Flexible(
     child: MarkdownTooltip(
@@ -73,6 +76,38 @@ Widget buildTextField({
                 inputFormatter,
                 FilteringTextInputFormatter.singleLineFormatter,
               ],
+              onEditingComplete: () {
+                // Called when the user finishes editing the text field (e.g., pressing
+                // the "Done" key on the keyboard). If this is the "Sample Size:" text field
+                // and we have a valid Riverpod reference, update the forestSampleSizeProvider
+                // with the current text from the controller.
+
+                if (label == 'Sample Size:' && ref != null) {
+                  ref.read(forestSampleSizeProvider.notifier).state =
+                      controller.text;
+                }
+              },
+              onSaved: (value) {
+                // Called when the form containing this text field is saved (for example,
+                // by calling Form.of(context).save()). If this is the "Sample Size:" text field
+                // and we have a valid Riverpod reference, update the forestSampleSizeProvider
+                // with the current text from the controller.
+
+                if (label == 'Sample Size:' && ref != null) {
+                  ref.read(forestSampleSizeProvider.notifier).state =
+                      controller.text;
+                }
+              },
+              onTapOutside: (event) {
+                // Called when the user taps outside of the text field, causing it to lose focus.
+                // If this is the "Sample Size:" text field and we have a valid Riverpod reference,
+                // update the forestSampleSizeProvider with the current text from the controller.
+                
+                if (label == 'Sample Size:' && ref != null) {
+                  ref.read(forestSampleSizeProvider.notifier).state =
+                      controller.text;
+                }
+              },
             ),
           ),
         ],

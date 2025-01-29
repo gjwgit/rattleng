@@ -43,44 +43,33 @@ library(verification)
 mtype <- "randomForest"
 mdesc <- "Random Forest"
 
-# Calculate default sample size for random forest.
-#
-# This function determines the appropriate sample size for random forest training:
-# - If input_sampsize is a character and x is a data frame:
-#   - With replacement: uses full dataset size
-#   - Without replacement: uses ~63.2% of dataset (bootstrap sample)
-# - Otherwise returns the input_sampsize value directly
-#
-# Args:
-#   x: Input data frame
-#   input_sampsize: Sample size specification (character or numeric) 
-#   replace: Whether sampling is with replacement (default: FALSE)
-#
-# Returns:
-#   Integer sample size to use for random forest.
 
-default_sampsize <- function(x, input_sampsize, replace=FALSE) {
-  if (is.character(input_sampsize)&&length(input_sampsize)) {
-    if (!is.data.frame(x)) stop("x must be a data frame")
-    if (replace) {
-      return(nrow(x))
-    } else {
-      return(floor(.632 * nrow(x)))
-    }
-  }else{
-    return(input_sampsize)
-  }
-}
+# Build the argument list for randomForest.
 
-model_randomForest <- randomForest(
-  form,
+rf_args <- list(
+  formula    = form,
   data       = trds,
   ntree      = <RF_NUM_TREES>,
   mtry       = <RF_MTRY>,
-  sampsize   = default_sampsize(trds, <RF_INPUT_SAMPSIZE>, replace=FALSE),
   importance = TRUE,
   na.action  = <RF_NA_ACTION>,
   replace    = FALSE)
+
+# Conditionally add sampsize if it's not NULL, "NULL", or empty.
+
+if (!is.null(<RF_INPUT_SAMPSIZE>) && all(<RF_INPUT_SAMPSIZE> != "NULL") && all(<RF_INPUT_SAMPSIZE> != "")) {
+  
+  rf_args$sampsize <- <RF_INPUT_SAMPSIZE>
+}
+
+
+# Call randomForest with the constructed arguments.
+
+model_randomForest <- do.call(randomForest::randomForest, rf_args)
+
+# Force the model's call to show data = trds instead of the expanded data.
+
+model_randomForest$call$data <- quote(trds)
 
 ########################################################################
 

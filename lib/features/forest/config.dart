@@ -98,7 +98,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
     AlgorithmType selectedAlgorithm =
         ref.read(algorithmForestProvider.notifier).state;
 
-    _rfSampleSizeController.text = ref.watch(forestSampleSizeProvider) ?? '';
+    _rfSampleSizeController.text =
+        ref.watch(forestSampleSizeProvider.notifier).state ?? '';
 
     /// Validates the sample size input for forest sampling.
     /// Returns null if valid, or an error message string if invalid.
@@ -144,6 +145,39 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
       }
 
       return null;
+    }
+
+    /// Uses [_validateSampleSize] to check if [value] is valid.
+    /// If valid (i.e., _validateSampleSize returns null) and [value] is not null,
+    /// returns 'c($value)'. Otherwise, returns the validation error.
+
+    String _formatSampleSize(String? value) {
+      // If value matches the pattern c(...), return it directly.
+      // - This check ensures we don't re-wrap an already wrapped value.
+
+      if (value != null && RegExp(r'^c\(.*\)$').hasMatch(value)) {
+        return value;
+      }
+
+      // Validate the value.
+
+      final validationError = _validateSampleSize(value);
+
+      // If there's a validation error, return that error.
+
+      if (validationError != null) {
+        return '';
+      }
+
+      // If the value is null or empty, there's no conversion to 'c(...)'.
+
+      if (value == null || value.isEmpty) {
+        return '';
+      }
+
+      // Otherwise, the value is valid and non-null, so convert it.
+
+      return value;
     }
 
     return Column(
@@ -225,7 +259,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                 if (selectedAlgorithm == AlgorithmType.traditional) {
                   ref.read(randomForestEvaluateProvider.notifier).state = true;
                   ref.read(forestSampleSizeProvider.notifier).state =
-                      _rfSampleSizeController.text;
+                      _formatSampleSize(_rfSampleSizeController.text);
                 } else if (selectedAlgorithm == AlgorithmType.conditional) {
                   ref.read(conditionalForestEvaluateProvider.notifier).state =
                       true;
@@ -341,6 +375,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                 RegExp('[0-9,]'),
               ),
               maxWidth: 10,
+              ref: ref,
             ),
 
             LabelledCheckbox(
