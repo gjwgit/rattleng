@@ -136,19 +136,7 @@ void main() {
         ],
       );
 
-      // await navigateToTab(tester, 'Dataset');
-
-      // await scrollDown(tester);
-
-      // await verifyImputedVariable(tester, 'R01_min_temp');
-
-      // await checkVariableNotMissing(tester, 'R01_min_temp');
-
       // 3. Select and test chip "-Median/MAD"
-
-      await navigateToTab(tester, 'Transform');
-
-      await navigateToFeature(tester, 'Rescale', RescalePanel);
 
       await tapChip(
         tester,
@@ -177,6 +165,138 @@ void main() {
           'Mean   :-0.005742', // Mean value of 'RMD_min_temp'.
           '3rd Qu.: 0.650402', // Third quartile value of 'RMD_min_temp'.
           'Max.   : 1.698271', // Maximum value of 'RMD_min_temp'.
+        ],
+      );
+
+      // 4. Select and test chip "Natural Log"
+
+      await tapChip(
+        tester,
+        'Natural Log',
+      );
+
+      await pressFirstButton(tester, 'Rescale Variable Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'RLG_min_temp',
+      );
+
+      await scrollUntilFindKey(tester, 'text_page');
+
+      // Verify specific statistical values for the imputed 'RLG_min_temp' variable.
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   :-2.303', // Minimum value of 'RLG_min_temp'.
+          '1st Qu.: 1.493', // First quartile value of 'RLG_min_temp'.
+          'Median : 2.186', // Median value of 'RLG_min_temp'.
+          'Mean   : 1.857', // Mean value of 'RLG_min_temp'.
+          '3rd Qu.: 2.588', // Third quartile value of 'RLG_min_temp'.
+          'Max.   : 3.035', // Maximum value of 'RLG_min_temp'.
+          //                     NA's   :71
+          'NA\'s   :71', // Number of missing values in 'RLG_min_temp'.
+        ],
+      );
+
+      // 5. Select and test chip "Log 10"
+
+      await tapChip(
+        tester,
+        'Log 10',
+      );
+
+      await pressFirstButton(tester, 'Rescale Variable Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'R10_min_temp',
+      );
+
+      await scrollUntilFindKey(tester, 'text_page');
+
+      // Verify specific statistical values for the imputed 'R10_min_temp' variable.
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   :-1.0000', // Minimum value of 'R10_min_temp'.
+          '1st Qu.: 0.6483', // First quartile value of 'R10_min_temp'.
+          'Median : 0.9494', // Median value of 'R10_min_temp'.
+          'Mean   : 0.8064', // Mean value of 'R10_min_temp'.
+          '3rd Qu.: 1.1239', // Third quartile value of 'R10_min_temp'.
+          'Max.   : 1.3181', // Maximum value of 'R10_min_temp'.
+          //                     NA's   :71
+          'NA\'s   :71', // Number of missing values in 'R10_min_temp'.
+        ],
+      );
+
+      // 6. Select and test chip "Rank"
+
+      await tapChip(
+        tester,
+        'Rank',
+      );
+
+      await pressFirstButton(tester, 'Rescale Variable Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'RRK_min_temp',
+      );
+
+      await scrollUntilFindKey(tester, 'text_page');
+
+      // Verify specific statistical values for the imputed 'RRK_min_temp' variable.
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   :  1.0', // Minimum value of 'RRK_min_temp'.
+          '1st Qu.: 92.5', // First quartile value of 'RRK_min_temp'.
+          'Median :183.0', // Median value of 'RRK_min_temp'.
+          'Mean   :183.0', // Mean value of 'RRK_min_temp'.
+          '3rd Qu.:273.0', // Third quartile value of 'RRK_min_temp'.
+          'Max.   :365.0', // Maximum value of 'RRK_min_temp'.
+        ],
+      );
+
+      // 6. Select and test chip "Interval"
+
+      await tapChip(
+        tester,
+        'Interval',
+      );
+
+      await pressFirstButton(tester, 'Rescale Variable Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'RIN_min_temp_100',
+      );
+
+      await scrollUntilFindKey(tester, 'text_page');
+
+      // Verify specific statistical values for the imputed 'RIN_min_temp_100' variable.
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   : 0.00', // Minimum value of 'RIN_min_temp_100'.
+          '1st Qu.:27.00', // First quartile value of 'RIN_min_temp_100'.
+          'Median :47.00', // Median value of 'RIN_min_temp_100'.
+          'Mean   :47.15', // Mean value of 'RIN_min_temp_100'.
+          '3rd Qu.:67.00', // Third quartile value of 'RIN_min_temp_100'.
+          'Max.   :99.00', // Maximum value of 'RIN_min_temp_100'.
         ],
       );
     });
