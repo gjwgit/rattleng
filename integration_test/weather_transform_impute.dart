@@ -25,14 +25,13 @@
 
 library;
 
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
+import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
@@ -98,13 +97,13 @@ void main() {
 
       await scrollDown(tester);
 
-      // Step 3: Verify that the imputed variable 'IZR_rainfall' is present in the dataset.
+      // Step 3: Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
 
       await verifyImputedVariable(tester, 'IMN_rainfall');
 
-      // Step 4: Check that the imputed variable 'IZR_rainfall' is no longer listed as missing.
+      // Step 4: Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
 
-      // await checkVariableNotMissing(container, 'IZR_rainfall');
+      await checkVariableNotMissing(tester, 'IZR_rainfall');
     });
   });
 }

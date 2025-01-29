@@ -26,14 +26,20 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattle/features/dataset/display.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 
 Future<void> checkVariableNotMissing(
-  ProviderContainer container,
+  WidgetTester tester,
   String variable,
 ) async {
-  final stdout = container.read(stdoutProvider);
+  final stdout = tester
+      .state<ConsumerState>(
+        find.byType(DatasetDisplay),
+      )
+      .ref
+      .read(stdoutProvider);
   String missing = rExtract(stdout, '> missing');
 
   RegExp regExp = RegExp(r'"(.*?)"');
