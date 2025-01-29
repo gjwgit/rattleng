@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Thursday 2025-01-16 09:31:46 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-01-29 12:07:05 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -66,6 +66,7 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
+import 'package:rattle/utils/compare_varsions.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
@@ -173,9 +174,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
             yamlContent['version'].toString().split('+').first;
         debugText('  VERSION', 'Available $latestVersion');
 
-        // Compare with the current version
-        if (currentVersion != latestVersion) {
-          debugPrint('Update available: $latestVersion');
+        // 20250129 gjw Compare with the current version and we will indicate
+        // through the UI if it is not up-to-date.
+
+        if (compareVersions(currentVersion, latestVersion) < 0) {
           setState(() {
             _isLatest = false;
           });
