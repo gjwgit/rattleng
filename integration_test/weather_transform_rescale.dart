@@ -39,6 +39,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/scroll_down.dart';
+import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_selectable_text.dart';
@@ -58,6 +59,8 @@ void main() {
 
       await loadDemoDataset(tester);
 
+      // 1. Select and test chip "Recenter"
+
       await navigateToTab(tester, 'Transform');
 
       await navigateToFeature(tester, 'Rescale', RescalePanel);
@@ -67,8 +70,6 @@ void main() {
       await tester.pump(delay);
 
       await gotoNextPage(tester);
-
-      // Verify that the page content includes the expected dataset summary with 'RRC_min_temp'.
 
       await verifyPage(
         'Dataset Summary',
@@ -91,19 +92,93 @@ void main() {
         ],
       );
 
-      // Step 2: Navigate to the 'Dataset' tab to ensure the UI updates correctly.
-
       await navigateToTab(tester, 'Dataset');
 
       await scrollDown(tester);
 
-      // Step 3: Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
-
       await verifyImputedVariable(tester, 'RRC_min_temp');
 
-      // Step 4: Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
-
       await checkVariableNotMissing(tester, 'RRC_min_temp');
+
+      // 2. Select and test chip "Scale [0, 1]"
+
+      await navigateToTab(tester, 'Transform');
+
+      await navigateToFeature(tester, 'Rescale', RescalePanel);
+
+      await tapChip(
+        tester,
+        'Scale [0-1]',
+      );
+
+      await pressFirstButton(tester, 'Rescale Variable Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'R01_min_temp',
+      );
+
+      await scrollUntilFindKey(tester, 'text_page');
+
+      // Verify specific statistical values for the imputed 'R01_min_temp' variable.
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   :0.0000', // Minimum value of 'R01_min_temp'.
+          '1st Qu.:0.2704', // First quartile value of 'R01_min_temp'.
+          'Median :0.4778', // Median value of 'R01_min_temp'.
+          'Mean   :0.4760', // Mean value of 'R01_min_temp'.
+          '3rd Qu.:0.6778', // Third quartile value of 'R01_min_temp'.
+          'Max.   :1.0000', // Maximum value of 'R01_min_temp'.
+        ],
+      );
+
+      // await navigateToTab(tester, 'Dataset');
+
+      // await scrollDown(tester);
+
+      // await verifyImputedVariable(tester, 'R01_min_temp');
+
+      // await checkVariableNotMissing(tester, 'R01_min_temp');
+
+      // 3. Select and test chip "-Median/MAD"
+
+      await navigateToTab(tester, 'Transform');
+
+      await navigateToFeature(tester, 'Rescale', RescalePanel);
+
+      await tapChip(
+        tester,
+        '-Median/MAD',
+      );
+
+      await pressFirstButton(tester, 'Rescale Variable Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'RMD_min_temp',
+      );
+
+      await scrollUntilFindKey(tester, 'text_page');
+
+      // Verify specific statistical values for the imputed 'RMD_min_temp' variable.
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   :-1.553738', // Minimum value of 'RMD_min_temp'.
+          '1st Qu.:-0.674491', // First quartile value of 'RMD_min_temp'.
+          'Median : 0.000000', // Median value of 'RMD_min_temp'.
+          'Mean   :-0.005742', // Mean value of 'RMD_min_temp'.
+          '3rd Qu.: 0.650402', // Third quartile value of 'RMD_min_temp'.
+          'Max.   : 1.698271', // Maximum value of 'RMD_min_temp'.
+        ],
+      );
     });
   });
 }
