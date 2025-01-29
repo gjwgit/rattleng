@@ -39,9 +39,11 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/press_first_button.dart';
+import 'utils/scroll_down.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/scroll_until.dart';
 import 'utils/verify_page.dart';
 
 void main() {
@@ -74,15 +76,7 @@ void main() {
         'IMN_rainfall',
       );
 
-      // Standard mouse wheel scroll amount and find the first Scrollable widget by key.
-
-      await tester.scrollUntilVisible(
-        find.byKey(const PageStorageKey('text_page')),
-        500.0,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await scrollUntilFindKey(tester, 'text_page');
 
       // Verify specific statistical values for the imputed 'IMN_rainfall' variable.
 
@@ -102,19 +96,7 @@ void main() {
 
       await navigateToTab(tester, 'Dataset');
 
-      // Find the first Scrollable widget and scroll to the bottom.
-
-      await tester.fling(
-        find.byType(Scrollable).first,
-        // Scroll down with significant offset.
-
-        const Offset(0, -1000),
-        // Higher velocity for longer scroll.
-
-        3000,
-      );
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await scrollDown(tester);
 
       // Step 3: Verify that the imputed variable 'IZR_rainfall' is present in the dataset.
 
