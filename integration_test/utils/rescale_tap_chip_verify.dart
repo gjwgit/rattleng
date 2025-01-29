@@ -7,6 +7,9 @@ import 'tap_chip.dart';
 import 'verify_page.dart';
 import 'verify_selectable_text.dart';
 
+/// Verify the Rescale feature on the DEMO dataset.
+/// tap chip, press button, verify car name , verify stats.
+
 Future<void> rescale_tap_chip_verify(
   WidgetTester tester,
   String chipText,
