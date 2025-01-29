@@ -1,4 +1,4 @@
-/// Test the Transform tab Impute feature on the DEMO dataset.
+/// Test the Transform tab Rescale feature on the DEMO dataset.
 //
 // Time-stamp: <Friday 2024-12-27 16:23:12 +1100 Graham Williams>
 //
@@ -28,7 +28,7 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/impute/panel.dart';
+import 'package:rattle/features/rescale/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/check_variable_not_missing.dart';
@@ -60,34 +60,34 @@ void main() {
 
       await navigateToTab(tester, 'Transform');
 
-      await navigateToFeature(tester, 'Impute', ImputePanel);
+      await navigateToFeature(tester, 'Rescale', RescalePanel);
 
-      await pressFirstButton(tester, 'Impute Missing Values');
+      await pressFirstButton(tester, 'Rescale Variable Values');
 
       await tester.pump(delay);
 
       await gotoNextPage(tester);
 
-      // Verify that the page content includes the expected dataset summary with 'IMN_rainfall'.
+      // Verify that the page content includes the expected dataset summary with 'RRC_min_temp'.
 
       await verifyPage(
         'Dataset Summary',
-        'IMN_rainfall',
+        'RRC_min_temp',
       );
 
       await scrollUntilFindKey(tester, 'text_page');
 
-      // Verify specific statistical values for the imputed 'IMN_rainfall' variable.
+      // Verify specific statistical values for the imputed 'RRC_min_temp' variable.
 
       await verifySelectableText(
         tester,
         [
-          'Min.   : 0.000', // Minimum value of 'IMN_rainfall'.
-          '1st Qu.: 0.000', // First quartile value of 'IMN_rainfall'.
-          'Median : 0.000', // Median value of 'IMN_rainfall'.
-          'Mean   : 1.825', // Mean value of 'IMN_rainfall'.
-          '3rd Qu.: 0.200', // Third quartile value of 'IMN_rainfall'.
-          'Max.   :44.800', // Maximum value of 'IMN_rainfall'.
+          'Min.   :-1.946941', // Minimum value of 'RRC_min_temp'.
+          '1st Qu.:-0.841097', // First quartile value of 'RRC_min_temp'.
+          'Median : 0.007221', // Median value of 'RRC_min_temp'.
+          'Mean   : 0.000000', // Mean value of 'RRC_min_temp'.
+          '3rd Qu.: 0.825243', // Third quartile value of 'RRC_min_temp'.
+          'Max.   : 2.143167', // Maximum value of 'RRC_min_temp'.
         ],
       );
 
@@ -99,11 +99,11 @@ void main() {
 
       // Step 3: Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
 
-      await verifyImputedVariable(tester, 'IMN_rainfall');
+      await verifyImputedVariable(tester, 'RRC_min_temp');
 
       // Step 4: Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
 
-      await checkVariableNotMissing(tester, 'IZR_rainfall');
+      await checkVariableNotMissing(tester, 'RRC_min_temp');
     });
   });
 }
