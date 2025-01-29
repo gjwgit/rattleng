@@ -219,7 +219,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
     final prefs = await SharedPreferences.getInstance();
     final savedVersion = prefs.getString('version') ?? '';
 
-    // Extract date from CHANGELOG.md - first date in [6.4.0 20250120 gjw].
+    // Extract date from CHANGELOG.md - first date in [6.4.0 20250120 gjw] bracketed
+    // by square brackets.
 
     final changelogFile = File('CHANGELOG.md');
     String currentDate = '20250101'; // Default date
