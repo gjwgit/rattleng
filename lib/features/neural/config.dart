@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-01-23 09:06:44 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-29 12:12:42 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -132,7 +132,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('Build Neural Network'),
               tooltip: '''
 
-              Tap to build a Nerual Network model using the parameter values
+              Tap to build a Neural Network model using the parameter values
               that you can set here.
 
               ''',

@@ -25,7 +25,7 @@ modelling. The aim is to build a mathematical formula that captures
 the relationship between a collection of input variables and a numeric
 output variable. This formula can then be applied to new observations
 to predict a numeric outcome. The and **SVM** (support vector
-machine), **Linear** regression, and **Nerual** network models support
+machine), **Linear** regression, and **Neural** network models support
 regression type models, though the tree-based methods can often also
 build regression models.
 
