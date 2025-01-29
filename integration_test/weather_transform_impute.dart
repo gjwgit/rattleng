@@ -25,6 +25,7 @@
 
 library;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -32,10 +33,12 @@ import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/press_first_button.dart';
+import 'utils/unify_on.dart';
 import 'utils/verify_text.dart';
 import 'utils/verify_page.dart';
 
@@ -44,34 +47,25 @@ void main() {
 
   group('Transform DEMO:', () {
     testWidgets('build, page.', (WidgetTester tester) async {
-      // Remove the container usage to what we are typically doing now with
-      // tester. But need to update the various tests.
-
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await loadDemoDataset(tester);
+      await unifyOn(tester);
 
-      // Navigate to the 'Transform' tab in the app.
+      await loadDemoDataset(tester);
 
       await navigateToTab(tester, 'Transform');
 
-      // Within the 'Transform' tab, navigate to the 'Impute' feature.
-
       await navigateToFeature(tester, 'Impute', ImputePanel);
-
-      // Step 1: Check if the variable 'rainfall' has missing values.
-
-      // await checkMissingVariable(container, 'rainfall');
-
-      // Step 2: Simulate pressing the button to impute missing value as mean.
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
       // Allow the UI to settle after the imputation action.
 
-      await tester.pump(hack);
+      await tester.pump(delay);
+
+      await gotoNextPage(tester);
 
       // Verify that the page content includes the expected dataset summary with 'IZR_rainfall'.
 
@@ -79,6 +73,14 @@ void main() {
         'Dataset Summary',
         'IMN_rainfall',
       );
+
+      await tester.scrollUntilVisible(
+        find.text('Max.   :44.800'),
+        500.0,
+        scrollable: find.byType(Scrollable).first,
+      );
+
+      await tester.pump(hack);
 
       // Verify specific statistical values for the imputed 'IZR_rainfall' variable.
 
