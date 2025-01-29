@@ -23,7 +23,9 @@ Flutter Style Guide: https://survivor.togaware.com/gnulinux/flutter-style.html
   - [ ] Linux
   - [ ] MacOS
   - [ ] Windows
-- [ ] Added two reviewers
+- [ ] Added software engineer reviewer
+- [ ] Approved by one software engineer reviewer
+- [ ] Approved by team leader
 
 ## Finalising
 
