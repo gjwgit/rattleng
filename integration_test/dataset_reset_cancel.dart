@@ -1,6 +1,6 @@
 /// DATASET feature.
 //
-// Time-stamp: <Sunday 2025-01-26 08:56:59 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-29 16:32:36 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -80,7 +80,9 @@ void main() {
 
       final filePathField = find.byType(TextField);
       await tester.enterText(
-          filePathField, 'integration_test/data/medical.csv');
+        filePathField,
+        'integration_test/data/medical.csv',
+      );
 
       // Simulate pressing the Enter key.
 
