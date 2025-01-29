@@ -38,6 +38,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/press_first_button.dart';
+import 'utils/rescale_tap_chip_verify.dart';
 import 'utils/scroll_down.dart';
 import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
@@ -56,8 +57,9 @@ void main() {
       await tester.pump(interact);
 
       await unifyOn(tester);
-
       await loadDemoDataset(tester);
+
+      await tester.pump(delay);
 
       // 1. Select and test chip "Recenter"
 
@@ -106,26 +108,10 @@ void main() {
 
       await navigateToFeature(tester, 'Rescale', RescalePanel);
 
-      await tapChip(
+      await rescale_tap_chip_verify(
         tester,
         'Scale [0-1]',
-      );
-
-      await pressFirstButton(tester, 'Rescale Variable Values');
-
-      await tester.pump(delay);
-
-      await verifyPage(
-        'Dataset Summary',
         'R01_min_temp',
-      );
-
-      await scrollUntilFindKey(tester, 'text_page');
-
-      // Verify specific statistical values for the imputed 'R01_min_temp' variable.
-
-      await verifySelectableText(
-        tester,
         [
           'Min.   :0.0000', // Minimum value of 'R01_min_temp'.
           '1st Qu.:0.2704', // First quartile value of 'R01_min_temp'.
@@ -138,26 +124,10 @@ void main() {
 
       // 3. Select and test chip "-Median/MAD"
 
-      await tapChip(
+      await rescale_tap_chip_verify(
         tester,
         '-Median/MAD',
-      );
-
-      await pressFirstButton(tester, 'Rescale Variable Values');
-
-      await tester.pump(delay);
-
-      await verifyPage(
-        'Dataset Summary',
         'RMD_min_temp',
-      );
-
-      await scrollUntilFindKey(tester, 'text_page');
-
-      // Verify specific statistical values for the imputed 'RMD_min_temp' variable.
-
-      await verifySelectableText(
-        tester,
         [
           'Min.   :-1.553738', // Minimum value of 'RMD_min_temp'.
           '1st Qu.:-0.674491', // First quartile value of 'RMD_min_temp'.
@@ -170,26 +140,10 @@ void main() {
 
       // 4. Select and test chip "Natural Log"
 
-      await tapChip(
+      await rescale_tap_chip_verify(
         tester,
         'Natural Log',
-      );
-
-      await pressFirstButton(tester, 'Rescale Variable Values');
-
-      await tester.pump(delay);
-
-      await verifyPage(
-        'Dataset Summary',
         'RLG_min_temp',
-      );
-
-      await scrollUntilFindKey(tester, 'text_page');
-
-      // Verify specific statistical values for the imputed 'RLG_min_temp' variable.
-
-      await verifySelectableText(
-        tester,
         [
           'Min.   :-2.303', // Minimum value of 'RLG_min_temp'.
           '1st Qu.: 1.493', // First quartile value of 'RLG_min_temp'.
@@ -197,33 +151,16 @@ void main() {
           'Mean   : 1.857', // Mean value of 'RLG_min_temp'.
           '3rd Qu.: 2.588', // Third quartile value of 'RLG_min_temp'.
           'Max.   : 3.035', // Maximum value of 'RLG_min_temp'.
-          //                     NA's   :71
           'NA\'s   :71', // Number of missing values in 'RLG_min_temp'.
         ],
       );
 
       // 5. Select and test chip "Log 10"
 
-      await tapChip(
+      await rescale_tap_chip_verify(
         tester,
         'Log 10',
-      );
-
-      await pressFirstButton(tester, 'Rescale Variable Values');
-
-      await tester.pump(delay);
-
-      await verifyPage(
-        'Dataset Summary',
         'R10_min_temp',
-      );
-
-      await scrollUntilFindKey(tester, 'text_page');
-
-      // Verify specific statistical values for the imputed 'R10_min_temp' variable.
-
-      await verifySelectableText(
-        tester,
         [
           'Min.   :-1.0000', // Minimum value of 'R10_min_temp'.
           '1st Qu.: 0.6483', // First quartile value of 'R10_min_temp'.
@@ -231,33 +168,16 @@ void main() {
           'Mean   : 0.8064', // Mean value of 'R10_min_temp'.
           '3rd Qu.: 1.1239', // Third quartile value of 'R10_min_temp'.
           'Max.   : 1.3181', // Maximum value of 'R10_min_temp'.
-          //                     NA's   :71
           'NA\'s   :71', // Number of missing values in 'R10_min_temp'.
         ],
       );
 
       // 6. Select and test chip "Rank"
 
-      await tapChip(
+      await rescale_tap_chip_verify(
         tester,
         'Rank',
-      );
-
-      await pressFirstButton(tester, 'Rescale Variable Values');
-
-      await tester.pump(delay);
-
-      await verifyPage(
-        'Dataset Summary',
         'RRK_min_temp',
-      );
-
-      await scrollUntilFindKey(tester, 'text_page');
-
-      // Verify specific statistical values for the imputed 'RRK_min_temp' variable.
-
-      await verifySelectableText(
-        tester,
         [
           'Min.   :  1.0', // Minimum value of 'RRK_min_temp'.
           '1st Qu.: 92.5', // First quartile value of 'RRK_min_temp'.
@@ -270,26 +190,10 @@ void main() {
 
       // 6. Select and test chip "Interval"
 
-      await tapChip(
+      await rescale_tap_chip_verify(
         tester,
         'Interval',
-      );
-
-      await pressFirstButton(tester, 'Rescale Variable Values');
-
-      await tester.pump(delay);
-
-      await verifyPage(
-        'Dataset Summary',
         'RIN_min_temp_100',
-      );
-
-      await scrollUntilFindKey(tester, 'text_page');
-
-      // Verify specific statistical values for the imputed 'RIN_min_temp_100' variable.
-
-      await verifySelectableText(
-        tester,
         [
           'Min.   : 0.00', // Minimum value of 'RIN_min_temp_100'.
           '1st Qu.:27.00', // First quartile value of 'RIN_min_temp_100'.

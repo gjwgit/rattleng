@@ -18,7 +18,7 @@ Future<void> rescale_tap_chip_verify(
   await tester.pump(delay);
   await gotoNextPage(tester);
 
-  // await verifyPage('Dataset Summary', variableName);
+  await verifyPage('Dataset Summary', variableName);
   await scrollUntilFindKey(tester, 'text_page');
   await verifySelectableText(tester, expectedStats);
 }
