@@ -140,7 +140,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(interact);
 
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
 
     await navigateToPage(
       tester,

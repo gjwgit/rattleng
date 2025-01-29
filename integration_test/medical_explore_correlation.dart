@@ -49,7 +49,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
 
-      await loadDatasetByPath(tester, 'integration_test/medical.csv');
+      await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await tapButton(tester, 'Perform Correlation Analysis');

@@ -39,7 +39,7 @@ void main() {
   testWidgets('Load Medical Dataset.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     final rolesRecIDFinder = find.textContaining('rec-57600');
     expect(rolesRecIDFinder, findsOneWidget);
     await tester.pump(interact);

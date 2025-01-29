@@ -70,7 +70,7 @@ void main() {
   ) async {
     app.main();
     await tester.pumpAndSettle();
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     for (final v in varsToIgnore) {
       await setDatasetRole(tester, v, 'Ignore');
     }
