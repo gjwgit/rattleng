@@ -65,7 +65,7 @@ default_sampsize <- function(x, input_sampsize, replace=FALSE) {
     if (replace) {
       return(nrow(x))
     } else {
-      return(ceiling(.632 * nrow(x)))
+      return(floor(.632 * nrow(x)))
     }
   }else{
     return(input_sampsize)

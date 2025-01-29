@@ -196,4 +196,4 @@ split <- c(<DATA_SPLIT_TR_TU_TE>)
 # Calculates the ceiling of the class frequencies multiplied by the split ratio.
 # Returns integer values rounded up to ensure all classes are represented.
 
-ceiling(as.numeric(table(ds[[target]])) * split[1])
+floor(as.numeric(table(ds[[target]])) * split[1])

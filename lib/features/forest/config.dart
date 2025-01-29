@@ -329,11 +329,11 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   ? disabledTextStyle
                   : normalTextStyle,
               tooltip: '''
-                **Sample Size** controls observations sampled per class.
-    
-                - For binary classification: enter two numbers separated by comma.
-                - Each number must be between 1 and class size.
-               
+
+                Specify a single sample size (e.g. 500), or a sample size 
+                for each class (e.g., 500,500 for a binary model), 
+                which may be useful in balancing class predictions
+
                 ''',
               enabled: selectedAlgorithm != AlgorithmType.conditional,
               validator: (value) => _validateSampleSize(value),

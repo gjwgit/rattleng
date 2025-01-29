@@ -40,12 +40,12 @@ List<int> getTargetFrequency(WidgetRef ref) {
 
   try {
     // Extract frequencies of target variable classes from R output.
-    // If randomPartition is true, calculate ceiling of frequencies scaled by DATA_SPLIT_TR_TU_TE.
+    // If randomPartition is true, calculate floor of frequencies scaled by DATA_SPLIT_TR_TU_TE.
 
     String defineTarget = rExtract(
       stdout,
       randomPartition
-          ? '> ceiling(as.numeric(table(ds[[target]])) * split[1])'
+          ? '> floor(as.numeric(table(ds[[target]])) * split[1])'
           : '> as.numeric(table(ds[[target]]))',
     );
 
