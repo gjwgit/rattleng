@@ -63,7 +63,7 @@ void main() {
 
       // Open the large dataset in the app.
 
-      await loadDatasetByPath(tester, 'integration_test/medical.csv');
+      await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
 
       // Navigate to the 'Transform' tab in the app.
 

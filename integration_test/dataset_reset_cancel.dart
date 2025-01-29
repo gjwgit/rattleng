@@ -79,7 +79,8 @@ void main() {
       // Locate the TextField where the file path is input.
 
       final filePathField = find.byType(TextField);
-      await tester.enterText(filePathField, 'integration_test/medical.csv');
+      await tester.enterText(
+          filePathField, 'integration_test/data/medical.csv');
 
       // Simulate pressing the Enter key.
 

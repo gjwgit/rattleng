@@ -48,7 +48,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await tester.pump(interact);
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Missing', MissingPanel);
     await tapButton(tester, 'Perform Missing Analysis');

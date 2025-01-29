@@ -49,7 +49,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(interact);
 
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
 
     // 20240822 TODO gjw DOES THIS NEED A WAIT FOR THE R CODE TO FINISH!!!
     //
