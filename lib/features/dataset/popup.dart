@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Monday 2025-01-13 06:48:59 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-01-29 11:50:47 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -350,6 +350,28 @@ class DatasetPopup extends ConsumerWidget {
                         );
                       },
                       child: const Text('Sherlock'),
+                    ),
+                  ),
+                  buttonGap,
+                  MarkdownTooltip(
+                    message: '''
+
+                      The **US Census** data file is a larger **csv** file for
+                      exploring a dataset. The data comes from the U.S. Census
+                      Bureau, Population Division. The variables are described
+                      [there](https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/counties/totals/co-est2016-alldata.pdf).
+
+                      ''',
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await loadDemoDataset(
+                          ref,
+                          context,
+                          'data/co-est2016-alldata.csv',
+                          'US Census',
+                        );
+                      },
+                      child: const Text('US Census'),
                     ),
                   ),
                 ],
