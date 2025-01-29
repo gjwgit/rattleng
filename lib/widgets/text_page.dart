@@ -141,6 +141,7 @@ class TextPage extends StatelessWidget {
               controller: horizontalScrollController,
               child: SingleChildScrollView(
                 // Attach a vertical controller for independent scrolling.
+                key: PageStorageKey('text_page'),
 
                 controller: ScrollController(),
                 scrollDirection: Axis.vertical,

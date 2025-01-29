@@ -39,7 +39,8 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/unify_on.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_imputed_variable.dart';
+import 'utils/verify_selectable_text.dart';
 import 'utils/verify_page.dart';
 
 void main() {
@@ -67,32 +68,34 @@ void main() {
 
       await gotoNextPage(tester);
 
-      // Verify that the page content includes the expected dataset summary with 'IZR_rainfall'.
+      // Verify that the page content includes the expected dataset summary with 'IMN_rainfall'.
 
       await verifyPage(
         'Dataset Summary',
         'IMN_rainfall',
       );
 
+      // Standard mouse wheel scroll amount and find the first Scrollable widget by key.
+
       await tester.scrollUntilVisible(
-        find.text('Max.   :44.800'),
+        find.byKey(const PageStorageKey('text_page')),
         500.0,
         scrollable: find.byType(Scrollable).first,
       );
+      await tester.pumpAndSettle();
+      await tester.pump(delay);
 
-      await tester.pump(hack);
+      // Verify specific statistical values for the imputed 'IMN_rainfall' variable.
 
-      // Verify specific statistical values for the imputed 'IZR_rainfall' variable.
-
-      await verifyText(
+      await verifySelectableText(
         tester,
         [
-          'Min.   : 0.000', // Minimum value of 'IZR_rainfall'.
-          '1st Qu.: 0.000', // First quartile value of 'IZR_rainfall'.
-          'Median : 0.000', // Median value of 'IZR_rainfall'.
-          'Mean   : 1.825', // Mean value of 'IZR_rainfall'.
-          '3rd Qu.: 0.200', // Third quartile value of 'IZR_rainfall'.
-          'Max.   :44.800', // Maximum value of 'IZR_rainfall'.
+          'Min.   : 0.000', // Minimum value of 'IMN_rainfall'.
+          '1st Qu.: 0.000', // First quartile value of 'IMN_rainfall'.
+          'Median : 0.000', // Median value of 'IMN_rainfall'.
+          'Mean   : 1.825', // Mean value of 'IMN_rainfall'.
+          '3rd Qu.: 0.200', // Third quartile value of 'IMN_rainfall'.
+          'Max.   :44.800', // Maximum value of 'IMN_rainfall'.
         ],
       );
 
@@ -100,13 +103,13 @@ void main() {
 
       await navigateToTab(tester, 'Dataset');
 
-      // Allow time for the UI to settle after navigating to the 'Dataset' tab.
+      // // Allow time for the UI to settle after navigating to the 'Dataset' tab.
 
-      await tester.pump(interact);
+      // await tester.pump(interact);
 
       // Step 3: Verify that the imputed variable 'IZR_rainfall' is present in the dataset.
 
-      // await verifyImputedVariable(container, 'IZR_rainfall');
+      await verifyImputedVariable(container, 'IMN_rainfall');
 
       // Step 4: Check that the imputed variable 'IZR_rainfall' is no longer listed as missing.
 
