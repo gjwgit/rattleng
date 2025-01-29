@@ -44,7 +44,7 @@ void main() {
   testWidgets('Summary.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await gotoNextPage(tester);
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Summary', SummaryPanel);

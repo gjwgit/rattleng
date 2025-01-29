@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-12-28 11:36:18 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-29 20:04:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -71,9 +71,10 @@ model_arules <- apriori(
 
 print(summary(model_arules))
 
-# Limit the number of rules for display and calculating the interest
-# measures. Generally this can be very large and if so the `inspect()`
-# will be very time consuming and it appears the app has frozen.
+# Limit the number of rules for display and calculating the
+# interestingness measures. Generally this can be very large and if so
+# the `inspect()` will be very time consuming and it appears the app
+# has frozen.
 
 top_rules <- sort(model_arules, by = <ASSOCIATION_RULES_SORT_BY>)
 top_rules <- top_rules[1:min(length(top_rules), <ASSOCIATION_INTEREST_MEASURE>)]
@@ -94,20 +95,21 @@ measures <- interestMeasure(
 
 print(measures)
 
-# Plot a summary of the
+# Plot a summary of the associations.
+##
+## 20250129 gjw The SVG generated here uses filter elements which are not supported
+## by flutter_svg. Other tools display it just fine. Alternative might
+## be to go with PNG for
+## now. https://github.com/dnfield/flutter_svg/issues/53
+##
+## svg("<TEMPDIR>/model_arules_viz.svg")
 
-# The CVG generated here uses filter elements which are not supported
-# by flutter_svg. Other tools display it jsut fine. Alternative might
-# be to go with PNG for
-# now. https://github.com/dnfield/flutter_svg/issues/53
-
-# svg("<TEMPDIR>/model_arules_viz.svg")
 png("<TEMPDIR>/model_arules_viz.png")
-plot(model_arules, method="graph")
+plot(top_rules, method="graph")
 dev.off()
 
 svg("<TEMPDIR>/model_arules_para.svg")
-plot(model_arules, method="paracoord")
+plot(top_rules, method="paracoord")
 dev.off()
 
 # Plot the relative importance of the rules using arulesViz.

@@ -47,7 +47,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(hack);
 
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Visual', VisualPanel);
     await tapButton(tester, 'Generate Plots');

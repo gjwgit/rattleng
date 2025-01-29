@@ -62,7 +62,7 @@ void main() {
   testWidgets('Medical Dataset Ignore Variables.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-    await loadDatasetByPath(tester, 'integration_test/medical.csv');
+    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     verifyRole('rec_id', 'Ident');
     verifyRole('ssn', 'Ident');
     verifyRole('gender', 'Target');

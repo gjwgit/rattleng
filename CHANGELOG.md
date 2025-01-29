@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ Bug fix ASSOCIATIONS visualisations [6.4.4 20250129 gjw]
 + Bug fix TESTS [6.4.3 20250129 gjw]
 + Add new sample dataset us census [6.4.2 20250129 gjw]
 + Update EVALUATION error matrix and roc [6.4.1 20250129 zy]
