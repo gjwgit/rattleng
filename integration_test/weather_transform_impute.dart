@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -62,8 +63,6 @@ void main() {
 
       await pressFirstButton(tester, 'Impute Missing Values');
 
-      // Allow the UI to settle after the imputation action.
-
       await tester.pump(delay);
 
       await gotoNextPage(tester);
@@ -99,24 +98,31 @@ void main() {
         ],
       );
 
-      // Step 2.5: Navigate to the 'Dataset' tab to ensure the UI updates correctly.
+      // Step 2: Navigate to the 'Dataset' tab to ensure the UI updates correctly.
 
       await navigateToTab(tester, 'Dataset');
 
-      // // Allow time for the UI to settle after navigating to the 'Dataset' tab.
+      // Find the first Scrollable widget and scroll to the bottom.
 
-      // await tester.pump(interact);
+      await tester.fling(
+        find.byType(Scrollable).first,
+        // Scroll down with significant offset.
+
+        const Offset(0, -1000),
+        // Higher velocity for longer scroll.
+
+        3000,
+      );
+      await tester.pumpAndSettle();
+      await tester.pump(delay);
 
       // Step 3: Verify that the imputed variable 'IZR_rainfall' is present in the dataset.
 
-      await verifyImputedVariable(container, 'IMN_rainfall');
+      await verifyImputedVariable(tester, 'IMN_rainfall');
 
       // Step 4: Check that the imputed variable 'IZR_rainfall' is no longer listed as missing.
 
       // await checkVariableNotMissing(container, 'IZR_rainfall');
-
-      // Dispose of the ProviderContainer to clean up resources and prevent memory leaks.
-      // container.dispose();
     });
   });
 }
