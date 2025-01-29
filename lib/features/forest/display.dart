@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-12-23 15:32:03 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-01-29 14:33:09 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -84,6 +84,16 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     forestAlgorithm == AlgorithmType.traditional
         ? content = rExtract(stdout, 'print(model_randomForest')
+            .replaceFirst(', ntree', ',\n              ntree')
+            .replaceFirst(' import', '\n              import')
+            .replaceFirst(', na.action =', ',\n              na.action =')
+            .replaceFirst('               Type of', '\nType of')
+            .replaceFirst(
+              '                     Number of trees',
+              '\nNumber of trees',
+            )
+            .replaceFirst('        OOB', 'OOB')
+            .replaceFirst('Confusion', '\nConfusion')
         : content = rExtract(stdout, 'print(model_cforest)');
 
     if (content.isNotEmpty) {
@@ -93,10 +103,11 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
           # Random Forest Model
 
-          Built using `randomForest()`.
+          Built using
+          [randomForest::randomForest()](https://www.rdocumentation.org/packages/randomForest/topics/randomForest).
 
           ''',
-          content: '\n$content',
+          content: '$content',
         ),
       );
     }
@@ -132,7 +143,9 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
             # Sample Rules
 
-            Built using `rattle::printRandomForest()`.
+            Generated using
+            [rattle::printRandomForest()](https://www.rdocumentation.org/packages/rattle/topics/printRandomForest).
+
 
             ''',
             content: '\n$content',
@@ -151,7 +164,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
             # Variable Importance &#8212; Numeric
 
-            Built using `randomForest::importance()`
+            Generated using
+            [randomForest::importance()](https://www.rdocumentation.org/packages/randomForest/topics/importance).
 
             ''',
             content: '\n$content',
@@ -169,6 +183,9 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             title: '''
 
             # Variable Importance &#8212; Plot
+
+            Generated using
+            [randomForest::importance()](https://www.rdocumentation.org/packages/randomForest/topics/importance).
 
             ''',
             path: image,
