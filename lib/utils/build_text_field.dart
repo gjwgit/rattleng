@@ -102,7 +102,7 @@ Widget buildTextField({
                 // Called when the user taps outside of the text field, causing it to lose focus.
                 // If this is the "Sample Size:" text field and we have a valid Riverpod reference,
                 // update the forestSampleSizeProvider with the current text from the controller.
-                
+
                 if (label == 'Sample Size:' && ref != null) {
                   ref.read(forestSampleSizeProvider.notifier).state =
                       controller.text;
