@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ Add new sample dataset us census [6.4.2 20250129 gjw]
++ Update EVALUATEION error matrix and roc [6.4.1 20250129 zy]
 + Migrate to using delimited PARAMETERS in R templates [6.4.0 20250120 gjw]
 
 ## 6.4 LATEST UPDATES
