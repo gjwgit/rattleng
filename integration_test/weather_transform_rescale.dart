@@ -40,7 +40,6 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/press_first_button.dart';
 import 'utils/rescale_tap_chip_verify.dart';
 import 'utils/scroll_down.dart';
-import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_selectable_text.dart';
@@ -61,7 +60,8 @@ void main() {
 
       await tester.pump(delay);
 
-      // 1. Select and test chip "Recenter"
+      // 1. Select and test chip "Recenter". Do not use rescale_tap_chip_verify
+      // because it is a special case (No need to select chip).
 
       await navigateToTab(tester, 'Transform');
 
