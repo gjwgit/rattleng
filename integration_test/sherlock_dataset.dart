@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Tuesday 2024-10-15 19:22:21 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 17:18:36 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,11 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/load_dataset_by_path.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/load_demo_dataset.dart';
+import 'utils/tap_button.dart';
+import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 
 const Duration delay = Duration(seconds: 5);
 
@@ -47,61 +51,26 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
-      await loadDatasetByPath(tester, 'integration_test/sherlock.txt');
-
+      await loadDemoDataset(tester, 'Sherlock');
       await gotoNextPage(tester);
-
-      // Check first line of the file
-
-      final textFinder = find.textContaining(
+      await verifySelectableText(tester, [
         '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}',
-      );
-      expect(textFinder, findsOneWidget);
-
+      ]);
       await tester.pump(interact);
-
-      // If this passes, it means we are in the same page as before.
-
-      final textFinder2 = find.textContaining(
-        '{- The Project Gutenberg eBook of The Adventures of Sherlock Holmes,          -}',
-      );
-      expect(textFinder2, findsOneWidget);
-
-      // Navigate to the Model tab
-
-      final modelTabFinder = find.text('Model');
-      expect(modelTabFinder, findsOneWidget);
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
-
-      // Navigate to the Tree feature.
-
+      await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Word Cloud', WordCloudPanel);
-
-      // Find and tap the 'Display Word Cloud' button
-
-      final displayWordCloudButtonFinder = find.text('Display Word Cloud');
-      expect(displayWordCloudButtonFinder, findsOneWidget);
-      await tester.tap(displayWordCloudButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
-
-      // Go to the third page
-
+      await tapButton(tester, 'Display Word Cloud');
       await gotoNextPage(tester);
-
-      // Confirm these entries are in the frequency table
-
-      final freqFinder = find.textContaining('upon    9');
-      expect(freqFinder, findsOneWidget);
-
-      final freqFinder2 = find.textContaining('little    7');
-      expect(freqFinder2, findsOneWidget);
+      await gotoNextPage(tester);
+      await verifyPage('Word Frequency');
+      await verifySelectableText(tester, [
+        ' upon    9',
+        'littl    7',
+      ]);
 
       // Confirm these entries are not in the frequency table
 
-      final freqFinder5 = find.textContaining('littl    7');
+      final freqFinder5 = find.textContaining('little   7');
       expect(freqFinder5, findsNothing);
 
       // Find the second checkbox (which should be the 'Stem' checkbox)
@@ -116,9 +85,7 @@ void main() {
 
       // Tap the 'Display Word Cloud' button
 
-      await tester.tap(displayWordCloudButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await tapButton(tester, 'Display Word Cloud');
 
       // Go to the third page
 
@@ -152,10 +119,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap the 'Display Word Cloud' button again after checking the checkbox
-
-      await tester.tap(displayWordCloudButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await tapButton(tester, 'Display Word Cloud');
 
       // Confirm that "again?" is no longer present in the word cloud
 
@@ -173,9 +137,7 @@ void main() {
 
       // Tap the 'Display Word Cloud' button again after checking the checkbox
 
-      await tester.tap(displayWordCloudButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await tapButton(tester, 'Display Word Cloud');
 
       // Confirm this entry is in the frequency table
 
@@ -198,9 +160,7 @@ void main() {
 
       // Tap the 'Display Word Cloud' button
 
-      await tester.tap(displayWordCloudButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await tapButton(tester, 'Display Word Cloud');
 
       // Verify that this is not present in the word cloud
 
@@ -230,9 +190,7 @@ void main() {
 
       // Tap the 'Display Word Cloud' button
 
-      await tester.tap(displayWordCloudButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await tapButton(tester, 'Display Word Cloud');
 
       // Confirm that 1 is not in the frequency table
 
