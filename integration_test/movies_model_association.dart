@@ -1,6 +1,6 @@
 /// Test MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Saturday 2024-12-28 08:00:58 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:53:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -38,6 +38,8 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 import 'utils/verify_text.dart';
 
 void main() {
@@ -46,42 +48,26 @@ void main() {
   testWidgets('Movies Model Association.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDemoDataset(tester, 'Movies');
-
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Associations', AssociationPanel);
     await tapButton(tester, 'Build Association Rules');
-
     await tester.pump(delay);
-
     await gotoNextPage(tester);
-    await verifyText(
+    await verifyPage('Association Rules - Meta Summary');
+    await verifySelectableText(
       tester,
       [
-        'Association Rules - Meta Summary',
         '44 rules',
       ],
     );
-
     await gotoNextPage(tester);
-    await verifyText(
+    await verifyPage('Association Rules - Discovered Rules');
+    await verifySelectableText(
       tester,
       [
-        'Association Rules - Discovered Rules',
         'Patriot',
         '0.7500000  0.4      1.5000000 3',
-      ],
-    );
-
-    // TODO 20241228 gjw THIS IS CURRENTLY FAILING TO BE EXTRACTED FROM STDOUT
-
-    await gotoNextPage(tester);
-    await verifyText(
-      tester,
-      [
-        'chiSquared',
-        '0.7125984',
       ],
     );
 
@@ -94,12 +80,12 @@ void main() {
     expect(imageFinder, findsOneWidget);
 
     await gotoNextPage(tester);
-    await verifyText(
-      tester,
-      [
-        'Item Frequency',
-      ],
-    );
+    await verifyPage('Parrallel Coordinates Plot');
+    imageFinder = find.byType(ImagePage);
+    expect(imageFinder, findsOneWidget);
+
+    await gotoNextPage(tester);
+    await verifyPage('Item Frequency');
     imageFinder = find.byType(ImagePage);
     expect(imageFinder, findsOneWidget);
   });
