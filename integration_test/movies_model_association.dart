@@ -1,6 +1,6 @@
 /// Test MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Thursday 2025-01-30 16:53:16 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:55:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,7 +40,6 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
-import 'utils/verify_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
