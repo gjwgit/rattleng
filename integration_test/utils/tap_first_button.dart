@@ -27,19 +27,19 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> pressFirstButton(
-  WidgetTester tester,
-  String buttonText,
-) async {
-  // Finds the first widget with the given text.
+// Future<void> tapFirstButton(
+//   WidgetTester tester,
+//   String buttonText,
+// ) async {
+//   // Finds the first widget with the given text.
 
-  final buttonFinder = find.text(buttonText).first;
+//   final buttonFinder = find.text(buttonText).first;
 
-  // Taps the first widget found.
+//   // Taps the first widget found.
 
-  await tester.tap(buttonFinder);
+//   await tester.tap(buttonFinder);
 
-  // Wait for any animations or changes to complete.
+//   // Wait for any animations or changes to complete.
 
-  await tester.pumpAndSettle();
-}
+//   await tester.pumpAndSettle();
+// }

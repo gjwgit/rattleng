@@ -37,7 +37,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/press_first_button.dart';
+import 'utils/tap_button.dart';
 import 'utils/scroll_down.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
@@ -62,7 +62,7 @@ void main() {
 
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      await pressFirstButton(tester, 'Impute Missing Values');
+      await tapButton(tester, 'Impute Missing Values');
 
       await tester.pump(delay);
 

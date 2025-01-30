@@ -32,7 +32,7 @@ Future<void> tapButton(
   WidgetTester tester,
   String buttonText,
 ) async {
-  final buttonFinder = find.text(buttonText);
+  final buttonFinder = find.text(buttonText).first;
   expect(buttonFinder, findsOneWidget);
 
   await tester.tap(buttonFinder);

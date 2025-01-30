@@ -36,7 +36,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_dataset_by_path.dart';
-import 'utils/press_first_button.dart';
+import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_text.dart';
 // import 'utils/check_missing_variable.dart';
@@ -79,7 +79,7 @@ void main() {
 
       // Step 2: Simulate pressing the button to impute missing values.
 
-      await pressFirstButton(tester, 'Impute Missing Values');
+      await tapButton(tester, 'Impute Missing Values');
 
       // Allow the UI to settle after the action.
 
