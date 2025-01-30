@@ -30,6 +30,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattle/features/dataset/display.dart';
 import 'package:rattle/providers/vars/roles.dart';
 
+/// Verify that a variable has been imputed in the dataset display.
+/// Check if the rolesProvider has the imputed variable.
+
 Future<void> verifyImputedVariable(
   WidgetTester tester,
   String variable,
