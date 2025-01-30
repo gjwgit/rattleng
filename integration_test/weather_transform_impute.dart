@@ -41,6 +41,7 @@ import 'utils/tap_button.dart';
 import 'utils/scroll_down.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
+import 'utils/verify_role.dart';
 import 'utils/verify_selectable_text.dart';
 import 'utils/verify_page.dart';
 
@@ -106,6 +107,11 @@ void main() {
       // Step 4: Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
 
       await checkVariableNotMissing(tester, 'IZR_rainfall');
+
+      await scrollDown(tester);
+
+      await verifyRole('IMN_rainfall', 'Input');
+      await verifyRole('rainfall', 'Ignore');
     });
   });
 }
