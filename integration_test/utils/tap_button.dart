@@ -1,6 +1,6 @@
-/// Tap button with the corresponding label.
+/// Tap an activity (build) button with the corresponding label.
 //
-// Time-stamp: <Thursday 2025-01-30 16:30:14 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:38:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -29,13 +29,17 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
+/// Tap an [ElevatedButton] with the [text] label.
+
 Future<void> tapButton(
   WidgetTester tester,
   String text,
 ) async {
   final button = find.byWidgetPredicate(
     (Widget widget) =>
-        widget is ElevatedButton && (widget.child as Text).data == text,
+        widget is ElevatedButton &&
+        widget.child is Text &&
+        (widget.child as Text).data == text,
   );
   expect(button, findsOneWidget);
 
