@@ -1,8 +1,8 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Friday 2025-01-31 09:35:34 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 09:36:20 +1100 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
