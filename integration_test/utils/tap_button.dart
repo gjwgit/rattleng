@@ -1,6 +1,6 @@
 ///  Press a button with the given text.
 //
-// Time-stamp: <Friday 2024-12-27 14:06:30 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:16:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,24 +25,25 @@
 
 library;
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:rattle/widgets/activity_button.dart';
+
+// TODO 20250130 gjw tapButton should be checking for a button with the label!
+// Then we would not need tapFirstButton.
 
 Future<void> tapButton(
   WidgetTester tester,
-  String buttonText,
+  String text,
 ) async {
-  final buttonFinder = find.text(buttonText);
-  expect(buttonFinder, findsOneWidget);
+  final button = find.byWidgetPredicate(
+    (Widget widget) =>
+        widget is ElevatedButton && (widget.child as Text).data == text,
+  );
+  expect(button, findsOneWidget);
 
-  await tester.tap(buttonFinder);
-  await tester.pumpAndSettle();
-}
-
-Future<void> tapButtonByKey(WidgetTester tester, String key) async {
-  final buttonFinder = find.byKey(Key(key));
-  expect(buttonFinder, findsOneWidget);
-
-  await tester.tap(buttonFinder);
+  await tester.tap(button);
   await tester.pumpAndSettle();
 }
