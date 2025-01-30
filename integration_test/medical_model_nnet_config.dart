@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Sunday 2025-01-26 07:34:43 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 09:52:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -41,6 +41,7 @@ import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
+import 'utils/verify_selectable_text.dart';
 
 /// List of specific variables that should have their role set to 'Ignore' in
 /// large dataset. These are factors and don't play well with nnet.
@@ -100,16 +101,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(delay);
     await gotoNextPage(tester);
-    final modelDescriptionFinder = find.byWidgetPredicate(
-      (widget) =>
-          widget is SelectableText &&
-          widget.data?.contains('A 7-11-1 network with 100 weights') == true,
-    );
+    await verifySelectableText(tester, [
+      'A 7-11-1 network with 107 weights',
+    ]);
 
     // Ensure the SelectableText widget with the expected content exists.
-
-    // TODO 20241001 kev : underneath code is not working as expected
-    expect(modelDescriptionFinder, findsOneWidget);
 
     final summaryDecisionTreeFinder = find.byType(TextPage);
     expect(summaryDecisionTreeFinder, findsOneWidget);
@@ -119,7 +115,7 @@ void main() {
       (widget) =>
           widget is SelectableText &&
           widget.data?.contains(
-                'Options were - entropy fitting',
+                'Options were - skip-layer connections  entropy fitting',
               ) ==
               true,
     );
@@ -129,7 +125,6 @@ void main() {
     expect(optionsDescriptionFinder, findsOneWidget);
     await tester.pump(interact);
     await gotoNextPage(tester);
-    await tester.pump(hack);
     final forthPageTitleFinder = find.text('Neural Net Model - Visual');
     expect(forthPageTitleFinder, findsOneWidget);
     final imageFinder = find.byType(ImagePage);
