@@ -1,4 +1,4 @@
-///  Fuction to scroll down to the bottom of the page.
+///  Fuction to scroll until a widget with a specific key is visible.
 //
 // Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
 //
@@ -28,20 +28,12 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Scroll down to the bottom of the page.
+/// Scroll until a widget with a specific key is visible.
 
-Future<void> scrollDown(
-  WidgetTester tester,
-) async {
-  // Find the first Scrollable widget and scroll to the bottom.
-
-  await tester.fling(
-    find.byType(Scrollable).first,
-    // Scroll down with significant offset.
-
-    const Offset(0, -1000),
-    // Higher velocity for longer scroll.
-
-    3000,
+Future<void> scrollUntilFindKey(WidgetTester tester, String key) async {
+  await tester.scrollUntilVisible(
+    find.byKey(PageStorageKey(key)),
+    500.0,
+    scrollable: find.byType(Scrollable).first,
   );
 }
