@@ -42,7 +42,6 @@ import 'utils/scroll_down.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_selectable_text.dart';
-import 'utils/scroll_until.dart';
 import 'utils/verify_page.dart';
 
 void main() {
@@ -75,7 +74,10 @@ void main() {
         'IMN_rainfall',
       );
 
-      await scrollUntilFindKey(tester, 'text_page');
+      // comment out the following line because it is not needed. sometimes it is not working
+      // so we need to scroll down to the bottom of the page.
+
+      // await scrollUntilFindKey(tester, 'text_page');
 
       // Verify specific statistical values for the imputed 'IMN_rainfall' variable.
 
