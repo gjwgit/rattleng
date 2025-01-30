@@ -1,6 +1,6 @@
-/// AUDIT dataset TREE model RPART feature.
+/// AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Sunday 2025-01-26 09:53:03 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 14:39:43 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -51,6 +51,7 @@ void main() {
         (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
+      await tester.pump(interact);
       await loadDemoDataset(tester, 'Audit');
       await setDatasetRole(tester, 'adjustment', 'Risk');
       await setDatasetRole(tester, 'marital', 'Ignore');

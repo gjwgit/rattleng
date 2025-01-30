@@ -1,6 +1,6 @@
-/// Test cforest() with demo dataset.
+/// WEATHER dataset MODEL tab FOREST feature CFOREST option.
 //
-// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 14:52:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -32,107 +32,45 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/model.dart';
-import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/navigate_to_page.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
+import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Conditional Forest:', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+  group('WEATHER MODEL FOREST CFOREST:', () {
+    testWidgets('build, test.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-
       await tester.pump(interact);
-
       await loadDemoDataset(tester);
-
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
-
-      // Navigate to the Forest feature.
-
+      await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Forest', ForestPanel);
-
       await tester.pump(interact);
-
-      // Find the ChoiceChipTip widget for the Conditional algorithm type.
-
-      final conditionalChip = find.text('Conditional');
-
-      expect(conditionalChip, findsOneWidget);
-
-      // Tap the conditional chip to switch algorithms.
-
-      await tester.tap(conditionalChip);
-
-      await tester.pumpAndSettle();
-
+      await tapChip(tester, 'Conditional');
       await tapButton(tester, 'Build Random Forest');
-
       await tester.pump(delay);
-
-      await tapButton(tester, 'Build Random Forest');
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final titleFinder = find.textContaining(
-        "Summary of the Conditional Forest model for Classification (built using 'cforest'):",
-      );
-      expect(titleFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
       await gotoNextPage(tester);
-
+      await verifyPage('Random Forest Model');
+      await verifySelectableText(tester, [
+        'Number of trees:  500',
+        'Number of observations:  254',
+      ]);
       await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final dataFinder = find.textContaining(
+      await gotoNextPage(tester);
+      await verifySelectableText(tester, [
         'humidity_3pm',
-      );
-      expect(dataFinder, findsOneWidget);
-
+        '0.0259354839',
+      ]);
       await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final sampleRulesFinder = find.textContaining(
-        'Sample Rules',
-      );
-      expect(sampleRulesFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final imagePageTitleFinder = find.text('VAR IMPORTANCE');
-      expect(imagePageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
     });
   });
 }
