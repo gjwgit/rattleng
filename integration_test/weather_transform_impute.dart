@@ -106,7 +106,7 @@ void main() {
 
       // Step 4: Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
 
-      await checkVariableNotMissing(tester, 'IZR_rainfall');
+      await checkVariableNotMissing(tester, 'IMN_rainfall');
 
       await scrollDown(tester);
 
