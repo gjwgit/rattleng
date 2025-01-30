@@ -39,6 +39,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 import 'utils/scroll_down.dart';
+import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_role.dart';
@@ -61,6 +62,8 @@ void main() {
       await navigateToTab(tester, 'Transform');
 
       await navigateToFeature(tester, 'Impute', ImputePanel);
+
+      // Step 1: Test imputation with Mean.
 
       await tapButton(tester, 'Impute Missing Values');
 
@@ -94,23 +97,99 @@ void main() {
         ],
       );
 
-      // Step 2: Navigate to the 'Dataset' tab to ensure the UI updates correctly.
+      // Navigate to the 'Dataset' tab to ensure the UI updates correctly.
 
       await navigateToTab(tester, 'Dataset');
 
       await scrollDown(tester);
 
-      // Step 3: Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
+      // Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
 
       await verifyImputedVariable(tester, 'IMN_rainfall');
 
-      // Step 4: Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
+      // Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
 
       await checkVariableNotMissing(tester, 'IMN_rainfall');
 
       await scrollDown(tester);
 
       await verifyRole('IMN_rainfall', 'Input');
+      await verifyRole('rainfall', 'Ignore');
+
+      // Step 2: Test imputation with Median.
+
+      await navigateToTab(tester, 'Transform');
+
+      await tapChip(tester, 'Median');
+
+      await tapButton(tester, 'Impute Missing Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'IMD_rainfall',
+      );
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   : 0.000', // Minimum value of 'IMD_rainfall'.
+          '1st Qu.: 0.000', // First quartile value of 'IMD_rainfall'.
+          'Median : 0.000', // Median value of 'IMD_rainfall'.
+          'Mean   : 1.815', // Mean value of 'IMD_rainfall'.
+          '3rd Qu.: 0.200', // Third quartile value of 'IMD_rainfall'.
+          'Max.   :44.800', // Maximum value of 'IMD_rainfall'.
+        ],
+      );
+
+      await navigateToTab(tester, 'Dataset');
+
+      await scrollDown(tester);
+
+      await verifyImputedVariable(tester, 'IMD_rainfall');
+
+      await checkVariableNotMissing(tester, 'IMD_rainfall');
+
+      await verifyRole('IMD_rainfall', 'Input');
+      await verifyRole('rainfall', 'Ignore');
+
+      // Step 3: Test imputation with Mode.
+
+      await navigateToTab(tester, 'Transform');
+
+      await tapChip(tester, 'Mode');
+
+      await tapButton(tester, 'Impute Missing Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'IMO_rainfall',
+      );
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   : 0.000', // Minimum value of 'IMO_rainfall'.
+          '1st Qu.: 0.000', // First quartile value of 'IMO_rainfall'.
+          'Median : 0.000', // Median value of 'IMO_rainfall'.
+          'Mean   : 1.815', // Mean value of 'IMO_rainfall'.
+          '3rd Qu.: 0.200', // Third quartile value of 'IMO_rainfall'.
+          'Max.   :44.800', // Maximum value of 'IMO_rainfall'.
+        ],
+      );
+
+      await navigateToTab(tester, 'Dataset');
+
+      await scrollDown(tester);
+
+      await verifyImputedVariable(tester, 'IMO_rainfall');
+
+      await checkVariableNotMissing(tester, 'IMO_rainfall');
+
+      await verifyRole('IMO_rainfall', 'Input');
       await verifyRole('rainfall', 'Ignore');
     });
   });
