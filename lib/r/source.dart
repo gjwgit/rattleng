@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Friday 2025-01-31 09:15:27 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 09:35:34 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -105,6 +105,10 @@ Future<void> rSource(
 ) async {
   // Initialise the state variables obtained from the different providers.
 
+  // TODO 20250131 gjw MIGRATE TO NOT CACHE THE VALUES HERE
+  //
+  // Instead directly use ref.read() later as with neuralMaxWeightsProvider.
+
   int randomSeedSetting = ref.read(randomSeedSettingProvider);
   bool randomPartitionSetting = ref.read(randomPartitionSettingProvider);
 
@@ -127,7 +131,6 @@ Future<void> rSource(
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
-  int nnetMaxNWts = ref.read(neuralMaxWeightsProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
@@ -542,7 +545,10 @@ Future<void> rSource(
 
   code = code.replaceAll('<NEURAL_HIDDEN_LAYERS>', 'c($hiddenNeurons)');
   code = code.replaceAll('<NEURAL_MAXIT>', nnetMaxit.toString());
-  code = code.replaceAll('<NEURAL_MAX_NWTS>', nnetMaxNWts.toString());
+  code = code.replaceAll(
+    '<NEURAL_MAX_NWTS>',
+    ref.read(neuralMaxWeightsProvider).toString(),
+  );
   code =
       code.replaceAll('<NEURAL_ERROR_FCT>', '"${neuralErrorFct.toString()}"');
   code = code.replaceAll(
