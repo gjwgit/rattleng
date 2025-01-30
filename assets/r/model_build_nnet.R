@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 14:15:19 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-31 09:06:17 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# TIMESTAMP
+# <TIMESTAMP>
 #
 # References:
 #
@@ -41,9 +41,11 @@
 mtype <- "nnet"
 mdesc <- "Neural NNET"
 
-# 20250121 gjw The tds is set to replace trds in handling situations
-# of ignoring the categoric variables (TRUE) or not (FALSE). We simply
-# toggle the TRUE/FALSE here approriately.
+# 20250121 gjw A temporary dataset `tds` is derived from trds to
+# handle the case of ignoring categoric variables (TRUE) or not
+# (FALSE).
+## 20250131 gjw Note that RattleV5 included categoric variables by
+## default and V6 does not.
 
 if (<NEURAL_IGNORE_CATEGORIC>) {
   tds <- trds[setdiff(c(numc, target), ignore)]

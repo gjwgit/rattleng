@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Thursday 2025-01-30 08:34:41 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 09:15:27 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -51,7 +51,6 @@ import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
-import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
@@ -128,12 +127,12 @@ Future<void> rSource(
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
-  int nnetMaxNWts = ref.read(maxNWtsProvider);
+  int nnetMaxNWts = ref.read(neuralMaxWeightsProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
-  bool nnetSkip = ref.read(skipNeuralProvider);
+  bool nnetSkip = ref.read(neuralSkipProvider);
   bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
