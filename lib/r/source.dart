@@ -540,10 +540,10 @@ Future<void> rSource(
   code = code.replaceAll(
     '<RF_INPUT_SAMPSIZE>',
     forestSampleSize == null
-        ? 'NULL'
+        ? ''
         : forestSampleSize.isEmpty
-            ? 'NULL'
-            : 'c($forestSampleSize)',
+            ? ''
+            : ', sampsize = c($forestSampleSize)',
   );
 
   ////////////////////////////////////////////////////////////////////////

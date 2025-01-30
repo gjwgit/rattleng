@@ -43,33 +43,16 @@ library(verification)
 mtype <- "randomForest"
 mdesc <- "Random Forest"
 
+# Train a random forest model based on the training dataset.
 
-# Build the argument list for randomForest.
-
-rf_args <- list(
-  formula    = form,
+model_randomForest <- randomForest(
+  form,
   data       = trds,
   ntree      = <RF_NUM_TREES>,
   mtry       = <RF_MTRY>,
   importance = TRUE,
   na.action  = <RF_NA_ACTION>,
-  replace    = FALSE)
-
-# Conditionally add sampsize if it's not NULL, "NULL", or empty.
-
-if (!is.null(<RF_INPUT_SAMPSIZE>) && all(<RF_INPUT_SAMPSIZE> != "NULL") && all(<RF_INPUT_SAMPSIZE> != "")) {
-  
-  rf_args$sampsize <- <RF_INPUT_SAMPSIZE>
-}
-
-
-# Call randomForest with the constructed arguments.
-
-model_randomForest <- do.call(randomForest::randomForest, rf_args)
-
-# Force the model's call to show data = trds instead of the expanded data.
-
-model_randomForest$call$data <- quote(trds)
+  replace    = FALSE <RF_INPUT_SAMPSIZE>)
 
 ########################################################################
 
