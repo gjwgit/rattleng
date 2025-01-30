@@ -1,6 +1,6 @@
-///  Press a button with the given text.
+/// Tap button with the corresponding label.
 //
-// Time-stamp: <Thursday 2025-01-30 16:16:22 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:30:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -28,11 +28,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:rattle/widgets/activity_button.dart';
-
-// TODO 20250130 gjw tapButton should be checking for a button with the label!
-// Then we would not need tapFirstButton.
 
 Future<void> tapButton(
   WidgetTester tester,
