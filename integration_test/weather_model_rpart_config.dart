@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Sunday 2025-01-26 07:25:24 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:32:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -39,7 +39,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/tap_button.dart';
+import 'utils/tap_button_by_key.dart';
 import 'utils/tap_checkbox.dart';
 import 'utils/enter_text.dart';
 import 'utils/verify_page.dart';
