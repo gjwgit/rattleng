@@ -1,6 +1,6 @@
 /// A simple function to print a message to the testing output.
 //
-// Time-stamp: <Sunday 2024-10-20 14:00:10 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 17:21:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,5 +27,5 @@ library;
 
 void testPrint(String message) {
   // ignore: avoid_print
-  print('***** $message');
+  print('  *****>       $message');
 }
