@@ -1,6 +1,6 @@
 /// Test WEATHER dataset loads properly when partition is on/off.
 //
-// Time-stamp: <Sunday 2025-01-26 07:32:24 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 12:15:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:rattle/features/tree/panel.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
@@ -55,6 +56,7 @@ void main() {
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree', TreePanel);
     await tapButton(tester, 'Build Decision Tree');
+    await tester.pump(delay); // 20250131 gjw Could not find '254'
     await gotoNextPage(tester);
     await verifySelectableText(tester, ['254']);
   });
