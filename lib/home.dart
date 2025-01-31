@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2025-01-29 12:07:05 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-31 09:28:56 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -314,7 +314,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // calling a function, etc.
       }
     });
-    rSource(context, ref, ['list_package_dataset']);
+
+    // TODO 20250131 gjw Why should we do this here on every Rattle startup? It
+    // might be better on a tap of the PACAKGE button in the DATASET popup.
+
+    rSource(context, ref, ['dataset_list_packages']);
   }
 
   @override

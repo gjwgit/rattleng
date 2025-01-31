@@ -53,6 +53,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Audit');
+      await tester.pump(delay); // 20250131 gjw Could not find 'adjustment'
       await setDatasetRole(tester, 'adjustment', 'Risk');
       await setDatasetRole(tester, 'marital', 'Ignore');
       await setDatasetRole(tester, 'education', 'Ignore');

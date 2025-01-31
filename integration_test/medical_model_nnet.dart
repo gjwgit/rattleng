@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Sunday 2025-01-26 07:35:02 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 09:43:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -80,7 +80,8 @@ void main() {
     await verifySelectableText(
       tester,
       [
-        'Options were - entropy fitting',
+        'A 7-10-1 network with 98 weights',
+        'Options were - skip-layer connections  entropy fitting',
       ],
     );
   });

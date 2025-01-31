@@ -43,6 +43,8 @@ library(verification)
 mtype <- "randomForest"
 mdesc <- "Random Forest"
 
+# Train a random forest model based on the training dataset.
+
 model_randomForest <- randomForest(
   form,
   data       = trds,
@@ -50,7 +52,7 @@ model_randomForest <- randomForest(
   mtry       = <RF_MTRY>,
   importance = TRUE,
   na.action  = <RF_NA_ACTION>,
-  replace    = FALSE)
+  replace    = FALSE <RF_INPUT_SAMPSIZE>)
 
 ########################################################################
 
