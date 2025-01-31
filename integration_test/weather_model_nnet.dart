@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 15:00:27 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 13:54:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -38,12 +38,17 @@ import 'package:rattle/widgets/text_page.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/set_dataset_role.dart';
+import 'utils/tap_button.dart';
+import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
 
-final List<String> demoVariablesToIgnore = [
+final List<String> varsToIgnore = [
   'wind_gust_dir',
   'wind_dir_9am',
   'wind_dir_3pm',
@@ -57,204 +62,28 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
       await loadDemoDataset(tester);
-
-      await tester.pump(interact);
-
-      // Find the scrollable ListView.
-
-      final scrollableFinder = find.byKey(const Key('roles listView'));
-
-      // Iterate over each variable in the list and find its corresponding row in the ListView.
-
-      for (final variable in demoVariablesToIgnore) {
-        bool foundVariable = false;
-
-        // Scroll in steps and search for the variable until it's found.
-
-        while (!foundVariable) {
-          // Find the row where the variable name is displayed.
-
-          final variableFinder = find.text(variable);
-
-          if (tester.any(variableFinder)) {
-            foundVariable = true;
-
-            // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-            final parentFinder = find.ancestor(
-              of: variableFinder,
-              matching: find.byType(
-                Row,
-              ),
-            );
-
-            // Select the first Row in the list.
-
-            final firstRowFinder = parentFinder.first;
-
-            // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-            final ignoreChipFinder = find.descendant(
-              of: firstRowFinder,
-              matching: find.text('Ignore'),
-            );
-
-            await tester.tap(ignoreChipFinder);
-
-            await tester.pumpAndSettle();
-
-            // Verify that the role is now set to 'Ignore'.
-
-            expect(ignoreChipFinder, findsOneWidget);
-          } else {
-            final currentScrollableFinder = scrollableFinder.first;
-
-            // Fling (or swipe) down by a small amount.
-
-            await tester.fling(
-              currentScrollableFinder,
-              const Offset(0, -300), // Scroll down
-              1000,
-            );
-            await tester.pumpAndSettle();
-            await tester.pump(delay);
-
-            // Tab the previous variable to avoid missing tab it.
-            // Missing tab happens if Ignore button overlaps the rightArrow icon.
-
-            int index = demoVariablesToIgnore.indexOf(variable);
-            if (index > 0) {
-              String preVariable = demoVariablesToIgnore[index - 1];
-
-              // Find the row where the variable name is displayed.
-
-              final preVariableFinder = find.text(preVariable);
-
-              if (tester.any(preVariableFinder)) {
-                // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-                final preParentFinder = find.ancestor(
-                  of: preVariableFinder,
-                  matching: find.byType(
-                    Row,
-                  ),
-                );
-
-                // Select the first Row in the list.
-
-                final firstRowFinder = preParentFinder.first;
-
-                // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-                final ignoreChipFinder = find.descendant(
-                  of: firstRowFinder,
-                  matching: find.text('Ignore'),
-                );
-
-                await tester.tap(ignoreChipFinder);
-
-                await tester.pumpAndSettle();
-
-                // Verify that the role is now set to 'Ignore'.
-
-                expect(ignoreChipFinder, findsOneWidget);
-              }
-            }
-          }
-        }
+      for (final v in varsToIgnore) {
+        await setDatasetRole(tester, v, 'Ignore');
       }
-
-      // Find the Model Page in the Side tab.
-
-      final modelTabFinder = find.byIcon(Icons.model_training);
-
-      // Tap the model Tab button.
-
-      await tester.tap(modelTabFinder);
-      await tester.pumpAndSettle();
-
-      // Navigate to the Neural feature.
-
+      await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Neural', NeuralPanel);
-
-      await tester.pumpAndSettle();
-
-      // Verify that the markdown content is loaded.
-
-      final markdownContent = find.byKey(const Key('markdown_file'));
-      expect(markdownContent, findsOneWidget);
-
-      // Simulate the presence of a neural network being built.
-
-      final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
-
-      await tester.tap(neuralNetworkButton);
-      await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      await tester.tap(neuralNetworkButton);
-      await tester.pumpAndSettle();
-
-      // Pause for a long time to wait for app gets stable.
-
-      await tester.pump(hack);
-
-      await tester.pump(interact);
-      // Tap the right arrow to go to the second page.
-
-      final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-      expect(rightArrowButton, findsOneWidget);
-
-      // Check if SelectableText contains the expected content.
-
-      final modelDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains('A 15-10-1 network with 171 weights') == true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      expect(modelDescriptionFinder, findsOneWidget);
-
-      final summaryDecisionTreeFinder = find.byType(TextPage);
-      expect(summaryDecisionTreeFinder, findsOneWidget);
-
-      final optionsDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains(
-                  'Options were - entropy fitting',
-                ) ==
-                true,
-      );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      expect(optionsDescriptionFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      // Tap the right arrow to go to the next page.
-
-      expect(rightArrowButton, findsOneWidget);
-      await tester.tap(rightArrowButton);
-      await tester.pumpAndSettle();
-      await tester.pump(hack);
-
-      await tester.pump(interact);
-
+      await tapButton(tester, 'Build Neural Network');
+      await tester.pump(delay);
       await gotoNextPage(tester);
-
-      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
-      expect(forthPageTitleFinder, findsOneWidget);
+      await tester.pump(delay);
+      await verifyPage('Neural Net Model - Summary and Weights');
+      await verifySelectableText(
+        tester,
+        [
+          'A 14-10-1 network with 171 weights',
+          'Options were - skip-layer connections  entropy fitting',
+        ],
+      );
+      await gotoNextPage(tester);
+      await verifyPage('Neural Net Model - Visual');
 
       final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
       expect(imageFinder, findsOneWidget);
 
       await tester.pump(interact);
