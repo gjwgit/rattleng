@@ -55,16 +55,16 @@ class NeuralConfig extends ConsumerStatefulWidget {
 
 class NeuralConfigState extends ConsumerState<NeuralConfig> {
   Map<String, String> neuralAlgorithm = {
-    'nnet': '''
-
-    A basic neural network with a single hidden layer.
-    Suitable for simple tasks and small datasets.
-
-    ''',
     'neuralnet': '''
 
     Supports multiple layers, ideal for complex patterns.
     Commonly used for deeper architectures.
+
+    ''',
+    'nnet': '''
+
+    A basic neural network with a single hidden layer.
+    Suitable for simple tasks and small datasets.
 
     ''',
   };

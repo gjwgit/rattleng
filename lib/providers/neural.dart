@@ -31,7 +31,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final activationFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
-final algorithmNeuralProvider = StateProvider<String>((ref) => 'nnet');
+final algorithmNeuralProvider = StateProvider<String>((ref) => 'neuralnet');
 final errorFctNeuralProvider = StateProvider<String>((ref) => 'sse');
 final hiddenLayersNeuralProvider = StateProvider<String>((ref) => '10');
 final ignoreCategoricNeuralProvider = StateProvider<bool>((ref) => true);
