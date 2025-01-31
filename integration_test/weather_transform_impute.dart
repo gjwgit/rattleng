@@ -142,28 +142,29 @@ void main() {
         ],
       );
 
-      // Navigate to the 'Dataset' tab to ensure the UI updates correctly.
+      // To ensure the UI updates correctly.
 
       await navigateToTab(tester, 'Dataset');
 
       await scrollDown(tester);
 
+      // Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
+
       await verifyImputedVariable(tester, 'IMN_rainfall');
       await checkVariableNotMissing(tester, 'IMN_rainfall');
-
-      await scrollDown(tester);
-
       await verifyRole('IMN_rainfall', 'Input');
       await verifyRole('rainfall', 'Ignore');
 
+      // Verify that the imputed variable 'IMO_rainfall' is present in the dataset.
+
       await verifyImputedVariable(tester, 'IMO_rainfall');
       await checkVariableNotMissing(tester, 'IMO_rainfall');
-
       await verifyRole('IMO_rainfall', 'Input');
+
+      // Verify that the imputed variable 'IMD_rainfall' is present in the dataset.
 
       await verifyImputedVariable(tester, 'IMD_rainfall');
       await checkVariableNotMissing(tester, 'IMD_rainfall');
-
       await verifyRole('IMD_rainfall', 'Input');
     });
   });
