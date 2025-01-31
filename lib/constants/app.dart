@@ -59,5 +59,5 @@ const List<String> months = [
   'Sep',
   'Oct',
   'Nov',
-  'Dec'
+  'Dec',
 ];
