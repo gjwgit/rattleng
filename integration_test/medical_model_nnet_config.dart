@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Friday 2025-01-31 09:52:01 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 12:01:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -99,8 +99,8 @@ void main() {
 
     await tester.tap(neuralNetworkButton);
     await tester.pumpAndSettle();
-    await tester.pump(delay);
     await gotoNextPage(tester);
+    await tester.pump(delay);
     await verifySelectableText(tester, [
       'A 7-11-1 network with 107 weights',
     ]);
