@@ -1,4 +1,4 @@
-/// Test the Transform tab Rescale feature on the DEMO dataset.
+/// WEATHER dataset TRANSFORM tab RESCALE feature.
 //
 // Time-stamp: <Friday 2024-12-27 16:23:12 +1100 Graham Williams>
 //
@@ -49,8 +49,8 @@ import 'utils/verify_page.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Transform DEMO:', () {
-    testWidgets('build, page.', (WidgetTester tester) async {
+  group('WEATHER TRANSFORM RESCALE:', () {
+    testWidgets('xxxx.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
