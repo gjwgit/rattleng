@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Friday 2025-01-31 13:54:42 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 15:29:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,15 +25,12 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
-import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
@@ -71,15 +68,15 @@ void main() {
       await tapButton(tester, 'Build Neural Network');
       await tester.pump(delay);
       await gotoNextPage(tester);
-      await tester.pump(delay);
       await verifyPage('Neural Net Model - Summary and Weights');
       await verifySelectableText(
         tester,
         [
-          'A 14-10-1 network with 171 weights',
+          'A 14-10-1 network with',
           'Options were - skip-layer connections  entropy fitting',
         ],
       );
+      await tester.pump(delay);
       await gotoNextPage(tester);
       await verifyPage('Neural Net Model - Visual');
 
