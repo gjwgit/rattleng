@@ -1,8 +1,8 @@
-/// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
+/// WEATHER dataset TRANSFORM tab IMPUTE feature.
 //
-// Time-stamp: <Thursday 2025-01-30 16:33:35 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -31,87 +31,136 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
+import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
-import 'utils/verify_text.dart';
+import 'utils/scroll_down.dart';
+import 'utils/tap_chip.dart';
+import 'utils/unify_on.dart';
+import 'utils/verify_imputed_variable.dart';
+import 'utils/verify_role.dart';
 import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Transform DEMO:', () {
-    testWidgets('build, page.', (WidgetTester tester) async {
-      // Remove the container usage to what we are typically doing now with
-      // tester. But need to update the various tests.
-
+  group('WEATHER TRANSFORM IMPUTE:', () {
+    testWidgets('xxxx.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
-      await loadDemoDataset(tester);
-
-      // Navigate to the 'Transform' tab in the app.
-
+      await unifyOn(tester);
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Transform');
-
-      // Within the 'Transform' tab, navigate to the 'Impute' feature.
-
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      // Step 1: Check if the variable 'rainfall' has missing values.
-
-      // await checkMissingVariable(container, 'rainfall');
-
-      // Step 2: Simulate pressing the button to impute missing value as mean.
+      // Step 1: Test imputation with Mean.
 
       await tapButton(tester, 'Impute Missing Values');
 
-      // Allow the UI to settle after the imputation action.
+      await tester.pump(delay);
+      await gotoNextPage(tester);
 
-      await tester.pump(hack);
-
-      // Verify that the page content includes the expected dataset summary with 'IZR_rainfall'.
+      // Verify that the page content includes the expected dataset summary with
+      // 'IMN_rainfall'.
 
       await verifyPage(
         'Dataset Summary',
         'IMN_rainfall',
       );
 
-      // Verify specific statistical values for the imputed 'IZR_rainfall' variable.
+      // Verify specific statistical values for the imputed 'IMN_rainfall' variable.
 
-      await verifyText(
+      await verifySelectableText(
         tester,
         [
-          'Min.   : 0.000', // Minimum value of 'IZR_rainfall'.
-          '1st Qu.: 0.000', // First quartile value of 'IZR_rainfall'.
-          'Median : 0.000', // Median value of 'IZR_rainfall'.
-          'Mean   : 1.825', // Mean value of 'IZR_rainfall'.
-          '3rd Qu.: 0.200', // Third quartile value of 'IZR_rainfall'.
-          'Max.   :44.800', // Maximum value of 'IZR_rainfall'.
+          'Min.   : 0.000', // Minimum value of 'IMN_rainfall'.
+          '1st Qu.: 0.000', // First quartile value of 'IMN_rainfall'.
+          'Median : 0.000', // Median value of 'IMN_rainfall'.
+          'Mean   : 1.825', // Mean value of 'IMN_rainfall'.
+          '3rd Qu.: 0.200', // Third quartile value of 'IMN_rainfall'.
+          'Max.   :44.800', // Maximum value of 'IMN_rainfall'.
         ],
       );
 
-      // Step 2.5: Navigate to the 'Dataset' tab to ensure the UI updates correctly.
+      // Step 2: Test imputation with Median.
+
+      await tapChip(tester, 'Median');
+
+      await tapButton(tester, 'Impute Missing Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'IMD_rainfall',
+      );
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   : 0.000', // Minimum value of 'IMD_rainfall'.
+          '1st Qu.: 0.000', // First quartile value of 'IMD_rainfall'.
+          'Median : 0.000', // Median value of 'IMD_rainfall'.
+          'Mean   : 1.815', // Mean value of 'IMD_rainfall'.
+          '3rd Qu.: 0.200', // Third quartile value of 'IMD_rainfall'.
+          'Max.   :44.800', // Maximum value of 'IMD_rainfall'.
+        ],
+      );
+
+      // Step 3: Test imputation with Mode.
+
+      await tapChip(tester, 'Mode');
+
+      await tapButton(tester, 'Impute Missing Values');
+
+      await tester.pump(delay);
+
+      await verifyPage(
+        'Dataset Summary',
+        'IMO_rainfall',
+      );
+
+      await verifySelectableText(
+        tester,
+        [
+          'Min.   : 0.000', // Minimum value of 'IMO_rainfall'.
+          '1st Qu.: 0.000', // First quartile value of 'IMO_rainfall'.
+          'Median : 0.000', // Median value of 'IMO_rainfall'.
+          'Mean   : 1.815', // Mean value of 'IMO_rainfall'.
+          '3rd Qu.: 0.200', // Third quartile value of 'IMO_rainfall'.
+          'Max.   :44.800', // Maximum value of 'IMO_rainfall'.
+        ],
+      );
+
+      // To ensure the UI updates correctly.
 
       await navigateToTab(tester, 'Dataset');
+      await scrollDown(tester);
 
-      // Allow time for the UI to settle after navigating to the 'Dataset' tab.
+      // Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
 
-      await tester.pump(interact);
+      await verifyImputedVariable(tester, 'IMN_rainfall');
+      await checkVariableNotMissing(tester, 'IMN_rainfall');
+      await verifyRole('IMN_rainfall', 'Input');
+      await verifyRole('rainfall', 'Ignore');
 
-      // Step 3: Verify that the imputed variable 'IZR_rainfall' is present in the dataset.
+      // Verify that the imputed variable 'IMO_rainfall' is present in the dataset.
 
-      // await verifyImputedVariable(container, 'IZR_rainfall');
+      await verifyImputedVariable(tester, 'IMO_rainfall');
+      await checkVariableNotMissing(tester, 'IMO_rainfall');
+      await verifyRole('IMO_rainfall', 'Input');
 
-      // Step 4: Check that the imputed variable 'IZR_rainfall' is no longer listed as missing.
+      // Verify that the imputed variable 'IMD_rainfall' is present in the dataset.
 
-      // await checkVariableNotMissing(container, 'IZR_rainfall');
-
-      // Dispose of the ProviderContainer to clean up resources and prevent memory leaks.
-      // container.dispose();
+      await verifyImputedVariable(tester, 'IMD_rainfall');
+      await checkVariableNotMissing(tester, 'IMD_rainfall');
+      await verifyRole('IMD_rainfall', 'Input');
     });
   });
 }

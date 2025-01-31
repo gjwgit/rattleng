@@ -26,19 +26,47 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattle/features/dataset/display.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 
+/// Verifies that a specified variable is not listed as missing in the dataset display.
+///
+/// This function checks the stdout output from the DatasetDisplay widget to ensure
+/// that the given variable is not included in the list of missing variables.
+///
+/// Parameters:
+/// - tester: The WidgetTester used to interact with the widget tree
+/// - variable: The name of the variable to check
+///
+/// Throws a test failure if the variable is found in the missing variables list.
 Future<void> checkVariableNotMissing(
-  ProviderContainer container,
+  WidgetTester tester,
   String variable,
 ) async {
-  final stdout = container.read(stdoutProvider);
+  // Get the stdout from the DatasetDisplay widget's state.
+
+  final stdout = tester
+      .state<ConsumerState>(
+        find.byType(DatasetDisplay),
+      )
+      .ref
+      .read(stdoutProvider);
+
+  // Extract the missing variables information from stdout.
+
   String missing = rExtract(stdout, '> missing');
+
+  // Use regex to find all variables enclosed in quotes.
 
   RegExp regExp = RegExp(r'"(.*?)"');
   Iterable<RegExpMatch> matches = regExp.allMatches(missing);
+
+  // Convert regex matches to a list of variable names.
+
   List<String> variables = matches.map((match) => match.group(1)!).toList();
+
+  // Verify that the specified variable is not in the list of missing variables.
 
   expect(variables.contains(variable), false);
 }

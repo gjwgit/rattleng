@@ -1,7 +1,7 @@
-/// Tap the button with the given key and fail if multiple keys are found.
-///
-// Time-stamp: <Friday 2025-01-31 15:48:35 +1100 Graham Williams>
-///
+///  Tap the first button with the given label in case there could be multiple.
+//
+// Time-stamp: <Friday 2025-01-31 16:01:53 +1100 Graham Williams>
+//
 /// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
@@ -26,18 +26,14 @@
 library;
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
 
-Future<void> tapButtonByKey(
+Future<void> tapFirstButton(
   WidgetTester tester,
-  String key,
+  String label,
 ) async {
-  final button = find.byKey(Key(key));
+  // Finds the first widget with the given text.
 
-  // 20250130 gjw Fail if more than a single widget with the key is found. Is
-  // that possible or are keys unique across the app?
-
-  expect(button, findsOneWidget);
+  final button = find.text(label).first;
   await tester.tap(button);
   await tester.pumpAndSettle();
 }

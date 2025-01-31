@@ -1,8 +1,8 @@
-/// Tap the button with the given key and fail if multiple keys are found.
-///
-// Time-stamp: <Friday 2025-01-31 15:48:35 +1100 Graham Williams>
-///
-/// Copyright (C) 2023-2025, Togaware Pty Ltd
+///  Fuction to scroll until a widget with a specific key is visible.
+//
+// Time-stamp: <Friday 2025-01-31 16:01:01 +1100 Graham Williams>
+//
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -25,19 +25,15 @@
 
 library;
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-Future<void> tapButtonByKey(
-  WidgetTester tester,
-  String key,
-) async {
-  final button = find.byKey(Key(key));
+/// Scroll until a widget with a specific key is visible.
 
-  // 20250130 gjw Fail if more than a single widget with the key is found. Is
-  // that possible or are keys unique across the app?
-
-  expect(button, findsOneWidget);
-  await tester.tap(button);
-  await tester.pumpAndSettle();
+Future<void> scrollUntilFindKey(WidgetTester tester, String key) async {
+  await tester.scrollUntilVisible(
+    find.byKey(PageStorageKey(key)),
+    500.0,
+    scrollable: find.byType(Scrollable).first,
+  );
 }

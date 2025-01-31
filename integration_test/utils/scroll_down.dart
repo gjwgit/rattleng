@@ -1,8 +1,8 @@
-/// Tap the button with the given key and fail if multiple keys are found.
-///
-// Time-stamp: <Friday 2025-01-31 15:48:35 +1100 Graham Williams>
-///
-/// Copyright (C) 2023-2025, Togaware Pty Ltd
+///  Fuction to scroll down to the bottom of the page.
+//
+// Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
+//
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,23 +21,27 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang, Graham Williams
+/// Authors: Kevin Wang
 
 library;
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-Future<void> tapButtonByKey(
+/// Scroll down to the bottom of the page.
+
+Future<void> scrollDown(
   WidgetTester tester,
-  String key,
 ) async {
-  final button = find.byKey(Key(key));
+  // Find the first Scrollable widget and scroll to the bottom.
 
-  // 20250130 gjw Fail if more than a single widget with the key is found. Is
-  // that possible or are keys unique across the app?
+  await tester.fling(
+    find.byType(Scrollable).first,
+    // Scroll down with significant offset.
 
-  expect(button, findsOneWidget);
-  await tester.tap(button);
-  await tester.pumpAndSettle();
+    const Offset(0, -1000),
+    // Higher velocity for longer scroll.
+
+    3000,
+  );
 }
