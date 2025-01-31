@@ -78,11 +78,6 @@ void main() {
         'IMN_rainfall',
       );
 
-      // comment out the following line because it is not needed. sometimes it is not working
-      // so we need to scroll down to the bottom of the page.
-
-      // await scrollUntilFindKey(tester, 'text_page');
-
       // Verify specific statistical values for the imputed 'IMN_rainfall' variable.
 
       await verifySelectableText(
@@ -97,28 +92,7 @@ void main() {
         ],
       );
 
-      // Navigate to the 'Dataset' tab to ensure the UI updates correctly.
-
-      await navigateToTab(tester, 'Dataset');
-
-      await scrollDown(tester);
-
-      // Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
-
-      await verifyImputedVariable(tester, 'IMN_rainfall');
-
-      // Check that the imputed variable 'IMN_rainfall' is no longer listed as missing.
-
-      await checkVariableNotMissing(tester, 'IMN_rainfall');
-
-      await scrollDown(tester);
-
-      await verifyRole('IMN_rainfall', 'Input');
-      await verifyRole('rainfall', 'Ignore');
-
       // Step 2: Test imputation with Median.
-
-      await navigateToTab(tester, 'Transform');
 
       await tapChip(tester, 'Median');
 
@@ -143,20 +117,7 @@ void main() {
         ],
       );
 
-      await navigateToTab(tester, 'Dataset');
-
-      await scrollDown(tester);
-
-      await verifyImputedVariable(tester, 'IMD_rainfall');
-
-      await checkVariableNotMissing(tester, 'IMD_rainfall');
-
-      await verifyRole('IMD_rainfall', 'Input');
-      await verifyRole('rainfall', 'Ignore');
-
       // Step 3: Test imputation with Mode.
-
-      await navigateToTab(tester, 'Transform');
 
       await tapChip(tester, 'Mode');
 
@@ -181,16 +142,29 @@ void main() {
         ],
       );
 
+      // Navigate to the 'Dataset' tab to ensure the UI updates correctly.
+
       await navigateToTab(tester, 'Dataset');
 
       await scrollDown(tester);
 
-      await verifyImputedVariable(tester, 'IMO_rainfall');
+      await verifyImputedVariable(tester, 'IMN_rainfall');
+      await checkVariableNotMissing(tester, 'IMN_rainfall');
 
+      await scrollDown(tester);
+
+      await verifyRole('IMN_rainfall', 'Input');
+      await verifyRole('rainfall', 'Ignore');
+
+      await verifyImputedVariable(tester, 'IMO_rainfall');
       await checkVariableNotMissing(tester, 'IMO_rainfall');
 
       await verifyRole('IMO_rainfall', 'Input');
-      await verifyRole('rainfall', 'Ignore');
+
+      await verifyImputedVariable(tester, 'IMD_rainfall');
+      await checkVariableNotMissing(tester, 'IMD_rainfall');
+
+      await verifyRole('IMD_rainfall', 'Input');
     });
   });
 }
