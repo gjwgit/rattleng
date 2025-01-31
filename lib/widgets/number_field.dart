@@ -120,8 +120,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
             if (_previousSelection != null && _focusNode.hasFocus) {
               widget.controller.selection = TextSelection.collapsed(
-                offset: min(_previousSelection!.baseOffset,
-                    widget.controller.text.length,),
+                offset: min(
+                  _previousSelection!.baseOffset,
+                  widget.controller.text.length,
+                ),
               );
             }
           });
@@ -289,7 +291,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
                         text: newValue,
                         selection: TextSelection.collapsed(
                           offset: min(
-                              _previousSelection!.baseOffset, newValue.length,),
+                            _previousSelection!.baseOffset,
+                            newValue.length,
+                          ),
                         ),
                       );
                     }
