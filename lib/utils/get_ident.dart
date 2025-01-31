@@ -33,7 +33,7 @@ import 'package:rattle/providers/vars/roles.dart';
 String getIdent(WidgetRef ref) {
   Map<String, Role> roles = ref.read(rolesProvider);
 
-  // Extract the first identifier variable from the rolesProvider.
+  // Extract the first variable with the role 'ident' from the rolesProvider.
 
   final ident = roles.entries
       .firstWhere(
