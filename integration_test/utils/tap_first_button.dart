@@ -1,13 +1,12 @@
-/// A provider for the MaxNWts for MODEL NNET.
-///
-/// Time-stamp: <Thursday 2024-09-26 06:35:21 +1000 Graham Williams>
-///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+///  Tap the first button with the given label in case there could be multiple.
+//
+// Time-stamp: <Friday 2025-01-31 16:01:53 +1100 Graham Williams>
+//
+/// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,10 +21,19 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu, Graham Williams
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-final maxNWtsProvider = StateProvider<int>((ref) => 1000);
+Future<void> tapFirstButton(
+  WidgetTester tester,
+  String label,
+) async {
+  // Finds the first widget with the given text.
+
+  final button = find.text(label).first;
+  await tester.tap(button);
+  await tester.pumpAndSettle();
+}

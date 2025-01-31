@@ -1,11 +1,11 @@
-# Get a list of datasets in the installed packages.
+# Obtain a list of datasets from the installed R packages.
 #
-# Copyright (C) 2023-2024, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-10-12 20:40:19 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-31 08:20:38 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,13 +22,13 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Yixiang Yin
+# Author: Yixiang Yin, Graham Williams
 
-# Get list of installed packages
+# Get list of installed packages.
 
-installed_pkgs <- installed.packages()  
+installed_pkgs <- installed.packages()
 
-# Loop over packages and collect datasets
+# Loop over packages and collect datasets.
 
 package_datasets <- lapply(installed_pkgs[, "Package"], function(pkg) {
 tryCatch({
@@ -37,15 +37,19 @@ tryCatch({
 }, error = function(e) NULL)
 })
 
-# Create a named list where each element is a package's datasets
+# Create a named list where each element is a package's datasets.
 
 names(package_datasets) <- installed_pkgs[, "Package"]
 
-# filter out package with no datasets
+# Filter out packages with no datasets.
 
 package_datasets_cleaned <- package_datasets[sapply(package_datasets, function(x) length(x) > 0)]
 
+# Send the list to STDOUT for scraping by dart. 20250131 gjw It's a
+# long list.
+
 package_datasets_cleaned
+
 # all_datasets <- unlist(package_datasets)
 
 # all_datasets

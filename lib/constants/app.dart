@@ -46,3 +46,18 @@ const String weatherDemoFile = 'rattle::weather';
 /// Links of R packages for reference.
 
 const nnetModelLink = 'https://cran.r-project.org/web/packages/nnet/index.html';
+
+const List<String> months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];

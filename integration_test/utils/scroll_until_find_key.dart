@@ -1,6 +1,6 @@
 ///  Fuction to scroll until a widget with a specific key is visible.
 //
-// Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 16:01:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 

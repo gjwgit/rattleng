@@ -1,8 +1,8 @@
-/// Test the Transform tab Impute feature on the DEMO dataset.
+/// WEATHER dataset TRANSFORM tab IMPUTE feature.
 //
-// Time-stamp: <Thursday 2025-01-30 16:33:35 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -34,33 +34,29 @@ import 'package:rattle/main.dart' as app;
 import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 import 'utils/scroll_down.dart';
 import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_role.dart';
-import 'utils/verify_selectable_text.dart';
 import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Transform DEMO:', () {
-    testWidgets('build, page.', (WidgetTester tester) async {
+  group('WEATHER TRANSFORM IMPUTE:', () {
+    testWidgets('xxxx.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
       await unifyOn(tester);
-
-      await loadDemoDataset(tester);
-
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Transform');
-
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
       // Step 1: Test imputation with Mean.
@@ -68,10 +64,10 @@ void main() {
       await tapButton(tester, 'Impute Missing Values');
 
       await tester.pump(delay);
-
       await gotoNextPage(tester);
 
-      // Verify that the page content includes the expected dataset summary with 'IMN_rainfall'.
+      // Verify that the page content includes the expected dataset summary with
+      // 'IMN_rainfall'.
 
       await verifyPage(
         'Dataset Summary',
@@ -145,7 +141,6 @@ void main() {
       // To ensure the UI updates correctly.
 
       await navigateToTab(tester, 'Dataset');
-
       await scrollDown(tester);
 
       // Verify that the imputed variable 'IMN_rainfall' is present in the dataset.

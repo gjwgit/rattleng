@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-01-29 12:12:42 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 09:15:14 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,7 +31,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/evaluate.dart';
-import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/r/source.dart';
@@ -56,16 +55,16 @@ class NeuralConfig extends ConsumerStatefulWidget {
 
 class NeuralConfigState extends ConsumerState<NeuralConfig> {
   Map<String, String> neuralAlgorithm = {
-    'nnet': '''
-
-    A basic neural network with a single hidden layer.
-    Suitable for simple tasks and small datasets.
-
-    ''',
     'neuralnet': '''
 
     Supports multiple layers, ideal for complex patterns.
     Commonly used for deeper architectures.
+
+    ''',
+    'nnet': '''
+
+    A basic neural network with a single hidden layer.
+    Suitable for simple tasks and small datasets.
 
     ''',
   };
@@ -112,7 +111,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
     _nnetSizeLayerController.text =
         ref.read(hiddenLayerNeuralProvider.notifier).state.toString();
     _maxNWtsController.text =
-        ref.read(maxNWtsProvider.notifier).state.toString();
+        ref.read(neuralMaxWeightsProvider.notifier).state.toString();
     _maxitController.text =
         ref.read(maxitNeuralProvider.notifier).state.toString();
 
@@ -181,7 +180,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                 } else {
                   ref.read(hiddenLayerNeuralProvider.notifier).state =
                       int.parse(_nnetSizeLayerController.text);
-                  ref.read(maxNWtsProvider.notifier).state =
+                  ref.read(neuralMaxWeightsProvider.notifier).state =
                       int.parse(_maxNWtsController.text);
                   ref.read(maxitNeuralProvider.notifier).state =
                       int.parse(_maxitController.text);
@@ -260,7 +259,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
               ''',
               label: 'Skip',
-              provider: skipNeuralProvider,
+              provider: neuralSkipProvider,
               enabled: algorithm == 'nnet',
             ),
             LabelledCheckbox(
@@ -351,7 +350,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
               validator: (value) => validateInteger(value, min: 1),
-              stateProvider: maxNWtsProvider,
+              stateProvider: neuralMaxWeightsProvider,
             ),
             NumberField(
               label: 'Threshold:',

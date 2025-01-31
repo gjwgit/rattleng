@@ -1,8 +1,7 @@
-/// Tap the button with the given key and fail if multiple keys are found.
-///
-// Time-stamp: <Friday 2025-01-31 15:48:35 +1100 Graham Williams>
-///
-/// Copyright (C) 2023-2025, Togaware Pty Ltd
+//  Get the first ident variable from the rolesProvider.
+// Time-stamp: <Wednesday 2025-01-15 16:25:50 +1100 Graham Williams>
+//
+/// Copyright (C) 2024, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,23 +20,27 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang, Graham Williams
+/// Authors: Graham Williams
+
+// ignore_for_file: check-unused-files
 
 library;
 
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Future<void> tapButtonByKey(
-  WidgetTester tester,
-  String key,
-) async {
-  final button = find.byKey(Key(key));
+import 'package:rattle/providers/vars/roles.dart';
 
-  // 20250130 gjw Fail if more than a single widget with the key is found. Is
-  // that possible or are keys unique across the app?
+String getIdent(WidgetRef ref) {
+  Map<String, Role> roles = ref.read(rolesProvider);
 
-  expect(button, findsOneWidget);
-  await tester.tap(button);
-  await tester.pumpAndSettle();
+  // Extract the first variable with the role 'ident' from the rolesProvider.
+
+  final ident = roles.entries
+      .firstWhere(
+        (entry) => entry.value == Role.ident,
+        orElse: () => MapEntry('', Role.ignore),
+      )
+      .key;
+
+  return ident;
 }
