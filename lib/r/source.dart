@@ -183,6 +183,7 @@ Future<void> rSource(
   // FOREST
 
   int forestTrees = ref.read(treeNumForestProvider);
+  String? forestSampleSize = ref.read(forestSampleSizeProvider);
   int forestPredictorNum = ref.read(predictorNumForestProvider);
   int forestNo = ref.read(treeNoForestProvider);
   bool forestImpute = ref.read(imputeForestProvider);
@@ -536,6 +537,15 @@ Future<void> rSource(
   code = code.replaceAll(
     '<RF_NA_ACTION>',
     forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
+  );
+
+  code = code.replaceAll(
+    '<RF_INPUT_SAMPSIZE>',
+    forestSampleSize == null
+        ? ''
+        : forestSampleSize.isEmpty
+            ? ''
+            : ', sampsize = c($forestSampleSize)',
   );
 
   ////////////////////////////////////////////////////////////////////////
