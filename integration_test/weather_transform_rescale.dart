@@ -37,7 +37,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/rescale_tap_chip_verify.dart';
+import 'utils/verify_rescale_tap_chip.dart';
 import 'utils/scroll_down.dart';
 import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
@@ -108,7 +108,7 @@ void main() {
 
       await navigateToFeature(tester, 'Rescale', RescalePanel);
 
-      await rescale_tap_chip_verify(
+      await verify_rescale_tap_chip(
         tester,
         'Scale [0-1]',
         'R01_min_temp',
@@ -124,7 +124,7 @@ void main() {
 
       // 3. Select and test chip "-Median/MAD"
 
-      await rescale_tap_chip_verify(
+      await verify_rescale_tap_chip(
         tester,
         '-Median/MAD',
         'RMD_min_temp',
@@ -140,7 +140,7 @@ void main() {
 
       // 4. Select and test chip "Natural Log"
 
-      await rescale_tap_chip_verify(
+      await verify_rescale_tap_chip(
         tester,
         'Natural Log',
         'RLG_min_temp',
@@ -157,7 +157,7 @@ void main() {
 
       // 5. Select and test chip "Log 10"
 
-      await rescale_tap_chip_verify(
+      await verify_rescale_tap_chip(
         tester,
         'Log 10',
         'R10_min_temp',
@@ -174,7 +174,7 @@ void main() {
 
       // 6. Select and test chip "Rank"
 
-      await rescale_tap_chip_verify(
+      await verify_rescale_tap_chip(
         tester,
         'Rank',
         'RRK_min_temp',
@@ -190,7 +190,7 @@ void main() {
 
       // 6. Select and test chip "Interval"
 
-      await rescale_tap_chip_verify(
+      await verify_rescale_tap_chip(
         tester,
         'Interval',
         'RIN_min_temp_100',
