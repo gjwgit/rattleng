@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Friday 2025-01-17 16:18:11 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 08:34:41 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -91,9 +91,9 @@ import 'package:rattle/utils/update_script.dart';
 ///
 /// Various PARAMETERS that are found in the R script will be replaced with
 /// actual values before the code is run. An early approach was to wrap the
-/// PARAMETERS within anlg brackets, as in <<PARAMETERS>> but then the R scripts
-/// do not run standalone. Whlist it did ensure the parameters were properly
-/// mapped, it is useful to be able to run the scripts as is outside of
+/// PARAMETERS within angle brackets, as in `<PARAMETERS`> but then the R
+/// scripts do not run standalone. Whlist it did ensure the parameters were
+/// properly mapped, it is useful to be able to run the scripts as is outside of
 /// rattleNG. So decided to remove the angle brackets. The scripts still can not
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.

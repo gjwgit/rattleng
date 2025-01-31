@@ -1,8 +1,8 @@
-/// Tap an activity (build) button with the corresponding label.
+///  Fuction to scroll until a widget with a specific key is visible.
 //
-// Time-stamp: <Thursday 2025-01-30 16:38:45 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,28 +21,19 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang, Graham Williams
+/// Authors: Kevin Wang
 
 library;
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 
-/// Tap an [ElevatedButton] with the [text] label.
+/// Scroll until a widget with a specific key is visible.
 
-Future<void> tapButton(
-  WidgetTester tester,
-  String text,
-) async {
-  final button = find.byWidgetPredicate(
-    (Widget widget) =>
-        widget is ElevatedButton &&
-        widget.child is Text &&
-        (widget.child as Text).data == text,
+Future<void> scrollUntilFindKey(WidgetTester tester, String key) async {
+  await tester.scrollUntilVisible(
+    find.byKey(PageStorageKey(key)),
+    500.0,
+    scrollable: find.byType(Scrollable).first,
   );
-  expect(button, findsOneWidget);
-
-  await tester.tap(button);
-  await tester.pumpAndSettle();
 }

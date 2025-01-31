@@ -1,8 +1,8 @@
-/// Test WEATHER dataset EXPLORE tab SUMARRY feature.
-//
-// Time-stamp: <Friday 2024-12-27 15:53:33 +1100 Graham Williams>
-//
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// WEATHER dataset EXPLORE tab SUMARY feature.
+///
+// Time-stamp: <Thursday 2025-01-30 14:32:19 +1100 Graham Williams>
+///
+/// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -37,70 +37,61 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Weather Explore Summary.', (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
+  group('WEATHER EXPLORE SUMMARY:', () {
+    testWidgets('.', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await loadDemoDataset(tester);
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Summary', SummaryPanel);
+      await tapButton(tester, 'Generate Dataset Summary');
+      await tester.pump(hack);
+      await gotoNextPage(tester);
+      await verifySelectableText(
+        tester,
+        [
+          // Verify date in the Content Column.
+          '2023-07-01',
 
-    await loadDemoDataset(tester);
+          // Verify min_temp as second parameter.
+          '-6.200',
 
-    await navigateToTab(tester, 'Explore');
-    await navigateToFeature(tester, 'Summary', SummaryPanel);
-    await tapButton(tester, 'Generate Dataset Summary');
+          // Verify max_temp as third parameter.
+          '8.40',
+        ],
+      );
+      await gotoNextPage(tester); // Datset Glimpse
+      await gotoNextPage(tester); // Skime the Dataset
 
-    await tester.pump(hack);
+      // Find the text containing "365" as the number of rows. 20241019 gjw
+      // There should now be two of them, one in the DISPLAY and now another in
+      // the STATUS BAR.
 
-    await gotoNextPage(tester);
+      final rowsFinder = find.textContaining('365');
+      expect(rowsFinder, findsNWidgets(2));
 
-    await verifyText(
-      tester,
-      [
-        // Verify date in the Content Column.
-        '2023-07-01',
+      // Find the text containing "21" as the number of columns. 20241019 gjw
+      // There should now be two of them, one in the DISPLAY and now another in
+      // the STATUS BAR.
 
-        // Verify min_temp as second parameter.
-        '-6.200',
+      final columnsFinder = find.textContaining('21');
+      expect(columnsFinder, findsNWidgets(2));
+      await gotoNextPage(tester); // Kurtosis and Skewness
 
-        // Verify max_temp as third parameter.
-        '8.40',
-      ],
-    );
+      // Find the text containing the min_temp.
 
-    // Tap the right arrow button to go to "Dataset Glimpse" page.
+      final tempMinFinder = find.textContaining('-1.0832020');
+      expect(tempMinFinder, findsOneWidget);
 
-    await gotoNextPage(tester);
-    await gotoNextPage(tester);
+      // Find the text containing "-1.0649102" as the max_temp.
 
-    // Find the text containing "365" as the number of rows. 20241019 gjw
-    // There should now be two of them, one in the DISPLAY and now another in
-    // the STATUS BAR.
-
-    final rowsFinder = find.textContaining('365');
-    expect(rowsFinder, findsNWidgets(2));
-
-    // Find the text containing "21" as the number of columns. 20241019 gjw
-    // There should now be two of them, one in the DISPLAY and now another in
-    // the STATUS BAR.
-
-    final columnsFinder = find.textContaining('21');
-    expect(columnsFinder, findsNWidgets(2));
-
-    // Tap the right arrow button to go to "Kurtosis and Skewness" page.
-
-    await gotoNextPage(tester);
-
-    // Find the text containing the min_temp.
-
-    final tempMinFinder = find.textContaining('-1.0832020');
-    expect(tempMinFinder, findsOneWidget);
-
-    // Find the text containing "-1.0649102" as the max_temp.
-
-    final tempMaxFinder = find.textContaining('-1.0649102');
-    expect(tempMaxFinder, findsOneWidget);
+      final tempMaxFinder = find.textContaining('-1.0649102');
+      expect(tempMaxFinder, findsOneWidget);
+    });
   });
 }

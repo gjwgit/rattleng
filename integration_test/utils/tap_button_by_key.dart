@@ -1,8 +1,8 @@
-///  Press the first button with the given text.
-//
-// Time-stamp: <Friday 2024-12-27 14:58:23 +1100 Graham Williams>
-//
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Tap the button with the given key and fail if multiple keys are found.
+///
+// Time-stamp: <Thursday 2025-01-30 08:47:17 +1100 Graham Williams>
+///
+/// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,25 +21,23 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 
-Future<void> pressFirstButton(
+Future<void> tapButtonByKey(
   WidgetTester tester,
-  String buttonText,
+  String key,
 ) async {
-  // Finds the first widget with the given text.
+  final button = find.byKey(Key(key));
 
-  final buttonFinder = find.text(buttonText).first;
+  // 20250130 gjw Fail if more than a single widget with the key is found. Is
+  // that possible or are keys unique across the app?
 
-  // Taps the first widget found.
-
-  await tester.tap(buttonFinder);
-
-  // Wait for any animations or changes to complete.
-
+  expect(button, findsOneWidget);
+  await tester.tap(button);
   await tester.pumpAndSettle();
 }
