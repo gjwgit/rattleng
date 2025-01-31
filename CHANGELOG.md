@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ Bug fix NumberFields accept typed numbers [6.4.8 20250131 zy]
 + Updates to VERSION, default NEURAL [6.4.7 20250131 kev]
 + Bug fixes and update to many tests [6.4.6 20250131 gjw]
 + Support RFOREST sampsize [6.4.5 20250131 zy]
