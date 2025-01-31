@@ -130,6 +130,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   var _appName = 'Unknown';
   var _appVersion = 'Unknown';
+  var _appDate = 'Unknown';
   var _isLatest = true;
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
@@ -213,13 +214,37 @@ class RattleHomeState extends ConsumerState<RattleHome>
   Future<void> _loadAppInfo() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
+    // Get version and date from saved preferences.
+
+    final prefs = await SharedPreferences.getInstance();
+    final savedVersion = prefs.getString('version') ?? '';
+
+    // Extract date from CHANGELOG.md - first date in [6.4.0 20250120 gjw] bracketed
+    // by square brackets.
+
+    final changelogFile = File('CHANGELOG.md');
+    String currentDate = '20250101'; // Default date
+    if (await changelogFile.exists()) {
+      final content = await changelogFile.readAsString();
+      final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
+      if (match != null) {
+        currentDate = match.group(1)!;
+      }
+    }
+
     setState(() {
-      _appName = packageInfo.packageName; // Set app version from package info
-      // debugPrint('Local version: ${packageInfo.version}');
-      _appVersion = packageInfo.version; // Set app version from package info
+      _appName = packageInfo.packageName;
+      _appVersion = packageInfo.version;
+      _appDate =
+          '${currentDate.substring(6, 8)} ${months[int.parse(currentDate.substring(4, 6)) - 1]} ${currentDate.substring(0, 4)}';
     });
 
-    // TODO fetch yaml file and compare
+    // Update saved version/date if version changed.
+
+    if (savedVersion != _appVersion) {
+      await prefs.setString('version', _appVersion);
+      await prefs.setString('version_date', currentDate);
+    }
 
     checkForUpdate(_appVersion);
   }
@@ -415,7 +440,7 @@ Xu, Yixiang Yin, Bo Zhang.
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Text(
-                  'Version $_appVersion',
+                  'Version $_appVersion - $_appDate',
                   style: TextStyle(
                     color: _isLatest ? Colors.blue : Colors.red,
                     fontSize: 16,
