@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ Updates to VERSION, default NEURAL [6.4.7 20250131 kev]
 + Bug fixes and update to many tests [6.4.6 20250131 gjw]
 + Support RFOREST sampsize [6.4.5 20250131 zy]
 + Bug fix ASSOCIATIONS visualisations [6.4.4 20250129 gjw]
