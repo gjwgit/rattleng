@@ -78,10 +78,24 @@ class NumberField extends ConsumerStatefulWidget {
 class NumberFieldState extends ConsumerState<NumberField> {
   final FocusNode _focusNode = FocusNode();
 
+  // Flag to prevent update loops between the TextEditingController and StateProvider.
+
+  bool _isInternalChange = false;
+
   @override
   void dispose() {
     _focusNode.dispose();
     super.dispose();
+  }
+
+  // Stores the current cursor position to maintain it during updates.
+
+  TextSelection? _previousSelection;
+
+  void _onFocusChange() {
+    if (!_focusNode.hasFocus) {
+      updateField();
+    }
   }
 
   @override
@@ -94,11 +108,26 @@ class NumberFieldState extends ConsumerState<NumberField> {
     ref.listenManual(
       widget.stateProvider,
       (previous, next) {
-        // Update the controller text when the provider state changes.
+        if (!_isInternalChange) {
+          setState(() {
+            // Store the current selection before updating text.
 
-        setState(() {
-          widget.controller.text = next.toString();
-        });
+            _previousSelection = widget.controller.selection;
+
+            widget.controller.text = next.toString();
+
+            // Restore the cursor position after text update.
+
+            if (_previousSelection != null && _focusNode.hasFocus) {
+              widget.controller.selection = TextSelection.collapsed(
+                offset: min(
+                  _previousSelection!.baseOffset,
+                  widget.controller.text.length,
+                ),
+              );
+            }
+          });
+        }
       },
       fireImmediately: true,
     );
@@ -159,6 +188,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
   }
 
   void updateField() {
+    // Store current cursor position.
+
+    _previousSelection = widget.controller.selection;
+
     String updatedText = widget.controller.text;
     num? v = num.tryParse(updatedText);
 
@@ -188,30 +221,28 @@ class NumberFieldState extends ConsumerState<NumberField> {
       v = double.parse(v.toStringAsFixed(widget.decimalPlaces));
     }
 
-    // Update state provider.
+    _isInternalChange = true;
 
-    ref.watch(widget.stateProvider.notifier).state = v;
-  }
+    // Update the state.
+    ref.read(widget.stateProvider.notifier).state = v;
 
-  void _onFocusChange() {
-    if (!_focusNode.hasFocus) {
-      updateField();
+    // Restore cursor position if needed.
+
+    if (_previousSelection != null && _focusNode.hasFocus) {
+      widget.controller.selection = TextSelection.collapsed(
+        offset:
+            min(_previousSelection!.baseOffset, widget.controller.text.length),
+      );
     }
+
+    _isInternalChange = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    // Watch the state provider to auto-update.
+    // Watch the state provider to ensure the widget rebuilds when the value changes.
 
-    final currentValue = ref.watch(widget.stateProvider);
-
-    // Ensure controller reflects the current state.
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.controller.text != currentValue.toString()) {
-        widget.controller.text = currentValue.toString();
-      }
-    });
+    ref.watch(widget.stateProvider);
 
     return MarkdownTooltip(
       message: widget.tooltip,
@@ -240,13 +271,32 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   onEditingComplete: () {
+                    // Store selection before completing edit.
+
+                    _previousSelection = widget.controller.selection;
                     updateField();
                   },
                   onChanged: (value) {
-                    updateField();
-                  },
-                  onSaved: (value) {
-                    updateField();
+                    // Store the current selection.
+
+                    _previousSelection = widget.controller.selection;
+
+                    // Only perform basic validation, don't update field yet.
+
+                    if (value.isNotEmpty &&
+                        !RegExp(r'^[0-9.]+$').hasMatch(value)) {
+                      String newValue =
+                          value.replaceAll(RegExp(r'[^0-9.]'), '');
+                      widget.controller.value = TextEditingValue(
+                        text: newValue,
+                        selection: TextSelection.collapsed(
+                          offset: min(
+                            _previousSelection!.baseOffset,
+                            newValue.length,
+                          ),
+                        ),
+                      );
+                    }
                   },
                   style: widget.enabled ? normalTextStyle : disabledTextStyle,
                   enabled: widget.enabled,
