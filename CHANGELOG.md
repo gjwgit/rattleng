@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ Bug fixes and update to many tests [6.4.6 20250131 gjw]
++ Support RFOREST sampsize [6.4.5 20250131 zy]
 + Bug fix ASSOCIATIONS visualisations [6.4.4 20250129 gjw]
 + Bug fix TESTS [6.4.3 20250129 gjw]
 + Add new sample dataset us census [6.4.2 20250129 gjw]
