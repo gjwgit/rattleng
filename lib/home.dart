@@ -178,8 +178,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // through the UI if it is not up-to-date.
 
         if (compareVersions(currentVersion, latestVersion) < 0) {
-          print('Update available: $latestVersion');
-          print('Current version: $currentVersion');
           setState(() {
             _isLatest = false;
           });
