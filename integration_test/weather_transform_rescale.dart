@@ -37,13 +37,13 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/press_first_button.dart';
 import 'utils/rescale_tap_chip_verify.dart';
 import 'utils/scroll_down.dart';
+import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_selectable_text.dart';
-import 'utils/scroll_until.dart';
+import 'utils/scroll_until_find_key.dart';
 import 'utils/verify_page.dart';
 
 void main() {
@@ -67,7 +67,7 @@ void main() {
 
       await navigateToFeature(tester, 'Rescale', RescalePanel);
 
-      await pressFirstButton(tester, 'Rescale Variable Values');
+      await tapButton(tester, 'Rescale Variable Values');
 
       await tester.pump(delay);
 

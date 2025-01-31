@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'delays.dart';
 import 'goto_next_page.dart';
-import 'press_first_button.dart';
-import 'scroll_until.dart';
+import 'scroll_until_find_key.dart';
+import 'tap_button.dart';
 import 'tap_chip.dart';
 import 'verify_page.dart';
 import 'verify_selectable_text.dart';
@@ -17,7 +17,7 @@ Future<void> rescale_tap_chip_verify(
   List<String> expectedStats,
 ) async {
   await tapChip(tester, chipText);
-  await pressFirstButton(tester, 'Rescale Variable Values');
+  await tapButton(tester, 'Rescale Variable Values');
   await tester.pump(delay);
   await gotoNextPage(tester);
 
