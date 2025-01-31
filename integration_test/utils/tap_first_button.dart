@@ -1,16 +1,8 @@
-<<<<<<<< HEAD:integration_test/utils/scroll_until_find_key.dart
-///  Fuction to scroll until a widget with a specific key is visible.
-//
-// Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
-//
-/// Copyright (C) 2025, Togaware Pty Ltd
-========
 ///  Tap the first button with the given label in case there could be multiple.
 //
-// Time-stamp: <Thursday 2025-01-30 08:17:33 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 16:01:53 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd
->>>>>>>> 811679e6 (Trying to repair the PR!!!!):integration_test/utils/tap_first_button.dart
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -33,19 +25,8 @@
 
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-<<<<<<<< HEAD:integration_test/utils/scroll_until_find_key.dart
-/// Scroll until a widget with a specific key is visible.
-
-Future<void> scrollUntilFindKey(WidgetTester tester, String key) async {
-  await tester.scrollUntilVisible(
-    find.byKey(PageStorageKey(key)),
-    500.0,
-    scrollable: find.byType(Scrollable).first,
-  );
-========
 Future<void> tapFirstButton(
   WidgetTester tester,
   String label,
@@ -55,5 +36,4 @@ Future<void> tapFirstButton(
   final button = find.text(label).first;
   await tester.tap(button);
   await tester.pumpAndSettle();
->>>>>>>> 811679e6 (Trying to repair the PR!!!!):integration_test/utils/tap_first_button.dart
 }
