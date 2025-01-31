@@ -1,6 +1,6 @@
 /// Load one of the DEMO datasets.
 //
-// Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 17:15:36 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -79,7 +79,11 @@ Future<void> loadDemoDataset(
   expect(dsPathTextFinder, findsOneWidget);
   final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
   String filename = dsPathText.controller?.text ?? '';
-  expect(filename.contains('${dataset.toLowerCase()}.csv'), isTrue);
+  expect(
+    filename.contains('${dataset.toLowerCase()}.csv') ||
+        filename.contains('${dataset.toLowerCase()}.txt'),
+    isTrue,
+  );
 
   // 20241019 gjw Add a delay here. Whilst app and dataset load.
 

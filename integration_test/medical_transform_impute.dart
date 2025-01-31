@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-12-27 16:22:55 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:16:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,9 +36,10 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_dataset_by_path.dart';
-import 'utils/press_first_button.dart';
+import 'utils/tap_chip.dart';
+import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
-import 'utils/verify_text.dart';
+import 'utils/verify_selectable_text.dart';
 // import 'utils/check_missing_variable.dart';
 // import 'utils/check_variable_not_missing.dart';
 // import 'utils/init_app.dart';
@@ -52,53 +53,22 @@ void main() {
   // Define a group of tests related to the Transform tab on a large dataset.
 
   group('Transform LARGE:', () {
-    // Define a test case within the group that builds the page and runs checks.
-
     testWidgets('build, page.', (WidgetTester tester) async {
-      // TODO 20240923 gjw HAD TO REMOVE CONTAINER TO GET IT WORKING
-
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
-      // Open the large dataset in the app.
-
-      await loadDatasetByPath(tester, 'integration_test/medical.csv');
-
-      // Navigate to the 'Transform' tab in the app.
-
+      await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
       await navigateToTab(tester, 'Transform');
-
-      // Within the 'Transform' tab, navigate to the 'Impute' feature.
-
       await navigateToFeature(tester, 'Impute', ImputePanel);
-
-      // Step 1: Check if the variable 'middle_name' has missing values.
-
-      // await checkMissingVariable(container, 'middle_name');
-
-      // Step 2: Simulate pressing the button to impute missing values.
-
-      await pressFirstButton(tester, 'Impute Missing Values');
-
-      // Allow the UI to settle after the action.
-
+      await tapChip(tester, 'Constant');
+      await tapButton(tester, 'Impute Missing Values');
       await tester.pump(hack);
-
       await gotoNextPage(tester);
-
-      // Verify that the page content includes the expected dataset summary with 'IZR_middle_name'.
-
-      await verifyPage(
-        'Dataset Summary',
-        'IZR_middle_name',
-      );
-
-      // Verify specific imputed values for 'IZR_middle_name'.
-
-      await verifyText(
+      await verifyPage('Dataset Summary');
+      await verifySelectableText(
         tester,
         [
+          'IMP_middle_name',
           'Missing: 1987', // Number of missing values imputed.
           'lee    :  563', // Frequency of 'lee' in the imputed data.
           'michael:  262', // Frequency of 'michael' in the imputed data.

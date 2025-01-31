@@ -1,6 +1,6 @@
 /// Test the Transform tab Impute/Rescale/Recode feature on the DEMO dataset.
 //
-// Time-stamp: <Friday 2024-12-27 16:23:12 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:33:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,7 @@ import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/press_first_button.dart';
+import 'utils/tap_button.dart';
 import 'utils/verify_text.dart';
 import 'utils/verify_page.dart';
 
@@ -67,7 +67,7 @@ void main() {
 
       // Step 2: Simulate pressing the button to impute missing value as mean.
 
-      await pressFirstButton(tester, 'Impute Missing Values');
+      await tapButton(tester, 'Impute Missing Values');
 
       // Allow the UI to settle after the imputation action.
 

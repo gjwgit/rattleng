@@ -1,6 +1,6 @@
-/// A provider for the parameters for neural.
+/// Providers for NEURAL feature NNET and NEURALNET options.
 ///
-/// Time-stamp: <Thursday 2024-12-12 08:01:20 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-01-31 09:13:30 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -22,7 +22,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -37,7 +37,14 @@ final hiddenLayersNeuralProvider = StateProvider<String>((ref) => '10');
 final ignoreCategoricNeuralProvider = StateProvider<bool>((ref) => true);
 final maxitNeuralProvider = StateProvider<int>((ref) => 100);
 final hiddenLayerNeuralProvider = StateProvider<int>((ref) => 10);
-final skipNeuralProvider = StateProvider<bool>((ref) => false);
+
+// 20250131 gjw RattleV5 uses 10,000 as the default so do the same here.
+
+final neuralMaxWeightsProvider = StateProvider<int>((ref) => 10000);
+
+// 20250131 gjw Set the SKIP to true since that's the default in RattleV5.
+
+final neuralSkipProvider = StateProvider<bool>((ref) => true);
 final stepMaxNeuralProvider = StateProvider<int>((ref) => 10000);
 final thresholdNeuralProvider = StateProvider<double>((ref) => 0.0100);
 final traceNeuralProvider = StateProvider<bool>((ref) => false);

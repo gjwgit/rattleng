@@ -1,8 +1,8 @@
 /// Support for running an R script using R source().
 ///
-/// Time-stamp: <Friday 2025-01-17 16:18:11 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 09:36:20 +1100 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -51,7 +51,6 @@ import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/max_depth.dart';
-import 'package:rattle/providers/max_nwts.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
@@ -91,9 +90,9 @@ import 'package:rattle/utils/update_script.dart';
 ///
 /// Various PARAMETERS that are found in the R script will be replaced with
 /// actual values before the code is run. An early approach was to wrap the
-/// PARAMETERS within anlg brackets, as in <<PARAMETERS>> but then the R scripts
-/// do not run standalone. Whlist it did ensure the parameters were properly
-/// mapped, it is useful to be able to run the scripts as is outside of
+/// PARAMETERS within angle brackets, as in `<PARAMETERS`> but then the R
+/// scripts do not run standalone. Whlist it did ensure the parameters were
+/// properly mapped, it is useful to be able to run the scripts as is outside of
 /// rattleNG. So decided to remove the angle brackets. The scripts still can not
 /// tun standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
@@ -105,6 +104,10 @@ Future<void> rSource(
   List<String> scripts,
 ) async {
   // Initialise the state variables obtained from the different providers.
+
+  // TODO 20250131 gjw MIGRATE TO NOT CACHE THE VALUES HERE
+  //
+  // Instead directly use ref.read() later as with neuralMaxWeightsProvider.
 
   int randomSeedSetting = ref.read(randomSeedSettingProvider);
   bool randomPartitionSetting = ref.read(randomPartitionSettingProvider);
@@ -128,12 +131,11 @@ Future<void> rSource(
 
   int minSplit = ref.read(minSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
-  int nnetMaxNWts = ref.read(maxNWtsProvider);
 
   String priors = ref.read(priorsProvider);
   bool includingMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
-  bool nnetSkip = ref.read(skipNeuralProvider);
+  bool nnetSkip = ref.read(neuralSkipProvider);
   bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
   int minBucket = ref.read(minBucketProvider);
   double complexity = ref.read(complexityProvider);
@@ -181,6 +183,7 @@ Future<void> rSource(
   // FOREST
 
   int forestTrees = ref.read(treeNumForestProvider);
+  String? forestSampleSize = ref.read(forestSampleSizeProvider);
   int forestPredictorNum = ref.read(predictorNumForestProvider);
   int forestNo = ref.read(treeNoForestProvider);
   bool forestImpute = ref.read(imputeForestProvider);
@@ -536,6 +539,15 @@ Future<void> rSource(
     forestImpute ? 'randomForest::na.roughfix' : 'na.omit',
   );
 
+  code = code.replaceAll(
+    '<RF_INPUT_SAMPSIZE>',
+    forestSampleSize == null
+        ? ''
+        : forestSampleSize.isEmpty
+            ? ''
+            : ', sampsize = c($forestSampleSize)',
+  );
+
   ////////////////////////////////////////////////////////////////////////
   // NEURAL
 
@@ -543,7 +555,10 @@ Future<void> rSource(
 
   code = code.replaceAll('<NEURAL_HIDDEN_LAYERS>', 'c($hiddenNeurons)');
   code = code.replaceAll('<NEURAL_MAXIT>', nnetMaxit.toString());
-  code = code.replaceAll('<NEURAL_MAX_NWTS>', nnetMaxNWts.toString());
+  code = code.replaceAll(
+    '<NEURAL_MAX_NWTS>',
+    ref.read(neuralMaxWeightsProvider).toString(),
+  );
   code =
       code.replaceAll('<NEURAL_ERROR_FCT>', '"${neuralErrorFct.toString()}"');
   code = code.replaceAll(

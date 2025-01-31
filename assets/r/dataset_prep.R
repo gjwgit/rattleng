@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-11-28 14:00:50 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-01-31 09:19:06 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,12 +28,12 @@
 #
 # Run this after the raw dataset has been loaded into the variable
 # `ds` in R and before the R data template script is run (on leaving
-# the <DATASET> tab).  This script cleans and prepares the dataset
+# the DATASET tab).  This script cleans and prepares the dataset
 # according to any configured cleaning and needs to do this before we
 # run the template script. After the cleaning we generate the META
-# DATA to be scraped for the <ROLES> display. The `dataset_template.R`
+# DATA to be scraped for the ROLES display. The `dataset_template.R`
 # script will be run after the data within the dataset has been
-# prepared, which may be called again after, for example, a <TRANSFORM>.
+# prepared, which may be called again after, for example, a TRANSFORM.
 #
 # References:
 #
@@ -45,15 +45,16 @@ library(dplyr)        # Wrangling: select() sample_frac().
 library(janitor)      # Cleanup: clean_names().
 library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
-# Normalise the variable names using janitor::clean_names(). This is
-# done after any dataset load. The <DATASET> tab has an option to
-# normalise the variable names on loading the data. It is set on by
-# default.
+# Here we can unify (normalise) the variable names using
+# janitor::clean_names(). This is done after any dataset
+# load. Rattle's DATASET tab has an option to unify the variable names
+# on loading the data. It is set on by default and you can turn it
+# on/off here with TRUE/FALSE.
 
 if (<NORMALISE_NAMES>) {
   ds %<>% janitor::clean_names(numerals="right")
-
-  # TODO 20241008 gjw <MIGRATE> TO META DATA
+  ##
+  ## TODO 20241008 gjw MIGRATE TO META DATA
 
   # Index the original variable names by the new names.
 
@@ -61,11 +62,13 @@ if (<NORMALISE_NAMES>) {
 }
 
 # Cleanse the dataset of constant value columns and convert char to
-# factor.
+# factor. This is also done after any dataset load. Rattle's DATASET
+# tab has an option to cleanse on loading the data. It is set on by
+# default and you can turn it on/off here with TRUE/FALSE.
 
 if (<CLEANSE_DATASET>) {
   # Map character columns to be factors.
-  
+
   ds %<>% mutate(across(where(is.character),
                         ~ if (n_distinct(.) <= <MAXFACTOR>)
                           as.factor(.) else .))
@@ -91,25 +94,25 @@ if (<CLEANSE_DATASET>) {
 
 }
 
-# 20241008 gjw We can now generate the meta data for the dataset. This
-# will be scraped into the metaProvider by the <DATASET> <DISPLAY> and
-# will be the definitive meta data for the dataset, replacing the
-# roles and types providers and many of the below informational
-# queries.
+## 20241008 gjw We can now generate the meta data for the
+## dataset. This will be scraped into the metaProvider by the DATASET
+## ROLES and will be the definitive meta data for the dataset,
+## replacing the roles and types providers and many of the below
+## informational queries.
 
 meta_data(ds)
-
-# TODO 20241008 gjw <MIGRATE> TO META DATA
+##
+## TODO 20241008 gjw MIGRATE TO META DATA
 
 # Check for unique valued columns. This will be scraped and used in
 # assigning a ROLE of <IDENT> to the variables
 
 unique_columns(ds)
 
-# TODO 20241008 gjw <MIGRATE> TO META DATA
+# TODO 20241008 gjw MIGRATE TO META DATA
 
 # List the variables having the fewest levels. This will be scraped
-# and used in identifying the <TARGET> varaible.
+# and used in identifying the TARGET varaible.
 
 find_fewest_levels(ds)
 
@@ -117,15 +120,18 @@ find_fewest_levels(ds)
 
 names(ds)
 
-# TODO 20241008 gjw <MIGRATE> TO META DATA
+# TODO 20241008 gjw MIGRATE TO META DATA
 
-# 20240916 gjw The glimpse is required for building the <ROLES> table but will
+# 20240916 gjw The glimpse is required for building the ROLES table but will
 # eventually be replaced by the meta data. Keep here for now.
 
 glimpse(ds)
 #summary(ds)
-
-# TODO 20241008 gjw <MIGRATE> TO META DATA
+##
+## TODO 20241008 gjw MIGRATE TO META DATA
+##
+## Why is this here and in dataset_template. Should be just once I
+## think.
 
 # Filter the variables in the dataset that are factors or ordered
 # factors with more than 20 levels. This should be replaced by using

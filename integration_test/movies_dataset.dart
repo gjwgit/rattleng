@@ -1,6 +1,6 @@
 /// Test MOVIES dataset loads properly.
 //
-// Time-stamp: <Friday 2025-01-10 08:03:45 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-01-30 16:46:52 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/load_demo_dataset.dart';
+import 'utils/verify_selectable_text.dart';
 import 'utils/verify_text.dart';
 
 void main() {
@@ -39,18 +40,20 @@ void main() {
   testWidgets('Load Movies Dataset.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
     await loadDemoDataset(tester, 'Movies');
-
-    // Expect specific text in the ROLES page.
-
     await verifyText(
       tester,
       [
-        'Sixth Sense',
-        'LOTR1',
         'basket',
         'item',
+      ],
+    );
+    await verifySelectableText(
+      tester,
+      [
+        '1, 1, 1, 1, 1, 2,',
+        'Sixth Sense',
+        'LOTR1',
       ],
     );
   });
