@@ -1,6 +1,6 @@
 /// Test randomForest() with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-01 17:56:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,20 +25,17 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/navigate_to_page.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 
@@ -54,11 +51,7 @@ void main() {
 
       await loadDemoDataset(tester);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
+      await navigateToTab(tester, 'Model');
 
       // Navigate to the Forest feature.
 

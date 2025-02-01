@@ -1,6 +1,6 @@
 /// Test nnet() with numeric demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 15:00:27 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-01 17:52:23 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,14 +32,13 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/navigate_to_page.dart';
+import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 
 void main() {
@@ -55,11 +54,7 @@ void main() {
 
       await tester.pump(interact);
 
-      await navigateToPage(
-        tester,
-        Icons.model_training,
-        ModelTabs,
-      );
+      await navigateToTab(tester, 'Model');
       await tester.pumpAndSettle();
 
       // Navigate to the Neural feature.
