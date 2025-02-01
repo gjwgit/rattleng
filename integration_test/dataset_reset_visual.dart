@@ -1,6 +1,6 @@
 /// Test visual image disappear after the DATASET RESET.
 //
-// Time-stamp: <Saturday 2025-02-01 18:02:49 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 06:00:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,6 +36,7 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_dataset_by_path.dart';
@@ -125,37 +126,15 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await tester.pump(interact);
-
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
-
     await navigateToTab(tester, 'Model');
-
     await navigateToFeature(tester, 'Tree', TreePanel);
-
     await tapButton(tester, 'Build Decision Tree');
-
     await tester.pump(hack);
-
-    final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-
-    await tester.tap(rightArrowButton);
-    await tester.pumpAndSettle();
-    await tester.pump(hack);
-
-    await tester.tap(rightArrowButton);
-    await tester.pumpAndSettle();
-
-    await tester.pump(hack);
-
-    // Tap the right arrow to go to the forth page.
-
-    // await tester.tap(rightArrowButton);
-    // await tester.pumpAndSettle();
-    // await tester.pump(hack);
+    await gotoNextPage(tester);
+    await gotoNextPage(tester);
 
     final imageFinder = find.byType(ImagePage);
-
-    // Assert that the image is present.
     expect(imageFinder, findsOneWidget);
 
     await navigateToTab(tester, 'Dataset');
