@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <2025-02-01 18:12:39 gjw>
+// Time-stamp: <Sunday 2025-02-02 05:58:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -54,6 +54,11 @@ void main() {
       await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
+      // TODO 20250202 gjw Replace gotoNextPage(tester) here with the new
+      // implementation of navigateToPage(tester,1);. Currently on local laptop
+      // the gotNextPage is not required but on ecosysl it is! This
+      // inconsistency is probably why we also need to re-implement the page
+      // navigator.
       await gotoNextPage(tester);
       await verifyPage('Error Matrix');
       await verifySelectableText(
