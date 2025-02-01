@@ -1,6 +1,6 @@
 /// Test ewkm() cluster analysis with demo dataset.
 //
-// Time-stamp: <Saturday 2025-02-01 17:58:12 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 05:33:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -25,14 +25,11 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/cluster/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/tabs/model.dart';
 import 'package:rattle/widgets/image_page.dart';
 
 import 'utils/delays.dart';
