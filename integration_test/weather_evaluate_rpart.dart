@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Saturday 2025-02-01 16:12:14 +1100 Graham Williams>
+// Time-stamp: <2025-02-01 18:12:39 gjw>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -32,7 +32,7 @@ import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-//import 'utils/goto_next_page.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
@@ -54,7 +54,7 @@ void main() {
       await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      //await gotoNextPage(tester);
+      await gotoNextPage(tester);
       await verifyPage('Error Matrix');
       await verifySelectableText(
         tester,
