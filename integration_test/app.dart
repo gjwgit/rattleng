@@ -1,6 +1,6 @@
 /// RATTLE app.
 //
-// Time-stamp: <Sunday 2025-01-26 08:55:54 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 06:06:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -102,6 +102,28 @@ void main() {
 
       final statusBarFinder = find.byKey(statusBarKey);
       expect(statusBarFinder, findsOneWidget);
+
+      // 20250202 gjw Finally introduce a delay as it seems the test sometimes
+      // finishes before the CONSOLE has loaded resulting in a failed test:
+      //
+      // ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+      // The following StateError was thrown running a test (but after the test had completed):
+      // Bad state: Cannot use "ref" after the widget was disposed.
+      //
+      // When the exception was thrown, this was the stack:
+      // #0      ConsumerStatefulElement._assertNotDisposed (package:flutter_riverpod/src/consumer.dart:550:7)
+      // #1      ConsumerStatefulElement.read (package:flutter_riverpod/src/consumer.dart:619:5)
+      // #2      _RConsoleState.initState.<anonymous closure> (package:rattle/r/console.dart:84:16)
+      // #18     _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:184:12)
+      // (elided 15 frames from class _Timer, dart:async, dart:async-patch, and package:stack_trace)
+      // ════════════════════════════════════════════════════════════════════════════════════════════════════
+      // +0 -1: RATTLE: startup. [E]
+      //
+      //   This test failed after it had already completed.
+      //   Make sure to use a matching library which informs the test runner
+      //   of pending async work.
+
+      await tester.pump(delay);
     });
   });
 }
