@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-02 11:36:19 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-02-01 15:05:38 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,43 +42,9 @@ model <- model_nn
 mtype <- "nnet"
 mdesc <- "Neural NNET"
 
-# 20250101 gjw Define the template functions to generate the
+# 20250201 gjw Define the template functions to generate the
 # predications and the probabilities for any dataset.
 
-pred_ra <- function(model, data) {
-  target_levels <- unique(data[[target]])  # nolint as sourced from 'model_template.R'
+pred_ra <- function(model, data) predict(model, newdata=data, type="class")
 
-  # Get predictions from the model.
-
-  raw_predictions <- predict(model, newdata = data)
-  
-  # Convert the raw predictions to the desired format.
-
-  formatted_predictions <- ifelse(
-    is.na(raw_predictions), 
-    NA, 
-    ifelse(raw_predictions < 0.5, as.character(target_levels[2]), as.character(target_levels[1]))
-  )
-  
-  # Return the formatted predictions.
-
-  return(formatted_predictions)
-}
-
-prob_ra <- function(model, data) {
-  # Get predictions from the model.
-
-  raw_predictions <- predict(model, newdata = data)
-  
-  # Convert to a vector by selecting the first column, preserving NA.
-
-  if (is.matrix(raw_predictions)) {
-    result <- raw_predictions[, 1]
-  } else {
-    result <- raw_predictions
-  }
-  
-  # Return the result as a vector.
-
-  return(result)
-}
+prob_ra <- function(model, data) predict(model, newdata=data)
