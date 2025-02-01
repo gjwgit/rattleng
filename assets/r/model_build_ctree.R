@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-16 09:25:33 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-02-01 17:32:11 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,7 +32,7 @@
 # https://survivor.togaware.com/datascience/conditional-decision-tree.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
+## Load required packages from the local library into the R session.
 ##
 ## 20250116 gjw Choose to use partykit (2015) over the older party
 ## (2008) package. The partykit package can do much more and is a
@@ -96,8 +96,8 @@
 ## Compatibility: The partykit package is designed to be backward
 ## compatible with the party package, making it easy for users to
 ## transition to the new package.
-
-library(partykit)     # Conditional decision tree.
+##
+## library(partykit)     # Conditional decision tree.
 
 # Define the model type and description for file paths and titles
 
