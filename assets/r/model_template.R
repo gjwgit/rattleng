@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-22 21:07:03 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-02-01 09:31:31 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -147,6 +147,26 @@ if (!is.null(risk)) {
   risk_te <- tcds %>% dplyr::slice(te) %>% pull(risk)
 }
 
+# Check if the risk variable exists and create `risk_tc`. We do this
+# here before we remove the risk variable (part of the `ignore` list).
+
+if (!is.null(risk)) {
+  # Retrieve the risk values for the full dataset.
+
+  risk_tc <- tcds %>%
+    pull(risk) %>%
+    as.numeric()  # Ensure it's numeric.
+
+  # 20250108 gjw We used to handle NA risk values by replacing them
+  # with a default value (e.g., 0). For now let's not do that.
+
+  risk_tc <- ifelse(is.na(risk_tc) | is.nan(risk_tc), 0, risk_tc)
+} else {
+  # If no risk, set `risk_tc` to NULL.
+
+  risk_tc <- NULL
+}
+
 # Retain only the columns that we need for the predictive modelling.
 # ctree() from the party package cannot handle predictors of type
 # character so convert character columns to factors.  The aim is to
@@ -178,23 +198,4 @@ if (!is.null(target)) {
 
   actual_tc <- NULL
   actual_numeric_tc <- NULL
-}
-
-# Check if the risk variable exists and create `risk_tc`.
-
-if (!is.null(risk)) {
-  # Retrieve the risk values for the full dataset.
-
-  risk_tc <- tcds %>%
-    pull(risk) %>%
-    as.numeric()  # Ensure it's numeric.
-
-  # 20250108 gjw We used to handle NA risk values by replacing them
-  # with a default value (e.g., 0). For now let's not do that.
-
-  risk_tc <- ifelse(is.na(risk_tc) | is.nan(risk_tc), 0, risk_tc)
-} else {
-  # If no risk, set `risk_tc` to NULL.
-
-  risk_tc <- NULL
 }
