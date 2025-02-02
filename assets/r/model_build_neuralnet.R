@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:26:31 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 19:22:15 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,9 +36,9 @@
 mtype <- "neuralnet"
 mdesc <- "Neural Neuralnet"
 
-# 20250121 gjw The tds is set to replace trds in handling situations
-# of ignoring the categoric variables (TRUE) or not (FALSE). We simply
-# toggle the TRUE/FALSE here approriately.
+# 20250121 gjw The tds (temporary data set) is set to replace trds in
+# handling situations of ignoring the categoric variables (TRUE) or
+# not (FALSE). We simply toggle the TRUE/FALSE here approriately.
 
 if (<NEURAL_IGNORE_CATEGORIC>) {
   tds <- trds[setdiff(c(numc, target), ignore)]
@@ -46,8 +46,8 @@ if (<NEURAL_IGNORE_CATEGORIC>) {
   tds <- trds
 }
 
-# neuralnet() do not handle missing data automatically.
-# Remove rows with missing values in predictors or target variable.
+# neuralnet() does not handle missing data automatically.  Remove rows
+# with missing values in predictors or target variable.
 
 tds <- tds[complete.cases(tds),]
 

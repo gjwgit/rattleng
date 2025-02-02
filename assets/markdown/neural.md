@@ -21,8 +21,8 @@ propagation are basic concepts for training networks to reflect the
 provided training datasets.
 
 Within Rattle you have a choice of using the **nnet** function for a
-single layer network or the **neuralnet** function for a multi layer
-network. Make your choice, specify the layers and other parameters,
-and then **build** the network. The resulting pages will provide a
-textual summary and a visual summary of the networks, and a measure of
-their performance on the tuning dataset.
+single layer network and *coming soon* is the **neuralnet** function
+for a multi layer network. Make your choice, specify the layers and
+other parameters, and then **build** the network. The resulting pages
+will provide a textual summary and a visual summary of the networks,
+and a measure of their performance on the tuning dataset.

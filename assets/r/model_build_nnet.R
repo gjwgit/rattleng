@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-31 09:06:17 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 19:24:24 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -59,7 +59,7 @@ if (<NEURAL_IGNORE_CATEGORIC>) {
 ## softmax, censored, as TRUE but when we specify entropy we see an
 ## error: `formal argument "entropy" matched by multiple actual
 ## arguments`. It is not clear where this is coming from without
-## further research for now. These options also only apply is specific
+## further research for now. These options also only apply in specific
 ## situations that we need to test for. Not implemented for now.
 
 model_nn <- nnet::nnet(

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-02 11:36:19 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 18:58:52 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,8 +36,8 @@
 
 model <- model_neuralnet
 
-# 20250105 zy Redefine the model type to update the output of error
-# matrix.
+# 20250105 zy Define the model type and description to include in the
+# titles for various evaluation outputs.
 
 mtype <- "neuralnet"
 mdesc <- "Neural Network"
@@ -49,7 +49,7 @@ pred_ra <- function(model, data) {
   # Retrieve the vector of possible target levels from the data.
 
   target_levels <- unique(data[[target]])  # nolint as sourced from 'model_template.R'
-  
+
   # Get raw numeric probabilities (assuming the model returns a single column
   # or you've already extracted the relevant column.
 
@@ -65,8 +65,8 @@ pred_ra <- function(model, data) {
   mapped_values_char <- ifelse(
     is.na(prob_vec),
     NA_character_,
-    ifelse(prob_vec > 0.5, 
-           as.character(target_levels[2]), 
+    ifelse(prob_vec > 0.5,
+           as.character(target_levels[2]),
            as.character(target_levels[1]))
   )
 

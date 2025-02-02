@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-01-31 09:15:14 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 19:28:03 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -53,14 +53,17 @@ class NeuralConfig extends ConsumerStatefulWidget {
   ConsumerState<NeuralConfig> createState() => NeuralConfigState();
 }
 
+// 20250202 gjw For now neuralnet is not fully operational for our typical
+// classification tasks. Stay with just nnet for now.
+
 class NeuralConfigState extends ConsumerState<NeuralConfig> {
   Map<String, String> neuralAlgorithm = {
-    'neuralnet': '''
+    // 'neuralnet': '''
 
-    Supports multiple layers, ideal for complex patterns.
-    Commonly used for deeper architectures.
+    // Supports multiple layers, ideal for complex patterns.
+    // Commonly used for deeper architectures.
 
-    ''',
+    // ''',
     'nnet': '''
 
     A basic neural network with a single hidden layer.

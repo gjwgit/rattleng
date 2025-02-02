@@ -1,6 +1,6 @@
 /// Providers for NEURAL feature NNET and NEURALNET options.
 ///
-/// Time-stamp: <Friday 2025-01-31 09:13:30 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-02-02 19:28:53 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -31,7 +31,12 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final activationFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
-final algorithmNeuralProvider = StateProvider<String>((ref) => 'neuralnet');
+
+// 20250202 gjw For now neuralnet is not fully operational for our typical
+// classification tasks. Stay with just nnet for now.
+
+final algorithmNeuralProvider = StateProvider<String>((ref) => 'nnet');
+
 final errorFctNeuralProvider = StateProvider<String>((ref) => 'sse');
 final hiddenLayersNeuralProvider = StateProvider<String>((ref) => '10');
 final ignoreCategoricNeuralProvider = StateProvider<bool>((ref) => true);
