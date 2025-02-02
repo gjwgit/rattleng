@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Friday 2025-01-31 12:01:11 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 15:48:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -41,6 +41,8 @@ import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
+import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
 
 /// List of specific variables that should have their role set to 'Ignore' in
@@ -77,6 +79,7 @@ void main() {
     }
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Neural', NeuralPanel);
+    await tapChip(tester, 'nnet');
 
     // Find and tap the 'Trace' checkbox.
 
@@ -93,11 +96,7 @@ void main() {
     await tester.enterText(find.byKey(const Key('maxit')), '101');
     await tester.pumpAndSettle();
 
-    // Simulate the presence of a decision tree being built.
-
-    final neuralNetworkButton = find.byKey(const Key('Build Neural Network'));
-
-    await tester.tap(neuralNetworkButton);
+    await tapButton(tester, 'Build Neural Network');
     await tester.pumpAndSettle();
     await gotoNextPage(tester);
     await tester.pump(delay);
