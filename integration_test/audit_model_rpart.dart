@@ -1,6 +1,6 @@
 /// AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Sunday 2025-02-02 06:15:44 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 06:47:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -53,9 +53,9 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Audit');
-      // 20250131 gjw Could not find 'adjustment'. One delay was still
-      // sometimes not enough so make it two delays for now. Perhaps the ROLES
-      // page is not yet ready sometimes.
+      // 20250131 gjw The test is sometimes failing with a `Could not find
+      // 'adjustment'`. One delay was still sometimes not enough so make it two
+      // delays for now. Perhaps the ROLES page is not yet ready sometimes.
       await tester.pump(delay);
       await tester.pump(delay);
       await setDatasetRole(tester, 'adjustment', 'Risk');

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-31 09:19:06 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:13:34 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -43,7 +43,6 @@
 
 library(dplyr)        # Wrangling: select() sample_frac().
 library(janitor)      # Cleanup: clean_names().
-library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
 # Here we can unify (normalise) the variable names using
 # janitor::clean_names(). This is done after any dataset

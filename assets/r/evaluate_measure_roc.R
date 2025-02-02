@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:16:33 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:48:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -40,12 +40,12 @@ library(ROCR)
 title <- glue(
     "ROC Curve &#8212; {mdesc} &#8212; ",
     "{mtype} {basename('<FILENAME>')} ",
-    "*{dtype}* <TARGET_VAR>"
+    "*{dtype}* ", <TARGET_VAR>
 )
 
 # Remove observations with missing target values.
 
-no.miss <- na.omit(actual)
+no.miss <- na.omit(actual_va)
 
 # Retrieve the indices of missing values.
 
@@ -57,8 +57,8 @@ attributes(no.miss) <- NULL
 
 # Handle predictions to align with non-missing values.
 
-target_levels <- levels(as.factor(actual))  # Retrieve unique levels
-actual_model_labels <- ifelse(actual == target_levels[1], 0, 1)
+target_levels <- levels(as.factor(actual_va))  # Retrieve unique levels
+actual_model_labels <- ifelse(actual_va == target_levels[1], 0, 1)
 
 # Create prediction object using probability and binary labels.
 # Identify positions where either vector has NA.

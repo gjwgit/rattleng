@@ -1,11 +1,11 @@
-# From `predicted`, `actual`, and `risk` generate a riskchart.
+# From `predicted`, `actual_va`, and `risk_va` generate a riskchart.
 #
 # Copyright (C) 2024, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:25:52 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:49:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -38,7 +38,7 @@
 # Convert factors to characters, then to numeric.
 
 predicted_numeric <- as.numeric(factor(predicted)) - 1
-actual_numeric <- as.numeric(factor(actual)) - 1
+actual_numeric <- as.numeric(factor(actual_va)) - 1
 
 # Combine logical NA checks for both vectors.
 
@@ -50,17 +50,13 @@ valid_indices <- !is.na(predicted_numeric) & !is.na(actual_numeric)
 
 filtered_predicted_numeric <- predicted_numeric[valid_indices]
 filtered_actual_numeric <- actual_numeric[valid_indices]
-filtered_risk <- risk[valid_indices]
-
-# Use rattle's evaluateRisk to generate data required for a Risk Chart.
-
-eval <- rattle::evaluateRisk(filtered_predicted_numeric, filtered_actual_numeric, filtered_risk)
+filtered_risk <- risk_va[valid_indices]
 
 # Build title string.
 
 title <- glue("Risk Chart &#8212; {mdesc} &#8212; ",
               "{mtype} {basename('<FILENAME>')} ",
-              "*{dtype}* <TARGET_VAR>")
+              "*{dtype}* ", <TARGET_VAR>)
 title
 
 # Generate the risk chart.
@@ -68,8 +64,8 @@ title
 svg(glue("<TEMPDIR>/model_{mtype}_riskchart_{dtype}.svg"), width=11)
 rattle::riskchart(filtered_predicted_numeric, filtered_actual_numeric, filtered_risk,
                   title          = title,
-                  risk.name      = "<RISK_VAR>",
-                  recall.name    = "<TARGET_VAR>",
+                  risk.name      = risk,
+                  recall.name    = target,
                   show.lift      = TRUE,
                   show.precision = TRUE,
                   legend.horiz   = FALSE) +

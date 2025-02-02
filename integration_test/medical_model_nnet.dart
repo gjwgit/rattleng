@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Friday 2025-01-31 09:43:04 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 06:56:00 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -38,6 +38,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
@@ -73,6 +74,7 @@ void main() {
     }
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Neural', NeuralPanel);
+    await tapChip('nnet');
     await tapButton(tester, 'Build Neural Network');
     await tester.pump(delay);
     await gotoNextPage(tester);

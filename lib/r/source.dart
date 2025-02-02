@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Friday 2025-01-31 09:36:20 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-02 09:37:44 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -273,7 +273,6 @@ Future<void> rSource(
   code = code.replaceAll('<DATASET>', dataset);
 
   ////////////////////////////////////////////////////////////////////////
-
   // SETTINGS
 
   // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
@@ -292,7 +291,103 @@ Future<void> rSource(
       code.replaceAll('<TUNING_TYPE>', useValidation ? 'validation' : 'tuning');
 
   ////////////////////////////////////////////////////////////////////////
+  // DATASET ROLES
+  //
+  // The `roles` Provider lists the roles for the different variables which we
+  // need to know for parsing the R scripts.
 
+  Map<String, Role> roles = ref.read(rolesProvider);
+
+  // Initialise the different roles for the global dataset variables.
+
+  String target = 'NULL'; // 20250202 gjw Required for predictive models.
+  String risk = 'NULL'; // 20250202 gjw Optional for predictive models.
+  String ident = 'NULL'; // 20250202 gjw Used in associations.
+
+  // TARGET
+
+  // Extract the target variable from the rolesProvider.
+
+  roles.forEach((key, value) {
+    if (value == Role.target) {
+      target = key;
+    }
+  });
+
+  // 20250202 gjw If the target is NULL (no target has been identified) then we
+  // need to ensure expressions in the R code like
+  //
+  // target <- <TARGET_VAR>
+  //
+  // becomes
+  //
+  // target <- NULL
+  //
+  // otherwise
+  //
+  // target <- "rain_tomorrow"
+  //
+  // A naive approach ends up with "NULL" as the variable called NULL rather
+  // than being NULL. We handle this special case and then replace any other
+  // TARGET_VAR replacement as usual.
+
+  code = code.replaceAll(
+    '<TARGET_VAR>',
+    target == 'NULL' ? 'NULL' : '"$target"',
+  );
+
+  //code = code.replaceAll('<TARGET_VAR>', ref.read(rolesProvider));
+
+  // RISK
+
+  // Extract the risk variable from the rolesProvider and use that for now as
+  // the variable to visualise.
+
+  roles.forEach((key, value) {
+    if (value == Role.risk) {
+      risk = key;
+    }
+  });
+
+  code = code.replaceAll(
+    '<RISK_VAR>',
+    risk == 'NULL' ? 'NULL' : '"$risk"',
+  );
+
+  // IDENTIFIERS
+
+  // 20250202 gjw Do we use id in the R scripts? If not then remove it.
+
+  String ids = '';
+
+  roles.forEach((key, value) {
+    if (value == Role.ident) {
+      ident = key;
+    }
+  });
+
+  code = code.replaceAll('<IDENT_VAR>', ident == 'NULL' ? 'NULL' : '"$ident"');
+
+  // Extract the IDENT variables from the rolesProvider.
+
+  roles.forEach((key, value) {
+    if (value == Role.ident) {
+      ids = '$ids${ids.isNotEmpty ? ", " : ""}"$key"';
+    }
+  });
+
+  code = code.replaceAll('<ID_VARS>', ids == 'NULL' ? 'NULL' : '"$ids"');
+
+  // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
+
+  List<String> ignoredVars = getIgnored(ref);
+  String ignoredVarsString = toRVector(ignoredVars);
+  code = code.replaceAll('<IGNORE_VARS>', ignoredVarsString);
+
+  List<String> result = getMissing(ref);
+  code = code.replaceAll('<MISSING_VARS>', toRVector(result));
+
+  ////////////////////////////////////////////////////////////////////////
   // BOOST
 
   code = code.replaceAll('<BOOST_MAX_DEPTH>', boostMaxDepth.toString());
@@ -310,14 +405,6 @@ Future<void> rSource(
 
   code = code.replaceAll('<LINEAR_FAMILY>', '"$linearFamily"');
 
-  // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
-
-  List<String> ignoredVars = getIgnored(ref);
-  String ignoredVarsString = toRVector(ignoredVars);
-  code = code.replaceAll('<IGNORE_VARS>', ignoredVarsString);
-
-  List<String> result = getMissing(ref);
-  code = code.replaceAll('<MISSING_VARS>', toRVector(result));
   // NEEDS_INIT is true for Windows as main.R does not get run on startup on
   // Windows.
 
@@ -346,66 +433,6 @@ Future<void> rSource(
 
   code = code.replaceAll('<CLEANSE_DATASET>', cleanse ? 'TRUE' : 'FALSE');
 
-  // TODO 20231016 gjw THESE SHOULD BE SET IN THE DATASET TAB AND ACCESS THROUGH
-  // PROVIDERS.
-  //
-  // target
-  // risk
-  // id
-  // split
-
-  // The rolesProvider listes the roles for the different variables which we
-  // need to know for parsing the R scripts.
-
-  Map<String, Role> roles = ref.read(rolesProvider);
-
-  // Extract the target variable from the rolesProvider.
-
-  String target = 'NULL';
-  String ident = 'NULL';
-
-  roles.forEach((key, value) {
-    if (value == Role.target) {
-      target = key;
-    } else if (value == Role.ident) {
-      ident = key;
-    }
-  });
-
-  // If target is NULL then we need to ensure expressions in the R code like
-  //
-  // target <- "TARGET_VAR"
-  //
-  // becomes
-  //
-  // target <- NULL
-  //
-  // rather then being "NULL" which then indicates a variable called NULL. So
-  // handle that special case and then replace any other TARGET_VAR replacement
-  // as usual.
-
-  if (target == 'NULL' || target.isEmpty || target == '\"\"') {
-    code = code.replaceAll('<"TARGET_VAR">', target);
-  }
-  code = code.replaceAll('<TARGET_VAR>', target);
-
-  if (ident == 'NULL') {
-    code = code.replaceAll('<"IDENT_VAR">', ident);
-  }
-  code = code.replaceAll('<IDENT_VAR>', ident);
-
-  //code = code.replaceAll('<TARGET_VAR>', ref.read(rolesProvider));
-
-  // Extract the risk variable from the rolesProvider and use that for now as
-  // the variable to visualise.
-
-  String risk = 'NULL';
-  roles.forEach((key, value) {
-    if (value == Role.risk) {
-      risk = key;
-    }
-  });
-
   code = code.replaceAll('<INTERVAL>', interval.toString());
   code = code.replaceAll('<NUMBER>', ref.read(numberProvider).toString());
   code = code.replaceAll('<SELECTED_VAR>', selected);
@@ -416,21 +443,6 @@ Future<void> rSource(
       code.replaceAll('<GROUP_BY_VAR>', groupBy == 'None' ? 'NULL' : groupBy);
 
   code = code.replaceAll('<IMPUTED_VALUE>', imputed);
-
-  //    normalise ? "rain_tomorrow" : "RainTomorrow",
-//  );
-  code = code.replaceAll('<RISK_VAR>', risk);
-
-  // Extract the IDENT variables from the rolesProvider.
-
-  String ids = '';
-  roles.forEach((key, value) {
-    if (value == Role.ident) {
-      ids = '$ids${ids.isNotEmpty ? ", " : ""}"$key"';
-    }
-  });
-
-  code = code.replaceAll('<ID_VARS>', ids);
 
   // Replace DATA_SPLIT_TR_TU_TE with the current values from partitionSettingProvider.
 

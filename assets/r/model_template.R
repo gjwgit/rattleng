@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2025-02-01 09:31:31 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:12:54 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,9 +41,13 @@
 
 library(stringi)      # The string concat operator %s+%.
 
-# Record basic variable roles for the templates.
+# 20250202 gjw Record basic variable roles for the templates. We add
+# in the risk variable and the identifier variable to the user
+# specificed list of variables to ignore. The `vars` are all variables
+# to retain in a dataaset for working with whilst `inputs` are the
+# vars without the target (output) variable.
 
-ignore <- c(risk, id, <IGNORE_VARS>)
+ignore <- c(risk, identifier, ignore)
 vars   <- setdiff(vars, ignore)
 inputs <- setdiff(vars, target)
 

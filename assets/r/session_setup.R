@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:22:09 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:13:52 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -52,10 +52,11 @@
 # right button bar which will run the `packages.R` script to check and
 # install any missing packages.
 
-library(ggplot2) # To support a local rattle theme.
-library(ggtext)  # To support markdown text in ggplot title.
-library(glue)    # To glue strings together.
-library(rattle)  # Support functions used throughout data science.
+library(ggplot2)      # To support a local rattle theme.
+library(ggtext)       # To support markdown text in ggplot title.
+library(glue)         # To glue strings together.
+library(rattle)       # Support functions used throughout data science.
+library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
 ####################################
 # Default settings

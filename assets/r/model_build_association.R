@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-29 20:04:10 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 07:33:21 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,10 +47,11 @@ mdesc <- "Association Rules"
 # and the other (<TARGET>) identifying an item contained in the basket.
 
 if(<ASSOCIATION_BASKETS>) {
-  # We need to get the <IDENT> variable from ds since all <IDENT>s are
-  # removed from trds.
 
-  transactions <- as(split(trds$<TARGET_VAR>, ds[tr, "<IDENT_VAR>"]), "transactions")
+  # We need to get the IDENT variable from ds since IDENT are removed
+  # from trds.
+
+  transactions <- as(split(trds$<TARGET_VAR>, ds[tr, identifier]), "transactions")
 
 } else {
 

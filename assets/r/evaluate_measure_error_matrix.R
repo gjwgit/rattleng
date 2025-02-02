@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:23:14 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:47:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,7 +39,7 @@
 
 # Combine the levels from both vectors.
 
-all_levels <- union(levels(actual), levels(predicted))
+all_levels <- union(levels(actual_va), levels(predicted))
 
 # (Optional) Sort them if you want a consistent order.
 
@@ -47,10 +47,10 @@ all_levels <- sort(all_levels)
 
 # Force both factors to share these levels.
 
-actual    <- factor(actual,    levels = all_levels)
+actual_va <- factor(actual_va,    levels = all_levels)
 predicted <- factor(predicted, levels = all_levels)
 
-em_count <- rattle::errorMatrix(actual, predicted, count=TRUE)
+em_count <- rattle::errorMatrix(actual_va, predicted, count=TRUE)
 ##
 ## 20241229 zy Capture the output of the error matrix and print it to
 ## the console.  The print line includes '> ` for the dart script to
@@ -64,7 +64,7 @@ em_count
 # Generate a confusion matrix with proportions (relative frequencies)
 # rather than counts.
 
-em_prop <- rattle::errorMatrix(actual, predicted)
+em_prop <- rattle::errorMatrix(actual_va, predicted)
 ##
 ## 20241229 zy Capture the output of the error matrix and print it to
 ## the console.  The print line includes '> ` for the dart script to

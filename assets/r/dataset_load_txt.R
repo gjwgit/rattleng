@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-11-23 10:03:01 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:04:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,8 +35,6 @@
 # @williams:2017:essentials Chapter 3
 #
 # https://survivor.togaware.com/datascience/csv-data-reading.html
-
-library(magrittr)        # Pipeline: %>%
 
 dsname <- "<FILENAME>" %>% basename() %>% sub(".txt$", "", .)
 

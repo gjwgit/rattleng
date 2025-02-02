@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-12-12 16:31:27 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:15:29 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -40,7 +40,6 @@
 
 library(dplyr)        # Wrangling: select() sample_frac().
 library(janitor)      # Cleanup: clean_names().
-library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
 ## # Index the original variable names by the new names.
 ##
@@ -65,20 +64,16 @@ large_factor_vars
 
 # Identify variable roles.
 
-target <- "<TARGET_VAR>"
-ident  <- "<IDENT_VAR>"
-risk   <- "<RISK_VAR>"
-id     <- c(<ID_VARS>)
-
-# Identify variables to ignore.
-
-ignore <- <IGNORE_VARS>
+target      <- <TARGET_VAR>
+risk        <- <RISK_VAR>
+identifier  <- <IDENT_VAR>
+ignore      <- <IGNORE_VARS>
 
 ## 20240829 gjw Ideally remove the ignored variables from ds for now as
-## a bug fix to support the <CORRELATION> feature for selected
+## a bug fix to support the CORRELATION feature for selected
 ## variables. In future this dataset template will reload the dataset
 ## into ds from `get(dsname)` each time it is run afresh. FOR NOW do
-## this for <CORRELATION> only.
+## this for CORRELATION only.
 ##
 ## ds <- ds[setdiff(names(ds), ignore)]
 ##

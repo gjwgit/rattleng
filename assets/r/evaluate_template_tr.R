@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-01-01 21:01:25 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-02-02 14:54:39 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -48,10 +48,11 @@
 dtype <- 'training'
 
 # Store in <TEMPLATE> variables the actual and risk values, and the
-# predicted and probabilites, for later processing.
+# predicted and probabilites, into the `_va` (values) for the
+# variables , for later processing.
 
-actual      <- actual_tr
-risk        <- risk_tr
+actual_va      <- actual_tr
+risk_va        <- risk_tr
 
 predicted   <- pred_ra(model, trds)
 probability <- prob_ra(model, trds)
