@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <2025-02-03 19:48:01 gjw>
+// Time-stamp: <Tuesday 2025-02-04 10:38:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,7 +34,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
