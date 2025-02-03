@@ -229,6 +229,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
       final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
       if (match != null) {
         currentDate = match.group(1)!;
+
+        debugPrint('Current date: $currentDate');
       }
     }
 
