@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-20 08:22:02 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-03 16:59:33 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -70,7 +70,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
-
+    //
     // Text pattern of missing values.
 
     content = rExtract(stdout, 'md.pattern(');
@@ -79,11 +79,14 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     lines = content.split('\n');
 
-    for (int i = 0; i < lines.length; i++) {
-      if (lines[i].startsWith(' ') && !RegExp(r'^\s+\d').hasMatch(lines[i])) {
-        lines[i] = '\n${lines[i]}';
-      }
-    }
+    // 20250203 gjw Remove this processing for now - it was not working for the
+    // US Population dataset.
+    //
+    // for (int i = 0; i < lines.length; i++) {
+    //   if (lines[i].startsWith(' ') && !RegExp(r'^\s+\d').hasMatch(lines[i])) {
+    //     lines[i] = '\n${lines[i]}';
+    //   }
+    // }
 
     content = lines.join('\n');
 
@@ -100,7 +103,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
           [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
           ''',
-          content: content,
+          content: '\n$content',
         ),
       );
     }
