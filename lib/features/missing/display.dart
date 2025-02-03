@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2025-02-03 16:59:33 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-04 09:31:06 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -98,9 +98,22 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
           # Patterns of Missing Data - Textual
 
           Visit the [Survival
-          Guide](https://survivor.togaware.com/datascience/missing-values-in-rattle.html)
-          and
+          Guide](https://survivor.togaware.com/datascience/missing-values-in-rattle.html).
+
+          Generated using
           [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
+
+          In the table a **1** indicates a value is present and **0** that a
+          value is missing for the variable.
+
+          The **first column** is the number of observations with the
+          corresponding pattern.
+
+          The **final column** is the count of the number of variables with
+          missing values in the pattern.
+
+          The **final row** is the count of the number of missing values for
+          that variable.
 
           ''',
           content: '\n$content',
