@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 15:55:07 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-03 16:03:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,7 +64,7 @@ class SummaryConfigState extends ConsumerState<SummaryConfig> {
             ActivityButton(
               tooltip: '''
 
-              Tap to request R to generate a few summaries of the dataset.
+              Tap here to request *R* to generate a few summaries of the dataset.
 
               ''',
               pageControllerProvider: summaryPageControllerProvider,
