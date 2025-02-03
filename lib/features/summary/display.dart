@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2025-02-03 16:39:03 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-03 17:20:19 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -97,7 +97,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
         'Median',
         'Mean',
         '3rd Qu.',
-        'Max.'
+        'Max.',
       ];
 
       // Check if the string starts with any of the prefixes.
