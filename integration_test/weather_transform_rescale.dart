@@ -1,8 +1,8 @@
 /// WEATHER dataset TRANSFORM tab RESCALE feature.
 //
-// Time-stamp: <Friday 2024-12-27 16:23:12 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-04 10:34:15 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -50,34 +50,26 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('WEATHER TRANSFORM RESCALE:', () {
-    testWidgets('xxxx.', (WidgetTester tester) async {
+    testWidgets('min_temp.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
       await unifyOn(tester);
       await loadDemoDataset(tester);
-
       await tester.pump(delay);
 
-      // 1. Select and test chip "Recenter". Do not use rescale_tap_chip_verify
-      // because it is a special case (No need to select chip).
+      // 1. Default chip "Recenter". Do not use rescale_tap_chip_verify because
+      // it is a special case.
 
       await navigateToTab(tester, 'Transform');
-
       await navigateToFeature(tester, 'Rescale', RescalePanel);
-
       await tapButton(tester, 'Rescale Variable Values');
-
       await tester.pump(delay);
-
       await gotoNextPage(tester);
-
       await verifyPage(
         'Dataset Summary',
         'RRC_min_temp',
       );
-
       await scrollUntilFindKey(tester, 'text_page');
 
       // Verify specific statistical values for the imputed 'RRC_min_temp' variable.
@@ -95,19 +87,14 @@ void main() {
       );
 
       await navigateToTab(tester, 'Dataset');
-
       await scrollDown(tester);
-
       await verifyImputedVariable(tester, 'RRC_min_temp');
-
       await checkVariableNotMissing(tester, 'RRC_min_temp');
 
       // 2. Select and test chip "Scale [0, 1]"
 
       await navigateToTab(tester, 'Transform');
-
       await navigateToFeature(tester, 'Rescale', RescalePanel);
-
       await verify_rescale_tap_chip(
         tester,
         'Scale [0-1]',
