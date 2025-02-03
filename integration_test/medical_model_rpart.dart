@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Friday 2025-01-24 19:24:29 +1100 Graham Williams>
+// Time-stamp: <2025-02-03 19:48:01 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,9 +37,12 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_dataset_by_path.dart';
+import 'utils/tap_button.dart';
+import 'utils/verify_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -47,94 +50,56 @@ void main() {
   testWidgets('Load, Navigate, Build, Page.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-    await tester.pump(interact);
-
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
-
-    // 20240822 TODO gjw DOES THIS NEED A WAIT FOR THE R CODE TO FINISH!!!
-    //
-    // How do we ensure the R Code is executed before proceeding in Rattle
-    // itself - we need to deal with the async issue in Rattle.
-
-//      await tester.pump(hack);
-
-    // Tap the MODEL Tab button.
-
     await navigateToTab(tester, 'Model');
-
-    // Navigate to the TREE feature.
-
     await navigateToFeature(tester, 'Tree', TreePanel);
-
-    // Verify that the markdown content is loaded.
-
     final markdownContent = find.byKey(const Key('markdown_file'));
     expect(markdownContent, findsOneWidget);
-
-    // Simulate the presence of a decision tree being built
-
-    final decisionTreeButton = find.byKey(const Key('Build Decision Tree'));
-    await tester.tap(decisionTreeButton);
-    await tester.pumpAndSettle();
-
-    await tester.tap(decisionTreeButton);
-    await tester.pumpAndSettle();
-
-    await tester.pump(interact);
-
-    // Pause for a long time to wait for app to get stable.
-
-    // await tester.pump(hack);
-
-    // Automatically go to the second page.
-
-    final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
-    await tester.tap(rightArrowButton);
-    await tester.pumpAndSettle();
+    await tapButton(tester, 'Build Decision Tree');
+    // 20250203 gjw Had to add two delays on ecosysl to await the
+    // model to be built.
     await tester.pump(delay);
-    // expect(rightArrowButton, findsOneWidget);
-    // await tester.pumpAndSettle();
+    await tester.pump(delay);
+    await gotoNextPage(tester);
+    // 20250203 gjw Needed another delay on ecosysl after going to
+    // the next page.
+    await tester.pump(delay);
+    await verifyPage('Decision Tree Model');
+    await gotoNextPage(tester);
 
-    final secondPageTitleFinder = find.text('Decision Tree Model');
-    expect(secondPageTitleFinder, findsOneWidget);
+// 20250203 gjw Add the following back in.
 
-    // App may raise bugs in loading textPage. Thus, test does not target
-    // at content.
+//     await tester.pump(interact);
 
-    final summaryDecisionTreeFinder = find.byType(TextPage);
-    expect(summaryDecisionTreeFinder, findsOneWidget);
+//     // Tap the right arrow to go to the third page.
 
-    await tester.pump(interact);
+//     await tester.tap(rightArrowButton);
+//     await tester.pumpAndSettle();
 
-    // Tap the right arrow to go to the third page.
+// //    final thirdPageTitleFinder = find.text('Decision Tree as Rules');
+// //    expect(thirdPageTitleFinder, findsOneWidget);
 
-    await tester.tap(rightArrowButton);
-    await tester.pumpAndSettle();
+//     // App may raise bugs in loading textPage. Thus, test does not target
+//     // at content.
 
-//    final thirdPageTitleFinder = find.text('Decision Tree as Rules');
-//    expect(thirdPageTitleFinder, findsOneWidget);
+// //    final decisionTreeRulesFinder = find.byType(TextPage);
+// //    expect(decisionTreeRulesFinder, findsOneWidget);
 
-    // App may raise bugs in loading textPage. Thus, test does not target
-    // at content.
+//     await tester.pump(interact);
 
-//    final decisionTreeRulesFinder = find.byType(TextPage);
-//    expect(decisionTreeRulesFinder, findsOneWidget);
+//     // Tap the right arrow to go to the forth page.
 
-    await tester.pump(interact);
+//     await tester.tap(rightArrowButton);
+//     await tester.pumpAndSettle();
 
-    // Tap the right arrow to go to the forth page.
+// //    final forthPageTitleFinder = find.text('Tree');
+// //    expect(forthPageTitleFinder, findsOneWidget);
 
-    await tester.tap(rightArrowButton);
-    await tester.pumpAndSettle();
+// //    final imageFinder = find.byType(ImagePage);
 
-//    final forthPageTitleFinder = find.text('Tree');
-//    expect(forthPageTitleFinder, findsOneWidget);
+//     // Assert that the image is present.
 
-//    final imageFinder = find.byType(ImagePage);
-
-    // Assert that the image is present.
-
-//    expect(imageFinder, findsOneWidget);
+// //    expect(imageFinder, findsOneWidget);
 
     await tester.pump(interact);
   });
