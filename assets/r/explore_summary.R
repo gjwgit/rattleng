@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-10-12 20:40:19 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-02-03 16:50:54 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -60,17 +60,24 @@ summary(ds)
 
 ## lapply(ds[numc], fBasics::basicStats)
 
-# Summarise the kurtosis of the numeric data.
+########################################################################
+#
+# Summarise the kurtosis and skewness of the numeric data.
+##
+## 20250203 gjw Notice the use of timeDate here. Apparently this is
+## where these are referenced. fBasics for example seems to reference
+## kurtosis and skewness from timeDate. Odd.
 
 timeDate::kurtosis(ds[numc], na.rm=TRUE)
 
-# Summarise the skewness of the numeric data.
-
 timeDate::skewness(ds[numc], na.rm=TRUE)
 
-# Generate cross tabulations for categoric data. 20240815 gjw This is
-# qite costly, and memory hungry, for a 20,000 observation dataset so
-# by default we do not build the cross tabulation. 
+# Generate cross tabulations for categoric data. This can be quite
+# time consuming so do it selevectively.
+##
+## 20240815 gjw This is quite costly, and memory hungry, for a 20,000
+## observation dataset so by default we do not build the cross
+## tabulation.
 
 if (<SUMMARY_CROSS_TAB>) {
   for (i in catc) {
@@ -79,6 +86,7 @@ if (<SUMMARY_CROSS_TAB>) {
     cat(paste(rep("=", 70), collapse=""), "\n")
   }
 } else {
-  cat("\n") 
+  ## 20250203 gjw Do I need an extra line here? Why not drop the else
+  ## branch?
+  cat("\n")
 }
-
