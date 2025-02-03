@@ -1,4 +1,4 @@
-/// WEATHER dataset MODEL BOOST EXTREME  EVALUATE feature.
+/// WEATHER dataset MODEL BOOST ADAPTIVE  EVALUATE feature.
 //
 // Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
 //
@@ -37,13 +37,14 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('WEATHER MODEL BOOST EXTREME  EVALUATE:', () {
+  group('WEATHER MODEL BOOST ADAPTIVE  EVALUATE:', () {
     testWidgets('build, evaluate, verify.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -52,6 +53,7 @@ void main() {
       await navigateToTab(tester, 'Model');
 
       await navigateToFeature(tester, 'Boost', BoostPanel);
+      await tapChip(tester, 'Adaptive');
       await tapButton(tester, 'Build Boosted Trees');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
@@ -61,11 +63,11 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          'No   4  10  71.4',
-          'Yes  2   6  25.0',
-          ' No  18.2 45.5  71.4',
-          'Yes  9.1 27.3  25.0',
-          'Overall Error = 54.55%; Average Error = 48.21%.',
+          'No  42   1   2.3',
+          'Yes 10   1  90.9',
+          'No  77.8 1.9   2.3',
+          'Yes 18.5 1.9  90.9',
+          'Overall Error = 20.37%; Average Error = 46.62%.',
         ],
       );
     });
