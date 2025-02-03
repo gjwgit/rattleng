@@ -13,7 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
-+ test kev [6.4.12 20250210 gjw]
++ test kev [6.4.12 20250211 gjw]
 + Updated tests. Remove NEURALNET for now [6.4.11 20250202 gjw]
 + Bug fix NumberFields accept typed numbers [6.4.8 20250131 zy]
 + Updates to VERSION, default NEURAL [6.4.7 20250131 kev]
