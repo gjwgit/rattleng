@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Monday 2025-02-03 16:05:57 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2025-02-04 09:05:38 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -124,7 +124,7 @@ class DatasetPopup extends ConsumerWidget {
                   // warning.
 
                   if (!context.mounted) return;
-                  Navigator.pop(context, 'Filename');
+                  Navigator.pop(context, 'Local File');
 
                   // Access the PageController via Riverpod and move to the second page.
 
@@ -139,12 +139,12 @@ class DatasetPopup extends ConsumerWidget {
                 child: MarkdownTooltip(
                   message: '''
 
-                  **Filename for Dataset** Tap here to popup a window to browse
-                  to a **csv** or **txt** file that you would like to load
+                  **Load Local File as Dataset** Tap here to popup a window to browse
+                  to a local **csv** or **txt** file that you would like to load
                   into Rattle.
 
                   ''',
-                  child: Text('Filename'),
+                  child: Text('Local File'),
                 ),
               ),
 
