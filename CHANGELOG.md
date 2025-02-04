@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ Review COMP3425 W3 ASSOCIATIONS updates [6.4.11 20250204 gjw]
++ Review COMP3425 W1 EXPLORE updates [6.4.10 20250203 gjw]
 + Updated tests. Remove NEURALNET for now [6.4.9 20250202 gjw]
 + Bug fix NumberFields accept typed numbers [6.4.8 20250131 zy]
 + Updates to VERSION, default NEURAL [6.4.7 20250131 kev]

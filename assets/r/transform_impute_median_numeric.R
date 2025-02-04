@@ -1,11 +1,11 @@
 # Rattle Scripts: Data Transformation/Wrangling
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2024-08-11 19:31:34 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-04 09:54:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,15 +24,12 @@
 #
 # Author: Graham Williams
 
-# Transform "<SELECTED_VAR>" by replacing NA.
+# Transform numeric "<SELECTED_VAR>" by replacing NA with the median value.
 
-if (is.numeric(ds$<SELECTED_VAR>))
-{
-  ds %<>%
-    mutate(IMD_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
-                                     median(<SELECTED_VAR>, na.rm = TRUE),
-                                     <SELECTED_VAR>))
-}
+ds %<>%
+    dplyr::mutate(IMD_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                              median(<SELECTED_VAR>, na.rm = TRUE),
+                                              <SELECTED_VAR>))
 
 glimpse(ds)
 summary(ds)
