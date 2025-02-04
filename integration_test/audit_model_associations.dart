@@ -1,6 +1,6 @@
 /// Test AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Tuesday 2025-02-04 14:52:35 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-04 15:57:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -77,6 +77,11 @@ void main() {
 
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Impute', ImputePanel);
+      // TODO 20250204 gjw CONTINUE HERE WHEN HAVE setSelectedVar('occupation')
+      //
+      // Want to impute CONSTANT for missing occupation and then test what has
+      // changed in the rules.
+      //
       await tapButton(tester, 'Impute Missing Values');
 
       // TODO 20241228 gjw THIS IS FAILING TO BE RENDERED IN FLUTTER
