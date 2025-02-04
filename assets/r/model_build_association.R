@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-02-04 08:46:38 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-04 15:23:40 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,7 +44,7 @@ mdesc <- "Association Rules"
 # Depending on whether we consider the dataset `ds` as a collection of
 # baskets or not, we build our transactions dataset. For `ds` as a
 # basket it will have two columns, one (<IDENT>) identifying the basket
-# and the other (<TARGET>) identifying an item contained in the basket.
+# and the other (<TARGET_VAR>) identifying an item contained in the basket.
 
 if(<ASSOCIATION_BASKETS>) {
 
@@ -114,6 +114,7 @@ print(measures)
 svg("<TEMPDIR>/model_arules_item_frequency.svg")
 arules::itemFrequencyPlot(transactions,
                           support = <ASSOCIATION_SUPPORT>,
+                          horiz   = TRUE,
                           type    = "relative")
 dev.off()
 
