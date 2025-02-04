@@ -73,7 +73,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   // Default transformation.
 
-  String selectedTransform = 'Mean';
+  String selectedTransform = 'Mode';
 
   // Initialize a TextEditingController for the CONSTANT value.
 
@@ -254,9 +254,30 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     } else {
       switch (selectedTransform) {
         case 'Mean':
-          rSource(context, ref, ['transform_impute_mean_numeric']);
+          // Check if the variable is numeric before running the R script.
+          // If it is categoric, show an error message.
+          if (ref.read(typesProvider)[selected] == Type.categoric) {
+            showOk(
+              context: context,
+              title: 'Invalid Operation',
+              content: 'Mean and Median only apply to NUMERIC variables',
+            );
+          } else {
+            rSource(context, ref, ['transform_impute_mean_numeric']);
+          }
         case 'Median':
-          rSource(context, ref, ['transform_impute_median_numeric']);
+          // Check if the variable is numeric before running the R script.
+          // If it is categoric, show an error message.
+
+          if (ref.read(typesProvider)[selected] == Type.categoric) {
+            showOk(
+              context: context,
+              title: 'Invalid Operation',
+              content: 'Mean and Median only apply to NUMERIC variables',
+            );
+          } else {
+            rSource(context, ref, ['transform_impute_median_numeric']);
+          }
         case 'Mode':
           rSource(context, ref, ['transform_impute_mode']);
         case 'Constant':
@@ -341,7 +362,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               onChanged: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                selectedTransform = 'Mean';
+                // selectedTransform = 'Mode';
               },
               tooltip: '''
 
