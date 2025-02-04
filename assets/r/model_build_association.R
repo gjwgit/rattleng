@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-02-04 15:23:40 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-04 15:42:05 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -110,6 +110,10 @@ measures <- interestMeasure(
 print(measures)
 
 # Plot the frequency of the support items.
+##
+## 20250204 gjw Turn the plot around horizontal. We may have many
+## items but the freqency range is controlled. So better to have the
+## items stacked up horizontally.
 
 svg("<TEMPDIR>/model_arules_item_frequency.svg")
 arules::itemFrequencyPlot(transactions,
