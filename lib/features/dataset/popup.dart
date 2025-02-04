@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2025-02-05 05:55:45 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-05 08:18:21 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -35,14 +35,14 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
-import 'package:rattle/features/dataset/select_package.dart';
+// import 'package:rattle/features/dataset/select_package.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract.dart';
-import 'package:rattle/r/extract_package.dart';
+// import 'package:rattle/providers/stdout.dart';
+// import 'package:rattle/r/extract.dart';
+// import 'package:rattle/r/extract_package.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
