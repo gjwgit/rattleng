@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:15:29 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-04 15:36:43 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -75,6 +75,7 @@ ignore      <- <IGNORE_VARS>
 ## into ds from `get(dsname)` each time it is run afresh. FOR NOW do
 ## this for CORRELATION only.
 ##
+## ds <- get(dsname)
 ## ds <- ds[setdiff(names(ds), ignore)]
 ##
 # Record the number of observations.
