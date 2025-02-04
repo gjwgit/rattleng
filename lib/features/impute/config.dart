@@ -90,6 +90,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   // Define a transform chooser widget with tooltips for each chip.
 
   Widget transformChooser() {
+    bool isCategoric = ref.read(typesProvider)[selected] == Type.categoric;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Wrap(
@@ -100,8 +102,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           // gap before CONSTANT and so tie the CONSTANT chip to the CONSTANT
           // field for improved UX.
 
+          // Mean and Median Chips are only available for numeric variables.
+
           ChoiceChipTip<String>(
-            options: methods.sublist(0, 3),
+            options: methods.sublist(0, 2),
             selectedOption: selectedTransform,
             onSelected: (transform) {
               setState(() {
@@ -129,6 +133,25 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               outliers in a skewed distribution.
 
               ''',
+            },
+            enabled: !isCategoric,
+          ),
+
+          // Place Mode Chip separately so we can enable it conditionally.
+
+          ChoiceChipTip<String>(
+            options: methods.sublist(2, 3),
+            selectedOption: selectedTransform,
+            onSelected: (transform) {
+              setState(() {
+                selectedTransform = transform ?? '';
+                if (selectedTransform == 'Constant') {
+                  _setConstantDefault();
+                }
+              });
+            },
+            getLabel: (transform) => transform,
+            tooltips: const {
               'Mode': '''
 
               Use the mode (most common) value of the variable values as the
