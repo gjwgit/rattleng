@@ -1,10 +1,11 @@
-/// WEATHER dataset TRANSFORM tab IMPUTE feature.
+/// AUDIT dataset TRANSFORM tab IMPUTE feature.
 //
 // Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
+
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -47,13 +48,14 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('WEATHER TRANSFORM IMPUTE:', () {
+  group('AUDIT TRANSFORM IMPUTE:', () {
     testWidgets('xxxx.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await unifyOn(tester);
       await loadDemoDataset(tester, 'Audit');
+
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
@@ -88,80 +90,6 @@ void main() {
           'NA\'s   :101', // Number of missing values of 'IMN_occupation'.
         ],
       );
-
-      // // Step 2: Test imputation with Median.
-
-      // await tapChip(tester, 'Median');
-
-      // await tapButton(tester, 'Impute Missing Values');
-
-      // await tester.pump(delay);
-
-      // await verifyPage(
-      //   'Dataset Summary',
-      //   'IMD_rainfall',
-      // );
-
-      // await verifySelectableText(
-      //   tester,
-      //   [
-      //     'Min.   : 0.000', // Minimum value of 'IMD_rainfall'.
-      //     '1st Qu.: 0.000', // First quartile value of 'IMD_rainfall'.
-      //     'Median : 0.000', // Median value of 'IMD_rainfall'.
-      //     'Mean   : 1.815', // Mean value of 'IMD_rainfall'.
-      //     '3rd Qu.: 0.200', // Third quartile value of 'IMD_rainfall'.
-      //     'Max.   :44.800', // Maximum value of 'IMD_rainfall'.
-      //   ],
-      // );
-
-      // // Step 3: Test imputation with Mode.
-
-      // await tapChip(tester, 'Mode');
-
-      // await tapButton(tester, 'Impute Missing Values');
-
-      // await tester.pump(delay);
-
-      // await verifyPage(
-      //   'Dataset Summary',
-      //   'IMO_rainfall',
-      // );
-
-      // await verifySelectableText(
-      //   tester,
-      //   [
-      //     'Min.   : 0.000', // Minimum value of 'IMO_rainfall'.
-      //     '1st Qu.: 0.000', // First quartile value of 'IMO_rainfall'.
-      //     'Median : 0.000', // Median value of 'IMO_rainfall'.
-      //     'Mean   : 1.815', // Mean value of 'IMO_rainfall'.
-      //     '3rd Qu.: 0.200', // Third quartile value of 'IMO_rainfall'.
-      //     'Max.   :44.800', // Maximum value of 'IMO_rainfall'.
-      //   ],
-      // );
-
-      // // To ensure the UI updates correctly.
-
-      // await navigateToTab(tester, 'Dataset');
-      // await scrollDown(tester);
-
-      // // Verify that the imputed variable 'IMN_rainfall' is present in the dataset.
-
-      // await verifyImputedVariable(tester, 'IMN_rainfall');
-      // await checkVariableNotMissing(tester, 'IMN_rainfall');
-      // await verifyRole('IMN_rainfall', 'Input');
-      // await verifyRole('rainfall', 'Ignore');
-
-      // // Verify that the imputed variable 'IMO_rainfall' is present in the dataset.
-
-      // await verifyImputedVariable(tester, 'IMO_rainfall');
-      // await checkVariableNotMissing(tester, 'IMO_rainfall');
-      // await verifyRole('IMO_rainfall', 'Input');
-
-      // // Verify that the imputed variable 'IMD_rainfall' is present in the dataset.
-
-      // await verifyImputedVariable(tester, 'IMD_rainfall');
-      // await checkVariableNotMissing(tester, 'IMD_rainfall');
-      // await verifyRole('IMD_rainfall', 'Input');
     });
   });
 }
