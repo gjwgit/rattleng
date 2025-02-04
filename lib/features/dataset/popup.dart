@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Tuesday 2025-02-04 09:05:38 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-05 05:55:45 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -151,32 +151,43 @@ class DatasetPopup extends ConsumerWidget {
               buttonGap,
 
               ElevatedButton(
-                onPressed: () async {
-                  // scrape the packages
-                  String stdout = ref.read(stdoutProvider);
-                  String content =
-                      rExtract(stdout, '> package_datasets_cleaned');
-                  Map<String, List<String>> map = parsePackage(content);
-                  String path = await datasetSelectPackage(context, map, ref);
-                  if (path.isNotEmpty) {
-                    // ref.read(pathProvider.notifier).state = path;
-                    if (context.mounted) await rLoadDataset(context, ref);
-                    setStatus(ref, statusChooseVariableRoles);
-                    datasetLoadedUpdate(ref);
-                  }
-                  if (!context.mounted) return;
-                  Navigator.pop(context, 'Package');
+                // 20250205 gjw Disable the PACKAGE button for now until we move
+                // the generation of the list of available datasets in R
+                // packages from home.dart on startup to here with the button
+                // press.
+                //
+                onPressed: null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.grey, // Background color when disabled
+                  foregroundColor: Colors.white, // Text color when disabled
+                ),
+                // onPressed: () async {
+                //   // scrape the packages
+                //   String stdout = ref.read(stdoutProvider);
+                //   String content =
+                //       rExtract(stdout, '> package_datasets_cleaned');
+                //   Map<String, List<String>> map = parsePackage(content);
+                //   String path = await datasetSelectPackage(context, map, ref);
+                //   if (path.isNotEmpty) {
+                //     // ref.read(pathProvider.notifier).state = path;
+                //     if (context.mounted) await rLoadDataset(context, ref);
+                //     setStatus(ref, statusChooseVariableRoles);
+                //     datasetLoadedUpdate(ref);
+                //   }
+                //   if (!context.mounted) return;
+                //   Navigator.pop(context, 'Package');
 
-                  // Access the PageController via Riverpod and move to the second page.
+                //   // Access the PageController via Riverpod and move to the second page.
 
-                  ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
+                //   ref.read(pageControllerProvider).animateToPage(
+                //         // Index of the second page.
 
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                },
+                //         1,
+                //         duration: const Duration(milliseconds: 300),
+                //         curve: Curves.easeInOut,
+                //       );
+                // },
                 child: const MarkdownTooltip(
                   message: '''
 

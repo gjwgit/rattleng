@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2025-01-31 09:28:56 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-05 05:46:06 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -324,7 +324,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
             // 20241211 gjw In lib/features/dataset/display.dart we use a
             // hueristic for datasets with only two columns, assuming they are
-            // for basket analysis. In such a case we want to set the default
+            // for basket analysis. In such a case we want< to set the default
             // for association analysis to be Baskets. Do that here on moving
             // from the DATASET tab. We do it here rather than in display.dart
             // as there it creates an exception to be thrown: "Tried to modify a
@@ -342,8 +342,11 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
     // TODO 20250131 gjw Why should we do this here on every Rattle startup? It
     // might be better on a tap of the PACAKGE button in the DATASET popup.
+    //
+    // 20250205 gjw On starting up Rattle and loading a dataset the dataset load
+    // failed, perhaps due to the unfinished query for the package list.
 
-    rSource(context, ref, ['dataset_list_packages']);
+    // rSource(context, ref, ['dataset_list_packages']);
   }
 
   @override
