@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-02-04 15:42:05 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-04 16:43:47 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -113,12 +113,13 @@ print(measures)
 ##
 ## 20250204 gjw Turn the plot around horizontal. We may have many
 ## items but the freqency range is controlled. So better to have the
-## items stacked up horizontally.
+## items stacked up horizontally. For COMP3425 revert to the V5
+## version and then revert in V6 in July 2025.
 
 svg("<TEMPDIR>/model_arules_item_frequency.svg")
 arules::itemFrequencyPlot(transactions,
                           support = <ASSOCIATION_SUPPORT>,
-                          horiz   = TRUE,
+ #                        horiz   = TRUE,
                           type    = "relative")
 dev.off()
 
