@@ -25,25 +25,22 @@
 
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
-import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
-import 'utils/scroll_down.dart';
-import 'utils/tap_chip.dart';
+
 import 'utils/unify_on.dart';
-import 'utils/verify_imputed_variable.dart';
-import 'utils/verify_role.dart';
+
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
@@ -60,25 +57,7 @@ void main() {
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Impute', ImputePanel);
 
-      // TODO kevin
-      // Set the selected variable to 'occupation' in the variable chooser dropdown
-      // Verify that the variable chooser dropdown exists
-      expect(
-        find.byWidgetPredicate((widget) =>
-            widget is DropdownMenu &&
-            widget.label is Text &&
-            (widget.label as Text).data == 'Variable'),
-        findsOneWidget,
-        reason: 'Variable chooser dropdown not found',
-      );
-
-      await tester.tap(find.byWidgetPredicate((widget) =>
-          widget is DropdownMenu &&
-          widget.label is Text &&
-          (widget.label as Text).data == 'Variable'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('occupation').last);
-      await tester.pumpAndSettle();
+      await setSelectedVariable(tester, 'occupation');
 
       // // Step 1: Test imputation with Mean.
 
