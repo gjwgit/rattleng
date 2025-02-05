@@ -1,6 +1,6 @@
-/// Test AUDIT dataset MODEL tab ASSOCIATION feature.
+/// COMP3425 W4 AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Tuesday 2025-02-04 15:57:01 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-05 20:54:31 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -37,7 +37,10 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/set_dataset_role.dart';
+import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
@@ -50,6 +53,9 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await loadDemoDataset(tester, 'Audit');
+      await setDatasetRole(tester, 'employment', 'Ignore');
+      await setDatasetRole(tester, 'occupation', 'Ignore');
+      await setDatasetRole(tester, 'accounts', 'Ignore');
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Associations', AssociationPanel);
       await tapButton(tester, 'Build Association Rules');
@@ -59,7 +65,7 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          '52 rules',
+          '19 rules',
         ],
       );
       await gotoNextPage(tester);
@@ -67,40 +73,56 @@ void main() {
       await verifySelectableText(
         tester,
         [
+          'marital=Married',
           'gender=Male',
-          'employment=Private',
-          '0.4585714 0.6837061  0.6707143 0.9777206 642',
+          '0.4014286 0.8906498  0.4507143 1.3279123 562',
         ],
       );
 
       // Now IMPUTE missing for the Occupation and build again.
 
+      await navigateToTab(tester, 'Dataset');
+      await setDatasetRole(tester, 'occupation', 'Input');
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Impute', ImputePanel);
-      // TODO 20250204 gjw CONTINUE HERE WHEN HAVE setSelectedVar('occupation')
-      //
-      // Want to impute CONSTANT for missing occupation and then test what has
-      // changed in the rules.
-      //
+      await setSelectedVariable(tester, 'occupation');
+      await tapChip(tester, 'Constant');
       await tapButton(tester, 'Impute Missing Values');
+      await gotoNextPage(tester);
+      await verifySelectableText(
+        tester,
+        [
+          'IMP_occupation',
+        ],
+      );
 
-      // TODO 20241228 gjw THIS IS FAILING TO BE RENDERED IN FLUTTER
-      //
-      // It might require a bug report to the svg package.
+      // 20250205 gjw Rebuild the model and determin the difference?
 
-      // await gotoNextPage(tester);
-      // var imageFinder = find.byType(ImagePage);
-      // expect(imageFinder, findsOneWidget);
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Associations', AssociationPanel);
+      await tapButton(tester, 'Build Association Rules');
+      await tester.pump(delay);
 
-      // await gotoNextPage(tester);
-      // await verifyPage('Parrallel Coordinates Plot');
-      // imageFinder = find.byType(ImagePage);
-      // expect(imageFinder, findsOneWidget);
+      // 20250205 gjw Don't go to next page here since we are already on the
+      // right page.
 
-      // await gotoNextPage(tester);
-      // await verifyPage('Item Frequency');
-      // imageFinder = find.byType(ImagePage);
-      // expect(imageFinder, findsOneWidget);
+      await verifyPage('Association Rules - Meta Summary');
+      await verifySelectableText(
+        tester,
+        [
+          '23 rules',
+        ],
+      );
+      await gotoNextPage(tester);
+      await verifyPage('Association Rules - Discovered Rules');
+      await verifySelectableText(
+        tester,
+        [
+          'marital=Married',
+          'gender=Male',
+          '0.4014286 0.8906498  0.4507143 1.3279123 562',
+        ],
+      );
     });
   });
 }
