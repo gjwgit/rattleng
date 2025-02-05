@@ -1,6 +1,6 @@
-/// AUDIT dataset MODEL tab TREE feature RPART option.
+/// COMP3425 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Sunday 2025-02-02 06:47:37 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 09:37:09 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -47,8 +47,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('AUDIT MODEL TREE RPART:', () {
-    testWidgets('set risk, build tree, verify.        ',
-        (WidgetTester tester) async {
+    testWidgets('set risk, build tree, verify.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);

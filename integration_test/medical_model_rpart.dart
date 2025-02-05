@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Tuesday 2025-02-04 10:38:47 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 10:21:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -55,8 +55,9 @@ void main() {
     final markdownContent = find.byKey(const Key('markdown_file'));
     expect(markdownContent, findsOneWidget);
     await tapButton(tester, 'Build Decision Tree');
-    // 20250203 gjw Had to add two delays on ecosysl to await the
+    // 20250203 gjw Had to add three delays on ecosysl to await the
     // model to be built.
+    await tester.pump(delay);
     await tester.pump(delay);
     await tester.pump(delay);
     await gotoNextPage(tester);
