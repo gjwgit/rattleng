@@ -360,11 +360,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
                 // If the variable is numeric, set the transform to Mean.
                 // So that the user doesn't have to do this manually and be annoyed.
 
-                if (ref.read(typesProvider)[value] == Type.categoric) {
-                  selectedTransform = 'Mode';
-                } else {
-                  selectedTransform = 'Mean';
-                }
+                selectedTransform =
+                    ref.read(typesProvider)[value] == Type.categoric
+                        ? 'Mode'
+                        : 'Mean';
               },
               tooltip: '''
 
