@@ -1,6 +1,6 @@
 /// Query the roles provider to return the list of ignored variables.
 //
-// Time-stamp: <Sunday 2024-09-08 12:16:31 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-05 08:56:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,10 +36,12 @@ List<String> getIgnored(WidgetRef ref) {
   Map<String, Role> roles = ref.read(rolesProvider);
 
   // Extract the ignored variable from the rolesProvider.
+  //
+  // 20250205 gjw Add the newly ignored through a transform variables as well,
 
   List<String> ignored = [];
   roles.forEach((key, value) {
-    if (value == Role.ignore) {
+    if (value == Role.ignore || value == Role.ignoreAfterTransformed) {
       ignored.add(key);
     }
   });
