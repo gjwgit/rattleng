@@ -1,11 +1,11 @@
-# After loading the raw dataset we prepare it for <ROLES>.
+# After loading the raw dataset we prepare it for the ROLES page.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:13:34 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-02-05 16:09:10 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# Rattle timestamp: <TIMESTAMP>
+# RattleNG <TIMESTAMP>
 #
 # Run this after the raw dataset has been loaded into the variable
 # `ds` in R and before the R data template script is run (on leaving
@@ -40,9 +40,6 @@
 # @williams:2017:essentials Chapter 3
 #
 # https://survivor.togaware.com/datascience/data-template.html
-
-library(dplyr)        # Wrangling: select() sample_frac().
-library(janitor)      # Cleanup: clean_names().
 
 # Here we can unify (normalise) the variable names using
 # janitor::clean_names(). This is done after any dataset
@@ -68,13 +65,13 @@ if (<NORMALISE_NAMES>) {
 if (<CLEANSE_DATASET>) {
   # Map character columns to be factors.
 
-  ds %<>% mutate(across(where(is.character),
-                        ~ if (n_distinct(.) <= <MAXFACTOR>)
+  ds %<>% dplyr::mutate(dplyr::across(tidyselect::where(is.character),
+                        ~ if (dplyr::n_distinct(.) <= <MAXFACTOR>)
                           as.factor(.) else .))
 
   # Remove any constant columns,
 
-  ds %<>% remove_constant()
+  ds %<>% janitor::remove_constant()
 
   # Check if the last variable is numeric and has 5 or fewer unique
   # values then treat it as a factor since it is probably a target
