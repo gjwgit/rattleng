@@ -1,6 +1,6 @@
 /// Return those veriables with an INPUT role.
 //
-// Time-stamp: <Sunday 2024-09-08 12:20:49 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-05 08:41:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:
+/// Authors: Yixiang Yin, Graham Williams
 
 library;
 
@@ -40,26 +40,6 @@ List<String> getInputs(WidgetRef ref) {
   List<String> inputs = [];
   roles.forEach((key, value) {
     if (value == Role.input) {
-      inputs.add(key);
-    }
-  });
-
-  return inputs;
-}
-
-/// TODO 20240908 zy THIS SHOULD BE IN OWN FILE.
-
-List<String> getInputsAndIgnoreTransformed(WidgetRef ref) {
-  // The rolesProvider lists the roles for the different variables which we need
-  // to know for parsing the R scripts.
-
-  Map<String, Role> roles = ref.read(rolesProvider);
-
-  // Extract the input variable from the rolesProvider.
-
-  List<String> inputs = [];
-  roles.forEach((key, value) {
-    if (value == Role.input || value == Role.ignoreAfterTransformed) {
       inputs.add(key);
     }
   });
