@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-02-04 16:43:47 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-02-05 17:29:33 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -119,7 +119,7 @@ print(measures)
 svg("<TEMPDIR>/model_arules_item_frequency.svg")
 arules::itemFrequencyPlot(transactions,
                           support = <ASSOCIATION_SUPPORT>,
- #                        horiz   = TRUE,
+                          horiz   = TRUE,
                           type    = "relative")
 dev.off()
 
