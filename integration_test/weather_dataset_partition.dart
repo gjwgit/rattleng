@@ -1,6 +1,6 @@
 /// Test WEATHER dataset loads properly when partition is on/off.
 //
-// Time-stamp: <Friday 2025-01-31 12:15:49 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 08:37:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,8 +36,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/partition_off.dart';
-import 'utils/partition_on.dart';
+import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_selectable_text.dart';
@@ -51,7 +50,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await unifyOn(tester);
-    await partitionOn(tester);
+    await setPartition(tester, true);
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree', TreePanel);
@@ -67,7 +66,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await unifyOn(tester);
-    await partitionOff(tester);
+    await setPartition(tester, false);
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree', TreePanel);

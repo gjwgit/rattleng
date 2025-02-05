@@ -1,6 +1,6 @@
 /// COMP3425 W4 AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Wednesday 2025-02-05 20:54:31 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 08:33:00 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -38,6 +38,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
+import 'utils/set_partition.dart';
 import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
@@ -52,6 +53,9 @@ void main() {
         (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
+      // 20250206 gjw Turn partition on for now though the COMP3425 exercise
+      // turns it off.
+      await setPartition(tester, true);
       await loadDemoDataset(tester, 'Audit');
       await setDatasetRole(tester, 'employment', 'Ignore');
       await setDatasetRole(tester, 'occupation', 'Ignore');
@@ -66,8 +70,22 @@ void main() {
         tester,
         [
           '19 rules',
+          'Min.   :0.1114   Min.   :0.1747   Min.   :0.1614   Min.   :0.8538',
+          'Median :0.1457   Median :0.4403   Median :0.3436   Median :1.0425',
+          'support = 0.1, confidence = 0.1, minlen = 2',
         ],
       );
+      // 20250206 gjw If we turn partition off then we get different numbers.
+      // await verifySelectableText(
+      //   tester,
+      //   [
+      //     '19 rules',
+      //     'Min.   :0.1035   Min.   :0.1557   Min.   :0.1125   Min.   :0.8435',
+      //     'Median :0.1505   Median :0.5793   Median :0.3345   Median :1.0166',
+      //     'transactions          2000     0.1        0.1',
+      //     'support = 0.1, confidence = 0.1, minlen = 2',
+      //   ],
+      // );
       await gotoNextPage(tester);
       await verifyPage('Association Rules - Discovered Rules');
       await verifySelectableText(
