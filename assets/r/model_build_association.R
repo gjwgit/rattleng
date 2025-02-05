@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-02-05 17:29:33 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-02-06 07:03:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -43,13 +43,14 @@ mdesc <- "Association Rules"
 
 # Depending on whether we consider the dataset `ds` as a collection of
 # baskets or not, we build our transactions dataset. For `ds` as a
-# basket it will have two columns, one (<IDENT>) identifying the basket
-# and the other (<TARGET_VAR>) identifying an item contained in the basket.
+# basket it will have two columns, one (Ident) identifying the basket
+# and the other (Target) identifying an item contained in the
+# basket. Toggle TRUE/FALSE as required.
 
 if(<ASSOCIATION_BASKETS>) {
 
-  # We need to get the IDENT variable from ds since IDENT are removed
-  # from trds.
+  # We get the Ident variable from `ds` since the Ident variables are
+  # removed from trds in our dataset template.
 
   transactions <- as(split(trds$<TARGET_VAR>, ds[tr, identifier]), "transactions")
 
