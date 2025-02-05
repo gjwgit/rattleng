@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 16:01:45 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-05 08:46:16 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -38,7 +38,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/get_inputs.dart';
+import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -97,7 +97,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     'As Numeric': '''
 
       Multiply out the selected categoric variables into a new single variable.
-    
+
       ''',
   };
 
@@ -105,14 +105,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     'Quantiles': '''
 
       Each bin will have approximately the same number of observations.
-      If the Data tab includes a Weight variable, then the observations 
+      If the Data tab includes a Weight variable, then the observations
       are weighted when performing the binning.
 
       ''',
     'KMeans': '''
 
       A kmeans clustering will be used to bin the variable.
-    
+
       ''',
     'Equal Width': '''
 
@@ -137,7 +137,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       Combine multiple categoric variables into just one.
       A join of categoric variables requires two categoric variables.
       Please select two categoric variables, then Execute.
-    
+
       ''',
   };
 
@@ -214,9 +214,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
           enabled: isNumeric && selected != 'NULL',
           tooltip: '''
-              
+
           Set the number of bins to construct.
-    
+
           ''',
         ),
 

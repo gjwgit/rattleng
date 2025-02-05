@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 15:59:51 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-05 08:44:24 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,7 +35,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/get_inputs.dart';
+import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/variable_chooser.dart';
