@@ -101,6 +101,13 @@ class PagesState extends State<Pages> with TickerProviderStateMixin {
     });
   }
 
+  void setPage2(int index) {
+    setState(() {
+      _currentPage = index;
+      _tabController.animateTo(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

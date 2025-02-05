@@ -59,8 +59,13 @@ void main() {
       // the gotNextPage is not required but on ecosysl it is! This
       // inconsistency is probably why we also need to re-implement the page
       // navigator.
-      await gotoNextPage(tester);
+      // await gotoNextPage(tester);
+
+      await navigateToPageNew(tester, 1);
+      await tester.pump(hack);
+
       await verifyPage('Error Matrix');
+
       await verifySelectableText(
         tester,
         [
