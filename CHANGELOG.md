@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ ASSOCIATE: tests and horizontal item freq [6.4.13 20250205 gjw]
 + Bug fix transformed variables as ignore/input in R [6.4.12 20250205 gjw]
 + Review COMP3425 W3 ASSOCIATIONS updates [6.4.11 20250204 gjw]
 + Review COMP3425 W1 EXPLORE updates [6.4.10 20250203 gjw]
