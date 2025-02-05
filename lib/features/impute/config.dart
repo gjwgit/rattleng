@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 15:57:21 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 10:59:15 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -71,9 +71,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     'Constant',
   ];
 
-  // Default transformation.
+  // 20250206 gjw Default transformation is the Mean imputation but we will
+  // override this below to be the Mode if a categoric variable is selected.
 
-  String selectedTransform = 'Mode';
+  String selectedTransform = 'Mean';
 
   // Initialize a TextEditingController for the CONSTANT value.
 
@@ -91,6 +92,14 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   Widget transformChooser() {
     bool isCategoric = ref.read(typesProvider)[selected] == Type.categoric;
+
+    // 20250206 gjw If the currently selected variables is a categoric then the
+    // only two available options should be Mode or Constant. If it is not
+    // Constatnt them what ever it currently is we can change it to be Mode.
+
+    if (isCategoric && selectedTransform != 'Constant') {
+      selectedTransform = 'Mode';
+    }
 
     return Align(
       alignment: Alignment.centerLeft,
