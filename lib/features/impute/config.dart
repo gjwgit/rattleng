@@ -257,27 +257,20 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           // Check if the variable is numeric before running the R script.
           // If it is categoric, show an error message.
           if (ref.read(typesProvider)[selected] == Type.categoric) {
-            showOk(
-              context: context,
-              title: 'Invalid Operation',
-              content: 'Mean and Median only apply to NUMERIC variables',
-            );
+            selectedTransform = 'Mode';
           } else {
             rSource(context, ref, ['transform_impute_mean_numeric']);
           }
+
         case 'Median':
           // Check if the variable is numeric before running the R script.
           // If it is categoric, show an error message.
-
           if (ref.read(typesProvider)[selected] == Type.categoric) {
-            showOk(
-              context: context,
-              title: 'Invalid Operation',
-              content: 'Mean and Median only apply to NUMERIC variables',
-            );
+            selectedTransform = 'Mode';
           } else {
             rSource(context, ref, ['transform_impute_median_numeric']);
           }
+
         case 'Mode':
           rSource(context, ref, ['transform_impute_mode']);
         case 'Constant':
@@ -362,9 +355,19 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               onChanged: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                // selectedTransform = 'Mode';
+
+                // If the variable is categoric, set the transform to Mode.
+                // If the variable is numeric, set the transform to Mean.
+                // So that the user doesn't have to do this manually and be annoyed.
+
+                if (ref.read(typesProvider)[value] == Type.categoric) {
+                  selectedTransform = 'Mode';
+                } else {
+                  selectedTransform = 'Mean';
+                }
               },
               tooltip: '''
+
 
               Select the variable for which missing values will be imputed. All
               variables having a role of INPUT are available for imputation.
