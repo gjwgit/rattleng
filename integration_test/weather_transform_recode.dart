@@ -141,6 +141,8 @@ void main() {
 
       await setSelectedVariable(tester, 'wind_dir_9am');
 
+      await scrollDown(tester);
+
       // 5. Select and test chip "As Numeric"
       //TODO kevin , failing here
 
