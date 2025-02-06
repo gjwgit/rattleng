@@ -425,12 +425,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   ref: ref,
                 );
 
-                await ref.read(evaluatePageControllerProvider).animateToPage(
-                      // Index of the second page.
-                      1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                // await ref.read(evaluatePageControllerProvider).animateToPage(
+                //       // Index of the second page.
+                //       1,
+                //       duration: const Duration(milliseconds: 300),
+                //       curve: Curves.easeInOut,
+                //     );
               },
               child: const Text('Evaluate'),
             ),

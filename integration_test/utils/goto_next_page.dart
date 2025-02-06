@@ -26,8 +26,13 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:rattle/features/evaluate/config.dart';
+import 'package:rattle/features/evaluate/display.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/pages.dart';
 
@@ -49,19 +54,17 @@ Future<void> gotoNextPage(WidgetTester tester) async {
   await tester.pump(interact);
 }
 
-/// Navigate to a specific page number.
-///
-/// The [page] parameter is zero-based, where 0 is the first page.
+// TODO kevin, confirmed this does not work.
+// Use ref.read(evaluatePageControllerProvider) cannot navigate to the page.
 Future<void> navigateToPage(WidgetTester tester, int page) async {
   // Find the PageViewer widget's PageController
   final pageController = tester
-      .state<PageViewerState>(
-        find.byType(PageViewer),
+      .state<ConsumerState>(
+        find.byType(EvaluateConfig),
       )
-      .widget
-      .pageController;
+      .ref
+      .read(evaluatePageControllerProvider);
 
-  // Animate to the specified page
   await pageController.animateToPage(
     page,
     duration: const Duration(milliseconds: 300),
@@ -74,15 +77,22 @@ Future<void> navigateToPage(WidgetTester tester, int page) async {
   await tester.pump(interact);
 }
 
-/// Navigate to a specific page using the Pages widget.
-///
-/// The [page] parameter is zero-based, where 0 is the first page.
+// TODO kevin, confirmed this does not work.
+// Use PageViewer widget's PageController cannot navigate to the page.
 Future<void> navigateToPageNew(WidgetTester tester, int page) async {
   // Find the Pages widget state
-  final pagesState = tester.state<PagesState>(find.byType(Pages));
+  final pageViewerState =
+      tester.state<PageViewerState>(find.byType(PageViewer));
 
-  // Use the public method to navigate
-  pagesState.setPage2(page);
+  // Get the PageController from the PageViewer state
+  final pageController = pageViewerState.widget.pageController;
+
+  // Animate to the desired page
+  await pageController.animateToPage(
+    page,
+    duration: const Duration(milliseconds: 300),
+    curve: Curves.easeInOut,
+  );
 
   await tester.pumpAndSettle();
 
