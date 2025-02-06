@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Thursday 2025-02-06 20:41:34 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-02-07 05:21:20 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -361,7 +361,7 @@ Future<void> rSource(
   String ident = 'NULL'; // 20250202 gjw Used in associations.
 
   roles.forEach((key, value) {
-    if (ident == 'Null' && value == Role.ident) {
+    if (ident == 'NULL' && value == Role.ident) {
       ident = key;
     }
   });
