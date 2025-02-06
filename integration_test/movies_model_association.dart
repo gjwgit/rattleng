@@ -1,6 +1,6 @@
 /// Test MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Thursday 2025-01-30 16:55:14 +1100 Graham Williams>
+// Time-stamp: <2025-02-06 15:45:41 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -70,21 +70,17 @@ void main() {
       ],
     );
 
-    // TODO 20241228 gjw THIS IS FAILING TO BE RENDERED IN FLUTTER
-    //
-    // It might require a bug report to the svg package.
-
     await gotoNextPage(tester);
+    await verifyPage('Item Frequency');
     var imageFinder = find.byType(ImagePage);
     expect(imageFinder, findsOneWidget);
 
     await gotoNextPage(tester);
-    await verifyPage('Parrallel Coordinates Plot');
     imageFinder = find.byType(ImagePage);
     expect(imageFinder, findsOneWidget);
 
     await gotoNextPage(tester);
-    await verifyPage('Item Frequency');
+    await verifyPage('Parrallel Coordinates Plot');
     imageFinder = find.byType(ImagePage);
     expect(imageFinder, findsOneWidget);
   });
