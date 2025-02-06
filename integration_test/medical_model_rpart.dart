@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Thursday 2025-02-06 10:21:57 +1100 Graham Williams>
+// Time-stamp: <2025-02-06 20:19:57 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,6 +40,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_dataset_by_path.dart';
+import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 
@@ -50,6 +51,7 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
+    await setDatasetRole('ssn', 'Ignore');
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree', TreePanel);
     final markdownContent = find.byKey(const Key('markdown_file'));
