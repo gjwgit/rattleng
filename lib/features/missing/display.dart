@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-20 08:22:02 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-04 09:31:06 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -70,7 +70,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
-
+    //
     // Text pattern of missing values.
 
     content = rExtract(stdout, 'md.pattern(');
@@ -79,11 +79,14 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     lines = content.split('\n');
 
-    for (int i = 0; i < lines.length; i++) {
-      if (lines[i].startsWith(' ') && !RegExp(r'^\s+\d').hasMatch(lines[i])) {
-        lines[i] = '\n${lines[i]}';
-      }
-    }
+    // 20250203 gjw Remove this processing for now - it was not working for the
+    // US Population dataset.
+    //
+    // for (int i = 0; i < lines.length; i++) {
+    //   if (lines[i].startsWith(' ') && !RegExp(r'^\s+\d').hasMatch(lines[i])) {
+    //     lines[i] = '\n${lines[i]}';
+    //   }
+    // }
 
     content = lines.join('\n');
 
@@ -95,12 +98,25 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
           # Patterns of Missing Data - Textual
 
           Visit the [Survival
-          Guide](https://survivor.togaware.com/datascience/missing-values-in-rattle.html)
-          and
+          Guide](https://survivor.togaware.com/datascience/missing-values-in-rattle.html).
+
+          Generated using
           [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
+          In the table a **1** indicates a value is present and **0** that a
+          value is missing for the variable.
+
+          The **first column** is the number of observations with the
+          corresponding pattern.
+
+          The **final column** is the count of the number of variables with
+          missing values in the pattern.
+
+          The **final row** is the count of the number of missing values for
+          that variable.
+
           ''',
-          content: content,
+          content: '\n$content',
         ),
       );
     }

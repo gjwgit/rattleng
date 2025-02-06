@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Saturday 2024-11-23 16:45:15 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-05 08:48:34 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -121,7 +121,6 @@ class RattleStateText extends ConsumerWidget {
             'TYPES:       $type\n\n'
             'TARGET:      ${getTarget(ref)}\n'
             'RISK:        ${getRisk(ref)} \n'
-            'IDENTIFIERS: \$identifiers \n'
             'IGNORE:      $ignored\n'
             'SELECTED:    $selected\n'
             'SELECTED2:   $selected2\n'

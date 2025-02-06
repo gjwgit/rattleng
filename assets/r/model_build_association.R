@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 07:33:21 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-02-06 07:03:03 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -43,19 +43,27 @@ mdesc <- "Association Rules"
 
 # Depending on whether we consider the dataset `ds` as a collection of
 # baskets or not, we build our transactions dataset. For `ds` as a
-# basket it will have two columns, one (<IDENT>) identifying the basket
-# and the other (<TARGET>) identifying an item contained in the basket.
+# basket it will have two columns, one (Ident) identifying the basket
+# and the other (Target) identifying an item contained in the
+# basket. Toggle TRUE/FALSE as required.
 
 if(<ASSOCIATION_BASKETS>) {
 
-  # We need to get the IDENT variable from ds since IDENT are removed
-  # from trds.
+  # We get the Ident variable from `ds` since the Ident variables are
+  # removed from trds in our dataset template.
 
   transactions <- as(split(trds$<TARGET_VAR>, ds[tr, identifier]), "transactions")
 
 } else {
 
-  transactions <- as(trds, "transactions")
+  # Only use categoric variables. Numeric can be included if
+  # transformed to categoric, or `as()` will do it using `
+  # discretizeDF'()`.
+  ##
+  ## 20250204 gjw V5 only used categoric variables so replicate that
+  ## here.
+
+  transactions <- as(trds[catc], "transactions")
 
 }
 
@@ -72,13 +80,19 @@ model_arules <- apriori(
 
 print(summary(model_arules))
 
-# Limit the number of rules for display and calculating the
-# interestingness measures. Generally this can be very large and if so
-# the `inspect()` will be very time consuming and it appears the app
-# has frozen.
+# 20250204 gjw Limit the number of rules for display and calculating
+# the interestingness measures. Generally this can be very large and
+# if so the `inspect()` will be very time consuming and it appears the
+# app has frozen.
 
 top_rules <- sort(model_arules, by = <ASSOCIATION_RULES_SORT_BY>)
-top_rules <- top_rules[1:min(length(top_rules), <ASSOCIATION_INTEREST_MEASURE>)]
+
+# 20250204 gjw If there are no rules then don't try to index the rules
+# from 1!
+
+if (length(top_rules) > 0) {
+  top_rules <- top_rules[1:min(length(top_rules), <ASSOCIATION_INTEREST_MEASURE>)]
+}
 
 # Show the rules identified.
 
@@ -96,6 +110,20 @@ measures <- interestMeasure(
 
 print(measures)
 
+# Plot the frequency of the support items.
+##
+## 20250204 gjw Turn the plot around horizontal. We may have many
+## items but the freqency range is controlled. So better to have the
+## items stacked up horizontally. For COMP3425 revert to the V5
+## version and then revert in V6 in July 2025.
+
+svg("<TEMPDIR>/model_arules_item_frequency.svg")
+arules::itemFrequencyPlot(transactions,
+                          support = <ASSOCIATION_SUPPORT>,
+                          horiz   = TRUE,
+                          type    = "relative")
+dev.off()
+
 # Plot a summary of the associations.
 ##
 ## 20250129 gjw The SVG generated here uses filter elements which are not supported
@@ -109,12 +137,10 @@ png("<TEMPDIR>/model_arules_viz.png")
 plot(top_rules, method="graph")
 dev.off()
 
-svg("<TEMPDIR>/model_arules_para.svg")
-plot(top_rules, method="paracoord")
+svg("<TEMPDIR>/model_arules_grouped.png")
+plot(top_rules, method="grouped matrix")
 dev.off()
 
-# Plot the relative importance of the rules using arulesViz.
-
-svg("<TEMPDIR>/model_arules_item_frequency.svg")
-itemFrequencyPlot(transactions, topN = 10, type = "relative")
+svg("<TEMPDIR>/model_arules_para.svg")
+plot(top_rules, method="paracoord")
 dev.off()

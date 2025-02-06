@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 09:13:28 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-04 09:47:28 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,17 +24,12 @@
 #
 # Author: Graham Williams
 
-# Transform "<SELECTED_VAR>" by replacing NA with the mean value.
+# Transform numeric "<SELECTED_VAR>" by replacing NA with the mean value.
 
-library(dplyr)        # Wrangling: mutate().
-
-if (is.numeric(ds$<SELECTED_VAR>))
-{
-  ds %<>%
-    mutate(IMN_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
-                                     mean(<SELECTED_VAR>, na.rm = TRUE),
-                                     <SELECTED_VAR>))
-}
+ds %<>%
+  dplyr::mutate(IMN_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                            mean(<SELECTED_VAR>, na.rm = TRUE),
+                                            <SELECTED_VAR>))
 
 glimpse(ds)
 summary(ds)

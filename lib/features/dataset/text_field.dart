@@ -92,7 +92,7 @@ class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
       child: MarkdownTooltip(
         message: '''
 
-        **Filename:** You can paste or type the path to a file containing your
+        **Path:** You can paste or type the path to a file containing your
         dataset. It is expected to be a **csv** or **txt** file, or the name of
         a package dataset, like rattle::wattle.
 

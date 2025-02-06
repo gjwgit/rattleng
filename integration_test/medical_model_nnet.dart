@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Sunday 2025-02-02 15:44:51 +1100 Graham Williams>
+// Time-stamp: <2025-02-06 11:20:22 gjw>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -76,6 +76,9 @@ void main() {
     await navigateToFeature(tester, 'Neural', NeuralPanel);
     await tapChip(tester, 'nnet');
     await tapButton(tester, 'Build Neural Network');
+    // 20250206 The model build is sometimes a little slow indeterminately
+    // on ecosysl so add two delays here.
+    await tester.pump(delay);
     await tester.pump(delay);
     await gotoNextPage(tester);
     await verifyPage('Neural Net Model - Summary and Weights');

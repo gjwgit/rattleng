@@ -1,11 +1,11 @@
 /// Widget to display the SUMMARY introduction and R summary output.
 ///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-20 05:52:05 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-03 17:20:19 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -70,7 +70,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
-
+    //
     // BASIC R SUMMARY
 
     content = rExtractSummary(stdout);
@@ -80,7 +80,35 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     lines = content.split('\n');
 
     for (int i = 0; i < lines.length; i++) {
-      if (lines[i].startsWith('  ') && !lines[i].trimLeft().startsWith('NA')) {
+      // 20250203 gjw This was not capturing long veriable names that end up
+      // beginning in the first column.
+
+      // if (lines[i].startsWith('  ') && !lines[i].trimLeft().startsWith('NA')) {
+      //   lines[i] = '\n${lines[i]}';
+      // }
+
+      // 20250203 gjw Try this as an alternative.
+
+      // List of prefixes to check against.
+
+      List<String> prefixes = [
+        'Min.',
+        '1st Qu.',
+        'Median',
+        'Mean',
+        '3rd Qu.',
+        'Max.',
+      ];
+
+      // Check if the string starts with any of the prefixes.
+
+      bool startsWithPrefix =
+          prefixes.any((prefix) => lines[i].startsWith(' $prefix'));
+
+      // If it doesn't start with any of the prefixes, add a newline at the
+      // beginning.
+
+      if (!startsWithPrefix) {
         lines[i] = '\n${lines[i]}';
       }
     }
@@ -119,6 +147,9 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     Generated using
     [dplyr::glimpse(ds)](https://www.rdocumentation.org/packages/dplyr/topics/glimpse).
 
+      This R command is useful for a quick look at some of the actual data in
+      the dataset.
+
       ''';
 
     if (content.isNotEmpty) {
@@ -131,7 +162,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
-
+    //
     // Skimr
 
     content = rExtract(stdout, 'skim(ds)');
@@ -146,8 +177,11 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           Generated using
           [skimr::skim(ds)](https://www.rdocumentation.org/packages/skimr/topics/skim/).
 
+          The [skimr](https:www.rdocumentation.org/packages/skimr/) package for
+          R is great for a bit of a stitistical summary of the dataset.
+
           ''',
-          content: content,
+          content: '\n$content',
         ),
       );
     }
@@ -182,8 +216,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+    //
     // HMISC DESCRIBE
-    ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'describe(ds)');
 
@@ -227,8 +261,8 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+    //
     // KURTOSIS AND SKEWNESS
-    ////////////////////////////////////////////////////////////////////////
 
     content = 'Kurtosis:\n';
     content += rExtract(stdout, 'timeDate::kurtosis(ds[numc], na.rm=TRUE)');
@@ -282,6 +316,12 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           [timeDate::kurtosis(ds)](https://www.rdocumentation.org/packages/timeDate/topics/kurtosis)
           and
           [timeDate::skewness(ds)](https://www.rdocumentation.org/packages/timeDate/topics/skewness).
+
+          The **Kurtosis** provides a numeric measure for how much of a
+          tail the distribution of the data has.
+
+          The **Skewness** provides a numeric measure for how skewed the
+          distribution of the data is.
 
           ''',
           content: '\n$content',

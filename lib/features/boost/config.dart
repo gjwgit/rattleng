@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 21:15:24 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-03 16:05:12 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -81,8 +81,8 @@ class BoostConfigState extends ConsumerState<BoostConfig> {
               pageControllerProvider: boostPageControllerProvider,
               tooltip: '''
 
-              Tap to build the $algorithm Boosted model using the parameter
-              values that you can set here.
+              Tap here to build the $algorithm Boosted model using the parameter
+              values set here.
 
               ''',
               onPressed: () async {

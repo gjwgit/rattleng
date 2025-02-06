@@ -1,6 +1,6 @@
 /// A Button that repeats the onPressed action when held down.
 //
-// Time-stamp: <Wednesday 2024-10-09 06:01:35 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-03 16:06:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -98,9 +98,9 @@ class RandomSeedRow extends StatelessWidget {
         MarkdownTooltip(
           message: '''
           **Decrease Random Seed:**
-          Tap to decrease the random seed value by 1.
-          
-          **Hold:** Hold the button to continuously decrease the value.
+          Tap here to decrease the random seed value by 1.
+
+          **Press:** Hold the button to continuously decrease the value.
           ''',
           child: RepeatButton(
             child: const Icon(Icons.remove),
@@ -125,9 +125,9 @@ class RandomSeedRow extends StatelessWidget {
         MarkdownTooltip(
           message: '''
           **Increase Random Seed:**
-          Tap to increase the random seed value by 1.
-          
-          **Hold:** Hold the button to continuously increase the value.
+          Tap here to increase the random seed value by 1.
+
+          **Press:** Hold the button to continuously increase the value.
           ''',
           child: RepeatButton(
             child: const Icon(Icons.add),

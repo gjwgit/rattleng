@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Monday 2025-01-13 16:08:18 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-05 16:26:30 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -149,7 +149,36 @@ class ScriptSaveButton extends ConsumerWidget {
     lines = lines.where((line) => !line.trim().startsWith('dev.off')).toList();
     lines = lines.where((line) => !line.trim().startsWith('rat <-')).toList();
     lines = lines.where((line) => !line.trim().startsWith('rat(')).toList();
+
     lines = lines.map((line) => line.replaceAll(tempDir + '/', '')).toList();
+
+    // 20250205 gjw As a convenience for any of the demo datasets, when I export
+    // the R script I add the path `assets/data` to the `read_csv()` so it runs
+    // out of the box when testing in the source folder of rattleng. Not so
+    // useful for the end user, but either way they need to replace the demo
+    // file path exported from rattleng with an actual path, and so perhaps not
+    // much is lost for the end user and perhaps it is even informative as to
+    // where to find the data files.
+    //
+    // 20250205 TODO gjw THE LIST OF FILE NAMES HERE SHOULD PROBABLY BE A CONSTANT.
+
+    for (String assets in [
+      'weather.csv',
+      'audit.csv',
+      'protein.csv',
+      'movies.csv',
+      'sherlock.txt',
+      'co-est2016-alldata.csv',
+    ]) {
+      lines = lines
+          .map(
+            (line) => line.replaceAll(
+              '"$assets"',
+              '"assets/data/$assets"',
+            ),
+          )
+          .toList();
+    }
 
     if (stripComments) {
       // Remove R comments (lines starting with #).

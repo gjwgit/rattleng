@@ -1,13 +1,13 @@
-/// Providers for parameters association settings.
-///
-/// Time-stamp: <Wednesday 2025-02-05 16:04:51 +1100 Graham Williams>
-///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Return those veriables with an INPUT role or tranformed and now ignored.
+//
+// Time-stamp: <Wednesday 2025-02-05 08:41:37 +1100 Graham Williams>
+//
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
-///
+//
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -21,15 +21,28 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Yixiang Yin, Graham Williams
 
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final basketsAssociationProvider = StateProvider<bool>((ref) => false);
-final confidenceAssociationProvider = StateProvider<double>((ref) => 0.1);
-final interestMeasuresAssociationProvider = StateProvider<int>((ref) => 100);
-final minLengthAssociationProvider = StateProvider<int>((ref) => 2);
-final sortByAssociationProvider = StateProvider<String>((ref) => 'Support');
-final supportAssociationProvider = StateProvider<double>((ref) => 0.1);
+import 'package:rattle/providers/vars/roles.dart';
+
+List<String> getInputsAndIgnoreTransformed(WidgetRef ref) {
+  // The rolesProvider lists the roles for the different variables which we need
+  // to know for parsing the R scripts.
+
+  Map<String, Role> roles = ref.read(rolesProvider);
+
+  // Extract the input variable from the rolesProvider.
+
+  List<String> inputs = [];
+  roles.forEach((key, value) {
+    if (value == Role.input || value == Role.ignoreAfterTransformed) {
+      inputs.add(key);
+    }
+  });
+
+  return inputs;
+}

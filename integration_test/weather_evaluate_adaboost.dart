@@ -1,10 +1,11 @@
-/// COMP3425 AUDIT dataset MODEL tab TREE feature RPART option.
+/// WEATHER dataset MODEL BOOST ADAPTIVE  EVALUATE feature.
 //
-// Time-stamp: <Thursday 2025-02-06 09:37:09 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
 //
-/// Copyright (C) 2025, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
+
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -21,60 +22,52 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Graham Williams
-
+/// Authors:  Kevin Wang
 library;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:rattle/features/boost/panel.dart';
 
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
-//import 'package:rattle/widgets/image_page.dart';
-//import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('AUDIT MODEL TREE RPART:', () {
-    testWidgets('set risk, build tree, verify.', (WidgetTester tester) async {
+  group('WEATHER MODEL BOOST ADAPTIVE  EVALUATE:', () {
+    testWidgets('build, evaluate, verify.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-      await loadDemoDataset(tester, 'Audit');
-      // 20250131 gjw The test is sometimes failing with a `Could not find
-      // 'adjustment'`. One delay was still sometimes not enough so make it two
-      // delays for now. Perhaps the ROLES page is not yet ready sometimes.
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await setDatasetRole(tester, 'adjustment', 'Risk');
-      await setDatasetRole(tester, 'marital', 'Ignore');
-      await setDatasetRole(tester, 'education', 'Ignore');
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Tree', TreePanel);
-      await tapButton(tester, 'Build Decision Tree');
-      await tester.pump(hack);
+
+      await navigateToFeature(tester, 'Boost', BoostPanel);
+      await tapChip(tester, 'Adaptive');
+      await tapButton(tester, 'Build Boosted Trees');
+      await navigateToTab(tester, 'Evaluate');
+      await tapButton(tester, 'Evaluate');
       await gotoNextPage(tester);
-      await verifyPage('Decision Tree Model', 'Observations = 1400');
+      await verifyPage('Error Matrix');
+
       await verifySelectableText(
         tester,
         [
-          // 20250110 gjw We get a trivial decision tree initially since
-          // adjustment is actually an output variable.
-
-          '1) root 1400 319 No (0.77214286 0.22785714)',
-          '2) age< 30.5 475  31 No (0.93473684 0.06526316) *',
-          '14) gender=Female 118  28 No (0.76271186 0.23728814) *',
+          'No  42   1   2.3',
+          'Yes 10   1  90.9',
+          'No  77.8 1.9   2.3',
+          'Yes 18.5 1.9  90.9',
+          'Overall Error = 20.37%; Average Error = 46.62%.',
         ],
       );
     });

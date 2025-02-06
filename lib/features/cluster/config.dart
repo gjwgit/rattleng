@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-01-23 09:07:54 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-03 16:04:36 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -90,8 +90,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
             ActivityButton(
               tooltip: '''
 
-              Tap to build a $type cluster model using the parameter values that
-              are set here.
+              Tap here to build a $type cluster model using the parameter values
+              set here.
 
               ''',
               onPressed: () async {

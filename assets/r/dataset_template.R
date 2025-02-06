@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:15:29 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-02-05 16:01:56 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -75,7 +75,10 @@ ignore      <- <IGNORE_VARS>
 ## into ds from `get(dsname)` each time it is run afresh. FOR NOW do
 ## this for CORRELATION only.
 ##
+## ds <- get(dsname)
 ## ds <- ds[setdiff(names(ds), ignore)]
+##
+##
 ##
 # Record the number of observations.
 
@@ -91,46 +94,29 @@ vars   <- c(target, vars) %>% unique() %>% rev()
 
 # Identify the input variables for modelling.
 
-inputs <- setdiff(vars, target) %T>% print()
-
-# Also record them by indicies.
-
-inputs %>%
-  sapply(function(x) which(x == names(ds)), USE.NAMES=FALSE) %T>%
-  print() ->
-inputi
-
-# Identify the numeric variables by index.
-
-ds %>%
-  sapply(is.numeric) %>%
-  which() %>%
-  intersect(inputi) %T>%
-  print() ->
-numi
+inputs <- setdiff(vars, target)  %>%
+  setdiff(identifier) %T>%
+  print()
 
 # Identify the numeric variables by name.
 
 ds %>%
+  select(-all_of(ignore)) %>%
+  sapply(is.numeric) %>%
+  which()  %>%
   names() %>%
-  magrittr::extract(numi) %T>%
+  intersect(inputs) %T>%
   print() ->
 numc
-
-# Identify the categoric variables by index.
-
-ds %>%
-  sapply(is.factor) %>%
-  which() %>%
-  intersect(inputi) %T>%
-  print() ->
-cati
 
 # Identify the categoric variables by name.
 
 ds %>%
+  select(-all_of(ignore)) %>%
+  sapply(is.factor) %>%
+  which() %>%
   names() %>%
-  magrittr::extract(cati) %T>%
+  intersect(inputs) %T>%
   print() ->
 catc
 
@@ -146,10 +132,13 @@ nmobs <- sum(apply(ds, 1, anyNA))
 
 nmobs
 
-## # 20240916 gjw This is required for building the <ROLES> table but will
-## # eventually be replaced by the meta data.
+## # 20240916 gjw This is required for building the ROLES table but
+## # will eventually be replaced by the meta data.
 ##
 ## # 20241008 gjw I don't think these are required here now.
+##
+## # 20250205 gjw But they have been added into each of the transofrm
+## # scripts so maybe it is just once here?
 ##
 ## # glimpse(ds)
 ## # summary(ds)

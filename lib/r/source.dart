@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Sunday 2025-02-02 09:37:44 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 16:00:09 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -260,7 +260,7 @@ Future<void> rSource(
   // has been correctly converted to a Unix path for R.
 
   if (Platform.isWindows) {
-    path = path.replaceAll(r'\>', '/');
+    path = path.replaceAll(r'\', '/');
   }
   code = code.replaceAll('<FILENAME>', path);
 
@@ -378,7 +378,7 @@ Future<void> rSource(
 
   code = code.replaceAll('<ID_VARS>', ids == 'NULL' ? 'NULL' : '"$ids"');
 
-  // TODO 20240809 yyx MOVE COMPUTATION ELSEWHERE IF TOO SLOW.
+  // IGNORED
 
   List<String> ignoredVars = getIgnored(ref);
   String ignoredVarsString = toRVector(ignoredVars);

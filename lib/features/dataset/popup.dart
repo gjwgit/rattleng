@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2025-01-29 11:50:47 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-05 08:18:21 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -35,14 +35,14 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
-import 'package:rattle/features/dataset/select_package.dart';
+// import 'package:rattle/features/dataset/select_package.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract.dart';
-import 'package:rattle/r/extract_package.dart';
+// import 'package:rattle/providers/stdout.dart';
+// import 'package:rattle/r/extract.dart';
+// import 'package:rattle/r/extract_package.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
@@ -124,7 +124,7 @@ class DatasetPopup extends ConsumerWidget {
                   // warning.
 
                   if (!context.mounted) return;
-                  Navigator.pop(context, 'Filename');
+                  Navigator.pop(context, 'Local File');
 
                   // Access the PageController via Riverpod and move to the second page.
 
@@ -139,44 +139,55 @@ class DatasetPopup extends ConsumerWidget {
                 child: MarkdownTooltip(
                   message: '''
 
-                  **Filename for Dataset** Tap here to popup a window to browse
-                  to a **csv** or **txt** file that you would like to load
+                  **Load Local File as Dataset** Tap here to popup a window to browse
+                  to a local **csv** or **txt** file that you would like to load
                   into Rattle.
 
                   ''',
-                  child: Text('Filename'),
+                  child: Text('Local File'),
                 ),
               ),
 
               buttonGap,
 
               ElevatedButton(
-                onPressed: () async {
-                  // scrape the packages
-                  String stdout = ref.read(stdoutProvider);
-                  String content =
-                      rExtract(stdout, '> package_datasets_cleaned');
-                  Map<String, List<String>> map = parsePackage(content);
-                  String path = await datasetSelectPackage(context, map, ref);
-                  if (path.isNotEmpty) {
-                    // ref.read(pathProvider.notifier).state = path;
-                    if (context.mounted) await rLoadDataset(context, ref);
-                    setStatus(ref, statusChooseVariableRoles);
-                    datasetLoadedUpdate(ref);
-                  }
-                  if (!context.mounted) return;
-                  Navigator.pop(context, 'Package');
+                // 20250205 gjw Disable the PACKAGE button for now until we move
+                // the generation of the list of available datasets in R
+                // packages from home.dart on startup to here with the button
+                // press.
+                //
+                onPressed: null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.grey, // Background color when disabled
+                  foregroundColor: Colors.white, // Text color when disabled
+                ),
+                // onPressed: () async {
+                //   // scrape the packages
+                //   String stdout = ref.read(stdoutProvider);
+                //   String content =
+                //       rExtract(stdout, '> package_datasets_cleaned');
+                //   Map<String, List<String>> map = parsePackage(content);
+                //   String path = await datasetSelectPackage(context, map, ref);
+                //   if (path.isNotEmpty) {
+                //     // ref.read(pathProvider.notifier).state = path;
+                //     if (context.mounted) await rLoadDataset(context, ref);
+                //     setStatus(ref, statusChooseVariableRoles);
+                //     datasetLoadedUpdate(ref);
+                //   }
+                //   if (!context.mounted) return;
+                //   Navigator.pop(context, 'Package');
 
-                  // Access the PageController via Riverpod and move to the second page.
+                //   // Access the PageController via Riverpod and move to the second page.
 
-                  ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
+                //   ref.read(pageControllerProvider).animateToPage(
+                //         // Index of the second page.
 
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                },
+                //         1,
+                //         duration: const Duration(milliseconds: 300),
+                //         curve: Curves.easeInOut,
+                //       );
+                // },
                 child: const MarkdownTooltip(
                   message: '''
 
@@ -204,7 +215,7 @@ class DatasetPopup extends ConsumerWidget {
                   ''',
             child: MarkdownBody(
               data: '**Demo Datasets** '
-                  'Tap to load one of the available demonstration datasets:',
+                  'Tap here to load one of the available demonstration datasets:',
             ),
           ),
 
@@ -356,9 +367,10 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **US Census** data file is a larger **csv** file for
-                      exploring a dataset. The data comes from the U.S. Census
-                      Bureau, Population Division. The variables are described
+                      The **US Population** data file is a larger **csv** file
+                      for exploring a dataset. The data comes from the
+                      U.S. Census Bureau, Population Division. The variables are
+                      described
                       [there](https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/counties/totals/co-est2016-alldata.pdf).
 
                       ''',
@@ -368,10 +380,10 @@ class DatasetPopup extends ConsumerWidget {
                           ref,
                           context,
                           'data/co-est2016-alldata.csv',
-                          'US Census',
+                          'US Population',
                         );
                       },
-                      child: const Text('US Census'),
+                      child: const Text('US Population'),
                     ),
                   ),
                 ],

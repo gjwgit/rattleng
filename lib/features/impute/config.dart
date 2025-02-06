@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 15:57:21 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 10:59:15 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -71,7 +71,8 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     'Constant',
   ];
 
-  // Default transformation.
+  // 20250206 gjw Default transformation is the Mean imputation but we will
+  // override this below to be the Mode if a categoric variable is selected.
 
   String selectedTransform = 'Mean';
 
@@ -90,6 +91,16 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
   // Define a transform chooser widget with tooltips for each chip.
 
   Widget transformChooser() {
+    bool isCategoric = ref.read(typesProvider)[selected] == Type.categoric;
+
+    // 20250206 gjw If the currently selected variables is a categoric then the
+    // only two available options should be Mode or Constant. If it is not
+    // Constatnt them what ever it currently is we can change it to be Mode.
+
+    if (isCategoric && selectedTransform != 'Constant') {
+      selectedTransform = 'Mode';
+    }
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Wrap(
@@ -100,8 +111,10 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           // gap before CONSTANT and so tie the CONSTANT chip to the CONSTANT
           // field for improved UX.
 
+          // Mean and Median Chips are only available for numeric variables.
+
           ChoiceChipTip<String>(
-            options: methods.sublist(0, 3),
+            options: methods.sublist(0, 2),
             selectedOption: selectedTransform,
             onSelected: (transform) {
               setState(() {
@@ -129,6 +142,25 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               outliers in a skewed distribution.
 
               ''',
+            },
+            enabled: !isCategoric,
+          ),
+
+          // Place Mode Chip separately so we can enable it conditionally.
+
+          ChoiceChipTip<String>(
+            options: methods.sublist(2, 3),
+            selectedOption: selectedTransform,
+            onSelected: (transform) {
+              setState(() {
+                selectedTransform = transform ?? '';
+                if (selectedTransform == 'Constant') {
+                  _setConstantDefault();
+                }
+              });
+            },
+            getLabel: (transform) => transform,
+            tooltips: const {
               'Mode': '''
 
               Use the mode (most common) value of the variable values as the
@@ -231,9 +263,23 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
     } else {
       switch (selectedTransform) {
         case 'Mean':
-          rSource(context, ref, ['transform_impute_mean_numeric']);
+          // Check if the variable is numeric before running the R script.
+          // If it is categoric, show an error message.
+          if (ref.read(typesProvider)[selected] == Type.categoric) {
+            selectedTransform = 'Mode';
+          } else {
+            rSource(context, ref, ['transform_impute_mean_numeric']);
+          }
+
         case 'Median':
-          rSource(context, ref, ['transform_impute_median_numeric']);
+          // Check if the variable is numeric before running the R script.
+          // If it is categoric, show an error message.
+          if (ref.read(typesProvider)[selected] == Type.categoric) {
+            selectedTransform = 'Mode';
+          } else {
+            rSource(context, ref, ['transform_impute_median_numeric']);
+          }
+
         case 'Mode':
           rSource(context, ref, ['transform_impute_mode']);
         case 'Constant':
@@ -318,9 +364,18 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
               onChanged: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';
-                selectedTransform = 'Mean';
+
+                // If the variable is categoric, set the transform to Mode.
+                // If the variable is numeric, set the transform to Mean.
+                // So that the user doesn't have to do this manually and be annoyed.
+
+                selectedTransform =
+                    ref.read(typesProvider)[value] == Type.categoric
+                        ? 'Mode'
+                        : 'Mean';
               },
               tooltip: '''
+
 
               Select the variable for which missing values will be imputed. All
               variables having a role of INPUT are available for imputation.
