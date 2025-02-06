@@ -42,9 +42,10 @@ import 'verify_selectable_text.dart';
 /// 3. Verifies the resulting dataset summary page shows the expected variable name
 /// 4. Verifies the statistical summary matches the expected values
 
-Future<void> verify_rescale_tap_chip(
+Future<void> verify_tap_chip(
   WidgetTester tester,
   String chipText,
+  String buttonName,
   String variableName,
   List<String> expectedStats,
 ) async {
@@ -52,7 +53,7 @@ Future<void> verify_rescale_tap_chip(
 
   await tapChip(tester, chipText);
 
-  await tapButton(tester, 'Rescale Variable Values');
+  await tapButton(tester, buttonName);
   await tester.pump(delay);
   await gotoNextPage(tester);
 

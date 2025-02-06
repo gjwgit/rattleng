@@ -95,9 +95,10 @@ void main() {
 
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Rescale', RescalePanel);
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
         'Scale [0-1]',
+        'Rescale Variable Values',
         'R01_min_temp',
         [
           'Min.   :0.0000', // Minimum value of 'R01_min_temp'.
@@ -111,9 +112,10 @@ void main() {
 
       // 3. Select and test chip "-Median/MAD"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
         '-Median/MAD',
+        'Rescale Variable Values',
         'RMD_min_temp',
         [
           'Min.   :-1.553738', // Minimum value of 'RMD_min_temp'.
@@ -127,9 +129,10 @@ void main() {
 
       // 4. Select and test chip "Natural Log"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
         'Natural Log',
+        'Rescale Variable Values',
         'RLG_min_temp',
         [
           'Min.   :-2.303', // Minimum value of 'RLG_min_temp'.
@@ -144,9 +147,10 @@ void main() {
 
       // 5. Select and test chip "Log 10"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
         'Log 10',
+        'Rescale Variable Values',
         'R10_min_temp',
         [
           'Min.   :-1.0000', // Minimum value of 'R10_min_temp'.
@@ -161,9 +165,10 @@ void main() {
 
       // 6. Select and test chip "Rank"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
         'Rank',
+        'Rescale Variable Values',
         'RRK_min_temp',
         [
           'Min.   :  1.0', // Minimum value of 'RRK_min_temp'.
@@ -177,9 +182,10 @@ void main() {
 
       // 6. Select and test chip "Interval"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
         'Interval',
+        'Rescale Variable Values',
         'RIN_min_temp_100',
         [
           'Min.   : 0.00', // Minimum value of 'RIN_min_temp_100'.

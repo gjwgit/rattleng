@@ -29,15 +29,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/recode/panel.dart';
 
-import 'package:rattle/features/rescale/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/set_selected_variable.dart';
 import 'utils/verify_rescale_tap_chip.dart';
 import 'utils/scroll_down.dart';
 import 'utils/tap_button.dart';
@@ -66,130 +65,134 @@ void main() {
       await navigateToFeature(tester, 'Recode', RecodePanel);
       await tapButton(tester, 'Recode Variable Values');
       await tester.pump(delay);
-      await gotoNextPage(tester);
+      // await gotoNextPage(tester);
 
       await verifyPage(
         'Dataset Summary',
-        'RRC_min_temp',
+        'BQT_min_temp_4',
       );
       await scrollUntilFindKey(tester, 'text_page');
 
-      // Verify specific statistical values for the imputed 'RRC_min_temp' variable.
+      // Verify specific statistical values for the imputed 'BQT_min_temp_4' variable.
 
       await verifySelectableText(
         tester,
         [
-          'Min.   :-1.946941', // Minimum value of 'RRC_min_temp'.
-          '1st Qu.:-0.841097', // First quartile value of 'RRC_min_temp'.
-          'Median : 0.007221', // Median value of 'RRC_min_temp'.
-          'Mean   : 0.000000', // Mean value of 'RRC_min_temp'.
-          '3rd Qu.: 0.825243', // Third quartile value of 'RRC_min_temp'.
-          'Max.   : 2.143167', // Maximum value of 'RRC_min_temp'.
+          '[-6.2,1.1] :94',
+          '(1.1,6.7]  :89',
+          '(6.7,12.2] :91',
+          '(12.2,20.8]:91',
         ],
       );
 
       await navigateToTab(tester, 'Dataset');
       await scrollDown(tester);
-      await verifyImputedVariable(tester, 'RRC_min_temp');
-      await checkVariableNotMissing(tester, 'RRC_min_temp');
+      await verifyImputedVariable(tester, 'BQT_min_temp_4');
+      await checkVariableNotMissing(tester, 'BQT_min_temp_4');
 
-      // 2. Select and test chip "Scale [0, 1]"
+      // 2. Select and test chip "KMeans"
 
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Rescale', RescalePanel);
-      await verify_rescale_tap_chip(
+      await navigateToFeature(tester, 'Recode', RecodePanel);
+      await verify_tap_chip(
         tester,
-        'Scale [0-1]',
-        'R01_min_temp',
+        'KMeans',
+        'Recode Variable Values',
+        'BKM_min_temp_4',
         [
-          'Min.   :0.0000', // Minimum value of 'R01_min_temp'.
-          '1st Qu.:0.2704', // First quartile value of 'R01_min_temp'.
-          'Median :0.4778', // Median value of 'R01_min_temp'.
-          'Mean   :0.4760', // Mean value of 'R01_min_temp'.
-          '3rd Qu.:0.6778', // Third quartile value of 'R01_min_temp'.
-          'Max.   :1.0000', // Maximum value of 'R01_min_temp'.
+          '[-6.2,0.6] :87',
+          '(0.6,6.5]  :93',
+          '(6.5,12.1] :94',
+          '(12.1,20.8]:91',
         ],
       );
 
-      // 3. Select and test chip "-Median/MAD"
+      // 3. Select and test chip "Equal Width"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
-        '-Median/MAD',
-        'RMD_min_temp',
+        'Equal Width',
+        'Recode Variable Values',
+        'BEQ_min_temp_4',
         [
-          'Min.   :-1.553738', // Minimum value of 'RMD_min_temp'.
-          '1st Qu.:-0.674491', // First quartile value of 'RMD_min_temp'.
-          'Median : 0.000000', // Median value of 'RMD_min_temp'.
-          'Mean   :-0.005742', // Mean value of 'RMD_min_temp'.
-          '3rd Qu.: 0.650402', // Third quartile value of 'RMD_min_temp'.
-          'Max.   : 1.698271', // Maximum value of 'RMD_min_temp'.
+          '(-6.23,0.55]: 83',
+          '(0.55,7.3]  :107',
+          '(7.3,14.1]  :118',
+          '(14.1,20.8] : 57',
         ],
       );
 
-      // 4. Select and test chip "Natural Log"
+      // 4. Select and test chip "As Categoric"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
-        'Natural Log',
-        'RLG_min_temp',
+        'As Categoric',
+        'Recode Variable Values',
+        'TFC_min_temp',
         [
-          'Min.   :-2.303', // Minimum value of 'RLG_min_temp'.
-          '1st Qu.: 1.493', // First quartile value of 'RLG_min_temp'.
-          'Median : 2.186', // Median value of 'RLG_min_temp'.
-          'Mean   : 1.857', // Mean value of 'RLG_min_temp'.
-          '3rd Qu.: 2.588', // Third quartile value of 'RLG_min_temp'.
-          'Max.   : 3.035', // Maximum value of 'RLG_min_temp'.
-          'NA\'s   :71', // Number of missing values in 'RLG_min_temp'.
+          '-0.6   :  6',
+          '12.8   :  6',
+          '1.6    :  5',
+          '2.1    :  5',
+          '17.2   :  5',
+          '(Other):333',
         ],
       );
 
-      // 5. Select and test chip "Log 10"
+      await setSelectedVariable(tester, 'wind_dir_9am');
 
-      await verify_rescale_tap_chip(
+      // 5. Select and test chip "As Numeric"
+      //TODO kevin , failing here
+
+      await verify_tap_chip(
         tester,
-        'Log 10',
-        'R10_min_temp',
+        'As Numeric',
+        'Recode Variable Values',
+        'TNM_wind_dir_9am',
         [
-          'Min.   :-1.0000', // Minimum value of 'R10_min_temp'.
-          '1st Qu.: 0.6483', // First quartile value of 'R10_min_temp'.
-          'Median : 0.9494', // Median value of 'R10_min_temp'.
-          'Mean   : 0.8064', // Mean value of 'R10_min_temp'.
-          '3rd Qu.: 1.1239', // Third quartile value of 'R10_min_temp'.
-          'Max.   : 1.3181', // Maximum value of 'R10_min_temp'.
-          'NA\'s   :71', // Number of missing values in 'R10_min_temp'.
+          'Min.   : 1.000',
+          '1st Qu.: 5.000',
+          'Median : 8.000',
+          'Mean   : 8.073',
+          '3rd Qu.:11.000',
+          'Max.   :16.000',
+          'NA\'s   :52',
         ],
       );
 
-      // 6. Select and test chip "Rank"
+      // 6. Select and test chip "Indicator Variable"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
-        'Rank',
-        'RRK_min_temp',
+        'Indicator Variable',
+        'Recode Variable Values',
+        'TIN_wind_gust_dir_E',
         [
-          'Min.   :  1.0', // Minimum value of 'RRK_min_temp'.
-          '1st Qu.: 92.5', // First quartile value of 'RRK_min_temp'.
-          'Median :183.0', // Median value of 'RRK_min_temp'.
-          'Mean   :183.0', // Mean value of 'RRK_min_temp'.
-          '3rd Qu.:273.0', // Third quartile value of 'RRK_min_temp'.
-          'Max.   :365.0', // Maximum value of 'RRK_min_temp'.
+          'Min.   :0.0000',
+          '1st Qu.:0.0000',
+          'Median :0.0000',
+          'Mean   :0.1136',
+          '3rd Qu.:0.0000',
+          'Max.   :1.0000',
+          'NA\'s   :4',
         ],
       );
 
-      // 6. Select and test chip "Interval"
+      // 7. Select and test chip "Join Categorics"
 
-      await verify_rescale_tap_chip(
+      await verify_tap_chip(
         tester,
-        'Interval',
-        'RIN_min_temp_100',
+        'Join Categorics',
+        'Recode Variable Values',
+        'TJN_wind_gust_dir__wind_dir_9am',
         [
-          'Min.   : 0.00', // Minimum value of 'RIN_min_temp_100'.
-          '1st Qu.:27.00', // First quartile value of 'RIN_min_temp_100'.
-          'Median :47.00', // Median value of 'RIN_min_temp_100'.
-          'Mean   :47.15', // Mean value of 'RIN_min_temp_100'.
-          '3rd Qu.:67.00', // Third quartile value of 'RIN_min_temp_100'.
-          'Max.   :99.00', // Maximum value of 'RIN_min_temp_100'.
+          'NW_NNW : 15',
+          'NNW_NNW: 10',
+          'E_SSE  :  8',
+          'E_SE   :  7',
+          'NW_NW  :  7',
+          '(Other):263',
+          'NA\'s   : 55',
         ],
       );
     });
