@@ -222,16 +222,13 @@ class RattleHomeState extends ConsumerState<RattleHome>
     // Extract date from CHANGELOG.md - first date in [6.4.0 20250120 gjw] bracketed
     // by square brackets.
 
-    final changelogFile = File('CHANGELOG.md');
-    String currentDate = '20250101'; // Default date
-    if (await changelogFile.exists()) {
-      final content = await changelogFile.readAsString();
-      final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
-      if (match != null) {
-        currentDate = match.group(1)!;
-
-        debugPrint('Current date: $currentDate');
-      }
+    final response = await http.get(Uri.parse(_changelogUrl));
+    final content = response.body;
+    String currentDate = '20240101'; // Default date
+    final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
+    if (match != null) {
+      currentDate = match.group(1)!;
+      debugPrint('Current date: $currentDate');
     }
 
     setState(() {
