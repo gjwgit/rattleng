@@ -219,12 +219,13 @@ class RattleHomeState extends ConsumerState<RattleHome>
     final prefs = await SharedPreferences.getInstance();
     final savedVersion = prefs.getString('version') ?? '';
 
-    // Extract date from CHANGELOG.md - first date in [6.4.0 20250120 gjw] bracketed
+    // Extract date from remote CHANGELOG.md in _changelogUrl
+    //- first date in [6.4.0 20250120 gjw] format : bracketed
     // by square brackets.
 
     final response = await http.get(Uri.parse(_changelogUrl));
     final content = response.body;
-    String currentDate = '20240101'; // Default date
+    String currentDate = '20250101'; // Default date
     final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
     if (match != null) {
       currentDate = match.group(1)!;
