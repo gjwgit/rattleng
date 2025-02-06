@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Wednesday 2025-02-05 16:30:51 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 16:00:09 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -260,7 +260,7 @@ Future<void> rSource(
   // has been correctly converted to a Unix path for R.
 
   if (Platform.isWindows) {
-    path = path.replaceAll(r'\>', '/');
+    path = path.replaceAll(r'\', '/');
   }
   code = code.replaceAll('<FILENAME>', path);
 
