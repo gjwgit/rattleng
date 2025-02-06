@@ -68,12 +68,12 @@ void main() {
       await verifySelectableText(
         tester,
         [
-	  'Executive   :390',
-	  'Professional:247',
-	  'Clerical    :232',
-	  'Repair      :225',
-	  'Service     :210', 
-	  'Sales       :206',
+          'Executive   :390',
+          'Professional:247',
+          'Clerical    :232',
+          'Repair      :225',
+          'Service     :210',
+          'Sales       :206',
         ],
       );
     });
