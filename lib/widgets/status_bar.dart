@@ -51,9 +51,18 @@ class StatusBar extends ConsumerWidget {
     // Extract rows/columns info safely
     String rowsColumns = '';
     try {
+      //TODO kevin , the following code is not working.
+      // printed :glimpse: Error: object 'ds' not found
+
+      // Hi Graham , do you know why (Error: object 'ds' not found)
+      // is printed in console? Do we need to install a package to fix this?
+      print('stdout: $stdout');
       String glimpse = rExtractGlimpse(stdout);
+      print('glimpse: $glimpse');
+
       if (glimpse.isNotEmpty && glimpse.contains('Rows:')) {
         rowsColumns = rExtractRowsColumns(glimpse);
+        print('rowsColumns: $rowsColumns');
       }
     } catch (e) {
       debugPrint('Error extracting rows/columns: $e');
