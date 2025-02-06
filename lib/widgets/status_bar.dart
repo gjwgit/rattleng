@@ -48,6 +48,18 @@ class StatusBar extends ConsumerWidget {
     String path = ref.watch(pathProvider);
     if (path != '') path = '$path   ';
     String stdout = ref.watch(stdoutProvider);
+    // Extract rows/columns info safely
+    String rowsColumns = '';
+    try {
+      String glimpse = rExtractGlimpse(stdout);
+      if (glimpse.isNotEmpty && glimpse.contains('Rows:')) {
+        rowsColumns = rExtractRowsColumns(glimpse);
+      }
+    } catch (e) {
+      debugPrint('Error extracting rows/columns: $e');
+      // Set empty string on error to avoid displaying invalid data
+      rowsColumns = '';
+    }
 
     return Container(
       constraints: const BoxConstraints(minHeight: 50),
@@ -72,7 +84,7 @@ class StatusBar extends ConsumerWidget {
               data: '[Rattle @](https://rattle.togaware.com)  '
                   '[togware.com](https://togaware.com)  '
                   '${basename(path)}'
-                  '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
+                  '$rowsColumns   '
                   '${ref.watch(statusProvider)}',
               styleSheet: MarkdownStyleSheet(
                 p: Theme.of(context)
