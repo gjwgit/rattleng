@@ -53,3 +53,31 @@ Future<void> setSelectedVariable(
   await tester.tap(find.text(variableName).last);
   await tester.pumpAndSettle();
 }
+
+Future<void> setSelectedVariable2(
+  WidgetTester tester,
+  String variableName,
+) async {
+  expect(
+    find.byWidgetPredicate(
+      (widget) =>
+          widget is DropdownMenu &&
+          widget.label is Text &&
+          (widget.label as Text).data == 'Variable',
+    ),
+    findsOneWidget,
+    reason: 'Variable chooser dropdown not found',
+  );
+
+  await tester.tap(
+    find.byWidgetPredicate(
+      (widget) =>
+          widget is DropdownMenu &&
+          widget.label is Text &&
+          (widget.label as Text).data == 'Variable',
+    ),
+  );
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(variableName).first);
+  await tester.pumpAndSettle();
+}
