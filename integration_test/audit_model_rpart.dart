@@ -1,6 +1,6 @@
 /// COMP3425 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Saturday 2025-02-08 16:50:15 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-08 19:43:18 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -76,7 +76,7 @@ void main() {
           // 20250208 gjw How many unique values does the target variable have
           // and what are they?
           '6 adjusted              0         1     FALSE',
-          '2 No: 1537, Yes: 463'
+          '2 No: 1537, Yes: 463',
         ],
       );
       await navigateToTab(tester, 'Model');
