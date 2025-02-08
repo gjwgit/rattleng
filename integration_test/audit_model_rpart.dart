@@ -1,6 +1,6 @@
 /// COMP3425 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Saturday 2025-02-08 19:43:18 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-09 06:07:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -58,6 +58,9 @@ void main() {
       // 20250131 gjw The test is sometimes failing with a `Could not find
       // 'adjustment'`. One delay was still sometimes not enough so make it two
       // delays for now. Perhaps the ROLES page is not yet ready sometimes.
+      //
+      // 20250209 gjw Add a thrid delay.
+      await tester.pump(delay);
       await tester.pump(delay);
       await tester.pump(delay);
       await setDatasetRole(tester, 'adjustment', 'Risk');
