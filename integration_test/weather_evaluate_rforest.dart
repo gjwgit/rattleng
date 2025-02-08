@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL FOREST EVALUATE feature.
 //
-// Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-08 19:41:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -50,13 +50,19 @@ void main() {
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-
       await navigateToFeature(tester, 'Forest', ForestPanel);
       await tapButton(tester, 'Build Random Forest');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await gotoNextPage(tester);
-      await verifyPage('Error Matrix');
+      // 20250208 gjw Sometimes, on ecosysl with the full test suite, this was
+      // failing. Seems like because it is already on the next page and
+      // sometimes not. We capture that issue here.
+      try {
+        await verifyPage('Error Matrix');
+      } catch (e) {
+        await gotoNextPage(tester);
+        await verifyPage('Error Matrix');
+      }
       await verifySelectableText(
         tester,
         [

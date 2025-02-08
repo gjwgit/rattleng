@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Saturday 2025-02-08 16:37:02 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-08 16:56:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -91,8 +91,9 @@ void main() {
     // automatically and sometimes we do. Try catching the exception. Then pull
     // back on the delays.
     //
-    await tester.pump(delay);
-    await tester.pump(delay);
+    // That seems to have fixed it. Remove the two of the three delays for now
+    // to see if they are needed.
+    //
     await tester.pump(delay);
     try {
       await verifyPage('Neural Net Model - Summary and Weights');

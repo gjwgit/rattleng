@@ -1,6 +1,6 @@
 /// COMP3425 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Thursday 2025-02-06 09:37:09 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-08 16:50:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -28,6 +28,7 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 //import 'package:rattle/widgets/image_page.dart';
@@ -39,6 +40,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
+import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
@@ -51,6 +53,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
+      await setPartition(tester, true);
       await loadDemoDataset(tester, 'Audit');
       // 20250131 gjw The test is sometimes failing with a `Could not find
       // 'adjustment'`. One delay was still sometimes not enough so make it two
@@ -58,8 +61,24 @@ void main() {
       await tester.pump(delay);
       await tester.pump(delay);
       await setDatasetRole(tester, 'adjustment', 'Risk');
+      await setDatasetRole(tester, 'id', 'Ident');
       await setDatasetRole(tester, 'marital', 'Ignore');
       await setDatasetRole(tester, 'education', 'Ignore');
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Summary', SummaryPanel);
+      await tapButton(tester, 'Generate Dataset Summary');
+      await gotoNextPage(tester);
+      await gotoNextPage(tester);
+      await gotoNextPage(tester);
+      verifySelectableText(
+        tester,
+        [
+          // 20250208 gjw How many unique values does the target variable have
+          // and what are they?
+          '6 adjusted              0         1     FALSE',
+          '2 No: 1537, Yes: 463'
+        ],
+      );
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree', TreePanel);
       await tapButton(tester, 'Build Decision Tree');
