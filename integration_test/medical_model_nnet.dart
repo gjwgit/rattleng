@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Saturday 2025-02-08 16:30:19 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-08 16:37:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -87,7 +87,7 @@ void main() {
     // instead.
     //
     // 20250208 gjw Extra delay (3 now) does not help so it is likely no delay
-    // is required, just that sometimes we don;t get to the next page
+    // is required, just that sometimes we don't get to the next page
     // automatically and sometimes we do. Try catching the exception. Then pull
     // back on the delays.
     //
