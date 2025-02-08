@@ -1,6 +1,6 @@
 /// Check if some variable names are in the popup window.
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-02-09 05:46:12 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,16 +21,15 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Yixiang Yin, Graham Williams
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
-void checkInPopup(List<String> vars) {
+Future<void> verifyPopup(List<String> vars) async {
   // Locate the popup.
 
   final popupFinder = find.byType(
@@ -54,8 +53,7 @@ void checkInPopup(List<String> vars) {
     expect(
       variableTextFinder,
       findsOneWidget,
-      reason:
-          'The variable "$variable" should be mentioned in the popup, but it was not found.',
+      reason: 'The string "$variable" was not found in Alert Dialog.',
     );
   }
 }
