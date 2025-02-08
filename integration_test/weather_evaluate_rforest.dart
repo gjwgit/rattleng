@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL FOREST EVALUATE feature.
 //
-// Time-stamp: <Saturday 2025-02-08 19:41:40 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-08 20:24:00 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -55,8 +55,8 @@ void main() {
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
       // 20250208 gjw Sometimes, on ecosysl with the full test suite, this was
-      // failing. Seems like because it is already on the next page and
-      // sometimes not. We capture that issue here.
+      // failing. When run individually it succeeded. Seems like because it is
+      // already on the next page and sometimes not. We resolve this here.
       try {
         await verifyPage('Error Matrix');
       } catch (e) {
