@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <2025-02-06 11:20:22 gjw>
+// Time-stamp: <Saturday 2025-02-08 16:30:19 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -76,12 +76,30 @@ void main() {
     await navigateToFeature(tester, 'Neural', NeuralPanel);
     await tapChip(tester, 'nnet');
     await tapButton(tester, 'Build Neural Network');
-    // 20250206 The model build is sometimes a little slow indeterminately
-    // on ecosysl so add two delays here.
+    // 20250206 gjw The model build is sometimes a little slow indeterminately
+    // on ecosysl so add extra delays here.
+    //
+    // 20250207 gjw Add a third delay here as the test failed in the all-test
+    // run but not when run individually. It could be that we sometimes don't
+    // need the gotoNextPage() rather than having to delay and so no amount of
+    // delay will help here. Running interactively we have already navigated to
+    // that page. We have not yet worked out how to write a navigateToPage()
+    // instead.
+    //
+    // 20250208 gjw Extra delay (3 now) does not help so it is likely no delay
+    // is required, just that sometimes we don;t get to the next page
+    // automatically and sometimes we do. Try catching the exception. Then pull
+    // back on the delays.
+    //
     await tester.pump(delay);
     await tester.pump(delay);
-    await gotoNextPage(tester);
-    await verifyPage('Neural Net Model - Summary and Weights');
+    await tester.pump(delay);
+    try {
+      await verifyPage('Neural Net Model - Summary and Weights');
+    } catch (e) {
+      await gotoNextPage(tester);
+      await verifyPage('Neural Net Model - Summary and Weights');
+    }
     await verifySelectableText(
       tester,
       [

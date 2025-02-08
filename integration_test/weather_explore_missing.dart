@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab MISSING feature.
 //
-// Time-stamp: <Friday 2025-02-07 05:31:25 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-02-07 05:34:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -45,7 +45,7 @@ void main() {
   testWidgets('Demo Explore Missing', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-    await loadDemoDataset(tester);
+    await loadDemoDataset(tester, 'Weather');
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Missing', MissingPanel);
     await tapButton(tester, 'Perform Missing Analysis');
