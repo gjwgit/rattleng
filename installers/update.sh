@@ -38,14 +38,17 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
 
-    echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
+    # 20250210 gjw Moving to deb install as my local installation. See
+    # file:../Makefile
 
-    gh run download ${bumpId} --name ${APP}-linux-zip
-    rsync -avzh ${APP}-dev-linux.zip ${DEST}
-    unzip -oq ${APP}-dev-linux.zip -d ${HOME}/.local/share/${APP}/
-    mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
+    # echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
 
-    echo ""
+    # gh run download ${bumpId} --name ${APP}-linux-zip
+    # rsync -avzh ${APP}-dev-linux.zip ${DEST}
+    # unzip -oq ${APP}-dev-linux.zip -d ${HOME}/.local/share/${APP}/
+    # mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
+
+    # echo ""
 
     echo '***** UPLOAD WINDOWS INNO'
 
