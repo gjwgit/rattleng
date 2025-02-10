@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2025-02-05 05:46:06 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-02-10 11:59:21 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -301,34 +301,31 @@ class RattleHomeState extends ConsumerState<RattleHome>
         // Index 2 is the TRANSFORM tab.
         if (_tabController.previousIndex == 0 ||
             _tabController.previousIndex == 2) {
-          // 20241123 gjw For a table type dataset we want to run the
-          // dataset_template script.
-
           if (ref.read(datatypeProvider) == 'table') {
-            // 20241008 gjw On leaving the DATASET tab we run the data template
-            // if there is a dataset loaded, as indicated by the path having a
-            // value. We need to run the template here after we have loaded and
-            // setup the variable roles. Trying to run the dataset template
-            // before leaving the DATASET tab results TARGET in and RISK being
-            // set to NULL.
+            // 20250210 gjw On leaving the DATASET tab or the TRANSFORM tab,
+            // where we can change the dataset `ds` in either of these tabs, we
+            // run the R scripted data template, but only if there the dataset
+            // type is a table. We need to run the template here after we have
+            // loaded and setup the variable roles or transformed the
+            // dataset. Trying to run the dataset template before leaving the
+            // DATASET tab, for example, results in TARGET and RISK being set to
+            // NULL.
             //
             // Note that variable roles are set up in
             // `features/dataset/display.dart` after the dataset is loaded and
             // we need to wait until the roles are set before we run the
             // template.
-            //
-            // 20241123 gjw Only perform a dataset template if the path is not a
-            // text file.
 
             rSource(context, ref, ['dataset_template']);
 
-            // 20241211 gjw In lib/features/dataset/display.dart we use a
-            // hueristic for datasets with only two columns, assuming they are
-            // for basket analysis. In such a case we want< to set the default
-            // for association analysis to be Baskets. Do that here on moving
-            // from the DATASET tab. We do it here rather than in display.dart
-            // as there it creates an exception to be thrown: "Tried to modify a
-            // provider while the widget tree was building." It works here!
+            // 20241211 gjw In `features/dataset/display.dart` we use a
+            // hueristic for datasets with only two columns to assume they are
+            // for basket analysis in ASSOCIATIONS. In such a case, withonly two
+            // columns, we want to set the default for ASSOCIATIONS to be
+            // Basket. We do that here on moving from the DATASET tab, rather
+            // than in `display.dart` as there it throws an exception: "Tried to
+            // modify a provider while the widget tree was building." It works
+            // here!
 
             ref.read(basketsAssociationProvider.notifier).state =
                 ref.read(metaDataProvider).length == 2;
