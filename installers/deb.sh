@@ -2,7 +2,7 @@
 
 ## 20250210 TODO gjw Grab the version from pubspec.
 
-VER="6.4.14"
+VER=$(egrep '^version:' ../pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 
 # Build the release.
 
