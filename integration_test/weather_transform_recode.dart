@@ -66,7 +66,6 @@ void main() {
       await navigateToFeature(tester, 'Recode', RecodePanel);
       await tapButton(tester, 'Recode Variable Values');
       await tester.pump(delay);
-      // await gotoNextPage(tester);
 
       await verifyPage(
         'Dataset Summary',
@@ -92,121 +91,112 @@ void main() {
       await verifyImputedVariable(tester, 'BQT_min_temp_4');
       await checkVariableNotMissing(tester, 'BQT_min_temp_4');
 
-      // // 2. Select and test chip "KMeans"
+      // 2. Select and test chip "KMeans"
 
-      // await navigateToTab(tester, 'Transform');
-      // await navigateToFeature(tester, 'Recode', RecodePanel);
-      // await verify_tap_chip(
-      //   tester,
-      //   'KMeans',
-      //   'Recode Variable Values',
-      //   'BKM_min_temp_4',
-      //   [
-      //     '[-6.2,0.6] :87',
-      //     '(0.6,6.5]  :93',
-      //     '(6.5,12.1] :94',
-      //     '(12.1,20.8]:91',
-      //   ],
-      // );
+      await navigateToTab(tester, 'Transform');
+      await navigateToFeature(tester, 'Recode', RecodePanel);
+      await verify_tap_chip(
+        tester,
+        'KMeans',
+        'Recode Variable Values',
+        'BKM_min_temp_4',
+        [
+          '[-6.2,0.6] :87',
+          '(0.6,6.5]  :93',
+          '(6.5,12.1] :94',
+          '(12.1,20.8]:91',
+        ],
+      );
 
-      // // 3. Select and test chip "Equal Width"
+      // 3. Select and test chip "Equal Width"
 
-      // await verify_tap_chip(
-      //   tester,
-      //   'Equal Width',
-      //   'Recode Variable Values',
-      //   'BEQ_min_temp_4',
-      //   [
-      //     '(-6.23,0.55]: 83',
-      //     '(0.55,7.3]  :107',
-      //     '(7.3,14.1]  :118',
-      //     '(14.1,20.8] : 57',
-      //   ],
-      // );
+      await verify_tap_chip(
+        tester,
+        'Equal Width',
+        'Recode Variable Values',
+        'BEQ_min_temp_4',
+        [
+          '(-6.23,0.55]: 83',
+          '(0.55,7.3]  :107',
+          '(7.3,14.1]  :118',
+          '(14.1,20.8] : 57',
+        ],
+      );
 
-      // // 4. Select and test chip "As Categoric"
+      // 4. Select and test chip "As Categoric"
 
-      // await verify_tap_chip(
-      //   tester,
-      //   'As Categoric',
-      //   'Recode Variable Values',
-      //   'TFC_min_temp',
-      //   [
-      //     '-0.6   :  6',
-      //     '12.8   :  6',
-      //     '1.6    :  5',
-      //     '2.1    :  5',
-      //     '17.2   :  5',
-      //     '(Other):333',
-      //   ],
-      // );
+      await verify_tap_chip(
+        tester,
+        'As Categoric',
+        'Recode Variable Values',
+        'TFC_min_temp',
+        [
+          '-0.6   :  6',
+          '12.8   :  6',
+          '1.6    :  5',
+          '2.1    :  5',
+          '17.2   :  5',
+          '(Other):333',
+        ],
+      );
 
-      // await setSelectedVariable2(tester, 'wind_dir_9am');
-      await setSelectedVariable2(tester, 'wind_gust_dir');
+      await setSelectedVariable2(tester, 'wind_dir_9am');
 
       await tapChip(tester, 'As Numeric');
 
       await tapButton(tester, 'Recode Variable Values');
 
-      await verifyPage(
-        'Dataset Summary',
-        'TNM_wind_gust_dir',
+      // 5. Select and test chip "As Numeric"
+
+      await verify_tap_chip(
+        tester,
+        'As Numeric',
+        'Recode Variable Values',
+        'TNM_wind_dir_9am',
+        [
+          'Min.   : 1.000',
+          '1st Qu.: 5.000',
+          'Median : 8.000',
+          'Mean   : 8.073',
+          '3rd Qu.:11.000',
+          'Max.   :16.000',
+          'NA\'s   :52',
+        ],
       );
 
-      // 5. Select and test chip "As Numeric"
-      //TODO kevin , failing here
+      // 6. Select and test chip "Indicator Variable"
 
-      // await verify_tap_chip(
-      //   tester,
-      //   'As Numeric',
-      //   'Recode Variable Values',
-      //   'TNM_wind_dir_9am',
-      //   [
-      //     'Min.   : 1.000',
-      //     '1st Qu.: 5.000',
-      //     'Median : 8.000',
-      //     'Mean   : 8.073',
-      //     '3rd Qu.:11.000',
-      //     'Max.   :16.000',
-      //     'NA\'s   :52',
-      //   ],
-      // );
+      await verify_tap_chip(
+        tester,
+        'Indicator Variable',
+        'Recode Variable Values',
+        'TIN_wind_dir_9am_E',
+        [
+          'Min.   :0.0000',
+          '1st Qu.:0.0000',
+          'Median :0.0000',
+          'Mean   :0.06709',
+          '3rd Qu.:0.0000',
+          'Max.   :1.0000',
+        ],
+      );
 
-      // // 6. Select and test chip "Indicator Variable"
+      // 7. Select and test chip "Join Categorics"
 
-      // await verify_tap_chip(
-      //   tester,
-      //   'Indicator Variable',
-      //   'Recode Variable Values',
-      //   'TIN_wind_gust_dir_E',
-      //   [
-      //     'Min.   :0.0000',
-      //     '1st Qu.:0.0000',
-      //     'Median :0.0000',
-      //     'Mean   :0.1136',
-      //     '3rd Qu.:0.0000',
-      //     'Max.   :1.0000',
-      //     'NA\'s   :4',
-      //   ],
-      // );
-
-      // // 7. Select and test chip "Join Categorics"
-
-      // await verify_tap_chip(
-      //   tester,
-      //   'Join Categorics',
-      //   'Recode Variable Values',
-      //   'TJN_wind_gust_dir__wind_dir_9am',
-      //   [
-      //     'NW_NNW : 15',
-      //     'NNW_NNW: 10',
-      //     'E_SSE  :  8',
-      //     'E_SE   :  7',
-      //     'NW_NW  :  7',
-      //     '(Other):263',
-      //     'NA\'s   : 55',
-      //   ],
-      // );
+      await verify_tap_chip(
+        tester,
+        'Join Categorics',
+        'Recode Variable Values',
+        'TJN_wind_gust_dir__wind_dir_9am',
+        [
+          'NW_NNW : 15',
+          'NNW_NNW: 10',
+          'E_SSE  :  8',
+          'E_SE   :  7',
+          'NW_NW  :  7',
+          '(Other):263',
+        ],
+      );
     });
   });
 }

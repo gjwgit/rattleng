@@ -25,6 +25,7 @@
 /// Authors: Kevin Wang
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 Future<void> setSelectedVariable(
   WidgetTester tester,
@@ -61,23 +62,31 @@ Future<void> setSelectedVariable2(
   expect(
     find.byWidgetPredicate(
       (widget) =>
-          widget is DropdownMenu &&
-          widget.label is Text &&
-          (widget.label as Text).data == 'Variable',
+          widget is MarkdownTooltip &&
+          widget.child is DropdownMenu &&
+          (widget.child as DropdownMenu).label is Text &&
+          ((widget.child as DropdownMenu).label as Text).data == 'Variable',
     ),
     findsOneWidget,
-    reason: 'Variable chooser dropdown not found',
+    reason: 'Variable chooser tooltip not found',
   );
 
   await tester.tap(
     find.byWidgetPredicate(
       (widget) =>
-          widget is DropdownMenu &&
-          widget.label is Text &&
-          (widget.label as Text).data == 'Variable',
+          widget is MarkdownTooltip &&
+          widget.child is DropdownMenu &&
+          (widget.child as DropdownMenu).label is Text &&
+          ((widget.child as DropdownMenu).label as Text).data == 'Variable',
     ),
   );
+
   await tester.pumpAndSettle();
-  await tester.tap(find.text(variableName).first);
+
+  // Find the second instance of the text and tap it.
+  // For the Recode Feature there are 3 instances of the text "Variable"
+  // The second one is the one we want to tap.
+
+  await tester.tap(find.text(variableName).at(1));
   await tester.pumpAndSettle();
 }
