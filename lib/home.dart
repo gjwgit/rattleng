@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Monday 2025-02-10 11:59:21 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2025-02-11 09:28:16 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -229,7 +229,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
     final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
     if (match != null) {
       currentDate = match.group(1)!;
-      debugPrint('Current date from remote CHANGELOG.md: $currentDate');
+      debugText('  CHANGELOG', currentDate);
     }
 
     setState(() {
