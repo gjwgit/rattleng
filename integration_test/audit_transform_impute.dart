@@ -1,6 +1,6 @@
 /// AUDIT dataset TRANSFORM tab IMPUTE feature.
 //
-// Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
+// Time-stamp: <2025-02-06 20:15:41 gjw>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -49,45 +49,31 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('AUDIT TRANSFORM IMPUTE:', () {
-    testWidgets('xxxx.', (WidgetTester tester) async {
+    testWidgets('occupation.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await unifyOn(tester);
       await loadDemoDataset(tester, 'Audit');
-
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Impute', ImputePanel);
-
       await setSelectedVariable(tester, 'occupation');
-
-      // // Step 1: Test imputation with Mean.
-
       await tapButton(tester, 'Impute Missing Values');
-
       await tester.pump(delay);
       await gotoNextPage(tester);
-
-      // Verify that the page content includes the expected dataset summary with
-      // 'IMN_occupation'.
-
       await verifyPage(
         'Dataset Summary',
-        'IMN_occupation',
+        'IMO_occupation',
       );
-
-      // Verify specific statistical values for the imputed 'IMN_occupation' variable.
-
       await verifySelectableText(
         tester,
         [
-          'Min.   : 1.000', // Minimum value of 'IMN_occupation'.
-          '1st Qu.: 3.000', // First quartile value of 'IMN_occupation'.
-          'Median : 8.000', // Median value of 'IMN_occupation'.
-          'Mean   : 7.387', // Mean value of 'IMN_occupation'.
-          '3rd Qu.:11.000', // Third quartile value of 'IMN_occupation'.
-          'Max.   :14.000', // Maximum value of 'IMN_occupation'.
-          'NA\'s   :101', // Number of missing values of 'IMN_occupation'.
+          'Executive   :390',
+          'Professional:247',
+          'Clerical    :232',
+          'Repair      :225',
+          'Service     :210',
+          'Sales       :206',
         ],
       );
     });

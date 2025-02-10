@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-02-05 16:01:56 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-02-06 20:38:37 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -62,11 +62,16 @@ large_factor_vars <- names(large_factors)[large_factors]
 
 large_factor_vars
 
-# Identify variable roles.
+# Identify variable roles. The identifier is usually the first
+# variable in the dataset that looks like an ID whilst all are
+# recoreded in identifiers. Association rules, for example, use
+# identifier, whilst we use identifiers to ignore columns from the
+# list of inputs from the dataset used for model building.
 
 target      <- <TARGET_VAR>
 risk        <- <RISK_VAR>
 identifier  <- <IDENT_VAR>
+identifiers <- <IDENT_VARS>
 ignore      <- <IGNORE_VARS>
 
 ## 20240829 gjw Ideally remove the ignored variables from ds for now as
@@ -95,7 +100,7 @@ vars   <- c(target, vars) %>% unique() %>% rev()
 # Identify the input variables for modelling.
 
 inputs <- setdiff(vars, target)  %>%
-  setdiff(identifier) %T>%
+  setdiff(identifiers) %T>%
   print()
 
 # Identify the numeric variables by name.

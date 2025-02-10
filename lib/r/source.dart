@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Wednesday 2025-02-05 16:30:51 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-02-07 05:21:20 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -260,7 +260,7 @@ Future<void> rSource(
   // has been correctly converted to a Unix path for R.
 
   if (Platform.isWindows) {
-    path = path.replaceAll(r'\>', '/');
+    path = path.replaceAll(r'\', '/');
   }
   code = code.replaceAll('<FILENAME>', path);
 
@@ -302,7 +302,6 @@ Future<void> rSource(
 
   String target = 'NULL'; // 20250202 gjw Required for predictive models.
   String risk = 'NULL'; // 20250202 gjw Optional for predictive models.
-  String ident = 'NULL'; // 20250202 gjw Used in associations.
 
   // TARGET
 
@@ -356,27 +355,30 @@ Future<void> rSource(
 
   // IDENTIFIERS
 
-  // 20250202 gjw Do we use id in the R scripts? If not then remove it.
+  // 20250202 gjw If we need a single identifier then take the first one
+  // available.
 
-  String ids = '';
+  String ident = 'NULL'; // 20250202 gjw Used in associations.
 
   roles.forEach((key, value) {
-    if (value == Role.ident) {
+    if (ident == 'NULL' && value == Role.ident) {
       ident = key;
     }
   });
 
   code = code.replaceAll('<IDENT_VAR>', ident == 'NULL' ? 'NULL' : '"$ident"');
 
-  // Extract the IDENT variables from the rolesProvider.
+  // 20250206 gjw If we need to identify all identifiers then build the list.
+
+  String idents = '';
 
   roles.forEach((key, value) {
     if (value == Role.ident) {
-      ids = '$ids${ids.isNotEmpty ? ", " : ""}"$key"';
+      idents = '$idents${idents.isNotEmpty ? ", " : ""}"$key"';
     }
   });
 
-  code = code.replaceAll('<ID_VARS>', ids == 'NULL' ? 'NULL' : '"$ids"');
+  code = code.replaceAll('<IDENT_VARS>', idents == '' ? 'NULL' : 'c($idents)');
 
   // IGNORED
 

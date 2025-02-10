@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2025-01-12 10:12:39 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-02-10 14:34:12 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -118,8 +118,18 @@ apk::
 	mv -f installers/$(APP)-*.apk installers/ARCHIVE
 	rm -f installers/$(APP).apk
 
+deb:
+	(cd installers; make $@)
+	rsync -avzh installers/rattle_$(VER)_amd64.deb $(REPO):$(RLOC)/rattle_amd64.deb
+	ssh $(REPO) chmod a+r $(RLOC)/rattle_amd64.deb
+	wget https://access.togaware.com/rattle_amd64.deb -O rattle_amd64.deb
+	wajig install rattle_amd64.deb
+	rm -f rattle_amd64.deb
+	mv -f installers/rattle_*.deb installers/ARCHIVE
+
+
 # 20250110 gjw A ginstall of the github built bundles, and the locally
 # built apk installed to the repository and moved into ARCHIVE.
 
-ginstall: apk
+ginstall: deb apk
 	(cd installers; make $@)

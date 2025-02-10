@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab MISSING feature.
 //
-// Time-stamp: <Friday 2024-12-27 15:56:42 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-02-07 05:34:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 
+import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/navigate_to_feature.dart';
@@ -44,33 +45,24 @@ void main() {
   testWidgets('Demo Explore Missing', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-
-    await loadDemoDataset(tester);
-
+    await loadDemoDataset(tester, 'Weather');
     await navigateToTab(tester, 'Explore');
-
     await navigateToFeature(tester, 'Missing', MissingPanel);
-
     await tapButton(tester, 'Perform Missing Analysis');
-
     await gotoNextPage(tester);
+    // 20250207 gjw Add a delay for ecosysl.
+    await tester.pump(delay);
     await verifyPage('Patterns of Missing Data - Textual', '380');
-
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Values - Visual');
-
     await gotoNextPage(tester);
     await verifyPage('Aggregation of Missing Values - Textual', '172');
-
     await gotoNextPage(tester);
     await verifyPage('Aggregation of Missing Values - Visual');
-
     await gotoNextPage(tester);
     await verifyPage('Visualisation of Observations with Missing Values');
-
     await gotoNextPage(tester);
     await verifyPage('Comparison of Counts of Missing Values');
-
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missingness');
   });

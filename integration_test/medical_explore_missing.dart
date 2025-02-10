@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Sunday 2025-01-26 07:35:34 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-11 09:50:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -52,24 +52,25 @@ void main() {
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Missing', MissingPanel);
     await tapButton(tester, 'Perform Missing Analysis');
-
     // 20250123 gjw I had to add this delay in order to ensure the R script had
-    // finsihed generating the various analyses.
-
+    // finished generating the various analyses.
     await tester.pump(delay);
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Data - Textual');
     await gotoNextPage(tester);
-    await verifyPage('Patterns of Missing Values');
+    await verifyPage('Patterns of Missing Values - Visual');
     await gotoNextPage(tester);
     await verifyPage(
-      'Aggregation of Missing Values',
+      'Aggregation of Missing Values - Textual',
     );
     await gotoNextPage(tester);
     await verifyPage(
-      'Aggregation of Missing Values',
+      'Aggregation of Missing Values - Visual',
     );
     await gotoNextPage(tester);
+    // 20250211 gjw I added this delay in order to ensure the visualisation is
+    // rendered on the page as I was occasionally getting an exception.
+    await tester.pump(delay);
     await verifyPage(
       'Visualisation of Observations with Missing Values',
     );

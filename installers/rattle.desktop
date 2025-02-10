@@ -1,8 +1,11 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Version=1.0
-Terminal=false
-Type=Application
 Name=Rattle
+Version=1.0
+GenericName=Data Analyser
+Comment=Established data science tool
 Exec=.local/bin/rattle
 Icon=/home/USER/.local/share/icons/hicolor/256x256/apps/rattle.png
+Terminal=false
+Type=Application
+Categories=DataScience;AI;MachineLearning;

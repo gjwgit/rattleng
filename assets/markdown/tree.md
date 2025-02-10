@@ -37,4 +37,4 @@ full access to all options.
 Decision trees work with both numeric and categoric data.
 
 R's [rpart](https://www.rdocumentation.org/packages/rpart) package is
-used to build the decision tree.
+used to build the traditional decision tree.

@@ -1,6 +1,6 @@
 /// Test TRANSFORM tab CLEANUP feature IGNORE option on the DEMO dataset.
 //
-// Time-stamp: <Wednesday 2024-10-09 17:27:17 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-02-09 05:50:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -21,22 +21,26 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin, Kevin Wang
+/// Authors: Yixiang Yin, Kevin Wang, Graham Williams
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:rattle/features/visual/panel.dart';
 
-import 'package:rattle/constants/keys.dart';
 import 'package:rattle/main.dart' as app;
+import 'package:rattle/features/cleanup/panel.dart';
 
 import 'utils/delays.dart';
-import 'utils/check_popup.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/set_dataset_role.dart';
+import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
+import 'utils/verify_popup.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -46,111 +50,18 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
-      await loadDemoDataset(tester);
-
-      final dsPathTextFinder = find.byKey(datasetPathKey);
-      expect(dsPathTextFinder, findsOneWidget);
-
-      final dsPathText = dsPathTextFinder.evaluate().first.widget as TextField;
-      String filename = dsPathText.controller?.text ?? '';
-      expect(filename.contains('weather.csv'), isTrue);
-
-      // await gotoNextPage(tester);
-
-      // Find the "Ignore" buttons and click the first four.
-
-      final buttonFinder = find.text('Ignore');
-
-      // Check that "Ignore" buttons exist
-
-      expect(
-        buttonFinder,
-        findsWidgets,
-      );
-
-      for (int i = 0; i < 4; i++) {
-        await tester.tap(buttonFinder.at(i));
-        await tester.pumpAndSettle();
-
-        // Pause after screen change.
-
-        await tester.pump(interact);
-      }
-
-      // Navigate to the "Transform" tab.
-
-      final transformTabFinder = find.text('Transform');
-      expect(
-        transformTabFinder,
-        findsOneWidget,
-      );
-      await tester.tap(transformTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
+      await loadDemoDataset(tester, 'Weather');
+      await setDatasetRole(tester, 'min_temp', 'Ignore');
+      await setDatasetRole(tester, 'max_temp', 'Ignore');
+      await setDatasetRole(tester, 'rainfall', 'Ignore');
+      await navigateToTab(tester, 'Transform');
       await tester.pump(interact);
-
-      // Navigate to the "Cleanup" sub-tab within the Transform tab.
-
-      final cleanupSubTabFinder = find.text('Cleanup');
-      expect(
-        cleanupSubTabFinder,
-        findsOneWidget,
-      );
-      await tester.tap(cleanupSubTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
-      // Locate the "Ignore" chip.
-
-      final ignoreChipFinder = find.text('Ignored');
-
-      expect(
-        ignoreChipFinder,
-        findsOneWidget,
-      );
-
-      await tester.tap(ignoreChipFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
-      // Tap the "Delete from Dataset" button.
-
-      final deleteButtonFinder = find.text('Delete from Dataset');
-
-      // Ensure the "Delete from Dataset" button exists.
-
-      expect(
-        deleteButtonFinder,
-        findsOneWidget,
-      );
-
-      // Tap on the "Delete from Dataset" button.
-
-      await tester.tap(deleteButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
+      await navigateToFeature(tester, 'Cleanup', CleanupPanel);
+      await tapChip(tester, 'Ignored');
+      await tapButton(tester, 'Delete from Dataset');
       // Check that the variables to be deleted are mentioned in the popup.
-
-      final deletedVariables = ['date', 'min_temp', 'max_temp', 'rainfall'];
-
-      checkInPopup(deletedVariables);
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
+      final deletedVariables = ['min_temp', 'max_temp', 'rainfall'];
+      await verifyPopup(deletedVariables);
 
       // Confirm the deletion by tapping the "Yes" button.
 
@@ -192,43 +103,8 @@ void main() {
         );
       }
 
-      // Navigate to "EXPLORE" -> "VISUAL".
-
-      final exploreTabFinder = find.text('Explore');
-
-      // Ensure the "Explore" tab exists.
-
-      expect(
-        exploreTabFinder,
-        findsOneWidget,
-      );
-
-      // Tap on the "Explore" tab.
-
-      await tester.tap(exploreTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
-      final visualSubTabFinder = find.text('Visual');
-
-      // Ensure the "Visual" sub-tab exists.
-
-      expect(
-        visualSubTabFinder,
-        findsOneWidget,
-      );
-
-      // Tap on the "Visual" sub-tab.
-
-      await tester.tap(visualSubTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Visual', VisualPanel);
 
       // Check that 'wind_gust_dir' is the selected variable.
 
@@ -251,96 +127,15 @@ void main() {
 
       await tester.pump(interact);
 
-      // Navigate to the "Dataset" tab.
-
-      final datasetTabFinder = find.text(
-        'Dataset',
-      );
-
-      // Ensure the "Dataset" tab exists.
-
-      expect(
-        datasetTabFinder,
-        findsOneWidget,
-      );
-
-      // Tap on the "Dataset" tab.
-
-      await tester.tap(datasetTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
-      // Tap the right arrow button twice to go to the variable role selection.
-
+      await navigateToTab(tester, 'Dataset');
       await gotoNextPage(tester);
-
-      // Find the "Ignore" buttons
-
-      final button2Finder = find.text('Ignore');
-
-      // Check "Ignore" button exists
-
-      expect(
-        button2Finder,
-        findsWidgets,
-      );
-
-      // Tap the first two "Ignore" buttons found
-
-      for (int i = 0; i < 2; i++) {
-        await tester.tap(button2Finder.at(i));
-        await tester.pumpAndSettle();
-
-        // Pause after screen change.
-
-        await tester.pump(interact);
-      }
-
-      // Navigate to the "Transform" tab.
-
-      await tester.tap(transformTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
-      // Navigate to the "Cleanup" sub-tab within the Transform tab.
-
-      await tester.tap(cleanupSubTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
-      // Check the ignored chip is selected. Fail the test if not. If it is then simply tap the "Delete from Dataset" button.
-
-      final ignoreChip = find
-          .widgetWithText(ChoiceChip, 'Ignored')
-          .evaluate()
-          .first
-          .widget as ChoiceChip;
-      bool isSelected = ignoreChip.selected;
-      if (!isSelected) {
-        fail('The "Ignored" chip is not selected, failing the test.');
-      }
-
-      // Tap the "Delete from Dataset" button.
-
-      await tester.tap(deleteButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-
-      // Check that the variables to be deleted are mentioned in the popup.
-
-      checkInPopup(['wind_gust_dir', 'wind_gust_speed']);
+      await setDatasetRole(tester, 'wind_gust_dir', 'Ignore');
+      await setDatasetRole(tester, 'wind_gust_speed', 'Ignore');
+      await navigateToTab(tester, 'Transform');
+      await navigateToFeature(tester, 'Cleanup', CleanupPanel);
+      await tapChip(tester, 'Ignored');
+      await tapButton(tester, 'Delete from Dataset');
+      await verifyPopup(['wind_gust_dir', 'wind_gust_speed']);
 
       // Pause after screen change.
 
@@ -359,20 +154,8 @@ void main() {
 
       // Navigate to "EXPLORE" -> "VISUAL".
 
-      // Tap on the "Explore" tab.
-
-      await tester.tap(exploreTabFinder);
-      await tester.pumpAndSettle();
-
-      // Pause after screen change.
-
-      await tester.pump(interact);
-      await tester.pump(hack);
-
-      // Tap on the "Visual" sub-tab.
-
-      await tester.tap(visualSubTabFinder);
-      await tester.pumpAndSettle();
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Visual', VisualPanel);
 
       // Pause after screen change.
 

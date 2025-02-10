@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Thursday 2025-02-06 10:21:57 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-06 21:37:46 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,8 +40,33 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_dataset_by_path.dart';
+import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
+import 'utils/verify_role.dart';
+import 'utils/verify_selectable_text.dart';
+
+/// List of specific variables that should have their role automatically set to
+/// 'Ignore' in the DEMO and the LARGE datasets.
+
+final List<String> varsToIgnore = [
+  'first_name',
+  'middle_name',
+  'last_name',
+  'birth_date',
+  'street_address',
+  'suburb',
+  'postcode',
+  'phone',
+  'email',
+  'clinical_notes',
+  'consultation_timestamp',
+];
+
+// 20250206 gjw For this dataset rec_id, ssn, and medicare_numberare all
+// automatically identifiers. We then add a colelction of Ignored variables and
+// change the target to build a tree which only has a root node. Identifiers
+// should be ignored in any modelling.
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +75,16 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
+    await setDatasetRole(tester, 'smoking_status', 'Target');
+    // 20250206 gjw gender is the default Target but after setting Target above
+    // it should now be Input.
+    await verifyRole('gender', 'Input');
+    await verifyRole('rec_id', 'Ident');
+    await verifyRole('ssn', 'Ident');
+    await verifyRole('medicare_number', 'Ident');
+    for (final v in varsToIgnore) {
+      await setDatasetRole(tester, v, 'Ignore');
+    }
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree', TreePanel);
     final markdownContent = find.byKey(const Key('markdown_file'));
@@ -65,42 +100,12 @@ void main() {
     // the next page.
     await tester.pump(delay);
     await verifyPage('Decision Tree Model');
-    await gotoNextPage(tester);
-
-// 20250203 gjw Add the following back in.
-
-//     await tester.pump(interact);
-
-//     // Tap the right arrow to go to the third page.
-
-//     await tester.tap(rightArrowButton);
-//     await tester.pumpAndSettle();
-
-// //    final thirdPageTitleFinder = find.text('Decision Tree as Rules');
-// //    expect(thirdPageTitleFinder, findsOneWidget);
-
-//     // App may raise bugs in loading textPage. Thus, test does not target
-//     // at content.
-
-// //    final decisionTreeRulesFinder = find.byType(TextPage);
-// //    expect(decisionTreeRulesFinder, findsOneWidget);
-
-//     await tester.pump(interact);
-
-//     // Tap the right arrow to go to the forth page.
-
-//     await tester.tap(rightArrowButton);
-//     await tester.pumpAndSettle();
-
-// //    final forthPageTitleFinder = find.text('Tree');
-// //    expect(forthPageTitleFinder, findsOneWidget);
-
-// //    final imageFinder = find.byType(ImagePage);
-
-//     // Assert that the image is present.
-
-// //    expect(imageFinder, findsOneWidget);
-
+    await verifySelectableText(
+      tester,
+      [
+        '1) root 14000 1860 0 (0.8671429 0.1328571) *',
+      ],
+    );
     await tester.pump(interact);
   });
 }
