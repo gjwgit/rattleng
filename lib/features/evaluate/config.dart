@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-01-23 09:13:25 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 10:20:10 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -265,7 +265,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     return Column(
       spacing: configRowSpace,
       children: [
-        // 20241215 gjw Add comment to allow empty lines between widgets.
+        // 20241215 gjw Add comment into this file here to force the automatic
+        // code formatter to allow empty lines between widgets.
 
         configTopGap,
 
@@ -439,11 +440,18 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             ...modelConfigs.map((config) {
               bool enabled = _isEvaluationEnabled(config);
 
+              String buildMsg = enabled
+                  ? ''
+                  : ' You will need to build a ${config.label} model '
+                      'before you can evaluate it. '
+                      'Visit the **Model** tab to do so.';
+
               return Row(
                 children: [
                   LabelledCheckbox(
                     key: Key(config.key),
-                    tooltip: '',
+                    tooltip: 'Evaluate the performace of any '
+                        '**${config.label}** model(s).$buildMsg',
                     label: config.label,
                     provider: config.provider,
                     enabled: enabled,
@@ -460,6 +468,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             }).toList(),
           ],
         ),
+
         Row(
           spacing: configWidgetSpace,
           children: [
