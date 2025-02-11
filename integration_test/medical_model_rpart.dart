@@ -1,8 +1,8 @@
-/// Test the MODEL tab's TREE feature with the LARGE dataset.
+/// MEDICAL dataset MODEL tab TREE feature RPART option.
 //
 // Time-stamp: <Thursday 2025-02-06 21:37:46 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -22,8 +22,6 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu, Graham Williams
-
-// TODO 20250124 gjw THIS NEEDS A LOT OF WORK TO GET IT USEFUL - DECLARATIVE
 
 library;
 
@@ -63,15 +61,16 @@ final List<String> varsToIgnore = [
   'consultation_timestamp',
 ];
 
-// 20250206 gjw For this dataset rec_id, ssn, and medicare_numberare all
-// automatically identifiers. We then add a colelction of Ignored variables and
+// 20250206 gjw For this dataset rec_id, ssn, and medicare_number are all
+// automatically identifiers. We then add a collection of Ignored variables and
 // change the target to build a tree which only has a root node. Identifiers
 // should be ignored in any modelling.
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Load, Navigate, Build, Page.', (WidgetTester tester) async {
+  group('MEDICAL MODEL TREE RPART CONGIFURATION:', () {
+    testWidgets('load, build, test.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
@@ -108,4 +107,5 @@ void main() {
     );
     await tester.pump(interact);
   });
+});
 }

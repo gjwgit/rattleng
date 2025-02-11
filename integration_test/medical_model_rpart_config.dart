@@ -1,6 +1,6 @@
 /// MEDICAL dataset MODEL tab TREE feature RPART option CONFIGURATIONS.
 //
-// Time-stamp: <Thursday 2025-01-30 15:17:39 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-11 11:27:17 +1100 >
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -47,13 +47,10 @@ import 'utils/verify_page.dart';
 /// 'Ignore' in the DEMO and the LARGE datasets.
 
 final List<String> varsToIgnore = [
-  'rec_id',
-  'ssn',
   'first_name',
   'middle_name',
   'last_name',
   'birth_date',
-  'medicare_number',
   'street_address',
   'suburb',
   'postcode',
@@ -63,11 +60,16 @@ final List<String> varsToIgnore = [
   'consultation_timestamp',
 ];
 
+// 20250206 gjw For this dataset rec_id, ssn, and medicare_number are all
+// automatically identifiers. We then add a collection of Ignored variables and
+// change the target to build a tree which only has a root node. Identifiers
+// should be ignored in any modelling.
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('MEDICAL MODEL TREE RPART CONGIFURATION:', () {
-    testWidgets('configure, build, test.', (WidgetTester tester) async {
+    testWidgets('load, configure, build, test.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
@@ -78,14 +80,13 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree', TreePanel);
 
-      // 20250130 gjw CShould put this into utils but currently it assumes a
+      // 20250130 gjw Should put this into utils but currently it assumes a
       // single check box on this page so need to considere that. For now keep
       // it here procedurally rather than declaratively.
 
       final Finder includeMissingCheckbox = find.byType(Checkbox);
       await tester.tap(includeMissingCheckbox);
       await tester.pumpAndSettle();
-
       await setTextField(tester, 'minSplitField', '21');
       await setTextField(tester, 'maxDepthField', '29');
       await setTextField(tester, 'minBucketField', '9');
