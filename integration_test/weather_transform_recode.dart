@@ -59,7 +59,7 @@ void main() {
       await loadDemoDataset(tester);
       await tester.pump(delay);
 
-      // 1. Default chip "Recenter". Do not use rescale_tap_chip_verify because
+      // 1. Default chip "Quantiles". Do not use verify_tap_chip because
       // it is a special case.
 
       await navigateToTab(tester, 'Transform');
@@ -140,7 +140,7 @@ void main() {
         ],
       );
 
-      await setSelectedVariable2(tester, 'wind_dir_9am');
+      await setSelectedVariable(tester, 'wind_dir_9am', feature: 'recode');
 
       await tapChip(tester, 'As Numeric');
 

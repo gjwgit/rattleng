@@ -29,64 +29,67 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 Future<void> setSelectedVariable(
   WidgetTester tester,
-  String variableName,
-) async {
-  expect(
-    find.byWidgetPredicate(
-      (widget) =>
-          widget is DropdownMenu &&
-          widget.label is Text &&
-          (widget.label as Text).data == 'Variable',
-    ),
-    findsOneWidget,
-    reason: 'Variable chooser dropdown not found',
-  );
-
-  await tester.tap(
-    find.byWidgetPredicate(
-      (widget) =>
-          widget is DropdownMenu &&
-          widget.label is Text &&
-          (widget.label as Text).data == 'Variable',
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.tap(find.text(variableName).last);
-  await tester.pumpAndSettle();
-}
-
-Future<void> setSelectedVariable2(
-  WidgetTester tester,
-  String variableName,
-) async {
-  expect(
-    find.byWidgetPredicate(
-      (widget) =>
-          widget is MarkdownTooltip &&
-          widget.child is DropdownMenu &&
-          (widget.child as DropdownMenu).label is Text &&
-          ((widget.child as DropdownMenu).label as Text).data == 'Variable',
-    ),
-    findsOneWidget,
-    reason: 'Variable chooser tooltip not found',
-  );
-
-  await tester.tap(
-    find.byWidgetPredicate(
-      (widget) =>
-          widget is MarkdownTooltip &&
-          widget.child is DropdownMenu &&
-          (widget.child as DropdownMenu).label is Text &&
-          ((widget.child as DropdownMenu).label as Text).data == 'Variable',
-    ),
-  );
-
-  await tester.pumpAndSettle();
-
-  // Find the second instance of the text and tap it.
+  String variableName, {
+  String? feature,
+}) async {
   // For the Recode Feature there are 3 instances of the text "Variable"
   // The second one is the one we want to tap.
 
-  await tester.tap(find.text(variableName).at(1));
-  await tester.pumpAndSettle();
+  if (feature == 'recode') {
+    expect(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is MarkdownTooltip &&
+            widget.child is DropdownMenu &&
+            (widget.child as DropdownMenu).label is Text &&
+            ((widget.child as DropdownMenu).label as Text).data == 'Variable',
+      ),
+      findsOneWidget,
+      reason: 'Variable chooser dropdown not found',
+    );
+
+    await tester.tap(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is MarkdownTooltip &&
+            widget.child is DropdownMenu &&
+            (widget.child as DropdownMenu).label is Text &&
+            ((widget.child as DropdownMenu).label as Text).data == 'Variable',
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    // Find the second instance of the text and tap it.
+
+    await tester.tap(find.text(variableName).at(1));
+    await tester.pumpAndSettle();
+  } else {
+    expect(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is DropdownMenu &&
+            widget.label is Text &&
+            (widget.label as Text).data == 'Variable',
+      ),
+      findsOneWidget,
+      reason: 'Variable chooser dropdown not found',
+    );
+
+    await tester.tap(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is DropdownMenu &&
+            widget.label is Text &&
+            (widget.label as Text).data == 'Variable',
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // For other features, find the last instance of the text(dropdown selection)
+    // and tap it.
+
+    await tester.tap(find.text(variableName).last);
+    await tester.pumpAndSettle();
+  }
 }
