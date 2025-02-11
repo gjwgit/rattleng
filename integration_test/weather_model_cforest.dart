@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL tab FOREST feature CFOREST option.
 //
-// Time-stamp: <Thursday 2025-01-30 14:54:37 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 07:55:10 +1100 >
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -64,6 +64,10 @@ void main() {
       ]);
       await tester.pump(interact);
       await gotoNextPage(tester);
+      // 20250212 gjw Oddly on one failure `0.025935...` was not found, yet
+      // presumably `humidity_3pm` was found. Add a delay to see if this is
+      // repeated.
+      await tester.pump(delay);
       await verifySelectableText(tester, [
         'humidity_3pm',
         '0.0259354839',

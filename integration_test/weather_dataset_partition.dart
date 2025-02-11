@@ -1,6 +1,6 @@
 /// Test WEATHER dataset loads properly when partition is on/off.
 //
-// Time-stamp: <Thursday 2025-02-06 08:37:57 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 05:20:44 +1100 >
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -57,6 +57,7 @@ void main() {
     await tapButton(tester, 'Build Decision Tree');
     await tester.pump(delay); // 20250131 gjw Could not find '254'
     await gotoNextPage(tester);
+    await tester.pump(delay); // 20250212 gjw Could not find '254'
     await verifySelectableText(tester, ['254']);
   });
 
@@ -71,6 +72,7 @@ void main() {
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree', TreePanel);
     await tapButton(tester, 'Build Decision Tree');
+    await tester.pump(delay); // 20250212 gjw Could not find '363'
     await gotoNextPage(tester);
     await verifySelectableText(tester, ['363']);
   });

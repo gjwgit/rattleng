@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL FOREST EVALUATE feature.
 //
-// Time-stamp: <Tuesday 2025-02-11 13:39:16 +1100 >
+// Time-stamp: <Wednesday 2025-02-12 09:45:00 +1100 >
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -67,6 +67,7 @@ void main() {
         await gotoNextPage(tester);
         await verifyPage('Error Matrix');
       }
+      await tester.pump(delay); // 20250212 gjw Add another delay.
       await verifySelectableText(
         tester,
         [
