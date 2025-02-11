@@ -324,7 +324,7 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
       constant = '';
     }
 
-    // Now build and return the configuration widget.
+    // Now build and return the configuration widget .
 
     return Column(
       spacing: configRowSpace,

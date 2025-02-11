@@ -71,41 +71,41 @@ void main() {
 
   group('MEDICAL MODEL TREE RPART CONGIFURATION:', () {
     testWidgets('load, build, test.', (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-    await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
-    await setDatasetRole(tester, 'smoking_status', 'Target');
-    // 20250206 gjw gender is the default Target but after setting Target above
-    // it should now be Input.
-    await verifyRole('gender', 'Input');
-    await verifyRole('rec_id', 'Ident');
-    await verifyRole('ssn', 'Ident');
-    await verifyRole('medicare_number', 'Ident');
-    for (final v in varsToIgnore) {
-      await setDatasetRole(tester, v, 'Ignore');
-    }
-    await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree', TreePanel);
-    final markdownContent = find.byKey(const Key('markdown_file'));
-    expect(markdownContent, findsOneWidget);
-    await tapButton(tester, 'Build Decision Tree');
-    // 20250203 gjw Had to add three delays on ecosysl to await the
-    // model to be built.
-    await tester.pump(delay);
-    await tester.pump(delay);
-    await tester.pump(delay);
-    await gotoNextPage(tester);
-    // 20250203 gjw Needed another delay on ecosysl after going to
-    // the next page.
-    await tester.pump(delay);
-    await verifyPage('Decision Tree Model');
-    await verifySelectableText(
-      tester,
-      [
-        '1) root 14000 1860 0 (0.8671429 0.1328571) *',
-      ],
-    );
-    await tester.pump(interact);
+      app.main();
+      await tester.pumpAndSettle();
+      await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
+      await setDatasetRole(tester, 'smoking_status', 'Target');
+      // 20250206 gjw gender is the default Target but after setting Target above
+      // it should now be Input.
+      await verifyRole('gender', 'Input');
+      await verifyRole('rec_id', 'Ident');
+      await verifyRole('ssn', 'Ident');
+      await verifyRole('medicare_number', 'Ident');
+      for (final v in varsToIgnore) {
+        await setDatasetRole(tester, v, 'Ignore');
+      }
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Tree', TreePanel);
+      final markdownContent = find.byKey(const Key('markdown_file'));
+      expect(markdownContent, findsOneWidget);
+      await tapButton(tester, 'Build Decision Tree');
+      // 20250203 gjw Had to add three delays on ecosysl to await the
+      // model to be built.
+      await tester.pump(delay);
+      await tester.pump(delay);
+      await tester.pump(delay);
+      await gotoNextPage(tester);
+      // 20250203 gjw Needed another delay on ecosysl after going to
+      // the next page.
+      await tester.pump(delay);
+      await verifyPage('Decision Tree Model');
+      await verifySelectableText(
+        tester,
+        [
+          '1) root 14000 1860 0 (0.8671429 0.1328571) *',
+        ],
+      );
+      await tester.pump(interact);
+    });
   });
-});
 }
