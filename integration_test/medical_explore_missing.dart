@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Tuesday 2025-02-11 09:50:04 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-11 11:09:27 +1100 >
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -67,6 +67,10 @@ void main() {
     await verifyPage(
       'Aggregation of Missing Values - Visual',
     );
+    // 20250211 gjw I added this delay before the move to the next page since
+    // the delay after the goto did not always work. It could be that we just
+    // need this delay and not the one afterwards. For checking.
+    await tester.pump(delay);
     await gotoNextPage(tester);
     // 20250211 gjw I added this delay in order to ensure the visualisation is
     // rendered on the page as I was occasionally getting an exception.
