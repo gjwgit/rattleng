@@ -1,21 +1,25 @@
 # Interactive Data Exploration
 
-Rattle V5 and earlier have utilised [GGobi](http://ggobi.org/) as an
-independent application which provides highly dynamic and interactive
-graphic data visualisations for exploratory data analysis. GGobi is
-written in C.  Specialist tools include tours, scatterplots, barcharts
-and parallel coordinates plots. Points can be identified and linked
-with brushing across multiple plots.
+The interactive data exploration functionality is not yet
+available. However, I am experimenting with including the
+[explore](https://github.com/rolkra/explore) package. You can also
+experiment with the package. After loading a dataset into Rattle, go
+to the CONSOLE tab and entry the following commands:
 
-GGobi is a stable product and development of it has not seen any
-activity since about 2010. Nonetheless, it remains a great tool to
-interactively visualise your data.
+```
+install.packages('explore')
+library(explore)
+explore(ds)
+```
 
-This interactive feature will simply pass the current dataset on to
-GGobi for you to separately explore your data.
+Rattle V5 and earlier utilised [GGobi](http://ggobi.org/) for
+interactive graphic data visualisations. GGobi was written in C and
+supported specialist tools including tours, scatterplots, barcharts
+and parallel coordinates plots. GGobi has not seen any activity since
+about 2010 and is not currently included in this version of Rattle.
 
-In the meantime you can install GGobi following the instructions from
-the [Download GGobi](http://ggobi.org/downloads/index.html) site. The
+You can try installing GGobi following the instructions from the
+[Download GGobi](http://ggobi.org/downloads/index.html) site. The
 older [rggobi](https://cran.r-project.org/package=rggobi) package for
 R was archived in 2020.
 
