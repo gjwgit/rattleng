@@ -1,8 +1,8 @@
-/// Tap an activity (build) button with the corresponding label.
+/// Move to the previous age.
 //
-// Time-stamp: <Wednesday 2025-02-12 16:33:42 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 16:05:46 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2025, Togaware Pty Ltd
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang, Graham Williams
+/// Authors: Graham Williams
 
 library;
 
@@ -29,20 +29,20 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// Tap an [ElevatedButton] with the [text] label.
+import 'delays.dart';
 
-Future<void> tapButton(
-  WidgetTester tester,
-  String text,
-) async {
-  final button = find.byWidgetPredicate(
-    (Widget widget) =>
-        widget is ElevatedButton &&
-        widget.child is Text &&
-        (widget.child as Text).data == text,
-  );
-  expect(button, findsOneWidget);
+Future<void> gotoPreviousPage(WidgetTester tester) async {
+  // Find the right arrow button in the PageIndicator.
 
-  await tester.tap(button);
+  final backArrowFinder = find.byIcon(Icons.arrow_left_rounded);
+  expect(backArrowFinder, findsOneWidget);
+
+  // Tap the right arrow button twice to go to the last page for variable role selection.
+
+  await tester.tap(backArrowFinder);
   await tester.pumpAndSettle();
+
+  // Pause after screen change.
+
+  await tester.pump(interact);
 }

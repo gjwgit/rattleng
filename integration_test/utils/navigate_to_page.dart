@@ -1,6 +1,6 @@
-/// Navigate to a page in the app.
+/// Navigate to a specific page counting from 0.
 //
-// Time-stamp: <Tuesday 2024-09-24 13:38:25 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 16:27:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,18 +33,43 @@ import 'delays.dart';
 
 Future<void> navigateToPage(
   WidgetTester tester,
-  IconData icon,
-  Type pageType,
+  int page,
+  String title,
 ) async {
-  final pageIconFinder = find.byIcon(icon);
-  expect(pageIconFinder, findsOneWidget);
+  // 20250212 gjw Currently we've not found a way to directly go to a specific
+  // page. It should be possible. A work around is to do multiple back clicks to
+  // hopefully go to the first page, then a series of forward clicks.
 
-  await tester.tap(pageIconFinder);
-  await tester.pumpAndSettle();
+  // Find the back and forward arrow buttons in the PageIndicator.
+
+  final backArrowFinder = find.byIcon(Icons.arrow_left_rounded);
+  expect(backArrowFinder, findsOneWidget);
+
+  final fwdArrowFinder = find.byIcon(Icons.arrow_right_rounded);
+  expect(backArrowFinder, findsOneWidget);
+
+  // 20250212 gjw Tap the back button 5 times. For most pages that should be okay.
+
+  for (var i = 0; i < 5; i++) {
+    await tester.tap(backArrowFinder);
+    await tester.pumpAndSettle();
+  }
+
+  // Tap the forward button the required number of times.
+
+  for (var i = 0; i < page; i++) {
+    await tester.tap(fwdArrowFinder);
+    await tester.pumpAndSettle();
+  }
 
   // Pause after screen change.
 
   await tester.pump(interact);
 
-  expect(find.byType(pageType), findsOneWidget);
+  // Check for the expected title.
+
+  if (title.length > 0) {
+    final titleFinder = find.text(title);
+    expect(titleFinder, findsOneWidget);
+  }
 }

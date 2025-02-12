@@ -1,6 +1,6 @@
 /// COMP3425 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Sunday 2025-02-09 06:13:01 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 16:29:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -37,6 +37,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
@@ -70,9 +71,7 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Summary', SummaryPanel);
       await tapButton(tester, 'Generate Dataset Summary');
-      await gotoNextPage(tester);
-      await gotoNextPage(tester);
-      await gotoNextPage(tester);
+      await navigateToPage(tester, 3, 'Skim the Dataset');
       verifySelectableText(
         tester,
         [
@@ -85,8 +84,8 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree', TreePanel);
       await tapButton(tester, 'Build Decision Tree');
-      await tester.pump(hack);
-      await gotoNextPage(tester);
+      await tester.pump(delay);
+      await navigateToPage(tester, 1, 'Decision Tree Model');
       await verifyPage('Decision Tree Model', 'Observations = 1400');
       await verifySelectableText(
         tester,

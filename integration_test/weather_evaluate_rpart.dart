@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Wednesday 2025-02-12 13:32:19 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 16:37:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -32,8 +32,8 @@ import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_text_field.dart';
@@ -55,20 +55,7 @@ void main() {
       await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      // TODO 20250202 gjw Replace gotoNextPage(tester) here with the new
-      // implementation of navigateToPage(tester,1);. Currently on local laptop
-      // the gotNextPage is not required but on ecosysl it is! This
-      // inconsistency is probably why we also need to re-implement the page
-      // navigator. However, with the try/catch it is failaing on kadesh, so
-      // revert to the gotoNextPage. which previously was not working here?
-      //
-//      try {
-//        await verifyPage('Error Matrix');
-//      } catch (e) {
-      await gotoNextPage(tester);
-//        await verifyPage('Error Matrix');
-//      }
-//      await tester.pump(delay);
+      await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,
         [
@@ -97,13 +84,7 @@ void main() {
       await tapChip(tester, 'Training');
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
-//      try {
-//        await verifyPage('Error Matrix');
-//      } catch (e) {
-      await gotoNextPage(tester);
-//        await verifyPage('Error Matrix');
-//      }
-//      await tester.pump(delay);
+      await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,
         [
@@ -112,6 +93,20 @@ void main() {
           'No  84.6   0   0.0',
           'Yes  0.4  15   2.6',
           'Overall Error = 0.39%; Average Error = 1.28%.',
+        ],
+      );
+      await tapChip(tester, 'Validation');
+      await tapButton(tester, 'Evaluate');
+      await tester.pump(delay);
+      await navigateToPage(tester, 1, 'Error Matrix');
+      await verifySelectableText(
+        tester,
+        [
+          'No  41   2   4.7',
+          'Yes  7   4  63.6',
+          'No  75.9 3.7   4.7',
+          'Yes 13.0 7.4  63.6',
+          'Overall Error = 16.67%; Average Error = 34.14%.',
         ],
       );
     });

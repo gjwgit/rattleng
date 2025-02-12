@@ -1,8 +1,8 @@
 /// Verify multiple text content in the widget.
 //
-// Time-stamp: <Friday 2024-12-27 13:45:57 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 16:33:15 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -37,18 +37,3 @@ Future<void> verifyText(
     expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
   }
 }
-
-// TODO Kevin leave this here in case we need it in the future.
-
-// Future<void> verifySelectableText(
-//   WidgetTester tester,
-//   String text, {
-//   bool multi = false,
-// }) async {
-//   final textFinder = find.byWidgetPredicate(
-//     (widget) =>
-//         (widget is SelectableText && widget.data == text) ||
-//         (widget is Text && widget.data == text),
-//   );
-//   expect(textFinder, multi ? findsAtLeastNWidgets(1) : findsOneWidget);
-// }
