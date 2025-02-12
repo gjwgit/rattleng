@@ -1,6 +1,6 @@
-/// COMP3425 W5 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
+/// COMP3425 W05 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Thursday 2025-02-13 09:22:47 +1100 >
+// Time-stamp: <Thursday 2025-02-13 09:28:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -36,9 +36,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/set_text_field.dart';
 import 'utils/tap_button.dart';
-import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
