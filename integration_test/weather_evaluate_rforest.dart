@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL FOREST EVALUATE feature.
 //
-// Time-stamp: <Wednesday 2025-02-12 21:17:59 +1100 >
+// Time-stamp: <Thursday 2025-02-13 08:57:30 +1100 >
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -55,20 +55,6 @@ void main() {
       await tapButton(tester, 'Build Random Forest');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      // 20250211 gjw Even with the below check for 'Error Matrix' on the page
-      // we still get failure finding specific text like 'No 13'. Add a delay
-      // here to see if that fixes the issue.
-      // await tester.pump(delay);
-      // 20250208 gjw Sometimes, on ecosysl with the full test suite, this was
-      // failing. When run individually it succeeded. Seems like because it is
-      // already on the next page and sometimes not. We resolve this here.
-      // try {
-      //   await verifyPage('Error Matrix');
-      // } catch (e) {
-      //   await gotoNextPage(tester);
-      //   await verifyPage('Error Matrix');
-      // }
-      // await tester.pump(delay); // 20250212 gjw Add another delay.
       await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,
