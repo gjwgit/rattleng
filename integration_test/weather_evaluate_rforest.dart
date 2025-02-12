@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL FOREST EVALUATE feature.
 //
-// Time-stamp: <Wednesday 2025-02-12 09:45:00 +1100 >
+// Time-stamp: <Wednesday 2025-02-12 21:17:59 +1100 >
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -34,6 +34,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
@@ -57,17 +58,18 @@ void main() {
       // 20250211 gjw Even with the below check for 'Error Matrix' on the page
       // we still get failure finding specific text like 'No 13'. Add a delay
       // here to see if that fixes the issue.
-      await tester.pump(delay);
+      // await tester.pump(delay);
       // 20250208 gjw Sometimes, on ecosysl with the full test suite, this was
       // failing. When run individually it succeeded. Seems like because it is
       // already on the next page and sometimes not. We resolve this here.
-      try {
-        await verifyPage('Error Matrix');
-      } catch (e) {
-        await gotoNextPage(tester);
-        await verifyPage('Error Matrix');
-      }
-      await tester.pump(delay); // 20250212 gjw Add another delay.
+      // try {
+      //   await verifyPage('Error Matrix');
+      // } catch (e) {
+      //   await gotoNextPage(tester);
+      //   await verifyPage('Error Matrix');
+      // }
+      // await tester.pump(delay); // 20250212 gjw Add another delay.
+      await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,
         [
