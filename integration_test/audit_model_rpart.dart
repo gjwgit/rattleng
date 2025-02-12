@@ -1,6 +1,6 @@
 /// COMP3425 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Wednesday 2025-02-12 16:41:17 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 16:43:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -89,9 +89,6 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          // 20250110 gjw We get a trivial decision tree initially since
-          // adjustment is actually an output variable.
-
           '1) root 1400 319 No (0.77214286 0.22785714)',
           '2) age< 30.5 475  31 No (0.93473684 0.06526316) *',
           '14) gender=Female 118  28 No (0.76271186 0.23728814) *',
