@@ -1,6 +1,6 @@
-/// COMP3425 W5 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
+/// COMP3425 W05 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Thursday 2025-02-13 09:22:47 +1100 >
+// Time-stamp: <Thursday 2025-02-13 09:20:59 +1100 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -45,16 +45,23 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('WEATHER MODEL TREE RPART EVALUATE:', () {
-    testWidgets('build, evaluate, verify.', (WidgetTester tester) async {
+    testWidgets('comp3425 w05 lab evaluation.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree', TreePanel);
+      await tester.pumpAndSettle();
+      await setTextField(tester, 'minSplitField', '1');
+      await setTextField(tester, 'maxDepthField', '50');
+      await setTextField(tester, 'minBucketField', '1');
+      await setTextField(tester, 'complexityField', '0.01');
       await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
+      await tapChip(tester, 'Tuning');
       await tapButton(tester, 'Evaluate');
+      await tester.pump(delay);
       await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,
@@ -64,6 +71,20 @@ void main() {
           'No  75.9 3.7   4.7',
           'Yes 13.0 7.4  63.6',
           'Overall Error = 16.67%; Average Error = 34.14%.',
+        ],
+      );
+      await tapChip(tester, 'Training');
+      await tapButton(tester, 'Evaluate');
+      await tester.pump(delay);
+      await navigateToPage(tester, 1, 'Error Matrix');
+      await verifySelectableText(
+        tester,
+        [
+          'No  215   0   0.0',
+          'Yes   1  38   2.6',
+          'No  84.6   0   0.0',
+          'Yes  0.4  15   2.6',
+          'Overall Error = 0.39%; Average Error = 1.28%.',
         ],
       );
     });
