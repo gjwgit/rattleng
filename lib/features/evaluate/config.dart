@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-02-12 10:20:10 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-02-12 10:24:37 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -163,10 +163,10 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     ''',
     'Tuning': '''
 
-    Evaluate the model using the **tuning** dataset.  This is used whilst the
-    model parameters are still being tuned but not for the final unbiased
-    estimate of error. This option is only available if partitioning is enabled
-    in the Data tab and a tuning dataset is specified.
+    Evaluate the model using the **tuning/validation** dataset.  This is used
+    whilst the model parameters are still being tuned but not for the final
+    unbiased estimate of error. This option is only available if partitioning is
+    enabled in the Data tab and a tuning/validation dataset is specified.
 
     ''',
     'Testing': '''
