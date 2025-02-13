@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Friday 2025-02-07 05:21:20 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-13 14:40:26 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -104,16 +104,22 @@ Future<void> rSource(
   WidgetRef ref,
   List<String> scripts,
 ) async {
-  // Load the partition train value from shared preferences and update the provider.
-  // So that the values are immediately available on startup.
+  // 20250213 gjw Be sure to load the partition informationfrom shared
+  // preferences and so update the provider appropraitely so that the user's
+  // selected preferred partitioning is immediately available on startup.
 
   final prefs = await SharedPreferences.getInstance();
-  final trainValue = prefs.getInt('train') ?? 60;
+
+  final trainValue =
+      prefs.getInt('train') ?? ref.read(partitionTrainProvider.notifier).state;
   ref.read(partitionTrainProvider.notifier).state = trainValue;
-  final tuneValue = prefs.getInt('tune') ?? 15;
+
+  final tuneValue =
+      prefs.getInt('tune') ?? ref.read(partitionTuneProvider.notifier).state;
   ref.read(partitionTuneProvider.notifier).state = tuneValue;
 
-  final testValue = prefs.getInt('test') ?? 25;
+  final testValue =
+      prefs.getInt('test') ?? ref.read(partitionTestProvider.notifier).state;
   ref.read(partitionTestProvider.notifier).state = testValue;
 
   // Update the partition setting provider with the loaded values
