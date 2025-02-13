@@ -44,18 +44,39 @@ class Partition extends ConsumerWidget {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('train', value);
       ref.read(partitionTrainProvider.notifier).state = value;
+      // Save the new partition ratios to the partition setting provider to have immediate effect.
+
+      ref.read(partitionSettingProvider.notifier).state = [
+        value / 100,
+        ref.read(partitionTuneProvider) / 100,
+        ref.read(partitionTestProvider) / 100,
+      ];
     }
 
     Future<void> _savePartitionTune(int value) async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('tune', value);
       ref.read(partitionTuneProvider.notifier).state = value;
+      // Save the new partition ratios to the partition setting provider to have immediate effect.
+
+      ref.read(partitionSettingProvider.notifier).state = [
+        ref.read(partitionTrainProvider) / 100,
+        value / 100,
+        ref.read(partitionTestProvider) / 100,
+      ];
     }
 
     Future<void> _savePartitionTest(int value) async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('test', value);
       ref.read(partitionTestProvider.notifier).state = value;
+      // Save the new partition ratios to the partition setting provider to have immediate effect.
+
+      ref.read(partitionSettingProvider.notifier).state = [
+        ref.read(partitionTrainProvider) / 100,
+        ref.read(partitionTuneProvider) / 100,
+        value / 100,
+      ];
     }
 
     Future<void> _saveValidation(bool value) async {

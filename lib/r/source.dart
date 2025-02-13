@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Thursday 2025-02-13 08:46:25 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-13 14:40:26 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rattle/providers/dataset.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:universal_io/io.dart' show Platform;
 
@@ -103,6 +104,31 @@ Future<void> rSource(
   WidgetRef ref,
   List<String> scripts,
 ) async {
+  // 20250213 gjw Be sure to load the partition informationfrom shared
+  // preferences and so update the provider appropraitely so that the user's
+  // selected preferred partitioning is immediately available on startup.
+
+  final prefs = await SharedPreferences.getInstance();
+
+  final trainValue =
+      prefs.getInt('train') ?? ref.read(partitionTrainProvider.notifier).state;
+  ref.read(partitionTrainProvider.notifier).state = trainValue;
+
+  final tuneValue =
+      prefs.getInt('tune') ?? ref.read(partitionTuneProvider.notifier).state;
+  ref.read(partitionTuneProvider.notifier).state = tuneValue;
+
+  final testValue =
+      prefs.getInt('test') ?? ref.read(partitionTestProvider.notifier).state;
+  ref.read(partitionTestProvider.notifier).state = testValue;
+
+  // Update the partition setting provider with the loaded values
+  ref.read(partitionSettingProvider.notifier).state = [
+    trainValue / 100,
+    tuneValue / 100,
+    testValue / 100,
+  ];
+
   // Initialise the state variables obtained from the different providers.
 
   // TODO 20250131 gjw MIGRATE TO NOT CACHE THE VALUES HERE
