@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Friday 2024-12-20 14:38:03 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-13 07:19:06 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -301,8 +301,24 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ''',
                 inputFormatter:
                     FilteringTextInputFormatter.digitsOnly, // Integers only
-                validator: (value) => validateInteger(value, min: 0),
+                validator: (value) => validateInteger(value, min: 2),
+                min: 2,
                 stateProvider: minSplitProvider,
+              ),
+              NumberField(
+                label: 'Min Bucket:',
+                key: const Key('minBucketField'),
+                controller: _minBucketController,
+                tooltip: '''
+
+                The minimum number of observations allowed in any leaf node of
+                the decision tree.  The default value is one third of Min Split.
+
+                ''',
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                validator: (value) => validateInteger(value, min: 1),
+                min: 1,
+                stateProvider: minBucketProvider,
               ),
               NumberField(
                 label: 'Max Depth:',
@@ -319,23 +335,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) =>
-                    validateInteger(value, min: 1, max: maxDepthLimit),
+                    validateInteger(value, min: 0, max: maxDepthLimit),
+                min: 0,
                 max: maxDepthLimit,
                 stateProvider: maxDepthProvider,
-              ),
-              NumberField(
-                label: 'Min Bucket:',
-                key: const Key('minBucketField'),
-                controller: _minBucketController,
-                tooltip: '''
-
-                The minimum number of observations allowed in any leaf node of
-                the decision tree.  The default value is one third of Min Split.
-
-                ''',
-                inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                validator: (value) => validateInteger(value, min: 1),
-                stateProvider: minBucketProvider,
               ),
               NumberField(
                 label: 'Complexity:',

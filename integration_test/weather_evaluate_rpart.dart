@@ -1,6 +1,6 @@
-/// WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
+/// COMP3425 W05 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Wednesday 2025-02-12 16:37:49 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-13 09:28:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -36,9 +36,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
-import 'utils/set_text_field.dart';
 import 'utils/tap_button.dart';
-import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -55,49 +53,6 @@ void main() {
       await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await navigateToPage(tester, 1, 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'No  41   2   4.7',
-          'Yes  7   4  63.6',
-          'No  75.9 3.7   4.7',
-          'Yes 13.0 7.4  63.6',
-          'Overall Error = 16.67%; Average Error = 34.14%.',
-        ],
-      );
-    });
-    testWidgets('comp3425 w5 lab evaluation.', (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
-      await loadDemoDataset(tester, 'Weather');
-      await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Tree', TreePanel);
-      await tester.pumpAndSettle();
-      await setTextField(tester, 'minSplitField', '1');
-      await setTextField(tester, 'maxDepthField', '50');
-      await setTextField(tester, 'minBucketField', '1');
-      await setTextField(tester, 'complexityField', '0.01');
-      await tapButton(tester, 'Build Decision Tree');
-      await navigateToTab(tester, 'Evaluate');
-      await tapChip(tester, 'Training');
-      await tapButton(tester, 'Evaluate');
-      await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'No  215   0   0.0',
-          'Yes   1  38   2.6',
-          'No  84.6   0   0.0',
-          'Yes  0.4  15   2.6',
-          'Overall Error = 0.39%; Average Error = 1.28%.',
-        ],
-      );
-      await tapChip(tester, 'Validation');
-      await tapButton(tester, 'Evaluate');
-      await tester.pump(delay);
       await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,

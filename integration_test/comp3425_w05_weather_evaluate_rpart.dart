@@ -1,11 +1,10 @@
-/// WEATHER dataset MODEL FOREST EVALUATE feature.
+/// COMP3425 W05 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Thursday 2025-02-13 09:30:01 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-13 09:20:59 +1100 >
 //
-/// Copyright (C) 2024-2025, Togaware Pty Ltd
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
-
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -22,13 +21,14 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang
+/// Authors: Graham Williams
+
 library;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/features/forest/panel.dart';
 
+import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -36,32 +36,55 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/set_text_field.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('WEATHER MODEL FOREST EVALUATE:', () {
-    testWidgets('build, evaluate, verify.', (WidgetTester tester) async {
+  group('WEATHER MODEL TREE RPART EVALUATE:', () {
+    testWidgets('comp3425 w05 lab evaluation.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Forest', ForestPanel);
-      await tapButton(tester, 'Build Random Forest');
+      await navigateToFeature(tester, 'Tree', TreePanel);
+      await tester.pumpAndSettle();
+      await setTextField(tester, 'minSplitField', '1');
+      await setTextField(tester, 'maxDepthField', '50');
+      await setTextField(tester, 'minBucketField', '1');
+      await setTextField(tester, 'complexityField', '0.01');
+      await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
+      await tapChip(tester, 'Tuning');
       await tapButton(tester, 'Evaluate');
+      await tester.pump(delay);
       await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,
         [
-          'No  13   1   7.1',
-          'Yes  5   3  62.5',
-          'No  59.1  4.5   7.1',
-          'Yes 22.7 13.6  62.5',
-          'Overall Error = 27.27%; Average Error = 34.82%.',
+          'No  41   2   4.7',
+          'Yes  7   4  63.6',
+          'No  75.9 3.7   4.7',
+          'Yes 13.0 7.4  63.6',
+          'Overall Error = 16.67%; Average Error = 34.14%.',
+        ],
+      );
+      await tapChip(tester, 'Training');
+      await tapButton(tester, 'Evaluate');
+      await tester.pump(delay);
+      await navigateToPage(tester, 1, 'Error Matrix');
+      await verifySelectableText(
+        tester,
+        [
+          'No  215   0   0.0',
+          'Yes   1  38   2.6',
+          'No  84.6   0   0.0',
+          'Yes  0.4  15   2.6',
+          'Overall Error = 0.39%; Average Error = 1.28%.',
         ],
       );
     });

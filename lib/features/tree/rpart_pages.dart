@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 19:09:07 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-02-13 08:44:52 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -36,14 +36,14 @@ import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-/// Rpart tree displays.
+/// Display the results of building an rpart tree.
 
 List<Widget> rpartPages(
   WidgetRef ref,
 ) {
   String stdout = ref.watch(stdoutProvider);
 
-  // Begin the list of pages to display with the introduction markdown text.
+  // Begin the list of pages to display with model content.
 
   List<Widget> pages = [];
 
@@ -53,7 +53,7 @@ List<Widget> rpartPages(
   String image = '';
 
   ////////////////////////////////////////////////////////////////////////
-
+  //
   // Default tree text.
 
   content = rExtractTree(stdout);
@@ -65,7 +65,10 @@ List<Widget> rpartPages(
 
           # Decision Tree Model
 
-          Built using [rpart::rpart()](https://www.rdocumentation.org/packages/rpart/topics/rpart).
+          Built using
+          [rpart::rpart()](https://www.rdocumentation.org/packages/rpart/topics/rpart)
+          with configuration set using
+          [rpart::rpart.control()](https://www.rdocumentation.org/packages/rpart/topics/rpart.control).
 
           ''',
         content: '\n$content',
@@ -74,7 +77,7 @@ List<Widget> rpartPages(
   }
 
   ////////////////////////////////////////////////////////////////////////
-
+  //
   // Tree visualisation.
 
   image = '$tempDir/model_tree_rpart.svg';
@@ -96,7 +99,7 @@ List<Widget> rpartPages(
   }
 
   ////////////////////////////////////////////////////////////////////////
-
+  //
   // Convert to rules.
 
   content = rExtract(stdout, 'asRules(model_rpart)');
