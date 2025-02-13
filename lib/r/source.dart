@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rattle/providers/dataset.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:universal_io/io.dart' show Platform;
 
@@ -103,6 +104,25 @@ Future<void> rSource(
   WidgetRef ref,
   List<String> scripts,
 ) async {
+  // Load the partition train value from shared preferences and update the provider.
+  // So that the values are immediately available on startup.
+
+  final prefs = await SharedPreferences.getInstance();
+  final trainValue = prefs.getInt('train') ?? 60;
+  ref.read(partitionTrainProvider.notifier).state = trainValue;
+  final tuneValue = prefs.getInt('tune') ?? 15;
+  ref.read(partitionTuneProvider.notifier).state = tuneValue;
+
+  final testValue = prefs.getInt('test') ?? 25;
+  ref.read(partitionTestProvider.notifier).state = testValue;
+
+  // Update the partition setting provider with the loaded values
+  ref.read(partitionSettingProvider.notifier).state = [
+    trainValue / 100,
+    tuneValue / 100,
+    testValue / 100,
+  ];
+
   // Initialise the state variables obtained from the different providers.
 
   // TODO 20250131 gjw MIGRATE TO NOT CACHE THE VALUES HERE
