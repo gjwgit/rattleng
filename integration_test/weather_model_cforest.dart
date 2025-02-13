@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL tab FOREST feature CFOREST option.
 //
-// Time-stamp: <Wednesday 2025-02-12 07:55:10 +1100 >
+// Time-stamp: <Friday 2025-02-14 10:25:44 +1100 >
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,9 +32,9 @@ import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
@@ -49,24 +49,30 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-      await loadDemoDataset(tester);
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Forest', ForestPanel);
       await tester.pump(interact);
       await tapChip(tester, 'Conditional');
       await tapButton(tester, 'Build Random Forest');
       await tester.pump(delay);
-      await gotoNextPage(tester);
-      await verifyPage('Random Forest Model');
+      await navigateToPage(tester, 1, 'Random Forest Model');
       await verifySelectableText(tester, [
         'Number of trees:  500',
         'Number of observations:  254',
       ]);
       await tester.pump(interact);
-      await gotoNextPage(tester);
+      // 2025-02-14 10:24 gjw I tried testing the TITLE but could not get it to
+      // work for this page - 'Variable Importance'.
+      await navigateToPage(tester, 2, '');
       // 20250212 gjw Oddly on one failure `0.025935...` was not found, yet
       // presumably `humidity_3pm` was found. Add a delay to see if this is
       // repeated.
+      //
+      // 20250214 gjw Still seeing occasional failure. Add extra delay. Though
+      // maybe it's some randomness in the number? Try truncating it to `0.0259`
+      // here next time.
+      await tester.pump(delay);
       await tester.pump(delay);
       await verifySelectableText(tester, [
         'humidity_3pm',
