@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Wednesday 2025-01-08 09:31:21 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-02-14 17:14:44 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,7 +33,6 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
-import 'package:rattle/providers/target.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/is_numeric.dart';
