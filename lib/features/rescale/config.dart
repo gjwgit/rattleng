@@ -36,6 +36,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/variable_chooser.dart';
@@ -260,6 +261,16 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
       if (types[i] == Type.numeric) {
         numericInputs.add(i);
       }
+    }
+
+    // Add target variable if it's numeric.
+
+    String target = getTarget(ref);
+    if (target != 'NULL' && types[target] == Type.numeric) {
+      // Add the target variable to the beginning of the list so that it is
+      // selected by default.
+
+      numericInputs.insert(0, target);
     }
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
