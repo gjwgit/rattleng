@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 LATEST UPDATES
 
++ TRANSFORM: RESCALE and RECODE of target if numeric [6.4.17  20250214 kev]
 + PARTITION: Allow dynamic change of proportions [6.4.16 20250213 kev]
 + Bug fixes. TESTING updates. INSTALLER for .deb [6.4.15 20250210 gjw]
 + DATASET: Bug fix causing file load to fail on Windows [6.4.14 20250206 kev]
