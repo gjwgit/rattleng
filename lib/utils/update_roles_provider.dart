@@ -33,7 +33,9 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/providers/target.dart';
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/is_numeric.dart';
 
 // Define the prefixes that need special handling because they can have a
@@ -149,7 +151,13 @@ void updateVariablesProvider(WidgetRef ref) {
       if (isTransformedVar(column.name)) {
         // Update the old variable's role.
 
-        ref.read(rolesProvider.notifier).state[column.name] = Role.input;
+        String target = getTarget(ref);
+
+        // If the target variable is the same as the original variable, then
+        // set the role to target, otherwise set it to input.
+
+        ref.read(rolesProvider.notifier).state[column.name] =
+            target == getOriginal(column.name) ? Role.target : Role.input;
 
         // Update the new variable's role.
 

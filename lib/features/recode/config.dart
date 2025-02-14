@@ -39,6 +39,7 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -283,6 +284,16 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   Widget build(BuildContext context) {
     // updateVariablesProvider(ref);
     List<String> inputs = getInputsAndIgnoreTransformed(ref);
+
+    // Add target variable if it's numeric.
+
+    String target = getTarget(ref);
+    if (target != 'NULL' && ref.read(typesProvider)[target] == Type.numeric) {
+      // Add the target variable to the end of the list.
+
+      inputs.add(target);
+    }
+
     selected = ref.watch(selectedProvider);
     if (selected == 'NULL' && inputs.isNotEmpty) {
       setState(() {
