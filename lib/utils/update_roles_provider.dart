@@ -150,10 +150,11 @@ void updateVariablesProvider(WidgetRef ref) {
     if (!ref.read(rolesProvider.notifier).state.containsKey(column.name)) {
       if (isTransformedVar(column.name)) {
         // Update the old variable's role.
-        // Kevin changed this to target on 20250214 to fix the issue 901
-        // where the new transformed variable should be the target.
 
         String target = getTarget(ref);
+
+        // If the target variable is the same as the original variable, then
+        // set the role to target, otherwise set it to input.
 
         ref.read(rolesProvider.notifier).state[column.name] =
             target == getOriginal(column.name) ? Role.target : Role.input;
