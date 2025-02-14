@@ -6,7 +6,7 @@ available. However, I am experimenting with including the
 experiment with the package. After loading a dataset into Rattle, go
 to the CONSOLE tab and entry the following commands:
 
-```
+```r
 install.packages('explore')
 library(explore)
 explore(ds)
