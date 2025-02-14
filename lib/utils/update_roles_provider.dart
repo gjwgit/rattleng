@@ -33,7 +33,9 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/providers/target.dart';
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/is_numeric.dart';
 
 // Define the prefixes that need special handling because they can have a
@@ -151,7 +153,10 @@ void updateVariablesProvider(WidgetRef ref) {
         // Kevin changed this to target on 20250214 to fix the issue 901
         // where the new transformed variable should be the target.
 
-        ref.read(rolesProvider.notifier).state[column.name] = Role.target;
+        String target = getTarget(ref);
+
+        ref.read(rolesProvider.notifier).state[column.name] =
+            target == getOriginal(column.name) ? Role.target : Role.input;
 
         // Update the new variable's role.
 
