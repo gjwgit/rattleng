@@ -289,10 +289,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     String target = getTarget(ref);
     if (target != 'NULL' && ref.read(typesProvider)[target] == Type.numeric) {
-      // Add the target variable to the beginning of the list so that it is
-      // selected by default.
+      // Add the target variable to the end of the list.
 
-      inputs.insert(0, target);
+      inputs.add(target);
     }
 
     selected = ref.watch(selectedProvider);

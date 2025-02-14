@@ -267,10 +267,9 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
     String target = getTarget(ref);
     if (target != 'NULL' && types[target] == Type.numeric) {
-      // Add the target variable to the beginning of the list so that it is
-      // selected by default.
+      // Add the target variable to the end of the list.
 
-      numericInputs.insert(0, target);
+      numericInputs.add(target);
     }
     // Retrieve the current selected variable and use that as the initial value
     // for the dropdown menu. If there is no current value and we do have inputs
