@@ -11,7 +11,7 @@ Binaries to download latest version:
 [**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
 [**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
-## 6.5 LATEST UPDATES
+## 6.5 Complete Models and Evaluations
 
 + TRANSFORM: RESCALE and RECODE of target if numeric [6.4.17  20250214 kev]
 + PARTITION: Allow dynamic change of proportions [6.4.16 20250213 kev]
@@ -32,7 +32,7 @@ Binaries to download latest version:
 + Update EVALUATION error matrix and roc [6.4.1 20250129 zy]
 + Migrate to using delimited PARAMETERS in R templates [6.4.0 20250120 gjw]
 
-## 6.4 LATEST UPDATES
+## 6.4 Models and Evaluation
 
 + Add PACKAGES list to available DATASETS [6.3.54 20250120 yyx]
 + Support links in tooltips [6.3.53 20250113 gjw]
