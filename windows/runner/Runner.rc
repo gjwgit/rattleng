@@ -90,10 +90,10 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "Togaware" "\0"
-            VALUE "FileDescription", "A new Flutter project." "\0"
+            VALUE "FileDescription", "Rattle Data Science." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "rattle" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2021 Togaware Pty Ltd. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024-2025 Togaware Pty Ltd. All rights reserved." "\0"
             VALUE "OriginalFilename", "rattle.exe" "\0"
             VALUE "ProductName", "rattle" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
