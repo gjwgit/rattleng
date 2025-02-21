@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2025-02-22 05:24:09 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-02-22 09:05:19 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,7 +64,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'print(round(cor,2))');
+    // content = rExtract(stdout, 'print(round(cor,2))');
+    content = rExtract(stdout, 'print(format(round(cor, 2)');
 
     // Add a blank line between each sub-table.
 
