@@ -1,6 +1,7 @@
 #!/bin/bash
 
-## 20250210 TODO gjw Grab the version from pubspec.
+APP=$(pwd | rev | cut -d'/' -f2 | rev)
+APP=${APP::-2}
 
 VER=$(egrep '^version:' ../pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 
@@ -10,15 +11,16 @@ VER=$(egrep '^version:' ../pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 
 # Create debian package structure.
 
-mkdir -p rattle_${VER}_amd64/DEBIAN
-mkdir -p rattle_${VER}_amd64/usr/bin
-mkdir -p rattle_${VER}_amd64/usr/share/applications
-mkdir -p rattle_${VER}_amd64/usr/share/icons/hicolor/512x512/apps
+mkdir -p ${APP}_${VER}_amd64/DEBIAN
+mkdir -p ${APP}_${VER}_amd64/usr/bin
+mkdir -p ${APP}_${VER}_amd64/usr/lib/${APP}
+mkdir -p ${APP}_${VER}_amd64/usr/share/applications
+mkdir -p ${APP}_${VER}_amd64/usr/share/icons/hicolor/512x512/apps
 
 # Create control file.
 
-cat > rattle_${VER}_amd64/DEBIAN/control << EOL
-Package: rattle
+cat > ${APP}_${VER}_amd64/DEBIAN/control << EOL
+Package: ${APP}
 Version: ${VER}
 Section: utils
 Priority: optional
@@ -32,12 +34,12 @@ EOL
 
 # Create desktop entry.
 
-cat > rattle_${VER}_amd64/usr/share/applications/rattle.desktop << EOL
+cat > ${APP}_${VER}_amd64/usr/share/applications/${APP}.desktop << EOL
 [Desktop Entry]
 Name=Rattle
 Comment=Rattle Data Science
-Exec=/usr/bin/rattle
-Icon=rattle
+Exec=/usr/bin/${APP}
+Icon=${APP}
 Terminal=false
 Type=Application
 Categories=Utility;
@@ -45,24 +47,28 @@ EOL
 
 # Copy the built flutter application.
 
-cp -r ../build/linux/x64/release/bundle/* rattle_${VER}_amd64/usr/bin/
+cp -r ../build/linux/x64/release/bundle/* ${APP}_${VER}_amd64/usr/lib/${APP}/
 
-# Copy the app icon (assuming you have an icon file named rattle.png).
+# Ensure /usr/bin/${APP} points to the actual executable.
 
-cp rattle.png rattle_${VER}_amd64/usr/share/icons/hicolor/512x512/apps/
+(cd ${APP}_${VER}_amd64/usr/bin; ln -s ../lib/${APP}/${APP} ${APP})
+
+# Copy the app icon which is assumed to be named ${APP}.png in the
+# installers folder.
+
+cp ${APP}.png ${APP}_${VER}_amd64/usr/share/icons/hicolor/512x512/apps/
 
 # Set correct permissions.
 
-chmod 755 rattle_${VER}_amd64/usr/bin/rattle
-chmod -R 755 rattle_${VER}_amd64/DEBIAN
-find rattle_${VER}_amd64/usr -type d -exec chmod 755 {} \;
-find rattle_${VER}_amd64/usr -type f -exec chmod 644 {} \;
-chmod 755 rattle_${VER}_amd64/usr/bin/rattle
+chmod -R 755 ${APP}_${VER}_amd64/DEBIAN
+find ${APP}_${VER}_amd64/usr -type d -exec chmod 755 {} \;
+find ${APP}_${VER}_amd64/usr -type f -exec chmod 644 {} \;
+chmod 755 ${APP}_${VER}_amd64/usr/lib/${APP}/${APP}
 
 # Build the debian package.
 
-dpkg-deb --build rattle_${VER}_amd64
+dpkg-deb --build ${APP}_${VER}_amd64
 
 # Cleanup.
 
-rm -rf rattle_${VER}_amd64
+rm -rf ${APP}_${VER}_amd64
