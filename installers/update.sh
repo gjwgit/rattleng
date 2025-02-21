@@ -40,15 +40,21 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     # 20250210 gjw Moving to deb install as my local installation. See
     # file:../Makefile
+    #
+    # 20250218 gjw Remove the deb build until it is configured
+    # properly.
+    #
+    # 20250221 gjw Got deb build working. Do that install in the
+    # Makefile now and don't do the local unzip install here.
 
-    # echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
+    echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
 
-    # gh run download ${bumpId} --name ${APP}-linux-zip
-    # rsync -avzh ${APP}-dev-linux.zip ${DEST}
+    gh run download ${bumpId} --name ${APP}-linux-zip
+    rsync -avzh ${APP}-dev-linux.zip ${DEST}
     # unzip -oq ${APP}-dev-linux.zip -d ${HOME}/.local/share/${APP}/
-    # mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
+    mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
 
-    # echo ""
+    echo ""
 
     echo '***** UPLOAD WINDOWS INNO'
 

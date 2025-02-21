@@ -292,7 +292,6 @@ qtest:
 	done
 	@echo $(SEPARATOR)
 
-
 %.qtest:
 	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
 	if [ -z "$$device_id" ]; then \
