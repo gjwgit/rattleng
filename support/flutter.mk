@@ -194,13 +194,13 @@ analyze:
 .PHONY: ignore
 ignore:
 	@echo "Files that override lint checks with IGNORE:\n"
-	@-if grep -r -n ignore: lib; then exit 1; else exit 0; fi
+	@-if rgrep -n ignore: lib; then exit 1; else exit 0; fi
 	@echo $(SEPARATOR)
 
 .PHONY: todo
 todo:
 	@echo "Files that include TODO items to be resolved:\n"
-	@-if grep -r -n ' TODO ' lib; then exit 1; else exit 0; fi
+	@-if rgrep -n ' TODO ' lib; then exit 1; else exit 0; fi
 	@echo $(SEPARATOR)
 
 .PHONY: license

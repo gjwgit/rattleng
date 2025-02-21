@@ -25,10 +25,12 @@ DATE=$(shell date +%Y-%m-%d)
 
 DEST=/var/www/html/$(APP)
 
-# The host for the repository of packages.
+# The host for the repository of packages, the path on the server to
+# the download folder, and the URL to the downloads.
 
 REPO=togaware.com
 RLOC=apps/access
+DWLD=https://$(REPO)/installers
 
 ########################################################################
 # Supported Makefile modules.
