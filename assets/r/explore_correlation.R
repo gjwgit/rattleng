@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-29 17:16:32 +0800 Graham Williams>
+# Time-stamp: <Saturday 2025-02-22 07:52:17 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,7 +36,7 @@
 
 # Load required packages from the local library into the R session.
 
-# Generate a correlation plot for the variables. 
+# Generate a correlation plot for the variables.
 
 # Correlations work for numeric variables only.
 
@@ -48,9 +48,12 @@ ord <- order(cor[1,])
 cor <- cor[ord, ord]
 
 # Display a textual table of the actual correlations.
+##
+## 20250222 gjw On Windows the layout is misaligned. we might try some
+## alternatives as in #903. It's not a Rattle issue per se. If you
+## copy the table and paste into Notepad we get the same misalignment.
 
 print(round(cor,2))
-
 
 # Generate the chart.
 
