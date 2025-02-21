@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ Update app title/descriptions [6.4.18 20250222 gjw]
 + TRANSFORM: RESCALE and RECODE of target if numeric [6.4.17  20250214 kev]
 + PARTITION: Allow dynamic change of proportions [6.4.16 20250213 kev]
 + Bug fixes. TESTING updates. INSTALLER for .deb [6.4.15 20250210 gjw]
