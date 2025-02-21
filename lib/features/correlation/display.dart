@@ -1,11 +1,11 @@
 /// Widget to display the CORRELATION introduction or output.
 ///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-06 16:43:07 +1000 Graham Williams>
+// Time-stamp: <Saturday 2025-02-22 05:24:09 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -84,7 +84,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
           title: '''
 
           # Correlation - Numeric Data
-          
+
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/correlated-numeric-variables.html)
           and
@@ -106,7 +106,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
           title: '''
 
         # Variable Correlation Plot
-        
+
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/correlated-numeric-variables.html)
           and
