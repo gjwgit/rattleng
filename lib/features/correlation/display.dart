@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2025-02-22 09:05:19 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-02-24 16:09:50 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -64,8 +64,11 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
+    // 20250222 gjw Trying to get a properly aligned output for Windows.
+
     // content = rExtract(stdout, 'print(round(cor,2))');
     content = rExtract(stdout, 'print(format(round(cor, 2)');
+    // content = rExtract(stdout, 'knitr::kable(round(cor, 2))');
 
     // Add a blank line between each sub-table.
 
