@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-02-24 16:09:17 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-02-24 19:39:01 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -56,7 +56,7 @@ cor <- cor[ord, ord]
 ##
 ##print(round(cor,2))
 ##
-print(format(round(cor, 2), nsmall=2), quote=FALSE)
+print(format(round(cor, 2), nsmall=2, width=6), quote=FALSE)
 ##
 ## print(format(round(cor, 2), nsmall = 2, width = 6), quote = FALSE)
 ##
