@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2025-02-22 09:04:44 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-02-24 16:09:17 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -52,10 +52,15 @@ cor <- cor[ord, ord]
 ## 20250222 gjw On Windows the layout is misaligned. we might try some
 ## alternatives as in #903. It's not a Rattle issue per se. If you
 ## copy the table and paste into Notepad we get the same misalignment.
-##
-## print(round(cor,2))
 
+##
+##print(round(cor,2))
+##
 print(format(round(cor, 2), nsmall=2), quote=FALSE)
+##
+## print(format(round(cor, 2), nsmall = 2, width = 6), quote = FALSE)
+##
+## knitr::kable(round(cor, 2))
 
 # Generate the chart.
 
