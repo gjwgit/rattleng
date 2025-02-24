@@ -3,8 +3,8 @@
 Recorded here are the high level changes for the RattleNG app.
 
 Guide: Each version update is recorded here with a short user-oriented
-description of the update. Updates in the 6.3.n series are heading
-toward a 6.4 release.
+description of the update. Updates in the 6.4.n series are heading
+toward a 6.5 release.
 
 Binaries to download latest version:
 [**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
