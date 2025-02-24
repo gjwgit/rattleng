@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ Presentation bug fixes: CORRELATION and NEURAL plot [6.4.20 20250224 gjw]
 + Review misaligned correlation on Windows [6.4.19 20250224 gjw]
 + Update app title/descriptions [6.4.18 20250222 gjw]
 + TRANSFORM: RESCALE and RECODE of target if numeric [6.4.17  20250214 kev]
