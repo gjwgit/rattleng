@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 19:24:24 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-02-24 16:49:45 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -82,7 +82,7 @@ summary(model_nn)
 
 svg("<TEMPDIR>/model_nn_nnet.svg")
 NeuralNetTools::plotnet(model_nn,
-                        cex_val    = 0.5,
+                        cex_val    = 0.3,
                         circle_cex = 2,
                         rel_rsc    = c(1, 3),
                         pos_col    = "orange",
