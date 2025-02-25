@@ -257,11 +257,16 @@ class ImagePage extends ConsumerWidget {
 
                             File(path).copy(tempFile.path);
 
-                            // Get the image viewer app from SharedPreferences or fall back to provider.
+                            // Get the image viewer app from SharedPreferences or use the provider default
+                            // if not set.
 
                             final prefs = await SharedPreferences.getInstance();
                             final savedImageViewer =
                                 prefs.getString('imageViewerApp');
+
+                            // If the shared preferences image viewer app is null(not set),
+                            // use the provider default.
+
                             final imageViewerApp = savedImageViewer ??
                                 ref.read(imageViewerSettingProvider);
 
