@@ -37,6 +37,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -50,8 +51,9 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/providers/settings.dart';
 
-class ImagePage extends StatelessWidget {
+class ImagePage extends ConsumerWidget {
   final String title;
   final String path;
 
@@ -152,7 +154,7 @@ class ImagePage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugText('  IMAGE', path);
 
     // Clear the image cache
@@ -252,17 +254,21 @@ class ImagePage extends StatelessWidget {
                             File tempFile = File('$tempDir/$fileName');
 
                             // Copy the original file to the temporary file.
+
                             File(path).copy(tempFile.path);
 
-                            // Pop out a window to display the plot separate
-                            // to the Rattle app.
-
-                            // Update "Image Viewer" state.
+                            // Get the image viewer app from SharedPreferences or use the provider default
+                            // if not set.
 
                             final prefs = await SharedPreferences.getInstance();
-
-                            final imageViewerApp =
+                            final savedImageViewer =
                                 prefs.getString('imageViewerApp');
+
+                            // If the shared preferences image viewer app is null(not set),
+                            // use the provider default.
+
+                            final imageViewerApp = savedImageViewer ??
+                                ref.read(imageViewerSettingProvider);
 
                             Platform.isWindows
                                 ? Process.run(
