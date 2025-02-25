@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ Re-enable NEURALNET [6.4.21 20250225 gjw]
 + Presentation bug fixes: CORRELATION and NEURAL plot [6.4.20 20250224 gjw]
 + Review misaligned correlation on Windows [6.4.19 20250224 gjw]
 + Update app title/descriptions [6.4.18 20250222 gjw]
