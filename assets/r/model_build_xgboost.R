@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:26:09 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-25 19:56:29 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,7 +25,7 @@
 
 # Load required libraries.
 
-library(Ckmeans.1d.dp)  # For ggplot.
+library(Ckmeans.1d.dp)  # Needed for xgb.ggplot.importance
 library(data.table)     # Display data as a nicely formatted table.
 library(hmeasure)
 library(xgboost)        # For XGBoost model.
@@ -60,7 +60,7 @@ summary(model_xgb)
 svg("<TEMPDIR>/model_xgb_importance.svg")
 importance_matrix <- xgb.importance(model = model_xgb)
 
-# Create a ggplot-based importance plot.
+# Create a ggplot-based importance plot. Uses Ckmeans.1d.dp.
 
 importance_plot <- xgb.ggplot.importance(importance_matrix, measure = "Gain", rel_to_first = FALSE)
 
