@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2025-02-26 14:36:42 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-26 14:52:40 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -38,7 +38,7 @@ import 'package:rattle/features/dataset/select_file.dart';
 // import 'package:rattle/features/dataset/select_package.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
-import 'package:rattle/providers/page_controller.dart';
+// import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 // import 'package:rattle/providers/stdout.dart';
 // import 'package:rattle/r/extract.dart';
