@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2025-02-05 08:18:21 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-02-26 14:36:42 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -127,14 +127,21 @@ class DatasetPopup extends ConsumerWidget {
                   Navigator.pop(context, 'Local File');
 
                   // Access the PageController via Riverpod and move to the second page.
+                  //
+                  // 20250226 gjw For now we try not moving to the dataset page
+                  // just yet. On a Mac there are reports of a grey ROLES
+                  // page. That could be because the R code is not yet finished
+                  // and some kind of time out. Or the dataset load has a
+                  // problem. By staying on the OVERVIEW we mightreduce the
+                  // liklihood?
 
-                  ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
+                  // ref.read(pageControllerProvider).animateToPage(
+                  //       // Index of the second page.
 
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  //       1,
+                  //       duration: const Duration(milliseconds: 300),
+                  //       curve: Curves.easeInOut,
+                  //     );
                 },
                 child: MarkdownTooltip(
                   message: '''
@@ -458,9 +465,16 @@ Future<void> loadDemoDataset(
 
   // Navigate to the second page using the page controller.
 
-  ref.read(pageControllerProvider).animateToPage(
-        1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+  // 20250226 gjw For now we try not moving to the dataset page
+  // just yet. On a Mac there are reports of a grey ROLES
+  // page. That could be because the R code is not yet finished
+  // and some kind of time out. Or the dataset load has a
+  // problem. By staying on the OVERVIEW we mightreduce the
+  // liklihood?
+
+  // ref.read(pageControllerProvider).animateToPage(
+  //       1,
+  //       duration: const Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
 }
