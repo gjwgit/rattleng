@@ -1,6 +1,6 @@
 /// COMP3425 W4 AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Thursday 2025-02-06 08:33:00 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 08:30:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
@@ -64,15 +65,15 @@ void main() {
       await navigateToFeature(tester, 'Associations', AssociationPanel);
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-      await gotoNextPage(tester);
-      await verifyPage('Association Rules - Meta Summary');
+      await navigateToPage(tester, 1, 'Association Rules - Meta Summary');
       await verifySelectableText(
         tester,
         [
-          '19 rules',
+          'set of 19 rules',
+          '   support         confidence        coverage           lift',
           'Min.   :0.1114   Min.   :0.1747   Min.   :0.1614   Min.   :0.8538',
           'Median :0.1457   Median :0.4403   Median :0.3436   Median :1.0425',
-          'support = 0.1, confidence = 0.1, minlen = 2',
+          'list(support = 0.1, confidence = 0.1, minlen = 2)',
         ],
       );
       // 20250206 gjw If we turn partition off then we get different numbers.
@@ -86,13 +87,13 @@ void main() {
       //     'support = 0.1, confidence = 0.1, minlen = 2',
       //   ],
       // );
-      await gotoNextPage(tester);
-      await verifyPage('Association Rules - Discovered Rules');
+      await navigateToPage(tester, 2, 'Association Rules - Discovered Rules');
       await verifySelectableText(
         tester,
         [
           'marital=Married',
-          'gender=Male',
+          '=> {gender=Male}',
+          'support   confidence coverage  lift      count',
           '0.4014286 0.8906498  0.4507143 1.3279123 562',
         ],
       );
@@ -106,7 +107,7 @@ void main() {
       await setSelectedVariable(tester, 'occupation');
       await tapChip(tester, 'Constant');
       await tapButton(tester, 'Impute Missing Values');
-      await gotoNextPage(tester);
+      await navigateToPage(tester, 1, 'Dataset Summary');
       await verifySelectableText(
         tester,
         [
@@ -120,24 +121,20 @@ void main() {
       await navigateToFeature(tester, 'Associations', AssociationPanel);
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-
-      // 20250205 gjw Don't go to next page here since we are already on the
-      // right page.
-
-      await verifyPage('Association Rules - Meta Summary');
+      await navigateToPage(tester, 1, 'Association Rules - Meta Summary');
       await verifySelectableText(
         tester,
         [
-          '23 rules',
+          'set of 23 rules',
         ],
       );
-      await gotoNextPage(tester);
-      await verifyPage('Association Rules - Discovered Rules');
+      await navigateToPage(tester, 2, 'Association Rules - Discovered Rules');
       await verifySelectableText(
         tester,
         [
           'marital=Married',
-          'gender=Male',
+          '=> {gender=Male}',
+          'support   confidence coverage  lift      count',
           '0.4014286 0.8906498  0.4507143 1.3279123 562',
         ],
       );
