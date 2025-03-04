@@ -1,6 +1,6 @@
 /// DATASET feature RESET function.
 //
-// Time-stamp: <Sunday 2025-01-26 08:58:11 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 09:07:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -33,6 +33,7 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/load_demo_dataset.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -64,6 +65,8 @@ void main() {
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
       await tester.pump(delay);
+
+      await navigateToPage(tester, 1, '');
 
       await verifySelectableText(
         tester,
