@@ -1,6 +1,6 @@
 /// Load one of the DEMO datasets.
 //
-// Time-stamp: <Thursday 2025-01-30 17:15:36 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 06:43:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,6 +34,7 @@ import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/features/dataset/popup.dart';
 
 import 'delays.dart';
+import 'navigate_to_page.dart';
 import 'navigate_to_tab.dart';
 import 'test_print.dart';
 
@@ -88,6 +89,8 @@ Future<void> loadDemoDataset(
   // 20241019 gjw Add a delay here. Whilst app and dataset load.
 
   await tester.pump(delay);
+
+  await navigateToPage(tester, 1, '');
 
   testPrint('Finished loading the ${dataset.toUpperCase()} Dataset.');
 }
