@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ TEST and DOC updates [6.4.25 20250305 gjw]
 + R BUG FIX: Remove errant angle brackets [6.4.24 20250226 gjw]
 + DATASET: Remain on page 0 on load - bug fix. [6.4.23 20250226 gjw]
 + Bug fix for open image [6.4.22 20250225 kev]
