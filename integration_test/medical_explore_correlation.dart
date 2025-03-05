@@ -1,6 +1,6 @@
 /// EXPLORE tab: Correlation Large Dataset Test.
 //
-// Time-stamp: <Thursday 2025-01-23 17:03:50 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 13:00:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,12 +32,11 @@ import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/tap_button.dart';
-import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -53,18 +52,11 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await tapButton(tester, 'Perform Correlation Analysis');
-      await gotoNextPage(tester);
-
-      // Verify the content of the page 1.
-
-      await verifyPage(
-        'Correlation - Numeric Data',
-        'cholesterol_level                1.00           0.00           0.00  -0.01',
-      );
+      await navigateToPage(tester, 1, 'Correlation - Numeric Data');
       await verifySelectableText(tester, [
-        'smoking_status                   0.00           0.01           1.00   0.04  0.05',
-        'bmi                             -0.01           0.03           0.05   0.39  1.00',
-        'age_at_consultation              0.00           0.06           0.08   0.20  0.24',
+        'smoking_status        0.00              0.01           1.00           0.04   0.05',
+        'bmi                  -0.01              0.03           0.05           0.39   1.00',
+        'age_at_consultation   0.00              0.06           0.08           0.20   0.24',
       ]);
 
       // Verify the content of the page 2.
@@ -73,9 +65,7 @@ void main() {
       //
       // Must be something we can do to confirm the image. Not sure what yet!
 
-      await gotoNextPage(tester);
-
-      await verifyPage('Variable Correlation Plot');
+      await navigateToPage(tester, 2, 'Variable Correlation Plot');
     });
   });
 }
