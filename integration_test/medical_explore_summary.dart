@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Wednesday 2025-03-05 14:24:54 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 14:44:50 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -56,17 +56,17 @@ void main() {
       'Length:20000',
       'f:12435',
     ]);
-    await navigateToPage(tester, 2, 'Dataset Glimpse');
+    await gotoNextPage(tester, title: 'Dataset Glimpse');
     await verifySelectableText(
       tester,
       ['Rows: 20,000'],
     );
-    await navigateToPage(tester, 3, 'Skim the Dataset');
+    await gotoNextPage(tester, title: 'Skim the Dataset');
     await verifySelectableText(
       tester,
       ['20000'],
     );
-    await navigateToPage(tester, 4, 'Kurtosis and Skewness');
+    await gotoNextPage(tester, title: 'Kurtosis and Skewness');
     await verifySelectableText(
       tester,
       [

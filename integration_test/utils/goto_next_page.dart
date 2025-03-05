@@ -1,6 +1,6 @@
-/// Move to the next page.
+/// Move to the next page and optionally check the title.
 //
-// Time-stamp: <Tuesday 2024-09-24 13:38:08 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 14:46:38 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,13 +31,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
 
-Future<void> gotoNextPage(WidgetTester tester) async {
+/// Move to the next page and optionally check the [title].
+
+Future<void> gotoNextPage(WidgetTester tester, {String? title}) async {
   // Find the right arrow button in the PageIndicator.
 
   final rightArrowFinder = find.byIcon(Icons.arrow_right_rounded);
   expect(rightArrowFinder, findsOneWidget);
 
-  // Tap the right arrow button twice to go to the last page for variable role selection.
+  // Tap the right arrow button.
 
   await tester.tap(rightArrowFinder);
   await tester.pumpAndSettle();
@@ -45,4 +47,11 @@ Future<void> gotoNextPage(WidgetTester tester) async {
   // Pause after screen change.
 
   await tester.pump(interact);
+
+  // Check for the expected title.
+
+  if (title != null && title.isNotEmpty) {
+    final titleFinder = find.text(title);
+    expect(titleFinder, findsOneWidget);
+  }
 }
