@@ -51,6 +51,7 @@ String _basicTemplate(
   bool svmExecuted = ref.watch(svmEvaluateProvider);
   bool nnetExecuted = ref.watch(nnetEvaluateProvider);
   bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
+  bool linearExecuted = ref.watch(linearEvaluateProvider);
 
   // 20250117 zy There could be opportunity to reduce duplicated code
   // but at this time it is not clear how.
@@ -92,6 +93,9 @@ String _basicTemplate(
       'Error matrix for the NEURALNET model [$evaluateDataset] (counts)';
   String entp =
       'Error matrix for the NEURALNET model [$evaluateDataset] (proportions)';
+  String elic = 'Error matrix for the LINEAR model [$evaluateDataset] (counts)';
+  String elip =
+      'Error matrix for the LINEAR model [$evaluateDataset] (proportions)';
 
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
@@ -127,6 +131,8 @@ String _basicTemplate(
   String cnp = rExtract(log, '> nnet_${evaluateDataset}_PROP');
   String cntc = rExtract(log, '> neuralnet_${evaluateDataset}_COUNT');
   String cntp = rExtract(log, '> neuralnet_${evaluateDataset}_PROP');
+  String clic = rExtract(log, '> linear_${evaluateDataset}_COUNT');
+  String clip = rExtract(log, '> linear_${evaluateDataset}_PROP');
   String rems =
       rExtract(log, '> rpart_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
   String cems =
@@ -145,6 +151,8 @@ String _basicTemplate(
       rExtract(log, '> nnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
   String ntems =
       rExtract(log, '> neuralnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String liems =
+      rExtract(log, '> linear_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
 
   // Obtain the current timestamp for logging purposes.
 
@@ -248,6 +256,17 @@ String _basicTemplate(
         '$entp\n\n'
         '$cntp\n\n'
         '$ntems\n\n';
+  }
+
+  // Append Linear model results if available and Linear is executed.
+
+  if (clic != '' && clip != '' && linearExecuted && liems != '') {
+    result = '$result\n'
+        '$elic\n\n'
+        '$clic\n\n'
+        '$elip\n\n'
+        '$clip\n\n'
+        '$liems\n\n';
   }
 
   result = '$result\n'
