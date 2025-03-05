@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL tab LINEAR feature.
 //
-// Time-stamp: <Thursday 2025-03-06 09:37:55 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-06 10:22:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -78,6 +78,24 @@ void main() {
       await tester.pump(interact);
       await gotoNextPage(tester, title: 'Linear Model - Visual');
       await verifyImage(tester);
+      await navigateToTab(tester, 'Evaluate');
+      await tapButton(tester, 'Evaluate');
+      await navigateToPage(tester, 1, 'Error Matrix');
+      await verifySelectableText(
+        tester,
+        [
+          'No   3  12  80.0',
+          'Yes  4   5  44.4',
+          'No  12.5 50.0  80.0',
+          'Yes 16.7 20.8  44.4',
+          'Overall Error = 66.67%; Average Error = 62.22%.',
+        ],
+      );
+      // The titles on these pages is different widget?
+      //
+      //await gotoNextPage(tester, title: '(ROC)');
+      //await gotoNextPage(tester, title: 'H-Measure');
+      //await gotoNextPage(tester, title: 'Risk Chart');
     });
   });
 }
