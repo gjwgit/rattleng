@@ -88,6 +88,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String rocAdaBoostImage = '$tempDir/model_evaluate_roc_adaboost_$dtype.svg';
     String rocCtreeImage = '$tempDir/model_evaluate_roc_ctree_$dtype.svg';
+    String rocLinearImage = '$tempDir/model_evaluate_roc_linear_$dtype.svg';
     String rocNNETImage = '$tempDir/model_evaluate_roc_nnet_$dtype.svg';
     String rocNeuralNetImage =
         '$tempDir/model_evaluate_roc_neuralnet_$dtype.svg';
@@ -99,6 +100,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String rocXGBoostImage = '$tempDir/model_evaluate_roc_xgboost_$dtype.svg';
 
     String riskChartRpartImage = '$tempDir/model_rpart_riskchart_$dtype.svg';
+    String riskChartLinearImage = '$tempDir/model_linear_riskchart_$dtype.svg';
     String riskChartCtreeImage = '$tempDir/model_ctree_riskchart_$dtype.svg';
     String riskChartAdaBoostImage =
         '$tempDir/model_adaboost_riskchart_$dtype.svg';
@@ -132,6 +134,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     bool boostBoxTicked = ref.watch(boostEvaluateProvider);
     bool svmBoxTicked = ref.watch(svmEvaluateProvider);
     bool neuralBoxTicked = ref.watch(neuralEvaluateProvider);
+    bool linearBoxTicked = ref.watch(linearEvaluateProvider);
 
     List<String> rocImages = [];
     List<String> rocImagesTitles = [];
@@ -156,6 +159,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'image': rocNeuralNetImage,
         'title': 'NEURALNET',
         'ticked': neuralBoxTicked,
+      },
+      {
+        'image': rocLinearImage,
+        'title': 'LINEAR',
+        'ticked': linearBoxTicked,
       },
       {
         'image': rocRforestImage,
@@ -183,6 +191,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {'image': riskChartSVMImage, 'title': 'SVM'},
       {'image': riskChartCforestImage, 'title': 'CONDITIONAL FOREST'},
       {'image': riskChartXGBoostImage, 'title': 'XGBoost'},
+      {'image': riskChartLinearImage, 'title': 'LINEAR'},
     ];
     // List of image-title pairs for Hand plot.
 
@@ -206,7 +215,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       },
       {'image': handXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
       {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
-      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': svmBoxTicked},
+      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': linearBoxTicked},
       {'image': handNNETImage, 'title': 'NNET', 'ticked': neuralBoxTicked},
       {
         'image': handNeuralNetImage,

@@ -42,27 +42,40 @@ model <- model_glm
 mtype <- "linear"
 mdesc <- "Linear Model"
 
-# 20250101 gjw Define the template functions to generate the
-# predications and the probabilities.
-##
-## Rattle V5 does this:
-##
-## crs$pr <- as.vector(ifelse(predict(crs$glm,
-##   type    = "response",
-##   newdata = crs$dataset[crs$validate, c(crs$input, crs$target)]) > 0.5, "Yes", "No"))
-##
-## 20250305 gjw This is hard wiring Yes and No. Need to get the actual
-## dataset classes.
-##
-## 20250305 gjw Currently I am getting an EXTRA LEVELS error
-##
-##   factor wind_dir_9am has new levels SW, WNW
+pred_ra <- function(model, data) {
+  # Retrieve the vector of possible target levels from the data.
 
-pred_ra <- function(model, data) as.vector(ifelse(predict(model,
-                                                          type    = "response",
-                                                          newdata = data) > 0.5,
-                                                  "Yes", "No"))
+  target_levels <- unique(data[[target]])  # nolint as sourced from 'model_template.R'
 
-prob_ra <- function(model, data) predict(model,
-                                         type    = "response",
-                                         newdata = data)
+  # Get raw numeric probabilities (assuming the model returns a single column
+  # or you've already extracted the relevant column.
+
+  prob_vec <- predict(model, newdata=data, type="response")
+
+  # Map probabilities to factor levels.
+  # - If the probability is NA, set the label to NA.
+  # - If the probability > 0.5, pick target_levels[2].
+  # - Otherwise, pick target_levels[1].
+  # We immediately convert to character so the ifelse() doesn't
+  # accidentally coerce things back to numeric.
+
+  mapped_values_char <- ifelse(
+    is.na(prob_vec),
+    NA_character_,
+    ifelse(prob_vec > 0.5,
+           as.character(target_levels[2]),
+           as.character(target_levels[1]))
+  )
+
+  # Convert the character vector to a factor with the same levels as 'target_levels'.
+  # This ensures the output is not numeric, but a factor with consistent levels.
+
+  mapped_values_factor <- factor(mapped_values_char, levels=target_levels)
+
+  # Return the factor vector.
+
+  return(mapped_values_factor)
+}
+
+prob_ra <- function(model, data) predict(model, newdata=data, type="response")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
