@@ -11,9 +11,9 @@ code that is generated and can be exported as a standalone R program.
 
 ## Getting Started
 
-Tap the **Dataset** button to choose a data source.  The **Demo**
-dataset consists of one year of observations from a weather station in
-Canberra.
+Tap the **Dataset** button of the **Dataset** tab to choose a data
+source.  A choice of demo datasets is available. Tooltips explain each
+one.
 
 Alternatively, load your own data, including **csv** (comma separated
 value) and **txt** (plain text) files. Support for **xlsx**, **arff**,

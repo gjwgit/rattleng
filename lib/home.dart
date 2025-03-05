@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2025-02-11 09:28:16 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-03-05 16:37:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -600,11 +600,11 @@ Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Settings:** Tap here to update your default settings. At present we
-            have just one setting: ggplot theme. The default theme is the simple
-            and clean Rattle theme but there are many themes to choose
-            from. Your settings will be saved for this session and you have the
-            option to reset to the Rattle defaults.
+            **Settings:** Tap here to update your default settings. Settings
+            include a default theme for he charts, the random seed, partition
+            options, and much more. Your settings will be saved for this session
+            and future sessions and you have the option to reset to the Rattle
+            defaults.
 
             ''',
             child: IconButton(
