@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-03-05 17:34:54 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-03-06 10:14:45 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -42,10 +42,26 @@ model <- model_glm
 mtype <- "linear"
 mdesc <- "Linear Model"
 
+# 20250101 gjw Define the template functions to generate the
+# predications and the probabilities.
+##
+## Rattle V5 does this:
+##
+## crs$pr <- as.vector(ifelse(predict(crs$glm,
+##   type    = "response",
+##   newdata = crs$dataset[crs$validate, c(crs$input, crs$target)]) > 0.5, "Yes", "No"))
+##
+## 20250305 gjw This is hard wiring Yes and No. Need to get the actual
+## dataset classes.
+##
+## 20250305 gjw Currently I am getting an EXTRA LEVELS error
+##
+##   factor wind_dir_9am has new levels SW, WNW
+
 pred_ra <- function(model, data) {
   # Retrieve the vector of possible target levels from the data.
 
-  target_levels <- unique(data[[target]])  # nolint as sourced from 'model_template.R'
+  target_levels <- unique(data[[target]])
 
   # Get raw numeric probabilities (assuming the model returns a single column
   # or you've already extracted the relevant column.
@@ -58,6 +74,8 @@ pred_ra <- function(model, data) {
   # - Otherwise, pick target_levels[1].
   # We immediately convert to character so the ifelse() doesn't
   # accidentally coerce things back to numeric.
+##
+## 20250306 gjw Why is NA as a character needed?
 
   mapped_values_char <- ifelse(
     is.na(prob_vec),
@@ -78,4 +96,3 @@ pred_ra <- function(model, data) {
 }
 
 prob_ra <- function(model, data) predict(model, newdata=data, type="response")
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
