@@ -1,6 +1,6 @@
 /// Test glm() linear with demo dataset.
 //
-// Time-stamp: <Sunday 2024-10-13 13:27:51 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 19:48:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,6 +36,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 
@@ -46,38 +47,27 @@ void main() {
     testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-
       await tester.pump(interact);
-
-      await loadDemoDataset(tester);
-
+      await loadDemoDataset(tester, 'Weather');
+      await setDatasetRole(tester, 'wind_gust_dir', 'Ignore');
+      await setDatasetRole(tester, 'wind_dir_9am', 'Ignore');
+      await setDatasetRole(tester, 'wind_dir_3pm', 'Ignore');
+      await setDatasetRole(tester, 'rain_today', 'Ignore');
       await navigateToTab(tester, 'Model');
-
       await navigateToFeature(tester, 'Linear', LinearPanel);
-
-      await tester.pump(interact);
-
       await tapButton(tester, 'Build Linear Model');
-
       await tester.pump(delay);
-
-      await tapButton(tester, 'Build Linear Model');
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      await verifyPage(
-        'glm(formula = form, family = binomial(link = "logit"), data = ds[tr,',
+      await navigateToPage(tester, 1, '');
+      await verifySelectableText(
+        tester,
+        [
+          'glm(formula = form, family = binomial(link = "logit"), data = ds[tr,',
+        ],
       );
-
       await tester.pump(interact);
-
       await gotoNextPage(tester);
-
       await tester.pump(interact);
       await verifyPage('Linear Model - Visual');
-
       await verifyImage(tester);
     });
   });

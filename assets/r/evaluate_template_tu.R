@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:56:05 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-05 17:14:09 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,16 +32,6 @@
 # https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
-
-## #########################################################################
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
-
-####################################
 
 # Identify the dataset partition that the model is applied to.
 

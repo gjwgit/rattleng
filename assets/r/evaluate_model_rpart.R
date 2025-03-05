@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 09:50:30 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-05 16:50:53 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -33,21 +33,12 @@
 # https://survivor.togaware.com/datascience/rpart.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-## #########################################################################
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
-
 # 20241220 gjw Save the model to the <TEMPLATE> variable `model`. This
 # will be used below and in the following evaluations as required.
 
 model <- model_rpart
 
-# 20250105 zy Redefine the model type to update the output of error
-# matrix.
+# 20250305 gjw Specify the model type and the model description.
 
 mtype <- "rpart"
 mdesc <- "Decision Tree"
