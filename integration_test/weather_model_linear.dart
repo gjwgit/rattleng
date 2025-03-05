@@ -1,8 +1,8 @@
-/// Test glm() linear with demo dataset.
+/// WEATHER dataset MODEL tab LINEAR feature.
 //
-// Time-stamp: <Wednesday 2025-03-05 22:32:07 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-06 09:37:55 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -42,34 +42,41 @@ import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
+/// Specific variables with ROLE set to 'Ignore'.
+
+final List<String> varsToIgnore = [
+  'wind_gust_dir',
+  'wind_dir_9am',
+  'wind_dir_3pm',
+  'rain_today',
+];
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Linear Model:', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+  group('WEATHER IGNORE MODEL LINEAR:', () {
+    testWidgets('load, ignore, build, test.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
-      await setDatasetRole(tester, 'wind_gust_dir', 'Ignore');
-      await setDatasetRole(tester, 'wind_dir_9am', 'Ignore');
-      await setDatasetRole(tester, 'wind_dir_3pm', 'Ignore');
-      await setDatasetRole(tester, 'rain_today', 'Ignore');
+      for (final v in varsToIgnore) {
+        await setDatasetRole(tester, v, 'Ignore');
+      }
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Linear', LinearPanel);
       await tapButton(tester, 'Build Linear Model');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, '');
+      await navigateToPage(tester, 1, 'Linear Model');
       await verifySelectableText(
         tester,
         [
-          'glm(formula = form, family = binomial(link = "logit"), data = ds[tr,',
+          'glm(formula = form, family = binomial(link = "logit"), data = trds)',
+          '(Intercept)     249.56414   85.79545   2.909  0.00363 **',
         ],
       );
       await tester.pump(interact);
-      await gotoNextPage(tester);
-      await tester.pump(interact);
-      await verifyPage('Linear Model - Visual');
+      await gotoNextPage(tester, title: 'Linear Model - Visual');
       await verifyImage(tester);
     });
   });
