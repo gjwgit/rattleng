@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 09:50:30 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-05 17:34:54 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -32,29 +32,37 @@
 # https://survivor.togaware.com/datascience/dtrees.html
 # https://survivor.togaware.com/datascience/ for further details.
 
-## #########################################################################
-## #########################################################################
-## #########################################################################
-## 20241220 gjw DO NOT MODIFY THIS FILE WITHOUT DISCUSSION
-## #########################################################################
-## #########################################################################
-## #########################################################################
-
 # 20241220 gjw Save the model to the TEMPLATE variable `model`. This
 # will be used below and in the following evaluations as required.
 
 model <- model_glm
 
-# 20250105 zy Redefine the model type to update the output of error
-# matrix.
+# 20250305 gjw Specify the model type and the model description.
 
 mtype <- "linear"
 mdesc <- "Linear Model"
 
 # 20250101 gjw Define the template functions to generate the
 # predications and the probabilities.
-# dataset.
+##
+## Rattle V5 does this:
+##
+## crs$pr <- as.vector(ifelse(predict(crs$glm,
+##   type    = "response",
+##   newdata = crs$dataset[crs$validate, c(crs$input, crs$target)]) > 0.5, "Yes", "No"))
+##
+## 20250305 gjw This is hard wiring Yes and No. Need to get the actual
+## dataset classes.
+##
+## 20250305 gjw Currently I am getting an EXTRA LEVELS error
+##
+##   factor wind_dir_9am has new levels SW, WNW
 
-pred_ra <- function(model, data) predict(model, newdata=data,)
+pred_ra <- function(model, data) as.vector(ifelse(predict(model,
+                                                          type    = "response",
+                                                          newdata = data) > 0.5,
+                                                  "Yes", "No"))
 
-prob_ra <- function(model, data) predict(model, newdata=data, type="prob")[,2]
+prob_ra <- function(model, data) predict(model,
+                                         type    = "response",
+                                         newdata = data)
