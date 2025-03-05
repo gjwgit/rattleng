@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2025-02-26 14:52:40 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2025-03-06 08:40:52 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -239,22 +239,22 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **Weather** dataset is a recent dataset of one year of
-                      daily observations from a weather station in Canberra,
+                      The **Weather** dataset captures one year of daily
+                      observations from a weather station in Canberra,
                       Australia. It is useful to demonstrate all steps of the
-                      Data Science process, to Explore, Transform, model, and
-                      Evaluate. The target variable for predictive modelling is
-                      the variable *Rain Tomorrow*. The amount of rain tomorrow
-                      is recored as the variable *Risk MM*. Most of the
-                      remaining variables could be used as inputs for building a
-                      model to predict the likelihood of it raining tomorrow -
-                      *should you take an umbrella with you tomorrow?*
+                      Data Science process, to **Explore**, **Transform**,
+                      **Model**, and **Evaluate**. The **binary** target
+                      variable for predictive modelling is *Rain Tomorrow* with
+                      the amount of rain recored as **Risk MM**. Most of the
+                      remaining variables can be used as inputs for building a
+                      **Decision Tree**.
 
-                      The data has been collected from the Australian Bureau of
-                      Meterology since 2007, covering over 50 weather stations
-                      across Australia. The larger dataset is available from
+                      This is a subset of the full dataset available from
                       Togaware as
-                      [weatherAus.csv](https://access.togaware.com/weatherAUS.csv).
+                      [weatherAus.csv](https://rattle.togaware.com/weatherAUS.csv). This
+                      dataset has been collected from the Australian Bureau of
+                      Meterology since 2007, covering over 50 weather stations
+                      across Australia.
 
                       ''',
                     child: ElevatedButton(
