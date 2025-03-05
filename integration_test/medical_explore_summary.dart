@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Sunday 2025-01-26 07:14:48 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 14:24:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,8 +35,10 @@ import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -45,55 +47,32 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
-    await gotoNextPage(tester);
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Summary', SummaryPanel);
     await tapButton(tester, 'Generate Dataset Summary');
     await tester.pump(hack);
-    await gotoNextPage(tester);
-    final ssnFinder = find.textContaining('Length:20000');
-    expect(ssnFinder, findsOneWidget);
-
-    // Find the gender containing count of females".
-
-    final firstNameFinder = find.textContaining('f:12435');
-    expect(firstNameFinder, findsOneWidget);
-
-    // Tap the right arrow button to go to "Dataset Glimpse" page.
-
-    await gotoNextPage(tester);
-
-    // Find the text containing "20,000" as the number of rows.
-
-    var rowsFinder = find.textContaining('Rows: 20,000');
-    expect(rowsFinder, findsOneWidget);
-
-    // Tap the right arrow button to go to "Skim of the Dataset" page.
-
-    await gotoNextPage(tester);
-
-    // Find the text containing "20000" as the number of rows.
-
-    rowsFinder = find.textContaining('20000');
-    expect(rowsFinder, findsOneWidget);
-
-    // Find the text containing "24" as the number of columns.
-
-    final columnsFinder = find.textContaining('24');
-    expect(columnsFinder, findsNWidgets(2));
-
-    // Tap the right arrow button to go to "Kurtosis and Skewness" page.
-
-    await gotoNextPage(tester);
-
-    // Find the text containing "2.35753359" as the weight.
-
-    final weightFinder = find.textContaining('2.12090961');
-    expect(weightFinder, findsOneWidget);
-
-    // Find the text containing "0.099352734" as the age_at_consultation.
-
-    final ageFinder = find.textContaining('0.099352734');
-    expect(ageFinder, findsOneWidget);
+    await navigateToPage(tester, 1, 'Summary of the Dataset');
+    await verifySelectableText(tester, [
+      'Length:20000',
+      'f:12435',
+    ]);
+    await navigateToPage(tester, 2, 'Dataset Glimpse');
+    await verifySelectableText(
+      tester,
+      ['Rows: 20,000'],
+    );
+    await navigateToPage(tester, 3, 'Skim the Dataset');
+    await verifySelectableText(
+      tester,
+      ['20000'],
+    );
+    await navigateToPage(tester, 4, 'Kurtosis and Skewness');
+    await verifySelectableText(
+      tester,
+      [
+        '2.12090961',
+        '0.099352734',
+      ],
+    );
   });
 }

@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab CORRELATION feature.
 //
-// Time-stamp: <Sunday 2025-01-26 08:01:34 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 14:29:23 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -47,7 +47,7 @@ void main() {
     testWidgets('Check calculated correlations.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await loadDemoDataset(tester);
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation', CorrelationPanel);
       await tapButton(tester, 'Perform Correlation Analysis');
@@ -57,9 +57,9 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          'risk_mm                -0.20        -0.22         0.06',
-          'pressure_9am            1.00         0.97         0.25',
-          'humidity_9am            0.25         0.23         1.00',
+          'pressure_9am      1.00         0.97         0.25',
+          'humidity_9am      0.25         0.23         1.00',
+          'risk_mm          -0.20        -0.22         0.06',
         ],
       );
       await gotoNextPage(tester);
