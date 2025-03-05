@@ -1,6 +1,6 @@
 /// Test glm() linear with demo dataset.
 //
-// Time-stamp: <Wednesday 2025-03-05 19:48:39 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-05 22:32:07 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,12 +33,14 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
