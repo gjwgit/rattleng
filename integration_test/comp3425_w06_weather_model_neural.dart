@@ -1,6 +1,6 @@
 /// COMP3425 W06 WEATHER dataset MODEL tab NNET feature.
 //
-// Time-stamp: <Friday 2025-03-07 12:01:56 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 12:10:07 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -31,17 +31,12 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/cleanup/panel.dart';
 import 'package:rattle/main.dart' as app;
 
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
-import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/set_partition.dart';
-import 'utils/tap_button.dart';
-import 'utils/verify_checkbox.dart';
 import 'utils/verify_role.dart';
-import 'utils/verify_selectable_text.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
