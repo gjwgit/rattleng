@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-02-06 07:03:03 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-03-07 17:09:08 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -121,7 +121,8 @@ svg("<TEMPDIR>/model_arules_item_frequency.svg")
 arules::itemFrequencyPlot(transactions,
                           support = <ASSOCIATION_SUPPORT>,
                           horiz   = TRUE,
-                          type    = "relative")
+                          type    = "relative",
+                          xlab    = "Item frequency (relative)")
 dev.off()
 
 # Plot a summary of the associations.
