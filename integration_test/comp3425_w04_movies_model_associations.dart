@@ -1,6 +1,6 @@
 /// COMP3425 W04 MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Friday 2025-03-07 11:37:54 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 12:24:52 +1100 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -93,68 +93,6 @@ void main() {
         tester,
         title: 'Association Rules — Parrallel Coordinates Plot',
       );
-      //   // 20250206 gjw If we turn partition off then we get different numbers.
-      //   // await verifySelectableText(
-      //   //   tester,
-      //   //   [
-      //   //     '19 rules',
-      //   //     'Min.   :0.1035   Min.   :0.1557   Min.   :0.1125   Min.   :0.8435',
-      //   //     'Median :0.1505   Median :0.5793   Median :0.3345   Median :1.0166',
-      //   //     'transactions          2000     0.1        0.1',
-      //   //     'support = 0.1, confidence = 0.1, minlen = 2',
-      //   //   ],
-      //   // );
-      //   await navigateToPage(tester, 2, 'Association Rules - Discovered Rules');
-      //   await verifySelectableText(
-      //     tester,
-      //     [
-      //       'marital=Married',
-      //       '=> {gender=Male}',
-      //       'support   confidence coverage  lift      count',
-      //       '0.4014286 0.8906498  0.4507143 1.3279123 562',
-      //     ],
-      //   );
-
-      //   // Now IMPUTE missing for the Occupation and build again.
-
-      //   await navigateToTab(tester, 'Dataset');
-      //   await setDatasetRole(tester, 'occupation', 'Input');
-      //   await navigateToTab(tester, 'Transform');
-      //   await navigateToFeature(tester, 'Impute', ImputePanel);
-      //   await setSelectedVariable(tester, 'occupation');
-      //   await tapChip(tester, 'Constant');
-      //   await tapButton(tester, 'Impute Missing Values');
-      //   await navigateToPage(tester, 1, 'Dataset Summary');
-      //   await verifySelectableText(
-      //     tester,
-      //     [
-      //       'IMP_occupation',
-      //     ],
-      //   );
-
-      //   // 20250205 gjw Rebuild the model and determin the difference?
-
-      //   await navigateToTab(tester, 'Model');
-      //   await navigateToFeature(tester, 'Associations', AssociationPanel);
-      //   await tapButton(tester, 'Build Association Rules');
-      //   await tester.pump(delay);
-      //   await navigateToPage(tester, 1, 'Association Rules - Meta Summary');
-      //   await verifySelectableText(
-      //     tester,
-      //     [
-      //       'set of 23 rules',
-      //     ],
-      //   );
-      //   await navigateToPage(tester, 2, 'Association Rules - Discovered Rules');
-      //   await verifySelectableText(
-      //     tester,
-      //     [
-      //       'marital=Married',
-      //       '=> {gender=Male}',
-      //       'support   confidence coverage  lift      count',
-      //       '0.4014286 0.8906498  0.4507143 1.3279123 562',
-      //     ],
-      //   );
     });
   });
 }
