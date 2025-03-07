@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-03-07 14:51:29 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 16:40:07 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -126,9 +126,10 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               key: const Key('basketsAssociationField'),
               tooltip: '''
 
-              If checked, baskets are identified by the ident variable and items
-              in the basket by the target variable. Otherwise a basket is the
-              collection of input variables.
+              **Baskets:** When checked the grouping of items or baskets are
+              identified by the **Ident** variable and the items in the basket
+              by the **Target** variable. Otherwise we treat
+              **Input** variables as being the 'basket'.
 
               ''',
               label: 'Baskets',
