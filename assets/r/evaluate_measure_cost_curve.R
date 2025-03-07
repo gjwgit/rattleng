@@ -80,8 +80,7 @@ svg(glue("<TEMPDIR>/model_evaluate_cost_curve_{mtype}_{dtype}.svg"), width = 11)
 
 cost_df %>%
   ggplot(aes(x = threshold, y = cost)) +
-  geom_line(color = "blue", linewidth = 1) +
-  geom_point(color = "red", linewidth = 2) +
+  geom_line(color = "black") +
   labs(
     title = title_text,
     x = "Threshold",
