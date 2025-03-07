@@ -1,6 +1,6 @@
 /// Test MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <2025-02-06 15:45:41 gjw>
+// Time-stamp: <Friday 2025-03-07 12:24:21 +1100 >
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -53,7 +53,7 @@ void main() {
     await tapButton(tester, 'Build Association Rules');
     await tester.pump(delay);
     await gotoNextPage(tester);
-    await verifyPage('Association Rules - Meta Summary');
+    await verifyPage('Association Rules — Meta Summary');
     await verifySelectableText(
       tester,
       [
@@ -61,7 +61,7 @@ void main() {
       ],
     );
     await gotoNextPage(tester);
-    await verifyPage('Association Rules - Discovered Rules');
+    await verifyPage('Association Rules — Discovered Rules');
     await verifySelectableText(
       tester,
       [

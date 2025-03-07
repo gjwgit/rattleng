@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Thursday 2025-03-06 08:40:52 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-07 08:08:30 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -256,6 +256,9 @@ class DatasetPopup extends ConsumerWidget {
                       Meterology since 2007, covering over 50 weather stations
                       across Australia.
 
+                      The **csv** file is available as
+                      [weather.csv](https://github.com/gjwgit/rattleng/blob/dev/assets/data/weather.csv).
+
                       ''',
                     child: ElevatedButton(
                       onPressed: () async {
@@ -289,6 +292,9 @@ class DatasetPopup extends ConsumerWidget {
                       adjustment. Auditors can thus not waste their time on
                       non-productive audits.
 
+                      The **csv** file is available as
+                      [audit.csv](https://github.com/gjwgit/rattleng/blob/dev/assets/data/audit.csv).
+
                       ''',
                     child: ElevatedButton(
                       onPressed: () async {
@@ -310,6 +316,9 @@ class DatasetPopup extends ConsumerWidget {
                       Business, The University of
                       Iowa](http://www.biz.uiowa.edu/faculty/jledolter/DataMining/protein.csv). It
                       is useful for demonstrating **Cluster** analysis.
+
+                      The **csv** file is available as
+                      [protien.csv](https://github.com/gjwgit/rattleng/blob/dev/assets/data/protein.csv).
 
                       ''',
                     child: ElevatedButton(
@@ -336,6 +345,9 @@ class DatasetPopup extends ConsumerWidget {
                       association rules analysis with *Baskets* enabled will
                       build assoitation rules found in the dataset.
 
+                      The **csv** file is available as
+                      [movies.csv](https://github.com/gjwgit/rattleng/blob/dev/assets/data/movies.csv).
+
                       ''',
                     child: ElevatedButton(
                       onPressed: () async {
@@ -356,6 +368,9 @@ class DatasetPopup extends ConsumerWidget {
                       The **Sherlock** data file is a text file for
                       demonstrating the **Word Cloud** feature of the **Model**
                       tab. It is a snippet from a Sherlock Holmes novel.
+
+                      The **txt** file is available as
+                      [sherlock.txt](https://github.com/gjwgit/rattleng/blob/dev/assets/data/sherlock.txt).
 
                       ''',
                     child: ElevatedButton(
@@ -379,6 +394,9 @@ class DatasetPopup extends ConsumerWidget {
                       U.S. Census Bureau, Population Division. The variables are
                       described
                       [there](https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/counties/totals/co-est2016-alldata.pdf).
+
+                      The **csv** file is available as
+                      [co-est2016-alldata.csv](https://github.com/gjwgit/rattleng/blob/dev/assets/data/co-est2016-alldata.csv).
 
                       ''',
                     child: ElevatedButton(

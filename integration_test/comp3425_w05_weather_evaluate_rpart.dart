@@ -1,6 +1,6 @@
 /// COMP3425 W05 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Thursday 2025-02-13 09:20:59 +1100 >
+// Time-stamp: <Friday 2025-03-07 05:33:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -44,8 +44,8 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('WEATHER MODEL TREE RPART EVALUATE:', () {
-    testWidgets('comp3425 w05 lab evaluation.', (WidgetTester tester) async {
+  group('COMP3425 W05 LAB WEATHER RPART EVALUATE:', () {
+    testWidgets('lab evaluation.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);

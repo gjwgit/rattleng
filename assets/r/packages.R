@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-02-26 15:43:36 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-03-06 14:43:11 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -87,6 +87,7 @@ pkgs <- c(
   'Ckmeans.1d.dp',
   'Hmisc',
   'NeuralNetTools',
+  'ROCR',
   'SnowballC',
   'VIM',
   'ada',
