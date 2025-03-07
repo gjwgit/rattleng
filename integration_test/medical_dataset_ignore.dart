@@ -1,6 +1,6 @@
 /// Test MEDICAL dataset IGNORE roles.
 //
-// Time-stamp: <Sunday 2025-01-26 07:35:55 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 11:39:58 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -36,8 +36,7 @@ import 'utils/load_dataset_by_path.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/verify_role.dart';
 
-/// List of specific variables that should have their role automatically set to
-/// 'Ignore' in the DEMO and the LARGE datasets.
+/// Specific variables with ROLE set to 'Ignore'.
 
 final List<String> varsToIgnore = [
   'rec_id',

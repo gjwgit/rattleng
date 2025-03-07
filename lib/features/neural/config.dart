@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-02-25 09:49:00 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 08:34:20 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -244,7 +244,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               },
             ),
             LabelledCheckbox(
-              key: const Key('NNET Trace'),
+              key: const Key('nnet_trace'),
               tooltip: '''
 
               Enable tracing optimization for the **single layer neural

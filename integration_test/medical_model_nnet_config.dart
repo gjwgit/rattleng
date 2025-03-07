@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Sunday 2025-02-02 15:48:55 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 08:34:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -83,7 +83,7 @@ void main() {
 
     // Find and tap the 'Trace' checkbox.
 
-    final Finder traceCheckBox = find.byKey(const Key('NNET Trace'));
+    final Finder traceCheckBox = find.byKey(const Key('nnet_trace'));
     await tester.tap(traceCheckBox);
     await tester.pumpAndSettle(); // Wait for UI to settle.
 

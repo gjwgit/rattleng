@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-02-04 08:21:38 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 11:05:36 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -87,7 +87,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         TextPage(
           title: '''
 
-          # Association Rules - Meta Summary
+          # Association Rules &#8212; Meta Summary
 
           Built using
           [arules::apriori()](https://www.rdocumentation.org/packages/arules/topics/apriori).
@@ -109,7 +109,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         TextPage(
           title: '''
 
-          # Association Rules - Discovered Rules
+          # Association Rules &#8212; Discovered Rules
 
           Generated using
           [arules::inspect()](https://www.rdocumentation.org/packages/arules/topics/inspect).
@@ -131,7 +131,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         ImagePage(
           title: '''
 
-          # Association Rules  &#8212; Item Frequency
+          # Association Rules &#8212; Item Frequency
 
           Generated using
           [arules::itemFrequencyPlot()](https://www.rdocumentation.org/packages/arules/topics/itemFrequencyPlot).
@@ -153,7 +153,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         TextPage(
           title: '''
 
-          # Interestingness Measures
+          # Association Rules &#8212; Interestingness Measures
 
           Generated using `apriori()`
 
@@ -181,7 +181,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         ImagePage(
           title: '''
 
-          # Association Rules  &#8212; Graph of Associations
+          # Association Rules &#8212; Graph of Associations
 
           Generated using
           [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot).
@@ -235,7 +235,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
         ImagePage(
           title: '''
 
-          # Association Rules  &#8212; Parrallel Coordinates Plot
+          # Association Rules &#8212; Parrallel Coordinates Plot
 
           Visit $image.
 
