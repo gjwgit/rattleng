@@ -13,7 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
-+ Documentation (Datasets) and dependency (ROCR) updates [6.4.27 20250307 gjw]
++ Doc (Datasets) and depend (ROCR) updates [6.4.27 20250307 gjw]
 + EVALUATE LINEAR: Implemented [6.4.26 20250306 gjw]
 + TEST and DOC updates [6.4.25 20250305 gjw]
 + R BUG FIX: Remove errant angle brackets [6.4.24 20250226 gjw]
