@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-03-07 14:45:38 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 14:51:29 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -83,7 +83,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
   Widget build(BuildContext context) {
     String sortByAssociation =
         ref.read(sortByAssociationProvider.notifier).state;
-    bool basketsTicked = ref.read(basketsAssociationProvider.notifier).state;
+    // bool basketsTicked = ref.read(basketsAssociationProvider.notifier).state;
 
     return Column(
       spacing: configRowSpace,
