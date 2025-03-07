@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2025-03-07 08:08:30 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-07 16:54:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -146,9 +146,9 @@ class DatasetPopup extends ConsumerWidget {
                 child: MarkdownTooltip(
                   message: '''
 
-                  **Load Local File as Dataset** Tap here to popup a window to browse
-                  to a local **csv** or **txt** file that you would like to load
-                  into Rattle.
+                  **Local File:** Tap here to popup a window so that you can
+                  browse to a local **csv** or **txt** file that you would like
+                  to load into Rattle.
 
                   ''',
                   child: Text('Local File'),
@@ -221,8 +221,8 @@ class DatasetPopup extends ConsumerWidget {
 
                   ''',
             child: MarkdownBody(
-              data: '**Demo Datasets** '
-                  'Tap here to load one of the available demonstration datasets:',
+              data: '**Demo Datasets:** '
+                  'Tap one of the following buttons to load one of the available demonstration datasets.',
             ),
           ),
 
@@ -239,15 +239,15 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **Weather** dataset captures one year of daily
-                      observations from a weather station in Canberra,
-                      Australia. It is useful to demonstrate all steps of the
-                      Data Science process, to **Explore**, **Transform**,
-                      **Model**, and **Evaluate**. The **binary** target
-                      variable for predictive modelling is *Rain Tomorrow* with
-                      the amount of rain recored as **Risk MM**. Most of the
-                      remaining variables can be used as inputs for building a
-                      **Decision Tree**.
+                      **Weather:** Tap here to load a dataset that captures one
+                      year of daily observations from a weather station in
+                      Canberra, Australia. It is useful to demonstrate all steps
+                      of the Data Science process, to **Explore**,
+                      **Transform**, **Model**, and **Evaluate**. The **binary**
+                      target variable for predictive modelling is *Rain
+                      Tomorrow* with the amount of rain recored as **Risk
+                      MM**. Most of the remaining variables can be used as
+                      inputs for building a **Decision Tree**.
 
                       This is a subset of the full dataset available from
                       Togaware as
@@ -276,10 +276,10 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **Audit** dataset is a demonstrator for predicting
-                      whether the govenrment revenue authority might need to
-                      audit a taxpayer. The dataset of 2,000 fictional tax
-                      payers who have previously been audited includes their
+                     **Audit:** Tap here to load a dataset for predicting
+                      whether a govenrment revenue authority might need to audit
+                      a taxpayer. The dataset consists of 2,000 fictional tax
+                      payers who have previously been audited. It includes their
                       demographics and financial variables. The target variable
                       *Adjusted* records whether their financial data had to be
                       adjusted because their originally submitted data had
@@ -287,8 +287,8 @@ class DatasetPopup extends ConsumerWidget {
                       *Adjustment* is the dollar amount of the adjustment - the
                       adjustment to their tax liability.
 
-                      The resulting predictive model could be used to predict
-                      the likelihood of an audit of a tax payer resulting in an
+                      A **predictive** model could be used to predict the
+                      likelihood of an audit of a tax payer resulting in an
                       adjustment. Auditors can thus not waste their time on
                       non-productive audits.
 
@@ -312,8 +312,8 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **Protein** dataset comes from the [Tippie College of
-                      Business, The University of
+                      **Protein:** Tap here to load this dataset from the
+                      [Tippie College of Business, The University of
                       Iowa](http://www.biz.uiowa.edu/faculty/jledolter/DataMining/protein.csv). It
                       is useful for demonstrating **Cluster** analysis.
 
@@ -337,13 +337,14 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **Movies** dataset is useful for demonstrating basket
-                      analysis under the **Associations** feature of the
-                      **Model** tab. The dataset has just two
-                      columns/variables. Each basket is uniquley identified and
-                      each basket can contain 1 or more items. Running the
-                      association rules analysis with *Baskets* enabled will
-                      build assoitation rules found in the dataset.
+                      **Movies:** Tap here to load this dataset of some
+                      favourite movies. The dataset is useful for demonstrating
+                      basket analysis available through the **Associations**
+                      feature of the **Model** tab. The dataset has just two
+                      columns, a **basket** which identifies a basket, and an
+                      **item** which names an item contained in a basket. Thus,
+                      each basket is uniquley identified and each basket can
+                      contain 1 or more items.
 
                       The **csv** file is available as
                       [movies.csv](https://github.com/gjwgit/rattleng/blob/dev/assets/data/movies.csv).
@@ -365,7 +366,7 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **Sherlock** data file is a text file for
+                      **Sherlock:** Tap here to load this text file for
                       demonstrating the **Word Cloud** feature of the **Model**
                       tab. It is a snippet from a Sherlock Holmes novel.
 
@@ -389,10 +390,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      The **US Population** data file is a larger **csv** file
-                      for exploring a dataset. The data comes from the
-                      U.S. Census Bureau, Population Division. The variables are
-                      described
+                      **US Population:** Tap here to load a rather large dataset
+                      from the U.S. Census Bureau, Population Division. The
+                      variables are described
                       [there](https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/counties/totals/co-est2016-alldata.pdf).
 
                       The **csv** file is available as
@@ -432,7 +432,7 @@ class DatasetPopup extends ConsumerWidget {
                 child: MarkdownTooltip(
                   message: '''
 
-                  **Cancel** Tap here to **not** proceed with loading a new
+                  **Cancel:** Tap here to **not** proceed with loading a new
                     dataset.
 
                   ''',
