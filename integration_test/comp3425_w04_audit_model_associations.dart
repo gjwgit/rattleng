@@ -1,6 +1,6 @@
-/// COMP3425 W4 AUDIT dataset MODEL tab ASSOCIATION feature.
+/// COMP3425 W04 AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Wednesday 2025-03-05 08:33:27 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 12:20:24 +1100 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -47,7 +47,7 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('AUDIT MODEL ASSOCIATION:', () {
+  group('COMP3425 W04 LAB AUDIT ASSOCIATION:', () {
     testWidgets('model, impute occupation, model.',
         (WidgetTester tester) async {
       app.main();
@@ -63,7 +63,7 @@ void main() {
       await navigateToFeature(tester, 'Associations', AssociationPanel);
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Association Rules - Meta Summary');
+      await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
       await verifySelectableText(
         tester,
         [
@@ -85,7 +85,7 @@ void main() {
       //     'support = 0.1, confidence = 0.1, minlen = 2',
       //   ],
       // );
-      await navigateToPage(tester, 2, 'Association Rules - Discovered Rules');
+      await navigateToPage(tester, 2, 'Association Rules — Discovered Rules');
       await verifySelectableText(
         tester,
         [
@@ -119,14 +119,14 @@ void main() {
       await navigateToFeature(tester, 'Associations', AssociationPanel);
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Association Rules - Meta Summary');
+      await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
       await verifySelectableText(
         tester,
         [
           'set of 23 rules',
         ],
       );
-      await navigateToPage(tester, 2, 'Association Rules - Discovered Rules');
+      await navigateToPage(tester, 2, 'Association Rules — Discovered Rules');
       await verifySelectableText(
         tester,
         [
