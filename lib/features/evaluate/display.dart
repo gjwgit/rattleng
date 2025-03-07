@@ -129,7 +129,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String handNeuralNetImage =
         '$tempDir/model_evaluate_hand_neuralnet_$dtype.svg';
 
-    String costCurveRpartImage = '$tempDir/model_evaluate_cost_curve_rpart_$dtype.svg';
+    String costCurveRpartImage =
+        '$tempDir/model_evaluate_cost_curve_rpart_$dtype.svg';
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
     bool forestBoxTicked = ref.watch(forestEvaluateProvider);
