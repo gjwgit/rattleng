@@ -1,6 +1,6 @@
-/// COMP3425 W4 AUDIT dataset MODEL tab ASSOCIATION feature.
+/// COMP3425 W04 AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Wednesday 2025-03-05 08:33:27 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-07 07:54:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -47,7 +47,7 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('AUDIT MODEL ASSOCIATION:', () {
+  group('COMP3425 W04 LAB AUDIT ASSOCIATION:', () {
     testWidgets('model, impute occupation, model.',
         (WidgetTester tester) async {
       app.main();
