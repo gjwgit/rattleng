@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2025-03-08 09:26:00 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-03-08 16:24:24 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -88,7 +88,7 @@ actual_model_labels <- actual_model_labels[keep_idx]
 
 # Generate a prediction object that combines the predicted probability and actual labels.
 
-prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
+prediction_prob_values <- ROCR::prediction(roc_predicted_probs, actual_model_labels)
 
 # Compute performance metrics: True Positive Rate (TPR) and False Positive Rate (FPR).
 
