@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 08:37:14 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 08:46:51 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -327,8 +327,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         MultiImagePage(
           titles: rocImagesTitles,
           paths: rocImages,
+          // 20250309 gjw Zheyuan Isn't this the tite for the page? Call it pageTitle.
           appBarImage:
               'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
+          // 20250309 gjw Zheyuan Isn't this the documentation for the page?
+          // Call it pageDoc and allow it to be multiple lines in a triple
+          // quoted string.
           buildHyperLink:
               'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
         ),
@@ -365,7 +369,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
           paths: costCurveImages,
           appBarImage: 'Cost Curve &#8212; Expected Misclassification Cost',
           buildHyperLink:
-              'Built using [ROCR::performance](https://www.rdocumentation.org/packages/ROCR).',
+              'Built using [ROCR::performance](https://www.rdocumentation.org/packages/ROCR/topics/performance) with measure=ecost.',
         ),
       );
     }
