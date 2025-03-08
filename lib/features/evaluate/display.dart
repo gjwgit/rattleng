@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 06:53:59 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 06:58:57 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -118,7 +118,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // with those in `assets/r/evaluate_model_*.R`.
 
     // 20250309 gjw Zheyaun, this surely looks like an opportunity for a
-    // labelled array rather then all of the replicated work?
+    // labelled array rather then all of the replicated work? Create a variable
+    // to list the model types (rpart, adaboost, ctree, linear, nnet, neuralnet,
+    // svm, ...) and another for the evaluation types (roc, costcurve,
+    // riskchart, ...). Then iterate over them to decide what to display. Should
+    // be able to reduce the number of lines of code and it will be a lot easier
+    // to understand and to maintain.
 
     // 20250309 gjw Zheyuan, we seem to have changed the file naming scheme. It
     // should be `evaluate_rpart_roc.svg`, etc. and
