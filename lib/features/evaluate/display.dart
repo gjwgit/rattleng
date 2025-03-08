@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 06:08:03 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 06:32:04 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,7 +42,8 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 // import 'package:rattle/widgets/no_image_page.dart';
 
-/// The EVALUATE panel displays the instructions and then the build output.
+/// A panel to displays the overview for the evaluate tab and the built pages to
+/// present an evluation of any built models.
 
 class EvaluateDisplay extends ConsumerStatefulWidget {
   const EvaluateDisplay({super.key});
@@ -54,11 +55,21 @@ class EvaluateDisplay extends ConsumerStatefulWidget {
 class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
   @override
   Widget build(BuildContext context) {
+    // We use a PageController from Riverpod so that XXXX.
+
     final pageController = ref.watch(
       evaluatePageControllerProvider,
-    ); // Get the PageController from Riverpod
+    );
+
+    // From the R output, kept in Riverpod,  we will XXXX.
 
     String stdout = ref.watch(stdoutProvider);
+
+    // 20250309 gjw Zheyuan, how does converting toUpperCase (why do that at
+    // all) and then test 'Tuning' work? Wouldn't you need to test 'TUNING'. And
+    // then later converting toLowerCase for the display is probably what we do
+    // want, so just convert it to lower case up front. Fix rExtractEvalaute()
+    // to work with what we give it.
 
     String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
     bool useV = ref.watch(useValidationSettingProvider);
@@ -90,8 +101,17 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String dtype = datasetType.toLowerCase();
 
+    // 20250309 gjw We need to identify the model specific SVG files for each of
+    // the evaluation types that we support in Rattle. All files follw a very
+    // distinct naming scheme and we need to coordinate the names we use here
+    // with those in `assets/r/evaluate_model_*.R`.
+
     // 20250309 gjw Zheyaun, this surely looks like an opportunity for a
     // labelled array rather then all of the replicated work?
+
+    // 20250309 gjw Zheyuan, we seem to have changed the file naming scheme. It
+    // should be `evaluate_rpart_roc.svg`, etc. and
+    // `evaluate_rpart_riskchart.svg` and so on.
 
     String rocAdaBoostImage = '$tempDir/model_evaluate_roc_adaboost_$dtype.svg';
     String rocCtreeImage = '$tempDir/model_evaluate_roc_ctree_$dtype.svg';
