@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ COST CURVE: Implemented for rpart [6.4.29 20250308 zy]
 + ASSOCIATIONS: Enable rule limit and sort [6.4.28 20250307 gjw]
 + Doc (Datasets) and depend (ROCR) updates [6.4.27 20250307 gjw]
 + EVALUATE LINEAR: Implemented [6.4.26 20250306 gjw]
