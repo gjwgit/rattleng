@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 08:46:51 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 09:01:45 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -81,8 +81,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // 20250309 gjw Zheyuan, how does converting toUpperCase (why do that at
     // all) and then test 'Tuning' work? Wouldn't you need to test 'TUNING'. And
     // then later converting toLowerCase for the display is probably what we do
-    // want, so just convert it to lower case up front. Fix rExtractEvalaute()
-    // to work with what we give it.
+    // want, so just convert it to lower case up front. Fix rExtractEvaluate()
+    // to work with what we give it. Or do you need TUNING, Tuning, and tuning
+    // in different places? It is really unclear here why this is being done,
+    // and needs to be very clean and informative as to why the different
+    // capitalisations are needed?
 
     String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
     bool useValidation = ref.watch(useValidationSettingProvider);
