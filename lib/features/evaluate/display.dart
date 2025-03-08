@@ -129,6 +129,9 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String handNeuralNetImage =
         '$tempDir/model_evaluate_hand_neuralnet_$dtype.svg';
 
+    String costCurveRpartImage =
+        '$tempDir/model_evaluate_cost_curve_rpart_$dtype.svg';
+
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
     bool forestBoxTicked = ref.watch(forestEvaluateProvider);
     bool boostBoxTicked = ref.watch(boostEvaluateProvider);
@@ -138,11 +141,15 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     List<String> rocImages = [];
     List<String> rocImagesTitles = [];
+
     List<String> handImages = [];
     List<String> handImagesTitles = [];
 
     List<String> riskChartImages = [];
     List<String> riskChartImagesTitles = [];
+
+    List<String> costCurveImages = [];
+    List<String> costCurveImagesTitles = [];
 
     // List of image-title pairs for ROC data.
 
@@ -224,6 +231,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       },
     ];
 
+    // List of image-title pairs for Hand plot.
+
+    final costCurveImageData = [
+      {'image': costCurveRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
+    ];
+
     // Iterate through each image-title pair.
 
     for (var data in rocImageData) {
@@ -239,10 +252,18 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         riskChartImagesTitles.add(data['title']!);
       }
     }
+
     for (var data in handImageData) {
       if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
         handImages.add(data['image']!.toString());
         handImagesTitles.add(data['title']!.toString());
+      }
+    }
+
+    for (var data in costCurveImageData) {
+      if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
+        costCurveImages.add(data['image']!.toString());
+        costCurveImagesTitles.add(data['title']!.toString());
       }
     }
 
@@ -277,6 +298,19 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
           titles: riskChartImagesTitles,
           paths: riskChartImages,
           appBarImage: 'Risk Chart',
+        ),
+      );
+    }
+
+    if (costCurveImages.isNotEmpty) {
+      debugPrint('costCurveImages: $costCurveImages');
+      pages.add(
+        MultiImagePage(
+          titles: costCurveImagesTitles,
+          paths: costCurveImages,
+          appBarImage: 'Cost Curve -- the Expected Misclassification Cost',
+          buildHyperLink:
+              'Built using [ROCR::performance](https://www.rdocumentation.org/packages/ROCR).',
         ),
       );
     }
