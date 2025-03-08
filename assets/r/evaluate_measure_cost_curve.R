@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-03-09 06:02:36 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-03-09 08:41:23 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -51,9 +51,9 @@ pred <- if (length(actual_missing)) {
 }
 
 # 20250309 gjw ROCR's `performance()` can compute many kinds of
-# performance measures. Here we compute the expected cost.  We extract
-# the x and y values from the expeced cost into a temporary data frame
-# for plotting
+# performance measures. Here we compute the expected cost which is the
+# basis of our cost curve.  We extract the x and y values from the
+# expeced cost into a temporary data frame for plotting
 
 perf_ecost <- ROCR::performance(pred, "ecost")
 tdf <-data.frame(
@@ -68,8 +68,9 @@ tdf <-data.frame(
 auc <- ROCR::performance(pred, "auc")@y.values[[1]]
 
 # 20250309 gjw An informative title will present the plot type, the
-# model type, the data set on which the model was built, the dataset
-# used to evaluate the model, and the target variable of the model.
+# model description and specific model type, the data set on which the
+# model was built, the dataset used to evaluate the model, and the
+# target variable of the model.
 
 title <- glue(
   "Cost Curve — {mdesc} — {mtype} ",
