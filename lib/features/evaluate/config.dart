@@ -325,12 +325,13 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String ro = 'evaluate_measure_roc';
                 String erc = 'evaluate_measure_riskchart';
                 String hd = 'evaluate_measure_hand';
+                String ecc = 'evaluate_measure_cost_curve';
 
                 // Execute evaluation for rpart model if it was executed and treeExecuted is true.
 
                 await executeEvaluation(
                   executed: rpartExecuted && treeExecuted,
-                  parameters: [er, em, ro, erc, hd],
+                  parameters: [er, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,

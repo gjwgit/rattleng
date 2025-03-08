@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:48:05 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-03-08 16:24:24 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,12 +30,6 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
-
-# Load required packages from the local library into the R session.
-
-library(ROCR)
-
-################################
 
 title <- glue(
     "ROC Curve &#8212; {mdesc} &#8212; ",
@@ -94,24 +88,24 @@ actual_model_labels <- actual_model_labels[keep_idx]
 
 # Generate a prediction object that combines the predicted probability and actual labels.
 
-prediction_prob_values <- prediction(roc_predicted_probs, actual_model_labels)
+prediction_prob_values <- ROCR::prediction(roc_predicted_probs, actual_model_labels)
 
 # Compute performance metrics: True Positive Rate (TPR) and False Positive Rate (FPR).
 
-pe <- performance(prediction_prob_values, "tpr", "fpr")
+pe <- ROCR::performance(prediction_prob_values, "tpr", "fpr")
 
 # Extract the Area Under the Curve (AUC) value for the ROC curve.
 
-au <- performance(prediction_prob_values, "auc")@y.values[[1]]
+au <- ROCR::performance(prediction_prob_values, "auc")@y.values[[1]]
 
 # Create a data frame containing the FPR and TPR values for plotting the ROC curve.
 
 pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
 ##
-## 20250106 gjw embed the path into the svg() call since the svg()
-## lines are removed from the script saved for the user and having a
-## separate fname definitino all by itself looks a little odd and is
-## not required.
+## 20250106 gjw I now embed the path into the svg() call since the
+## svg() lines are removed from the script saved for the user and
+## having a separate fname definition all by itself looks a little odd
+## and is not required.
 ##
 svg(glue("<TEMPDIR>/model_evaluate_roc_{mtype}_{dtype}.svg"), width = 11)
 
