@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 06:32:04 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 06:53:59 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -40,10 +40,10 @@ import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/multi_image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
-// import 'package:rattle/widgets/no_image_page.dart';
 
-/// A panel to displays the overview for the evaluate tab and the built pages to
-/// present an evluation of any built models.
+/// A panel to display an overview for the evaluate tab and then pages to
+/// present an evluation (the error matrix or else the set of charts) of any
+/// built model.
 
 class EvaluateDisplay extends ConsumerStatefulWidget {
   const EvaluateDisplay({super.key});
@@ -61,7 +61,20 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       evaluatePageControllerProvider,
     );
 
-    // From the R output, kept in Riverpod,  we will XXXX.
+    // 20250309 gjw Set up the first page to contain the appropriate
+    // overview/introduction to the evaluate function.
+
+    List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
+
+    // 20250309 gjw We will populate the text content with output from the R
+    // console.
+
+    String content = '';
+
+    // 20250309 gjw From the R output, kept in the Riverpod stdout, we will
+    // extract the error matrix output that is clearly marked in the R output
+    // with the evaluation dataset type (Tuning or Testing, etc.). We also need
+    // to account for the user chosen nomenclature of Tuning/Validation.
 
     String stdout = ref.watch(stdoutProvider);
 
@@ -72,18 +85,18 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // to work with what we give it.
 
     String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
-    bool useV = ref.watch(useValidationSettingProvider);
-    if (datasetType == 'Tuning' && useV) datasetType = 'Validation';
-
-    List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
-
-    String content = '';
-
+    bool useValidation = ref.watch(useValidationSettingProvider);
+    if (datasetType == 'Tuning' && useValidation) datasetType = 'Validation';
     content = rExtractEvaluate(stdout, datasetType, ref);
+    String dtype = datasetType.toLowerCase();
 
-    bool showContentMaterial = content.trim().split('\n').length > 1;
+    // 20250309 gjw Process the content to ensure that we have the expected
+    // output to display in Rattle and if so, add a new page to display the
+    // Error Matrix, if any, we have just extracted.
 
-    if (showContentMaterial) {
+    bool contentFound = content.trim().split('\n').length > 1;
+
+    if (contentFound) {
       pages.add(
         TextPage(
           title: '''
@@ -98,8 +111,6 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         ),
       );
     }
-
-    String dtype = datasetType.toLowerCase();
 
     // 20250309 gjw We need to identify the model specific SVG files for each of
     // the evaluation types that we support in Rattle. All files follw a very
@@ -341,12 +352,6 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         ),
       );
     }
-
-    // 20250105 gjw Considered displaying a No Image Available graphic. Not
-    // quite working yet so comment it out for now.
-    //
-    // } else {
-    //   pages.add(NoImagePage());
 
     return PageViewer(
       pageController: pageController,
