@@ -1,7 +1,7 @@
 # Model Performance Evaluation
 
-The **Evaluate** tab in Rattle is essential for assessing the
-performance and accuracy of machine learning models. This tab provides
+The **Evaluate** function in Rattle is essential for assessing the
+performance and accuracy of machine learning models. This function provides
 various evaluation metrics and visualizations to help you understand
 how well your model is performing on the selected dataset.
 

@@ -19,7 +19,7 @@ aware that imputation is problematic.
 
 Any patterns we notice for missing values can be useful in suggesting
 which variables could be candidates for imputing. Refer to the Missing
-feature of the Explore tab for details.
+feature of the Explore function for details.
 
 When Rattle performs an imputation it will store the results in a
 variable of the dataset which has the same name as the variable that
@@ -28,7 +28,7 @@ imputed by Rattle or already exist in the dataset loaded into Rattle
 (e.g., a dataset from SAS), will be treated as input variables, and
 the original variable marked to be ignored.
 
-The **Zero/Missing** function ([Survival
+The **Zero/Missing** operator ([Survival
 Guide](https://survivor.togaware.com/datascience/impute-zeromissing.html))
 is the simplest of imputations. It involves replacing all missing
 values for a variable with a single value! This makes most sense when
@@ -42,7 +42,7 @@ reasonable assumption to assume it is zero.
 For categoric data the simplest approach to imputation is to replace
 missing values with a special value, Missing.
 
-The **Mean**, **Median**, and **Mode** functions ([Survival
+The **Mean**, **Median**, and **Mode** operators ([Survival
 Guide](https://survivor.togaware.com/datascience/impute-meanmediamode.html))
 provide simple, if not always satisfactory, choices for missing values
 that are known not to be zero. Using the mean, median, or mode, often
@@ -63,7 +63,7 @@ Whilst this is a simple and computationally quick approach, it is a
 very blunt approach to imputation and can lead to poor performance
 from the resulting models.
 
-The **Constant** function ([Survival
+The **Constant** operator ([Survival
 Guide](https://survivor.togaware.com/datascience/impute-constant.html))
 provides a default value to fill in the gaps. This might be an integer
 or real number for numeric variables, or else a special marker or the

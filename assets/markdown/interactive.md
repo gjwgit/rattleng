@@ -4,7 +4,7 @@ The interactive data exploration functionality is not yet
 available. However, I am experimenting with including the
 [explore](https://github.com/rolkra/explore) package. You can also
 experiment with the package. After loading a dataset into Rattle, go
-to the CONSOLE tab and entry the following commands:
+to the **Console** function and enter the following commands:
 
 ```r
 install.packages('explore')

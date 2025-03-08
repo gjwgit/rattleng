@@ -1,8 +1,8 @@
 # Dataset Transformations &mdash; Wrangling Data
 
-The **Transform** tab provides a number of features for transforming
+The **Transform** function provides a number of features for transforming
 or wrangling a dataset. All transformations are accomplished using
-R and the actual R code is available in the **Script** tab.
+R and the actual R code is available in the **Script** function.
 
 Transformations are not always appropriate. For example, imputation
 that is supported under the **Impute** feature can significantly alter
@@ -16,8 +16,8 @@ categoric data. Some transformations can apply to any data type. Generally
 In tuning the dataset to suit, we do often transform it in many
 different ways. Of course, once we have transformed the dataset, we
 will want to save the new version. After working on the dataset
-through the Transform tab it is a good idea to save the data. We can
-do this from the **Console** tab:
+through the Transform function it is a good idea to save the data. We
+can do this from the **Console** function:
 
 ```r
 ds %>%
