@@ -10,10 +10,10 @@ actionable understandings, from the data.
 Rattle provides some of the visualisations commonly used by data
 scientists to gain initial insights into the data. The R code used to
 generate the examples here is captured and can be reviewed and saved
-to file via the **Script** tab. This will allow the code to be edited
-and extended to suit the data and to present the visualisations more
-creatively and expressively for your particular dataset.  The Data
-Visualisation chapter of the [Data Science Desktop Survival
+to file via the **Script** function. This will allow the code to be
+edited and extended to suit the data and to present the visualisations
+more creatively and expressively for your particular dataset.  The
+Data Visualisation chapter of the [Data Science Desktop Survival
 Guide](https://survivor.togaware.com/datascience/data-visualisation.html)
 provides a detailed exploration of what is possible.
 

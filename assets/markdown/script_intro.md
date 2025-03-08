@@ -1,7 +1,7 @@
 # The R Script
 
-This **Script** tab captures all interactions with Rattle as an *R
-script*. You can see the full script on the right here.
+This **Script** function captures all interactions with Rattle as an
+*R script*. You can see the full script on the right here.
 
 You can **Save** the script to a file to replicate what you have done
 in Rattle directly in R. And even better, you can use that script as

@@ -15,7 +15,7 @@ While a choice of measures are available to select a variable to split
 the dataset on, the Gini measure is used, and generally is no
 different to the information measure for binary classification. To
 explore the alternatives, copy the relevant code from the **Script**
-tab and paste it into the R Console and change any of the options.
+function and paste it into the R Console and change any of the options.
 
 Common options that a user may change from their default values are
 available.
@@ -31,8 +31,8 @@ e.g., 0,10,1,0.
 Other options exist, but are not usually required. For example,
 10-fold cross validation, used in deciding how to prune to the best
 decision tree, is generally regarded as the right number. Transferring
-the commands from the **Script** tab into the R Console does give you
-full access to all options.
+the commands from the **Script** function into the R Console does give
+you full access to all options.
 
 Decision trees work with both numeric and categoric data.
 
