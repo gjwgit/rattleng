@@ -1,11 +1,11 @@
-# Use `actual` and `prediction` to generate cost curve plots.
+# Use `actual_va` and `prediction` to generate cost curve plots.
 #
 # Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:48:05 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-03-09 06:02:36 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu
+# Author: Zheyuan Xu, Graham Williams
 
 # <TIMESTAMP>
 #
@@ -31,52 +31,64 @@
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Remove observations with missing target values.
+# 20250309 gjw The ROCR package that we use here does not handle
+# missing predictions (NAs) itself so we need to identify and remove
+# them.  Notice that we also remove the unnecessary attributes from
+# the actual values with the missing excluded.
 
-no.miss <- na.omit(actual_va)
-miss.list <- attr(no.miss, "na.action")
-attributes(no.miss) <- NULL  # Remove unnecessary attributes
+actual_complete <- na.omit(actual_va)
+actual_missing <- attr(actual_complete, "na.action")
+attributes(actual_complete) <- NULL
 
-# Align predictions with non-missing target values.
+# 20250309 gjw Create a ROCR prediction object from the probabilities
+# and the corresponding outcome labels. We handle missing predictions
+# specially since ROCR is not handling them.
 
-pred <- if (length(miss.list)) {
-  ROCR::prediction(probability[-miss.list], no.miss)
+pred <- if (length(actual_missing)) {
+  ROCR::prediction(probability[-actual_missing], actual_complete)
 } else {
-  ROCR::prediction(probability, no.miss)
+  ROCR::prediction(probability, actual_complete)
 }
 
-# Compute expected cost performance.
+# 20250309 gjw ROCR's `performance()` can compute many kinds of
+# performance measures. Here we compute the expected cost.  We extract
+# the x and y values from the expeced cost into a temporary data frame
+# for plotting
 
 perf_ecost <- ROCR::performance(pred, "ecost")
-
-# Extract the Area Under the Curve (AUC) value for the ROC curve.
-
-au <- ROCR::performance(pred, "auc")@y.values[[1]]
-
-# Convert performance object to a tidy dataframe.
-
-cost_df <- data.frame(
+tdf <-data.frame(
   threshold = unlist(perf_ecost@x.values),
-  cost = unlist(perf_ecost@y.values)
+  cost      = unlist(perf_ecost@y.values)
 )
 
-# Generate dynamic plot title using glue.
+# 20250309 gjw ROCR can also calculate the area under the curve based
+# on the ROC curve for added information displayed on the cost curve
+# plot.
 
-title_text <- glue(
-  "Cost Curve — {mdesc} — {mtype} {basename('<FILENAME>')} *{dtype}* ", <TARGET_VAR>
+auc <- ROCR::performance(pred, "auc")@y.values[[1]]
+
+# 20250309 gjw An informative title will present the plot type, the
+# model type, the data set on which the model was built, the dataset
+# used to evaluate the model, and the target variable of the model.
+
+title <- glue(
+  "Cost Curve — {mdesc} — {mtype} ",
+  "{basename('<FILENAME>')} *{dtype}* ",
+  <TARGET_VAR>
 )
 
-svg(glue("<TEMPDIR>/model_evaluate_cost_curve_{mtype}_{dtype}.svg"), width = 11)
-
-# Create the cost curve plot.
-
-cost_df %>%
-  ggplot(aes(x = threshold, y = cost)) +
-  geom_line(color = "black") +
+## 20250309 gjw The plot is saved into a specific file named so that
+## we can access it from the Rattle app.
+##
+svg(glue("<TEMPDIR>/model_evaluate_cost_curve_{mtype}_{dtype}.svg"),
+    width=11)
+tdf %>%
+  ggplot(aes(x=threshold, y=cost)) +
+  geom_line(color="black") +
   labs(
-    title = title_text,
-    x = "Threshold",
-    y = "Expected Cost",
+    title   = title,
+    x       = "Threshold",
+    y       = "Expected Cost",
     caption = "Lower cost values indicate better model performance"
   ) +
   annotate("text",
@@ -85,7 +97,7 @@ cost_df %>%
            hjust = 0,
            vjust = 0,
            size  = 5,
-           label = sprintf('AUC = %.2f', au)) +
+           label = sprintf('AUC = %.2f', auc)) +
   <SETTINGS_GRAPHIC_THEME>() +
-  theme(plot.title = element_markdown())
+  theme(plot.title=element_markdown())
 dev.off()
