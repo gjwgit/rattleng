@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 06:58:57 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 07:04:51 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -280,7 +280,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       {'image': costCurveRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
     ];
 
-    // Iterate through each image-title pair.
+    // 20250309 gjw For each of the evaluation types we now iterate over the
+    // expected image files and for those that exist and the user interface has
+    // that model type ticked, we add the image file for display.
+
+    // 20250309 gjw Zheyuan Do you need `== true` here because data['ticked']
+    // will either be true or false anyhow?
 
     for (var data in rocImageData) {
       if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
@@ -309,6 +314,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         costCurveImagesTitles.add(data['title']!.toString());
       }
     }
+
+    // 20250309 gjw For each of the evaluation types if we have images to
+    // display then we add a new page to display the charts. Note that for a
+    // single evalautin we place all charts across multiple models on a single
+    // page.
 
     if (rocImages.isNotEmpty) {
       pages.add(
