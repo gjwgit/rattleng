@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 07:04:51 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 08:37:14 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -126,8 +126,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // to understand and to maintain.
 
     // 20250309 gjw Zheyuan, we seem to have changed the file naming scheme. It
-    // should be `evaluate_rpart_roc.svg`, etc. and
-    // `evaluate_rpart_riskchart.svg` and so on.
+    // should be `evaluate_rpart_roc_tuning.svg`, etc. and
+    // `evaluate_rpart_riskchart_testing.svg` and so on. Then most of the
+    // following code can be replaced by a simpler loop over the model and
+    // measure.
 
     String rocAdaBoostImage = '$tempDir/model_evaluate_roc_adaboost_$dtype.svg';
     String rocCtreeImage = '$tempDir/model_evaluate_roc_ctree_$dtype.svg';
