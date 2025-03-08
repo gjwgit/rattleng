@@ -1,11 +1,11 @@
 /// Widget to display the Evaluate introduction.
 ///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-01-23 09:17:44 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-09 06:08:03 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,7 +20,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -76,15 +76,22 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       pages.add(
         TextPage(
           title: '''
-                 # Error Matrix\n
-                 Built using [errorMatrix::errorMatrix](https://www.rdocumentation.org/packages/rattle/topics/errorMatrix)
-                 ''',
+
+          # Error Matrix
+
+          Built using
+          [errorMatrix::errorMatrix](https://www.rdocumentation.org/packages/rattle/topics/errorMatrix)
+
+          ''',
           content: '\n$content',
         ),
       );
     }
 
     String dtype = datasetType.toLowerCase();
+
+    // 20250309 gjw Zheyaun, this surely looks like an opportunity for a
+    // labelled array rather then all of the replicated work?
 
     String rocAdaBoostImage = '$tempDir/model_evaluate_roc_adaboost_$dtype.svg';
     String rocCtreeImage = '$tempDir/model_evaluate_roc_ctree_$dtype.svg';
@@ -285,7 +292,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         MultiImagePage(
           titles: handImagesTitles,
           paths: handImages,
-          appBarImage: 'H-Measure --- Coherent Alternative to the AUC',
+          appBarImage: 'H-Measure &#8212; Coherent Alternative to AUC',
           buildHyperLink:
               'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
         ),
@@ -308,7 +315,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         MultiImagePage(
           titles: costCurveImagesTitles,
           paths: costCurveImages,
-          appBarImage: 'Cost Curve -- the Expected Misclassification Cost',
+          appBarImage: 'Cost Curve &#8212; Expected Misclassification Cost',
           buildHyperLink:
               'Built using [ROCR::performance](https://www.rdocumentation.org/packages/ROCR).',
         ),
