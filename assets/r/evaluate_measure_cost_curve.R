@@ -31,18 +31,6 @@
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
-
-# evaluate_measure_cost_curve.R
-
-# Load necessary libraries.
-
-library(ROCR)
-library(glue)
-library(ggplot2)
-library(dplyr)
-library(ggtext) # For element_markdown
-
 # Remove observations with missing target values.
 
 no.miss <- na.omit(actual_va)
@@ -52,14 +40,18 @@ attributes(no.miss) <- NULL  # Remove unnecessary attributes
 # Align predictions with non-missing target values.
 
 pred <- if (length(miss.list)) {
-  prediction(probability[-miss.list], no.miss)
+  ROCR::prediction(probability[-miss.list], no.miss)
 } else {
-  prediction(probability, no.miss)
+  ROCR::prediction(probability, no.miss)
 }
 
 # Compute expected cost performance.
 
-perf_ecost <- performance(pred, "ecost")
+perf_ecost <- ROCR::performance(pred, "ecost")
+
+# Extract the Area Under the Curve (AUC) value for the ROC curve.
+
+au <- ROCR::performance(pred, "auc")@y.values[[1]]
 
 # Convert performance object to a tidy dataframe.
 
