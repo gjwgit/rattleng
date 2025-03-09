@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ CORRELATION bug fix to title [6.4.31 20250309 tonynolan]
 + Add tooltips for function icons [6.4.30 20250309 gjw]
 + COST CURVE: Implemented for rpart [6.4.29 20250308 zy]
 + ASSOCIATIONS: Enable rule limit and sort [6.4.28 20250307 gjw]
