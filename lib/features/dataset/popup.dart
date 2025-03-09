@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Friday 2025-03-07 16:54:39 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-03-10 05:32:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -147,8 +147,8 @@ class DatasetPopup extends ConsumerWidget {
                   message: '''
 
                   **Local File:** Tap here to popup a window so that you can
-                  browse to a local **csv** or **txt** file that you would like
-                  to load into Rattle.
+                  browse to a local **csv**, **xlsx**, or **txt** file that you
+                  would like to load into Rattle.
 
                   ''',
                   child: Text('Local File'),

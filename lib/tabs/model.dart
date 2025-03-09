@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2024-12-20 16:06:16 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-10 09:31:59 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -116,7 +116,10 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
       // Only show the Word Cloud tab for .txt files
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
-    } else if (currentPath.endsWith('.csv') || currentPath == weatherDemoFile) {
+    } else if (currentPath.endsWith('.csv') ||
+        currentPath.endsWith('.xlsx') ||
+        // TODO 20250310 gjw Remove the deprecated weatherDemoFile
+        currentPath == weatherDemoFile) {
       // For csv files and demo, show all tabs except the Word Cloud tab
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();

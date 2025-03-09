@@ -1,6 +1,6 @@
 /// Choose and load a file as the source dataset.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-03-10 05:33:13 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -32,9 +32,9 @@ Future<String> datasetSelectFile() async {
   // main UI thread.
 
   FilePickerResult? result = await FilePicker.platform.pickFiles(
-    dialogTitle: 'Choose a csv/txt file to load as your dataset.',
+    dialogTitle: 'Choose a file to load as your dataset.',
     type: FileType.custom,
-    allowedExtensions: ['csv', 'txt'],
+    allowedExtensions: ['csv', 'xlsx', 'txt'],
   );
 
   String path = '';
