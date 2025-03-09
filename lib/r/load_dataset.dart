@@ -1,6 +1,6 @@
 /// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Saturday 2024-11-23 16:46:54 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-03-10 09:33:04 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -70,12 +70,15 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   String ss = 'session_setup';
   // String dw = 'dataset_load_weather';
-  String dfp = 'dataset_load_from_package';
   String dc = 'dataset_load_csv';
   String dx = 'dataset_load_txt';
   String dp = 'dataset_prep'; // Dataset cleaning and prepartion pre-template.
+  String dfp = 'dataset_load_from_package';
+  String dxl = 'dataset_load_xls';
 
   if (path == '' && dataset.isEmpty && package.isEmpty) {
+    // TODO 20250310 gjw Remove the deprecated weatherDemoFile
+
     // 20241007 gjw If no path is specified then we load the sample dataset from
     // Rattle. At this time through the GUI we do not have an empty path nor are
     // we using the rattle::weather dataset which is rather dated. So this
@@ -92,6 +95,12 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
     // dataset template is run in `home.dart` on leaving the DATASET tab.
 
     if (context.mounted) await rSource(context, ref, [ss, dc, dp]);
+
+    ref.read(datatypeProvider.notifier).state = 'table';
+  } else if (path.endsWith('.xlsx')) {
+    // 20250309 gjw Load an Excel file into Rattle.
+
+    if (context.mounted) await rSource(context, ref, [ss, dxl, dp]);
 
     ref.read(datatypeProvider.notifier).state = 'table';
   } else if (path.endsWith('.txt')) {

@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Monday 2024-12-16 08:19:17 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-10 09:34:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -106,7 +106,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
-    } else if (path == weatherDemoFile || path.endsWith('.csv')) {
+    } else if (path == weatherDemoFile ||
+        // TODO 20250310 gjw Remo the deprecated weatherDemoFile
+        path.endsWith('.csv') ||
+        path.endsWith('.xlsx')) {
       // 20240815 gjw Update the metaData provider here if needed.
 
       updateMetaData(ref);
@@ -372,6 +375,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   void _setTargetRole(List<VariableInfo> vars, WidgetRef ref) {
     String target = getTarget(ref);
+
     if (target == 'NULL') {
       ref.read(rolesProvider.notifier).state[vars.last.name] = Role.target;
     } else if (target != '""') {

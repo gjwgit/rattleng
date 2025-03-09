@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2025-01-12 06:08:38 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-10 09:30:06 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -40,6 +40,8 @@ const String assetsPath = 'assets';
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
 
 /// File name of demo file (weather.csv).
+
+// TODO 20250310 gjw This is deprecated.
 
 const String weatherDemoFile = 'rattle::weather';
 
