@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:13:52 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-03-10 09:09:53 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -130,7 +130,7 @@ meta_data <- function(df) {
         unique = length(unique(x)),
         missing = sum(is.na(x))
       )
-    } else if (lubridate::is.Date(x)) {
+    } else if (lubridate::is.Date(x) || lubridate::is.POSIXct(x)) {
       list(
         datatype = "date",
         min = min(x, na.rm = TRUE),
@@ -142,7 +142,7 @@ meta_data <- function(df) {
       list(
         datatype = "other",
         unique = length(unique(x)),
-        missing = sum(is.na(x)),
+        missing = sum(is.na(x))
       )
     }
   })
