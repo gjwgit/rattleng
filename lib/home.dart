@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2025-03-05 16:37:15 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-03-09 12:02:34 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -80,34 +80,87 @@ final List<Map<String, dynamic>> homeTabs = [
   {
     'title': 'Dataset',
     'icon': Icons.input,
+    'tooltip': '''
+
+    **Dataset:** Tap here to access the Dataset function. Through this function
+      you can load a dataset into Rattle, including any one of a number of
+      demonstration datasets.
+
+    ''',
   },
   {
     'title': 'Explore',
     'icon': Icons.insights,
+    'tooltip': '''
+
+    **Explore:** Tap here to access the Explore function. Through this function
+      you can 'live and breathe' your data. That is, explore the distribution of
+      variables, correlations, mising data, and so on.
+
+    ''',
   },
   {
     'title': 'Transform',
     'icon': Icons.transform,
+    'tooltip': '''
+
+    **Transform:** Tap here to access the Transform function. Through this
+      function you can clean up and transform your data set in various way.
+
+    ''',
   },
   {
     'title': 'Model',
     'icon': Icons.model_training,
+    'tooltip': '''
+
+    **Model:** Tap here to acces the Model function. Through this function you
+      can build predict and descritive models from your data.
+
+    ''',
   },
   {
     'title': 'Evaluate',
     'icon': Icons.leaderboard,
+    'tooltip': '''
+
+    **Evaluate:** Tap here to acces the Evaluate function. Through this function
+      you can evaluate the performance of your predictive models.
+
+    ''',
   },
   {
     'title': 'Console',
     'icon': Icons.terminal,
+    'tooltip': '''
+
+    **Console:** Tap here to acces the Console function. Through this function
+      you can access the R console where all of the R commands and their output
+      is captured.
+
+    ''',
   },
   {
     'title': 'Script',
     'icon': Icons.code,
+    'tooltip': '''
+
+    **Script:** Tap here to acces the Script function. Through this function you
+      can review all of the R commands that are being run and save the script to
+      an R script file for running in R directly.
+
+    ''',
   },
   {
     'title': 'Debug',
     'icon': Icons.work,
+    'tooltip': '''
+
+    **Debug:** Tap here to acces the Debug function. Through this function you
+      can see some debugging information. This is primarily of use to our
+      developers.
+
+    ''',
   },
 ];
 
@@ -688,8 +741,16 @@ Xu, Yixiang Yin, Bo Zhang.
                   },
                   labelType: NavigationRailLabelType.all,
                   destinations: homeTabs.map((tab) {
+                    // Use a custom tooltip if provided. Otherwise,
+                    // default to the tab title.
+
+                    final tooltipMessage = tab['tooltip'] ?? tab['title'];
+
                     return NavigationRailDestination(
-                      icon: Icon(tab['icon']),
+                      icon: MarkdownTooltip(
+                        message: tooltipMessage,
+                        child: Icon(tab['icon']),
+                      ),
                       label: Text(
                         tab['title'],
                         style: const TextStyle(fontSize: 16),
