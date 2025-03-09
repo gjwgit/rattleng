@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ XLSX: Support loading Excel spreadsheets [6.4.32 20250310 gjw]
 + CORRELATION bug fix to title [6.4.31 20250309 tonynolan]
 + Add tooltips for function icons [6.4.30 20250309 gjw]
 + COST CURVE: Implemented for rpart [6.4.29 20250308 zy]
