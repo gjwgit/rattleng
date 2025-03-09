@@ -1,11 +1,11 @@
 # Rattle Scripts: Correlation Analysis
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-02-24 19:39:01 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-03-09 19:30:08 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,15 +34,12 @@
 #
 # https://survivor.togaware.com/datascience/ for further details.
 
-# Load required packages from the local library into the R session.
+# Generate a correlation plot for the variables. Correlations work for
+# numeric variables only.
 
-# Generate a correlation plot for the variables.
+cor <- cor(ds[setdiff(numc, ignore)], use="pairwise", method="pearson")
 
-# Correlations work for numeric variables only.
-
-cor <- cor(ds[setdiff(numc,ignore)], use="pairwise", method="pearson")
-
-# Order the correlations by their strength.
+# The correlations are ordered by their strength.
 
 ord <- order(cor[1,])
 cor <- cor[ord, ord]
@@ -71,7 +68,7 @@ corrplot::corrplot(cor,
                    type   = 'full',
                    tl.srt = 45,
                    mar    = c(0,0,1,0))
-title(main = "Correlation weather.csv using Pearson",
+title(main = glue("Correlation {basename('<FILENAME>')} using Pearson"),
       sub  = paste("<TIMESTAMP>", username))
 dev.off()
 
