@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Wednesday 2025-02-05 16:26:30 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2025-03-11 08:42:51 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -137,28 +137,31 @@ class ScriptSaveButton extends ConsumerWidget {
     // Get the script content from the provider.
 
     String script = ref.read(scriptProvider);
-    // 20250106 gjw Remove the lines starting with 'svg' and 'dev.off' since the
-    // final user script will generally not have access to the tmpdir and the
-    // user will generally want to see the plots rather than immediately save
-    // them to file. 20250106 gjw Also remove any lines starting with rat as
+    // Remove the lines starting with 'svg'/'png' and 'dev.off' since the final
+    // user script will generally not have access to the tmpdir and the user
+    // will generally want to see the plots rather than immediately save them to
+    // file (gjw 20250106).
+    //
+    // Also remove any lines starting with rat as
     // they are Rattle versions of cat used for communicating to Rattle rather
-    // than for user messages.
+    // than for user messages (gjw 20250106).
 
     List<String> lines = script.split('\n');
     lines = lines.where((line) => !line.trim().startsWith('svg')).toList();
+    lines = lines.where((line) => !line.trim().startsWith('png')).toList();
     lines = lines.where((line) => !line.trim().startsWith('dev.off')).toList();
     lines = lines.where((line) => !line.trim().startsWith('rat <-')).toList();
     lines = lines.where((line) => !line.trim().startsWith('rat(')).toList();
 
     lines = lines.map((line) => line.replaceAll(tempDir + '/', '')).toList();
 
-    // 20250205 gjw As a convenience for any of the demo datasets, when I export
+    // As a convenience for any of the demo datasets, when I export
     // the R script I add the path `assets/data` to the `read_csv()` so it runs
     // out of the box when testing in the source folder of rattleng. Not so
     // useful for the end user, but either way they need to replace the demo
     // file path exported from rattleng with an actual path, and so perhaps not
     // much is lost for the end user and perhaps it is even informative as to
-    // where to find the data files.
+    // where to find the data files (gjw 20250205).
     //
     // 20250205 TODO gjw THE LIST OF FILE NAMES HERE SHOULD PROBABLY BE A CONSTANT.
 
