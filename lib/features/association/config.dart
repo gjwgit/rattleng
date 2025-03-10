@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-03-07 16:40:07 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-11 07:34:53 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -123,7 +123,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             Text('Ident: ${getIdent(ref)}'),
 
             LabelledCheckbox(
-              key: const Key('basketsAssociationField'),
+              key: const Key('association_config_baskets'),
               tooltip: '''
 
               **Baskets:** When checked the grouping of items or baskets are
@@ -151,7 +151,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             configLeftGap,
             NumberField(
               label: 'Support:',
-              key: const Key('supportAssociationField'),
+              key: const Key('association_config_support'),
               controller: _supportController,
               tooltip: '''
 
@@ -169,7 +169,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             ),
             NumberField(
               label: 'Confidence:',
-              key: const Key('confidenceAssociationField'),
+              key: const Key('association_config_confidence'),
               controller: _confidenceController,
               tooltip: '''
 
@@ -187,7 +187,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             ),
             NumberField(
               label: 'Min Length:',
-              key: const Key('minLengthAssociationField'),
+              key: const Key('association_config_min_length'),
               controller: _minLengthController,
               tooltip: '''
 
@@ -202,7 +202,7 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             ),
             NumberField(
               label: 'Limit Rules:',
-              key: const Key('measuresLimitAssociationField'),
+              key: const Key('association_config_limit_rules'),
               controller: _limitNumberMeasureController,
               tooltip: '''
 
