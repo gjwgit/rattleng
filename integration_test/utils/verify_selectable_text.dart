@@ -1,6 +1,6 @@
 /// Verify selectable text content in the widget.
 //
-// Time-stamp: <Tuesday 2025-03-11 07:56:50 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-11 09:44:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -37,8 +37,11 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// We needed to define this separately from verifyText because XXXX?
 
-Future<void> verifySelectableText(WidgetTester tester, List<String> texts,
-    {bool present = true}) async {
+Future<void> verifySelectableText(
+  WidgetTester tester,
+  List<String> texts, {
+  bool present = true,
+}) async {
   // Find all SelectableText widgets in the widget tree.
 
   final textFinder = find.byType(SelectableText);
