@@ -12,24 +12,29 @@ on:
       - dev
 
 env:
-  FLUTTER_VERSION: '3.27.3'
+  FLUTTER_VERSION: '3.29.1'
 
 jobs:
 
   ########################################################################
-  # Originally I was building on Ubuntu 22.04 since my 24.04 version
-  # would not run on Mint 21.3. Then moved even older to Ubuntu 20.04
-  # to get it more widely available. Seems to work on 22.04 and
-  # 24.04. Backwards the error was: "rattle:
-  # /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found
-  # (required by rattle)" On Ubuntu 20.04 the highest version of GLIBC
-  # is GLIBC2.30.
+  #
+  # 20240801 gjw Originally I was building on Ubuntu 22.04 since
+  # builds on 24.04 would not run on Mint 21.3. Then I moved to an
+  # even older Ubuntu 20.04 to get it more widely available. Such
+  # builds seem to work on 22.04 and 24.04. Backwards the error was:
+  # "rattle: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not
+  # found (required by rattle)" On Ubuntu 20.04 the highest version of
+  # GLIBC is GLIBC2.30.
+  #
+  # 20250311 gjw Support for Ubuntu 20.04 is being deprecated
+  # https://github.com/gjwgit/rattleng/actions/runs/13753262146.
+  # Move to 22.04 to get broadest deployment.
 
   build-linux-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Clone Repository
