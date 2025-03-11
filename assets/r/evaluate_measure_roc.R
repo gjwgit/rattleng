@@ -107,7 +107,7 @@ pd <- data.frame(fpr = unlist(pe@x.values), tpr = unlist(pe@y.values))
 ## having a separate fname definition all by itself looks a little odd
 ## and is not required.
 ##
-svg(glue("<TEMPDIR>/model_evaluate_roc_{mtype}_{dtype}.svg"), width = 11)
+svg(glue("<TEMPDIR>/evaluate_{mtype}_roc_{dtype}.svg"), width = 11)
 
 # Now render the ROC curve with the FPR and TPR data.  The red line
 # represent the ROC curve while the diagonal grey reference line

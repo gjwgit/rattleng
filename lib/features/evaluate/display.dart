@@ -129,18 +129,18 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // following code can be replaced by a simpler loop over the model and
     // measure.
 
-    String rocAdaBoostImage = '$tempDir/model_evaluate_roc_adaboost_$dtype.svg';
-    String rocCtreeImage = '$tempDir/model_evaluate_roc_ctree_$dtype.svg';
-    String rocLinearImage = '$tempDir/model_evaluate_roc_linear_$dtype.svg';
-    String rocNNETImage = '$tempDir/model_evaluate_roc_nnet_$dtype.svg';
+    String rocAdaBoostImage = '$tempDir/evaluate_adaboost_roc_$dtype.svg';
+    String rocCtreeImage = '$tempDir/evaluate_ctree_roc_$dtype.svg';
+    String rocLinearImage = '$tempDir/evaluate_linear_roc_$dtype.svg';
+    String rocNNETImage = '$tempDir/evaluate_nnet_roc_$dtype.svg';
     String rocNeuralNetImage =
-        '$tempDir/model_evaluate_roc_neuralnet_$dtype.svg';
-    String rocRpartImage = '$tempDir/model_evaluate_roc_rpart_$dtype.svg';
-    String rocSVMImage = '$tempDir/model_evaluate_roc_svm_$dtype.svg';
-    String rocCforestImage = '$tempDir/model_evaluate_roc_cforest_$dtype.svg';
+        '$tempDir/evaluate_neuralnet_roc_$dtype.svg';
+    String rocRpartImage = '$tempDir/evaluate_rpart_roc_$dtype.svg';
+    String rocSVMImage = '$tempDir/evaluate_svm_roc_$dtype.svg';
+    String rocCforestImage = '$tempDir/evaluate_cforest_roc_$dtype.svg';
     String rocRforestImage =
-        '$tempDir/model_evaluate_roc_randomForest_$dtype.svg';
-    String rocXGBoostImage = '$tempDir/model_evaluate_roc_xgboost_$dtype.svg';
+        '$tempDir/evaluate_randomForest_roc_$dtype.svg';
+    String rocXGBoostImage = '$tempDir/evaluate_xgboost_roc_$dtype.svg';
 
     String riskChartRpartImage = '$tempDir/model_rpart_riskchart_$dtype.svg';
     String riskChartLinearImage = '$tempDir/model_linear_riskchart_$dtype.svg';
@@ -158,22 +158,22 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     String riskChartXGBoostImage =
         '$tempDir/model_xgboost_riskchart_$dtype.svg';
 
-    String handRpartImage = '$tempDir/model_evaluate_hand_rpart_$dtype.svg';
-    String handCtreeImage = '$tempDir/model_evaluate_hand_ctree_$dtype.svg';
+    String handRpartImage = '$tempDir/evaluate_rpart_hand_$dtype.svg';
+    String handCtreeImage = '$tempDir/evaluate_ctree_hand_$dtype.svg';
     String handRForestImage =
-        '$tempDir/model_evaluate_hand_randomForest_$dtype.svg';
-    String handCForestImage = '$tempDir/model_evaluate_hand_cforest_$dtype.svg';
-    String handXGBoostImage = '$tempDir/model_evaluate_hand_xgboost_$dtype.svg';
+        '$tempDir/evaluate_randomForest_hand_$dtype.svg';
+    String handCForestImage = '$tempDir/evaluate_cforest_hand_$dtype.svg';
+    String handXGBoostImage = '$tempDir/evaluate_xgboost_hand_$dtype.svg';
     String handAdaBoostImage =
-        '$tempDir/model_evaluate_hand_adaboost_$dtype.svg';
-    String handSVMImage = '$tempDir/model_evaluate_hand_svm_$dtype.svg';
-    String handLinearImage = '$tempDir/model_evaluate_hand_linear_$dtype.svg';
-    String handNNETImage = '$tempDir/model_evaluate_hand_nnet_$dtype.svg';
+        '$tempDir/evaluate_adaboost_hand_$dtype.svg';
+    String handSVMImage = '$tempDir/evaluate_svm_hand_$dtype.svg';
+    String handLinearImage = '$tempDir/evaluate_linear_hand_$dtype.svg';
+    String handNNETImage = '$tempDir/evaluate_nnet_hand_$dtype.svg';
     String handNeuralNetImage =
-        '$tempDir/model_evaluate_hand_neuralnet_$dtype.svg';
+        '$tempDir/evaluate_neuralnet_hand_$dtype.svg';
 
     String costCurveRpartImage =
-        '$tempDir/model_evaluate_cost_curve_rpart_$dtype.svg';
+        '$tempDir/evaluate_rpart_cost_curve_$dtype.svg';
 
     bool treeBoxTicked = ref.watch(treeEvaluateProvider);
     bool forestBoxTicked = ref.watch(forestEvaluateProvider);
