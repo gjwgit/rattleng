@@ -55,46 +55,31 @@ class EvaluateDisplay extends ConsumerStatefulWidget {
 class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
   @override
   Widget build(BuildContext context) {
-    // We use a PageController from Riverpod so that XXXX.
-
-    final pageController = ref.watch(
-      evaluatePageControllerProvider,
-    );
+    final pageController = ref.watch(evaluatePageControllerProvider);
 
     // 20250309 gjw Set up the first page to contain the appropriate
     // overview/introduction to the evaluate function.
 
     List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
 
-    // 20250309 gjw We will populate the text content with output from the R
-    // console.
-
-    String content = '';
-
     // 20250309 gjw From the R output, kept in the Riverpod stdout, we will
     // extract the error matrix output that is clearly marked in the R output
     // with the evaluation dataset type (Tuning or Testing, etc.). We also need
     // to account for the user chosen nomenclature of Tuning/Validation.
 
-    String stdout = ref.watch(stdoutProvider);
-
+    final stdout = ref.watch(stdoutProvider);
     String datasetType = ref.watch(datasetTypeProvider);
     bool useValidation = ref.watch(useValidationSettingProvider);
     if (datasetType == 'Tuning' && useValidation) datasetType = 'Validation';
 
-    content = rExtractEvaluate(stdout, datasetType, ref);
-
-    // Dataset type in file name is all lowercase.
-
-    String dtype = datasetType.toLowerCase();
+    final content = rExtractEvaluate(stdout, datasetType, ref);
+    final dtype = datasetType.toLowerCase();
 
     // 20250309 gjw Process the content to ensure that we have the expected
     // output to display in Rattle and if so, add a new page to display the
     // Error Matrix, if any, we have just extracted.
 
-    bool contentFound = content.trim().split('\n').length > 1;
-
-    if (contentFound) {
+    if (content.trim().split('\n').length > 1) {
       pages.add(
         TextPage(
           title: '''
@@ -115,261 +100,99 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // distinct naming scheme and we need to coordinate the names we use here
     // with those in `assets/r/evaluate_model_*.R`.
 
-    // 20250309 gjw Zheyaun, this surely looks like an opportunity for a
-    // labelled array rather then all of the replicated work? Create a variable
-    // to list the model types (rpart, adaboost, ctree, linear, nnet, neuralnet,
-    // svm, ...) and another for the evaluation types (roc, costcurve,
-    // riskchart, ...). Then iterate over them to decide what to display. Should
-    // be able to reduce the number of lines of code and it will be a lot easier
-    // to understand and to maintain.
-
-    // 20250309 gjw Zheyuan, we seem to have changed the file naming scheme. It
-    // should be `evaluate_rpart_roc_tuning.svg`, etc. and
-    // `evaluate_rpart_riskchart_testing.svg` and so on. Then most of the
-    // following code can be replaced by a simpler loop over the model and
-    // measure.
-
-    String rocAdaBoostImage = '$tempDir/evaluate_adaboost_roc_$dtype.svg';
-    String rocCtreeImage = '$tempDir/evaluate_ctree_roc_$dtype.svg';
-    String rocLinearImage = '$tempDir/evaluate_linear_roc_$dtype.svg';
-    String rocNNETImage = '$tempDir/evaluate_nnet_roc_$dtype.svg';
-    String rocNeuralNetImage =
-        '$tempDir/evaluate_neuralnet_roc_$dtype.svg';
-    String rocRpartImage = '$tempDir/evaluate_rpart_roc_$dtype.svg';
-    String rocSVMImage = '$tempDir/evaluate_svm_roc_$dtype.svg';
-    String rocCforestImage = '$tempDir/evaluate_cforest_roc_$dtype.svg';
-    String rocRforestImage =
-        '$tempDir/evaluate_randomForest_roc_$dtype.svg';
-    String rocXGBoostImage = '$tempDir/evaluate_xgboost_roc_$dtype.svg';
-
-    String riskChartRpartImage = '$tempDir/model_rpart_riskchart_$dtype.svg';
-    String riskChartLinearImage = '$tempDir/model_linear_riskchart_$dtype.svg';
-    String riskChartCtreeImage = '$tempDir/model_ctree_riskchart_$dtype.svg';
-    String riskChartAdaBoostImage =
-        '$tempDir/model_adaboost_riskchart_$dtype.svg';
-    String riskChartNNETImage = '$tempDir/model_nnet_riskchart_$dtype.svg';
-    String riskChartNeuralNetImage =
-        '$tempDir/model_neuralnet_riskchart_$dtype.svg';
-    String riskChartSVMImage = '$tempDir/model_svm_riskchart_$dtype.svg';
-    String riskChartCforestImage =
-        '$tempDir/model_cforest_riskchart_$dtype.svg';
-    String riskChartRforestImage =
-        '$tempDir/model_randomForest_riskchart_$dtype.svg';
-    String riskChartXGBoostImage =
-        '$tempDir/model_xgboost_riskchart_$dtype.svg';
-
-    String handRpartImage = '$tempDir/evaluate_rpart_hand_$dtype.svg';
-    String handCtreeImage = '$tempDir/evaluate_ctree_hand_$dtype.svg';
-    String handRForestImage =
-        '$tempDir/evaluate_randomForest_hand_$dtype.svg';
-    String handCForestImage = '$tempDir/evaluate_cforest_hand_$dtype.svg';
-    String handXGBoostImage = '$tempDir/evaluate_xgboost_hand_$dtype.svg';
-    String handAdaBoostImage =
-        '$tempDir/evaluate_adaboost_hand_$dtype.svg';
-    String handSVMImage = '$tempDir/evaluate_svm_hand_$dtype.svg';
-    String handLinearImage = '$tempDir/evaluate_linear_hand_$dtype.svg';
-    String handNNETImage = '$tempDir/evaluate_nnet_hand_$dtype.svg';
-    String handNeuralNetImage =
-        '$tempDir/evaluate_neuralnet_hand_$dtype.svg';
-
-    String costCurveRpartImage =
-        '$tempDir/evaluate_rpart_cost_curve_$dtype.svg';
-
-    bool treeBoxTicked = ref.watch(treeEvaluateProvider);
-    bool forestBoxTicked = ref.watch(forestEvaluateProvider);
-    bool boostBoxTicked = ref.watch(boostEvaluateProvider);
-    bool svmBoxTicked = ref.watch(svmEvaluateProvider);
-    bool neuralBoxTicked = ref.watch(neuralEvaluateProvider);
-    bool linearBoxTicked = ref.watch(linearEvaluateProvider);
-
-    List<String> rocImages = [];
-    List<String> rocImagesTitles = [];
-
-    List<String> handImages = [];
-    List<String> handImagesTitles = [];
-
-    List<String> riskChartImages = [];
-    List<String> riskChartImagesTitles = [];
-
-    List<String> costCurveImages = [];
-    List<String> costCurveImagesTitles = [];
-
-    // List of image-title pairs for ROC data.
-
-    final rocImageData = [
-      {
-        'image': rocAdaBoostImage,
-        'title': 'AdaBoost',
-        'ticked': boostBoxTicked,
-      },
-      {'image': rocRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
-      {'image': rocCtreeImage, 'title': 'CTREE', 'ticked': treeBoxTicked},
-      {'image': rocNNETImage, 'title': 'NNET', 'ticked': neuralBoxTicked},
-      {
-        'image': rocNeuralNetImage,
-        'title': 'NEURALNET',
-        'ticked': neuralBoxTicked,
-      },
-      {
-        'image': rocLinearImage,
-        'title': 'LINEAR',
-        'ticked': linearBoxTicked,
-      },
-      {
-        'image': rocRforestImage,
-        'title': 'RANDOM FOREST',
-        'ticked': forestBoxTicked,
-      },
-      {'image': rocSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
-      {
-        'image': rocCforestImage,
-        'title': 'CONDITIONAL FOREST',
-        'ticked': forestBoxTicked,
-      },
-      {'image': rocXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
+    final models = [
+      'adaboost',
+      'rpart',
+      'ctree',
+      'linear',
+      'nnet',
+      'neuralnet',
+      'svm',
+      'cforest',
+      'randomForest',
+      'xgboost',
     ];
 
-    // List of image-title pairs for ROC data.
+    final evaluationTypes = ['roc', 'riskchart', 'hand', 'cost_curve'];
 
-    final riskChartImageData = [
-      {'image': riskChartRpartImage, 'title': 'RPART'},
-      {'image': riskChartCtreeImage, 'title': 'CTREE'},
-      {'image': riskChartAdaBoostImage, 'title': 'AdaBoost'},
-      {'image': riskChartNNETImage, 'title': 'NNET'},
-      {'image': riskChartNeuralNetImage, 'title': 'NEURALNET'},
-      {'image': riskChartRforestImage, 'title': 'RANDOM FOREST'},
-      {'image': riskChartSVMImage, 'title': 'SVM'},
-      {'image': riskChartCforestImage, 'title': 'CONDITIONAL FOREST'},
-      {'image': riskChartXGBoostImage, 'title': 'XGBoost'},
-      {'image': riskChartLinearImage, 'title': 'LINEAR'},
-    ];
-    // List of image-title pairs for Hand plot.
+    final modelDisplayNames = {
+      'adaboost': 'AdaBoost',
+      'rpart': 'RPART',
+      'ctree': 'CTREE',
+      'linear': 'LINEAR',
+      'nnet': 'NNET',
+      'neuralnet': 'NEURALNET',
+      'svm': 'SVM',
+      'cforest': 'CONDITIONAL FOREST',
+      'randomForest': 'RANDOM FOREST',
+      'xgboost': 'XGBoost',
+    };
 
-    final handImageData = [
-      {'image': handRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
-      {'image': handCtreeImage, 'title': 'CTREE', 'ticked': treeBoxTicked},
-      {
-        'image': handRForestImage,
-        'title': 'RANDOM FOREST',
-        'ticked': forestBoxTicked,
-      },
-      {
-        'image': handCForestImage,
-        'title': 'CONDITIONAL FOREST',
-        'ticked': forestBoxTicked,
-      },
-      {
-        'image': handAdaBoostImage,
-        'title': 'AdaBoost',
-        'ticked': boostBoxTicked,
-      },
-      {'image': handXGBoostImage, 'title': 'XGBoost', 'ticked': boostBoxTicked},
-      {'image': handSVMImage, 'title': 'SVM', 'ticked': svmBoxTicked},
-      {'image': handLinearImage, 'title': 'LINEAR', 'ticked': linearBoxTicked},
-      {'image': handNNETImage, 'title': 'NNET', 'ticked': neuralBoxTicked},
-      {
-        'image': handNeuralNetImage,
-        'title': 'NEURALNET',
-        'ticked': neuralBoxTicked,
-      },
-    ];
+    final evaluateProviders = {
+      'adaboost': ref.watch(boostEvaluateProvider),
+      'rpart': ref.watch(treeEvaluateProvider),
+      'ctree': ref.watch(treeEvaluateProvider),
+      'linear': ref.watch(linearEvaluateProvider),
+      'nnet': ref.watch(neuralEvaluateProvider),
+      'neuralnet': ref.watch(neuralEvaluateProvider),
+      'svm': ref.watch(svmEvaluateProvider),
+      'cforest': ref.watch(forestEvaluateProvider),
+      'randomForest': ref.watch(forestEvaluateProvider),
+      'xgboost': ref.watch(boostEvaluateProvider),
+    };
 
-    // List of image-title pairs for cost curve plot.
-
-    final costCurveImageData = [
-      {'image': costCurveRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
-    ];
+    final evalTypePageDetails = {
+      'roc': {
+        'title':
+            'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
+        'link':
+            'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
+      },
+      'riskchart': {
+        'title': 'Risk Chart',
+        'link': null,
+      },
+      'hand': {
+        'title': 'H-Measure &#8212; Coherent Alternative to AUC',
+        'link':
+            'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
+      },
+      'cost_curve': {
+        'title': 'Cost Curve &#8212; Expected Misclassification Cost',
+        'link':
+            'Built using [ROCR::performance](https://www.rdocumentation.org/packages/ROCR/topics/performance) with measure=ecost.',
+      },
+    };
 
     // 20250309 gjw For each of the evaluation types we now iterate over the
     // expected image files and for those that exist and the user interface has
     // that model type ticked, we add the image file for display.
 
-    // 20250309 gjw Zheyuan Do you need `== true` here because data['ticked']
-    // will either be true or false anyhow?
+    for (var evalType in evaluationTypes) {
+      List<String> images = [];
+      List<String> titles = [];
 
-    for (var data in rocImageData) {
-      if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
-        rocImages.add(data['image']!.toString());
-        rocImagesTitles.add(data['title']!.toString());
+      for (var model in models) {
+        bool isTicked = evaluateProviders[model] ?? false;
+        String prefix = evalType == 'riskchart' ? 'model' : 'evaluate';
+        String imagePath = '$tempDir/${prefix}_${model}_${evalType}_$dtype.svg';
+
+        if (isTicked && imageExists(imagePath)) {
+          images.add(imagePath);
+          titles.add(modelDisplayNames[model]!);
+        }
       }
-    }
 
-    for (var data in riskChartImageData) {
-      if (imageExists(data['image']!)) {
-        riskChartImages.add(data['image']!);
-        riskChartImagesTitles.add(data['title']!);
+      if (images.isNotEmpty) {
+        pages.add(
+          MultiImagePage(
+            titles: titles,
+            paths: images,
+            appBarImage: evalTypePageDetails[evalType]!['title']!,
+            buildHyperLink: evalTypePageDetails[evalType]!['link'],
+          ),
+        );
       }
-    }
-
-    for (var data in handImageData) {
-      if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
-        handImages.add(data['image']!.toString());
-        handImagesTitles.add(data['title']!.toString());
-      }
-    }
-
-    for (var data in costCurveImageData) {
-      if (imageExists(data['image']!.toString()) && data['ticked'] == true) {
-        costCurveImages.add(data['image']!.toString());
-        costCurveImagesTitles.add(data['title']!.toString());
-      }
-    }
-
-    // 20250309 gjw For each of the evaluation types if we have images to
-    // display then we add a new page to display the charts. Note that for a
-    // single evalautin we place all charts across multiple models on a single
-    // page.
-
-    if (rocImages.isNotEmpty) {
-      pages.add(
-        MultiImagePage(
-          titles: rocImagesTitles,
-          paths: rocImages,
-          // 20250309 gjw Zheyuan Isn't this the tite for the page? Call it pageTitle.
-          appBarImage:
-              'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
-          // 20250309 gjw Zheyuan Isn't this the documentation for the page?
-          // Call it pageDoc and allow it to be multiple lines in a triple
-          // quoted string.
-          buildHyperLink:
-              'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
-        ),
-      );
-    }
-
-    if (handImages.isNotEmpty) {
-      pages.add(
-        MultiImagePage(
-          titles: handImagesTitles,
-          paths: handImages,
-          appBarImage: 'H-Measure &#8212; Coherent Alternative to AUC',
-          buildHyperLink:
-              'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
-        ),
-      );
-    }
-
-    if (riskChartImages.isNotEmpty) {
-      pages.add(
-        MultiImagePage(
-          titles: riskChartImagesTitles,
-          paths: riskChartImages,
-          appBarImage: 'Risk Chart',
-        ),
-      );
-    }
-
-    if (costCurveImages.isNotEmpty) {
-      debugPrint('costCurveImages: $costCurveImages');
-      pages.add(
-        MultiImagePage(
-          titles: costCurveImagesTitles,
-          paths: costCurveImages,
-          appBarImage: 'Cost Curve &#8212; Expected Misclassification Cost',
-          buildHyperLink:
-              'Built using [ROCR::performance](https://www.rdocumentation.org/packages/ROCR/topics/performance) with measure=ecost.',
-        ),
-      );
     }
 
     return PageViewer(
