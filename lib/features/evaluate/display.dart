@@ -188,8 +188,8 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
           MultiImagePage(
             titles: titles,
             paths: images,
-            appBarImage: evalTypePageDetails[evalType]!['title']!,
-            buildHyperLink: evalTypePageDetails[evalType]!['link'],
+            pageTitle: evalTypePageDetails[evalType]!['title']!,
+            pageDoc: evalTypePageDetails[evalType]!['link'],
           ),
         );
       }
