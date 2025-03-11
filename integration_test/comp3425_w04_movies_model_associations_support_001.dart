@@ -31,9 +31,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/features/association/panel.dart';
 import 'package:rattle/main.dart' as app;
 
-import 'utils/delays.dart';
 import 'utils/enter_text.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
