@@ -1,8 +1,8 @@
-/// A widget to build the common image based pages.
+/// Widget for multiple images across the page.
 //
-// Time-stamp: <Friday 2024-12-27 16:10:14 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-12 08:41:48 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -61,7 +61,7 @@ class MultiImagePage extends StatelessWidget {
     super.key,
     required this.titles,
     required this.paths,
-    this.pageTitle = 'Hand',
+    this.pageTitle = 'EVALUATION',
     this.svgImage = true,
     this.pageDoc,
   });
@@ -150,7 +150,7 @@ class MultiImagePage extends StatelessWidget {
             : MarkdownBody(
                 data: wordWrap('''
                       **$pageTitle**
-          
+
                       $pageDoc
                       '''),
                 styleSheet: MarkdownStyleSheet(
