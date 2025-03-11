@@ -1,6 +1,6 @@
 /// Utility to find a chip with the given label and tap it.
 ///
-// Time-stamp: <Thursday 2025-01-30 16:05:31 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-12 10:13:21 +1100 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -29,6 +29,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
+class NoChipFoundException implements Exception {
+  final String message;
+  NoChipFoundException(this.message);
+
+  @override
+  String toString() => 'No chip found by this name: "$message"';
+}
+
 /// Find a [Chip] widget with label [text] and tap it.
 
 Future<void> tapChip(
@@ -39,7 +47,11 @@ Future<void> tapChip(
     (Widget widget) =>
         widget is ChoiceChip && (widget.label as Text).data == text,
   );
-  expect(chip, findsOneWidget);
+  try {
+    expect(chip, findsOneWidget);
+  } catch (e) {
+    throw NoChipFoundException(text);
+  }
   await tester.tap(chip);
   await tester.pumpAndSettle();
 }

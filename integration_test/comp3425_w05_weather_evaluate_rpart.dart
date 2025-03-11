@@ -1,6 +1,6 @@
 /// COMP3425 W05 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Friday 2025-03-07 05:33:02 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-12 10:09:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -53,13 +53,17 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree', TreePanel);
       await tester.pumpAndSettle();
-      await setTextField(tester, 'minSplitField', '1');
-      await setTextField(tester, 'maxDepthField', '50');
+      await setTextField(tester, 'minSplitField', '2');
       await setTextField(tester, 'minBucketField', '1');
+      await setTextField(tester, 'maxDepthField', '50');
       await setTextField(tester, 'complexityField', '0.01');
       await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
-      await tapChip(tester, 'Tuning');
+      try {
+        await tapChip(tester, 'Tuning');
+      } catch (e) {
+        await tapChip(tester, 'Validation');
+      }
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
       await navigateToPage(tester, 1, 'Error Matrix');
