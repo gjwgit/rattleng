@@ -78,19 +78,14 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
-    // 20250309 gjw Zheyuan, how does converting toUpperCase (why do that at
-    // all) and then test 'Tuning' work? Wouldn't you need to test 'TUNING'. And
-    // then later converting toLowerCase for the display is probably what we do
-    // want, so just convert it to lower case up front. Fix rExtractEvaluate()
-    // to work with what we give it. Or do you need TUNING, Tuning, and tuning
-    // in different places? It is really unclear here why this is being done,
-    // and needs to be very clean and informative as to why the different
-    // capitalisations are needed?
-
-    String datasetType = ref.watch(datasetTypeProvider).toUpperCase();
+    String datasetType = ref.watch(datasetTypeProvider);
     bool useValidation = ref.watch(useValidationSettingProvider);
     if (datasetType == 'Tuning' && useValidation) datasetType = 'Validation';
+
     content = rExtractEvaluate(stdout, datasetType, ref);
+
+    // Dataset type in file name is all lowercase.
+
     String dtype = datasetType.toLowerCase();
 
     // 20250309 gjw Process the content to ensure that we have the expected
