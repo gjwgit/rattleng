@@ -274,7 +274,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       },
     ];
 
-    // List of image-title pairs for Hand plot.
+    // List of image-title pairs for cost curve plot.
 
     final costCurveImageData = [
       {'image': costCurveRpartImage, 'title': 'RPART', 'ticked': treeBoxTicked},
