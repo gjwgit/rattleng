@@ -1,11 +1,11 @@
-/// Widget to display the Evaluate introduction.
+/// Widget to display the Evaluate introduction and evaluations.
 ///
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-09 09:01:45 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-12 08:30:19 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -42,8 +42,8 @@ import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// A panel to display an overview for the evaluate tab and then pages to
-/// present an evluation (the error matrix or else the set of charts) of any
-/// built model.
+/// present an evaluation (the error matrix and a set of charts) for any built
+/// model.
 
 class EvaluateDisplay extends ConsumerStatefulWidget {
   const EvaluateDisplay({super.key});
@@ -57,15 +57,15 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
   Widget build(BuildContext context) {
     final pageController = ref.watch(evaluatePageControllerProvider);
 
-    // 20250309 gjw Set up the first page to contain the appropriate
-    // overview/introduction to the evaluate function.
+    // Set up the first page to contain the appropriate overview/introduction to
+    // the evaluate function (gjw 20250309).
 
     List<Widget> pages = [showMarkdownFile(context, evaluateIntroFile)];
 
-    // 20250309 gjw From the R output, kept in the Riverpod stdout, we will
-    // extract the error matrix output that is clearly marked in the R output
-    // with the evaluation dataset type (Tuning or Testing, etc.). We also need
-    // to account for the user chosen nomenclature of Tuning/Validation.
+    // From the R output in stdout we will extract the error matrix that is
+    // clearly marked in the R output with the evaluation dataset type (Tuning
+    // or Testing, etc.). We also need to account for the user chosen
+    // nomenclature of Tuning/Validation (gjw 20250309).
 
     final stdout = ref.watch(stdoutProvider);
     String datasetType = ref.watch(datasetTypeProvider);
@@ -75,9 +75,9 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     final content = rExtractEvaluate(stdout, datasetType, ref);
     final dtype = datasetType.toLowerCase();
 
-    // 20250309 gjw Process the content to ensure that we have the expected
-    // output to display in Rattle and if so, add a new page to display the
-    // Error Matrix, if any, we have just extracted.
+    // Process the content to ensure that we have the expected output to display
+    // in Rattle and if so, add a new page to display the Error Matrix we have
+    // just extracted (gjw 20250309).
 
     if (content.trim().split('\n').length > 1) {
       pages.add(
@@ -95,10 +95,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       );
     }
 
-    // 20250309 gjw We need to identify the model specific SVG files for each of
-    // the evaluation types that we support in Rattle. All files follw a very
+    // We need to identify the model specific SVG files for each of the
+    // evaluation types that we support in Rattle. All files follow a very
     // distinct naming scheme and we need to coordinate the names we use here
-    // with those in `assets/r/evaluate_model_*.R`.
+    // with those in `assets/r/evaluate_model_*.R` (20250312 gjw).
 
     final models = [
       'adaboost',
@@ -113,7 +113,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       'xgboost',
     ];
 
-    final evaluationTypes = ['roc', 'riskchart', 'hand', 'cost_curve'];
+    final evaluationTypes = [
+      'roc',
+      'riskchart',
+      'hand',
+      'cost_curve',
+    ];
 
     final modelDisplayNames = {
       'adaboost': 'AdaBoost',
@@ -143,30 +148,31 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     final evalTypePageDetails = {
       'roc': {
-        'title':
-            'Receiver-Operating Characteristic (ROC) and Area Under the Curve (AUC)',
-        'link':
-            'Reference [ROC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc).',
+        'title': 'Receiver-Operating Characteristic (ROC) '
+            'and Area Under the Curve (AUC)',
+        'documentation': 'Reference [ROC](https://developers.google.com/'
+            'machine-learning/crash-course/classification/roc-and-auc).',
       },
       'riskchart': {
         'title': 'Risk Chart',
-        'link': null,
+        'documentation': null,
       },
       'hand': {
         'title': 'H-Measure &#8212; Coherent Alternative to AUC',
-        'link':
-            'Built using [hmeasure::HMeasure](https://www.rdocumentation.org/packages/hmeasure).',
+        'documentation': 'Built using [hmeasure::HMeasure](https://'
+            'www.rdocumentation.org/packages/hmeasure).',
       },
       'cost_curve': {
         'title': 'Cost Curve &#8212; Expected Misclassification Cost',
-        'link':
-            'Built using [ROCR::performance](https://www.rdocumentation.org/packages/ROCR/topics/performance) with measure=ecost.',
+        'documentation':
+            'Built using [ROCR::performance](https://www.rdocumentation.org/'
+                'packages/ROCR/topics/performance) with measure=ecost.',
       },
     };
 
-    // 20250309 gjw For each of the evaluation types we now iterate over the
-    // expected image files and for those that exist and the user interface has
-    // that model type ticked, we add the image file for display.
+    // For each of the evaluation types we now iterate over the expected image
+    // files and for those that exist and the user interface has that model type
+    // ticked, we add the image file for display (gjw 20250309).
 
     for (var evalType in evaluationTypes) {
       List<String> images = [];
@@ -189,7 +195,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
             titles: titles,
             paths: images,
             pageTitle: evalTypePageDetails[evalType]!['title']!,
-            pageDoc: evalTypePageDetails[evalType]!['link'],
+            pageDoc: evalTypePageDetails[evalType]!['documentation'],
           ),
         );
       }
