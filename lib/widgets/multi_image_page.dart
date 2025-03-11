@@ -49,21 +49,21 @@ import 'package:rattle/utils/show_ok.dart';
 class MultiImagePage extends StatelessWidget {
   final List<String> titles;
   final List<String> paths;
-  final String appBarImage;
+  final String pageTitle;
   final bool svgImage;
 
-  // If this is non-null, display it in the app bar alongside [appBarImage].
+  // If this is non-null, display it in the app bar alongside [pageTitle].
   // The combined text is rendered as Markdown.
 
-  final String? buildHyperLink;
+  final String? pageDoc;
 
   const MultiImagePage({
     super.key,
     required this.titles,
     required this.paths,
-    this.appBarImage = 'Hand',
+    this.pageTitle = 'Hand',
     this.svgImage = true,
-    this.buildHyperLink,
+    this.pageDoc,
   });
 
   Future<Uint8List?> _loadImageBytes(String path) async {
@@ -145,13 +145,13 @@ class MultiImagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: buildHyperLink == null
-            ? Text(appBarImage)
+        title: pageDoc == null
+            ? Text(pageTitle)
             : MarkdownBody(
                 data: wordWrap('''
-                      **$appBarImage**
+                      **$pageTitle**
           
-                      $buildHyperLink
+                      $pageDoc
                       '''),
                 styleSheet: MarkdownStyleSheet(
                   // Force left alignment for paragraph text.
