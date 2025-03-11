@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-03-10 09:09:53 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-03-11 08:37:09 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -45,12 +45,12 @@
 # collect together the library commands at the beginning of the script
 # here.
 
-# 20241007 gjw Loading packages requires they are already installed
+# Loading packages requires they are already installed
 # into a local library. The RattleNG installation instructions
 # recommends installing these packages before running rattle for the
 # first time. From within RattleNG, tap the <DOWNLOAD> button in the top
 # right button bar which will run the `packages.R` script to check and
-# install any missing packages.
+# install any missing packages. (20241007 gjw)
 
 library(ggplot2)      # To support a local rattle theme.
 library(ggtext)       # To support markdown text in ggplot title.
@@ -164,9 +164,9 @@ if (username == "") {
   username <- Sys.getenv("<USERNAME>")  # On Windows
 }
 ##
-## 20250106 gjw Introduce the `rat()` command as being excatly the
-## same as the `cat()` command but is used where we don't want to
-## export the command to the user's R script.
+## Introduce the `rat()` command as being excatly the same as the
+## `cat()` command but is used where we don't want to export the
+## command to the user's R script. (20250106 gjw)
 ##
 rat <- cat
 
@@ -208,16 +208,20 @@ check_not_real <- function(x) {
   }
 }
 
-# Then find columns with unique values which we will treat as
-# identifiers, but not real number columns.
+# Identify columns (except real numbers) with unique values to treat
+# as identifiers. (20250311 gjw)
 
-unique_columns <- function(df) {
-  col_names <- names(df)
-  # Get those columns that have only unique values.
-  unique_cols <- col_names[sapply(df, check_unique)]
-  # Remove those that are real numbers (more likely to be unique)
-  unique_cols <- unique_cols[sapply(df[unique_cols], check_not_real)]
-  return(unique_cols)
+unique_columns <- function(tbl) {
+  tbl %>%
+    dplyr::select(where(~ !is.numeric(.x) || all(.x == as.integer(.x), na.rm=TRUE))) ->
+  non_real_cols
+
+  non_real_cols %>%
+    dplyr::select(where(~ dplyr::n_distinct(.x, na.rm=TRUE) == nrow(tbl))) %>%
+    colnames() ->
+  unique_non_real_cols
+
+  return(unique_non_real_cols)
 }
 
 find_fewest_levels <- function(df) {

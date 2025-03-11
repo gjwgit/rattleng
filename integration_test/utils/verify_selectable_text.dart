@@ -1,6 +1,6 @@
 /// Verify selectable text content in the widget.
 //
-// Time-stamp: <Thursday 2025-01-23 14:21:27 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-11 09:44:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -29,18 +29,19 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// Verify all [texts] exist within SelectableText widgets on the screen.
+/// Verify all [texts] present (or not) within SelectableText.
 ///
 /// 1. Find all SelectableText widgets in the widget tree
 /// 2. Check each widget's text content to see if it contains [texts]
-/// 3. Fails the test if any [texts] is not found in any widget
+/// 3. Fails the test if found any [texts] is not [present]
 ///
 /// We needed to define this separately from verifyText because XXXX?
 
 Future<void> verifySelectableText(
   WidgetTester tester,
-  List<String> texts,
-) async {
+  List<String> texts, {
+  bool present = true,
+}) async {
   // Find all SelectableText widgets in the widget tree.
 
   final textFinder = find.byType(SelectableText);
@@ -69,12 +70,15 @@ Future<void> verifySelectableText(
       }
     }
 
-    // Fail test if text wasn't found in any widget.
+    // Fail test if text wasn't found in any widget (when [present] is true) or
+    // the text was found in a SelectedableText (when [present] is false).
 
     expect(
       foundText,
-      true,
-      reason: 'Text "$text" not found in any SelectableText widget',
+      present,
+      reason: present
+          ? 'Text "$text" not found in SelectableText.'
+          : 'Text "$text" was not expected to be found in SelectableText.',
     );
   }
 }

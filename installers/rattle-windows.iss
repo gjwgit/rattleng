@@ -9,10 +9,12 @@
 #define MyAppExeName "rattle.exe"
 
 [Setup]
+;
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 ; (On Ubunut run `uuidgen` to generate a unique AppId.)
+;
 AppId={{2C2A7757-EE3A-456D-ABCA-045C3C411AF2}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
@@ -24,9 +26,21 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\RattleNG
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
-; Uncomment the following line to run in non administrative install mode (install for current user only.)
+;
+; Uncomment the following line to run in non administrative install mode
+; (install for current user only.) Otherwise it runs as admin to install
+; for all users.
+;
 ;PrivilegesRequired=lowest
-PrivilegesRequiredOverridesAllowed=dialog
+;
+; If the following is `dialog` then when installed from the command line the
+; user is prompted through a POPUP to install for current user or system.
+; By setting it to `commandline` then from the command line the choice can
+; be `/ALLUSERS` or `/CURRENTUSER`. The default is `/ALLUSERS`.
+;
+;PrivilegesRequiredOverridesAllowed=dialog
+;
+PrivilegesRequiredOverridesAllowed=commandline
 OutputDir=installers
 OutputBaseFilename=rattle-{#MyAppVersion}
 SetupIconFile=..\windows\runner\resources\app_icon.ico
