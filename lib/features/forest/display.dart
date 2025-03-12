@@ -313,8 +313,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     String image = '';
 
     forestAlgorithm == AlgorithmType.traditional
-        ? image = '$tempDir/model_randomForest_riskchart_training.svg'
-        : image = '$tempDir/model_cforest_riskchart_training.svg';
+        ? image = '$tempDir/evaluate_randomForest_riskchart_training.svg'
+        : image = '$tempDir/evaluate_cforest_riskchart_training.svg';
 
     if (imageExists(image)) {
       pages.add(
@@ -337,8 +337,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     image = '';
 
     forestAlgorithm == AlgorithmType.traditional
-        ? image = '$tempDir/model_randomForest_riskchart_tuning.svg'
-        : image = '$tempDir/model_cforest_riskchart_tuning.svg';
+        ? image = '$tempDir/evaluate_randomForest_riskchart_tuning.svg'
+        : image = '$tempDir/evaluate_cforest_riskchart_tuning.svg';
 
     if (imageExists(image)) {
       pages.add(
