@@ -81,7 +81,7 @@ title <- glue(
 ## 20250309 gjw The plot is saved into a specific file named so that
 ## we can access it from the Rattle app.
 ##
-svg(glue("<TEMPDIR>/model_evaluate_cost_curve_{mtype}_{dtype}.svg"),
+svg(glue("<TEMPDIR>/evaluate_{mtype}_cost_curve_{dtype}.svg"),
     width=11)
 tdf %>%
   ggplot(aes(x=threshold, y=cost)) +

@@ -56,6 +56,10 @@ String _basicTemplate(
   // 20250117 zy There could be opportunity to reduce duplicated code
   // but at this time it is not clear how.
 
+  // Convert the evaluation dataset identifier to uppercase for consistency.
+
+  evaluateDataset = evaluateDataset.toUpperCase();
+
   // Define header strings for various model error matrices (counts and proportions).
 
   String hdr =

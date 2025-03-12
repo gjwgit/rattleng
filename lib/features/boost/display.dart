@@ -152,8 +152,8 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     String riskImage = '';
 
     algorithm == 'Extreme'
-        ? riskImage = '$tempDir/model_xgboost_riskchart_training.svg'
-        : riskImage = '$tempDir/model_adaboost_riskchart_training.svg';
+        ? riskImage = '$tempDir/evaluate_xgboost_riskchart_training.svg'
+        : riskImage = '$tempDir/evaluate_adaboost_riskchart_training.svg';
 
     if (imageExists(riskImage)) {
       pages.add(
@@ -172,8 +172,8 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     }
 
     algorithm == 'Extreme'
-        ? riskImage = '$tempDir/model_xgboost_riskchart_tuning.svg'
-        : riskImage = '$tempDir/model_adaboost_riskchart_tuning.svg';
+        ? riskImage = '$tempDir/evaluate_xgboost_riskchart_tuning.svg'
+        : riskImage = '$tempDir/evaluate_adaboost_riskchart_tuning.svg';
 
     if (imageExists(riskImage)) {
       pages.add(
