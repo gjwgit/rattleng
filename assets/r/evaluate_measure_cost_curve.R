@@ -55,9 +55,16 @@ if (any(na_in_pred)) {
   probability_complete <- probability_clean
 }
 
+# 20250309 gjw Create a ROCR prediction object from the probabilities
+# and the corresponding outcome labels. We handle missing predictions
+# specially since ROCR is not handling them.
+
 pred <- ROCR::prediction(probability_complete, actual_complete)
 
-# Compute expected cost performance.
+# 20250309 gjw ROCR's `performance()` can compute many kinds of
+# performance measures. Here we compute the expected cost which is the
+# basis of our cost curve.  We extract the x and y values from the
+# expeced cost into a temporary data frame for plotting
 
 perf_ecost <- ROCR::performance(pred, "ecost")
 tdf <- data.frame(
@@ -65,11 +72,16 @@ tdf <- data.frame(
   cost      = unlist(perf_ecost@y.values)
 )
 
-# Compute AUC.
+# 20250309 gjw ROCR can also calculate the area under the curve based
+# on the ROC curve for added information displayed on the cost curve
+# plot.
 
 auc <- ROCR::performance(pred, "auc")@y.values[[1]]
 
-# Informative plot title (Replace placeholders accordingly).
+# 20250309 gjw An informative title will present the plot type, the
+# model description and specific model type, the data set on which the
+# model was built, the dataset used to evaluate the model, and the
+# target variable of the model.
 
 title <- glue(
   "Cost Curve — {mdesc} — {mtype} ",
@@ -77,7 +89,8 @@ title <- glue(
   <TARGET_VAR>
 )
 
-# Plot to SVG.
+## 20250309 gjw The plot is saved into a specific file named so that
+## we can access it from the Rattle app.
 
 svg(glue("<TEMPDIR>/evaluate_{mtype}_cost_curve_{dtype}.svg"), width=11)
 
