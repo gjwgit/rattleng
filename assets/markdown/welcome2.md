@@ -17,8 +17,9 @@ data source.  A choice of demo datasets is available. Tooltips explain
 each one.
 
 Alternatively, load your own data, including **csv** (comma separated
-value) and **txt** (plain text) files. Support for **xlsx**, **arff**,
-**rData**, **odbc**, **corpus**, and R package datasets is planned.
+value), **xlsx** (Excel spreadsheet), and **txt** (plain text)
+files. Support for **arff**, **rData**, **odbc**,
+**corpus**, and R package datasets is planned.
 
 After loading a dataset you can navigate to the **Roles** page. Each
 variable has a role. Most will be **Input** (i.e., independent)
@@ -32,13 +33,14 @@ role **Ignore**.
 
 ## Options on Loading your Dataset
 
-The toggles at the top right of the Dataset configuration panel will
-**Cleanse**, **Unify**, and **Partition** your dataset on
-loading. Cleansing will remove columns that have a constant value and
+The toggles at the top right of the Dataset configuration panel
+support **Cleanse**, **Unify**, and **Partition** options for your
+dataset. Cleansing will remove columns that have a constant value and
 will convert character columns with few values into factors. A dataset
 is unified by converting column names to a [standard
 format](https://survivor.togaware.com/datascience/normalise-variable-names.html),
-and partitioning will split a dataset into [training, tuning, and
+and partitioning will split a dataset into [training,
+tuning/validation, and
 testing](https://survivor.togaware.com/datascience/train-tune-and-test-datasets.html)
 subsets.
 
