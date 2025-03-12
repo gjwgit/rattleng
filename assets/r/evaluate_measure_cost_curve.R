@@ -37,18 +37,29 @@
 # the actual values with the missing excluded.
 
 actual_complete <- na.omit(actual_va)
+
 actual_missing <- attr(actual_complete, "na.action")
+
 attributes(actual_complete) <- NULL
+
+probability_clean <- if (length(actual_missing)) probability[-actual_missing] else probability
+
+# Now remove remaining NAs from probability_clean (minimal-change).
+
+na_in_pred <- is.na(probability_clean)
+
+if (any(na_in_pred)) {
+  probability_complete <- probability_clean[!na_in_pred]
+  actual_complete <- actual_complete[!na_in_pred]
+} else {
+  probability_complete <- probability_clean
+}
 
 # 20250309 gjw Create a ROCR prediction object from the probabilities
 # and the corresponding outcome labels. We handle missing predictions
 # specially since ROCR is not handling them.
 
-pred <- if (length(actual_missing)) {
-  ROCR::prediction(probability[-actual_missing], actual_complete)
-} else {
-  ROCR::prediction(probability, actual_complete)
-}
+pred <- ROCR::prediction(probability_complete, actual_complete)
 
 # 20250309 gjw ROCR's `performance()` can compute many kinds of
 # performance measures. Here we compute the expected cost which is the
@@ -56,7 +67,7 @@ pred <- if (length(actual_missing)) {
 # expeced cost into a temporary data frame for plotting
 
 perf_ecost <- ROCR::performance(pred, "ecost")
-tdf <-data.frame(
+tdf <- data.frame(
   threshold = unlist(perf_ecost@x.values),
   cost      = unlist(perf_ecost@y.values)
 )
@@ -80,9 +91,9 @@ title <- glue(
 
 ## 20250309 gjw The plot is saved into a specific file named so that
 ## we can access it from the Rattle app.
-##
-svg(glue("<TEMPDIR>/evaluate_{mtype}_cost_curve_{dtype}.svg"),
-    width=11)
+
+svg(glue("<TEMPDIR>/evaluate_{mtype}_cost_curve_{dtype}.svg"), width=11)
+
 tdf %>%
   ggplot(aes(x=threshold, y=cost)) +
   geom_line(color="black") +
