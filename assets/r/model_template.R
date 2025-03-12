@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-02-06 20:48:29 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-03-13 08:08:17 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -52,13 +52,13 @@ vars   <- setdiff(vars, ignore)
 inputs <- setdiff(vars, target)
 
 # Generate the formula to be used for predictive modelling which is
-# available when a <TARGET> variable is identified.
+# available when a TARGET variable is identified.
 
 if (!is.null(target)) {
   form <- formula(target %s+% " ~ .")
 
-  # 20250108 gjw Create the <TARGET> <COMPLETE> dataset (tcds).  We
-  # identify a subset of the FULL <DATASET> that has values for the
+  # 20250108 gjw Create the Target complete dataset (tcds).  We
+  # identify a subset of the full dataset that has values for the
   # target variable, removing those rows that do not have a
   # target. For predictive modelling we would only use data that has a
   # target value.
@@ -70,7 +70,7 @@ if (!is.null(target)) {
 } else {
   form <- formula("~ .")
 
-  # If no <TARGET> variable is identified then we still want to start
+  # If no TARGET variable is identified then we still want to start
   # with a `tcds` for processing.
 
   tcds <- ds
@@ -134,7 +134,7 @@ if (<SPLIT_DATASET>) {
   tc <- tr <- tu <- te <- 1:tcnobs
 }
 
-# Note the actual values of the <TARGET> variable and the RISK variable
+# Note the actual values of the TARGET variable and the RISK variable
 # for use in model training and evaluation later on.
 
 if (!is.null(target)) {
