@@ -97,7 +97,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       key: 'svmEvaluate',
       label: 'SVM',
       checkCommands: [
-        ['print(svm_model)'],
+        ['print(model_svm)'],
       ],
       checkFiles: [[]],
       provider: svmEvaluateProvider,
@@ -341,7 +341,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: ctreeExecuted && treeExecuted,
-                  parameters: [ec, em, ro, erc, hd],
+                  parameters: [ec, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -351,7 +351,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: randomForestExecuted && forestTicked,
-                  parameters: [erf, em, ro, erc, hd],
+                  parameters: [erf, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -361,7 +361,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: conditionalForestExecuted && forestTicked,
-                  parameters: [ecf, em, ro, erc, hd],
+                  parameters: [ecf, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -371,7 +371,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: adaBoostExecuted && boostTicked,
-                  parameters: [ea, em, ro, erc, hd],
+                  parameters: [ea, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -381,7 +381,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: xgBoostExecuted && boostTicked,
-                  parameters: [ex, em, ro, erc, hd],
+                  parameters: [ex, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -391,7 +391,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: svmExecuted,
-                  parameters: [es, em, ro, erc, hd],
+                  parameters: [es, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -401,7 +401,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: linearExecuted,
-                  parameters: [el, em, ro, erc, hd],
+                  parameters: [el, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -411,7 +411,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && nnetExecuted,
-                  parameters: [en, em, ro, erc, hd],
+                  parameters: [en, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
@@ -421,7 +421,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                 await executeEvaluation(
                   executed: neuralTicked && neuralNetExecuted,
-                  parameters: [ent, em, ro, erc, hd],
+                  parameters: [ent, em, ro, erc, hd, ecc],
                   datasetSplitType: datasetSplitType,
                   context: context,
                   ref: ref,
