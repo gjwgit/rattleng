@@ -36,17 +36,24 @@
 # them.  Notice that we also remove the unnecessary attributes from
 # the actual values with the missing excluded.
 
-# Remove NAs explicitly from both probability predictions and actual outcomes.
+actual_complete <- na.omit(actual_va)
 
-complete_cases <- complete.cases(probability, actual_va)
-probability_complete <- probability[complete_cases]
-actual_complete <- actual_va[complete_cases]
-
-# Ensure attributes are cleared.
+actual_missing <- attr(actual_complete, "na.action")
 
 attributes(actual_complete) <- NULL
 
-# Create ROCR prediction object.
+probability_clean <- if (length(actual_missing)) probability[-actual_missing] else probability
+
+# Now remove remaining NAs from probability_clean (minimal-change).
+
+na_in_pred <- is.na(probability_clean)
+
+if (any(na_in_pred)) {
+  probability_complete <- probability_clean[!na_in_pred]
+  actual_complete <- actual_complete[!na_in_pred]
+} else {
+  probability_complete <- probability_clean
+}
 
 pred <- ROCR::prediction(probability_complete, actual_complete)
 
