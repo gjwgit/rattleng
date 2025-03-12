@@ -180,7 +180,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
       for (var model in models) {
         bool isTicked = evaluateProviders[model] ?? false;
-        String prefix = evalType == 'riskchart' ? 'model' : 'evaluate';
+        String prefix = 'evaluate';
         String imagePath = '$tempDir/${prefix}_${model}_${evalType}_$dtype.svg';
 
         if (isTicked && imageExists(imagePath)) {

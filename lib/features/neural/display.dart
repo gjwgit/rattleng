@@ -275,7 +275,7 @@ $weights
     if (algorithm == 'neuralnet') {
       String neuralRiskImage = '';
 
-      neuralRiskImage = '$tempDir/model_neuralnet_riskchart_tuning.svg';
+      neuralRiskImage = '$tempDir/evaluate_neuralnet_riskchart_tuning.svg';
 
       if (imageExists(neuralRiskImage)) {
         pages.add(
@@ -294,7 +294,7 @@ $weights
         );
       }
 
-      neuralRiskImage = '$tempDir/model_neuralnet_riskchart_training.svg';
+      neuralRiskImage = '$tempDir/evaluate_neuralnet_riskchart_training.svg';
 
       if (imageExists(neuralRiskImage)) {
         pages.add(
