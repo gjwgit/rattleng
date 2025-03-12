@@ -1,10 +1,10 @@
 # Work Flow
 
 Rattle encourages a data science work flow down the left hand vertical
-*functions*. For each function we expose *features* available through
+*tabs*. For each tab we expose *features* available through
 horizontal tabs. After you *configure* a feature the *build* button
 will run an **R template script**. The results are *display*ed as
-pages that you can navigate. Be sure to visit the **Script** function
+pages that you can navigate. Be sure to visit the **Script** tab
 to see the **R** code that is generated and can be exported as a
 standalone R program.
 
@@ -12,7 +12,7 @@ standalone R program.
 
 ## Getting Started
 
-Tap the **Dataset** button of the **Dataset** function to choose a
+Tap the **Dataset** button of the **Dataset** tab to choose a
 data source.  A choice of demo datasets is available. Tooltips explain
 each one.
 
