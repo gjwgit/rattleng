@@ -36,41 +36,33 @@
 # them.  Notice that we also remove the unnecessary attributes from
 # the actual values with the missing excluded.
 
-actual_complete <- na.omit(actual_va)
-actual_missing <- attr(actual_complete, "na.action")
+# Remove NAs explicitly from both probability predictions and actual outcomes.
+
+complete_cases <- complete.cases(probability, actual_va)
+probability_complete <- probability[complete_cases]
+actual_complete <- actual_va[complete_cases]
+
+# Ensure attributes are cleared.
+
 attributes(actual_complete) <- NULL
 
-# 20250309 gjw Create a ROCR prediction object from the probabilities
-# and the corresponding outcome labels. We handle missing predictions
-# specially since ROCR is not handling them.
+# Create ROCR prediction object.
 
-pred <- if (length(actual_missing)) {
-  ROCR::prediction(probability[-actual_missing], actual_complete)
-} else {
-  ROCR::prediction(probability, actual_complete)
-}
+pred <- ROCR::prediction(probability_complete, actual_complete)
 
-# 20250309 gjw ROCR's `performance()` can compute many kinds of
-# performance measures. Here we compute the expected cost which is the
-# basis of our cost curve.  We extract the x and y values from the
-# expeced cost into a temporary data frame for plotting
+# Compute expected cost performance.
 
 perf_ecost <- ROCR::performance(pred, "ecost")
-tdf <-data.frame(
+tdf <- data.frame(
   threshold = unlist(perf_ecost@x.values),
   cost      = unlist(perf_ecost@y.values)
 )
 
-# 20250309 gjw ROCR can also calculate the area under the curve based
-# on the ROC curve for added information displayed on the cost curve
-# plot.
+# Compute AUC.
 
 auc <- ROCR::performance(pred, "auc")@y.values[[1]]
 
-# 20250309 gjw An informative title will present the plot type, the
-# model description and specific model type, the data set on which the
-# model was built, the dataset used to evaluate the model, and the
-# target variable of the model.
+# Informative plot title (Replace placeholders accordingly).
 
 title <- glue(
   "Cost Curve — {mdesc} — {mtype} ",
@@ -78,11 +70,10 @@ title <- glue(
   <TARGET_VAR>
 )
 
-## 20250309 gjw The plot is saved into a specific file named so that
-## we can access it from the Rattle app.
-##
-svg(glue("<TEMPDIR>/evaluate_{mtype}_cost_curve_{dtype}.svg"),
-    width=11)
+# Plot to SVG.
+
+svg(glue("<TEMPDIR>/evaluate_{mtype}_cost_curve_{dtype}.svg"), width=11)
+
 tdf %>%
   ggplot(aes(x=threshold, y=cost)) +
   geom_line(color="black") +
@@ -97,7 +88,7 @@ tdf %>%
            y     = 0.00,
            hjust = 0,
            vjust = 0,
-           size  = 5,
+           size = 5,
            label = sprintf('AUC = %.2f', auc)) +
   <SETTINGS_GRAPHIC_THEME>() +
   theme(plot.title=element_markdown())
