@@ -1,8 +1,8 @@
-/// Test randomForest() with demo dataset.
+/// WEATHER dataset MODEL tab FOREST feature.
 //
-// Time-stamp: <Saturday 2025-02-01 17:56:48 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-13 07:12:59 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -30,120 +30,31 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/image_page.dart';
 
-import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model RandomForest:', () {
-    testWidgets('Load, Navigate, Build.', (WidgetTester tester) async {
+  group('WEATHER MODEL RANDOM FOREST:', () {
+    testWidgets('load, navigate, build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-
-      await tester.pump(interact);
-
-      await loadDemoDataset(tester);
-
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-
-      // Navigate to the Forest feature.
-
       await navigateToFeature(tester, 'Forest', ForestPanel);
-
-      await tester.pump(interact);
-
       await tapButton(tester, 'Build Random Forest');
-
-      await tester.pump(delay);
-
-      await tapButton(tester, 'Build Random Forest');
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final titleFinder = find.textContaining(
-        "Summary of the Random Forest model for Classification (built using 'randomForest'):",
-      );
-      expect(titleFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final dataFinder = find.textContaining(
-        'humidity_3pm',
-      );
-      expect(dataFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      // Find the title of text page.
-
-      final sampleRulesFinder = find.textContaining(
-        'Random Forest Model 1 ',
-      );
-      expect(sampleRulesFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final imagePageTitleFinder = find.text('VAR IMPORTANCE');
-      expect(imagePageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final secondImagePageTitleFinder = find.text('ERROR RATE');
-      expect(secondImagePageTitleFinder, findsOneWidget);
-
-      final secondImageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(secondImageFinder, findsOneWidget);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(interact);
-
-      final thirdImagePageTitleFinder = find.text('OOB ROC Curve');
-      expect(thirdImagePageTitleFinder, findsOneWidget);
-
-      final thirdImageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(thirdImageFinder, findsOneWidget);
+      await navigateToPage(tester, 1, 'Random Forest Model');
+      await gotoNextPage(tester, title: 'Sample Rules');
+      await gotoNextPage(tester, title: 'Variable Importance — Numeric');
+      await verifySelectableText(tester, ['humidity_3pm']);
+      await gotoNextPage(tester, title: 'Variable Importance — Plot');
     });
   });
 }
