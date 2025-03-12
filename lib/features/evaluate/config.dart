@@ -97,7 +97,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       key: 'svmEvaluate',
       label: 'SVM',
       checkCommands: [
-        ['print(svm_model)'],
+        ['print(model_svm)'],
       ],
       checkFiles: [[]],
       provider: svmEvaluateProvider,
