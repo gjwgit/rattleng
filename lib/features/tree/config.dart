@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Thursday 2025-02-13 07:19:06 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-12 16:58:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -276,7 +276,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 key: const Key('include_missing'),
                 tooltip: '''
 
-              Include missing values in decision tree splits to handle incomplete data without discarding observations.
+              **Include Missing:** If set then the algorithm will distribut
+              missing values in decision tree splits to handle incomplete data
+              without discarding observations.
 
               ''',
                 label: 'Include Missing',
@@ -284,7 +286,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
               ),
             ],
           ),
-          // Min Split, Max Depth, and Min Bucket.
+
           Row(
             spacing: configWidgetSpace,
             children: [
@@ -294,9 +296,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _minSplitController,
                 tooltip: '''
 
-                This is the minimum number of observations that must exist in a
-                dataset at any node in order for a split of that node to be
-                attempted.  The default is 20.
+                **Min Split:** Set the minimum number of observations that must
+                exist in the dataset at any node in order for a split of that
+                node to be attempted.  The default is 20.
 
                 ''',
                 inputFormatter:
@@ -311,8 +313,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _minBucketController,
                 tooltip: '''
 
-                The minimum number of observations allowed in any leaf node of
-                the decision tree.  The default value is one third of Min Split.
+                **Min Bucket:** Set the minimum number of observations allowed
+                in any leaf node of the decision tree.  The default value is one
+                third of Min Split.
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
@@ -326,11 +329,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _maxDepthController,
                 tooltip: '''
 
-                This is the maximum depth of any node of the final tree. The
-                root node is considered to be depth 0 so a non-trivial tree
-                starts with depth 1.  The maximum allowable depth for rpart() is
-                ${maxDepthLimit.toString()} which we retain as the maximum
-                depth allowable for Rattle and the default.
+                **Max Depth:** Set the maximum depth of any node of the final
+                tree. The root node is considered to be depth 0 so a non-trivial
+                tree starts with depth 1.  The maximum allowable depth for
+                rpart() is ${maxDepthLimit.toString()} which we retain as the
+                maximum depth allowable for Rattle and the default.
 
                 ''',
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
@@ -346,8 +349,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _complexityController,
                 tooltip: '''
 
-                The complexity parameter is used to control the size of the
-                decision tree and to select the optimal tree size.
+                **Complexity:** The complexity parameter is used to control the
+                size of the decision tree and to select the optimal tree
+                size.See the
+                [RPart](https://www.rdocumentation.org/packages/rpart/topics/rpart.control)
+                documentation for details.
 
                 ''',
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
@@ -368,8 +374,11 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     : normalTextStyle,
                 tooltip: '''
 
-                Set the prior probabilities for each class.  E.g. for two
-                classes: 0.5,0.5. Must add up to 1.
+                **Priors:** Set the prior probabilities for each class to boost
+                a particularly important class, by giving it a higher prior
+                probability. Expects a list of numbers that sum up to 1, and of
+                the same length as the number of classes in the training
+                dataset: e.g.,0.5,0.5.
 
                 ''',
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
@@ -390,8 +399,10 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     : normalTextStyle,
                 tooltip: '''
 
-                Weight the outcome classes differently.  E.g., 0,10,1,0 (TN, FP,
-                FN, TP).
+                **Loss Matrix:** Set the weights for the outcome classes
+                differently to the observed outcomes from the dataset. For
+                example, for binary classification this might be 0,10,1,0 (TN,
+                FP, FN, TP).
 
                 ''',
                 enabled: selectedAlgorithm != AlgorithmType.conditional,
