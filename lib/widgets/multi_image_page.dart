@@ -1,8 +1,8 @@
-/// A widget to build the common image based pages.
+/// Widget for multiple images across the page.
 //
-// Time-stamp: <Friday 2024-12-27 16:10:14 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-12 08:41:48 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -49,21 +49,21 @@ import 'package:rattle/utils/show_ok.dart';
 class MultiImagePage extends StatelessWidget {
   final List<String> titles;
   final List<String> paths;
-  final String appBarImage;
+  final String pageTitle;
   final bool svgImage;
 
-  // If this is non-null, display it in the app bar alongside [appBarImage].
+  // If this is non-null, display it in the app bar alongside [pageTitle].
   // The combined text is rendered as Markdown.
 
-  final String? buildHyperLink;
+  final String? pageDoc;
 
   const MultiImagePage({
     super.key,
     required this.titles,
     required this.paths,
-    this.appBarImage = 'Hand',
+    this.pageTitle = 'EVALUATION',
     this.svgImage = true,
-    this.buildHyperLink,
+    this.pageDoc,
   });
 
   Future<Uint8List?> _loadImageBytes(String path) async {
@@ -145,13 +145,13 @@ class MultiImagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: buildHyperLink == null
-            ? Text(appBarImage)
+        title: pageDoc == null
+            ? Text(pageTitle)
             : MarkdownBody(
                 data: wordWrap('''
-                      **$appBarImage**
-          
-                      $buildHyperLink
+                      **$pageTitle**
+
+                      $pageDoc
                       '''),
                 styleSheet: MarkdownStyleSheet(
                   // Force left alignment for paragraph text.

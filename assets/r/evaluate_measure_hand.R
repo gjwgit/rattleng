@@ -37,7 +37,7 @@ results <- hmeasure::HMeasure(true.class=actual_va, scores=probability)
 
 # Create a single SVG file that displays all 4 plots.
 
-svg(filename = glue("<TEMPDIR>/model_evaluate_hand_{mtype}_{dtype}.svg"),
+svg(filename = glue("<TEMPDIR>/evaluate_{mtype}_hand_{dtype}.svg"),
     width    = 11,
     height   = 8)
 

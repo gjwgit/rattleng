@@ -61,7 +61,7 @@ title
 
 # Generate the risk chart.
 
-svg(glue("<TEMPDIR>/model_{mtype}_riskchart_{dtype}.svg"), width=11)
+svg(glue("<TEMPDIR>/evaluate_{mtype}_riskchart_{dtype}.svg"), width=11)
 rattle::riskchart(filtered_predicted_numeric, filtered_actual_numeric, filtered_risk,
                   title          = title,
                   risk.name      = risk,
