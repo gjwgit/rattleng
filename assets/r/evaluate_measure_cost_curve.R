@@ -88,7 +88,7 @@ tdf %>%
            y     = 0.00,
            hjust = 0,
            vjust = 0,
-           size = 5,
+           size  = 5,
            label = sprintf('AUC = %.2f', auc)) +
   <SETTINGS_GRAPHIC_THEME>() +
   theme(plot.title=element_markdown())
