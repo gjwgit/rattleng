@@ -105,5 +105,4 @@ sensitivity_df %>%
            label = sprintf('AUC = %.2f', auc)) +
   <SETTINGS_GRAPHIC_THEME>() +
   theme(plot.title = element_markdown())
-
 dev.off()
