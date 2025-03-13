@@ -1,6 +1,6 @@
 /// COMP3425 W5 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Friday 2025-03-07 11:40:37 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-14 05:31:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -40,9 +40,9 @@ import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
-import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
+import 'utils/verify_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -53,18 +53,19 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-      await setPartition(tester, true);
       await loadDemoDataset(tester, 'Audit');
-      // 20250131 gjw The test is sometimes failing with a `Could not find
-      // 'adjustment'`. One delay was still sometimes not enough so make it two
-      // delays for now. Perhaps the ROLES page is not yet ready sometimes.
+      // The test is sometimes failing with a `Could not find 'adjustment'`. One
+      // delay was still sometimes not enough so make it two delays for
+      // now. Perhaps the ROLES page is not yet ready sometimes (20250131 gjw).
       //
-      // 20250209 gjw Add a third delay which seemed to work.
+      // Add a third delay which seemed to finally work reliably (20250209 gjw).
       await tester.pump(delay);
       await tester.pump(delay);
       await tester.pump(delay);
+      await verifyRole('adjusted', 'Target');
+      await verifyRole('adjustment', 'Input');
+      await verifyRole('id', 'Ident');
       await setDatasetRole(tester, 'adjustment', 'Risk');
-      await setDatasetRole(tester, 'id', 'Ident');
       await setDatasetRole(tester, 'marital', 'Ignore');
       await setDatasetRole(tester, 'education', 'Ignore');
       await navigateToTab(tester, 'Explore');
