@@ -119,6 +119,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       'hand',
       'cost_curve',
       'lift',
+      'sensitivity',
     ];
 
     final modelDisplayNames = {
@@ -174,6 +175,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'documentation':
             'Built using [ROCR::performance](https://www.rdocumentation.org/'
                 'packages/ROCR/topics/performance) with measure=lift.',
+      },
+      'sensitivity': {
+        'title': 'Sensitivity &#8212; Measures Positive Detection',
+        'documentation':
+            'Built using [ROCR::performance](https://www.rdocumentation.org/'
+                'packages/ROCR/topics/performance) with measure=sens.',
       },
     };
 
