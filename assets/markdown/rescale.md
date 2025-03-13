@@ -11,11 +11,10 @@ be the case when calculating distances.
 
 In these situations we will want to Normalise the data. The types of
 normalisations (available through the **Rescale* feature of the
-**Transform** function) include re-centering and rescaling the data to
-be around zero, rescaling the data to be in the range from 0 to 1
-(Scale [0,1]), covert the numbers into a rank ordering (Rank), and
-finally, to do a robust rescaling around zero using the median
-(-Median/MAD).
+**Transform** tab) include re-centering and rescaling the data to be
+around zero, rescaling the data to be in the range from 0 to 1 (Scale
+[0,1]), covert the numbers into a rank ordering (Rank), and finally,
+to do a robust rescaling around zero using the median (-Median/MAD).
 
 The original data is not modified. Instead, a new variable is created
 with a prefix added to the variable's name that indicates the kind of
@@ -28,14 +27,14 @@ transformation.
   negative to positive values, using
   [base::scale](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale).
 
-+ **Scale [0,1]** function supports another common requirement to
++ **Scale [0,1]** operation supports another common requirement to
   remap the data to the [0,1] range.
 
 + [Rank](https://survivor.togaware.com/datascience/rescale-data-using-rank.html)
   will convert the values of a numeric variable into a rank using
   [base::rank()](https://www.rdocumentation.org/packages/base/topics/rank).
 
-+ **Median/MAD** function is considered to be a robust version of the
++ **Median/MAD** operation is considered to be a robust version of the
   standard Recenter option. Instead of using the mean and standard
   deviation, we subtract the median and divide by median absolute
   deviation.

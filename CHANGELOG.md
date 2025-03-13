@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ COST CURVE: Implemented for all model types [6.4.44 20250313 zy]
 + ASSOCIATION: Allow more decimal points in config [6.4.33 20250311 gjw]
 + XLSX: Support loading Excel spreadsheets [6.4.32 20250310 gjw]
 + CORRELATION bug fix to title [6.4.31 20250309 tonynolan]

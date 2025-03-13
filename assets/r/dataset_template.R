@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-02-06 20:38:37 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-03-13 08:09:18 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,7 +30,7 @@
 # Rattle and the dataset cleansed and prepared with roles
 # assigned. The actions here in `dataset_template.R` will also setup
 # the data after a dataset has changed, which may be called after, for
-# example, a <TRANSFORM>.
+# example, a TRANSFORM.
 #
 # References:
 #
@@ -151,9 +151,9 @@ nmobs
 ## # 20240814 gjw migrate to generating the meta data with rattle::meta_data(ds)
 ##
 ## # 20241008 gjw I think we now move this to PREP rather than
-## # here. 20241212 gjw However this is required to update the <DATASET>
-## # view of the data, particularly after a <TRANSFORM>. So add it back in
-## # here. Without this the <DATASET> will not show that an imputed
+## # here. 20241212 gjw However this is required to update the DATASET
+## # view of the data, particularly after a TRANSFORM. So add it back in
+## # here. Without this the DATASET will not show that an imputed
 ## # IMN_rainfull, for example, has 54 unique values (it is 0 when
 ## # IMN_rainfall does not appear in metaData).
 
