@@ -118,6 +118,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       'riskchart',
       'hand',
       'cost_curve',
+      'lift',
     ];
 
     final modelDisplayNames = {
@@ -167,6 +168,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'documentation':
             'Built using [ROCR::performance](https://www.rdocumentation.org/'
                 'packages/ROCR/topics/performance) with measure=ecost.',
+      },
+      'lift': {
+        'title': 'Lift &#8212; Model Improvement over Random',
+        'documentation':
+            'Built using [ROCR::performance](https://www.rdocumentation.org/'
+                'packages/ROCR/topics/performance) with measure=lift.',
       },
     };
 
