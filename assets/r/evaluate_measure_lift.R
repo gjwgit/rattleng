@@ -106,6 +106,4 @@ lift_df %>%
   <SETTINGS_GRAPHIC_THEME>() +
   theme(plot.title = element_markdown())
 
-# Close the SVG device.
-
 dev.off()
