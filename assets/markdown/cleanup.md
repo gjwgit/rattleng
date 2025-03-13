@@ -1,7 +1,7 @@
 # Cleanup the Dataset
 
 It is quite easy to get the dataset variable count up to significant
-numbers through the use of the **Transform** function features **Impute**,
+numbers through the use of the **Transform** tab features **Impute**,
 **Rescale**, and **Recode**. The **Cleanup** option supports the
 deletion of rows (observations) and columns (variables) from the
 dataset. You can freely undertake transforms that add new variables,
@@ -20,13 +20,13 @@ following options:
 + **Delete Variable**.
 
 If you view the dataset summary page (the second page of each of the
-features of the Cleanup function) you will see the updated summary after
+features of the Cleanup tab) you will see the updated summary after
 each of the updates.
 
 The dataset summary page will eventually also provide an option to
 **Save** your dataset back to a **csv** file. In the meantime, after
 you have updated your dataset in various ways you can export it back
-to a **csv** file from the **Console** function with a command like:
+to a **csv** file from the **Console** tab with a command like:
 
 ```r
 ds %>%

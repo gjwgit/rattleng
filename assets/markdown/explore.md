@@ -4,10 +4,10 @@ The first task for a data scientist, on loading their dataset into
 Rattle, is to understand what the data looks like and how it is
 distributed. I call this *living and breathing your data*.
 
-Back on the **Dataset** function we saw an initial glimpse of the dataset
+Back on the **Dataset** tab we saw an initial glimpse of the dataset
 &mdash; the first few values from the dataset were listed there.
 
-Here in the **Explore** function we can further review, for example, how
+Here in the **Explore** tab we can further review, for example, how
 the values of each of variables in the dataset are distributed &ndash;
 explore the **distributions**. This provides much more insight into
 the data leading to a better understanding of the data and leading ask

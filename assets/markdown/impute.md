@@ -19,7 +19,7 @@ aware that imputation is problematic.
 
 Any patterns we notice for missing values can be useful in suggesting
 which variables could be candidates for imputing. Refer to the Missing
-feature of the Explore function for details.
+feature of the Explore tab for details.
 
 When Rattle performs an imputation it will store the results in a
 variable of the dataset which has the same name as the variable that
