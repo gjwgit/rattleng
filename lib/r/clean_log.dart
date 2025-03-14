@@ -1,6 +1,6 @@
 /// Utility to strip lines from an R script file t to ignore for extract.
 ///
-/// Time-stamp: <Friday 2025-03-14 16:03:04 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-14 16:30:10 +1100 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd.
 ///
@@ -36,16 +36,13 @@ String rCleanLog(String log) {
   List<String> lines = log.split('\n');
 
   List<String> filteredLines = lines
-      // Filter out lines that start with '> em_prop'. This is the particular
+      // Filter out lines that contain '> em_prop'. This is the particular
       // example that motivated this function. On Windows the `> em_prop` was
-      // being printed at the beginning of the line, wheres on Linux it is at
-      // the end of the previous line. Hence whenscraping the ERROR MATRIX on
-      // Windows no ERROR MATRIX was found since the next line after our tag
-      // line started with '>'. So let's strip it before extracting the output
-      // ERROR MATRIX (gjw 20250314).
-      // .map((line) => line.replaceAll(RegExp('> em_prop(?!\s)', ''))
-      // .map((line) => line.replaceAll('> em_count', ''))
-      // .map((line) => line.replaceAll('> cat(error_summary)', ''))
+      // coming out on a line by itself, wheres on Linux it is at the end of the
+      // previous line. Hence when scraping the ERROR MATRIX on Windows no ERROR
+      // MATRIX was found since the next line after our tag line started with
+      // '>' and so searching for the output stopped. So we strip the whole line
+      // so we are able to extract the output ERROR MATRIX (gjw 20250314).
       .where((line) => !RegExp(r'^> em_prop$').hasMatch(line))
       .where((line) => !RegExp(r'^> em_count$').hasMatch(line))
       .where((line) => !RegExp(r'^> cat(error_summary)$').hasMatch(line))
