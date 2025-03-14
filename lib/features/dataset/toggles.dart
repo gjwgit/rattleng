@@ -249,7 +249,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         MarkdownTooltip(
           message: '''
 
-          **Cleanse** Currently **${cleanse ? "" : "not "}enabled**. When
+          **Cleanse:** Currently **${cleanse ? "" : "not "}enabled**. When
           enabled a dataset will be cleansed by removing any columns with a
           single constant value and converting character columns with
           $charToFactor or fewer unique values to factors (categoric).  If you
@@ -265,7 +265,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         MarkdownTooltip(
           message: '''
 
-          **Unify** Currently **${normalise ? "" : "not "}enabled**. When
+          **Unify:** Currently **${normalise ? "" : "not "}enabled**. When
           enabled the names of columns (variables) of the dataset are unified by
           converting them to lowercase and separating words by underscore.  If
           you do not require this automated unifying of the variable names,
@@ -280,7 +280,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         MarkdownTooltip(
           message: '''
 
-          **Partition** Currently **${partition ? "" : "not "}enabled**. When
+          **Partition:** Currently **${partition ? "" : "not "}enabled**. When
           enabled, for the purposes of predictive modelling *only*, a dataset
           will be randomly split into three smaller datasets. The three-way
           split defaults to 70/15/15 percent and is currently set as
