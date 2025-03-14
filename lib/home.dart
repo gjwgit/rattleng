@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2025-03-14 20:16:39 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-14 20:17:49 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
