@@ -14,15 +14,23 @@ DEST=${HOST}:${FLDR}
 # version' pushes to the repositroy and get the latest one as the one
 # we want to download the artefacts.
 
+# bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
+# 	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+# 	     | head -n 1)
+
+# A temporary patch. COmment the above and uncomment below to do the
+# 'Build inno' path for a quick build of the windows inno exe for
+# debugging (gjw 20250314).
+
 bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
-	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Build inno")) | .databaseId' \
 	     | head -n 1)
 
 if [[ -z "${bumpId}" ]]; then
     echo "No workflow found."
     exit 1
 fi
-
+echo ${bumpId}
 status=$(gh run view ${bumpId} --json status --jq '.status')
 conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
 
