@@ -1,6 +1,6 @@
 /// Utility to strip lines from an R script file t to ignore for extract.
 ///
-/// Time-stamp: <Friday 2025-03-14 18:05:36 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-14 18:08:07 +1100 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd.
 ///
@@ -45,8 +45,12 @@ String rCleanLog(String log) {
       // strip the string so we are able to extract the output ERROR MATRIX (gjw
       // 20250314).
       .map((line) => line.replaceAll('> em_prop', ''))
-      .map((line) =>
-          line.replaceAll(' <- rattle::errorMatrix(actual_va, predicted)', ''))
+      .map(
+        (line) => line.replaceAll(
+          ' <- rattle::errorMatrix(actual_va, predicted)',
+          '',
+        ),
+      )
       .map((line) => line.replaceAll('> em_count', ''))
       .map((line) => line.replaceAll('> cat(error_summary)', ''))
       //
