@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-27 05:39:57 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-03-14 18:49:50 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,6 +27,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/evaluate.dart';
+import 'package:rattle/r/clean_log.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
@@ -103,6 +104,11 @@ String _basicTemplate(
 
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
+
+  // We begin by removing spurious text that can appear int he log that we need
+  // to fix before hunting for the required out (gjw 20250314).
+
+  log = rCleanLog(log);
 
   String crc = rExtract(
     log,
