@@ -120,6 +120,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       'cost_curve',
       'lift',
       'sensitivity',
+      'precision',
     ];
 
     final modelDisplayNames = {
@@ -181,6 +182,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'documentation':
             'Built using [ROCR::performance](https://www.rdocumentation.org/'
                 'packages/ROCR/topics/performance) with measure=sens.',
+      },
+      'precision': {
+        'title': 'Precision &#8212; Measures Correct Positive Predictions',
+        'documentation':
+            'Built using [ROCR::performance](https://www.rdocumentation.org/'
+                'packages/ROCR/topics/performance) with measure=prec.',
       },
     };
 
