@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-03-14 18:06:21 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-14 18:49:50 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -106,10 +106,9 @@ String _basicTemplate(
   // Extract the count data from the log and remove the first line.
 
   // We begin by removing spurious text that can appear int he log that we need
-  // to fix before hunting for the required out.
+  // to fix before hunting for the required out (gjw 20250314).
 
   log = rCleanLog(log);
-  // print(log);
 
   String crc = rExtract(
     log,

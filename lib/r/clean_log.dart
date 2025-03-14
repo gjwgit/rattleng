@@ -1,6 +1,6 @@
-/// Utility to strip lines from an R script file t to ignore for extract.
+/// Utility to strip lines from an R script file to ignore.
 ///
-/// Time-stamp: <Friday 2025-03-14 18:08:07 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-14 18:48:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd.
 ///
@@ -53,11 +53,6 @@ String rCleanLog(String log) {
       )
       .map((line) => line.replaceAll('> em_count', ''))
       .map((line) => line.replaceAll('> cat(error_summary)', ''))
-      //
-      // .where((line) => !RegExp(r'^> em_prop$').hasMatch(line))
-      // .where((line) => !RegExp(r'^> em_count$').hasMatch(line))
-      // .where((line) => !RegExp(r'^> cat(error_summary)$').hasMatch(line))
-      //
       .toList();
 
   // Join the filtered lines back into a single string.
