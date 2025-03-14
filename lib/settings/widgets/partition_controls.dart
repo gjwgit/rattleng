@@ -1,6 +1,6 @@
 /// Partition controls.
 //
-// Time-stamp: <Wednesday 2025-01-15 16:06:36 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-14 13:58:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -74,8 +74,10 @@ class PartitionControls extends ConsumerWidget {
               },
               tooltip: '''
 
-              The percentage of data allocated for training the model. Ensure
-              the total across training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
+              **Training:** This is the percentage of data allocated for
+              training the model. Please ensure that the total across training,
+              ${useValidation ? "validation" : "tuning"}, and testing sums to
+              100%.
 
               ''',
             ),
@@ -91,8 +93,10 @@ class PartitionControls extends ConsumerWidget {
               },
               tooltip: '''
 
-              The percentage of data allocated for ${useValidation ? "validating" : "tuning"} the model. Ensure the total across
-              training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
+              **${useValidation ? "Validation" : "Tuning"}:** This is the
+              percentage of data allocated for ${useValidation ? "validating" : "tuning"} the model. Please ensure that the total across training,
+              ${useValidation ? "validation" : "tuning"}, and testing sums to
+              100%.
 
               ''',
             ),
@@ -108,8 +112,10 @@ class PartitionControls extends ConsumerWidget {
               },
               tooltip: '''
 
-              The percentage of data allocated for testing the model. Ensure the total
-              across training, ${useValidation ? "validation" : "tuning"}, and testing sums to 100%.
+              **Testing:** This is the percentage of data allocated for testing
+              the model. Please ensure that the total across training,
+              ${useValidation ? "validation" : "tuning"}, and testing sums to
+              100%.
 
               ''',
             ),
@@ -125,11 +131,12 @@ class PartitionControls extends ConsumerWidget {
               child: MarkdownTooltip(
                 message: '''
 
-                Some data scientists think of the second dataset of the
-                partitions as a dataset to use for **tuning** the model. Others
-                see it as a dataset for **validating** parameter settings. You
-                can choose your preference for the nomenclature here. The choice
-                does not have any material impact on any analysis.
+                **Validation or Tuning:** Some data scientists think of the
+                second dataset of the partitions as a dataset to use for
+                **tuning** the model. Others see it as a dataset for
+                **validating** parameter settings. You can choose your
+                preference for the nomenclature here. The choice does not have
+                any material impact on any analysis.
 
                 ''',
                 child: Row(
