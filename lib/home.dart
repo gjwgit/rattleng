@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Sunday 2025-03-09 12:02:34 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-14 20:16:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -115,7 +115,7 @@ final List<Map<String, dynamic>> homeTabs = [
     'tooltip': '''
 
     **Model:** Tap here to acces the Model function. Through this function you
-      can build predict and descritive models from your data.
+      can build predictive and descriptive models from your data.
 
     ''',
   },
