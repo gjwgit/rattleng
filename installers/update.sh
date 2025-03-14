@@ -47,20 +47,20 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     # 20250221 gjw Got deb build working. Do that install in the
     # Makefile now and don't do the local unzip install here.
 
+    echo '***** UPLOAD WINDOWS INNO'
+
+    gh run download ${bumpId} --name ${APP}-windows-inno
+    rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
+    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}-${version}-windows-inno.exe
+
+    echo ""
+
     echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
 
     gh run download ${bumpId} --name ${APP}-linux-zip
     rsync -avzh ${APP}-dev-linux.zip ${DEST}
     # unzip -oq ${APP}-dev-linux.zip -d ${HOME}/.local/share/${APP}/
     mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
-
-    echo ""
-
-    echo '***** UPLOAD WINDOWS INNO'
-
-    gh run download ${bumpId} --name ${APP}-windows-inno
-    rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
-    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}-${version}-windows-inno.exe
 
     echo ""
 
