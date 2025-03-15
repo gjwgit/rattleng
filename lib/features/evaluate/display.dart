@@ -117,10 +117,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       'roc',
       'riskchart',
       'hand',
-      'cost_curve',
-      'lift',
-      'sensitivity',
-      'precision',
+      'combined_metrics',
     ];
 
     final modelDisplayNames = {
@@ -165,29 +162,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'documentation': 'Built using [hmeasure::HMeasure](https://'
             'www.rdocumentation.org/packages/hmeasure).',
       },
-      'cost_curve': {
-        'title': 'Cost Curve &#8212; Expected Misclassification Cost',
+      'combined_metrics': {
+        'title': 'Combined Metrics: Cost, Lift, Sensitivity, and Precision',
         'documentation':
-            'Built using [ROCR::performance](https://www.rdocumentation.org/'
-                'packages/ROCR/topics/performance) with measure=ecost.',
-      },
-      'lift': {
-        'title': 'Lift &#8212; Model Improvement over Random',
-        'documentation':
-            'Built using [ROCR::performance](https://www.rdocumentation.org/'
-                'packages/ROCR/topics/performance) with measure=lift.',
-      },
-      'sensitivity': {
-        'title': 'Sensitivity &#8212; Measures Positive Detection',
-        'documentation':
-            'Built using [ROCR::performance](https://www.rdocumentation.org/'
-                'packages/ROCR/topics/performance) with measure=sens.',
-      },
-      'precision': {
-        'title': 'Precision &#8212; Measures Correct Positive Predictions',
-        'documentation':
-            'Built using [ROCR::performance](https://www.rdocumentation.org/'
-                'packages/ROCR/topics/performance) with measure=prec.',
+            'Combines Cost Curve, Lift, Sensitivity, and Precision metrics into a single visualization.',
       },
     };
 
@@ -196,17 +174,30 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // ticked, we add the image file for display (gjw 20250309).
 
     for (var evalType in evaluationTypes) {
+      String prefix = 'evaluate';
+
       List<String> images = [];
       List<String> titles = [];
 
       for (var model in models) {
         bool isTicked = evaluateProviders[model] ?? false;
-        String prefix = 'evaluate';
-        String imagePath = '$tempDir/${prefix}_${model}_${evalType}_$dtype.svg';
 
-        if (isTicked && imageExists(imagePath)) {
+        if (evalType != evaluationTypes.last) {
+          String imagePath =
+              '$tempDir/${prefix}_${model}_${evalType}_$dtype.svg';
+
+          if (isTicked && imageExists(imagePath)) {
+            images.add(imagePath);
+            titles.add(modelDisplayNames[model]!);
+          }
+        }
+      }
+
+      if (evalType == evaluationTypes.last) {
+        String imagePath = '$tempDir/${prefix}_${evalType}_$dtype.svg';
+        if (imageExists(imagePath)) {
           images.add(imagePath);
-          titles.add(modelDisplayNames[model]!);
+          titles.add('Combined Metrics');
         }
       }
 
