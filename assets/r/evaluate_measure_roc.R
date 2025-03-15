@@ -1,6 +1,6 @@
-# Use `actual` and `prediction` to generate ROC/AUC plots.
+# Use `actual_va` and `prediction` to generate ROC/AUC plots.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
