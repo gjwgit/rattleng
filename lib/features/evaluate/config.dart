@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-02-12 10:24:37 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-16 06:19:18 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -239,6 +239,13 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ];
 
       await rSource(context, ref, selectedParameters.cast<String>());
+
+      // Add a delay to avoid overrunning the CONSOLE which reuslts in scripts
+      // being truncated withthe current R CONSOLE implementation. This works
+      // for me on my kadesh Ubuntu laptop. It may be less of a problem on
+      // slower machines. (gjw 20250316)
+
+      await Future.delayed(Duration(milliseconds: 500));
     }
   }
 

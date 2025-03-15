@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Saturday 2025-03-15 17:31:35 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-16 06:13:33 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -99,11 +99,42 @@ import 'package:rattle/utils/update_script.dart';
 /// define the variables and then run the scripts.
 ///
 /// Reverted to using angle brackets as substring parameters were getting
-/// replaced if the order was not correct (e.g. FILE and FILENAME). There is not much need for running the scripts standal(gjw
+/// replaced if the order was not correct (e.g. FILE and FILENAME). (gjw
 /// 20250315)
 ///
 
 Future<void> rSource(
+  BuildContext context,
+  WidgetRef ref,
+  List<String> scripts,
+) async {
+  // In order to explore different execution options I call rSource as a private
+  // function. The issue is that on Linux the script sent to the Console is
+  // being truncated on the Console for EVLUATION. And so with the recent
+  // addition of the 4 ROCR plots (cost, lift, precision, sensitivity) I don't
+  // get all the plots for multiple models. They are actually not being
+  // generated into SVG files, seems like because the code is not getting to the
+  // CONSOLE. Seems like this is the case on my Linux, but others are not yet
+  // reporting an issue. However, splitting each script out to be executed one
+  // at a time does not solve the problem. (gjw 20250316)
+  //
+  // A work around is to generate an evaluation for one model T a time, then
+  // have a break!
+
+  // for (String script in scripts) {
+  //   _rSource(context, ref, [script]);
+  // }
+
+  // In this case simply pass through. This is the original implementation.
+
+  _rSource(context, ref, scripts);
+
+  // Could try a delay after ever script.
+
+//      await Future.delayed(Duration(milliseconds: 500));
+}
+
+Future<void> _rSource(
   BuildContext context,
   WidgetRef ref,
   List<String> scripts,
