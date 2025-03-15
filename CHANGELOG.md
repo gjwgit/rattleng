@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ EVALUATION: Combine rocr curves into single plot [6.4.37 20250316 zy]
 + WINDOWS: Bug fix for ERROR MATRIX [6.4.36 20250314 gjw]
 + EVALUATION: Add lift, cost, sensitivity plots [6.4.35 20250314 zy]
 + COST CURVE: Implemented for all model types [6.4.34 20250313 zy]
