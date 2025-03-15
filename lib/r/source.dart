@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Wednesday 2025-03-05 11:27:39 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-03-15 17:31:35 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -95,8 +95,12 @@ import 'package:rattle/utils/update_script.dart';
 /// scripts do not run standalone. Whlist it did ensure the parameters were
 /// properly mapped, it is useful to be able to run the scripts as is outside of
 /// rattleNG. So decided to remove the angle brackets. The scripts still can not
-/// tun standalone as such since they will have undefined vairables, but we can
+/// run standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
+///
+/// Reverted to using angle brackets as substring parameters were getting
+/// replaced if the order was not correct (e.g. FILE and FILENAME). There is not much need for running the scripts standal(gjw
+/// 20250315)
 ///
 
 Future<void> rSource(
