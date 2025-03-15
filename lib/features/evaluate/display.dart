@@ -117,7 +117,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       'roc',
       'riskchart',
       'hand',
-      'combined_metrics',
+      'rocr',
     ];
 
     final modelDisplayNames = {
@@ -162,7 +162,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'documentation': 'Built using [hmeasure::HMeasure](https://'
             'www.rdocumentation.org/packages/hmeasure).',
       },
-      'combined_metrics': {
+      'rocr': {
         'title': 'Combined Metrics: Cost, Lift, Sensitivity, and Precision',
         'documentation':
             'Combines Cost Curve, Lift, Sensitivity, and Precision metrics into a single visualization.',
@@ -182,22 +182,11 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       for (var model in models) {
         bool isTicked = evaluateProviders[model] ?? false;
 
-        if (evalType != evaluationTypes.last) {
-          String imagePath =
-              '$tempDir/${prefix}_${model}_${evalType}_$dtype.svg';
+        String imagePath = '$tempDir/${prefix}_${model}_${evalType}_$dtype.svg';
 
-          if (isTicked && imageExists(imagePath)) {
-            images.add(imagePath);
-            titles.add(modelDisplayNames[model]!);
-          }
-        }
-      }
-
-      if (evalType == evaluationTypes.last) {
-        String imagePath = '$tempDir/${prefix}_${evalType}_$dtype.svg';
-        if (imageExists(imagePath)) {
+        if (isTicked && imageExists(imagePath)) {
           images.add(imagePath);
-          titles.add('Combined Metrics');
+          titles.add(modelDisplayNames[model]!);
         }
       }
 

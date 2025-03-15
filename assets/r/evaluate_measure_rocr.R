@@ -68,7 +68,7 @@ generate_plot <- function(pred, measure, y_label, title_label) {
   theme(plot.title = element_markdown())
 }
 
-svg(glue("<TEMPDIR>/evaluate_combined_metrics_{dtype}.svg"), width=11)
+svg(glue("<TEMPDIR>/evaluate_{mtype}_rocr_{dtype}.svg"), width=11)
 
 # Generate plots individually.
 
