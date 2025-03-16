@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:21:07 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-03-17 08:19:28 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -56,9 +56,10 @@ model_rpart <- rpart(
   data    = trds,
   method  = method,
   parms   = list(split="information" <PRIORS> <LOSS>),
-  control = rpart.control(usesurrogate = 0,
-                          maxsurrogate = 0,
-                          <MINSPLIT>, <MINBUCKET>, <MAXDEPTH>, <CP>),
+  control = rpart.control(<RPART_INCLUDE_MISSING><MINSPLIT>,
+                          <MINBUCKET>,
+                          <MAXDEPTH>,
+                          <CP>),
   model   = TRUE)
 
 # Output a textual view of themodel for review.
