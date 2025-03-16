@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Wednesday 2025-03-12 16:58:37 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-16 09:33:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -303,8 +303,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ''',
                 inputFormatter:
                     FilteringTextInputFormatter.digitsOnly, // Integers only
-                validator: (value) => validateInteger(value, min: 2),
-                min: 2,
+                validator: (value) => validateInteger(value, min: -1),
+                min: -1,
                 stateProvider: minSplitProvider,
               ),
               NumberField(
