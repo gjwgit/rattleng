@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ DATASET: Add weather 2007 for V5 comparison. [6.4.38 20250316 gjw]
 + EVALUATION: Combine rocr curves into single plot [6.4.37 20250316 zy]
 + WINDOWS: Bug fix for ERROR MATRIX [6.4.36 20250314 gjw]
 + EVALUATION: Add lift, cost, sensitivity plots [6.4.35 20250314 zy]
