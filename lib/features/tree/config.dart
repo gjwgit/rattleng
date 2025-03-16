@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Monday 2025-03-17 08:31:01 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 09:07:03 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -276,9 +276,12 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 key: const Key('include_missing'),
                 tooltip: '''
 
-              **Include Missing:** If set then the algorithm will distribut
-              missing values in decision tree splits to handle incomplete data
-              without discarding observations.
+              **Include Missing:** If set then the split algorithm will
+              distribute observations with missing values across multiple
+              datasets when calculating how to split the dataset for the
+              decision tree. This then allows incomplete data to be utilised
+              without discarding such observations at the cost of much more
+              computation.
 
               ''',
                 label: 'Include Missing',
