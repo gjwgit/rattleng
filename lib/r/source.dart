@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Sunday 2025-03-16 06:13:33 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 08:54:10 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -66,7 +66,7 @@ import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:rattle/providers/svm.dart';
-import 'package:rattle/providers/tree_include_missing.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/visualise.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
@@ -194,7 +194,7 @@ Future<void> _rSource(
   int maxDepth = ref.read(maxDepthProvider);
 
   String priors = ref.read(priorsProvider);
-  bool includingMissing = ref.read(treeIncludeMissingProvider);
+  bool treeIncludeMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
   bool nnetSkip = ref.read(neuralSkipProvider);
   bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
@@ -512,24 +512,28 @@ Future<void> _rSource(
 
   code = code.replaceAll('<DATA_SPLIT_TR_TU_TE>', partitionString);
 
-  // TODO if (script == 'model_build_rpart')) {
-
-  // TODO 20231016 gjw THESE SHOULD BE SET IN THE MODEL TAB AND ARE THEN
-  // REPLACED WITHING model_build_rpart.R
+  ////////////////////////////////////////////////////////////////////////
+  // RPART
 
   code = code.replaceAll(
-    ' <PRIORS>',
+    '<RPART_INCLUDE_MISSING>',
+    treeIncludeMissing
+        ? ''
+        : 'usesurrogate = 0,\n                          maxsurrogate = 0,\n                          ',
+  );
+  code = code.replaceAll('<MINSPLIT>', 'minsplit     = ${minSplit.toString()}');
+  code =
+      code.replaceAll('<MINBUCKET>', 'minbucket    = ${minBucket.toString()}');
+  code = code.replaceAll('<MAXDEPTH>', 'maxdepth     = ${maxDepth.toString()}');
+  code = code.replaceAll('<CP>', 'cp           = ${complexity.toString()}');
+  code = code.replaceAll(
+    '<PRIORS>',
     priors.isNotEmpty ? ', prior = c($priors)' : '',
   );
   code = code.replaceAll(
-    ' <LOSS>',
+    '<LOSS>',
     lossMatrix.isNotEmpty ? ', loss = matrix(c($lossMatrix))' : '',
   );
-  code = code.replaceAll(' <MAXDEPTH>', ' maxdepth = ${maxDepth.toString()}');
-  code = code.replaceAll(' <MINSPLIT>', ' minsplit = ${minSplit.toString()}');
-  code =
-      code.replaceAll(' <MINBUCKET>', ' minbucket = ${minBucket.toString()}');
-  code = code.replaceAll(' <CP>', ' cp = ${complexity.toString()}');
 
   ////////////////////////////////////////////////////////////////////////
   // ASSOCIATE
@@ -678,11 +682,6 @@ Future<void> _rSource(
   code = code.replaceAll('<MAXWORD>', maxWord);
 
   ////////////////////////////////////////////////////////////////////////
-
-  if (includingMissing) {
-    code = code.replaceAll('usesurrogate=0,', '');
-    code = code.replaceAll('maxsurrogate=0', '');
-  }
 
   code = code.replaceAll('<NNET_TRACE>', nnetTrace ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<NNET_SKIP>', nnetSkip ? 'TRUE' : 'FALSE');

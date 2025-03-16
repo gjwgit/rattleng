@@ -1,8 +1,8 @@
-/// A provider for tree model include missing.
+/// A provider for rpart and ctree configurations.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-03-17 08:30:26 +1100 Graham Williams>
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -22,9 +22,12 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Graham Williams
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/// Whether to treat missing values through using surrogates in rpart.
 
 final treeIncludeMissingProvider = StateProvider<bool>((ref) => false);

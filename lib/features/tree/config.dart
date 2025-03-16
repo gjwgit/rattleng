@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Sunday 2025-03-16 09:33:27 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 08:31:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -41,7 +41,7 @@ import 'package:rattle/providers/min_split.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
-import 'package:rattle/providers/tree_include_missing.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/get_target.dart';
