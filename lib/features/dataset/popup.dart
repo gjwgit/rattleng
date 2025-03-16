@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Monday 2025-03-10 05:32:15 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-03-16 12:10:15 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -270,6 +270,32 @@ class DatasetPopup extends ConsumerWidget {
                         );
                       },
                       child: const Text('Weather'),
+                    ),
+                  ),
+                  buttonGap,
+                  MarkdownTooltip(
+                    message: '''
+
+                      **Weather 2007:** Tap here to load a dataset that captures
+                      one year of daily observations from a weather station in
+                      Canberra, Australia in 2007 (as used in Rattle V5). It is
+                      useful to compare Rattle V6 with rattle V5 using the same
+                      dataset.
+
+                      The **csv** file is available as
+                      [weather_2007.csv](https://github.com/gjwgit/rattleng/blob/dev/assets/data/weather_2007.csv).
+
+                      ''',
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await loadDemoDataset(
+                          ref,
+                          context,
+                          'data/weather_2007.csv',
+                          '2007',
+                        );
+                      },
+                      child: const Text('2007'),
                     ),
                   ),
                   buttonGap,
