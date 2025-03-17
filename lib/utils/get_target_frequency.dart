@@ -1,6 +1,6 @@
 /// Gets frequency vector of target variable.
 //
-// Time-stamp: <Monday 2024-12-16 08:18:30 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 12:29:25 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -45,8 +45,8 @@ List<int> getTargetFrequency(WidgetRef ref) {
     String defineTarget = rExtract(
       stdout,
       randomPartition
-          ? '> floor(as.numeric(table(ds[[target]])) * split[1])'
-          : '> as.numeric(table(ds[[target]]))',
+          ? ' floor(as.numeric(table(ds[[target]])) * split[1])'
+          : ' as.numeric(table(ds[[target]]))',
     );
 
     // Remove [1] prefix if present.

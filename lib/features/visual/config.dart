@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-12-15 15:54:09 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 12:09:20 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -94,10 +94,14 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     }
 
     // Retrieve the categoric variables that will be used to group the
-    // visualisations by. Be sure to also include the Target.
+    // visualisations by. Be sure to also include the Target. We don;t want to
+    // include the IGNORED or IDENT variables.
 
     List<String> cats = getCategoric(ref);
-    cats.insert(0, 'None'); // Add the "None" option at the top.
+
+    // Add a "None" option to the top.
+
+    cats.insert(0, 'None');
 
     String groupBy = ref.watch(groupByProvider);
 
@@ -205,8 +209,8 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             MarkdownTooltip(
               message: '''
 
-              A **Variable** (selected from the available **Input** variables)
-              is chosen for this visualisation.
+              **Variable:** Choose from amongst the available **Input**
+              variables one that is to be visualised.
 
               ''',
               child: DropdownMenu(
@@ -229,11 +233,11 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             MarkdownTooltip(
               message: '''
 
-              If a **Group By** variable (selected from the available
-              **Categoric** variables) is chosen then the data will be grouped
-              by the values of that variable and the distribution of the chosen
-              **Variable** will be displayed. Choose **None** to not perform any
-              grouping.
+              **Group By:** Choose from amongst the available **Categoric**
+              variables one variable by which you wish to group the data. The
+              dataset will then be grouped by the values of that chosen variable
+              and the distribution of the chosen Variable by these groups will
+              be displayed. Choose **None** to not perform any group by.
 
               ''',
               child: DropdownMenu(
@@ -243,8 +247,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 dropdownMenuEntries: cats.map((s) {
                   return DropdownMenuEntry(value: s, label: s);
                 }).toList(),
-                // On selection, record the variable that was selected AND rebuild
-                // the visualisations.
+
+                // On selection, record the variable that was selected AND
+                // rebuild the visualisations.
 
                 onSelected: (String? value) {
                   ref.read(groupByProvider.notifier).state =
@@ -258,9 +263,11 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               label: 'Ignore Missing Group by',
               tooltip: '''
 
-              If the **Group By** variable has missing values then we will
-              ignore them by default. Untick this box to show the missing (*NA*)
-              as another group displayed in the plots.
+              **Ignore Missing Group by:** When selected (the default) then if
+              the **Group By** variable has any missing (*NA*) values we will
+              ignore them in the plot. If you unslected this option then if the
+              variable has missing values, that will be treated as another group
+              and displayed in the plots.
 
               ''',
               provider: ignoreMissingGroupByProvider,
@@ -269,18 +276,21 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               label: 'Box Plot Notch',
               tooltip: '''
 
-              **Box Plot Notch:**
-
-              Enabling this option adds notches to the box plots.
-              The notches represent the confidence interval around the median.
-              This helps in visually assessing if two medians are significantly different.
+              **Box Plot Notch:** When selected (the default) this option adds
+              notches to the box plots.  The notches represent the confidence
+              interval around the median.  This helps in visually assessing if
+              two medians are significantly different.
 
               - **On:** Adds notches to the box plot.
 
               - **Off:** Displays box plots without notches.
 
-              Note: If the notch areas of two box plots do not overlap,
-              their medians are significantly different at approximately a 5% significance level.
+              Note: If the notch areas of two box plots do not overlap, their
+              medians are significantly different at approximately a 5%
+              significance level.
+
+              For some datasets the notches can not be calculated and so turning
+              them off produces a better looking plot.
 
               ''',
               provider: exploreVisualBoxplotNotchProvider,

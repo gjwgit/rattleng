@@ -1,8 +1,8 @@
-/// <DESCRIPTION>
+/// Return a list of the names of categoric variables from the dataset.
 //
-// Time-stamp: <Sunday 2024-09-22 16:00:27 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 12:10:58 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors: <AUTHORS>, Graham Williams
 
 library;
 
