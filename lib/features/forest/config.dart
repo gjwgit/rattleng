@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-01-23 09:07:22 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 12:39:35 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -364,8 +364,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   : normalTextStyle,
               tooltip: '''
 
-                Specify a single sample size (e.g. 500), or a sample size 
-                for each class (e.g., 500,500 for a binary model), 
+                Specify a single sample size (e.g. 500), or a sample size
+                for each class (e.g., 500,500 for a binary model),
                 which may be useful in balancing class predictions
 
                 ''',
