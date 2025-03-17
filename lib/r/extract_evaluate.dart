@@ -213,17 +213,6 @@ String _basicTemplate(
         '$cfems\n\n';
   }
 
-  // Append ADABOOST model results if available and boosting is enabled.
-
-  if (ca != '' && pa != '' && boostExecuted && aems != '') {
-    result = '$result\n'
-        '$hda\n\n'
-        '$ca\n\n'
-        '$mda\n\n'
-        '$pa\n\n'
-        '$aems\n\n';
-  }
-
   // Append XGBOOST model results if available and boosting is enabled.
 
   if (cx != '' && px != '' && boostExecuted && xems != '') {
@@ -235,6 +224,17 @@ String _basicTemplate(
         '$xems\n\n';
   }
 
+  // Append ADABOOST model results if available and boosting is enabled.
+
+  if (ca != '' && pa != '' && boostExecuted && aems != '') {
+    result = '$result\n'
+        '$hda\n\n'
+        '$ca\n\n'
+        '$mda\n\n'
+        '$pa\n\n'
+        '$aems\n\n';
+  }
+
   // Append SVM model results if available and SVM is executed.
 
   if (csvm != '' && psvm != '' && svmExecuted && svmems != '') {
@@ -244,6 +244,17 @@ String _basicTemplate(
         '$epsvm\n\n'
         '$psvm\n\n'
         '$svmems\n\n';
+  }
+
+  // Append Linear model results if available and Linear is executed.
+
+  if (clic != '' && clip != '' && linearExecuted && liems != '') {
+    result = '$result\n'
+        '$elic\n\n'
+        '$clic\n\n'
+        '$elip\n\n'
+        '$clip\n\n'
+        '$liems\n\n';
   }
 
   // Append NNET model results if available and NNET is executed.
@@ -266,17 +277,6 @@ String _basicTemplate(
         '$entp\n\n'
         '$cntp\n\n'
         '$ntems\n\n';
-  }
-
-  // Append Linear model results if available and Linear is executed.
-
-  if (clic != '' && clip != '' && linearExecuted && liems != '') {
-    result = '$result\n'
-        '$elic\n\n'
-        '$clic\n\n'
-        '$elip\n\n'
-        '$clip\n\n'
-        '$liems\n\n';
   }
 
   result = '$result\n'
