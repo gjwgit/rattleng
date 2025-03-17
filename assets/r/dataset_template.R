@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-03-13 08:09:18 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-03-17 12:38:00 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -103,7 +103,8 @@ inputs <- setdiff(vars, target)  %>%
   setdiff(identifiers) %T>%
   print()
 
-# Identify the numeric variables by name.
+# Identify the numeric variables by name, after rmoving ignored
+# variables.
 
 ds %>%
   select(-all_of(ignore)) %>%
@@ -114,7 +115,8 @@ ds %>%
   print() ->
 numc
 
-# Identify the categoric variables by name.
+# Identify the categoric variables by name, after rmoving ignored
+# variables.
 
 ds %>%
   select(-all_of(ignore)) %>%
@@ -174,15 +176,14 @@ meta_data(ds)
 ##
 ## # large_factor_vars
 
-# Convert frequency table of target variable to numeric vector.
-# It is used to check validation of sample size in building model rforest.
-
-as.numeric(table(ds[[target]]))
-
+## TODO 20250317 gjw #937 Eventually remove this after including the
+## same data in the meta_data. Currently we convert frequency table of
+## target variable to numeric vector so it can be used to check
+## validation of sample size in building model rforest.  We also
+## calculates the ceiling of the class frequencies multiplied by the
+## split ratio.  Returns integer values rounded up to ensure all
+## classes are represented. Again used in error checking in random
+## forest.
+if (!is.null(target)) as.numeric(table(ds[[target]]))
 split <- c(<DATA_SPLIT_TR_TU_TE>)
-
-
-# Calculates the ceiling of the class frequencies multiplied by the split ratio.
-# Returns integer values rounded up to ensure all classes are represented.
-
-floor(as.numeric(table(ds[[target]])) * split[1])
+if (!is.null(target)) floor(as.numeric(table(ds[[target]])) * split[1])

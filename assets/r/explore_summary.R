@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-02-03 16:50:54 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-03-17 11:51:22 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,12 +34,9 @@
 # @williams:2017:essentials
 # https://survivor.togaware.com/datascience/ for further details.
 
-library(descr)
-library(skimr)
+# SkimR presents a nice summary of the dataset.
 
-# SkimR presents a nice summary of the dataset
-
-skim(ds)
+skimr::skim(ds)
 
 # Standard R summary of the dataset.
 
@@ -68,9 +65,9 @@ summary(ds)
 ## where these are referenced. fBasics for example seems to reference
 ## kurtosis and skewness from timeDate. Odd.
 
-timeDate::kurtosis(ds[numc], na.rm=TRUE)
+timeDate::kurtosis(dplyr::select_if(ds, is.numeric), na.rm=TRUE)
 
-timeDate::skewness(ds[numc], na.rm=TRUE)
+timeDate::skewness(dplyr::select_if(ds, is_numeric), na.rm=TRUE)
 
 # Generate cross tabulations for categoric data. This can be quite
 # time consuming so do it selevectively.
