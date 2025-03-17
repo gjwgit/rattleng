@@ -89,7 +89,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     //   // Try checking known prefixes where we are NOT to add a newline. (gjw
     //   // 20250203)
-      
+
     //   // This does not work either since factors might start on the
     //   // line. Removing all this fixing up here and the output looks fine
     //   // anyhow! (gjw 20250317)
