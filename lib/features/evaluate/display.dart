@@ -100,19 +100,6 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // distinct naming scheme and we need to coordinate the names we use here
     // with those in `assets/r/evaluate_model_*.R` (20250312 gjw).
 
-    final models = [
-      'adaboost',
-      'rpart',
-      'ctree',
-      'linear',
-      'nnet',
-      'neuralnet',
-      'svm',
-      'cforest',
-      'randomForest',
-      'xgboost',
-    ];
-
     final evaluationTypes = [
       'roc',
       'riskchart',
@@ -121,16 +108,16 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     ];
 
     final modelDisplayNames = {
-      'adaboost': 'AdaBoost',
       'rpart': 'RPART',
       'ctree': 'CTREE',
+      'randomForest': 'RANDOM FOREST',
+      'cforest': 'CONDITIONAL FOREST',
+      'xgboost': 'XGBoost',
+      'adaboost': 'AdaBoost',
+      'svm': 'SVM',
       'linear': 'LINEAR',
       'nnet': 'NNET',
       'neuralnet': 'NEURALNET',
-      'svm': 'SVM',
-      'cforest': 'CONDITIONAL FOREST',
-      'randomForest': 'RANDOM FOREST',
-      'xgboost': 'XGBoost',
     };
 
     final evaluateProviders = {
@@ -179,7 +166,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       List<String> images = [];
       List<String> titles = [];
 
-      for (var model in models) {
+      for (var model in modelDisplayNames.keys) {
         bool isTicked = evaluateProviders[model] ?? false;
 
         String imagePath = '$tempDir/${prefix}_${model}_${evalType}_$dtype.svg';
