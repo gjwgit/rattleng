@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-03-17 11:51:22 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-03-17 13:09:55 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -67,7 +67,7 @@ summary(ds)
 
 timeDate::kurtosis(dplyr::select_if(ds, is.numeric), na.rm=TRUE)
 
-timeDate::skewness(dplyr::select_if(ds, is_numeric), na.rm=TRUE)
+timeDate::skewness(dplyr::select_if(ds, is.numeric), na.rm=TRUE)
 
 # Generate cross tabulations for categoric data. This can be quite
 # time consuming so do it selevectively.
