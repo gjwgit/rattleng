@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Friday 2025-02-14 17:14:44 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 13:44:05 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -168,7 +168,7 @@ void updateVariablesProvider(WidgetRef ref) {
         // prefixes above then they need to be informed to do so. A NULL
         // exception is generated otherwise.
 
-        debugPrint('** ERROR: Unidentified variable: ${column.name}.\n'
+        debugPrint('** ERROR: Unidentified variable prefix: ${column.name}.\n'
             '** ERROR: Please add it to the list in '
             'utils/update_roles_provider.dart');
       }
