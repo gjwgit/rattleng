@@ -79,44 +79,44 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     lines = content.split('\n');
 
-    for (int i = 0; i < lines.length; i++) {
-      // This was not capturing long veriable names that end up
-      // beginning in the first column. (gjw 20250203)
+    // for (int i = 0; i < lines.length; i++) {
+    //   // This was not capturing long veriable names that end up
+    //   // beginning in the first column. (gjw 20250203)
 
-      // if (lines[i].startsWith('  ') && !lines[i].trimLeft().startsWith('NA')) {
-      //   lines[i] = '\n${lines[i]}';
-      // }
+    //   if (lines[i].startsWith('  ') && !lines[i].trimLeft().startsWith('NA')) {
+    //     lines[i] = '\n${lines[i]}';
+    //   }
 
-      // Try checking known prefixes where we are NOT to add a newline. (gjw
-      // 20250203)
-      //
-      // This does not work either since factors might start on the
-      // line. Removing all this fixing up here and the output looks fine
-      // anyhow! (gjw 20250317)
+    //   // Try checking known prefixes where we are NOT to add a newline. (gjw
+    //   // 20250203)
+      
+    //   // This does not work either since factors might start on the
+    //   // line. Removing all this fixing up here and the output looks fine
+    //   // anyhow! (gjw 20250317)
 
-      // List of prefixes to check against.
+    //   // List of prefixes to check against.
 
-      // List<String> prefixes = [
-      //   'Min.',
-      //   '1st Qu.',
-      //   'Median',
-      //   'Mean',
-      //   '3rd Qu.',
-      //   'Max.',
-      // ];
+    //   List<String> prefixes = [
+    //     'Min.',
+    //     '1st Qu.',
+    //     'Median',
+    //     'Mean',
+    //     '3rd Qu.',
+    //     'Max.',
+    //   ];
 
-      // // Check if the string starts with any of the prefixes.
+    //   // Check if the string starts with any of the prefixes.
 
-      // bool startsWithPrefix =
-      //     prefixes.any((prefix) => lines[i].startsWith(' $prefix'));
+    //   bool startsWithPrefix =
+    //       prefixes.any((prefix) => lines[i].startsWith(' $prefix'));
 
-      // // If it doesn't start with any of the prefixes, add a newline at the
-      // // beginning.
+    //   // If it doesn't start with any of the prefixes, add a newline at the
+    //   // beginning.
 
-      // if (!startsWithPrefix) {
-      //   lines[i] = '\n${lines[i]}';
-      // }
-    }
+    //   if (!startsWithPrefix) {
+    //     lines[i] = '\n${lines[i]}';
+    //   }
+    // }
 
     content = lines.join('\n');
 
