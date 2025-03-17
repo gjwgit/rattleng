@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2025-02-03 17:20:19 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-17 13:19:12 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -80,37 +80,42 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     lines = content.split('\n');
 
     for (int i = 0; i < lines.length; i++) {
-      // 20250203 gjw This was not capturing long veriable names that end up
-      // beginning in the first column.
+      // This was not capturing long veriable names that end up
+      // beginning in the first column. (gjw 20250203)
 
       // if (lines[i].startsWith('  ') && !lines[i].trimLeft().startsWith('NA')) {
       //   lines[i] = '\n${lines[i]}';
       // }
 
-      // 20250203 gjw Try this as an alternative.
+      // Try checking known prefixes where we are NOT to add a newline. (gjw
+      // 20250203)
+      //
+      // This does not work either since factors might start on the
+      // line. Removing all this fixing up here and the output looks fine
+      // anyhow! (gjw 20250317)
 
       // List of prefixes to check against.
 
-      List<String> prefixes = [
-        'Min.',
-        '1st Qu.',
-        'Median',
-        'Mean',
-        '3rd Qu.',
-        'Max.',
-      ];
+      // List<String> prefixes = [
+      //   'Min.',
+      //   '1st Qu.',
+      //   'Median',
+      //   'Mean',
+      //   '3rd Qu.',
+      //   'Max.',
+      // ];
 
-      // Check if the string starts with any of the prefixes.
+      // // Check if the string starts with any of the prefixes.
 
-      bool startsWithPrefix =
-          prefixes.any((prefix) => lines[i].startsWith(' $prefix'));
+      // bool startsWithPrefix =
+      //     prefixes.any((prefix) => lines[i].startsWith(' $prefix'));
 
-      // If it doesn't start with any of the prefixes, add a newline at the
-      // beginning.
+      // // If it doesn't start with any of the prefixes, add a newline at the
+      // // beginning.
 
-      if (!startsWithPrefix) {
-        lines[i] = '\n${lines[i]}';
-      }
+      // if (!startsWithPrefix) {
+      //   lines[i] = '\n${lines[i]}';
+      // }
     }
 
     content = lines.join('\n');
@@ -265,9 +270,9 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     // KURTOSIS AND SKEWNESS
 
     content = 'Kurtosis:\n';
-    content += rExtract(stdout, 'timeDate::kurtosis(ds[numc], na.rm=TRUE)');
+    content += rExtract(stdout, 'timeDate::kurtosis');
     content += '\nSkewness:\n';
-    content += rExtract(stdout, 'timeDate::skewness(ds[numc], na.rm=TRUE)');
+    content += rExtract(stdout, 'timeDate::skewness');
 
     // Regular expression to match lines like '[1] "xxxx"'
 
