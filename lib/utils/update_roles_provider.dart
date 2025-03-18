@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Monday 2025-03-17 13:44:05 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-18 17:21:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -142,11 +142,16 @@ void updateVariablesProvider(WidgetRef ref) {
 
   // When a new row is added after transformation, initialise its role and
   // update the role of the old variable.
-
   for (var column in vars) {
     // Update roles.
 
     if (!ref.read(rolesProvider.notifier).state.containsKey(column.name)) {
+      // We first check if the variable name has one of the prefixes that
+      // indicatre it is a transformed variable in Rattle. Note this is somewhat
+      // dangerous assumption that the loaded dataset does not contain variables
+      // with the same prefixes. But that's how it has been implemented
+      // here. (gjw 20250318)
+
       if (isTransformedVar(column.name)) {
         // Update the old variable's role.
 
@@ -163,14 +168,25 @@ void updateVariablesProvider(WidgetRef ref) {
         ref.read(rolesProvider.notifier).state[getOriginal(column.name)] =
             Role.ignoreAfterTransformed;
       } else {
-        // 20250108 gjw Keep this debugPrint(). If we add a new transformation
-        // (as we did for TFC) and the developer has not added it to the known
-        // prefixes above then they need to be informed to do so. A NULL
-        // exception is generated otherwise.
+        // Keep this debugPrint(). If we add a new transformation (as we did for
+        // TFC) and the developer has not added it to the known prefixes above
+        // then they need to be informed to do so. A NULL exception is generated
+        // otherwise. (gjw 20250108)
 
-        debugPrint('** ERROR: Unidentified variable prefix: ${column.name}.\n'
-            '** ERROR: Please add it to the list in '
+        debugPrint(
+            '** ERROR: Unidentified transformed variable: ${column.name}.\n'
+            '** ERROR: Please add its prefix to the list in '
             'utils/update_roles_provider.dart');
+
+        // It seems we have an issue here because after delting an ignored
+        // variable we end up here withthis error and then an Exception because
+        // we have not actually deleted the variable from the ds. Try adding
+        // this variable to have a role of ignoreAfterTransformed. But for a
+        // variable like max_temp later on the max_gets stripped and then we get
+        // a NULL exception for the variable temp! (gjw 20250318)
+
+        // ref.read(rolesProvider.notifier).state[getOriginal(column.name)] =
+        //     Role.ignoreAfterTransformed;
       }
     }
 
