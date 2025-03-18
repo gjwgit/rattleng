@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ CLEANUP IGNORED: Bug fixed - now working again [6.4.40 20250319 gjw]
 + TREE: Bug fix for Include Missing - now works [6.4.39 20250317 gjw]
 + DATASET: Add weather 2007 for V5 comparison. [6.4.38 20250316 gjw]
 + EVALUATION: Combine rocr curves into single plot [6.4.37 20250316 zy]
