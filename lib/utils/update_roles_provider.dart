@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Tuesday 2025-03-18 17:21:34 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-19 05:32:06 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -174,9 +174,10 @@ void updateVariablesProvider(WidgetRef ref) {
         // otherwise. (gjw 20250108)
 
         debugPrint(
-            '** ERROR: Unidentified transformed variable: ${column.name}.\n'
-            '** ERROR: Please add its prefix to the list in '
-            'utils/update_roles_provider.dart');
+          '** ERROR: Unidentified transformed variable: ${column.name}.\n'
+          '** ERROR: Please add its prefix to the list in '
+          'utils/update_roles_provider.dart',
+        );
 
         // It seems we have an issue here because after delting an ignored
         // variable we end up here withthis error and then an Exception because
