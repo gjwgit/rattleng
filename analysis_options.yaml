@@ -12,6 +12,8 @@
 analyzer:
   plugins:
     - custom_lint
+  exclude:
+    - ignore/**
 
 dart_code_metrics:
 #  anti-patterns:
