@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Monday 2025-03-17 08:54:10 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-19 08:47:45 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -98,48 +98,58 @@ import 'package:rattle/utils/update_script.dart';
 /// run standalone as such since they will have undefined vairables, but we can
 /// define the variables and then run the scripts.
 ///
-/// Reverted to using angle brackets as substring parameters were getting
-/// replaced if the order was not correct (e.g. FILE and FILENAME). (gjw
-/// 20250315)
+/// Reverted to using angle brackets becasue substring parameters were getting
+/// replaced if the order was not correct (e.g. FILE and FILENAME). There has
+/// not been any call to run the scripts standalone, and if so we could have a
+/// separate parameter replacing script. (gjw 20250315)
 ///
 
 Future<void> rSource(
   BuildContext context,
   WidgetRef ref,
   List<String> scripts,
-) async {
-  // In order to explore different execution options I call rSource as a private
-  // function. The issue is that on Linux the script sent to the Console is
-  // being truncated on the Console for EVLUATION. And so with the recent
-  // addition of the 4 ROCR plots (cost, lift, precision, sensitivity) I don't
-  // get all the plots for multiple models. They are actually not being
-  // generated into SVG files, seems like because the code is not getting to the
-  // CONSOLE. Seems like this is the case on my Linux, but others are not yet
-  // reporting an issue. However, splitting each script out to be executed one
-  // at a time does not solve the problem. (gjw 20250316)
   //
-  // A work around is to generate an evaluation for one model T a time, then
-  // have a break!
+  // I wrapped the original rSource() as _rSource() within the followig new
+  // rSource(). However, oddly this caused issue #938 whereby with Weaher and
+  // IGNORE max_temp, CLEANUP -> IGNORED fails because getIgnored() is returning
+  // NULL because max_temp is presumably already removed and so not ignored nor
+  // is it in recently transformed Role. Putting it into that latter Role
+  // partially works but then fails. For now, revert to the direct call to
+  // rSource(). (gjw 20250319)
+  //
+// ) async {
+//   // In order to explore different execution options we can call _rSource() as a
+//   // private function. The issue is that on Linux the script that is being sent
+//   // to the Console is being truncated on the Console for EVLUATION. And so with
+//   // the recent addition of the 4 ROCR plots (cost, lift, precision,
+//   // sensitivity) I don't get all the plots for multiple models. They are
+//   // actually not being generated into SVG files, seems like because the code is
+//   // not getting to the CONSOLE. Seems like this is the case on my Linux, but
+//   // others are not yet reporting an issue. However, splitting each script out
+//   // to be executed one at a time does not solve the problem. (gjw 20250316)
+//   //
+//   // A work around is to generate an evaluation for one model at a time, then
+//   // have a break! But did not work.
 
-  // for (String script in scripts) {
-  //   _rSource(context, ref, [script]);
-  // }
+//   // for (String script in scripts) {
+//   //   _rSource(context, ref, [script]);
+//   // }
 
-  // In this case simply pass through. This is the original implementation.
+//   // In this case simply pass through. This is the original implementation.
 
-  _rSource(context, ref, scripts);
+//   _rSource(context, ref, scripts);
 
-  // Could try a delay after ever script.
+//   // Could try a delay after ever script.
 
-//      await Future.delayed(Duration(milliseconds: 500));
-}
+// //      await Future.delayed(Duration(milliseconds: 500));
+// }
 
-Future<void> _rSource(
-  BuildContext context,
-  WidgetRef ref,
-  List<String> scripts,
+// Future<void> _rSource(
+//   BuildContext context,
+//   WidgetRef ref,
+//   List<String> scripts,
 ) async {
-  // 20250213 gjw Be sure to load the partition informationfrom shared
+  // 20250213 gjw Be sure to load the partition information from shared
   // preferences and so update the provider appropraitely so that the user's
   // selected preferred partitioning is immediately available on startup.
 
