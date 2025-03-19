@@ -33,7 +33,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
-import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree.dart';
@@ -114,7 +113,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
         ref.read(treeComplexityProvider.notifier).state.toString();
     _priorsController.text = ref.read(treePriorsProvider.notifier).state.toString();
     _lossMatrixController.text =
-        ref.read(lossMatrixProvider.notifier).state.toString();
+        ref.read(treeLossMatrixProvider.notifier).state.toString();
 
     AlgorithmType selectedAlgorithm =
         ref.read(treeAlgorithmProvider.notifier).state;
@@ -224,7 +223,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     ref.read(treePriorsProvider.notifier).state =
                         _priorsController.text;
 
-                    ref.read(lossMatrixProvider.notifier).state =
+                    ref.read(treeLossMatrixProvider.notifier).state =
                         _lossMatrixController.text;
 
                     ref.read(treeAlgorithmProvider.notifier).state =
