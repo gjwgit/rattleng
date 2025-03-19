@@ -55,7 +55,6 @@ import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
@@ -199,7 +198,7 @@ Future<void> rSource(
   int minSplit = ref.read(treeMinSplitProvider);
   int maxDepth = ref.read(treeMaxDepthProvider);
 
-  String priors = ref.read(priorsProvider);
+  String priors = ref.read(treePriorsProvider);
   bool treeIncludeMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
   bool nnetSkip = ref.read(neuralSkipProvider);
