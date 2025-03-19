@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL BOOST ADAPTIVE  EVALUATE feature.
 //
-// Time-stamp: <Friday 2025-01-31 15:50:39 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-19 11:41:07 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -32,13 +32,12 @@ import 'package:rattle/features/boost/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
-import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -51,15 +50,12 @@ void main() {
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-
       await navigateToFeature(tester, 'Boost', BoostPanel);
       await tapChip(tester, 'Adaptive');
       await tapButton(tester, 'Build Boosted Trees');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await gotoNextPage(tester);
-      await verifyPage('Error Matrix');
-
+      await navigateToPage(tester, 1, 'Error Matrix');
       await verifySelectableText(
         tester,
         [
