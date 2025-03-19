@@ -35,7 +35,6 @@ import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
@@ -113,7 +112,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
         ref.read(treeMinBucketProvider.notifier).state.toString();
     _complexityController.text =
         ref.read(treeComplexityProvider.notifier).state.toString();
-    _priorsController.text = ref.read(priorsProvider.notifier).state.toString();
+    _priorsController.text = ref.read(treePriorsProvider.notifier).state.toString();
     _lossMatrixController.text =
         ref.read(lossMatrixProvider.notifier).state.toString();
 
@@ -222,7 +221,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     ref.read(treeComplexityProvider.notifier).state =
                         double.parse(_complexityController.text);
 
-                    ref.read(priorsProvider.notifier).state =
+                    ref.read(treePriorsProvider.notifier).state =
                         _priorsController.text;
 
                     ref.read(lossMatrixProvider.notifier).state =

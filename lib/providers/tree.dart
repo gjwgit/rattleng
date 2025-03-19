@@ -32,6 +32,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final treeComplexityProvider = StateProvider<double>((ref) => 0.0100);
 
+/// Whether to treat missing values through using surrogates in tree model.
+
+final treeIncludeMissingProvider = StateProvider<bool>((ref) => false);
+
 /// Provider for the max depth of tree model.
 
 final treeMaxDepthProvider = StateProvider<int>((ref) => 30);
@@ -44,6 +48,6 @@ final treeMinBucketProvider = StateProvider<int>((ref) => 7);
 
 final treeMinSplitProvider = StateProvider<int>((ref) => 20);
 
-/// Whether to treat missing values through using surrogates in tree model.
+/// Provider for the prior of tree model.
 
-final treeIncludeMissingProvider = StateProvider<bool>((ref) => false);
+final treePriorsProvider = StateProvider<String>((ref) => '');
