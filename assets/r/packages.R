@@ -106,6 +106,7 @@ pkgs <- c(
   'lubridate',
   'magrittr',
   'mice',
+  'ModelMetrics',
   'naniar',
   'neuralnet',
   'nnet',
