@@ -42,7 +42,6 @@ import 'package:rattle/providers/association.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
-import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
@@ -206,7 +205,7 @@ Future<void> rSource(
   bool nnetSkip = ref.read(neuralSkipProvider);
   bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
   int minBucket = ref.read(treeMinBucketProvider);
-  double complexity = ref.read(complexityProvider);
+  double complexity = ref.read(treeComplexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
   List<double> partitionRatios = ref.read(partitionSettingProvider);
   String partitionString =
