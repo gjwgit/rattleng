@@ -35,9 +35,7 @@ import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/loss_matrix.dart';
-import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/min_bucket.dart';
-import 'package:rattle/providers/min_split.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/priors.dart';
 import 'package:rattle/providers/tree_algorithm.dart';
@@ -110,9 +108,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     // Keep the value of text field.
 
     _minSplitController.text =
-        ref.read(minSplitProvider.notifier).state.toString();
+        ref.read(treeMinSplitProvider.notifier).state.toString();
     _maxDepthController.text =
-        ref.read(maxDepthProvider.notifier).state.toString();
+        ref.read(treeMaxDepthProvider.notifier).state.toString();
     _minBucketController.text =
         ref.read(minBucketProvider.notifier).state.toString();
     _complexityController.text =
@@ -216,9 +214,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   } else {
                     // Update provider value.
 
-                    ref.read(minSplitProvider.notifier).state =
+                    ref.read(treeMinSplitProvider.notifier).state =
                         int.parse(_minSplitController.text);
-                    ref.read(maxDepthProvider.notifier).state =
+                    ref.read(treeMaxDepthProvider.notifier).state =
                         int.parse(_maxDepthController.text);
                     ref.read(minBucketProvider.notifier).state =
                         int.parse(_minBucketController.text);
@@ -310,7 +308,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     FilteringTextInputFormatter.digitsOnly, // Integers only
                 validator: (value) => validateInteger(value, min: -1),
                 min: -1,
-                stateProvider: minSplitProvider,
+                stateProvider: treeMinSplitProvider,
               ),
               NumberField(
                 label: 'Min Bucket:',
@@ -346,7 +344,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     validateInteger(value, min: 0, max: maxDepthLimit),
                 min: 0,
                 max: maxDepthLimit,
-                stateProvider: maxDepthProvider,
+                stateProvider: treeMaxDepthProvider,
               ),
               NumberField(
                 label: 'Complexity:',
