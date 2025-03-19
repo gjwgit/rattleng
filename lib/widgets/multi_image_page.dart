@@ -214,179 +214,186 @@ class MultiImagePage extends ConsumerWidget {
 
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    fit: FlexFit.loose,
-                                    child: MarkdownBody(
-                                      data: wordWrap(titles[index]),
-                                      selectable: true,
-                                      onTapLink: (text, href, title) {
-                                        final Uri url = Uri.parse(href ?? '');
-                                        launchUrl(url);
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  MarkdownTooltip(
-                                    message: '''
-                    **Enlarge.** Tap here to view the plot enlarged to the
-                    maximum size within the app.
-                    ''',
-                                    child: IconButton(
-                                      icon: const Icon(
-                                        Icons.zoom_out_map,
-                                        color: Colors.blue,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      fit: FlexFit.loose,
+                                      child: MarkdownBody(
+                                        data: wordWrap(titles[index]),
+                                        selectable: true,
+                                        onTapLink: (text, href, title) {
+                                          final Uri url = Uri.parse(href ?? '');
+                                          launchUrl(url);
+                                        },
                                       ),
-                                      onPressed: () {
-                                        showImageDialog(context, bytes);
-                                      },
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  MarkdownTooltip(
-                                    message: '''
-                    **Open.** Tap here to open the plot in a separate window
-                    to the Rattle app itself. This allows you to retain a
-                    view of the plot while you navigate through other plots
-                    and analyses. If you choose the external app to be
-                    **Inkscape**, for example, then you can edit the plot,
-                    including the text, colours, etc. Note that Inkscape can
-                    be a little slow to startup. The choice of app depends
-                    on your operating system settings and can be overridden
-                    in the Rattle **Settings**.
-                    ''',
-                                    child: IconButton(
-                                      icon: const Icon(
-                                        Icons.open_in_new,
-                                        color: Colors.blue,
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    MarkdownTooltip(
+                                      message: '''
+                                                **Enlarge.** Tap here to view the plot enlarged to the
+                                                maximum size within the app.
+                                                ''',
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.zoom_out_map,
+                                          color: Colors.blue,
+                                        ),
+                                        onPressed: () {
+                                          showImageDialog(context, bytes);
+                                        },
                                       ),
-                                      onPressed: () async {
-                                        String fileName =
-                                            'plot_${Random().nextInt(10000)}.svg';
-                                        File tempFile =
-                                            File('$tempDir/$fileName');
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    MarkdownTooltip(
+                                      message: '''
+                                                **Open.** Tap here to open the plot in a separate window
+                                                to the Rattle app itself. This allows you to retain a
+                                                view of the plot while you navigate through other plots
+                                                and analyses. If you choose the external app to be
+                                                **Inkscape**, for example, then you can edit the plot,
+                                                including the text, colours, etc. Note that Inkscape can
+                                                be a little slow to startup. The choice of app depends
+                                                on your operating system settings and can be overridden
+                                                in the Rattle **Settings**.
+                                                ''',
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.open_in_new,
+                                          color: Colors.blue,
+                                        ),
+                                        onPressed: () async {
+                                          String fileName =
+                                              'plot_${Random().nextInt(10000)}.svg';
+                                          File tempFile =
+                                              File('$tempDir/$fileName');
 
-                                        await File(paths[index])
-                                            .copy(tempFile.path);
+                                          await File(paths[index])
+                                              .copy(tempFile.path);
 
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        final savedImageViewer =
-                                            prefs.getString('imageViewerApp');
+                                          final prefs = await SharedPreferences
+                                              .getInstance();
+                                          final savedImageViewer =
+                                              prefs.getString('imageViewerApp');
 
-                                        // If the shared preferences image viewer app is null(not set),
-                                        // use the provider default.
+                                          // If the shared preferences image viewer app is null(not set),
+                                          // use the provider default.
 
-                                        final imageViewerApp =
-                                            savedImageViewer ??
-                                                ref.read(
-                                                  imageViewerSettingProvider,
+                                          final imageViewerApp =
+                                              savedImageViewer ??
+                                                  ref.read(
+                                                    imageViewerSettingProvider,
+                                                  );
+
+                                          Platform.isWindows
+                                              ? Process.run(
+                                                  imageViewerApp!,
+                                                  [tempFile.path],
+                                                  runInShell: true,
+                                                )
+                                              : Process.run(
+                                                  imageViewerApp!,
+                                                  [tempFile.path],
                                                 );
-
-                                        Platform.isWindows
-                                            ? Process.run(
-                                                imageViewerApp!,
-                                                [tempFile.path],
-                                                runInShell: true,
-                                              )
-                                            : Process.run(
-                                                imageViewerApp!,
-                                                [tempFile.path],
-                                              );
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  MarkdownTooltip(
-                                    message: '''
-                    **Save.** Tap here to save the plot in your preferred
-                    format (**svg**, **pdf**, or **png**). You can directly
-                    choose your desired format by replacing the default
-                    *svg* filename extension with either *pdf* or *png*. The
-                    file is saved to your local storage. Perfect for
-                    including in reports or keeping for future
-                    reference. The **svg** format is particularly convenient
-                    as you can edit all details of the plot with an
-                    application like **Inkscape**.
-                    ''',
-                                    child: IconButton(
-                                      icon: const Icon(
-                                        Icons.save,
-                                        color: Colors.blue,
+                                        },
                                       ),
-                                      onPressed: () async {
-                                        String fileName =
-                                            paths[index].split('/').last;
-                                        String? pathToSave = await selectFile(
-                                          defaultFileName: fileName,
-                                          allowedExtensions: [
-                                            'svg',
-                                            'pdf',
-                                            'png',
-                                          ],
-                                        );
-                                        if (pathToSave != null) {
-                                          String extension = pathToSave
-                                              .split('.')
-                                              .last
-                                              .toLowerCase();
-                                          if (extension == 'svg') {
-                                            await File(paths[index])
-                                                .copy(pathToSave);
-                                          } else if (extension == 'pdf') {
-                                            await _exportToPdf(
-                                              paths[index],
-                                              pathToSave,
-                                            );
-                                          } else if (extension == 'png') {
-                                            await _exportToPng(
-                                              paths[index],
-                                              pathToSave,
-                                            );
-                                          } else {
-                                            showOk(
-                                              title: 'Error',
-                                              context: context,
-                                              content: '''
-                  An unsupported filename extension was
-                  provided: .$extension. Please try again
-                  and select a filename with one of the
-                  supported extensions: .svg, .pdf, or .png.
-                  ''',
-                                            );
-                                          }
-                                        }
-                                      },
                                     ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                ],
-                              ),
-                              Expanded(
-                                child: InteractiveViewer(
-                                  maxScale: 5,
-                                  alignment: Alignment.topCenter,
-                                  child: svgImage
-                                      ? SvgPicture.memory(
-                                          bytes,
-                                          fit: BoxFit.scaleDown,
-                                        )
-                                      : Image.memory(bytes),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    MarkdownTooltip(
+                                      message: '''
+                                                **Save.** Tap here to save the plot in your preferred
+                                                format (**svg**, **pdf**, or **png**). You can directly
+                                                choose your desired format by replacing the default
+                                                *svg* filename extension with either *pdf* or *png*. The
+                                                file is saved to your local storage. Perfect for
+                                                including in reports or keeping for future
+                                                reference. The **svg** format is particularly convenient
+                                                as you can edit all details of the plot with an
+                                                application like **Inkscape**.
+                                                ''',
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.save,
+                                          color: Colors.blue,
+                                        ),
+                                        onPressed: () async {
+                                          String fileName =
+                                              paths[index].split('/').last;
+                                          String? pathToSave = await selectFile(
+                                            defaultFileName: fileName,
+                                            allowedExtensions: [
+                                              'svg',
+                                              'pdf',
+                                              'png',
+                                            ],
+                                          );
+                                          if (pathToSave != null) {
+                                            String extension = pathToSave
+                                                .split('.')
+                                                .last
+                                                .toLowerCase();
+                                            if (extension == 'svg') {
+                                              await File(paths[index])
+                                                  .copy(pathToSave);
+                                            } else if (extension == 'pdf') {
+                                              await _exportToPdf(
+                                                paths[index],
+                                                pathToSave,
+                                              );
+                                            } else if (extension == 'png') {
+                                              await _exportToPng(
+                                                paths[index],
+                                                pathToSave,
+                                              );
+                                            } else {
+                                              showOk(
+                                                title: 'Error',
+                                                context: context,
+                                                content: '''
+                                              An unsupported filename extension was
+                                              provided: .$extension. Please try again
+                                              and select a filename with one of the
+                                              supported extensions: .svg, .pdf, or .png.
+                                              ''',
+                                              );
+                                            }
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Container(
+                                  constraints:
+                                      const BoxConstraints(maxHeight: 450),
+                                  child: InteractiveViewer(
+                                    maxScale: 5,
+                                    alignment: Alignment.topCenter,
+                                    child: svgImage
+                                        ? SvgPicture.memory(
+                                            bytes,
+                                            fit: BoxFit.scaleDown,
+                                          )
+                                        : Image.memory(bytes),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }
