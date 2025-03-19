@@ -28,12 +28,18 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Whether to treat missing values through using surrogates in rpart.
+/// Provider for the max depth of tree model.
 
 final treeMaxDepthProvider = StateProvider<int>((ref) => 30);
 
+/// Provider for the min bucket of tree model.
+
 final treeMinBucketProvider = StateProvider<int>((ref) => 7);
 
+/// Provider for the min split of tree model.
+
 final treeMinSplitProvider = StateProvider<int>((ref) => 20);
+
+/// Whether to treat missing values through using surrogates in tree model.
 
 final treeIncludeMissingProvider = StateProvider<bool>((ref) => false);
