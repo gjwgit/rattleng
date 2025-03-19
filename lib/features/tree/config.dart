@@ -34,7 +34,6 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/build_text_field.dart';
@@ -111,7 +110,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
         ref.read(treeMinBucketProvider.notifier).state.toString();
     _complexityController.text =
         ref.read(treeComplexityProvider.notifier).state.toString();
-    _priorsController.text = ref.read(treePriorsProvider.notifier).state.toString();
+    _priorsController.text =
+        ref.read(treePriorsProvider.notifier).state.toString();
     _lossMatrixController.text =
         ref.read(treeLossMatrixProvider.notifier).state.toString();
 
