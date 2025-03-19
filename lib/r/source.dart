@@ -51,7 +51,6 @@ import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/loss_matrix.dart';
-import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
@@ -200,7 +199,7 @@ Future<void> rSource(
   String selected2 = ref.read(selected2Provider);
 
   int minSplit = ref.read(treeMinSplitProvider);
-  int maxDepth = ref.read(maxDepthProvider);
+  int maxDepth = ref.read(treeMaxDepthProvider);
 
   String priors = ref.read(priorsProvider);
   bool treeIncludeMissing = ref.read(treeIncludeMissingProvider);
