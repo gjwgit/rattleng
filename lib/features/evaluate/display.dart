@@ -34,6 +34,7 @@ import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/extract_evaluate.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
