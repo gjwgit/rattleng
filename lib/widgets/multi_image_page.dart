@@ -290,7 +290,7 @@ class MultiImagePage extends ConsumerWidget {
                                         final imageViewerApp =
                                             savedImageViewer ??
                                                 ref.read(
-                                                    imageViewerSettingProvider);
+                                                    imageViewerSettingProvider,);
 
                                         Platform.isWindows
                                             ? Process.run(
