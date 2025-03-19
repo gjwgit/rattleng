@@ -53,7 +53,6 @@ import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/number.dart';
-import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
@@ -206,7 +205,7 @@ Future<void> rSource(
   bool nnetTrace = ref.read(traceNeuralProvider);
   bool nnetSkip = ref.read(neuralSkipProvider);
   bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
-  int minBucket = ref.read(minBucketProvider);
+  int minBucket = ref.read(treeMinBucketProvider);
   double complexity = ref.read(complexityProvider);
   String lossMatrix = ref.read(lossMatrixProvider);
   List<double> partitionRatios = ref.read(partitionSettingProvider);
