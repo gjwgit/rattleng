@@ -28,25 +28,26 @@ library;
 import 'dart:io';
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 
-class MultiImagePage extends StatelessWidget {
+class MultiImagePage extends ConsumerWidget {
   final List<String> titles;
   final List<String> paths;
   final String pageTitle;
@@ -137,7 +138,7 @@ class MultiImagePage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     imageCache.clear();
     imageCache.clearLiveImages();
     final ScrollController _scrollController = ScrollController();
@@ -280,8 +281,17 @@ class MultiImagePage extends StatelessWidget {
 
                                         final prefs = await SharedPreferences
                                             .getInstance();
-                                        final imageViewerApp =
+                                        final savedImageViewer =
                                             prefs.getString('imageViewerApp');
+
+                                        // If the shared preferences image viewer app is null(not set),
+                                        // use the provider default.
+
+                                        final imageViewerApp =
+                                            savedImageViewer ??
+                                                ref.read(
+                                                  imageViewerSettingProvider,
+                                                );
 
                                         Platform.isWindows
                                             ? Process.run(
