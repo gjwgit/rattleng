@@ -35,7 +35,6 @@ import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/loss_matrix.dart';
-import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/priors.dart';
@@ -111,7 +110,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     _minSplitController.text =
         ref.read(treeMinSplitProvider.notifier).state.toString();
     _maxDepthController.text =
-        ref.read(maxDepthProvider.notifier).state.toString();
+        ref.read(treeMaxDepthProvider.notifier).state.toString();
     _minBucketController.text =
         ref.read(minBucketProvider.notifier).state.toString();
     _complexityController.text =
@@ -217,7 +216,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
                     ref.read(treeMinSplitProvider.notifier).state =
                         int.parse(_minSplitController.text);
-                    ref.read(maxDepthProvider.notifier).state =
+                    ref.read(treeMaxDepthProvider.notifier).state =
                         int.parse(_maxDepthController.text);
                     ref.read(minBucketProvider.notifier).state =
                         int.parse(_minBucketController.text);
@@ -345,7 +344,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     validateInteger(value, min: 0, max: maxDepthLimit),
                 min: 0,
                 max: maxDepthLimit,
-                stateProvider: maxDepthProvider,
+                stateProvider: treeMaxDepthProvider,
               ),
               NumberField(
                 label: 'Complexity:',
