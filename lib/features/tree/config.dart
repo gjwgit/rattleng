@@ -32,13 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
-import 'package:rattle/providers/complexity.dart';
-import 'package:rattle/providers/evaluate.dart';
-import 'package:rattle/providers/loss_matrix.dart';
-import 'package:rattle/providers/min_bucket.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/priors.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/build_text_field.dart';
@@ -112,12 +106,13 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     _maxDepthController.text =
         ref.read(treeMaxDepthProvider.notifier).state.toString();
     _minBucketController.text =
-        ref.read(minBucketProvider.notifier).state.toString();
+        ref.read(treeMinBucketProvider.notifier).state.toString();
     _complexityController.text =
-        ref.read(complexityProvider.notifier).state.toString();
-    _priorsController.text = ref.read(priorsProvider.notifier).state.toString();
+        ref.read(treeComplexityProvider.notifier).state.toString();
+    _priorsController.text =
+        ref.read(treePriorsProvider.notifier).state.toString();
     _lossMatrixController.text =
-        ref.read(lossMatrixProvider.notifier).state.toString();
+        ref.read(treeLossMatrixProvider.notifier).state.toString();
 
     AlgorithmType selectedAlgorithm =
         ref.read(treeAlgorithmProvider.notifier).state;
@@ -218,16 +213,16 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                         int.parse(_minSplitController.text);
                     ref.read(treeMaxDepthProvider.notifier).state =
                         int.parse(_maxDepthController.text);
-                    ref.read(minBucketProvider.notifier).state =
+                    ref.read(treeMinBucketProvider.notifier).state =
                         int.parse(_minBucketController.text);
 
-                    ref.read(complexityProvider.notifier).state =
+                    ref.read(treeComplexityProvider.notifier).state =
                         double.parse(_complexityController.text);
 
-                    ref.read(priorsProvider.notifier).state =
+                    ref.read(treePriorsProvider.notifier).state =
                         _priorsController.text;
 
-                    ref.read(lossMatrixProvider.notifier).state =
+                    ref.read(treeLossMatrixProvider.notifier).state =
                         _lossMatrixController.text;
 
                     ref.read(treeAlgorithmProvider.notifier).state =
@@ -324,7 +319,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 inputFormatter: FilteringTextInputFormatter.digitsOnly,
                 validator: (value) => validateInteger(value, min: 1),
                 min: 1,
-                stateProvider: minBucketProvider,
+                stateProvider: treeMinBucketProvider,
               ),
               NumberField(
                 label: 'Max Depth:',
@@ -364,7 +359,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
                 validator: (value) => validateDecimal(value),
-                stateProvider: complexityProvider,
+                stateProvider: treeComplexityProvider,
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),

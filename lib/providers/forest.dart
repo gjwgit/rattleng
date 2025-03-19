@@ -28,7 +28,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/tree_algorithm.dart';
+import 'package:rattle/providers/tree.dart';
 
 final algorithmForestProvider =
     StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
