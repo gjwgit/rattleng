@@ -30,7 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/features/tree/rpart_pages.dart';

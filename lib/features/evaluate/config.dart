@@ -34,6 +34,7 @@ import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/widgets/activity_button.dart';
