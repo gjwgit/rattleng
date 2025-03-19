@@ -26,7 +26,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/forest.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/timestamp.dart';

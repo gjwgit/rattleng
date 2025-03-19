@@ -28,6 +28,11 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Provider for the tree algorithm.
+
+final treeAlgorithmProvider =
+    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
+
 /// Provider for the complexity in tree model.
 
 final treeComplexityProvider = StateProvider<double>((ref) => 0.0100);
@@ -55,3 +60,14 @@ final treeMinSplitProvider = StateProvider<int>((ref) => 20);
 /// Provider for the prior of tree model.
 
 final treePriorsProvider = StateProvider<String>((ref) => '');
+
+// Enum for tree algorithm types.
+
+enum AlgorithmType {
+  traditional('Traditional'),
+  conditional('Conditional');
+
+  final String displayName;
+
+  const AlgorithmType(this.displayName);
+}
