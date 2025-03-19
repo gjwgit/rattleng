@@ -27,6 +27,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/evaluate.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/clean_log.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';

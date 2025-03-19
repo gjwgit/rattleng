@@ -28,22 +28,25 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Provider for the tree algorithm.
+/// Provider for wheather ctree can be evaluated or not.
 
-final treeAlgorithmProvider =
-    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
+final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
 
-/// Provider for the complexity in tree model.
+/// Provider for wheather rpart can be evaluated or not.
 
-final treeComplexityProvider = StateProvider<double>((ref) => 0.0100);
+final rpartTreeEvaluateProvider = StateProvider<bool>((ref) => false);
+
+/// Provider for wheather tree is evaluated or not.
+
+final treeEvaluateProvider = StateProvider<bool>((ref) => false);
 
 /// Whether to treat missing values through using surrogates in tree model.
 
 final treeIncludeMissingProvider = StateProvider<bool>((ref) => false);
 
-/// Provider for the loss matrix of tree model.
+/// Provider for the complexity in tree model.
 
-final treeLossMatrixProvider = StateProvider<String>((ref) => '');
+final treeComplexityProvider = StateProvider<double>((ref) => 0.0100);
 
 /// Provider for the max depth of tree model.
 
@@ -57,9 +60,18 @@ final treeMinBucketProvider = StateProvider<int>((ref) => 7);
 
 final treeMinSplitProvider = StateProvider<int>((ref) => 20);
 
+/// Provider for the loss matrix of tree model.
+
+final treeLossMatrixProvider = StateProvider<String>((ref) => '');
+
 /// Provider for the prior of tree model.
 
 final treePriorsProvider = StateProvider<String>((ref) => '');
+
+/// Provider for the tree algorithm.
+
+final treeAlgorithmProvider =
+    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
 
 // Enum for tree algorithm types.
 
