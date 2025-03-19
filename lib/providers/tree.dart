@@ -28,6 +28,10 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Provider for the complexity in tree model.
+
+final treeComplexityProvider = StateProvider<double>((ref) => 0.0100);
+
 /// Provider for the max depth of tree model.
 
 final treeMaxDepthProvider = StateProvider<int>((ref) => 30);

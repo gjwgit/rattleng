@@ -32,7 +32,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
-import 'package:rattle/providers/complexity.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/page_controller.dart';
@@ -113,7 +112,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
     _minBucketController.text =
         ref.read(treeMinBucketProvider.notifier).state.toString();
     _complexityController.text =
-        ref.read(complexityProvider.notifier).state.toString();
+        ref.read(treeComplexityProvider.notifier).state.toString();
     _priorsController.text = ref.read(priorsProvider.notifier).state.toString();
     _lossMatrixController.text =
         ref.read(lossMatrixProvider.notifier).state.toString();
@@ -220,7 +219,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     ref.read(treeMinBucketProvider.notifier).state =
                         int.parse(_minBucketController.text);
 
-                    ref.read(complexityProvider.notifier).state =
+                    ref.read(treeComplexityProvider.notifier).state =
                         double.parse(_complexityController.text);
 
                     ref.read(priorsProvider.notifier).state =
@@ -363,7 +362,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
                 ),
                 validator: (value) => validateDecimal(value),
-                stateProvider: complexityProvider,
+                stateProvider: treeComplexityProvider,
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),
