@@ -34,7 +34,7 @@ import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/get_target.dart';

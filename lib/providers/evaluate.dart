@@ -29,11 +29,11 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/tree.dart';
 
 final adaBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 final boostEvaluateProvider = StateProvider<bool>((ref) => false);
 final conditionalForestEvaluateProvider = StateProvider<bool>((ref) => false);
-final cTreeEvaluateProvider = StateProvider<bool>((ref) => false);
 
 // 20250117 zy Using `ref.watch` ensures that this provider automatically
 // rebuilds whenever the watched provider (`useValidationSettingProvider`)
@@ -59,8 +59,6 @@ final nnetEvaluateProvider = StateProvider<bool>((ref) => false);
 final neuralNetEvaluateProvider = StateProvider<bool>((ref) => false);
 final svmEvaluateProvider = StateProvider<bool>((ref) => false);
 final randomForestEvaluateProvider = StateProvider<bool>((ref) => false);
-final rpartTreeEvaluateProvider = StateProvider<bool>((ref) => false);
-final treeEvaluateProvider = StateProvider<bool>((ref) => false);
 final xgBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 
 // List of all the providers of model to be evaluated.
