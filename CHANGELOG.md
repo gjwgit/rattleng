@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ Add all tree providers to tree.dart [6.4.43 20250319 zy]
 + MULTI IMAGE PAGE: Retain labels with plots [6.4.42 20250319 zy]
 + MULTI IMAGE PAGE: Bug fix open external viewer [6.4.41 20250319 zy]
 + CLEANUP IGNORED: Bug fixed - now working again [6.4.40 20250319 gjw]
