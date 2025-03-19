@@ -55,7 +55,6 @@ import 'package:rattle/providers/max_depth.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/min_bucket.dart';
-import 'package:rattle/providers/min_split.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
@@ -200,7 +199,7 @@ Future<void> rSource(
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
 
-  int minSplit = ref.read(minSplitProvider);
+  int minSplit = ref.read(treeMinSplitProvider);
   int maxDepth = ref.read(maxDepthProvider);
 
   String priors = ref.read(priorsProvider);
