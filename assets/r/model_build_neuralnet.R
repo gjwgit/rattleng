@@ -68,7 +68,7 @@ if (length(numc) > 0) {
 if (! <NEURAL_IGNORE_CATEGORIC> && length(catc) > 0) {
   # Create dummy variables for categoric predictors.
 
-  dmy_predictors <- dummyVars(~ ., data = tds[catc])
+  dmy_predictors <- caret::dummyVars(~ ., data = tds[catc])
 
   # Use the dummyVars model to transform the original categorical predictors
   # into dummy/indicator columns.
@@ -124,7 +124,7 @@ if (length(target_levels) == 2) {
   # Multiclass Classification
   # One-Hot Encode the Target Variable.
 
-  dmy_target <- dummyVars(~ ., data = tds[target])
+  dmy_target <- caret::dummyVars(~ ., data = tds[target])
   target_onehot <- as.data.frame(predict(dmy_target, newdata = tds[target]))
 
   # Combine predictors and target.
@@ -147,7 +147,7 @@ if (length(target_levels) == 2) {
 
   # Train neural network.
 
-  model_neuralnet <- neuralnet(
+  model_neuralnet <- neuralnet::neuralnet(
     formula       = formula_nn,
     data          = ds_final,
     hidden        = <NEURAL_HIDDEN_LAYERS>,
