@@ -49,7 +49,6 @@ import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
 import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/linear.dart';
-import 'package:rattle/providers/loss_matrix.dart';
 import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/normalise.dart';
@@ -205,7 +204,7 @@ Future<void> rSource(
   bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
   int minBucket = ref.read(treeMinBucketProvider);
   double complexity = ref.read(treeComplexityProvider);
-  String lossMatrix = ref.read(lossMatrixProvider);
+  String lossMatrix = ref.read(treeLossMatrixProvider);
   List<double> partitionRatios = ref.read(partitionSettingProvider);
   String partitionString =
       '${partitionRatios.first}, ${partitionRatios[1]}, ${partitionRatios.last}';

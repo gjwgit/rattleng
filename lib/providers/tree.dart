@@ -36,6 +36,10 @@ final treeComplexityProvider = StateProvider<double>((ref) => 0.0100);
 
 final treeIncludeMissingProvider = StateProvider<bool>((ref) => false);
 
+/// Provider for the loss matrix of tree model.
+
+final treeLossMatrixProvider = StateProvider<String>((ref) => '');
+
 /// Provider for the max depth of tree model.
 
 final treeMaxDepthProvider = StateProvider<int>((ref) => 30);
