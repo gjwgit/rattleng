@@ -34,7 +34,7 @@ import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/providers/tree_algorithm.dart';
+import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/utils/image_exists.dart';
