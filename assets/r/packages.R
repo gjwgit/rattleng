@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-03-06 14:43:11 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-19 21:37:34 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -106,7 +106,6 @@ pkgs <- c(
   'lubridate',
   'magrittr',
   'mice',
-  'ModelMetrics',
   'naniar',
   'neuralnet',
   'nnet',
