@@ -1,6 +1,6 @@
 /// EXPLORE tab: Correlation Large Dataset Test.
 //
-// Time-stamp: <Wednesday 2025-03-05 13:00:21 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 08:58:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -50,7 +49,7 @@ void main() {
 
       await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
       await navigateToTab(tester, 'Explore');
-      await navigateToFeature(tester, 'Correlation', CorrelationPanel);
+      await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');
       await navigateToPage(tester, 1, 'Correlation - Numeric Data');
       await verifySelectableText(tester, [

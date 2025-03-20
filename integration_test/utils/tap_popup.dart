@@ -1,8 +1,8 @@
-/// Navigate to a feature in the app.
+/// Tap a button on a popup (e.g., `Yes`).
 //
-// Time-stamp: <Thursday 2025-03-20 15:56:10 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 15:18:23 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,23 +21,22 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
-import 'delays.dart';
+/// Tap an [ElevatedButton] with the [text] label.
 
-Future<void> navigateToFeature(
+Future<void> tapPopup(
   WidgetTester tester,
-  String feature,
+  String text,
 ) async {
-  final tabFinder = find.text(feature);
-  expect(tabFinder, findsOneWidget);
-
-  await tester.tap(tabFinder);
+  final button = find.text(text);
+  expect(button, findsOneWidget);
+  await tester.tap(button);
   await tester.pumpAndSettle();
-
-  await tester.pump(delay);
 }

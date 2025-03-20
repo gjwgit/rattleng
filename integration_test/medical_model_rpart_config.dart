@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -78,7 +77,7 @@ void main() {
         await setDatasetRole(tester, v, 'Ignore');
       }
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree');
 
       // 20250130 gjw Should put this into utils but currently it assumes a
       // single check box on this page so need to considere that. For now keep

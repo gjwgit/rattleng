@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Tuesday 2025-02-11 11:09:27 +1100 >
+// Time-stamp: <Friday 2025-03-21 08:58:53 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -50,7 +49,7 @@ void main() {
     await tester.pump(interact);
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await navigateToTab(tester, 'Explore');
-    await navigateToFeature(tester, 'Missing', MissingPanel);
+    await navigateToFeature(tester, 'Missing');
     await tapButton(tester, 'Perform Missing Analysis');
     // 20250123 gjw I had to add this delay in order to ensure the R script had
     // finished generating the various analyses.

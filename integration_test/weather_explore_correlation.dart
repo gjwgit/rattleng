@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/correlation/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -49,7 +48,7 @@ void main() {
       await tester.pumpAndSettle();
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Explore');
-      await navigateToFeature(tester, 'Correlation', CorrelationPanel);
+      await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');
       await tester.pump(hack);
       await gotoNextPage(tester);

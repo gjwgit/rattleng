@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/svm/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -46,7 +45,7 @@ void main() {
     await tester.pump(interact);
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'SVM', SvmPanel);
+    await navigateToFeature(tester, 'SVM');
     await tester.pump(interact);
     await tapButton(tester, 'Build SVM Model');
     await tester.pump(delay);

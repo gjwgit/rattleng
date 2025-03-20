@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -59,7 +58,7 @@ void main() {
 
       // Navigate to the Neural feature.
 
-      await navigateToFeature(tester, 'Neural', NeuralPanel);
+      await navigateToFeature(tester, 'Neural');
 
       await tester.pumpAndSettle();
 

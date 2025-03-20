@@ -1,6 +1,6 @@
 /// COMP3425 W04 AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Friday 2025-03-07 12:20:24 +1100 >
+// Time-stamp: <Friday 2025-03-21 08:55:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -28,8 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/association/panel.dart';
-import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -60,7 +58,7 @@ void main() {
       await setDatasetRole(tester, 'occupation', 'Ignore');
       await setDatasetRole(tester, 'accounts', 'Ignore');
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Associations', AssociationPanel);
+      await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
       await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
@@ -101,7 +99,7 @@ void main() {
       await navigateToTab(tester, 'Dataset');
       await setDatasetRole(tester, 'occupation', 'Input');
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Impute', ImputePanel);
+      await navigateToFeature(tester, 'Impute');
       await setSelectedVariable(tester, 'occupation');
       await tapChip(tester, 'Constant');
       await tapButton(tester, 'Impute Missing Values');
@@ -116,7 +114,7 @@ void main() {
       // 20250205 gjw Rebuild the model and determin the difference?
 
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Associations', AssociationPanel);
+      await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
       await navigateToPage(tester, 1, 'Association Rules — Meta Summary');

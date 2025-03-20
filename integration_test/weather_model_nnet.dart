@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
@@ -64,7 +63,7 @@ void main() {
         await setDatasetRole(tester, v, 'Ignore');
       }
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Neural', NeuralPanel);
+      await navigateToFeature(tester, 'Neural');
       await tapButton(tester, 'Build Neural Network');
       await tester.pump(delay);
       await gotoNextPage(tester);

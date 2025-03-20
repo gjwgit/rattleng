@@ -35,9 +35,10 @@ import 'package:rattle/r/extract.dart';
 
 String getTarget(WidgetRef ref) {
   // The rolesProvider lists the roles for the different variables which we
-  // need to know for parsing the R scripts.
+  // need to know for parsing the R scripts. Roles get updated when user
+  // updates the roles in the UI.
 
-  Map<String, Role> roles = ref.read(rolesProvider);
+  Map<String, Role> roles = ref.watch(rolesProvider);
 
   // Extract the target variable from the rolesProvider.
 

@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/cluster/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
@@ -48,7 +47,7 @@ void main() {
     await tester.pump(interact);
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Cluster', ClusterPanel);
+    await navigateToFeature(tester, 'Cluster');
     await tester.pump(interact);
     final ewkmaChip = find.text(
       'Ewkm',
