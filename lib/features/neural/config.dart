@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-03-20 08:42:58 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 09:18:52 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -290,7 +290,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             algorithm == 'nnet'
                 ? NumberField(
                     label: 'Hidden Layer:',
-                    key: const Key('hidden_layers'),
+                    key: const Key('nnet_config_hidden_layers'),
                     controller: _nnetSizeLayerController,
 
                     tooltip: '''
@@ -310,6 +310,7 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                     controller: _neuralHiddenController,
                     stateProvider: hiddenLayersNeuralProvider,
                     label: 'Hidden Layers',
+                    key: const Key('neuralnet_config_hidden_layers'),
                     tooltip: '''
 
                     The Hidden Layers parameter is a vector of comma separated
