@@ -1,6 +1,6 @@
 /// WEATHER dataset TRANSFORM tab RECODE feature.
 //
-// Time-stamp: <Tuesday 2025-02-04 10:34:15 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 08:54:04 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -27,7 +27,6 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/features/recode/panel.dart';
 
 import 'package:rattle/main.dart' as app;
 
@@ -63,7 +62,7 @@ void main() {
       // it is a special case.
 
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Recode', RecodePanel);
+      await navigateToFeature(tester, 'Recode');
       await tapButton(tester, 'Recode Variable Values');
       await tester.pump(delay);
 
@@ -94,7 +93,7 @@ void main() {
       // 2. Select and test chip "KMeans"
 
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Recode', RecodePanel);
+      await navigateToFeature(tester, 'Recode');
       await verify_tap_chip(
         tester,
         'KMeans',

@@ -1,6 +1,6 @@
 /// COMP3425 W5 AUDIT dataset MODEL tab TREE feature RPART option.
 //
-// Time-stamp: <Friday 2025-03-14 05:31:33 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 08:57:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -28,8 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/summary/panel.dart';
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 //import 'package:rattle/widgets/image_page.dart';
 //import 'package:rattle/widgets/text_page.dart';
@@ -69,7 +67,7 @@ void main() {
       await setDatasetRole(tester, 'marital', 'Ignore');
       await setDatasetRole(tester, 'education', 'Ignore');
       await navigateToTab(tester, 'Explore');
-      await navigateToFeature(tester, 'Summary', SummaryPanel);
+      await navigateToFeature(tester, 'Summary');
       await tapButton(tester, 'Generate Dataset Summary');
       await navigateToPage(tester, 3, 'Skim the Dataset');
       verifySelectableText(
@@ -82,7 +80,7 @@ void main() {
         ],
       );
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree');
       await tapButton(tester, 'Build Decision Tree');
       await tester.pump(delay);
       await navigateToPage(tester, 1, 'Decision Tree Model');

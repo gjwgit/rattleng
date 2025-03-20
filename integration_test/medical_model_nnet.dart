@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -73,7 +72,7 @@ void main() {
       await setDatasetRole(tester, v, 'Ignore');
     }
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Neural', NeuralPanel);
+    await navigateToFeature(tester, 'Neural');
     await tapChip(tester, 'nnet');
     await tapButton(tester, 'Build Neural Network');
     // 20250206 gjw The model build is sometimes a little slow indeterminately

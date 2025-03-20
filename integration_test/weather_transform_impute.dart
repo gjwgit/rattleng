@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/check_variable_not_missing.dart';
@@ -57,7 +56,7 @@ void main() {
       await unifyOn(tester);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Impute', ImputePanel);
+      await navigateToFeature(tester, 'Impute');
 
       // Step 1: Test imputation with Mean.
 

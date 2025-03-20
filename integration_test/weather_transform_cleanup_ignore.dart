@@ -27,10 +27,8 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/features/visual/panel.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/features/cleanup/panel.dart';
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
@@ -56,7 +54,7 @@ void main() {
       await setDatasetRole(tester, 'rainfall', 'Ignore');
       await navigateToTab(tester, 'Transform');
       await tester.pump(interact);
-      await navigateToFeature(tester, 'Cleanup', CleanupPanel);
+      await navigateToFeature(tester, 'Cleanup');
       await tapChip(tester, 'Ignored');
       await tapButton(tester, 'Delete from Dataset');
       // Check that the variables to be deleted are mentioned in the popup.
@@ -104,7 +102,7 @@ void main() {
       }
 
       await navigateToTab(tester, 'Explore');
-      await navigateToFeature(tester, 'Visual', VisualPanel);
+      await navigateToFeature(tester, 'Visual');
 
       // Check that 'wind_gust_dir' is the selected variable.
 
@@ -132,7 +130,7 @@ void main() {
       await setDatasetRole(tester, 'wind_gust_dir', 'Ignore');
       await setDatasetRole(tester, 'wind_gust_speed', 'Ignore');
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Cleanup', CleanupPanel);
+      await navigateToFeature(tester, 'Cleanup');
       await tapChip(tester, 'Ignored');
       await tapButton(tester, 'Delete from Dataset');
       await verifyPopup(['wind_gust_dir', 'wind_gust_speed']);
@@ -155,7 +153,7 @@ void main() {
       // Navigate to "EXPLORE" -> "VISUAL".
 
       await navigateToTab(tester, 'Explore');
-      await navigateToFeature(tester, 'Visual', VisualPanel);
+      await navigateToFeature(tester, 'Visual');
 
       // Pause after screen change.
 

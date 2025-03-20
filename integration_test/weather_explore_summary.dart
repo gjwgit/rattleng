@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -48,7 +47,7 @@ void main() {
       await tester.pumpAndSettle();
       await loadDemoDataset(tester);
       await navigateToTab(tester, 'Explore');
-      await navigateToFeature(tester, 'Summary', SummaryPanel);
+      await navigateToFeature(tester, 'Summary');
       await tapButton(tester, 'Generate Dataset Summary');
       await tester.pump(hack);
       await gotoNextPage(tester);

@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -49,7 +48,7 @@ void main() {
 
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await navigateToTab(tester, 'Explore');
-    await navigateToFeature(tester, 'Visual', VisualPanel);
+    await navigateToFeature(tester, 'Visual');
     await tapButton(tester, 'Generate Plots');
     await tester.pump(delay);
     await gotoNextPage(tester);

@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
@@ -46,7 +45,7 @@ void main() {
     await tester.pumpAndSettle();
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Explore');
-    await navigateToFeature(tester, 'Visual', VisualPanel);
+    await navigateToFeature(tester, 'Visual');
     await tapButton(tester, 'Generate Plots');
     await gotoNextPage(tester);
     final boxPlotFinder = find.textContaining('Box Plot');
