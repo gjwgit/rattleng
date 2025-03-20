@@ -27,7 +27,6 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:rattle/features/tree/panel.dart';
 
 import 'package:rattle/main.dart' as app;
 
@@ -53,7 +52,7 @@ void main() {
     await setPartition(tester, true);
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree');
     await tapButton(tester, 'Build Decision Tree');
     await tester.pump(delay); // 20250131 gjw Could not find '254'
     await gotoNextPage(tester);
@@ -70,7 +69,7 @@ void main() {
     await setPartition(tester, false);
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree');
     await tapButton(tester, 'Build Decision Tree');
     await tester.pump(delay); // 20250212 gjw Could not find '363'
     await gotoNextPage(tester);

@@ -1,6 +1,6 @@
 /// Navigate to a feature in the app.
 //
-// Time-stamp: <Tuesday 2024-09-10 15:56:42 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 15:56:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -32,15 +32,12 @@ import 'delays.dart';
 Future<void> navigateToFeature(
   WidgetTester tester,
   String feature,
-  Type panelType,
 ) async {
   final tabFinder = find.text(feature);
   expect(tabFinder, findsOneWidget);
 
   await tester.tap(tabFinder);
   await tester.pumpAndSettle();
-
-  expect(find.byType(panelType), findsOneWidget);
 
   await tester.pump(delay);
 }

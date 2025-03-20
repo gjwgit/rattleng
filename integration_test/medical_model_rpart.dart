@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -85,7 +84,7 @@ void main() {
         await setDatasetRole(tester, v, 'Ignore');
       }
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree');
       final markdownContent = find.byKey(const Key('markdown_file'));
       expect(markdownContent, findsOneWidget);
       await tapButton(tester, 'Build Decision Tree');

@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/number_field.dart';
 
@@ -53,7 +52,7 @@ void main() {
       await tester.pump(interact);
       await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree');
 
       // Find the ChoiceChipTip widget for the traditional algorithm type.
 

@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/boost/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -49,7 +48,7 @@ void main() {
     await loadDemoDataset(tester);
     await tester.pump(delay);
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Boost', BoostPanel);
+    await navigateToFeature(tester, 'Boost');
     await tapButton(tester, 'Build Boosted Trees');
     await tester.pump(delay);
     await gotoNextPage(tester);

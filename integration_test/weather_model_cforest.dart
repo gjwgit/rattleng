@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -50,7 +49,7 @@ void main() {
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Forest', ForestPanel);
+      await navigateToFeature(tester, 'Forest');
       await tester.pump(interact);
       await tapChip(tester, 'Conditional');
       await tapButton(tester, 'Build Random Forest');

@@ -1,6 +1,6 @@
 /// AUDIT dataset TRANSFORM tab IMPUTE feature.
 //
-// Time-stamp: <2025-02-06 20:15:41 gjw>
+// Time-stamp: <Friday 2025-03-21 08:55:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -29,7 +29,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -56,7 +55,7 @@ void main() {
       await unifyOn(tester);
       await loadDemoDataset(tester, 'Audit');
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Impute', ImputePanel);
+      await navigateToFeature(tester, 'Impute');
       await setSelectedVariable(tester, 'occupation');
       await tapButton(tester, 'Impute Missing Values');
       await tester.pump(delay);

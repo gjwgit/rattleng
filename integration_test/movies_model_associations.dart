@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/association/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
@@ -49,7 +48,7 @@ void main() {
     await tester.pumpAndSettle();
     await loadDemoDataset(tester, 'Movies');
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Associations', AssociationPanel);
+    await navigateToFeature(tester, 'Associations');
     await tapButton(tester, 'Build Association Rules');
     await tester.pump(delay);
     await gotoNextPage(tester);

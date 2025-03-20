@@ -1,6 +1,6 @@
 /// COMP3425 W04 MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Wednesday 2025-03-12 05:49:49 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 08:57:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/association/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/enter_text.dart';
@@ -65,7 +64,7 @@ void main() {
       await verifyRole('basket', 'Ident');
       await verifyRole('item', 'Target');
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Associations', AssociationPanel);
+      await navigateToFeature(tester, 'Associations');
       await verifyCheckbox(tester, 'Baskets', true);
       await enterText(tester, 'association_config_support', '0.01');
       await tapButton(tester, 'Build Association Rules');

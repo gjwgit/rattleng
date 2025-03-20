@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Thursday 2025-01-30 16:32:54 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 16:28:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -30,7 +30,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/text_page.dart';
 
@@ -56,7 +55,7 @@ void main() {
     await loadDemoDataset(tester);
     await tester.pump(hack);
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree');
     await tapCheckbox(tester, 'include_missing');
 
     // Enter values into text fields
