@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-03-18 15:30:04 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 16:52:31 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -199,9 +199,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
           return AlertDialog(
             title: const Row(
               children: [
-                Icon(Icons.warning, color: Colors.red),
+                Icon(Icons.question_mark, color: Colors.green),
                 SizedBox(width: 20),
-                Text('Warning'),
+                Text('Confirmation'),
               ],
             ),
             content: Text(wordWrap(warning(method))),

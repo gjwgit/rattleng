@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/impute/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -59,7 +58,7 @@ void main() {
       await tester.pump(interact);
       await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Impute', ImputePanel);
+      await navigateToFeature(tester, 'Impute');
       await tapChip(tester, 'Constant');
       await tapButton(tester, 'Impute Missing Values');
       await tester.pump(hack);

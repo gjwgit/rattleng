@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -49,7 +48,7 @@ void main() {
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree');
       await tapButton(tester, 'Build Decision Tree');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');

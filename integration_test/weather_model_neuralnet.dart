@@ -1,6 +1,6 @@
 /// Test neuralnet() with demo dataset.
 //
-// Time-stamp: <Saturday 2025-02-01 17:55:57 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 16:32:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -40,17 +39,40 @@ import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
-import 'utils/unify_on.dart';
+import 'utils/verify_role.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
 
-final List<String> demoVariablesToIgnore = [
+final List<String> varsToIgnore = [
+  'min_temp',
+  'max_temp',
+  'rainfall',
   'wind_gust_dir',
+  'wind_gust_speed',
   'wind_dir_9am',
   'wind_dir_3pm',
+  'wind_speed_3pm',
+  'humidity_3pm',
+  'pressure_3pm',
+  'cloud_3pm',
+  'rain_today',
+  'rain_today',
+  'risk_mm',
+  'rain_tomorrow',
 ];
+
+final List<String> inputVars = [
+  'wind_speed_9am',
+  'humidity_9am',
+  'pressure_9am',
+  'cloud_9am',
+  'temp_9am',
+];
+
+final String targetVar = 'temp_3pm';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -59,127 +81,17 @@ void main() {
     testWidgets('Load, Ignore, Navigate, Build.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(interact);
-      await unifyOn(tester);
-
-      await loadDemoDataset(tester);
-
-      await tester.pump(interact);
-
-      // Find the scrollable ListView.
-
-      final scrollableFinder = find.byKey(const Key('roles listView'));
-
-      // Iterate over each variable in the list and find its corresponding row in the ListView.
-
-      for (final variable in demoVariablesToIgnore) {
-        bool foundVariable = false;
-
-        // Scroll in steps and search for the variable until it's found.
-
-        while (!foundVariable) {
-          // Find the row where the variable name is displayed.
-
-          final variableFinder = find.text(variable);
-
-          if (tester.any(variableFinder)) {
-            foundVariable = true;
-
-            // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-            final parentFinder = find.ancestor(
-              of: variableFinder,
-              matching: find.byType(
-                Row,
-              ),
-            );
-
-            // Select the first Row in the list.
-
-            final firstRowFinder = parentFinder.first;
-
-            // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-            final ignoreChipFinder = find.descendant(
-              of: firstRowFinder,
-              matching: find.text('Ignore'),
-            );
-
-            await tester.tap(ignoreChipFinder);
-
-            await tester.pumpAndSettle();
-
-            // Verify that the role is now set to 'Ignore'.
-
-            expect(ignoreChipFinder, findsOneWidget);
-          } else {
-            final currentScrollableFinder = scrollableFinder.first;
-
-            // Fling (or swipe) down by a small amount.
-
-            await tester.fling(
-              currentScrollableFinder,
-              const Offset(0, -300), // Scroll down
-              1000,
-            );
-            await tester.pumpAndSettle();
-            await tester.pump(delay);
-
-            // Tab the previous variable to avoid missing tab it.
-            // Missing tab happens if Ignore button overlaps the rightArrow icon.
-
-            int index = demoVariablesToIgnore.indexOf(variable);
-            if (index > 0) {
-              String preVariable = demoVariablesToIgnore[index - 1];
-
-              // Find the row where the variable name is displayed.
-
-              final preVariableFinder = find.text(preVariable);
-
-              if (tester.any(preVariableFinder)) {
-                // Find the parent widget that contains the variable and its associated ChoiceChip.
-
-                final preParentFinder = find.ancestor(
-                  of: preVariableFinder,
-                  matching: find.byType(
-                    Row,
-                  ),
-                );
-
-                // Select the first Row in the list.
-
-                final firstRowFinder = preParentFinder.first;
-
-                // Tap the correct ChoiceChip to change the role to 'Ignore'.
-
-                final ignoreChipFinder = find.descendant(
-                  of: firstRowFinder,
-                  matching: find.text('Ignore'),
-                );
-
-                await tester.tap(ignoreChipFinder);
-
-                await tester.pumpAndSettle();
-
-                // Verify that the role is now set to 'Ignore'.
-
-                expect(ignoreChipFinder, findsOneWidget);
-              }
-            }
-          }
-        }
+      await loadDemoDataset(tester, 'Weather');
+      for (final v in varsToIgnore) {
+        await setDatasetRole(tester, v, 'Ignore');
       }
-
+      for (final v in inputVars) {
+        await verifyRole(v, 'Input');
+      }
+      await setDatasetRole(tester, targetVar, 'Target');
+      await verifyRole(targetVar, 'Target');
       await navigateToTab(tester, 'Model');
-
-      // Navigate to the Neural feature.
-
-      await navigateToFeature(tester, 'Neural', NeuralPanel);
-
-      await tester.pumpAndSettle();
-
-      // Verify that the markdown content is loaded.
-
+      await navigateToFeature(tester, 'Neural');
       final markdownContent = find.byKey(const Key('markdown_file'));
       expect(markdownContent, findsOneWidget);
 

@@ -1,6 +1,6 @@
 /// Test visual image disappear after the DATASET RESET.
 //
-// Time-stamp: <Sunday 2025-02-02 06:00:35 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 08:57:53 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,7 +31,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/features/dataset/button.dart';
-import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
@@ -57,7 +56,7 @@ void main() {
 
       await navigateToTab(tester, 'Model');
 
-      await navigateToFeature(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree');
 
       await tapButton(tester, 'Build Decision Tree');
       await tester.pump(hack);
@@ -106,7 +105,7 @@ void main() {
 
       await navigateToTab(tester, 'Model');
 
-      await navigateToFeature(tester, 'Tree', TreePanel);
+      await navigateToFeature(tester, 'Tree');
 
       // Assuming the TabPageSelector's page count is based on a PageController.
       final pageControllerFinder = find.byWidgetPredicate(
@@ -128,7 +127,7 @@ void main() {
     await tester.pump(interact);
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree');
     await tapButton(tester, 'Build Decision Tree');
     await tester.pump(hack);
     await gotoNextPage(tester);
@@ -160,7 +159,7 @@ void main() {
     await navigateToTab(tester, 'Model');
     await tester.pump(hack);
 
-    await navigateToFeature(tester, 'Tree', TreePanel);
+    await navigateToFeature(tester, 'Tree');
 
     // Assuming the TabPageSelector's page count is based on a PageController
     final pageControllerFinder = find.byWidgetPredicate(

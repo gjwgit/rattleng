@@ -1,6 +1,6 @@
 /// WEATHER dataset TRANSFORM tab RESCALE feature.
 //
-// Time-stamp: <Tuesday 2025-02-04 10:34:15 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 16:08:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/rescale/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/check_variable_not_missing.dart';
@@ -62,7 +61,7 @@ void main() {
       // it is a special case.
 
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Rescale', RescalePanel);
+      await navigateToFeature(tester, 'Rescale');
       await tapButton(tester, 'Rescale Variable Values');
       await tester.pump(delay);
       await gotoNextPage(tester);
@@ -94,7 +93,7 @@ void main() {
       // 2. Select and test chip "Scale [0, 1]"
 
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Rescale', RescalePanel);
+      await navigateToFeature(tester, 'Rescale');
       await verify_tap_chip(
         tester,
         'Scale [0-1]',

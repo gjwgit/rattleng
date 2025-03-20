@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -47,7 +46,7 @@ void main() {
     await tester.pumpAndSettle();
     await loadDemoDataset(tester, 'Weather');
     await navigateToTab(tester, 'Explore');
-    await navigateToFeature(tester, 'Missing', MissingPanel);
+    await navigateToFeature(tester, 'Missing');
     await tapButton(tester, 'Perform Missing Analysis');
     await gotoNextPage(tester);
     // 20250207 gjw Add a delay for ecosysl.

@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -58,7 +57,7 @@ void main() {
       ]);
       await tester.pump(interact);
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Word Cloud', WordCloudPanel);
+      await navigateToFeature(tester, 'Word Cloud');
       await tapButton(tester, 'Display Word Cloud');
       await gotoNextPage(tester);
       await gotoNextPage(tester);

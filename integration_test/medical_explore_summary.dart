@@ -1,6 +1,6 @@
 /// LARGE EXPLORE SUMMARY.
 //
-// Time-stamp: <Wednesday 2025-03-05 14:44:50 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 08:59:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/summary/panel.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
@@ -48,7 +47,7 @@ void main() {
     await tester.pumpAndSettle();
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await navigateToTab(tester, 'Explore');
-    await navigateToFeature(tester, 'Summary', SummaryPanel);
+    await navigateToFeature(tester, 'Summary');
     await tapButton(tester, 'Generate Dataset Summary');
     await tester.pump(hack);
     await navigateToPage(tester, 1, 'Summary of the Dataset');

@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Friday 2025-03-07 08:34:02 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 16:43:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/neural/panel.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -72,7 +71,7 @@ void main() {
 
     // Navigate to the NEURAL feature.
 
-    await navigateToFeature(tester, 'Neural', NeuralPanel);
+    await navigateToFeature(tester, 'Neural');
     await tester.pumpAndSettle();
 
     // Find and tap the 'Trace' checkbox.
@@ -83,7 +82,10 @@ void main() {
 
     // Find the text fields by their keys and enter new values.
 
-    await tester.enterText(find.byKey(const Key('hidden_layers')), '5');
+    await tester.enterText(
+      find.byKey(const Key('nnet_config_hidden_layers')),
+      '5',
+    );
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byKey(const Key('max_nwts')), '100');

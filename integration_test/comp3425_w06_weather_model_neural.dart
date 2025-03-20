@@ -1,6 +1,6 @@
 /// COMP3425 W06 WEATHER dataset MODEL tab NNET feature.
 //
-// Time-stamp: <Friday 2025-03-07 12:10:07 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 16:49:13 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -28,15 +28,20 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:rattle/features/cleanup/panel.dart';
 import 'package:rattle/main.dart' as app;
 
+import 'utils/enter_text.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/set_partition.dart';
+import 'utils/set_selected_variable.dart';
+import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
+import 'utils/tap_popup.dart';
 import 'utils/verify_role.dart';
+import 'utils/verify_popup.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
@@ -75,6 +80,9 @@ void main() {
     testWidgets('roles, ignore, cleanup, impute, rescale, nnet.',
         (WidgetTester tester) async {
       app.main();
+
+      // Load the dataset and set variable roles.
+
       await tester.pumpAndSettle();
       await setPartition(tester, true);
       await loadDemoDataset(tester, 'Weather');
@@ -86,22 +94,56 @@ void main() {
       }
       await setDatasetRole(tester, targetVar, 'Target');
       await verifyRole(targetVar, 'Target');
+
+      // Remove all IGNORED variables.
+
       await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Cleanup', CleanupPanel);
+      await navigateToFeature(tester, 'Cleanup');
+      await tapChip(tester, 'Ignored');
+      await tapButton(tester, 'Delete from Dataset');
+      await verifyPopup(varsToIgnore);
+      await tapPopup(tester, 'Yes');
 
-// TRANSFORM -> CLEANUP ->  DELETE all IGNORED
+      // Impute missing clour_9am and remove the original.
 
-// TRANSFORM -> IMPUTE -> clound_9am -> 0
+      await navigateToFeature(tester, 'Impute');
+      await setSelectedVariable(tester, 'cloud_9am');
+      await tapChip(tester, 'Constant');
+      await tapButton(tester, 'Impute Missing Values');
+      await navigateToFeature(tester, 'Cleanup');
+      await tapChip(tester, 'Ignored');
+      await tapButton(tester, 'Delete from Dataset');
+      await tapPopup(tester, 'Yes');
 
-// TRANSFORM -> CLEANUP -> DELETE -> IGNORED (cloud_9am)
+      // Rescale [0-1] all variables, one at a time.
 
-// TRANSFORM -> RESCALE -> SCALE [0-1] -> all variables, one at a time
+      await navigateToFeature(tester, 'Rescale');
+      await tapChip(tester, 'Scale [0-1]');
+      for (final v in inputVars) {
+        if (v == 'cloud_9am') {
+          await setSelectedVariable(tester, 'IMP_cloud_9am');
+          await tapButton(tester, 'Rescale Variable Values');
+        } else {
+          await setSelectedVariable(tester, v);
+          await tapButton(tester, 'Rescale Variable Values');
+        }
+      }
+      await setSelectedVariable(tester, targetVar);
+      await tapButton(tester, 'Rescale Variable Values');
+      await navigateToFeature(tester, 'Cleanup');
+      await tapChip(tester, 'Ignored');
+      await tapButton(tester, 'Delete from Dataset');
+      await tapPopup(tester, 'Yes');
 
-// TRANSFORM -> CLEANUP ->  DELETE all IGNORED
+      // Build neuralnet().
 
-// TODO
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Neural');
+      await tapChip(tester, 'neuralnet');
+      await enterText(tester, 'neuralnet_config_hidden_layers', '5,3');
+      await tapButton(tester, 'Build Neural Network');
 
-// build nnet and neuralnet??
+      // build nnet and neuralnet??
 
 // evaluate either!!!
     });
