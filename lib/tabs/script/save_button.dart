@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Tuesday 2025-03-11 08:42:51 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-21 08:50:32 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -72,14 +72,22 @@ class ScriptSaveButton extends ConsumerWidget {
   // Display a dialog for the user to enter the file name.
 
   Future<void> _showFileNameDialog(BuildContext context, WidgetRef ref) async {
+    // TODO 20250321 gjw DUPLICATED CODE WITH `widgets/close_dialog.dart`
     final String dsname = ref.read(datasetNameProvider);
+    // Format the date now as yyyymmdd to include this in the daved script
+    // filename. (gjw 20250321)
+    final now = DateTime.now();
+    String yyyymmdd = "${now.year.toString().padLeft(4, '0')}"
+        "${(now.month).toString().padLeft(2, '0')}"
+        "${(now.day).toString().padLeft(2, '0')}";
 
     String? outputPath = await FilePicker.platform.saveFile(
       dialogTitle: 'Provide a .R filename to save the R script to.',
-      // 20250113 gjw If there is not yet a dataset laoded then we need to make
-      // sure the resulting saved filename is `script.R` and not `_script.R`.
+      // If there is not yet a dataset laoded then we need to make sure the
+      // resulting saved filename is `script_yyyymmdd.R` and not
+      // `script_yyyymmdd_.R` with the trailing underscore. (gjw 20250113)
 
-      fileName: '${dsname}${dsname.isNotEmpty ? "_" : ""}script.R',
+      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
     );
