@@ -1,6 +1,6 @@
 /// A dialog to prompte user on closing app with SAVE and CANCEL options
 ///
-/// Time-stamp: <Thursday 2024-11-14 09:22:33 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-21 08:51:22 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -37,6 +37,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -56,7 +57,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
   String _content = wordWrap('''
 
     Are you sure you want to close Rattle?
-    Unsaved changes will be lost. 
+    Unsaved changes will be lost.
     You can save the script now before closing.
 
     ''');
@@ -134,9 +135,18 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
   }
 
   Future<void> _showFileNameDialog(BuildContext context) async {
+    // TODO 20250321 gjw DUPLICATED CODE WITH `tabs/script/save_button.dart`
+    final String dsname = ref.read(datasetNameProvider);
+    // Format the date now as yyyymmdd to include this in the daved script
+    // filename. (gjw 20250321)
+    final now = DateTime.now();
+    String yyyymmdd = "${now.year.toString().padLeft(4, '0')}"
+        "${(now.month).toString().padLeft(2, '0')}"
+        "${(now.day).toString().padLeft(2, '0')}";
+
     final outputPath = await FilePicker.platform.saveFile(
       dialogTitle: 'Provide a .R filename to save the R script to',
-      fileName: 'script.R',
+      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
     );
