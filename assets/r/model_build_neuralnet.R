@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 19:22:15 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-03-21 08:19:56 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,9 +36,8 @@
 mtype <- "neuralnet"
 mdesc <- "Neural Neuralnet"
 
-# 20250121 gjw The tds (temporary data set) is set to replace trds in
-# handling situations of ignoring the categoric variables (TRUE) or
-# not (FALSE). We simply toggle the TRUE/FALSE here approriately.
+# We set up a temporary data set (tds) from trds. This will allow us
+# to exclude categoric variables if we decide to do so. (gjw 20250321)
 
 if (<NEURAL_IGNORE_CATEGORIC>) {
   tds <- trds[setdiff(c(numc, target), ignore)]
@@ -153,7 +152,7 @@ if (length(target_levels) == 2) {
     hidden        = <NEURAL_HIDDEN_LAYERS>,
     act.fct       = <NEURAL_ACT_FCT>,
     err.fct       = <NEURAL_ERROR_FCT>,
-    linear.output = FALSE,
+    linear.output = TRUE,
     threshold     = <NEURAL_THRESHOLD>,
     stepmax       = <NEURAL_STEP_MAX>,
   )
