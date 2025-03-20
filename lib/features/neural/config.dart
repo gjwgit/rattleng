@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-03-13 07:48:24 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-20 08:42:58 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -136,8 +136,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('Build Neural Network'),
               tooltip: '''
 
-              Tap here to build a Neural Network model using the parameter
-              values set here.
+              **Build:** Tap here to build a Neural Network model using the
+              parameter values set here.
 
               ''',
               pageControllerProvider:
@@ -247,9 +247,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('nnet_trace'),
               tooltip: '''
 
-              Enable tracing optimization for the **single layer neural
-              network**. The prediction error is provided after every 10 training
-              iterations in the Console.
+              **Trace:** Tap here to enable/disable tracing optimization for the
+              **single layer neural network**. The prediction error is provided
+              after every 10 training iterations in the Console.
 
               ''',
               label: 'Trace',
@@ -259,8 +259,8 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             LabelledCheckbox(
               tooltip: '''
 
-              Add skip-layer connections from input to output for the **single
-              layer neural network**.
+              **Skip:** Add skip-layer connections from input to output for the
+              **single layer neural network**.
 
               ''',
               label: 'Skip',
@@ -271,11 +271,11 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('Neural Ignore Categoric'),
               tooltip: '''
 
-              Build the model ignoring the categoric variables. Categoric
-              variables are handled by the neural net models by enumerating
-              their levels across the other variables. Because this can result
-              in many introduced variables we enable Ignore Categoric by
-              default.
+              **Ignore Categoirc:** Build the model ignoring the categoric
+              variables. Categoric variables are handled by the neural net
+              models by enumerating their levels across the other
+              variables. Because this can result in many introduced variables we
+              enable Ignore Categoric by default.
 
               ''',
               label: 'Ignore Categoric',
