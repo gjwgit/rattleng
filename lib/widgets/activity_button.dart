@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/providers/path.dart';
+import 'package:rattle/utils/check_target_numeric.dart';
 import 'package:rattle/utils/show_ok.dart';
 
 class ActivityButton extends ConsumerWidget {
@@ -64,6 +65,11 @@ class ActivityButton extends ConsumerWidget {
         onPressed: () {
           String path = ref.read(pathProvider);
 
+          // Current evaluations are focused on classification rather than regression.
+          // Evaluate is disabled when target variable is numeric.
+
+          bool numericDisabled = isNumericTarget(ref);
+
           if (path.isEmpty) {
             showOk(
               context: context,
@@ -72,6 +78,19 @@ class ActivityButton extends ConsumerWidget {
 
             Please choose a dataset to load from the **Dataset** tab. There is
             not much we can do until we have loaded a dataset.
+
+            ''',
+            );
+          } else if (numericDisabled) {
+            showOk(
+              context: context,
+              title: 'Numeric Target Variable',
+              content: '''
+
+            The current evaluations are focused on classification rather than regression.
+            Model evaluation is disabled when the target variable is numeric.
+            
+            Please select a categorical target variable to proceed with model evaluation.
 
             ''',
             );
