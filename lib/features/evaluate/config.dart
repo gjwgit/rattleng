@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-16 06:19:18 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 19:51:21 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -295,68 +295,72 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             ActivityButton(
               pageControllerProvider: evaluatePageControllerProvider,
               onPressed: () async {
-                // Retrieve the boolean state indicating if the evaluation was executed.
-
-                bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
-                bool boostTicked = ref.watch(boostEvaluateProvider);
-                bool conditionalForestExecuted =
-                    ref.watch(conditionalForestEvaluateProvider);
-                bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
-                String datasetSplitType = ref.watch(datasetTypeProvider);
-                bool forestTicked = ref.watch(forestEvaluateProvider);
-                bool linearExecuted = ref.watch(linearEvaluateProvider);
-                bool nnetExecuted = ref.watch(nnetEvaluateProvider);
-                bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
-                bool neuralTicked = ref.watch(neuralEvaluateProvider);
-                bool randomForestExecuted =
-                    ref.watch(randomForestEvaluateProvider);
-                bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
-                bool svmExecuted = ref.watch(svmEvaluateProvider);
-                bool treeExecuted = ref.watch(treeEvaluateProvider);
-                bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
-
-                // 20241220 gjw Identify constants corresponding to the various
-                // evaluation commands for each model to generate the required
-                // TEMPLATE variables. This is being updated to use the TEMPLATE
-                // variables one model at a time. Those that have _model_ are
-                // updated.
-
-                String ea = 'evaluate_model_adaboost';
-                String ec = 'evaluate_model_ctree';
-                String el = 'evaluate_model_linear';
-                String en = 'evaluate_model_nnet';
-                String er = 'evaluate_model_rpart';
-                String es = 'evaluate_model_svm';
-                String ex = 'evaluate_model_xgboost';
-                String ent = 'evaluate_model_neuralnet';
-
-                String ecf = 'evaluate_model_cforest';
-                String erf = 'evaluate_model_rforest';
-
-                // 20241220 gjw Finally we will run the generic templates for
-                // the various performance measures.
-
-                String em = 'evaluate_measure_error_matrix';
-                String ro = 'evaluate_measure_roc';
-                String erc = 'evaluate_measure_riskchart';
-                String hd = 'evaluate_measure_hand';
-                String ero = 'evaluate_measure_rocr';
-
                 if (numericDisabled) {
                   showOk(
                     context: context,
                     title: 'Numeric Target Variable',
                     content: '''
 
-            The current evaluations are focused on classification rather than regression.
-            Model evaluation is disabled when the target variable is numeric.
+                    Rattle's current evaluations are focused on classification
+                    models rather than regression models.  Model evaluation is
+                    presently disabled when the target variable is numeric as it
+                    is currently.
 
-            Please select a categorical target variable to proceed with model evaluation.
+                    To explore the evaluations please select a categoric target
+                    variable.
 
-            ''',
+                    ''',
                   );
                 } else {
-                  // Execute evaluation for rpart model if it was executed and treeExecuted is true.
+                  // Retrieve the boolean state indicating if the evaluation was executed.
+
+                  bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
+                  bool boostTicked = ref.watch(boostEvaluateProvider);
+                  bool conditionalForestExecuted =
+                      ref.watch(conditionalForestEvaluateProvider);
+                  bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+                  String datasetSplitType = ref.watch(datasetTypeProvider);
+                  bool forestTicked = ref.watch(forestEvaluateProvider);
+                  bool linearExecuted = ref.watch(linearEvaluateProvider);
+                  bool nnetExecuted = ref.watch(nnetEvaluateProvider);
+                  bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
+                  bool neuralTicked = ref.watch(neuralEvaluateProvider);
+                  bool randomForestExecuted =
+                      ref.watch(randomForestEvaluateProvider);
+                  bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
+                  bool svmExecuted = ref.watch(svmEvaluateProvider);
+                  bool treeExecuted = ref.watch(treeEvaluateProvider);
+                  bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
+
+                  // 20241220 gjw Identify constants corresponding to the various
+                  // evaluation commands for each model to generate the required
+                  // TEMPLATE variables. This is being updated to use the TEMPLATE
+                  // variables one model at a time. Those that have _model_ are
+                  // updated.
+
+                  String ea = 'evaluate_model_adaboost';
+                  String ec = 'evaluate_model_ctree';
+                  String el = 'evaluate_model_linear';
+                  String en = 'evaluate_model_nnet';
+                  String er = 'evaluate_model_rpart';
+                  String es = 'evaluate_model_svm';
+                  String ex = 'evaluate_model_xgboost';
+                  String ent = 'evaluate_model_neuralnet';
+
+                  String ecf = 'evaluate_model_cforest';
+                  String erf = 'evaluate_model_rforest';
+
+                  // 20241220 gjw Finally we will run the generic templates for
+                  // the various performance measures.
+
+                  String em = 'evaluate_measure_error_matrix';
+                  String ro = 'evaluate_measure_roc';
+                  String erc = 'evaluate_measure_riskchart';
+                  String hd = 'evaluate_measure_hand';
+                  String ero = 'evaluate_measure_rocr';
+
+                  // Execute evaluation for rpart model if it was executed and
+                  // treeExecuted is true.
 
                   await executeEvaluation(
                     executed: rpartExecuted && treeExecuted,
@@ -366,7 +370,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref: ref,
                   );
 
-                  // Execute evaluation for ctree model if it was executed and treeExecuted is true.
+                  // Execute evaluation for ctree model if it was executed and
+                  // treeExecuted is true.
 
                   await executeEvaluation(
                     executed: ctreeExecuted && treeExecuted,
@@ -376,7 +381,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref: ref,
                   );
 
-                  // Execute evaluation for Random Forest model if executed and forest box is ticked.
+                  // Execute evaluation for Random Forest model if executed and
+                  // forest box is ticked.
 
                   await executeEvaluation(
                     executed: randomForestExecuted && forestTicked,
@@ -386,7 +392,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref: ref,
                   );
 
-                  // Execute evaluation for Conditional Forest model if executed and forest box is ticked.
+                  // Execute evaluation for Conditional Forest model if executed
+                  // and forest box is ticked.
 
                   await executeEvaluation(
                     executed: conditionalForestExecuted && forestTicked,
@@ -396,7 +403,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref: ref,
                   );
 
-                  // Execute evaluation for AdaBoost model if executed and boost box is ticked.
+                  // Execute evaluation for AdaBoost model if executed and boost
+                  // box is ticked.
 
                   await executeEvaluation(
                     executed: adaBoostExecuted && boostTicked,
@@ -406,7 +414,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref: ref,
                   );
 
-                  // Execute evaluation for XGBoost model if executed and boost box is ticked.
+                  // Execute evaluation for XGBoost model if executed and boost
+                  // box is ticked.
 
                   await executeEvaluation(
                     executed: xgBoostExecuted && boostTicked,
@@ -436,7 +445,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref: ref,
                   );
 
-                  // Execute evaluation for Neural Network model if executed and neural network box is ticked.
+                  // Execute evaluation for Neural Network model if executed and
+                  // neural network box is ticked.
 
                   await executeEvaluation(
                     executed: neuralTicked && nnetExecuted,
@@ -446,7 +456,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     ref: ref,
                   );
 
-                  // Execute evaluation for Neural Net model if executed and neural network box is ticked.
+                  // Execute evaluation for Neural Net model if executed and
+                  // neural network box is ticked.
 
                   await executeEvaluation(
                     executed: neuralTicked && neuralNetExecuted,
