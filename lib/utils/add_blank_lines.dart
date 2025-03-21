@@ -1,6 +1,6 @@
 /// Add an empty line before header lines in the given string.
 //
-// Time-stamp: <Friday 2024-07-19 09:11:23 +1000 Graham Williams>
+// Time-stamp: <Saturday 2025-03-22 09:31:34 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -25,8 +25,9 @@
 
 library;
 
-/// We assume a header line is non-blank and does not contain a colon (":").
-/// If a header line is found and the preceding line is not blank, an empty line is inserted.
+/// We assume a header line is non-blank and does not contain a colon (":").  If
+/// a header line is found and the preceding line is not blank, an empty line is
+/// inserted.
 
 String addBlankLinesBeforeHeaders(String input) {
   final lines = input.split('\n');
@@ -35,12 +36,13 @@ String addBlankLinesBeforeHeaders(String input) {
   for (int i = 0; i < lines.length; i++) {
     final line = lines[i];
     final trimmed = line.trim();
+
     // Consider a line a header if it's non-empty and does NOT contain a colon.
 
     final isHeader = trimmed.isNotEmpty && !trimmed.contains(':');
 
-    // For header lines (except the very first line),
-    // if the previous line in the output is not blank, add an empty line.
+    // For header lines (except the very first line), if the previous line in
+    // the output is not blank, add an empty line.
 
     if (isHeader &&
         outputLines.isNotEmpty &&
