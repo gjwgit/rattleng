@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ TESTING: Simplify navigateToFeature() [6.4.45 20250321 gjw]
++ NEURAL NET: Dummy bug fix and default to linear.output [6.4.44 20250321 gjw]
 + Add all tree providers to tree.dart [6.4.43 20250319 zy]
 + MULTI IMAGE PAGE: Retain labels with plots [6.4.42 20250319 zy]
 + MULTI IMAGE PAGE: Bug fix open external viewer [6.4.41 20250319 zy]
