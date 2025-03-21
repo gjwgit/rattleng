@@ -32,8 +32,9 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_summary.dart';
-import 'package:rattle/widgets/page_viewer.dart';
+import 'package:rattle/utils/add_blank_lines.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The panel displays the instructions or the output.
@@ -66,6 +67,10 @@ class _RescaleDisplayState extends ConsumerState<RescaleDisplay> {
     // since we may transform it multiple times.
 
     String content = rExtractSummary(stdout);
+
+    // Add blank line for each variables.
+
+    content = addBlankLinesBeforeHeaders(content);
 
     if (content.isNotEmpty) {
       pages.add(
