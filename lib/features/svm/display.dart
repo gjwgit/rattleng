@@ -1,11 +1,11 @@
-/// Widget to display the SVM introduction or output.
+/// Widget to display the SVM introduction and model output.
 ///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-01-10 10:09:24 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 13:49:25 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -62,13 +62,23 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
       ),
     ];
 
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // Default model text.
+
     content = rExtract(stdout, 'print(model_svm)');
 
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
-          title: '# SVM Model\n\n'
-              'Built using `kernlab::ksvm()`.\n\n',
+          title: '''
+
+          # SVM Model
+
+          Built using
+          [kernlab::ksvm()](https://www.rdocumentation.org/packages/kernlab/topics/ksvm.html)
+
+          ''',
           content: '\n$content',
         ),
       );

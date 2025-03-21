@@ -1,6 +1,6 @@
 /// Providers for NEURAL feature NNET and NEURALNET options.
 ///
-/// Time-stamp: <Sunday 2025-02-02 19:28:53 +1100 Graham Williams>
+/// Time-stamp: <Friday 2025-03-21 12:53:56 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -33,7 +33,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final activationFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
 
 // 20250202 gjw For now neuralnet is not fully operational for our typical
-// classification tasks. Stay with just nnet for now.
+// classification tasks. Stay with just nnet for now. It is used in COMP3425 for
+// regression modelling.
 
 final algorithmNeuralProvider = StateProvider<String>((ref) => 'nnet');
 
@@ -50,6 +51,6 @@ final neuralMaxWeightsProvider = StateProvider<int>((ref) => 10000);
 // 20250131 gjw Set the SKIP to true since that's the default in RattleV5.
 
 final neuralSkipProvider = StateProvider<bool>((ref) => true);
-final stepMaxNeuralProvider = StateProvider<int>((ref) => 10000);
+final stepMaxNeuralProvider = StateProvider<int>((ref) => 100000);
 final thresholdNeuralProvider = StateProvider<double>((ref) => 0.0100);
 final traceNeuralProvider = StateProvider<bool>((ref) => false);
