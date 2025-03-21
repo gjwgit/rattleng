@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ SUMMARY: Fine tune `summary()` layout - blank lines [6.4.47 20250322 zy]
 + EVALUATE: Only enabled for categoric targets [6.4.46 20250321 zy]
 + TESTING: Simplify navigateToFeature() [6.4.45 20250321 gjw]
 + NEURAL NET: Dummy bug fix and default to linear.output [6.4.44 20250321 gjw]
