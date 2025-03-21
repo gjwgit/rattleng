@@ -1,6 +1,6 @@
 /// WEATHER dataset EXPLORE tab SUMARY feature.
 ///
-// Time-stamp: <Thursday 2025-01-30 14:32:19 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-21 17:14:42 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
@@ -33,6 +33,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/tap_button.dart';
@@ -45,52 +46,39 @@ void main() {
     testWidgets('.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await loadDemoDataset(tester);
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Summary');
       await tapButton(tester, 'Generate Dataset Summary');
       await tester.pump(hack);
-      await gotoNextPage(tester);
+      await navigateToPage(tester, 1, 'Summary of the Dataset');
       await verifySelectableText(
         tester,
         [
-          // Verify date in the Content Column.
           '2023-07-01',
-
-          // Verify min_temp as second parameter.
-          '-6.200',
-
-          // Verify max_temp as third parameter.
-          '8.40',
+          '-6.200', // min_temp
+          '8.40', // max_temp.
         ],
       );
       await gotoNextPage(tester); // Datset Glimpse
-      await gotoNextPage(tester); // Skime the Dataset
-
-      // Find the text containing "365" as the number of rows. 20241019 gjw
-      // There should now be two of them, one in the DISPLAY and now another in
-      // the STATUS BAR.
-
-      final rowsFinder = find.textContaining('365');
-      expect(rowsFinder, findsNWidgets(2));
-
-      // Find the text containing "21" as the number of columns. 20241019 gjw
-      // There should now be two of them, one in the DISPLAY and now another in
-      // the STATUS BAR.
-
-      final columnsFinder = find.textContaining('21');
-      expect(columnsFinder, findsNWidgets(2));
+      await gotoNextPage(tester); // Skim the Dataset
+      await verifySelectableText(
+        tester,
+        [
+          'Number of columns          21',
+          'Number of rows             365',
+          'rainfall                2         0.995    1.82',
+        ],
+      );
       await gotoNextPage(tester); // Kurtosis and Skewness
-
-      // Find the text containing the min_temp.
-
-      final tempMinFinder = find.textContaining('-1.0832020');
-      expect(tempMinFinder, findsOneWidget);
-
-      // Find the text containing "-1.0649102" as the max_temp.
-
-      final tempMaxFinder = find.textContaining('-1.0649102');
-      expect(tempMaxFinder, findsOneWidget);
+      await verifySelectableText(
+        tester,
+        [
+          '-1.0832020',
+          '-1.0649102',
+          '4.27691518',
+        ],
+      );
     });
   });
 }
