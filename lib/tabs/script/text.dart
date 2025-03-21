@@ -25,6 +25,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,56 +38,204 @@ import 'package:rattle/tabs/script/save_button.dart';
 ///
 /// The contents is intialised from the main.R script asset.
 
-class ScriptText extends ConsumerWidget {
+class ScriptText extends ConsumerStatefulWidget {
   const ScriptText({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Create a ScrollController for scrolling.
+  _ScriptTextState createState() => _ScriptTextState();
+}
 
-    final ScrollController scrollController = ScrollController();
+class _ScriptTextState extends ConsumerState<ScriptText> {
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
-    // Build the widget.
+  bool _showSearchBar = false;
+  List<int> _matchIndices = [];
+  int _currentMatchIndex = 0;
+  // A rough assumption for line height (adjust if needed).
 
-    return Container(
-      color: Colors.white,
-      child: Stack(
-        children: [
-          // Main content with scrollable text.
+  final double _lineHeight = 20.0;
 
-          Scrollbar(
-            controller: scrollController,
-            thumbVisibility: true,
-            child: SingleChildScrollView(
-              controller: scrollController,
-              scrollDirection: Axis.vertical,
-              child: Builder(
-                builder: (BuildContext context) {
-                  final script = ref.watch(scriptProvider);
+  @override
+  Widget build(BuildContext context) {
+    // Retrieve the script from the provider.
+    final script = ref.watch(scriptProvider);
 
-                  return Container(
-                    // Ensure width matches the full container.
+    return KeyboardListener(
+      focusNode: FocusNode(),
+      autofocus: true,
+      onKeyEvent: _handleKeyEvent,
+      child: Container(
+        color: Colors.white,
+        child: Stack(
+          children: [
+            // Main scrollable content.
 
-                    width: MediaQuery.of(context).size.width,
-                    child: SelectableText(
-                      script,
-                      key: scriptTextKey,
-                      style: monoSmallTextStyle,
-                    ),
-                  );
-                },
+            Scrollbar(
+              controller: _scrollController,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: SelectableText(
+                    script,
+                    key: scriptTextKey,
+                    style: monoSmallTextStyle,
+                  ),
+                ),
               ),
             ),
-          ),
-          // ScriptSaveButton at the top-right corner.
+            // ScriptSaveButton at the top-right corner.
 
-          Positioned(
-            top: 8.0,
-            right: 8.0,
-            child: const ScriptSaveButton(),
-          ),
-        ],
+            Positioned(
+              top: 8.0,
+              right: 8.0,
+              child: const ScriptSaveButton(),
+            ),
+            // Search bar overlay.
+
+            if (_showSearchBar) _buildSearchBar(context, script),
+          ],
+        ),
       ),
+    );
+  }
+
+  /// Listen for key events and trigger the search overlay if Ctrl+F (or Cmd+F) is pressed.
+
+  void _handleKeyEvent(KeyEvent event) {
+    if (event is KeyDownEvent) {
+      final keysPressed = HardwareKeyboard.instance.logicalKeysPressed;
+      final isControlPressed = keysPressed.contains(LogicalKeyboardKey.controlLeft) ||
+          keysPressed.contains(LogicalKeyboardKey.controlRight);
+      final isMetaPressed = keysPressed.contains(LogicalKeyboardKey.metaLeft) ||
+          keysPressed.contains(LogicalKeyboardKey.metaRight);
+      if ((isControlPressed || isMetaPressed) &&
+          event.logicalKey == LogicalKeyboardKey.keyF) {
+        setState(() {
+          _showSearchBar = true;
+        });
+      }
+    }
+  }
+
+  /// Build the search bar overlay.
+  
+  Widget _buildSearchBar(BuildContext context, String script) {
+    return Positioned(
+      top: 8.0,
+      left: 8.0,
+      right: 8.0,
+      child: Material(
+        elevation: 4,
+        borderRadius: BorderRadius.circular(4),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          color: Colors.white,
+          child: Row(
+            children: [
+              // The search input.
+
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  decoration: const InputDecoration(
+                    hintText: 'Search script...',
+                    border: InputBorder.none,
+                  ),
+                  onSubmitted: (query) {
+                    _performSearch(query, script);
+                  },
+                ),
+              ),
+              // Previous match button.
+
+              IconButton(
+                icon: const Icon(Icons.arrow_upward),
+                tooltip: 'Previous match',
+                onPressed: _matchIndices.isEmpty
+                    ? null
+                    : () {
+                        setState(() {
+                          _currentMatchIndex =
+                              (_currentMatchIndex - 1) % _matchIndices.length;
+                          _scrollToMatch(script);
+                        });
+                      },
+              ),
+              // Next match button.
+
+              IconButton(
+                icon: const Icon(Icons.arrow_downward),
+                tooltip: 'Next match',
+                onPressed: _matchIndices.isEmpty
+                    ? null
+                    : () {
+                        setState(() {
+                          _currentMatchIndex =
+                              (_currentMatchIndex + 1) % _matchIndices.length;
+                          _scrollToMatch(script);
+                        });
+                      },
+              ),
+              // Close search overlay button.
+
+              IconButton(
+                icon: const Icon(Icons.close),
+                tooltip: 'Close search',
+                onPressed: () {
+                  setState(() {
+                    _showSearchBar = false;
+                    _searchController.clear();
+                    _matchIndices.clear();
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Find all occurrences of [query] in [script] and scroll to the first match.
+  
+  void _performSearch(String query, String script) {
+    List<int> indices = [];
+    if (query.isNotEmpty) {
+      int startIndex = 0;
+      while (true) {
+        final index = script.toLowerCase().indexOf(query.toLowerCase(), startIndex);
+        if (index == -1) break;
+        indices.add(index);
+        startIndex = index + query.length;
+      }
+    }
+    setState(() {
+      _matchIndices = indices;
+      _currentMatchIndex = 0;
+    });
+    if (_matchIndices.isNotEmpty) {
+      _scrollToMatch(script);
+    }
+  }
+
+  /// Scroll to the match at [_matchIndices[_currentMatchIndex]].
+
+  void _scrollToMatch(String script) {
+    if (_matchIndices.isEmpty) return;
+    final matchIndex = _matchIndices[_currentMatchIndex];
+    // Calculate the line number where the match occurs.
+    
+    final textBeforeMatch = script.substring(0, matchIndex);
+    final lineNumber = '\n'.allMatches(textBeforeMatch).length;
+    final offset = lineNumber * _lineHeight;
+    _scrollController.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 }
