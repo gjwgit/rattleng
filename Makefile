@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Saturday 2025-02-22 05:14:32 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-03-21 13:22:49 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -130,17 +130,24 @@ deb:
 	mv -f installers/rattle_*.deb installers/ARCHIVE
 
 
-# 20250110 gjw A ginstall of the github built bundles, and the locally
-# built apk installed to the repository and moved into ARCHIVE.
+# A ginstall will install the github built bundles, and the locally
+# built apk installed to the repository and moved into ARCHIVE. (gjw
+# 20250110)
 #
-# 20250218 gjw Remove the deb build for now as it is placing the data
-# and lib folders into /ust/bin/ which when we try to add another
-# package also tries to do that, which is how I found the issue.
+# The deb build for a while was placing the data and lib folders into
+# /ust/bin/ which when we try to add another package (healthpod) also
+# tries to do the same and so conflicts. This was subsequently
+# fixed. (gjw 20250218)
 #
-# 20250222 gjw Solved the issue by putting the package files into
-# /usr/lib/rattle and then symlinked the executable to
-# /usr/bin/rattle. This is working so add deb into the install and now
-# utilise that for the default install on my machine.
+# Solved the issue by putting the package files into /usr/lib/rattle
+# and then symlinked the executable to /usr/bin/rattle. This is
+# working so add deb into the install and now utilise that for the
+# default install on my machine.  (gjw 20250222)
+#
+# Move the apk build to last as I am not usually waiting on it at
+# present, while I am waiting on the deb install to deploy to teaching
+# labs. (gjw 20250321)
 
-ginstall: deb apk
+ginstall: deb
 	(cd installers; make $@)
+	make apk
