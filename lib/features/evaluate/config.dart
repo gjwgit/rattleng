@@ -342,7 +342,6 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String hd = 'evaluate_measure_hand';
                 String ero = 'evaluate_measure_rocr';
 
-
                 if (numericDisabled) {
                   showOk(
                     context: context,
@@ -471,7 +470,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
               // Target variable is numeric then disable the evaluation.
-              
+
               bool enabled = _isEvaluationEnabled(config) && !numericDisabled;
 
               String buildMsg = enabled
