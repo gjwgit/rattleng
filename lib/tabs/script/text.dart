@@ -60,6 +60,25 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   Widget build(BuildContext context) {
     // Retrieve the script from the provider.
     final script = ref.watch(scriptProvider);
+    // Build the text widget. If there is a non-empty search query with matches,
+    // then rebuild the text with highlighted spans.
+
+    Widget scriptWidget;
+    if (_searchController.text.isNotEmpty && _matchIndices.isNotEmpty) {
+      scriptWidget = SelectableText.rich(
+        TextSpan(
+          children: buildHighlightSpans(
+              script, _searchController.text, _matchIndices),
+        ),
+        key: scriptTextKey,
+      );
+    } else {
+      scriptWidget = SelectableText(
+        script,
+        key: scriptTextKey,
+        style: monoSmallTextStyle,
+      );
+    }
 
     return KeyboardListener(
       focusNode: FocusNode(),
@@ -79,11 +98,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                 scrollDirection: Axis.vertical,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  child: SelectableText(
-                    script,
-                    key: scriptTextKey,
-                    style: monoSmallTextStyle,
-                  ),
+                  child: scriptWidget,
                 ),
               ),
             ),
@@ -103,13 +118,14 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
     );
   }
 
-  /// Listen for key events and trigger the search overlay if Ctrl+F (or Cmd+F) is pressed.
+  /// Handle key events for shortcuts.
 
   void _handleKeyEvent(KeyEvent event) {
     if (event is KeyDownEvent) {
       final keysPressed = HardwareKeyboard.instance.logicalKeysPressed;
-      final isControlPressed = keysPressed.contains(LogicalKeyboardKey.controlLeft) ||
-          keysPressed.contains(LogicalKeyboardKey.controlRight);
+      final isControlPressed =
+          keysPressed.contains(LogicalKeyboardKey.controlLeft) ||
+              keysPressed.contains(LogicalKeyboardKey.controlRight);
       final isMetaPressed = keysPressed.contains(LogicalKeyboardKey.metaLeft) ||
           keysPressed.contains(LogicalKeyboardKey.metaRight);
       if ((isControlPressed || isMetaPressed) &&
@@ -122,7 +138,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   }
 
   /// Build the search bar overlay.
-  
+
   Widget _buildSearchBar(BuildContext context, String script) {
     return Positioned(
       top: 8.0,
@@ -201,13 +217,14 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   }
 
   /// Find all occurrences of [query] in [script] and scroll to the first match.
-  
+
   void _performSearch(String query, String script) {
     List<int> indices = [];
     if (query.isNotEmpty) {
       int startIndex = 0;
       while (true) {
-        final index = script.toLowerCase().indexOf(query.toLowerCase(), startIndex);
+        final index =
+            script.toLowerCase().indexOf(query.toLowerCase(), startIndex);
         if (index == -1) break;
         indices.add(index);
         startIndex = index + query.length;
@@ -223,12 +240,12 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   }
 
   /// Scroll to the match at [_matchIndices[_currentMatchIndex]].
-
+  
   void _scrollToMatch(String script) {
     if (_matchIndices.isEmpty) return;
     final matchIndex = _matchIndices[_currentMatchIndex];
     // Calculate the line number where the match occurs.
-    
+
     final textBeforeMatch = script.substring(0, matchIndex);
     final lineNumber = '\n'.allMatches(textBeforeMatch).length;
     final offset = lineNumber * _lineHeight;
@@ -238,4 +255,33 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
       curve: Curves.easeInOut,
     );
   }
+}
+
+/// Build text spans highlighting matches of [query] in [text].
+/// [matchIndices] contains the starting indices of each occurrence.
+
+List<TextSpan> buildHighlightSpans(
+    String text, String query, List<int> matchIndices) {
+  List<TextSpan> spans = [];
+  if (query.isEmpty || matchIndices.isEmpty) {
+    spans.add(TextSpan(text: text, style: monoSmallTextStyle));
+    return spans;
+  }
+  int start = 0;
+  final queryLength = query.length;
+  // For each match index, add a normal span then a highlighted span.
+  for (final index in matchIndices) {
+    if (index > start) {
+      spans.add(TextSpan(
+          text: text.substring(start, index), style: monoSmallTextStyle,),);
+    }
+    spans.add(TextSpan(
+        text: text.substring(index, index + queryLength),
+        style: monoSmallTextStyle.copyWith(backgroundColor: Colors.yellow,),),);
+    start = index + queryLength;
+  }
+  if (start < text.length) {
+    spans.add(TextSpan(text: text.substring(start), style: monoSmallTextStyle));
+  }
+  return spans;
 }
