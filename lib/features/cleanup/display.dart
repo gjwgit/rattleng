@@ -61,7 +61,7 @@ class _CleanupDisplayState extends ConsumerState<CleanupDisplay> {
 
     String content = rExtractSummary(stdout);
 
-    // Add blank line for each variables. 
+    // Add blank line for each variables.
 
     content = addBlankLinesBeforeHeaders(content);
 

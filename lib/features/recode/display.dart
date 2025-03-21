@@ -67,7 +67,7 @@ class _RecodeDisplayState extends ConsumerState<RecodeDisplay> {
 
     String content = rExtractSummary(stdout);
 
-    // Add blank line for each variables. 
+    // Add blank line for each variables.
 
     content = addBlankLinesBeforeHeaders(content);
 

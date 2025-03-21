@@ -67,8 +67,8 @@ class _RescaleDisplayState extends ConsumerState<RescaleDisplay> {
     // since we may transform it multiple times.
 
     String content = rExtractSummary(stdout);
-    
-    // Add blank line for each variables. 
+
+    // Add blank line for each variables.
 
     content = addBlankLinesBeforeHeaders(content);
 
