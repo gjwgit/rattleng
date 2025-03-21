@@ -272,6 +272,11 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   Widget build(BuildContext context) {
     String datasetType = ref.watch(datasetTypeProvider.notifier).state;
 
+    // Current evaluations are focused on classification rather than regression.
+    // Evaluate is disabled when target variable is numeric.
+
+    bool numericDisabled = isNumericTarget(ref);
+
     return Column(
       spacing: configRowSpace,
       children: [
@@ -337,10 +342,6 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 String hd = 'evaluate_measure_hand';
                 String ero = 'evaluate_measure_rocr';
 
-                // Current evaluations are focused on classification rather than regression.
-                // Evaluate is disabled when target variable is numeric.
-
-                bool numericDisabled = isNumericTarget(ref);
 
                 if (numericDisabled) {
                   showOk(
@@ -469,7 +470,9 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
-              bool enabled = _isEvaluationEnabled(config);
+              // Target variable is numeric then disable the evaluation.
+              
+              bool enabled = _isEvaluationEnabled(config) && !numericDisabled;
 
               String buildMsg = enabled
                   ? ''
