@@ -52,7 +52,8 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   bool _showSearchBar = false;
   List<int> _matchIndices = [];
   int _currentMatchIndex = 0;
-  // A rough assumption for line height (adjust if needed).
+
+  // A rough assumption for line height (used for scrolling to matched lines).
 
   final double _lineHeight = 20.0;
 
@@ -60,15 +61,19 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   Widget build(BuildContext context) {
     // Retrieve the script from the provider.
     final script = ref.watch(scriptProvider);
-    // Build the text widget. If there is a non-empty search query with matches,
-    // then rebuild the text with highlighted spans.
+
+    // Build the text widget. If there's a non-empty search query with matches,
+    // we rebuild the text with highlighted spans.
 
     Widget scriptWidget;
     if (_searchController.text.isNotEmpty && _matchIndices.isNotEmpty) {
       scriptWidget = SelectableText.rich(
         TextSpan(
           children: buildHighlightSpans(
-              script, _searchController.text, _matchIndices),
+            script,
+            _searchController.text,
+            _matchIndices,
+          ),
         ),
         key: scriptTextKey,
       );
@@ -86,39 +91,48 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
       onKeyEvent: _handleKeyEvent,
       child: Container(
         color: Colors.white,
-        child: Stack(
+        child: Column(
           children: [
-            // Main scrollable content.
-
-            Scrollbar(
-              controller: _scrollController,
-              thumbVisibility: true,
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: scriptWidget,
-                ),
-              ),
-            ),
-            // ScriptSaveButton at the top-right corner.
-
-            Positioned(
-              top: 8.0,
-              right: 8.0,
-              child: const ScriptSaveButton(),
-            ),
-            // Search bar overlay.
+            // The search bar at the top (only visible if _showSearchBar is true).
 
             if (_showSearchBar) _buildSearchBar(context, script),
+
+            // Expanded area for the scrollable text content.
+
+            Expanded(
+              child: Stack(
+                children: [
+                  // Main scrollable script content.
+
+                  Scrollbar(
+                    controller: _scrollController,
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      scrollDirection: Axis.vertical,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: scriptWidget,
+                      ),
+                    ),
+                  ),
+                  // The save button, positioned at top-right of the scroll area.
+
+                  Positioned(
+                    top: 8.0,
+                    right: 8.0,
+                    child: const ScriptSaveButton(),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  /// Handle key events for shortcuts.
+  /// Handle key events for shortcuts (e.g., Ctrl+F or Cmd+F to show search bar).
 
   void _handleKeyEvent(KeyEvent event) {
     if (event is KeyDownEvent) {
@@ -128,6 +142,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
               keysPressed.contains(LogicalKeyboardKey.controlRight);
       final isMetaPressed = keysPressed.contains(LogicalKeyboardKey.metaLeft) ||
           keysPressed.contains(LogicalKeyboardKey.metaRight);
+
       if ((isControlPressed || isMetaPressed) &&
           event.logicalKey == LogicalKeyboardKey.keyF) {
         setState(() {
@@ -137,80 +152,75 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
     }
   }
 
-  /// Build the search bar overlay.
+  /// Build the search bar (shown at the top of the widget).
 
   Widget _buildSearchBar(BuildContext context, String script) {
-    return Positioned(
-      top: 8.0,
-      left: 8.0,
-      right: 8.0,
-      child: Material(
-        elevation: 4,
-        borderRadius: BorderRadius.circular(4),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          color: Colors.white,
-          child: Row(
-            children: [
-              // The search input.
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(4),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        color: Colors.white,
+        child: Row(
+          children: [
+            // The search input.
 
-              Expanded(
-                child: TextField(
-                  controller: _searchController,
-                  decoration: const InputDecoration(
-                    hintText: 'Search script...',
-                    border: InputBorder.none,
-                  ),
-                  onSubmitted: (query) {
-                    _performSearch(query, script);
-                  },
+            Expanded(
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  hintText: 'Search script...',
+                  border: InputBorder.none,
                 ),
-              ),
-              // Previous match button.
-
-              IconButton(
-                icon: const Icon(Icons.arrow_upward),
-                tooltip: 'Previous match',
-                onPressed: _matchIndices.isEmpty
-                    ? null
-                    : () {
-                        setState(() {
-                          _currentMatchIndex =
-                              (_currentMatchIndex - 1) % _matchIndices.length;
-                          _scrollToMatch(script);
-                        });
-                      },
-              ),
-              // Next match button.
-
-              IconButton(
-                icon: const Icon(Icons.arrow_downward),
-                tooltip: 'Next match',
-                onPressed: _matchIndices.isEmpty
-                    ? null
-                    : () {
-                        setState(() {
-                          _currentMatchIndex =
-                              (_currentMatchIndex + 1) % _matchIndices.length;
-                          _scrollToMatch(script);
-                        });
-                      },
-              ),
-              // Close search overlay button.
-
-              IconButton(
-                icon: const Icon(Icons.close),
-                tooltip: 'Close search',
-                onPressed: () {
-                  setState(() {
-                    _showSearchBar = false;
-                    _searchController.clear();
-                    _matchIndices.clear();
-                  });
+                onSubmitted: (query) {
+                  _performSearch(query, script);
                 },
               ),
-            ],
-          ),
+            ),
+            // Previous match button.
+
+            IconButton(
+              icon: const Icon(Icons.arrow_upward),
+              tooltip: 'Previous match',
+              onPressed: _matchIndices.isEmpty
+                  ? null
+                  : () {
+                      setState(() {
+                        _currentMatchIndex =
+                            (_currentMatchIndex - 1) % _matchIndices.length;
+                        _scrollToMatch(script);
+                      });
+                    },
+            ),
+            // Next match button.
+
+            IconButton(
+              icon: const Icon(Icons.arrow_downward),
+              tooltip: 'Next match',
+              onPressed: _matchIndices.isEmpty
+                  ? null
+                  : () {
+                      setState(() {
+                        _currentMatchIndex =
+                            (_currentMatchIndex + 1) % _matchIndices.length;
+                        _scrollToMatch(script);
+                      });
+                    },
+            ),
+            // Close search overlay button.
+
+            IconButton(
+              icon: const Icon(Icons.close),
+              tooltip: 'Close search',
+              onPressed: () {
+                setState(() {
+                  _showSearchBar = false;
+                  _searchController.clear();
+                  _matchIndices.clear();
+                });
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -240,15 +250,14 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   }
 
   /// Scroll to the match at [_matchIndices[_currentMatchIndex]].
-  
   void _scrollToMatch(String script) {
     if (_matchIndices.isEmpty) return;
     final matchIndex = _matchIndices[_currentMatchIndex];
     // Calculate the line number where the match occurs.
-
     final textBeforeMatch = script.substring(0, matchIndex);
     final lineNumber = '\n'.allMatches(textBeforeMatch).length;
     final offset = lineNumber * _lineHeight;
+
     _scrollController.animateTo(
       offset,
       duration: const Duration(milliseconds: 300),
@@ -261,7 +270,10 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
 /// [matchIndices] contains the starting indices of each occurrence.
 
 List<TextSpan> buildHighlightSpans(
-    String text, String query, List<int> matchIndices) {
+  String text,
+  String query,
+  List<int> matchIndices,
+) {
   List<TextSpan> spans = [];
   if (query.isEmpty || matchIndices.isEmpty) {
     spans.add(TextSpan(text: text, style: monoSmallTextStyle));
@@ -269,19 +281,32 @@ List<TextSpan> buildHighlightSpans(
   }
   int start = 0;
   final queryLength = query.length;
+
   // For each match index, add a normal span then a highlighted span.
+
   for (final index in matchIndices) {
     if (index > start) {
-      spans.add(TextSpan(
-          text: text.substring(start, index), style: monoSmallTextStyle,),);
+      spans.add(
+        TextSpan(
+          text: text.substring(start, index),
+          style: monoSmallTextStyle,
+        ),
+      );
     }
-    spans.add(TextSpan(
+    spans.add(
+      TextSpan(
         text: text.substring(index, index + queryLength),
-        style: monoSmallTextStyle.copyWith(backgroundColor: Colors.yellow,),),);
+        style: monoSmallTextStyle.copyWith(backgroundColor: Colors.yellow),
+      ),
+    );
     start = index + queryLength;
   }
+  // Add any remaining text after the last match.
+
   if (start < text.length) {
-    spans.add(TextSpan(text: text.substring(start), style: monoSmallTextStyle));
+    spans.add(
+      TextSpan(text: text.substring(start), style: monoSmallTextStyle),
+    );
   }
   return spans;
 }
