@@ -66,24 +66,22 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
     // we rebuild the text with highlighted spans.
 
     Widget scriptWidget;
-    if (_searchController.text.isNotEmpty && _matchIndices.isNotEmpty) {
-      scriptWidget = SelectableText.rich(
-        TextSpan(
-          children: buildHighlightSpans(
+    scriptWidget = _searchController.text.isNotEmpty && _matchIndices.isNotEmpty
+        ? SelectableText.rich(
+            TextSpan(
+              children: buildHighlightSpans(
+                script,
+                _searchController.text,
+                _matchIndices,
+              ),
+            ),
+            key: scriptTextKey,
+          )
+        : SelectableText(
             script,
-            _searchController.text,
-            _matchIndices,
-          ),
-        ),
-        key: scriptTextKey,
-      );
-    } else {
-      scriptWidget = SelectableText(
-        script,
-        key: scriptTextKey,
-        style: monoSmallTextStyle,
-      );
-    }
+            key: scriptTextKey,
+            style: monoSmallTextStyle,
+          );
 
     return KeyboardListener(
       focusNode: FocusNode(),
@@ -277,6 +275,7 @@ List<TextSpan> buildHighlightSpans(
   List<TextSpan> spans = [];
   if (query.isEmpty || matchIndices.isEmpty) {
     spans.add(TextSpan(text: text, style: monoSmallTextStyle));
+
     return spans;
   }
   int start = 0;
@@ -308,5 +307,6 @@ List<TextSpan> buildHighlightSpans(
       TextSpan(text: text.substring(start), style: monoSmallTextStyle),
     );
   }
+
   return spans;
 }
