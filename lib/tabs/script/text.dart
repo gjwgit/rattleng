@@ -25,6 +25,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,56 +38,275 @@ import 'package:rattle/tabs/script/save_button.dart';
 ///
 /// The contents is intialised from the main.R script asset.
 
-class ScriptText extends ConsumerWidget {
+class ScriptText extends ConsumerStatefulWidget {
   const ScriptText({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Create a ScrollController for scrolling.
+  _ScriptTextState createState() => _ScriptTextState();
+}
 
-    final ScrollController scrollController = ScrollController();
+class _ScriptTextState extends ConsumerState<ScriptText> {
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
-    // Build the widget.
+  bool _showSearchBar = false;
+  List<int> _matchIndices = [];
+  int _currentMatchIndex = 0;
 
-    return Container(
-      color: Colors.white,
-      child: Stack(
-        children: [
-          // Main content with scrollable text.
+  // A rough assumption for line height (used for scrolling to matched lines).
 
-          Scrollbar(
-            controller: scrollController,
-            thumbVisibility: true,
-            child: SingleChildScrollView(
-              controller: scrollController,
-              scrollDirection: Axis.vertical,
-              child: Builder(
-                builder: (BuildContext context) {
-                  final script = ref.watch(scriptProvider);
+  final double _lineHeight = 20.0;
 
-                  return Container(
-                    // Ensure width matches the full container.
+  @override
+  Widget build(BuildContext context) {
+    // Retrieve the script from the provider.
+    final script = ref.watch(scriptProvider);
 
-                    width: MediaQuery.of(context).size.width,
-                    child: SelectableText(
-                      script,
-                      key: scriptTextKey,
-                      style: monoSmallTextStyle,
-                    ),
-                  );
-                },
+    // Build the text widget. If there's a non-empty search query with matches,
+    // we rebuild the text with highlighted spans.
+
+    Widget scriptWidget;
+    scriptWidget = _searchController.text.isNotEmpty && _matchIndices.isNotEmpty
+        ? SelectableText.rich(
+            TextSpan(
+              children: buildHighlightSpans(
+                script,
+                _searchController.text,
+                _matchIndices,
               ),
             ),
-          ),
-          // ScriptSaveButton at the top-right corner.
+            key: scriptTextKey,
+          )
+        : SelectableText(
+            script,
+            key: scriptTextKey,
+            style: monoSmallTextStyle,
+          );
 
-          Positioned(
-            top: 8.0,
-            right: 8.0,
-            child: const ScriptSaveButton(),
-          ),
-        ],
+    return KeyboardListener(
+      focusNode: FocusNode(),
+      autofocus: true,
+      onKeyEvent: _handleKeyEvent,
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            // The search bar at the top (only visible if _showSearchBar is true).
+
+            if (_showSearchBar) _buildSearchBar(context, script),
+
+            // Expanded area for the scrollable text content.
+
+            Expanded(
+              child: Stack(
+                children: [
+                  // Main scrollable script content.
+
+                  Scrollbar(
+                    controller: _scrollController,
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      scrollDirection: Axis.vertical,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: scriptWidget,
+                      ),
+                    ),
+                  ),
+                  // The save button, positioned at top-right of the scroll area.
+
+                  Positioned(
+                    top: 8.0,
+                    right: 8.0,
+                    child: const ScriptSaveButton(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
+  /// Handle key events for shortcuts (e.g., Ctrl+F or Cmd+F to show search bar).
+
+  void _handleKeyEvent(KeyEvent event) {
+    if (event is KeyDownEvent) {
+      final keysPressed = HardwareKeyboard.instance.logicalKeysPressed;
+      final isControlPressed =
+          keysPressed.contains(LogicalKeyboardKey.controlLeft) ||
+              keysPressed.contains(LogicalKeyboardKey.controlRight);
+      final isMetaPressed = keysPressed.contains(LogicalKeyboardKey.metaLeft) ||
+          keysPressed.contains(LogicalKeyboardKey.metaRight);
+
+      if ((isControlPressed || isMetaPressed) &&
+          event.logicalKey == LogicalKeyboardKey.keyF) {
+        setState(() {
+          _showSearchBar = true;
+        });
+      }
+    }
+  }
+
+  /// Build the search bar (shown at the top of the widget).
+
+  Widget _buildSearchBar(BuildContext context, String script) {
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(4),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        color: Colors.white,
+        child: Row(
+          children: [
+            // The search input.
+
+            Expanded(
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  hintText: 'Search script...',
+                  border: InputBorder.none,
+                ),
+                onSubmitted: (query) {
+                  _performSearch(query, script);
+                },
+              ),
+            ),
+            // Previous match button.
+
+            IconButton(
+              icon: const Icon(Icons.arrow_upward),
+              tooltip: 'Previous match',
+              onPressed: _matchIndices.isEmpty
+                  ? null
+                  : () {
+                      setState(() {
+                        _currentMatchIndex =
+                            (_currentMatchIndex - 1) % _matchIndices.length;
+                        _scrollToMatch(script);
+                      });
+                    },
+            ),
+            // Next match button.
+
+            IconButton(
+              icon: const Icon(Icons.arrow_downward),
+              tooltip: 'Next match',
+              onPressed: _matchIndices.isEmpty
+                  ? null
+                  : () {
+                      setState(() {
+                        _currentMatchIndex =
+                            (_currentMatchIndex + 1) % _matchIndices.length;
+                        _scrollToMatch(script);
+                      });
+                    },
+            ),
+            // Close search overlay button.
+
+            IconButton(
+              icon: const Icon(Icons.close),
+              tooltip: 'Close search',
+              onPressed: () {
+                setState(() {
+                  _showSearchBar = false;
+                  _searchController.clear();
+                  _matchIndices.clear();
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Find all occurrences of [query] in [script] and scroll to the first match.
+
+  void _performSearch(String query, String script) {
+    List<int> indices = [];
+    if (query.isNotEmpty) {
+      int startIndex = 0;
+      while (true) {
+        final index =
+            script.toLowerCase().indexOf(query.toLowerCase(), startIndex);
+        if (index == -1) break;
+        indices.add(index);
+        startIndex = index + query.length;
+      }
+    }
+    setState(() {
+      _matchIndices = indices;
+      _currentMatchIndex = 0;
+    });
+    if (_matchIndices.isNotEmpty) {
+      _scrollToMatch(script);
+    }
+  }
+
+  /// Scroll to the match at [_matchIndices[_currentMatchIndex]].
+  void _scrollToMatch(String script) {
+    if (_matchIndices.isEmpty) return;
+    final matchIndex = _matchIndices[_currentMatchIndex];
+    // Calculate the line number where the match occurs.
+    final textBeforeMatch = script.substring(0, matchIndex);
+    final lineNumber = '\n'.allMatches(textBeforeMatch).length;
+    final offset = lineNumber * _lineHeight;
+
+    _scrollController.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+}
+
+/// Build text spans highlighting matches of [query] in [text].
+/// [matchIndices] contains the starting indices of each occurrence.
+
+List<TextSpan> buildHighlightSpans(
+  String text,
+  String query,
+  List<int> matchIndices,
+) {
+  List<TextSpan> spans = [];
+  if (query.isEmpty || matchIndices.isEmpty) {
+    spans.add(TextSpan(text: text, style: monoSmallTextStyle));
+
+    return spans;
+  }
+  int start = 0;
+  final queryLength = query.length;
+
+  // For each match index, add a normal span then a highlighted span.
+
+  for (final index in matchIndices) {
+    if (index > start) {
+      spans.add(
+        TextSpan(
+          text: text.substring(start, index),
+          style: monoSmallTextStyle,
+        ),
+      );
+    }
+    spans.add(
+      TextSpan(
+        text: text.substring(index, index + queryLength),
+        style: monoSmallTextStyle.copyWith(backgroundColor: Colors.yellow),
+      ),
+    );
+    start = index + queryLength;
+  }
+  // Add any remaining text after the last match.
+
+  if (start < text.length) {
+    spans.add(
+      TextSpan(text: text.substring(start), style: monoSmallTextStyle),
+    );
+  }
+
+  return spans;
 }
