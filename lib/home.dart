@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Friday 2025-03-14 20:17:49 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2025-03-22 17:19:43 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -181,9 +181,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   // We will populate the app name and version.
 
-  var _appName = 'Unknown';
-  var _appVersion = 'Unknown';
-  var _appDate = 'Unknown';
+  var _appName = '';
+  var _appVersion = '';
+  var _appDate = '';
   var _isLatest = true;
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
