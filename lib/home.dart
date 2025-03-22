@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2025-03-22 17:19:43 +1100 Graham Williams>
+/// Time-stamp: <Saturday 2025-03-22 19:34:18 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -493,7 +493,10 @@ Xu, Yixiang Yin, Bo Zhang.
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Text(
-                  'Version $_appVersion - $_appDate',
+                  // Only diplay the version string if we have a version from
+                  // the Internet. If we are not connected then simply display
+                  // nothing! (gjw 20250322)
+                  _appVersion.isEmpty ? '' : 'Version $_appVersion - $_appDate',
                   style: TextStyle(
                     color: _isLatest ? Colors.blue : Colors.red,
                     fontSize: 16,
