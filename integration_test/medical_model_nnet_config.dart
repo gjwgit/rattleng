@@ -1,6 +1,6 @@
 /// Model NNET test with large dataset.
 //
-// Time-stamp: <Thursday 2025-03-20 16:44:32 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-03-22 20:47:58 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -38,6 +38,7 @@ import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
@@ -100,8 +101,7 @@ void main() {
 
     await tapButton(tester, 'Build Neural Network');
     await tester.pumpAndSettle();
-    await gotoNextPage(tester);
-    await tester.pump(delay);
+    await navigateToPage(tester, 1, 'Neural Net Model - Summary and Weights');
     await verifySelectableText(tester, [
       'A 7-11-1 network with 107 weights',
     ]);
