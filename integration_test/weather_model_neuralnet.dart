@@ -1,6 +1,6 @@
 /// Test neuralnet() with demo dataset.
 //
-// Time-stamp: <Thursday 2025-03-20 16:32:49 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-23 15:13:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,17 +31,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/image_page.dart';
-import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_role.dart';
+import 'utils/verify_selectable_text.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
@@ -58,7 +57,6 @@ final List<String> varsToIgnore = [
   'humidity_3pm',
   'pressure_3pm',
   'cloud_3pm',
-  'rain_today',
   'rain_today',
   'risk_mm',
   'rain_tomorrow',
@@ -107,50 +105,17 @@ void main() {
       await tester.pumpAndSettle();
 
       await tapButton(tester, 'Build Neural Network');
-
-      await tester.pump(longHack);
-
-      await tapButton(tester, 'Build Neural Network');
-
-      // Check if SelectableText contains the expected content.
-
-      final modelDescriptionFinder = find.byWidgetPredicate(
-        (widget) =>
-            widget is SelectableText &&
-            widget.data?.contains('data = ds_onehot,') == true,
+      // We need quite a long delay here to have the model built. (gjw 20250323)
+      await tester.pump(delay);
+      await tester.pump(delay);
+      await tester.pump(delay);
+      await navigateToPage(tester, 1, '');
+      await verifySelectableText(
+        tester,
+        [
+          'data = ds_final',
+        ],
       );
-
-      // Ensure the SelectableText widget with the expected content exists.
-
-      expect(modelDescriptionFinder, findsOneWidget);
-
-      final summaryDecisionTreeFinder = find.byType(TextPage);
-      expect(summaryDecisionTreeFinder, findsOneWidget);
-
-      await tester.pump(interact);
-
-      // Tap the right arrow to go to the next page.
-
-      await gotoNextPage(tester);
-
-      await tester.pump(hack);
-
-      await gotoNextPage(tester);
-
-      await tester.pump(hack);
-
-      await tester.pump(interact);
-
-      final forthPageTitleFinder = find.text('Neural Net Model - Visual');
-      expect(forthPageTitleFinder, findsOneWidget);
-
-      final imageFinder = find.byType(ImagePage);
-
-      // Assert that the image is present.
-
-      expect(imageFinder, findsOneWidget);
-
-      await tester.pump(interact);
     });
   });
 }
