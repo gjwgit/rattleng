@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Thursday 2025-03-20 16:43:59 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-23 21:13:06 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,14 +35,15 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 import 'utils/delays.dart';
-import 'utils/ignore_variables.dart';
-import 'utils/navigate_to_feature.dart';
 import 'utils/load_demo_dataset.dart';
+import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_tab.dart';
+import 'utils/set_dataset_role.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
 
-final List<String> demoVariablesToIgnore = [
+final List<String> varsToIgnore = [
   'wind_gust_dir',
   'wind_dir_9am',
   'wind_dir_3pm',
@@ -56,23 +57,12 @@ void main() {
   ) async {
     app.main();
     await tester.pumpAndSettle();
-
-    await loadDemoDataset(tester);
-
-    await ignoreVariables(tester, demoVariablesToIgnore);
-
-    final modelTabFinder = find.byIcon(Icons.model_training);
-    expect(modelTabFinder, findsOneWidget);
-
-    // Tap the MODEL tab button.
-
-    await tester.tap(modelTabFinder);
-    await tester.pumpAndSettle();
-
-    // Navigate to the NEURAL feature.
-
+    await loadDemoDataset(tester, 'Weather');
+    for (final v in varsToIgnore) {
+      await setDatasetRole(tester, v, 'Ignore');
+    }
+    await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Neural');
-    await tester.pumpAndSettle();
 
     // Find and tap the 'Trace' checkbox.
 
@@ -119,7 +109,7 @@ void main() {
     final modelDescriptionFinder = find.byWidgetPredicate(
       (widget) =>
           widget is SelectableText &&
-          widget.data?.contains('A 15-5-1 network with 86 weights') == true,
+          widget.data?.contains('A 14-5-1 network with 95 weights') == true,
     );
     expect(modelDescriptionFinder, findsOneWidget);
 
