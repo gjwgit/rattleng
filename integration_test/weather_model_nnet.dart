@@ -1,6 +1,6 @@
 /// Test nnet() with demo dataset.
 //
-// Time-stamp: <Friday 2025-01-31 15:29:57 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-23 07:51:12 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,6 +34,7 @@ import 'package:rattle/widgets/image_page.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
@@ -58,7 +59,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-      await loadDemoDataset(tester);
+      await loadDemoDataset(tester, 'Weather');
       for (final v in varsToIgnore) {
         await setDatasetRole(tester, v, 'Ignore');
       }
@@ -66,8 +67,7 @@ void main() {
       await navigateToFeature(tester, 'Neural');
       await tapButton(tester, 'Build Neural Network');
       await tester.pump(delay);
-      await gotoNextPage(tester);
-      await verifyPage('Neural Net Model - Summary and Weights');
+      await navigateToPage(tester, 1, 'Neural Net Model - Summary and Weights');
       await verifySelectableText(
         tester,
         [
