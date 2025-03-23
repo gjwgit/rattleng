@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Monday 2025-03-17 09:41:45 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 05:51:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -295,8 +295,8 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 tooltip: '''
 
                 **Min Split:** Set the minimum number of observations that must
-                exist in the dataset at any node in order for a split of that
-                node to be attempted.  The default is 20.
+                exist in the dataset at a node in the tree before any further
+                splitting will be attempted.  The default is 20.
 
                 ''',
                 inputFormatter:
