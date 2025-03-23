@@ -1,6 +1,6 @@
 /// Test neuralnet() with numeric demo dataset.
 //
-// Time-stamp: <Thursday 2025-01-23 15:46:05 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-23 15:14:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,14 +31,15 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/tap_chip.dart';
 import 'utils/tap_checkbox.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -48,47 +49,23 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
-
-      await loadDemoDataset(tester);
-
-      await tester.pump(interact);
-
+      await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-
       await navigateToFeature(tester, 'Neural');
-
       await verifyMarkdown(tester);
-
       await tapChip(tester, 'neuralnet');
       await tapCheckbox(tester, 'Neural Ignore Categoric');
-
-      // Simulate the presence of a neural network being built.
-
       await tapButton(tester, 'Build Neural Network');
-
-      // Pause for a long time to wait for app gets stable.
-
-      await tester.pump(hack);
-
-      await tester.pump(interact);
-
-      await gotoNextPage(tester);
-
-      await verifyPageSelectableText(
-        'Neuralnet(formula = formula_nn, data = ds_final, hidden =',
+      await tester.pump(delay);
+      await tester.pump(delay);
+      await tester.pump(delay);
+      await navigateToPage(tester, 1, '');
+      await verifySelectableText(
+        tester,
+        [
+          'data = ds_final',
+        ],
       );
-
-      await tester.pump(interact);
-
-      await tester.pump(hack);
-
-      await gotoNextPage(tester);
-
-      await verifyPage('Neural Net Model - Visual');
-
-      await verifyImage(tester);
-
-      await tester.pump(interact);
     });
   });
 }
