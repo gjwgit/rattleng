@@ -86,6 +86,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                 script,
                 _searchController.text,
                 _matchIndices,
+                _currentMatchIndex,
               ),
             ),
             key: scriptTextKey,
@@ -308,11 +309,14 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
 
 /// Build text spans highlighting matches of [query] in [text].
 /// [matchIndices] contains the starting indices of each occurrence.
+/// The match at the current index (specified by [currentMatchIndex])
+/// is highlighted in other color.
 
 List<TextSpan> buildHighlightSpans(
   String text,
   String query,
   List<int> matchIndices,
+  int currentMatchIndex,
 ) {
   List<TextSpan> spans = [];
   if (query.isEmpty || matchIndices.isEmpty) {
@@ -323,9 +327,10 @@ List<TextSpan> buildHighlightSpans(
   int start = 0;
   final queryLength = query.length;
 
-  // For each match index, add a normal span then a highlighted span.
+  // Iterate with an index so we know which match is the current one.
 
-  for (final index in matchIndices) {
+  for (int i = 0; i < matchIndices.length; i++) {
+    final index = matchIndices[i];
     if (index > start) {
       spans.add(
         TextSpan(
@@ -334,16 +339,20 @@ List<TextSpan> buildHighlightSpans(
         ),
       );
     }
+    // Use green for the current match, yellow for others.
+
+    Color highlightColor =
+        (i == currentMatchIndex) ? Colors.lightGreen : Colors.yellow;
     spans.add(
       TextSpan(
         text: text.substring(index, index + queryLength),
-        style: monoSmallTextStyle.copyWith(backgroundColor: Colors.yellow),
+        style: monoSmallTextStyle.copyWith(backgroundColor: highlightColor),
       ),
     );
     start = index + queryLength;
   }
   // Add any remaining text after the last match.
-
+  
   if (start < text.length) {
     spans.add(
       TextSpan(text: text.substring(start), style: monoSmallTextStyle),
