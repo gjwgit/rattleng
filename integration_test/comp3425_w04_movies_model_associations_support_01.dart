@@ -68,8 +68,11 @@ void main() {
       await verifyCheckbox(tester, 'Baskets', true);
       await enterText(tester, 'association_config_support', '0.01');
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 1,
-          title: 'Association Rules — Meta Summary');
+      await navigateToPage(
+        tester,
+        1,
+        title: 'Association Rules — Meta Summary',
+      );
       await verifySelectableText(tester, ['support = 0.01']);
       await verifySelectableText(tester, ['117']);
     });

@@ -1,6 +1,6 @@
 /// COMP3425 W04 AUDIT dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Friday 2025-03-21 08:55:55 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 11:36:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -61,8 +61,11 @@ void main() {
       await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-      await navigateToPage(tester, 1,
-          title: 'Association Rules — Meta Summary');
+      await navigateToPage(
+        tester,
+        1,
+        title: 'Association Rules — Meta Summary',
+      );
       await verifySelectableText(
         tester,
         [
@@ -84,8 +87,11 @@ void main() {
       //     'support = 0.1, confidence = 0.1, minlen = 2',
       //   ],
       // );
-      await navigateToPage(tester, 2,
-          title: 'Association Rules — Discovered Rules');
+      await navigateToPage(
+        tester,
+        2,
+        title: 'Association Rules — Discovered Rules',
+      );
       await verifySelectableText(
         tester,
         [
@@ -119,16 +125,22 @@ void main() {
       await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-      await navigateToPage(tester, 1,
-          title: 'Association Rules — Meta Summary');
+      await navigateToPage(
+        tester,
+        1,
+        title: 'Association Rules — Meta Summary',
+      );
       await verifySelectableText(
         tester,
         [
           'set of 23 rules',
         ],
       );
-      await navigateToPage(tester, 2,
-          title: 'Association Rules — Discovered Rules');
+      await navigateToPage(
+        tester,
+        2,
+        title: 'Association Rules — Discovered Rules',
+      );
       await verifySelectableText(
         tester,
         [

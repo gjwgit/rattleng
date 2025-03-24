@@ -1,6 +1,6 @@
 /// COMP3425 W04 MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Friday 2025-03-21 08:56:07 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 11:37:07 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -58,8 +58,11 @@ void main() {
       await navigateToFeature(tester, 'Associations');
       await verifyCheckbox(tester, 'Baskets', true);
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 1,
-          title: 'Association Rules — Meta Summary');
+      await navigateToPage(
+        tester,
+        1,
+        title: 'Association Rules — Meta Summary',
+      );
       await verifySelectableText(
         tester,
         [
@@ -88,8 +91,11 @@ void main() {
       await verifySelectableText(tester, ['[101]'], present: false);
       await enterText(tester, 'association_config_limit_rules', '5000');
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 2,
-          title: 'Association Rules — Discovered Rules');
+      await navigateToPage(
+        tester,
+        2,
+        title: 'Association Rules — Discovered Rules',
+      );
       await verifySelectableText(tester, ['[101]'], present: true);
       await verifySelectableText(tester, ['[117]'], present: true);
       await gotoNextPage(tester, title: 'Association Rules — Item Frequency');
@@ -131,8 +137,11 @@ void main() {
       await verifyCheckbox(tester, 'Baskets', true);
       await enterText(tester, 'association_config_support', '0.001');
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 1,
-          title: 'Association Rules — Meta Summary');
+      await navigateToPage(
+        tester,
+        1,
+        title: 'Association Rules — Meta Summary',
+      );
       await verifySelectableText(tester, ['support = 0.001']);
       await verifySelectableText(tester, ['117']);
     });
