@@ -1,6 +1,6 @@
-/// WEATHER dataset MODEL BOOST EXTREME  EVALUATE feature.
+/// WEATHER -> XGBOOST -> EVALUATE
 //
-// Time-stamp: <Monday 2025-03-24 13:34:56 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 13:40:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -41,8 +41,8 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('WEATHER MODEL BOOST EXTREME  EVALUATE:', () {
-    testWidgets('build, evaluate, verify.', (WidgetTester tester) async {
+  group('WEATHER -> XGBOOST -> EVALUATE:', () {
+    testWidgets('verify.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);

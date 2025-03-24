@@ -1,8 +1,8 @@
-/// Test neuralnet() with demo dataset.
+/// WEATHER -> REGRESSION -> NEURALNET
 //
-// Time-stamp: <Monday 2025-03-24 12:28:55 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 13:49:28 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -39,11 +39,12 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_role.dart';
 import 'utils/verify_selectable_text.dart';
 
-// List of specific variables that should have their role set to 'Ignore' in
-// demo dataset. These are factors/chars and don't play well with nnet.
+// List of specific variables that should have their role set to 'Ignore' in the
+// Weather dataset. These are factors/chars and don't play well with nnet.
 
 final List<String> varsToIgnore = [
   'min_temp',
@@ -70,13 +71,15 @@ final List<String> inputVars = [
   'temp_9am',
 ];
 
+// For NEURALNET we build a regression model.
+
 final String targetVar = 'temp_3pm';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Neuralnet:', () {
-    testWidgets('Load, Ignore, Navigate, Build.', (WidgetTester tester) async {
+  group('WEATHER -> REGRESSION -> NEURALNET:', () {
+    testWidgets('trivial verify.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await loadDemoDataset(tester, 'Weather');
@@ -88,27 +91,22 @@ void main() {
       }
       await setDatasetRole(tester, targetVar, 'Target');
       await verifyRole(targetVar, 'Target');
+
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Neural');
       final markdownContent = find.byKey(const Key('markdown_file'));
       expect(markdownContent, findsOneWidget);
-
-      // Find the ChoiceChipTip widget for the algorithm type.
-
-      final neuralnetChip = find.text(
-        'neuralnet',
-      );
-
-      // Tap the neuralnet chip to switch algorithm.
-
-      await tester.tap(neuralnetChip);
-      await tester.pumpAndSettle();
-
+      await tapChip(tester, 'neuralnet');
       await tapButton(tester, 'Build Neural Network');
       // We need quite a long delay here to have the model built. On Kadesh it
       // required 6s delay but on ecosysl it required 16s! (gjw 20250323)
       await addDelay(tester, 16);
-      await navigateToPage(tester, 1);
+      await navigateToPage(
+        tester,
+        1,
+        back: 1,
+        title: 'Neural Net Model - Summary and Weights',
+      );
       await verifySelectableText(
         tester,
         [
