@@ -60,6 +60,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   @override
   Widget build(BuildContext context) {
     // Retrieve the script from the provider.
+
     final script = ref.watch(scriptProvider);
 
     // Build the text widget. If there's a non-empty search query with matches,
@@ -114,12 +115,26 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                       ),
                     ),
                   ),
-                  // The save button, positioned at top-right of the scroll area.
+                  // Save and Search buttons positioned at the top-right of the scroll area.
 
                   Positioned(
                     top: 8.0,
                     right: 8.0,
-                    child: const ScriptSaveButton(),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.search),
+                          tooltip: 'Search Script',
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _showSearchBar = true;
+                            });
+                          },
+                        ),
+                        const ScriptSaveButton(),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -248,10 +263,12 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   }
 
   /// Scroll to the match at [_matchIndices[_currentMatchIndex]].
+
   void _scrollToMatch(String script) {
     if (_matchIndices.isEmpty) return;
     final matchIndex = _matchIndices[_currentMatchIndex];
     // Calculate the line number where the match occurs.
+
     final textBeforeMatch = script.substring(0, matchIndex);
     final lineNumber = '\n'.allMatches(textBeforeMatch).length;
     final offset = lineNumber * _lineHeight;
