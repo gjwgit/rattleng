@@ -49,13 +49,24 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
 
+  // FocusNode for the search field.
+
+  final FocusNode _searchFocusNode = FocusNode();
+
   bool _showSearchBar = false;
   List<int> _matchIndices = [];
   int _currentMatchIndex = 0;
 
   // A rough assumption for line height (used for scrolling to matched lines).
-
   final double _lineHeight = 20.0;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +75,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
     final script = ref.watch(scriptProvider);
 
     // Build the text widget. If there's a non-empty search query with matches,
-    // we rebuild the text with highlighted spans.
+    // rebuild the text with highlighted spans.
 
     Widget scriptWidget;
     scriptWidget = _searchController.text.isNotEmpty && _matchIndices.isNotEmpty
@@ -130,6 +141,11 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                             setState(() {
                               _showSearchBar = true;
                             });
+                            // Request focus for the search field immediately.
+
+                            Future.delayed(Duration.zero, () {
+                              _searchFocusNode.requestFocus();
+                            });
                           },
                         ),
                         const ScriptSaveButton(),
@@ -161,6 +177,11 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
         setState(() {
           _showSearchBar = true;
         });
+        // Move focus to the search field.
+
+        Future.delayed(Duration.zero, () {
+          _searchFocusNode.requestFocus();
+        });
       }
     }
   }
@@ -180,6 +201,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
 
             Expanded(
               child: TextField(
+                focusNode: _searchFocusNode,
                 controller: _searchController,
                 decoration: const InputDecoration(
                   hintText: 'Search script...',
@@ -292,7 +314,7 @@ List<TextSpan> buildHighlightSpans(
   List<TextSpan> spans = [];
   if (query.isEmpty || matchIndices.isEmpty) {
     spans.add(TextSpan(text: text, style: monoSmallTextStyle));
-
+    
     return spans;
   }
   int start = 0;
