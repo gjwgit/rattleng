@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-01-02 11:36:19 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-03-24 09:09:54 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,29 +34,31 @@
 
 model <- model_xgb
 
-# 20250105 zy Redefine the model type to update the output of error
-# matrix.
+# Redefine the model type to update the output of error matrix. (zy
+# 20250105)
 
 mtype <- "xgboost"
 mdesc <- "Extreme Boost"
 
-# 20250101 gjw Define the template functions to generate the
-# predications and the probabilities for any dataset.
+# Define the template functions to generate the predications and the
+# probabilities for a given dataset. (gjw 20250101)
 
 pred_ra <- function(model, data) {
   # Retrieve the vector of possible target levels from the data.
 
   target_levels <- unique(data[[target]]) # nolint as sourced from 'model_template.R'
-  
+
   # Check if target_levels is either c("1", "0") or c("0", "1")
   # to avoid reversed results.
+  #
+  # Why was this needed? (gjw 20250324)
 
   if (all(target_levels %in% c("1", "0"))) {
     # Sort target levels to ensure "0" comes before "1".
 
     target_levels <- sort(target_levels)
   }
-  
+
   # Get raw numeric probabilities (assuming the model returns a single column
   # or you've already extracted the relevant column.
 
@@ -68,13 +70,18 @@ pred_ra <- function(model, data) {
   # - Otherwise, pick target_levels[1].
   # We immediately convert to character so the ifelse() doesn't
   # accidentally coerce things back to numeric.
+  #
+  # THIS WAS PLAIN WRONG for the audit dataset on testing. I had to
+  # swap the indicies 1 and 2 here to get the correct results. The
+  # explanation in the code here is simply not good enough to
+  # understand why Zheyuan chose this approch. (gjw 20250324)
 
   mapped_values_char <- ifelse(
     is.na(prob_vec),
     NA_character_,
-    ifelse(prob_vec > 0.5, 
-           as.character(target_levels[2]), 
-           as.character(target_levels[1]))
+    ifelse(prob_vec > 0.5,
+           as.character(target_levels[1]),
+           as.character(target_levels[2]))
   )
 
   # Convert the character vector to a factor with the same levels as 'target_levels'.
