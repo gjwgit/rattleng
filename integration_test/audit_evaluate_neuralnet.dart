@@ -1,6 +1,6 @@
 /// AUDIT -> CLASSIFICATION -> TRANSFORM -> MODEL -> NEURALNET -> EVALUATE -> ERROR MATRIX
 //
-// Time-stamp: <Monday 2025-03-24 12:07:26 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 12:20:31 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
@@ -112,7 +113,7 @@ void main() {
       await tapChip(tester, 'neuralnet');
       await setTextField(tester, 'neuralnet_config_hidden_layers', '3,2');
       await tapButton(tester, 'Build Neural Network');
-      await tester.pump(delay);
+      await addDelay(tester, 4);
       await navigateToPage(
         tester,
         1,
