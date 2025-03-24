@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL BOOST EXTREME  EVALUATE feature.
 //
-// Time-stamp: <Wednesday 2025-03-19 11:44:54 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 13:34:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -48,20 +48,33 @@ void main() {
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
-
       await navigateToFeature(tester, 'Boost');
       await tapButton(tester, 'Build Boosted Trees');
-      await navigateToTab(tester, 'Evaluate');
-      await tapButton(tester, 'Evaluate');
-      await navigateToPage(tester, 1, title: 'Error Matrix');
+      await navigateToPage(tester, 1, title: 'XGBoost - Summary', back: 1);
       await verifySelectableText(
         tester,
         [
-          'No   4  10  71.4',
-          'Yes  2   6  25.0',
-          ' No  18.2 45.5  71.4',
-          'Yes  9.1 27.3  25.0',
-          'Overall Error = 54.55%; Average Error = 48.21%.',
+          '        Feature        Gain       Cover Frequency  Importance',
+          '   humidity_3pm 0.245579925 0.208283402     0.130 0.245579925',
+          '   pressure_3pm 0.189113475 0.136315038     0.100 0.189113475',
+          '       min_temp 0.096486981 0.088880259     0.095 0.096486981',
+          '   pressure_9am 0.096343773 0.077483004     0.085 0.096343773',
+          'wind_gust_speed 0.079431444 0.108244312     0.130 0.079431444',
+          ' wind_speed_3pm 0.068648208 0.071066295     0.075 0.068648208',
+          '       max_temp 0.055045877 0.057362528     0.065 0.055045877',
+        ],
+      );
+      await navigateToTab(tester, 'Evaluate');
+      await tapButton(tester, 'Evaluate');
+      await navigateToPage(tester, 1, title: 'Error Matrix', back: 1);
+      await verifySelectableText(
+        tester,
+        [
+          'No  10   4  28.6',
+          'Yes  6   2  75.0',
+          'No  45.5 18.2  28.6',
+          'Yes 27.3  9.1  75.0',
+          'Overall Error = 45.45%; Average Error = 51.79%.',
         ],
       );
     });
