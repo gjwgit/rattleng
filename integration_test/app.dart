@@ -1,6 +1,6 @@
-/// RATTLE app.
+/// APP
 //
-// Time-stamp: <Sunday 2025-02-02 06:06:13 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 09:30:53 +1100 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -40,7 +40,7 @@ import 'utils/delays.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('RATTLE:', () {
+  group('APP', () {
     testWidgets('startup.', (WidgetTester tester) async {
       app.main();
 

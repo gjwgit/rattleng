@@ -58,7 +58,8 @@ void main() {
       await navigateToFeature(tester, 'Associations');
       await verifyCheckbox(tester, 'Baskets', true);
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
+      await navigateToPage(tester, 1,
+          title: 'Association Rules — Meta Summary');
       await verifySelectableText(
         tester,
         [
@@ -87,7 +88,8 @@ void main() {
       await verifySelectableText(tester, ['[101]'], present: false);
       await enterText(tester, 'association_config_limit_rules', '5000');
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 2, 'Association Rules — Discovered Rules');
+      await navigateToPage(tester, 2,
+          title: 'Association Rules — Discovered Rules');
       await verifySelectableText(tester, ['[101]'], present: true);
       await verifySelectableText(tester, ['[117]'], present: true);
       await gotoNextPage(tester, title: 'Association Rules — Item Frequency');
@@ -113,7 +115,7 @@ void main() {
     //   await enterText(tester, 'association_config_support', '0.01');
     //   await tester.pump(delay);
     //   await tapButton(tester, 'Build Association Rules');
-    //   await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
+    //   await navigateToPage(tester, 1, title: 'Association Rules — Meta Summary');
     //   await verifySelectableText(tester, ['support = 0.01']);
     //   await verifySelectableText(tester, ['117']);
     // });
@@ -129,7 +131,8 @@ void main() {
       await verifyCheckbox(tester, 'Baskets', true);
       await enterText(tester, 'association_config_support', '0.001');
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
+      await navigateToPage(tester, 1,
+          title: 'Association Rules — Meta Summary');
       await verifySelectableText(tester, ['support = 0.001']);
       await verifySelectableText(tester, ['117']);
     });

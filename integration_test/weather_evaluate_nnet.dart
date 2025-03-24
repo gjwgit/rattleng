@@ -1,6 +1,6 @@
-/// WEATHER dataset MODEL NEURAL  EVALUATE feature.
+/// WEATHER -> MODEL -> NEURAL -> EVALUATE.
 //
-// Time-stamp: <Wednesday 2025-03-19 11:42:56 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 09:25:08 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -53,7 +53,7 @@ void main() {
       await tapButton(tester, 'Build Neural Network');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await navigateToPage(tester, 1, 'Error Matrix');
+      await navigateToPage(tester, 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [

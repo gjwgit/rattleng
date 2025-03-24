@@ -1,6 +1,6 @@
 /// Load one of the DEMO datasets.
 //
-// Time-stamp: <Wednesday 2025-03-05 06:43:02 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 11:03:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -90,7 +90,7 @@ Future<void> loadDemoDataset(
 
   await tester.pump(delay);
 
-  await navigateToPage(tester, 1, '');
+  await navigateToPage(tester, 1, back: 0);
 
   testPrint('Finished loading the ${dataset.toUpperCase()} Dataset.');
 }

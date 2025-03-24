@@ -1,6 +1,6 @@
 /// Navigate to a specific page counting from 0.
 //
-// Time-stamp: <Wednesday 2025-02-12 16:27:24 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 11:21:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,11 +31,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
 
+/// Tap back button [back] times then fwd [page] times and verify [title].
+
 Future<void> navigateToPage(
   WidgetTester tester,
-  int page,
-  String title,
-) async {
+  int page, {
+  // Eventually the default back will be 0 rather than 5, and so the exceptions
+  // are specificed rather than the usual case which will be that we stay on
+  // page 0 (maybe). (gjw 20250324)
+  int back = 5,
+  String title = '',
+}) async {
   // 20250212 gjw Currently we've not found a way to directly go to a specific
   // page. It should be possible. A work around is to do multiple back clicks to
   // hopefully go to the first page, then a series of forward clicks.
@@ -50,7 +56,7 @@ Future<void> navigateToPage(
 
   // 20250212 gjw Tap the back button 5 times. For most pages that should be okay.
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < back; i++) {
     await tester.tap(backArrowFinder);
     await tester.pumpAndSettle();
   }

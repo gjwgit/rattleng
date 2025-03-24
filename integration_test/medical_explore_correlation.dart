@@ -51,7 +51,7 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');
-      await navigateToPage(tester, 1, 'Correlation - Numeric Data');
+      await navigateToPage(tester, 1, title: 'Correlation - Numeric Data');
       await verifySelectableText(tester, [
         'smoking_status        0.00              0.01           1.00           0.04   0.05',
         'bmi                  -0.01              0.03           0.05           0.39   1.00',
@@ -64,7 +64,7 @@ void main() {
       //
       // Must be something we can do to confirm the image. Not sure what yet!
 
-      await navigateToPage(tester, 2, 'Variable Correlation Plot');
+      await navigateToPage(tester, 2, title: 'Variable Correlation Plot');
     });
   });
 }
