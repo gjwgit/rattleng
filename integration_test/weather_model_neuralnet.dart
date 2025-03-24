@@ -1,6 +1,6 @@
 /// Test neuralnet() with demo dataset.
 //
-// Time-stamp: <Monday 2025-03-24 12:27:25 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 12:28:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -107,7 +107,7 @@ void main() {
       await tapButton(tester, 'Build Neural Network');
       // We need quite a long delay here to have the model built. On Kadesh it
       // required 6s delay but on ecosysl it required 16s! (gjw 20250323)
-      await addDelay(16);
+      await addDelay(tester, 16);
       await navigateToPage(tester, 1);
       await verifySelectableText(
         tester,
