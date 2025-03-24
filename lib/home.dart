@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Saturday 2025-03-22 19:34:18 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2025-03-25 09:04:34 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -415,8 +415,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
 Author: Graham Williams
 
-Contributions: Bob Muenchen, Tony Nolan, Mukund B Srinivas, Kevin Wang, Zheyuan
-Xu, Yixiang Yin, Bo Zhang.
+Contributions: Bob Muenchen, Tony Nolan, Zhangcheng Qiang, Mukund B Srinivas,
+Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
   ''';
 
