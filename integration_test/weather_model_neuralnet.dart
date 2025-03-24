@@ -1,6 +1,6 @@
 /// Test neuralnet() with demo dataset.
 //
-// Time-stamp: <Sunday 2025-03-23 18:18:17 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 12:27:25 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,7 +32,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/delays.dart';
+import 'utils/add_delay.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
@@ -106,15 +106,8 @@ void main() {
 
       await tapButton(tester, 'Build Neural Network');
       // We need quite a long delay here to have the model built. On Kadesh it
-      // required 3 delays but on ecosysl it required 8! (gjw 20250323)
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
+      // required 6s delay but on ecosysl it required 16s! (gjw 20250323)
+      await addDelay(16);
       await navigateToPage(tester, 1);
       await verifySelectableText(
         tester,
