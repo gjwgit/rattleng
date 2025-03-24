@@ -58,6 +58,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   int _currentMatchIndex = 0;
 
   // A rough assumption for line height (used for scrolling to matched lines).
+
   final double _lineHeight = 20.0;
 
   @override
@@ -75,7 +76,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
     final script = ref.watch(scriptProvider);
 
     // Build the text widget. If there's a non-empty search query with matches,
-    // rebuild the text with highlighted spans.
+    // we rebuild the text with highlighted spans.
 
     Widget scriptWidget;
     scriptWidget = _searchController.text.isNotEmpty && _matchIndices.isNotEmpty
@@ -207,7 +208,9 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                   hintText: 'Search script...',
                   border: InputBorder.none,
                 ),
-                onSubmitted: (query) {
+                // Use onChanged so that the search happens immediately as the user types.
+
+                onChanged: (query) {
                   _performSearch(query, script);
                 },
               ),
@@ -314,7 +317,7 @@ List<TextSpan> buildHighlightSpans(
   List<TextSpan> spans = [];
   if (query.isEmpty || matchIndices.isEmpty) {
     spans.add(TextSpan(text: text, style: monoSmallTextStyle));
-    
+
     return spans;
   }
   int start = 0;
