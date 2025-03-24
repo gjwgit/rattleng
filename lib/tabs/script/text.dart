@@ -352,7 +352,7 @@ List<TextSpan> buildHighlightSpans(
     start = index + queryLength;
   }
   // Add any remaining text after the last match.
-  
+
   if (start < text.length) {
     spans.add(
       TextSpan(text: text.substring(start), style: monoSmallTextStyle),
