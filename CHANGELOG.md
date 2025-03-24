@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ R CODE: Retain variable order in the dataset [6.4.48 20250325 gjw]
 + SUMMARY: Fine tune `summary()` layout - blank lines [6.4.47 20250322 zy]
 + EVALUATE: Only enabled for categoric targets [6.4.46 20250321 zy]
 + TESTING: Simplify navigateToFeature() [6.4.45 20250321 gjw]

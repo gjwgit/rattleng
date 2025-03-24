@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-10 16:20:53 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-03-25 10:26:18 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -44,6 +44,18 @@ mdesc <- "Support Vector Machine"
 # Define the dataset, input, and target.
 
 svm_kernel <- <SVM_KERNEL>
+##
+## If we set the seed here then the model built is identical to Rattle
+## V5. In V6 though the seed is set quite a bit earlier just before
+## the partition. How important is it to get identical to V5? As Kerry
+## notes, it shold not be concerning.  Students need to understand
+## that big or subtle variations can affect results in Machine
+## Learning, as it is not really the deterministic world we are used
+## to in computing. In the ATO it was always disconcerting to the
+## Executive when we got small random variations. It was an
+## opportunity to educate them! (gjw 20250325)
+##
+## set.seed(42)
 
 if (svm_kernel == "polydot") {
   model_svm <- ksvm(
