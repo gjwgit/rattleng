@@ -65,7 +65,7 @@ void main() {
       }
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Error Matrix');
+      await navigateToPage(tester, 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [
@@ -79,7 +79,7 @@ void main() {
       await tapChip(tester, 'Training');
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Error Matrix');
+      await navigateToPage(tester, 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [

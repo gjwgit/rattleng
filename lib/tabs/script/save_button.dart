@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Friday 2025-03-21 08:50:32 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-03-24 08:27:56 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -91,6 +91,7 @@ class ScriptSaveButton extends ConsumerWidget {
       type: FileType.custom,
       allowedExtensions: ['R'],
     );
+
     if (context.mounted) {
       if (outputPath != null) {
         // User picked a file.

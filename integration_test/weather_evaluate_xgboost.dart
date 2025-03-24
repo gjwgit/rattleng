@@ -53,7 +53,7 @@ void main() {
       await tapButton(tester, 'Build Boosted Trees');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await navigateToPage(tester, 1, 'Error Matrix');
+      await navigateToPage(tester, 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [

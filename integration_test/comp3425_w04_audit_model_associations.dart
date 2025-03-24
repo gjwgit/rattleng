@@ -61,7 +61,8 @@ void main() {
       await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
+      await navigateToPage(tester, 1,
+          title: 'Association Rules — Meta Summary');
       await verifySelectableText(
         tester,
         [
@@ -83,7 +84,8 @@ void main() {
       //     'support = 0.1, confidence = 0.1, minlen = 2',
       //   ],
       // );
-      await navigateToPage(tester, 2, 'Association Rules — Discovered Rules');
+      await navigateToPage(tester, 2,
+          title: 'Association Rules — Discovered Rules');
       await verifySelectableText(
         tester,
         [
@@ -103,7 +105,7 @@ void main() {
       await setSelectedVariable(tester, 'occupation');
       await tapChip(tester, 'Constant');
       await tapButton(tester, 'Impute Missing Values');
-      await navigateToPage(tester, 1, 'Dataset Summary');
+      await navigateToPage(tester, 1, title: 'Dataset Summary');
       await verifySelectableText(
         tester,
         [
@@ -117,14 +119,16 @@ void main() {
       await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
+      await navigateToPage(tester, 1,
+          title: 'Association Rules — Meta Summary');
       await verifySelectableText(
         tester,
         [
           'set of 23 rules',
         ],
       );
-      await navigateToPage(tester, 2, 'Association Rules — Discovered Rules');
+      await navigateToPage(tester, 2,
+          title: 'Association Rules — Discovered Rules');
       await verifySelectableText(
         tester,
         [

@@ -66,7 +66,7 @@ void main() {
       await navigateToFeature(tester, 'Linear');
       await tapButton(tester, 'Build Linear Model');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Linear Model');
+      await navigateToPage(tester, 1, title: 'Linear Model');
       await verifySelectableText(
         tester,
         [
@@ -79,7 +79,7 @@ void main() {
       await verifyImage(tester);
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await navigateToPage(tester, 1, 'Error Matrix');
+      await navigateToPage(tester, 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [

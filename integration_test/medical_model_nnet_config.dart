@@ -101,7 +101,8 @@ void main() {
 
     await tapButton(tester, 'Build Neural Network');
     await tester.pumpAndSettle();
-    await navigateToPage(tester, 1, 'Neural Net Model - Summary and Weights');
+    await navigateToPage(tester, 1,
+        title: 'Neural Net Model - Summary and Weights');
     await verifySelectableText(tester, [
       'A 7-11-1 network with 107 weights',
     ]);

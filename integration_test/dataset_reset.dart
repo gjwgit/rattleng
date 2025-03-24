@@ -66,7 +66,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(delay);
 
-      await navigateToPage(tester, 1, '');
+      await navigateToPage(tester, 1);
 
       await verifySelectableText(
         tester,

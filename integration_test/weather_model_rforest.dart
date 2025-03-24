@@ -49,7 +49,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Forest');
       await tapButton(tester, 'Build Random Forest');
-      await navigateToPage(tester, 1, 'Random Forest Model');
+      await navigateToPage(tester, 1, title: 'Random Forest Model');
       await gotoNextPage(tester, title: 'Sample Rules');
       await gotoNextPage(tester, title: 'Variable Importance — Numeric');
       await verifySelectableText(tester, ['humidity_3pm']);

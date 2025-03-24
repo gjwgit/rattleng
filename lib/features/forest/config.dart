@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2025-03-17 12:39:35 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 08:54:43 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -51,14 +51,22 @@ import 'package:rattle/widgets/vector_number_field.dart';
 Map forestTooltips = {
   AlgorithmType.conditional: '''
 
-      Build multiple decision trees using random samples of
-      data and features, then aggregate their predictions.
+    **Conditional:** The conditional forest is an extension of the traditional
+    Random Forest. It is focussed on handling situations where the response
+    variable is influenced by specific conditions or covariates.  Conditional
+    inference focuses on estimating the conditional distribution of the response
+    variable given certain predictors. It is particularly useful in causal
+    inference and when dealing with heterogeneous treatment effects.
 
       ''',
   AlgorithmType.traditional: '''
 
-      Adjust for covariate distributions during tree construction
-      to provide unbiased variable importance measures.
+      **Traditional:** The traditional and original random forest algorithm
+      (also called bagging or bootstrap aggregation) resamples the original
+      dataset multiple times to build multiple decision trees. Each dataset is a
+      sample of both the observations and the variables and can lead to reducing
+      overfitting and so improving generalisation. The final ensemble model is
+      then the aggregate of the predictions of the individual decision trees.
 
       ''',
 };
@@ -312,7 +320,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               controller: _treesController,
               tooltip: '''
 
-                The ntree parameter specifies the number of trees to grow in the forest.
+                **Trees:** This (*ntrees*) is the number of trees to grow in the
+                forest. Generally 500 (the default) is a good choice. The
+                rsulting model is fairly insensitive to the number of trees.
 
                 ''',
               inputFormatter: FilteringTextInputFormatter.allow(
@@ -329,8 +339,11 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               controller: _variablesController,
               tooltip: '''
 
-                The mtry parameter defines the number of variables
-                randomly selected as candidates at each split in the trees.
+                **Variables:** This (*mtry*) is the number of variables that
+                will be considered as candidates at each split when partitioning
+                the dataset. For classification the default is the square root
+                of the number of variables. The model is generally not very
+                sensitive to this value.
 
                 ''',
               validator: validateVector,
@@ -340,12 +353,13 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             ),
 
             NumberField(
-              label: 'NO. Tree:',
+              label: 'Display:',
               key: const Key('treeNoForest'),
               controller: _treeNoController,
               tooltip: '''
 
-                Which tree to display.
+                **Display:** Set this to the tree number to display as a sample
+                  of the output after building the model.
 
                 ''',
               max: treeNum,
@@ -364,9 +378,12 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   : normalTextStyle,
               tooltip: '''
 
-                Specify a single sample size (e.g. 500), or a sample size
-                for each class (e.g., 500,500 for a binary model),
-                which may be useful in balancing class predictions
+                **Sample Size:** Use this to specify either a single sample size
+                (e.g. 500) or a sample size for each class (e.g., 500,500 for a
+                binary model). This is the sample size for the subset of the
+                training dataset chosen for each of the different tree
+                builds. The sample size for each class is useful in balancing
+                class predictions.
 
                 ''',
               enabled: selectedAlgorithm != AlgorithmType.conditional,
@@ -382,8 +399,11 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               key: const Key('imputeForest'),
               tooltip: '''
 
-              Impute the median (numerical) or most frequent (categoric) value
-              for missing data using na.roughfix() from randomForest.
+              **Impute:** The random forest algorithm will ignore observations
+              with missing values by default. Enable this checkbox to have
+              missing values imputed as the median (numerical) or most frequent
+              (categoric) value using
+              [randomForest::na.roughfix](https://www.rdocumentation.org/packages/randomForest/topics/na.roughfix).
 
               ''',
               label: 'Impute',

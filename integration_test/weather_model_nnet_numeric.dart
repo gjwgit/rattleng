@@ -68,7 +68,7 @@ void main() {
 
       await tapButton(tester, 'Build Neural Network');
       await tester.pump(hack);
-      await navigateToPage(tester, 1, '');
+      await navigateToPage(tester, 1);
       await verifySelectableText(
         tester,
         [

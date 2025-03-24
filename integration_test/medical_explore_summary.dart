@@ -50,7 +50,7 @@ void main() {
     await navigateToFeature(tester, 'Summary');
     await tapButton(tester, 'Generate Dataset Summary');
     await tester.pump(hack);
-    await navigateToPage(tester, 1, 'Summary of the Dataset');
+    await navigateToPage(tester, 1, title: 'Summary of the Dataset');
     await verifySelectableText(tester, [
       'Length:20000',
       'f:12435',

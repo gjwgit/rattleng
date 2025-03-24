@@ -67,7 +67,8 @@ void main() {
       await navigateToFeature(tester, 'Neural');
       await tapButton(tester, 'Build Neural Network');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Neural Net Model - Summary and Weights');
+      await navigateToPage(tester, 1,
+          title: 'Neural Net Model - Summary and Weights');
       await verifySelectableText(
         tester,
         [

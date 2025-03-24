@@ -79,7 +79,7 @@ void main() {
       await navigateToFeature(tester, 'SVM');
       await tapButton(tester, 'Build SVM Model');
 
-      await navigateToPage(tester, 1, 'SVM Model');
+      await navigateToPage(tester, 1, title: 'SVM Model');
       await verifySelectableText(
         tester,
         [

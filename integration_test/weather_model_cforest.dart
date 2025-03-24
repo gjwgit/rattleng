@@ -54,7 +54,7 @@ void main() {
       await tapChip(tester, 'Conditional');
       await tapButton(tester, 'Build Random Forest');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Random Forest Model');
+      await navigateToPage(tester, 1, title: 'Random Forest Model');
       await verifySelectableText(tester, [
         'Number of trees:  500',
         'Number of observations:  254',
@@ -62,7 +62,7 @@ void main() {
       await tester.pump(interact);
       // 2025-02-14 10:24 gjw I tried testing the TITLE but could not get it to
       // work for this page - 'Variable Importance'.
-      await navigateToPage(tester, 2, '');
+      await navigateToPage(tester, 2);
       // 20250212 gjw Oddly on one failure `0.025935...` was not found, yet
       // presumably `humidity_3pm` was found. Add a delay to see if this is
       // repeated.

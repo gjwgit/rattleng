@@ -69,7 +69,7 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Summary');
       await tapButton(tester, 'Generate Dataset Summary');
-      await navigateToPage(tester, 3, 'Skim the Dataset');
+      await navigateToPage(tester, 3, title: 'Skim the Dataset');
       verifySelectableText(
         tester,
         [
@@ -83,7 +83,7 @@ void main() {
       await navigateToFeature(tester, 'Tree');
       await tapButton(tester, 'Build Decision Tree');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, 'Decision Tree Model');
+      await navigateToPage(tester, 1, title: 'Decision Tree Model');
       await verifyPage('Decision Tree Model', 'Observations = 1400');
       await verifySelectableText(
         tester,

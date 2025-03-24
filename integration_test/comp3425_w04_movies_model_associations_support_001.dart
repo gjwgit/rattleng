@@ -57,7 +57,8 @@ void main() {
       await verifyCheckbox(tester, 'Baskets', true);
       await enterText(tester, 'association_config_support', '0.001');
       await tapButton(tester, 'Build Association Rules');
-      await navigateToPage(tester, 1, 'Association Rules — Meta Summary');
+      await navigateToPage(tester, 1,
+          title: 'Association Rules — Meta Summary');
       await verifySelectableText(tester, ['support = 0.001']);
       await verifySelectableText(tester, ['117']);
     });
