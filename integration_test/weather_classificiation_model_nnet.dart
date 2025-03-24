@@ -1,6 +1,6 @@
-/// Test nnet() with demo dataset.
+/// WEATHER -> CLASSIFICATION -> NNET
 //
-// Time-stamp: <Sunday 2025-03-23 07:51:12 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-03-24 13:54:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
+import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/navigate_to_feature.dart';
@@ -54,8 +55,8 @@ final List<String> varsToIgnore = [
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Demo Model Neural NNet:', () {
-    testWidgets('Load, Ignore, Navigate, Build.', (WidgetTester tester) async {
+  group('WEATHER -> CLASSIFICATION -> NNET:', () {
+    testWidgets('verify, image.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
@@ -66,7 +67,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Neural');
       await tapButton(tester, 'Build Neural Network');
-      await tester.pump(delay);
+      await addDelay(tester, 2);
       await navigateToPage(
         tester,
         1,
@@ -79,14 +80,10 @@ void main() {
           'Options were - skip-layer connections  entropy fitting',
         ],
       );
-      await tester.pump(delay);
+      await addDelay(tester, 2);
       await gotoNextPage(tester);
       await verifyPage('Neural Net Model - Visual');
-
-      final imageFinder = find.byType(ImagePage);
-      expect(imageFinder, findsOneWidget);
-
-      await tester.pump(interact);
+      expect(find.byType(ImagePage), findsOneWidget);
     });
   });
 }
