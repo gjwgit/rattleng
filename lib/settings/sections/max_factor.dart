@@ -1,6 +1,6 @@
 /// Max factor section.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 16:52:43 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -51,11 +51,11 @@ class MaxFactor extends ConsumerWidget {
 
     return MarkdownTooltip(
       message: '''
-      
-            **Max Factor:** Specify here the maximum number of unique values 
-            for a character column in the dataset for which when CLEANSE 
-            is enabled we automatically convert to a FACTOR.
-      
+
+            **Max Factor:** Specify here the maximum number of unique values for
+            a character column in the dataset for which when the **Cleanse**
+            toggle, when enabled, will automatically convert to a **factor**.
+
             ''',
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
