@@ -1,6 +1,6 @@
-/// WEATHER dataset MODEL tab FOREST feature CFOREST option.
+/// WEATHER -> CFOREST
 //
-// Time-stamp: <Friday 2025-02-14 17:22:42 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 13:09:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,6 +30,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
@@ -42,27 +43,30 @@ import 'utils/verify_selectable_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('WEATHER MODEL FOREST CFOREST:', () {
-    testWidgets('build, test.', (WidgetTester tester) async {
+  group('WEATHER -> CFOREST:', () {
+    testWidgets('model, varimp.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Forest');
       await tester.pump(interact);
       await tapChip(tester, 'Conditional');
       await tapButton(tester, 'Build Random Forest');
-      await tester.pump(delay);
-      await navigateToPage(tester, 1, title: 'Random Forest Model');
+      await addDelay(tester, 2);
+      await navigateToPage(tester, 1, back: 1, title: 'Random Forest Model');
       await verifySelectableText(tester, [
         'Number of trees:  500',
         'Number of observations:  254',
       ]);
-      await tester.pump(interact);
       // 2025-02-14 10:24 gjw I tried testing the TITLE but could not get it to
       // work for this page - 'Variable Importance'.
-      await navigateToPage(tester, 2);
+      await navigateToPage(
+        tester,
+        2,
+        back: 1,
+        title: 'Variable Importance — Numeric',
+      );
       // 20250212 gjw Oddly on one failure `0.025935...` was not found, yet
       // presumably `humidity_3pm` was found. Add a delay to see if this is
       // repeated.
@@ -70,13 +74,25 @@ void main() {
       // 20250214 gjw Still seeing occasional failure. Add extra delay. Though
       // maybe it's some randomness in the number? Try truncating it to `0.0259`
       // here next time.
-      await tester.pump(delay);
-      await tester.pump(delay);
+      await addDelay(tester, 4);
       await verifySelectableText(tester, [
-        'humidity_3pm',
-        '0.0259354839',
+        '                       Variable    Importance',
+        'humidity_3pm       humidity_3pm  0.0247096774',
+        'pressure_3pm       pressure_3pm  0.0120000000',
+        'pressure_9am       pressure_9am  0.0060645161',
+        'min_temp               min_temp  0.0036989247',
+        'wind_dir_3pm       wind_dir_3pm  0.0031182796',
+        'rainfall               rainfall  0.0018924731',
+        'wind_gust_speed wind_gust_speed  0.0017634409',
+        'wind_speed_3pm   wind_speed_3pm  0.0015483871',
+        'wind_gust_dir     wind_gust_dir  0.0011827957',
+        'wind_speed_9am   wind_speed_9am  0.0010967742',
+        'cloud_3pm             cloud_3pm  0.0007311828',
+        'humidity_9am       humidity_9am  0.0005161290',
+        'max_temp               max_temp  0.0004516129',
+        'temp_3pm               temp_3pm  0.0004516129',
+        'cloud_9am             cloud_9am -0.0001290323',
       ]);
-      await tester.pump(interact);
     });
   });
 }
