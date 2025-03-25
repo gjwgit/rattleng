@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-03-25 10:26:18 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 05:49:38 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,13 +47,13 @@ svm_kernel <- <SVM_KERNEL>
 ##
 ## If we set the seed here then the model built is identical to Rattle
 ## V5. In V6 though the seed is set quite a bit earlier just before
-## the partition. How important is it to get identical to V5? As Kerry
-## notes, it shold not be concerning.  Students need to understand
-## that big or subtle variations can affect results in Machine
-## Learning, as it is not really the deterministic world we are used
-## to in computing. In the ATO it was always disconcerting to the
-## Executive when we got small random variations. It was an
-## opportunity to educate them! (gjw 20250325)
+## the partition. How important is it to get identical to V5?  Note
+## that it should not be concerning though and students need to
+## understand that big or subtle variations can affect results in
+## Machine Learning, as it is not specifically deterministic, compared
+## to what we are used to in computing. In the ATO it was always
+## disconcerting to the Executive when we got small random
+## variations. It was an opportunity to educate them! (gjw 20250325)
 ##
 ## set.seed(42)
 
