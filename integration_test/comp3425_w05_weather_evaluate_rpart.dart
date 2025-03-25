@@ -1,6 +1,6 @@
 /// COMP3425 W05 WEATHER dataset MODEL tab TREE feature RPART option EVALUATE tab.
 //
-// Time-stamp: <Friday 2025-03-21 08:57:24 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 11:25:03 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -65,29 +65,29 @@ void main() {
       }
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, title: 'Error Matrix');
+      await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [
           'No  41   2   4.7',
-          'Yes  7   4  63.6',
+          'Yes  8   3  72.7',
           'No  75.9 3.7   4.7',
-          'Yes 13.0 7.4  63.6',
-          'Overall Error = 16.67%; Average Error = 34.14%.',
+          'Yes 14.8 5.6  72.7',
+          'Overall Error = 18.52%; Average Error = 38.69%.',
         ],
       );
       await tapChip(tester, 'Training');
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
-      await navigateToPage(tester, 1, title: 'Error Matrix');
+      await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [
-          'No  215   0   0.0',
+          'No  214   1   0.5',
           'Yes   1  38   2.6',
-          'No  84.6   0   0.0',
-          'Yes  0.4  15   2.6',
-          'Overall Error = 0.39%; Average Error = 1.28%.',
+          'No  84.3  0.4   0.5',
+          'Yes  0.4 15.0   2.6',
+          'Overall Error = 0.79%; Average Error = 1.51%.',
         ],
       );
     });

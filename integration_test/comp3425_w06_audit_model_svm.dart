@@ -1,6 +1,6 @@
-/// COMP3425 W06 AUDIT dataset MODEL tab SVM feature.
+/// COMP3425 W06 AUDIT -> SVM.
 //
-// Time-stamp: <Friday 2025-03-21 15:23:58 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 12:54:52 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -42,9 +42,9 @@ import 'utils/verify_selectable_text.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
-final List<String> varsToIgnore = [];
+final List<String> varsToIgnore = ['accounts'];
 
-final List<String> inputVars = [];
+final List<String> inputVars = ['age', 'employment', 'education'];
 
 final String riskVar = 'adjustment';
 final String targetVar = 'adjusted';
@@ -52,9 +52,8 @@ final String targetVar = 'adjusted';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('COMP3425 W06 LAB AUDIT SVM:', () {
-    testWidgets('roles, ignore, cleanup, impute, rescale, nnet.',
-        (WidgetTester tester) async {
+  group('COMP3425 W06 AUDIT -> SVM:', () {
+    testWidgets('verify.', (WidgetTester tester) async {
       app.main();
 
       // Load the dataset and set variable roles.
@@ -83,11 +82,14 @@ void main() {
       await verifySelectableText(
         tester,
         [
+          'Support Vector Machine object of class "ksvm"',
+          'SV type: C-svc  (classification)',
+          'parameter : cost C = 1',
           'Gaussian Radial Basis kernel function.',
-          'Hyperparameter : sigma =  0.10302200712113',
-          'Number of Support Vectors : 569',
-          'Objective Function Value : -438.7149',
-          'Training error : 0.130704',
+          'Hyperparameter : sigma =  0.118465362307129',
+          'Number of Support Vectors : 585',
+          'Objective Function Value : -446.3346',
+          'Training error : 0.133434',
           'Probability model included.',
         ],
       );
