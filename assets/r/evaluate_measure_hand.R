@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:53:49 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-03-25 15:25:59 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,10 +36,11 @@
 results <- hmeasure::HMeasure(true.class=actual_va, scores=probability)
 
 # Create a single SVG file that displays all 4 plots.
+##
+## Be sure to keep the following on a single line to avoid orphons
+## when we strip the `svg` line on saving the SCRIPT.
 
-svg(filename = glue("<TEMPDIR>/evaluate_{mtype}_hand_{dtype}.svg"),
-    width    = 11,
-    height   = 8)
+svg(filename=glue("<TEMPDIR>/evaluate_{mtype}_hand_{dtype}.svg"), width=11, height=8)
 
 # Set up a 2x2 layout.
 
