@@ -165,7 +165,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         rSource(context, ref, ['transform_recode_join_categoric']);
         break;
       case 'As Categoric':
-        rSource(context, ref, ['transform_recode_as_categoric']);
+        rSource(context, ref, ['transform_recode_as_categoric_numeric']);
         break;
       case 'As Numeric':
         rSource(context, ref, ['transform_recode_as_numeric']);
