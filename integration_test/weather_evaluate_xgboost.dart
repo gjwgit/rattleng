@@ -1,6 +1,6 @@
 /// WEATHER -> XGBOOST -> EVALUATE
 //
-// Time-stamp: <Monday 2025-03-24 13:40:51 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 13:02:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -54,14 +54,19 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          '        Feature        Gain       Cover Frequency  Importance',
-          '   humidity_3pm 0.245579925 0.208283402     0.130 0.245579925',
-          '   pressure_3pm 0.189113475 0.136315038     0.100 0.189113475',
-          '       min_temp 0.096486981 0.088880259     0.095 0.096486981',
-          '   pressure_9am 0.096343773 0.077483004     0.085 0.096343773',
-          'wind_gust_speed 0.079431444 0.108244312     0.130 0.079431444',
-          ' wind_speed_3pm 0.068648208 0.071066295     0.075 0.068648208',
-          '       max_temp 0.055045877 0.057362528     0.065 0.055045877',
+          '          Feature        Gain       Cover   Frequency  Importance',
+          '           <char>       <num>       <num>       <num>       <num>',
+          '     humidity_3pm 0.230774034 0.209658503 0.118811881 0.230774034',
+          '     pressure_3pm 0.187928038 0.118403422 0.103960396 0.187928038',
+          '     pressure_9am 0.108964834 0.082466319 0.099009901 0.108964834',
+          '         min_temp 0.094356101 0.110981246 0.133663366 0.094356101',
+          '         max_temp 0.063723709 0.052837482 0.069306931 0.063723709',
+          '   wind_speed_3pm 0.063425970 0.069338825 0.069306931 0.063425970',
+          '  wind_gust_speed 0.061561271 0.086464581 0.089108911 0.061561271',
+          '         rainfall 0.054146403 0.061947650 0.099009901 0.054146403',
+          '   wind_dir_3pmNW 0.027691494 0.031774498 0.014851485 0.027691494',
+          '         temp_9am 0.025842172 0.032745099 0.049504950 0.025842172',
+          '        cloud_3pm 0.022117158 0.051494291 0.044554455 0.022117158',
         ],
       );
       await navigateToTab(tester, 'Evaluate');
@@ -70,11 +75,12 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          'No  10   4  28.6',
-          'Yes  6   2  75.0',
-          'No  45.5 18.2  28.6',
-          'Yes 27.3  9.1  75.0',
-          'Overall Error = 45.45%; Average Error = 51.79%.',
+          '   No  11   3  21.4',
+          '   Yes  6   2  75.0',
+          '   No  50.0 13.6  21.4',
+          '   Yes 27.3  9.1  75.0',
+          '',
+          'Overall Error = 40.91%; Average Error = 48.21%.',
         ],
       );
     });
