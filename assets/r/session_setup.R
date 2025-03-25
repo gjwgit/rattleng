@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-03-26 08:34:10 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 08:47:53 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -175,9 +175,8 @@ rat <- cat
 # more than 20 levels.
 
 is_large_factor <- function(x, maxfactor = 20) {
-  is_cat <- is.factor(x) || is.ordered(x) || is.character(x)
 
-  if (is.factor(x) || is.ordered(x)) {
+  if (is.factor(x)) {
     num_levels <- length(levels(x))
   } else if (is.character(x)) {
     num_levels <- length(unique(x))
@@ -185,11 +184,8 @@ is_large_factor <- function(x, maxfactor = 20) {
     num_levels <- NA  # For non-categoric variables
   }
 
-  if (is_cat) {
-    return(num_levels > maxfactor)
-  }
+  return((is.factor(x) || is.character(x)) && num_levels > maxfactor)
 
-  return(FALSE)
 }
 
 # Check if values in a column are unique.
