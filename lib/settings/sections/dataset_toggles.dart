@@ -26,11 +26,9 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:rattle/settings/sections/partition.dart';
-import 'package:rattle/settings/sections/random_seed.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -39,6 +37,9 @@ import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/settings/sections/max_factor.dart';
+import 'package:rattle/settings/sections/partition.dart';
+import 'package:rattle/settings/sections/random_seed.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
 
 class DatasetToggles extends ConsumerWidget {
@@ -61,6 +62,7 @@ class DatasetToggles extends ConsumerWidget {
       await prefs.setBool('cleanse', ref.read(cleanseProvider));
       await prefs.setBool('normalise', ref.read(normaliseProvider));
       await prefs.setBool('partition', ref.read(partitionProvider));
+      await prefs.setInt('maxFactor', ref.read(maxFactorProvider));
     }
 
     void _resetToggleStates() {
@@ -70,6 +72,7 @@ class DatasetToggles extends ConsumerWidget {
       ref.invalidate(normaliseProvider);
       ref.invalidate(partitionProvider);
       ref.invalidate(keepInSyncProvider);
+      ref.invalidate(maxFactorProvider);
 
       // Save the reset states to preferences.
 
@@ -291,6 +294,20 @@ class DatasetToggles extends ConsumerWidget {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setBool('ignoreMissingTarget', value);
                     },
+                  ),
+                  configRowGap,
+                  MaxFactor(),
+                  configRowGap,
+                  MarkdownTooltip(
+                    message: '''
+
+                    **Reset Toggles:** Tap here to reset the Max Factor to the default value
+
+                    ''',
+                    child: ElevatedButton(
+                      onPressed: _resetToggleStates,
+                      child: const Text('Reset'),
+                    ),
                   ),
                 ],
               ),

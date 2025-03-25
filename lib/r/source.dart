@@ -196,6 +196,7 @@ Future<void> rSource(
 
   int minSplit = ref.read(treeMinSplitProvider);
   int maxDepth = ref.read(treeMaxDepthProvider);
+  int maxFactor = ref.read(maxFactorProvider);
 
   String priors = ref.read(treePriorsProvider);
   bool treeIncludeMissing = ref.read(treeIncludeMissingProvider);
@@ -340,9 +341,7 @@ Future<void> rSource(
   ////////////////////////////////////////////////////////////////////////
   // SETTINGS
 
-  // TODO 20240916 gjw VALUE OF MAXFACTOR NEEDS TO COME FROM SETTINGS.
-
-  code = code.replaceAll('<MAXFACTOR>', '20');
+  code = code.replaceAll('<MAXFACTOR>', maxFactor.toString());
 
   code = code.replaceAll(
     '<RANDOM_PARTITION>',
