@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-12-02 05:33:57 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 13:36:29 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/keys.dart';
@@ -135,20 +136,29 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                     right: 8.0,
                     child: Row(
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.search),
-                          tooltip: 'Search Script',
-                          color: Colors.blue,
-                          onPressed: () {
-                            setState(() {
-                              _showSearchBar = true;
-                            });
-                            // Request focus for the search field immediately.
+                        MarkdownTooltip(
+                          message: '''
 
-                            Future.delayed(Duration.zero, () {
-                              _searchFocusNode.requestFocus();
-                            });
-                          },
+                          **Search:** Tap here to search the R script for any
+                          and all matching strings. The search is incremental,
+                          finding matches as you type. A keybourd shortcut
+                          `Ctrl-F` will also initiate a search.
+
+                          ''',
+                          child: IconButton(
+                            icon: const Icon(Icons.search),
+                            color: Colors.blue,
+                            onPressed: () {
+                              setState(() {
+                                _showSearchBar = true;
+                              });
+                              // Request focus for the search field immediately.
+
+                              Future.delayed(Duration.zero, () {
+                                _searchFocusNode.requestFocus();
+                              });
+                            },
+                          ),
                         ),
                         const ScriptSaveButton(),
                       ],
