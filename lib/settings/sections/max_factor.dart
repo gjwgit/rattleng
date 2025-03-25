@@ -1,0 +1,83 @@
+/// Max factor section.
+//
+// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+//
+/// Copyright (C) 2025, Togaware Pty Ltd
+///
+/// Licensed under the GNU General Public License, Version 3 (the "License");
+///
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program.  If not, see <https://www.gnu.org/licenses/>.
+///
+/// Authors: Zheyuan Xu
+library;
+
+import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
+import 'package:rattle/providers/cleanse.dart';
+
+class MaxFactor extends ConsumerWidget {
+  const MaxFactor({super.key});
+
+  // Save the "Max Factor" state to SharedPreferences.
+
+  Future<void> _saveMaxFactor(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('maxFactor', value);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final int maxFactor = ref.watch(maxFactorProvider);
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          'Max Factor',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        configRowGap,
+        IconButton(
+          icon: const Icon(Icons.remove),
+          tooltip: 'Decrease Max Factor by 1',
+          onPressed: () {
+            final newValue = maxFactor - 1;
+            ref.read(maxFactorProvider.notifier).state = newValue;
+            _saveMaxFactor(newValue);
+          },
+        ),
+        Text(
+          '$maxFactor',
+          style: normalTextStyle,
+        ),
+        IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: 'Increase Max Factor by 1',
+          onPressed: () {
+            final newValue = maxFactor + 1;
+            ref.read(maxFactorProvider.notifier).state = newValue;
+            _saveMaxFactor(newValue);
+          },
+        ),
+      ],
+    );
+  }
+}
