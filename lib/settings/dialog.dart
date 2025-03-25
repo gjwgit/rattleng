@@ -103,9 +103,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(useValidationSettingProvider.notifier).state =
         prefs.getBool('useValidation') ?? false;
 
-    _loadRandomSeed();
-
-    _loadPartition();
+    _loadNumericSettings();
 
     // Load strip comments setting from shared preferences.
 
@@ -118,22 +116,32 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
         prefs.getBool('ignoreMissingTarget') ?? true;
   }
 
-  Future<void> _loadRandomSeed() async {
+  /// Load all numeric settings from shared preferences.
+  ///
+  /// Loads:
+  /// - Random seed (defaults to 42)
+  /// - Maximum factor (defaults to 15)
+  /// - Partition ratios (defaults to 70/15/15)
+
+  Future<void> _loadNumericSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    final seed = prefs.getInt('randomSeed') ?? 42;
-    ref.read(randomSeedSettingProvider.notifier).state = seed;
-  }
 
-  Future<void> _loadPartition() async {
-    final prefs = await SharedPreferences.getInstance();
-    final train = prefs.getInt('train') ?? 70;
-    ref.read(partitionTrainProvider.notifier).state = train;
+    // Random seed.
 
-    final tune = prefs.getInt('tune') ?? 15;
-    ref.read(partitionTuneProvider.notifier).state = tune;
+    ref.read(randomSeedSettingProvider.notifier).state =
+        prefs.getInt('randomSeed') ?? 42;
 
-    final test = prefs.getInt('test') ?? 15;
-    ref.read(partitionTestProvider.notifier).state = test;
+    // Max factor.
+
+    ref.read(maxFactorProvider.notifier).state =
+        prefs.getInt('maxFactor') ?? 15;
+
+    // Partition ratios.
+
+    ref.read(partitionTrainProvider.notifier).state =
+        prefs.getInt('train') ?? 70;
+    ref.read(partitionTuneProvider.notifier).state = prefs.getInt('tune') ?? 15;
+    ref.read(partitionTestProvider.notifier).state = prefs.getInt('test') ?? 15;
   }
 
   @override
