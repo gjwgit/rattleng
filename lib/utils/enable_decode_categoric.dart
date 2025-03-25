@@ -47,7 +47,6 @@ bool enableDecodeCategoric(String key, WidgetRef ref) {
     for (var variableInfo in vars) {
       if (variableInfo.name == key &&
           (variableInfo.type == 'chr' || variableInfo.type == 'ord')) {
-            
         return true;
       }
     }
