@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2025-03-25 09:04:34 +1100 Graham Williams>
+/// Time-stamp: <Tuesday 2025-03-25 13:23:08 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -529,7 +529,12 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
                 // TODO yyx 20240611 return focus to DATASET TAB and set the sub tabs to the first tabs (put it in reset)
                 if (ref.read(datasetLoaded)) {
-                  showDatasetAlertDialog(context, ref, false);
+                  showDatasetAlertDialog(
+                    context,
+                    ref,
+                    false,
+                    title: 'Reset App',
+                  );
                 } else {
                   await reset(context, ref);
                 }
