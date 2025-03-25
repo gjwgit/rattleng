@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-03-11 08:37:09 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 08:34:10 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -70,7 +70,7 @@ library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 options(crayon.enabled = FALSE)
 
 # TODO 20241007 gjw MOVE <WIDTH> <LITERAL> INTO <SETTINGS>
-
+##
 # Set the width wider than the default 80. Experimentally, on Linux,
 # MacOS, Windows, seems like 120 works, though it depends on font size
 # etc. Also we now 20240814 have horizontal scrolling on the TextPage.
@@ -78,7 +78,7 @@ options(crayon.enabled = FALSE)
 options(width=120)
 
 # TODO 20241007 gjw MOVE SEED <LITERAL> INTO <SETTINGS>
-
+##
 # A pre-defined value for the random seed. Setting the random seed to
 # a specific known value ensures that the processing and analyses
 # undertaken in Rattle are repeatable every time. Usually, with a
@@ -91,9 +91,11 @@ set.seed(<RANDOM_SEED>)
 # Support Functions
 ####################################
 
-# TODO 20241007 gjw MOVE R <SUPPORT> <FUNCTIONS> INTO <RATTLE> R <PACKAGE>
-#
-# Or else are there equivalent functions in other packages.
+# The following support functions are planned to be migrated into the
+# rattle package in R and so will not be required here.
+##
+## Be sure to first check if there are equivalent functions in other
+## packages in the tidyverse.
 
 library(jsonlite)
 library(lubridate)    # Check if variable is a date.
@@ -157,12 +159,11 @@ meta_data <- function(df) {
   return(json_output)
 }
 
-# Username
+# The username is used for xlab() in ggplot() and within subtitles for
+# plots.
 
-username <- Sys.getenv("USER")  # On Linux/MacOS
-if (username == "") {
-  username <- Sys.getenv("<USERNAME>")  # On Windows
-}
+username <- Sys.getenv("USER")  # On Linux and macOS
+if (username == "") username <- Sys.getenv("USERNAME")  # On Windows
 ##
 ## Introduce the `rat()` command as being excatly the same as the
 ## `cat()` command but is used where we don't want to export the
@@ -191,7 +192,7 @@ is_large_factor <- function(x, maxfactor = 20) {
   return(FALSE)
 }
 
-# First  check if values in a column are unique.
+# Check if values in a column are unique.
 
 check_unique <- function(x) {
   !any(duplicated(x))
