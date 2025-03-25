@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-19 08:47:08 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 05:32:58 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,16 +24,11 @@
 #
 # Author: Kevin Wang
 
-
-#=======================================================================
-# Rattle timestamp: 2024-11-15 14:23:54.2565 x86_64-pc-linux-gnu 
-
-# Remap variables. 
+# Remap variables.
 
 # Transform into a numeric.
 
 ds[["TNM_<SELECTED_VAR>"]] <- as.numeric(ds[["<SELECTED_VAR>"]])
 
-#=======================================================================
 glimpse(ds)
 summary(ds)
