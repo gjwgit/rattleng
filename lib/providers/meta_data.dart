@@ -1,6 +1,6 @@
 /// Record the meta data from rattle::meta_data(ds)
 //
-// Time-stamp: <Wednesday 2024-08-14 18:46:14 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-03-26 09:00:23 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,5 +26,7 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/// Dataset meta data to be maintained as the dataset state.
 
 final metaDataProvider = StateProvider<Map<String, dynamic>>((ref) => {});
