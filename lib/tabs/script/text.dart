@@ -1,11 +1,11 @@
-/// An R script text widget for the SCRIPT tab page.
+/// A text widget to display the R script for the SCRIPT tab.
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-03-25 13:36:29 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 14:27:34 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -141,7 +141,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
 
                           **Search:** Tap here to search the R script for any
                           and all matching strings. The search is incremental,
-                          finding matches as you type. A keybourd shortcut
+                          finding matches as you type. The keyboard shortcut
                           `Ctrl-F` will also initiate a search.
 
                           ''',
