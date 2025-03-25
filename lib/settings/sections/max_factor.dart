@@ -27,11 +27,13 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/widgets/repeat_button.dart';
 
 class MaxFactor extends ConsumerWidget {
   const MaxFactor({super.key});
@@ -47,37 +49,44 @@ class MaxFactor extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final int maxFactor = ref.watch(maxFactorProvider);
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Max Factor',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        configRowGap,
-        IconButton(
-          icon: const Icon(Icons.remove),
-          tooltip: 'Decrease Max Factor by 1',
-          onPressed: () {
-            final newValue = maxFactor - 1;
-            ref.read(maxFactorProvider.notifier).state = newValue;
-            _saveMaxFactor(newValue);
-          },
-        ),
-        Text(
-          '$maxFactor',
-          style: normalTextStyle,
-        ),
-        IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: 'Increase Max Factor by 1',
-          onPressed: () {
-            final newValue = maxFactor + 1;
-            ref.read(maxFactorProvider.notifier).state = newValue;
-            _saveMaxFactor(newValue);
-          },
-        ),
-      ],
+    return MarkdownTooltip(
+      message: '''
+      
+            **Max Factor:** Specify here the maximum number of unique values 
+            for a character column in the dataset for which when CLEANSE 
+            is enabled we automatically convert to a FACTOR.
+      
+            ''',
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Max Factor',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          configRowGap,
+          RepeatButton(
+            child: const Icon(Icons.remove),
+            onPressed: () {
+              final newValue = maxFactor - 1;
+              ref.read(maxFactorProvider.notifier).state = newValue;
+              _saveMaxFactor(newValue);
+            },
+          ),
+          Text(
+            ' $maxFactor ',
+            style: normalTextStyle,
+          ),
+          RepeatButton(
+            child: const Icon(Icons.add),
+            onPressed: () {
+              final newValue = maxFactor + 1;
+              ref.read(maxFactorProvider.notifier).state = newValue;
+              _saveMaxFactor(newValue);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
