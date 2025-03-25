@@ -1,4 +1,4 @@
-# Transform a variable to factor.
+# Transform a numeric variable to factor.
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
