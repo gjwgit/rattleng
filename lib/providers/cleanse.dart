@@ -1,11 +1,11 @@
 /// Gloabl variable [cleaning].
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-06-02 14:56:17 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-03-25 16:49:35 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,14 +21,15 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Whether to cleanse the data or not. Default is true.
+/// Whether to cleanse the data or not. Default is true.
 
 final cleanseProvider = StateProvider<bool>((ref) => true);
 
-// Specify the maximum number of unique values for a character column.
+/// The maximum number of unique values for a character column to be a factor.
 
-final maxFactorProvider = StateProvider<int>((ref) => 15);
+final maxFactorProvider = StateProvider<int>((ref) => 20);
