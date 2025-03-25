@@ -1,11 +1,11 @@
-# Rattle Scripts: Data Transformation/Wrangling
+# Transform a variable to factor.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-03-26 05:32:36 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 08:08:44 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,13 +24,9 @@
 #
 # Author: Kevin Wang
 
-# Remap variables.
-
-# Transform into a factor.
-
 ds[["TFC_<SELECTED_VAR>"]] <- as.factor(ds[["<SELECTED_VAR>"]])
 
-ol - levels(ds[["TFC_<SELECTED_VAR>"]])
+ol <- levels(ds[["TFC_<SELECTED_VAR>"]])
 lol <- length(ol)
 nl <- c(sprintf("[%s,%s]", ol[1], ol[1]), sprintf("(%s,%s]", ol[-lol], ol[-1]))
 levels(ds[["TFC_<SELECTED_VAR>"]]) <- nl
