@@ -24,6 +24,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -34,29 +35,34 @@ import 'package:rattle/utils/reset.dart';
 void showDatasetAlertDialog(
   BuildContext context,
   WidgetRef ref,
-  bool loadNewDataset,
-) {
+  bool loadNewDataset, {
+  String title = 'Load a Dataset',
+}) {
   // Show Alert Window and then reset the app after confirmation.
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
             Icon(Icons.warning, color: Colors.red),
             SizedBox(width: 20),
-            Text('Warning'),
+            Text(title),
           ],
         ),
-        content: Text(
-          wordWrap('''
+        content: MarkdownBody(
+          data: wordWrap('''
 
-            Please note that if you load a new dataset it will reset the app by
-            clearing out all of the current data. You will lose any work already
-            completed. Consider saving your R script from the Script tab before
-            continuing.  Otherwise, are you sure you would like to reset?
+            **Loading** a new dataset or **Reseting** the app will clear out all
+            of the current data and the captured R script. You will lose any
+            work already completed. You may like to consider saving your R
+            script from the Script tab before continuing so you can replicate
+            your activity in Rattle later on in R itself.  Are you sure you
+            would like to **continue**?
 
             '''),
+          selectable: true,
+          softLineBreak: true,
         ),
         actions: <Widget>[
           TextButton(
