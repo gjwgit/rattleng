@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ SCRIPT: Support search [6.4.49 20250325 zy]
 + R CODE: Retain variable order in the dataset [6.4.48 20250325 gjw]
 + SUMMARY: Fine tune `summary()` layout - blank lines [6.4.47 20250322 zy]
 + EVALUATE: Only enabled for categoric targets [6.4.46 20250321 zy]
