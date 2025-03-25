@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-19 08:47:08 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 05:32:36 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,21 +24,16 @@
 #
 # Author: Kevin Wang
 
-
-
-
-# Remap variables. 
+# Remap variables.
 
 # Transform into a factor.
 
 ds[["TFC_<SELECTED_VAR>"]] <- as.factor(ds[["<SELECTED_VAR>"]])
 
-ol - levels(ds[["<TFC_<SELECTED_VAR>"]])
+ol - levels(ds[["TFC_<SELECTED_VAR>"]])
 lol <- length(ol)
 nl <- c(sprintf("[%s,%s]", ol[1], ol[1]), sprintf("(%s,%s]", ol[-lol], ol[-1]))
 levels(ds[["TFC_<SELECTED_VAR>"]]) <- nl
 
-#=======================================================================
-#=======================================================================
 glimpse(ds)
 summary(ds)
