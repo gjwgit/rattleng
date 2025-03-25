@@ -49,6 +49,10 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
 
+  // FocusNode for the search field.
+
+  final FocusNode _searchFocusNode = FocusNode();
+
   bool _showSearchBar = false;
   List<int> _matchIndices = [];
   int _currentMatchIndex = 0;
@@ -58,8 +62,17 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   final double _lineHeight = 20.0;
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Retrieve the script from the provider.
+
     final script = ref.watch(scriptProvider);
 
     // Build the text widget. If there's a non-empty search query with matches,
@@ -73,6 +86,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                 script,
                 _searchController.text,
                 _matchIndices,
+                _currentMatchIndex,
               ),
             ),
             key: scriptTextKey,
@@ -114,12 +128,31 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                       ),
                     ),
                   ),
-                  // The save button, positioned at top-right of the scroll area.
+                  // Save and Search buttons positioned at the top-right of the scroll area.
 
                   Positioned(
                     top: 8.0,
                     right: 8.0,
-                    child: const ScriptSaveButton(),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.search),
+                          tooltip: 'Search Script',
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _showSearchBar = true;
+                            });
+                            // Request focus for the search field immediately.
+
+                            Future.delayed(Duration.zero, () {
+                              _searchFocusNode.requestFocus();
+                            });
+                          },
+                        ),
+                        const ScriptSaveButton(),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -146,6 +179,11 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
         setState(() {
           _showSearchBar = true;
         });
+        // Move focus to the search field.
+
+        Future.delayed(Duration.zero, () {
+          _searchFocusNode.requestFocus();
+        });
       }
     }
   }
@@ -165,12 +203,15 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
 
             Expanded(
               child: TextField(
+                focusNode: _searchFocusNode,
                 controller: _searchController,
                 decoration: const InputDecoration(
                   hintText: 'Search script...',
                   border: InputBorder.none,
                 ),
-                onSubmitted: (query) {
+                // Use onChanged so that the search happens immediately as the user types.
+
+                onChanged: (query) {
                   _performSearch(query, script);
                 },
               ),
@@ -248,10 +289,12 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
   }
 
   /// Scroll to the match at [_matchIndices[_currentMatchIndex]].
+
   void _scrollToMatch(String script) {
     if (_matchIndices.isEmpty) return;
     final matchIndex = _matchIndices[_currentMatchIndex];
     // Calculate the line number where the match occurs.
+
     final textBeforeMatch = script.substring(0, matchIndex);
     final lineNumber = '\n'.allMatches(textBeforeMatch).length;
     final offset = lineNumber * _lineHeight;
@@ -266,11 +309,14 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
 
 /// Build text spans highlighting matches of [query] in [text].
 /// [matchIndices] contains the starting indices of each occurrence.
+/// The match at the current index (specified by [currentMatchIndex])
+/// is highlighted in other color.
 
 List<TextSpan> buildHighlightSpans(
   String text,
   String query,
   List<int> matchIndices,
+  int currentMatchIndex,
 ) {
   List<TextSpan> spans = [];
   if (query.isEmpty || matchIndices.isEmpty) {
@@ -281,9 +327,10 @@ List<TextSpan> buildHighlightSpans(
   int start = 0;
   final queryLength = query.length;
 
-  // For each match index, add a normal span then a highlighted span.
+  // Iterate with an index so we know which match is the current one.
 
-  for (final index in matchIndices) {
+  for (int i = 0; i < matchIndices.length; i++) {
+    final index = matchIndices[i];
     if (index > start) {
       spans.add(
         TextSpan(
@@ -292,10 +339,14 @@ List<TextSpan> buildHighlightSpans(
         ),
       );
     }
+    // Use green for the current match, yellow for others.
+
+    Color highlightColor =
+        (i == currentMatchIndex) ? Colors.lightGreen : Colors.yellow;
     spans.add(
       TextSpan(
         text: text.substring(index, index + queryLength),
-        style: monoSmallTextStyle.copyWith(backgroundColor: Colors.yellow),
+        style: monoSmallTextStyle.copyWith(backgroundColor: highlightColor),
       ),
     );
     start = index + queryLength;
