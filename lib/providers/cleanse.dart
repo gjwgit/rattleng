@@ -25,4 +25,10 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Whether to cleanse the data or not. Default is true.
+
 final cleanseProvider = StateProvider<bool>((ref) => true);
+
+// Specify the maximum number of unique values for a character column.
+
+final maxFactorProvider = StateProvider<int>((ref) => 15);

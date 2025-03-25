@@ -26,11 +26,10 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:rattle/settings/sections/partition.dart';
-import 'package:rattle/settings/sections/random_seed.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
@@ -39,7 +38,10 @@ import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/settings/sections/partition.dart';
+import 'package:rattle/settings/sections/random_seed.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 class DatasetToggles extends ConsumerWidget {
   const DatasetToggles({super.key});
@@ -52,6 +54,9 @@ class DatasetToggles extends ConsumerWidget {
     final keepInSync = ref.watch(keepInSyncProvider);
     final useValidation = ref.watch(useValidationSettingProvider);
     final ignoreMissingTarget = ref.watch(ignoreMissingTargetProvider);
+    final maxFactor = ref.watch(maxFactorProvider);
+
+    final TextEditingController _maxFactorController = TextEditingController(text: maxFactor.toString());
 
     Future<void> _saveToggleStates() async {
       final prefs = await SharedPreferences.getInstance();
@@ -291,6 +296,21 @@ class DatasetToggles extends ConsumerWidget {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setBool('ignoreMissingTarget', value);
                     },
+                  ),
+                  configRowGap,
+                  NumberField(
+                    label: 'Max Factor:',
+                    key: const Key('max_factor'),
+                    tooltip: '''
+
+                    **Max Factor:** Specify here the maximum number of unique values for a character column 
+                    in the dataset for which when CLEANSE is enabled we automatically convert to a FACTOR.
+
+                    ''',
+                    controller: _maxFactorController,
+                    inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                    validator: (value) => validateInteger(value, min: 1),
+                    stateProvider: maxFactorProvider,
                   ),
                 ],
               ),

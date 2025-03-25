@@ -28,7 +28,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
-import 'package:rattle/constants/data.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/first_start.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
@@ -131,6 +130,11 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
   @override
   Widget build(BuildContext context) {
     bool useValidation = ref.watch(useValidationSettingProvider);
+
+    // The maximum number of unique values for a character variable to be considered as a factor.
+
+    int charToFactor = ref.watch(maxFactorProvider);
+
     // Watch the "Keep in Sync" state to determine the synchronization behavior.
 
     final keepInSync = ref.watch(keepInSyncProvider);
