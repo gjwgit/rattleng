@@ -145,7 +145,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   // BUILD button action.
 
-  void buildAction() {
+  void buildAction(bool isNumeric) {
     // Run the R scripts.
 
     switch (selectedTransform) {
@@ -165,7 +165,15 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         rSource(context, ref, ['transform_recode_join_categoric']);
         break;
       case 'As Categoric':
-        rSource(context, ref, ['transform_recode_as_categoric_numeric']);
+        rSource(
+          context,
+          ref,
+          [
+            isNumeric
+                ? 'transform_recode_as_categoric_numeric'
+                : 'transform_recode_as_categoric_character',
+          ],
+        );
         break;
       case 'As Numeric':
         rSource(context, ref, ['transform_recode_as_numeric']);
@@ -359,7 +367,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
                     ref.read(selectedProvider.notifier).state = selected;
                     ref.read(selected2Provider.notifier).state = selected2;
-                    buildAction();
+
+                    bool varIsNumeric =
+                        ref.read(typesProvider)[selected] == Type.numeric;
+
+                    buildAction(varIsNumeric);
 
                     if (selectedTransform == 'Quantiles') {
                       await Future.delayed(const Duration(seconds: 1));
