@@ -38,7 +38,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
-import 'package:rattle/utils/enable_decode_categoric.dart';
+import 'package:rattle/utils/enable_recode_categoric.dart';
 import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_under_construction.dart';
@@ -198,7 +198,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     // When cleanse is disabled, chr variables can be recodec categoric.
 
-    bool enableCategoric = enableDecodeCategoric(selected, ref);
+    bool enableCategoric = enableRecodeCategoric(selected, ref);
 
     // TODO 20240819 gjw WHERE ARE THE TOOLTIPS?
 
