@@ -33,35 +33,12 @@ import 'package:file_selector/file_selector.dart' as fs;
 import 'package:rattle/r/execute.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
-/// A CSV Save Button widget. When tapped, it opens a file-save dialog 
-/// for the user to choose a CSV location, then executes an R command 
+/// A CSV Save Button widget. When tapped, it opens a file-save dialog
+/// for the user to choose a CSV location, then executes an R command
 /// to save the current dataset 'ds' to that file.
 
 class SaveDatasetButton extends ConsumerWidget {
-  const SaveDatasetButton({super.key});
-
-  Future<void> _saveDataset(WidgetRef ref, BuildContext context) async {
-
-    final String? path = await fs.getDirectoryPath();
-
-    // If the user cancels or no path is chosen, do nothing.
-
-    if (path == null || path.isEmpty) {
-      return;
-    }
-
-    // Escape backslashes if needed (e.g., on Windows).
-
-    final escapedPath = path.replaceAll('\\', '\\\\');
-
-    // Build the R command to save the dataset ds to CSV without row names.
-
-    final rCommand = 'write.csv(ds, file="$escapedPath", row.names=FALSE)\n';
-
-    // Execute the R command.
-    
-    rExecute(ref, rCommand);
-  }
+  const SaveDatasetButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -72,10 +49,38 @@ class SaveDatasetButton extends ConsumerWidget {
       
       ''',
       child: IconButton(
-        icon: const Icon(Icons.save_alt, color: Colors.blue),
-        tooltip: 'Save current ds to CSV file',
-        onPressed: () {
-          _saveDataset(ref, context);
+        icon: const Icon(
+          Icons.save_alt,
+          color: Colors.blue,
+        ),
+        tooltip: 'Save dataset to CSV',
+        onPressed: () async {
+          // Define allowed file type (optional: restrict to .csv files).
+
+          final fs.XTypeGroup csvType = const fs.XTypeGroup(
+            label: 'CSV files',
+            extensions: ['csv'],
+          );
+          // Open the Save dialog with a suggested file name.
+
+          fs.FileSaveLocation? result = await fs.getSaveLocation(
+            acceptedTypeGroups: [csvType],
+            suggestedName: 'dataset.csv',
+          );
+          if (result == null) {
+            return;
+          }
+          // Get the selected file path.
+
+          String selectedPath = result.path;
+
+          // Escape backslashes for Windows paths so R can handle the string.
+
+          String rSafePath = selectedPath.replaceAll('\\', '\\\\');
+
+          // Build the R command to save the dataset to the selected path.
+
+          rExecute(ref, 'write.csv(ds, file="$rSafePath", row.names=FALSE)\n');
         },
       ),
     );
