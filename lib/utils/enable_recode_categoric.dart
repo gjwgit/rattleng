@@ -35,7 +35,7 @@ import 'package:rattle/r/extract_vars.dart';
 ///
 /// Is [var] of type 'chr' and so can be recoded as categoric?
 
-bool enableDecodeCategoric(String vname, WidgetRef ref) {
+bool enableRecodeCategoric(String vname, WidgetRef ref) {
   // TODO CLEANSE should be irrelevant here. VARS should be extracted from
   // metaDataProvider. (gjw 20250327)
 
