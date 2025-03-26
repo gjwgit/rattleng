@@ -1,6 +1,6 @@
 /// Check for whether chr variable can be recoded as categoric.
 //
-// Time-stamp: <Sunday 2024-09-08 12:19:37 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-03-27 07:24:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -33,10 +33,12 @@ import 'package:rattle/r/extract_vars.dart';
 
 /// Determines if a variable can be decoded as categorical based on its type.
 ///
-/// Takes a [key] representing the variable name and a [ref] for state management.
-/// Returns true if the variable is of type 'chr' and cleansing is not enabled.
+/// Is [var] of type 'chr' and so can be recoded as categoric?
 
-bool enableDecodeCategoric(String key, WidgetRef ref) {
+bool enableDecodeCategoric(String vname, WidgetRef ref) {
+  // TODO CLEANSE should be irrelevant here. VARS should be extracted from
+  // metaDataProvider. (gjw 20250327)
+
   final cleanse = ref.watch(cleanseProvider);
 
   String stdout = ref.watch(stdoutProvider);
@@ -44,9 +46,8 @@ bool enableDecodeCategoric(String key, WidgetRef ref) {
   List<VariableInfo> vars = extractVariables(stdout);
 
   if (!cleanse) {
-    for (var variableInfo in vars) {
-      if (variableInfo.name == key &&
-          (variableInfo.type == 'chr' || variableInfo.type == 'ord')) {
+    for (var v in vars) {
+      if (v.name == vname && (v.type == 'chr' || v.type == 'ord')) {
         return true;
       }
     }
