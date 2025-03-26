@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Sunday 2025-01-12 06:03:23 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2025-03-27 05:38:58 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -56,14 +56,16 @@ class StatusBar extends ConsumerWidget {
       // Returns a markdown formatted string with the target if one exists,
       // otherwise returns an empty string.
 
+      String msg = '';
+
       if (target.isNotEmpty &&
           target != 'NULL' &&
           target != '""' &&
           !target.contains(' ')) {
-        return '   **Target**: $target';
+        msg = '   **Target**: $target';
       }
 
-      return '';
+      return msg;
     }
 
     return Container(
