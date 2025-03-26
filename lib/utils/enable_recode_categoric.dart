@@ -27,30 +27,21 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/cleanse.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/providers/meta_data.dart';
 
 /// Determines if a variable can be recoded as categorical based on its type.
 ///
 /// Is [var] of type 'chr' and so can be recoded as categoric?
 
 bool enableRecodeCategoric(String vname, WidgetRef ref) {
-  // TODO CLEANSE should be irrelevant here. VARS should be extracted from
-  // metaDataProvider. (gjw 20250327)
+  Map meta = ref.watch(metaDataProvider);
 
-  final cleanse = ref.watch(cleanseProvider);
-
-  String stdout = ref.watch(stdoutProvider);
-
-  List<VariableInfo> vars = extractVariables(stdout);
-
-  if (!cleanse) {
-    for (var v in vars) {
-      if (v.name == vname && (v.type == 'chr' || v.type == 'ord')) {
-        return true;
-      }
-    }
+  if (meta.containsKey(vname) &&
+      meta[vname] is Map &&
+      (meta[vname] as Map).containsKey('datatype') &&
+      (meta[vname]['datatype'] is List) &&
+      (meta[vname]['datatype'] as List).contains('character')) {
+    return true;
   }
 
   return false;

@@ -30,6 +30,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
@@ -195,8 +196,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     if (selected != 'NULL') {
       isNumeric = ref.read(typesProvider)[selected] == Type.numeric;
     }
-
-    // When cleanse is disabled, chr variables can be recodec categoric.
 
     bool enableCategoric = enableRecodeCategoric(selected, ref);
 
@@ -368,8 +367,9 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
                     ref.read(selectedProvider.notifier).state = selected;
                     ref.read(selected2Provider.notifier).state = selected2;
 
-                    bool varIsNumeric =
-                        ref.read(typesProvider)[selected] == Type.numeric;
+                    bool varIsNumeric = ref.read(metaDataProvider)[selected]
+                            ['datatype'] ==
+                        ['numeric'];
 
                     buildAction(varIsNumeric);
 
