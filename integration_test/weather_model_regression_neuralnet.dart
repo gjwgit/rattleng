@@ -1,6 +1,6 @@
 /// WEATHER -> REGRESSION -> NEURALNET
 //
-// Time-stamp: <Monday 2025-03-24 13:49:28 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-27 10:24:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -83,6 +83,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await loadDemoDataset(tester, 'Weather');
+      await navigateToPage(tester, 1, back: 1);
       for (final v in varsToIgnore) {
         await setDatasetRole(tester, v, 'Ignore');
       }
