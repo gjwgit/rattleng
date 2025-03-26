@@ -39,6 +39,7 @@ import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_rows_columns.dart';
+import 'package:rattle/utils/get_target.dart';
 
 class StatusBar extends ConsumerWidget {
   const StatusBar({super.key});
@@ -48,6 +49,22 @@ class StatusBar extends ConsumerWidget {
     String path = ref.watch(pathProvider);
     if (path != '') path = '$path   ';
     String stdout = ref.watch(stdoutProvider);
+
+    String _buildTargetDisplay(String target) {
+      // Builds the target display string for the status bar.
+      //
+      // Returns a markdown formatted string with the target if one exists,
+      // otherwise returns an empty string.
+
+      if (target.isNotEmpty &&
+          target != 'NULL' &&
+          target != '""' &&
+          !target.contains(' ')) {
+        return '   **Target**: $target';
+      }
+
+      return '';
+    }
 
     return Container(
       constraints: const BoxConstraints(minHeight: 50),
@@ -73,7 +90,8 @@ class StatusBar extends ConsumerWidget {
                   '[togware.com](https://togaware.com)  '
                   '${basename(path)}'
                   '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
-                  '${ref.watch(statusProvider)}',
+                  '${ref.watch(statusProvider)}'
+                  '${_buildTargetDisplay(getTarget(ref))}',
               styleSheet: MarkdownStyleSheet(
                 p: Theme.of(context)
                     .textTheme
