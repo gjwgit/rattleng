@@ -89,9 +89,9 @@ class StatusBar extends ConsumerWidget {
               data: '[Rattle @](https://rattle.togaware.com)  '
                   '[togware.com](https://togaware.com)  '
                   '${basename(path)}'
-                  '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
-                  '${ref.watch(statusProvider)}'
-                  '${_buildTargetDisplay(getTarget(ref))}',
+                  '${rExtractRowsColumns(rExtractGlimpse(stdout))}'
+                  '${_buildTargetDisplay(getTarget(ref))}   '
+                  '${ref.watch(statusProvider)}',
               styleSheet: MarkdownStyleSheet(
                 p: Theme.of(context)
                     .textTheme
