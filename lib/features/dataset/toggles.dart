@@ -79,8 +79,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
       ref.read(firstStartProvider.notifier).state = false;
 
-      // Set the initial state of the "Cleanse" toggle based on shared preferences,
-      // defaulting to `true` if no value is found.
+      // Set the initial state of the CLEANSE toggle based on shared
+      // preferences, defaulting to `true` if no value is found.
 
       ref.read(cleanseProvider.notifier).state =
           prefs.getBool('cleanse') ?? true;
@@ -100,8 +100,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
       // If this is not the first start and "Keep in Sync" is enabled.
 
       if (keepInSync) {
-        // Update the "Cleanse" toggle state to match the value in shared preferences,
-        // falling back to the current provider state if no value is found.
+        // Update the CLEANSE toggle state to match the value in shared
+        // preferences, falling back to the current provider state if no value
+        // is found.
 
         ref.read(cleanseProvider.notifier).state =
             prefs.getBool('cleanse') ?? ref.read(cleanseProvider);
@@ -189,7 +190,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           setState(() {
             switch (index) {
               case 0:
-                // Toggle the "Cleanse" state and update shared preferences.
+                // Toggle the CLEANSE state and update shared preferences.
 
                 ref.read(cleanseProvider.notifier).state = !cleanse;
 
@@ -223,7 +224,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           setState(() {
             switch (index) {
               case 0:
-                // Toggle the "Cleanse" state.
+                // Toggle the CLEANSE state.
 
                 ref.read(cleanseProvider.notifier).state = !cleanse;
 
@@ -254,11 +255,12 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           message: '''
 
           **Cleanse:** Currently **${cleanse ? "" : "not "}enabled**. When
-          enabled a dataset will be cleansed by removing any columns with a
-          single constant value and converting character columns with
-          $charToFactor or fewer unique values to factors (categoric).  If you
-          do not require this automated cleansing of the dataset, disable this
-          option.
+          enabled a dataset will be cleansed, when the dataset is loaded, by
+          removing any columns with a single constant value and converting
+          character columns with $charToFactor or fewer unique values to factors
+          (categoric).  If you do not require this automated cleansing when
+          loading the dataset, disable this option. This option is only relevant
+          on loading a dataset.
 
               ''',
           child: const Icon(Icons.cleaning_services),
@@ -270,10 +272,11 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           message: '''
 
           **Unify:** Currently **${normalise ? "" : "not "}enabled**. When
-          enabled the names of columns (variables) of the dataset are unified by
-          converting them to lowercase and separating words by underscore.  If
-          you do not require this automated unifying of the variable names,
-          disable this option.
+          enabled the names of columns (variables) of the dataset are unified,
+          when the dataset is loaded, by converting them to lowercase and
+          separating words by underscore.  If you do not require this automated
+          unifying of the variable names, disable this option. This option is
+          only relevant on loading a dataset.
 
           ''',
           child: const Icon(Icons.auto_fix_high_outlined),
