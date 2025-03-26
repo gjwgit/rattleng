@@ -31,7 +31,7 @@ import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_vars.dart';
 
-/// Determines if a variable can be decoded as categorical based on its type.
+/// Determines if a variable can be recoded as categorical based on its type.
 ///
 /// Is [var] of type 'chr' and so can be recoded as categoric?
 
