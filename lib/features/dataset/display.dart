@@ -79,9 +79,21 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   final int contentFlex = 3;
 
   // Track pressed keys for shift and control selection.
-
+  
   bool _isShiftPressed = false;
   bool _isCtrlPressed = false;
+
+  // Define fixed widths for each of the 6 columns.
+  // Adjust these as needed for your data and UI.
+
+  static const List<double> columnWidths = <double>[
+    100, // Variable
+    400, // Role
+    40,  // Type
+    40,  // Unique
+    40,  // Missing
+    200, // Sample
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -103,13 +115,15 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     ];
 
     // Handle different file types.
-
+    
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
     } else if (path == weatherDemoFile ||
         // TODO 20250310 gjw Remo the deprecated weatherDemoFile
+        
         path.endsWith('.csv') ||
         path.endsWith('.xlsx')) {
+
       // 20240815 gjw Update the metaData provider here if needed.
 
       updateMetaData(ref);
@@ -132,8 +146,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 .contains(LogicalKeyboardKey.controlRight);
       });
 
-      // Return a boolean value.
-
       return false;
     });
 
@@ -144,8 +156,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   }
 
   ////////////////////////////////////////////////////////////////////////
-
-  // Add a page for text file (a .txt file) content for Word Cloud.
+  
+  // Add a page for text file (a .txt file) content.
 
   void _addTextFilePage(String stdout, List<Widget> pages) {
     String content = rExtract(stdout, '> cat(txt,');
@@ -164,8 +176,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   }
 
   ////////////////////////////////////////////////////////////////////////
-
+  
   // Add a page for dataset summary.
+  
   void _addDatasetPage(String stdout, List<Widget> pages) {
     Map<String, Role> currentRoles = ref.read(rolesProvider);
     List<VariableInfo> vars = extractVariables(stdout);
@@ -177,6 +190,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // update the role of the old variable.
 
     updateVariablesProvider(ref);
+
     Map<String, String> rolesOption = {
       'Ignore': '''
 
@@ -200,24 +214,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     void _updateRoleForSelectedRows(String newRole) {
       setState(() {
         final selectedRows = ref.read(selectedRowIndicesProvider);
-        String stdout = ref.watch(stdoutProvider);
-
-        List<VariableInfo> vars = extractVariables(stdout);
-
-        // Update roles for each selected row
-
-        selectedRows.forEach((index) {
-          String columnName = vars[index].name;
+        String newStdout = ref.watch(stdoutProvider);
+        List<VariableInfo> newVars = extractVariables(newStdout);
+        for (var index in selectedRows) {
+          String columnName = newVars[index].name;
           ref.read(rolesProvider.notifier).state[columnName] =
-              newRole == 'Ignore' ? Role.ignore : Role.input;
-        });
-
-        // Clear selection after updating
+              (newRole == 'Ignore') ? Role.ignore : Role.input;
+        }
 
         selectedRows.clear();
-
-        // Increment the rebuild trigger to refresh DatasetDisplay
-
+        
         ref.read(rebuildTriggerProvider.notifier).state++;
       });
     }
@@ -225,6 +231,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     pages.add(
       Stack(
         children: [
+          // Row of role-setting buttons + Save + Viewer.
+
           Row(
             children: [
               configWidgetGap,
@@ -235,16 +243,13 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                     ...rolesOption.keys.map(
                       (roleKey) => MarkdownTooltip(
                         message: rolesOption[roleKey]!,
-                        wait: const Duration(
-                          seconds: 1,
-                        ),
+                        wait: const Duration(seconds: 1),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           child: ElevatedButton(
                             onPressed: () {
                               final selectedRows =
                                   ref.read(selectedRowIndicesProvider);
-
                               if (selectedRows.isEmpty) {
                                 // Show a warning dialog if no rows are selected.
 
@@ -258,9 +263,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                                       ),
                                       actions: <Widget>[
                                         TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
                                           child: const Text('OK'),
                                         ),
                                       ],
@@ -268,8 +272,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                                   },
                                 );
                               } else {
-                                // Proceed to update the role if rows are selected.
-
                                 _updateRoleForSelectedRows(roleKey);
                               }
                             },
@@ -285,29 +287,21 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               configChooserGap,
               MarkdownTooltip(
                 message: '''
-
-                **Viewer.** Tap here to open a separate window to view the
-                current dataset. The default and quite simple data viewer in R
-                will be used. It is invoked as `View(ds)`.
-
-              ''',
+                **Viewer.** Tap here to open a separate window to view the current dataset.
+                The default data viewer in R will be used, invoked as `View(ds)`.
+                ''',
                 child: IconButton(
-                  icon: const Icon(
-                    Icons.table_view,
-                    color: Colors.blue,
-                  ),
+                  icon: const Icon(Icons.table_view, color: Colors.blue),
                   onPressed: () {
-                    String path = ref.read(pathProvider);
-                    if (path.isEmpty) {
+                    String p = ref.read(pathProvider);
+                    if (p.isEmpty) {
                       showOk(
                         context: context,
                         title: 'No Dataset Loaded',
                         content: '''
-
-                      Please choose a dataset to load from the **Dataset** tab. There is
-                      not much we can do until we have loaded a dataset.
-
-                      ''',
+                        Please choose a dataset to load from the **Dataset** tab.
+                        There is not much we can do until we have loaded a dataset.
+                        ''',
                       );
                     } else {
                       rExecute(ref, 'View(ds)\n');
@@ -318,18 +312,203 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             ],
           ),
 
-          // Main ListView for displaying data table.
-          Padding(
-            padding: const EdgeInsets.only(top: 56.0),
-            child: _buildDataTable(vars),
+          // Column that has a fixed header plus scrollable body.
+
+          Column(
+            children: [
+              // 1) The fixed header row.
+
+              SizedBox(
+                height: 56.0,
+                child: DataTable(
+                  columns: [
+                    DataColumn(
+                      label: Container(
+                        width: columnWidths[0],
+                        child: MarkdownTooltip(
+                          message: '''
+                          To select or deselect all variables shift-click the
+                          checkbox to the left here in the header row.
+                          ''',
+                          child: const Text(
+                            'Variable',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Container(
+                        width: columnWidths[1],
+                        child: const Text(
+                          'Role',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Container(
+                        width: columnWidths[2],
+                        child: const Text(
+                          'Type',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Container(
+                        width: columnWidths[3],
+                        child: const Text(
+                          'Unique',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      numeric: true,
+                    ),
+                    DataColumn(
+                      label: Container(
+                        width: columnWidths[4],
+                        child: const Text(
+                          'Missing',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      numeric: true,
+                    ),
+                    DataColumn(
+                      label: Container(
+                        width: columnWidths[5],
+                        child: const Text(
+                          'Sample',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                  rows: const [],
+                ),
+              ),
+
+              // 2) The scrollable body below the header.
+
+              Expanded(
+                child: SingleChildScrollView(
+                  key: const Key('roles listView'),
+                  scrollDirection: Axis.vertical,
+                  child: DataTable(
+                    // Body columns with empty labels, but same widths.
+                    
+                    columns: List.generate(columnWidths.length, (index) {
+                      return DataColumn(
+                        label: SizedBox(width: columnWidths[index]),
+                      );
+                    }),
+                    rows: vars.map((variable) {
+                      int rowIndex = vars.indexOf(variable);
+                      bool isSelected =
+                          ref.watch(selectedRowIndicesProvider).contains(rowIndex);
+                      var formatter = NumberFormat('#,###');
+
+                      return DataRow(
+                        selected: isSelected,
+                        onSelectChanged: (bool? selected) {
+                          setState(() {
+                            if (selected == true) {
+                              if (_isShiftPressed) {
+                                ref.read(selectedRowIndicesProvider).add(rowIndex);
+                              } else if (_isCtrlPressed &&
+                                  ref
+                                      .read(selectedRowIndicesProvider)
+                                      .isNotEmpty) {
+                                int first = ref
+                                    .read(selectedRowIndicesProvider)
+                                    .first;
+                                int last = rowIndex;
+                                if (last < first) {
+                                  int temp = first;
+                                  first = last;
+                                  last = temp;
+                                }
+                                for (int i = first; i <= last; i++) {
+                                  ref.read(selectedRowIndicesProvider).add(i);
+                                }
+                              } else {
+                                ref.read(selectedRowIndicesProvider).clear();
+                                ref.read(selectedRowIndicesProvider).add(rowIndex);
+                              }
+                            } else {
+                              ref.read(selectedRowIndicesProvider).remove(rowIndex);
+                            }
+                          });
+                        },
+                        cells: [
+                          DataCell(
+                            Container(
+                              width: columnWidths[0],
+                              child: Text(variable.name),
+                            ),
+                          ),
+                          DataCell(
+                            Container(
+                              width: columnWidths[1],
+                              child: _buildRoleChips(
+                                variable.name,
+                                ref.watch(rolesProvider),
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            Container(
+                              width: columnWidths[2],
+                              child: Text(variable.type),
+                            ),
+                          ),
+                          DataCell(
+                            Container(
+                              width: columnWidths[3],
+                              child: Text(
+                                formatter.format(
+                                  ref.watch(metaDataProvider)[variable.name]
+                                          ?['unique']?[0] ??
+                                      0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            Container(
+                              width: columnWidths[4],
+                              child: Text(
+                                formatter.format(
+                                  ref.watch(metaDataProvider)[variable.name]
+                                          ?['missing']?[0] ??
+                                      0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            Container(
+                              width: columnWidths[5],
+                              child: SelectableText(
+                                _truncateContent(variable.details),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  // Initialise ROLES. Default to INPUT and identify TARGET, RISK,
-  // IDENTS. Also record variable types.
+  // Initialize roles. Default to INPUT, identify TARGET, RISK, etc.
 
   void _initializeRoles(
     List<VariableInfo> vars,
@@ -342,12 +521,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       }
       _setTargetRole(vars, ref);
       _setIdentRole(ref);
-
-      // 20241213 gjw Let's turn off the IGNORE heursitic for now. Leave it to a
-      // user to decide. For the PROTEIN dataset we want COUNTRY to be IDENT r
-      // TARGET rather than IGNORE.
-
-      // _setIgnoreRoleForHighVars(highVars, ref);
     }
   }
 
@@ -355,11 +528,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   void _setInitialRole(VariableInfo column, WidgetRef ref) {
     String name = column.name.toLowerCase();
-
-    // Default is INPUT unless a prefix is found.
-
     Role role = Role.input;
-
     if (name.startsWith('risk_')) role = Role.risk;
     if (name.startsWith('ignore_')) role = Role.ignore;
     if (name.startsWith('target_')) role = Role.target;
@@ -369,199 +538,35 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         isNumeric(column.type) ? Type.numeric : Type.categoric;
   }
 
-  // Treat the last variable as a TARGET by default. We will eventually
-  // implement Rattle heuristics to identify the TARGET if the final
-  // variable has more than 5 levels. If so we'll check if the first
-  // variable looks like a TARGET (another common practise) and if not
-  // then no TARGET will be identified by default.
+  // By default treat the last variable as TARGET if none is set.
 
   void _setTargetRole(List<VariableInfo> vars, WidgetRef ref) {
     String target = getTarget(ref);
-
     if (target == 'NULL') {
       ref.read(rolesProvider.notifier).state[vars.last.name] = Role.target;
     } else if (target != '""') {
-      // TODO 20241216 gjw HOW DOES target BECOME '""' - TO BE FIXED
       ref.read(rolesProvider.notifier).state[target] = Role.target;
     }
   }
 
-  void _setIdentRole(WidgetRef ref) {
-    // Any variables that have a unique value for every row in the dataset is
-    // considered to be an IDENTifier.
+  // Identify ID columns if they have unique values for each row.
 
+  void _setIdentRole(WidgetRef ref) {
     for (var id in getUniqueColumns(ref)) {
       ref.read(rolesProvider.notifier).state[id] = Role.ident;
     }
-
     Map metaData = ref.read(metaDataProvider);
-
-    // 20241211 gjw A hueristic that says if there are only two columns in the
-    // dataset, expect it to be a basket dataset for association rule
-    // analysis. Set the firt column as the basket identifier (IDENT) and the
-    // second column as the basket item (TARGET). As we move away from the
-    // DATASET tab we also set the BASKETS checkbox in the ASSOCIATE feature to
-    // match this heuristic. That is done in `lib/home.dart`.
-
     if (metaData.length == 2) {
       ref.read(rolesProvider.notifier).state[metaData.keys.first] = Role.ident;
       ref.read(rolesProvider.notifier).state[metaData.keys.last] = Role.target;
     }
   }
 
-  // Set ignore role for high cardinality variables.
-
-  // 20241213 gjw Remove this for now until we decide how to best deal with
-  // identifying variables to IGNORE.
-
-  // void _setIgnoreRoleForHighVars(List<String> highVars, WidgetRef ref) {
-  //   for (var highVar in highVars) {
-  //     if (ref.read(rolesProvider.notifier).state[highVar] != Role.target) {
-  //       ref.read(rolesProvider.notifier).state[highVar] = Role.ignore;
-  //     }
-  //   }
-  // }
-
-  // Build data table with row selection logic.
-
-  Widget _buildDataTable(List<VariableInfo> vars) {
-    Map<String, Role> currentRoles = ref.watch(rolesProvider);
-    final selectedRows = ref.watch(selectedRowIndicesProvider);
-
-    var formatter = NumberFormat('#,###');
-
-    return Container(
-      child: SingleChildScrollView(
-        key: const Key('roles listView'),
-        scrollDirection: Axis.vertical,
-        child: DataTable(
-          columns: [
-            DataColumn(
-              label: MarkdownTooltip(
-                message: '''
-
-                To select or deselect all variables shift-click the checkbox to
-                the left here in the header row.
-
-                ''',
-                child: Text(
-                  'Variable',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            DataColumn(
-              label:
-                  Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            DataColumn(
-              label:
-                  Text('Type', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            DataColumn(
-              label:
-                  Text('Unique', style: TextStyle(fontWeight: FontWeight.bold)),
-              numeric: true,
-            ),
-            DataColumn(
-              label: Text(
-                'Missing',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              numeric: true,
-            ),
-            DataColumn(
-              label:
-                  Text('Sample', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-          ],
-          rows: vars.map((variable) {
-            int rowIndex = vars.indexOf(variable);
-            bool isSelected = selectedRows.contains(rowIndex);
-
-            return DataRow(
-              selected: isSelected,
-              onSelectChanged: (bool? selected) {
-                setState(() {
-                  if (selected == true) {
-                    if (_isShiftPressed) {
-                      // Shift-click: Add multiple selections from the last selected row.
-
-                      selectedRows.add(rowIndex);
-                    } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
-                      // Ctrl-click: Auto-select range between the first selected row and this row.
-
-                      int firstSelectedRow = selectedRows.first;
-                      int lastSelectedRow = rowIndex;
-
-                      // Ensure that we have a start and end point correctly ordered.
-
-                      if (lastSelectedRow < firstSelectedRow) {
-                        int temp = firstSelectedRow;
-                        firstSelectedRow = lastSelectedRow;
-                        lastSelectedRow = temp;
-                      }
-
-                      // Select all rows in the range between first and last selected rows.
-
-                      for (int i = firstSelectedRow;
-                          i <= lastSelectedRow;
-                          i++) {
-                        selectedRows.add(i);
-                      }
-                    } else {
-                      // Single click: Clear previous selection and select only the current row.
-
-                      selectedRows.clear();
-                      selectedRows.add(rowIndex);
-                    }
-                  } else {
-                    // Deselect the row if it was previously selected.
-
-                    selectedRows.remove(rowIndex);
-                  }
-                });
-              },
-              cells: [
-                DataCell(Text(variable.name)),
-                DataCell(
-                  _buildRoleChips(variable.name, currentRoles),
-                ),
-                DataCell(Text(variable.type)),
-                DataCell(
-                  Text(
-                    formatter.format(
-                      ref.watch(metaDataProvider)[variable.name]?['unique']
-                              ?[0] ??
-                          0,
-                    ),
-                  ),
-                ),
-                DataCell(
-                  Text(
-                    formatter.format(
-                      ref.watch(metaDataProvider)[variable.name]?['missing']
-                              ?[0] ??
-                          0,
-                    ),
-                  ),
-                ),
-                DataCell(SelectableText(_truncateContent(variable.details))),
-              ],
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
   // Build role choice chips.
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
     return Center(
-      key: Key('role-${columnName}'),
-      // Set width to fit 5 ChoiceChips in a row.
-
+      key: Key('role-$columnName'),
       child: SizedBox(
         width: choiceChipRowWidth,
         child: Wrap(
@@ -578,12 +583,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               pressElevation: 8.0,
               elevation: 2.0,
               selected: remap(currentRoles[columnName]!, choice),
-              onSelected: (bool selected) => _handleRoleSelection(
-                selected,
-                choice,
-                columnName,
-                currentRoles,
-              ),
+              onSelected: (bool selected) =>
+                  _handleRoleSelection(selected, choice, columnName, currentRoles),
             );
           }).toList(),
         ),
@@ -599,18 +600,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     String columnName,
     Map<String, Role> currentRoles,
   ) {
-    // The parameter selected can be false when a chip
-    // is tapped when it is already selected. That could
-    // be useful as a toggle button.
-
     setState(() {
       if (selected) {
-        // Only one variable can be TARGET, RISK, or WEIGHT, so any previous
-        // variable with that role should become INPUT.
-
-        if (choice == Role.target ||
-            choice == Role.risk ||
-            choice == Role.weight) {
+        if (choice == Role.target || choice == Role.risk || choice == Role.weight) {
           currentRoles.forEach((key, value) {
             if (value == choice) {
               ref.read(rolesProvider.notifier).state[key] = Role.input;
@@ -627,10 +619,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   String _truncateContent(String content) {
     int maxLength = 45;
-    String subStr =
-        content.length > maxLength ? content.substring(0, maxLength) : content;
+    String subStr = content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
-
     return '${lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr} ...';
   }
 }
