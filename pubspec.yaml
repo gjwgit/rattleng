@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.4.51+204
+version: 6.4.52+204
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -40,6 +40,7 @@ dependencies:
 
   catppuccin_flutter: ^1.0.0
   file_picker: ^9.0.2
+  file_selector: ^1.0.3
   flutter_markdown: ^0.7.1
   flutter_riverpod: ^2.4.4
   flutter_svg: ^2.0.7
