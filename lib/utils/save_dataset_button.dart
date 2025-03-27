@@ -1,6 +1,6 @@
 /// CSV Save button.
 //
-// Time-stamp: <Thursday 2025-03-27 13:32:11 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-27 13:40:07 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -43,7 +43,7 @@ class SaveDatasetButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String dsname = ref.read(datasetNameProvider);
+    final String dsname = ref.read(dsnameProvider);
     final now = DateTime.now();
     String yyyymmdd = "${now.year.toString().padLeft(4, '0')}"
         "${(now.month).toString().padLeft(2, '0')}"

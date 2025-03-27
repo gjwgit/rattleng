@@ -1,6 +1,6 @@
 /// A provider for the state of dataset and its package to be loaded
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2025-03-27 13:37:30 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -30,4 +30,4 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final datasetProvider = StateProvider<String>((ref) => '');
 final packageProvider = StateProvider<String>((ref) => '');
 
-final datasetNameProvider = StateProvider<String>((ref) => '');
+final dsnameProvider = StateProvider<String>((ref) => '');

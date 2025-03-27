@@ -1,6 +1,6 @@
 /// A dialog to prompte user on closing app with SAVE and CANCEL options
 ///
-/// Time-stamp: <Friday 2025-03-21 08:51:22 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2025-03-27 13:37:18 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -136,7 +136,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
 
   Future<void> _showFileNameDialog(BuildContext context) async {
     // TODO 20250321 gjw DUPLICATED CODE WITH `tabs/script/save_button.dart`
-    final String dsname = ref.read(datasetNameProvider);
+    final String dsname = ref.read(dsnameProvider);
     // Format the date now as yyyymmdd to include this in the daved script
     // filename. (gjw 20250321)
     final now = DateTime.now();

@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Sunday 2025-03-16 12:10:15 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2025-03-27 13:55:02 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -110,9 +110,10 @@ class DatasetPopup extends ConsumerWidget {
                     setStatus(ref, statusChooseVariableRoles);
                     datasetLoadedUpdate(ref);
 
-                    // Save the dataset name in lowercase to the datasetNameProvider from the path.
+                    // Save the dataset name in lowercase to the dsnameProvider
+                    // from the path.
 
-                    ref.read(datasetNameProvider.notifier).state = path
+                    ref.read(dsnameProvider.notifier).state = path
                         .split(RegExp(r'[/\\]'))
                         .last
                         .split('.')
@@ -477,11 +478,12 @@ Future<void> loadDemoDataset(
   WidgetRef ref,
   BuildContext context,
   String assetPath,
-  String datasetName,
+  String dsname,
 ) async {
-  // Save the dataset name in lowercase to the datasetNameProvider.
+  // Save the dataset name in lowercase to the dsnameProvider.
 
-  ref.read(datasetNameProvider.notifier).state = datasetName.toLowerCase();
+  ref.read(dsnameProvider.notifier).state =
+      assetPath.split(RegExp(r'[/\\]')).last.split('.').first.toLowerCase();
 
   // Copy the asset to a temporary directory.
 
@@ -501,7 +503,7 @@ Future<void> loadDemoDataset(
 
   // Close the current dialog if the context is still mounted.
 
-  if (context.mounted) Navigator.pop(context, datasetName);
+  if (context.mounted) Navigator.pop(context, dsname);
 
   // Mark the dataset as loaded in the state management system.
 
