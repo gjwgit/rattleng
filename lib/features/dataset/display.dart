@@ -84,9 +84,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   static const List<double> columnWidths = <double>[
     100, // Variable
     400, // Role
-    60,  // Type
-    80,  // Unique
-    80,  // Missing
+    60, // Type
+    80, // Unique
+    80, // Missing
     200, // Sample
   ];
 
@@ -217,6 +217,37 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       });
     }
 
+    // Define a helper function that builds the header DataColumns.
+
+    List<DataColumn> _buildHeaderColumns() {
+      final List<Map<String, dynamic>> headers = [
+        {'title': 'Variable', 'width': columnWidths[0]},
+        {'title': 'Role', 'width': columnWidths[1]},
+        {'title': 'Type', 'width': columnWidths[2]},
+        {'title': 'Unique', 'width': columnWidths[3], 'numeric': true},
+        {'title': 'Missing', 'width': columnWidths[4], 'numeric': true},
+        {'title': 'Sample', 'width': columnWidths[5]},
+      ];
+
+      // Map each header definition to a DataColumn.
+
+      return headers.map((header) {
+        return DataColumn(
+          label: SizedBox(
+            width: header['width'] as double,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                header['title'] as String,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          numeric: header['numeric'] ?? false,
+        );
+      }).toList();
+    }
+
     // Build the dataset page.
 
     pages.add(
@@ -320,92 +351,17 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
           SizedBox(
             height: 56.0,
-            child: DataTable(
-              columns: [
-                DataColumn(
-                  label: SizedBox(
-                    width: columnWidths[0],
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: MarkdownTooltip(
-                        message: '''
+            child: MarkdownTooltip(
+              message: '''
                         
-                        To select or deselect all variables shift-click the checkbox to
-                        the left here in the header row.
+              To select or deselect all variables shift-click the checkbox to
+              the left here in the header row.
               
-                        ''',
-                        child: const Text(
-                          'Variable',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: columnWidths[1],
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: const Text(
-                        'Role',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: columnWidths[2],
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: const Text(
-                        'Type',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: columnWidths[3],
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: const Text(
-                        'Unique',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  numeric: true,
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: columnWidths[4],
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: const Text(
-                        'Missing',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  numeric: true,
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: columnWidths[5],
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: const Text(
-                        'Sample',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              rows: const [],
+              ''',
+              child: DataTable(
+                columns: _buildHeaderColumns(),
+                rows: const [],
+              ),
             ),
           ),
 
