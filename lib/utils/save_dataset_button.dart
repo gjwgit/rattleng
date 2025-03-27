@@ -1,6 +1,6 @@
 /// CSV Save button.
 //
-// Time-stamp: <Monday 2025-03-10 09:34:16 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-27 13:32:11 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_selector/file_selector.dart' as fs;
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/r/execute.dart';
 
 /// A CSV Save Button widget. When tapped, it opens a file-save dialog
@@ -42,11 +43,23 @@ class SaveDatasetButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String dsname = ref.read(datasetNameProvider);
+    final now = DateTime.now();
+    String yyyymmdd = "${now.year.toString().padLeft(4, '0')}"
+        "${(now.month).toString().padLeft(2, '0')}"
+        "${(now.day).toString().padLeft(2, '0')}";
+
+    String suggestedName =
+        'dataset_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.csv';
+
     return MarkdownTooltip(
       message: '''
-      
-      **Save.** Tap here to save the current ds to a CSV file.
-      
+
+        **Save:** Tap here to save the current dataset, which you might have
+        transformed within Rattle. The dataset will be saved as a CSV (comma
+        separated values) file. Within the R script the dataset is the current
+        value of the variable *ds*.
+
       ''',
       child: IconButton(
         icon: const Icon(
@@ -65,7 +78,7 @@ class SaveDatasetButton extends ConsumerWidget {
 
           fs.FileSaveLocation? result = await fs.getSaveLocation(
             acceptedTypeGroups: [csvType],
-            suggestedName: 'dataset.csv',
+            suggestedName: suggestedName,
           );
 
           if (result == null) {
