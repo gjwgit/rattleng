@@ -1,6 +1,6 @@
 /// Check for whether chr variable can be recoded as categoric.
 //
-// Time-stamp: <Thursday 2025-03-27 07:24:40 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-27 13:15:52 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -29,9 +29,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/meta_data.dart';
 
-/// Determines if a variable can be recoded as categorical based on its type.
-///
-/// Is [var] of type 'chr' and so can be recoded as categoric?
+/// Determines if [vname] can be recoded as categorical based on its type.
 
 bool enableRecodeCategoric(String vname, WidgetRef ref) {
   Map meta = ref.watch(metaDataProvider);
