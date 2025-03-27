@@ -25,11 +25,31 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Whether to cleanse the data or not. Default is true.
 
 final cleanseProvider = StateProvider<bool>((ref) => true);
 
 /// The maximum number of unique values for a character column to be a factor.
+/// This provider is initially set to 20, and then updated asynchronously with
+/// the saved value from SharedPreferences if available.
 
-final maxFactorProvider = StateProvider<int>((ref) => 20);
+final StateProvider<int> maxFactorProvider = StateProvider<int>((ref) {
+  const int defaultValue = 20;
+
+  // Schedule a microtask to load the saved value from SharedPreferences.
+
+  Future.microtask(() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedValue = prefs.getInt('maxFactor') ?? defaultValue;
+
+    // Update the provider only if the stored value is different.
+
+    if (ref.read(maxFactorProvider.notifier).state != storedValue) {
+      ref.read(maxFactorProvider.notifier).state = storedValue;
+    }
+  });
+
+  return defaultValue;
+});

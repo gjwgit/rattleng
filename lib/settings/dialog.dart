@@ -134,7 +134,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Max factor.
 
     ref.read(maxFactorProvider.notifier).state =
-        prefs.getInt('maxFactor') ?? 15;
+        prefs.getInt('maxFactor') ?? 20;
 
     // Partition ratios.
 
