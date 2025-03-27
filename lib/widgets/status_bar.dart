@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Sunday 2025-01-12 06:03:23 +1100 Graham Williams>
+/// Time-stamp: <Thursday 2025-03-27 05:38:58 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -39,6 +39,7 @@ import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_rows_columns.dart';
+import 'package:rattle/utils/get_target.dart';
 
 class StatusBar extends ConsumerWidget {
   const StatusBar({super.key});
@@ -48,6 +49,24 @@ class StatusBar extends ConsumerWidget {
     String path = ref.watch(pathProvider);
     if (path != '') path = '$path   ';
     String stdout = ref.watch(stdoutProvider);
+
+    String _buildTargetDisplay(String target) {
+      // Builds the target display string for the status bar.
+      //
+      // Returns a markdown formatted string with the target if one exists,
+      // otherwise returns an empty string.
+
+      String msg = '';
+
+      if (target.isNotEmpty &&
+          target != 'NULL' &&
+          target != '""' &&
+          !target.contains(' ')) {
+        msg = '   **Target**: $target';
+      }
+
+      return msg;
+    }
 
     return Container(
       constraints: const BoxConstraints(minHeight: 50),
@@ -72,7 +91,8 @@ class StatusBar extends ConsumerWidget {
               data: '[Rattle @](https://rattle.togaware.com)  '
                   '[togware.com](https://togaware.com)  '
                   '${basename(path)}'
-                  '${rExtractRowsColumns(rExtractGlimpse(stdout))}   '
+                  '${rExtractRowsColumns(rExtractGlimpse(stdout))}'
+                  '${_buildTargetDisplay(getTarget(ref))}   '
                   '${ref.watch(statusProvider)}',
               styleSheet: MarkdownStyleSheet(
                 p: Theme.of(context)
