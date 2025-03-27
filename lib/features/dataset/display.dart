@@ -84,9 +84,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   static const List<double> columnWidths = <double>[
     100, // Variable
     400, // Role
-    40, // Type
-    40, // Unique
-    40, // Missing
+    60,  // Type
+    80,  // Unique
+    80,  // Missing
     200, // Sample
   ];
 
@@ -325,16 +325,19 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 DataColumn(
                   label: SizedBox(
                     width: columnWidths[0],
-                    child: MarkdownTooltip(
-                      message: '''
-
-                          To select or deselect all variables shift-click the
-                          checkbox to the left here in the header row.
-
-                          ''',
-                      child: const Text(
-                        'Variable',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: MarkdownTooltip(
+                        message: '''
+                        
+                        To select or deselect all variables shift-click the checkbox to
+                        the left here in the header row.
+              
+                        ''',
+                        child: const Text(
+                          'Variable',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
@@ -342,27 +345,36 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 DataColumn(
                   label: SizedBox(
                     width: columnWidths[1],
-                    child: const Text(
-                      'Role',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: const Text(
+                        'Role',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
                 DataColumn(
                   label: SizedBox(
                     width: columnWidths[2],
-                    child: const Text(
-                      'Type',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: const Text(
+                        'Type',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
                 DataColumn(
                   label: SizedBox(
                     width: columnWidths[3],
-                    child: const Text(
-                      'Unique',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: const Text(
+                        'Unique',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   numeric: true,
@@ -370,9 +382,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 DataColumn(
                   label: SizedBox(
                     width: columnWidths[4],
-                    child: const Text(
-                      'Missing',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: const Text(
+                        'Missing',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   numeric: true,
@@ -380,9 +395,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 DataColumn(
                   label: SizedBox(
                     width: columnWidths[5],
-                    child: const Text(
-                      'Sample',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: const Text(
+                        'Sample',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
