@@ -2,7 +2,7 @@
 //
 // Time-stamp: <Monday 2025-03-10 09:34:16 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -29,9 +29,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_selector/file_selector.dart' as fs;
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/r/execute.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// A CSV Save Button widget. When tapped, it opens a file-save dialog
 /// for the user to choose a CSV location, then executes an R command
@@ -53,7 +53,6 @@ class SaveDatasetButton extends ConsumerWidget {
           Icons.save_alt,
           color: Colors.blue,
         ),
-        tooltip: 'Save dataset to CSV',
         onPressed: () async {
           // Define allowed file type (optional: restrict to .csv files).
 
@@ -61,15 +60,18 @@ class SaveDatasetButton extends ConsumerWidget {
             label: 'CSV files',
             extensions: ['csv'],
           );
+
           // Open the Save dialog with a suggested file name.
 
           fs.FileSaveLocation? result = await fs.getSaveLocation(
             acceptedTypeGroups: [csvType],
             suggestedName: 'dataset.csv',
           );
+
           if (result == null) {
             return;
           }
+
           // Get the selected file path.
 
           String selectedPath = result.path;
