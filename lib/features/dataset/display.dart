@@ -73,13 +73,8 @@ class DatasetDisplay extends ConsumerStatefulWidget {
 }
 
 class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
-  // Constants for layout.
-
-  final int typeFlex = 4;
-  final int contentFlex = 3;
-
   // Track pressed keys for shift and control selection.
-  
+
   bool _isShiftPressed = false;
   bool _isCtrlPressed = false;
 
@@ -89,20 +84,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   static const List<double> columnWidths = <double>[
     100, // Variable
     400, // Role
-    40,  // Type
-    40,  // Unique
-    40,  // Missing
+    40, // Type
+    40, // Unique
+    40, // Missing
     200, // Sample
   ];
 
   @override
   Widget build(BuildContext context) {
-    // Get the PageController from Riverpod.
-
     final pageController = ref.watch(pageControllerProvider);
 
-    String path = ref.watch(pathProvider);
-    String stdout = ref.watch(stdoutProvider);
+    final path = ref.watch(pathProvider);
+    final stdout = ref.watch(stdoutProvider);
 
     // Watch rebuildTriggerProvider to trigger a rebuild when its value changes.
 
@@ -115,15 +108,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     ];
 
     // Handle different file types.
-    
+
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
     } else if (path == weatherDemoFile ||
         // TODO 20250310 gjw Remo the deprecated weatherDemoFile
-        
+
         path.endsWith('.csv') ||
         path.endsWith('.xlsx')) {
-
       // 20240815 gjw Update the metaData provider here if needed.
 
       updateMetaData(ref);
@@ -131,7 +123,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       _addDatasetPage(stdout, pages);
     }
 
-    // Listen for shift and control key events.
+    // Listen for shift/ctrl key events.
 
     HardwareKeyboard.instance.addHandler((event) {
       setState(() {
@@ -156,7 +148,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   }
 
   ////////////////////////////////////////////////////////////////////////
-  
+
   // Add a page for text file (a .txt file) content.
 
   void _addTextFilePage(String stdout, List<Widget> pages) {
@@ -176,13 +168,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   }
 
   ////////////////////////////////////////////////////////////////////////
-  
   // Add a page for dataset summary.
-  
+
   void _addDatasetPage(String stdout, List<Widget> pages) {
-    Map<String, Role> currentRoles = ref.read(rolesProvider);
-    List<VariableInfo> vars = extractVariables(stdout);
-    List<String> highVars = extractLargeFactors(stdout);
+    final currentRoles = ref.read(rolesProvider);
+    final vars = extractVariables(stdout);
+    final highVars = extractLargeFactors(stdout);
 
     _initializeRoles(vars, highVars, currentRoles);
 
@@ -214,86 +205,76 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     void _updateRoleForSelectedRows(String newRole) {
       setState(() {
         final selectedRows = ref.read(selectedRowIndicesProvider);
-        String newStdout = ref.watch(stdoutProvider);
-        List<VariableInfo> newVars = extractVariables(newStdout);
+        final newStdout = ref.watch(stdoutProvider);
+        final newVars = extractVariables(newStdout);
         for (var index in selectedRows) {
           String columnName = newVars[index].name;
           ref.read(rolesProvider.notifier).state[columnName] =
               (newRole == 'Ignore') ? Role.ignore : Role.input;
         }
-
         selectedRows.clear();
-        
         ref.read(rebuildTriggerProvider.notifier).state++;
       });
     }
 
+    // Build the dataset page.
+
     pages.add(
-      Stack(
+      Column(
         children: [
-          // Row of role-setting buttons + Save + Viewer.
+          // 1) A Wrap for top row buttons so they won't overlap.
 
-          Row(
+          Wrap(
+            spacing: 8.0,
+            runSpacing: 8.0,
             children: [
-              configWidgetGap,
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ...rolesOption.keys.map(
-                      (roleKey) => MarkdownTooltip(
-                        message: rolesOption[roleKey]!,
-                        wait: const Duration(seconds: 1),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              final selectedRows =
-                                  ref.read(selectedRowIndicesProvider);
-                              if (selectedRows.isEmpty) {
-                                // Show a warning dialog if no rows are selected.
+              ...rolesOption.keys.map((roleKey) {
+                return ElevatedButton(
+                  onPressed: () {
+                    final selectedRows = ref.read(selectedRowIndicesProvider);
+                    if (selectedRows.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('No Row Selected'),
+                            content: const Text(
+                              'You have not selected a row to set the Role.',
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      _updateRoleForSelectedRows(roleKey);
+                    }
+                  },
+                  child: Text(roleKey),
+                );
+              }).toList(),
 
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('No Row Selected'),
-                                      content: const Text(
-                                        'You have not selected a row to set the Role.',
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(),
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              } else {
-                                _updateRoleForSelectedRows(roleKey);
-                              }
-                            },
-                            child: Text(roleKey),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // The Save Dataset button.
+
               SaveDatasetButton(),
-              configChooserGap,
+
+              // The viewer button.
+
               MarkdownTooltip(
                 message: '''
+
                 **Viewer.** Tap here to open a separate window to view the current dataset.
                 The default data viewer in R will be used, invoked as `View(ds)`.
+                
                 ''',
                 child: IconButton(
                   icon: const Icon(Icons.table_view, color: Colors.blue),
                   onPressed: () {
-                    String p = ref.read(pathProvider);
+                    final p = ref.read(pathProvider);
                     if (p.isEmpty) {
                       showOk(
                         context: context,
@@ -312,209 +293,197 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             ],
           ),
 
-          // Column that has a fixed header plus scrollable body.
+          // 2) The fixed header row.
 
-          Column(
-            children: [
-              // 1) The fixed header row.
+          SizedBox(
+            height: 56.0,
+            child: DataTable(
+              columns: [
+                DataColumn(
+                  label: SizedBox(
+                    width: columnWidths[0],
+                    child: MarkdownTooltip(
+                      message: '''
 
-              SizedBox(
-                height: 56.0,
-                child: DataTable(
-                  columns: [
-                    DataColumn(
-                      label: Container(
-                        width: columnWidths[0],
-                        child: MarkdownTooltip(
-                          message: '''
                           To select or deselect all variables shift-click the
                           checkbox to the left here in the header row.
+                          
                           ''',
-                          child: const Text(
-                            'Variable',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                      child: const Text(
+                        'Variable',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    DataColumn(
-                      label: Container(
-                        width: columnWidths[1],
-                        child: const Text(
-                          'Role',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Container(
-                        width: columnWidths[2],
-                        child: const Text(
-                          'Type',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Container(
-                        width: columnWidths[3],
-                        child: const Text(
-                          'Unique',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      numeric: true,
-                    ),
-                    DataColumn(
-                      label: Container(
-                        width: columnWidths[4],
-                        child: const Text(
-                          'Missing',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      numeric: true,
-                    ),
-                    DataColumn(
-                      label: Container(
-                        width: columnWidths[5],
-                        child: const Text(
-                          'Sample',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                  rows: const [],
-                ),
-              ),
-
-              // 2) The scrollable body below the header.
-
-              Expanded(
-                child: SingleChildScrollView(
-                  key: const Key('roles listView'),
-                  scrollDirection: Axis.vertical,
-                  child: DataTable(
-                    // Body columns with empty labels, but same widths.
-                    
-                    columns: List.generate(columnWidths.length, (index) {
-                      return DataColumn(
-                        label: SizedBox(width: columnWidths[index]),
-                      );
-                    }),
-                    rows: vars.map((variable) {
-                      int rowIndex = vars.indexOf(variable);
-                      bool isSelected =
-                          ref.watch(selectedRowIndicesProvider).contains(rowIndex);
-                      var formatter = NumberFormat('#,###');
-
-                      return DataRow(
-                        selected: isSelected,
-                        onSelectChanged: (bool? selected) {
-                          setState(() {
-                            if (selected == true) {
-                              if (_isShiftPressed) {
-                                ref.read(selectedRowIndicesProvider).add(rowIndex);
-                              } else if (_isCtrlPressed &&
-                                  ref
-                                      .read(selectedRowIndicesProvider)
-                                      .isNotEmpty) {
-                                int first = ref
-                                    .read(selectedRowIndicesProvider)
-                                    .first;
-                                int last = rowIndex;
-                                if (last < first) {
-                                  int temp = first;
-                                  first = last;
-                                  last = temp;
-                                }
-                                for (int i = first; i <= last; i++) {
-                                  ref.read(selectedRowIndicesProvider).add(i);
-                                }
-                              } else {
-                                ref.read(selectedRowIndicesProvider).clear();
-                                ref.read(selectedRowIndicesProvider).add(rowIndex);
-                              }
-                            } else {
-                              ref.read(selectedRowIndicesProvider).remove(rowIndex);
-                            }
-                          });
-                        },
-                        cells: [
-                          DataCell(
-                            Container(
-                              width: columnWidths[0],
-                              child: Text(variable.name),
-                            ),
-                          ),
-                          DataCell(
-                            Container(
-                              width: columnWidths[1],
-                              child: _buildRoleChips(
-                                variable.name,
-                                ref.watch(rolesProvider),
-                              ),
-                            ),
-                          ),
-                          DataCell(
-                            Container(
-                              width: columnWidths[2],
-                              child: Text(variable.type),
-                            ),
-                          ),
-                          DataCell(
-                            Container(
-                              width: columnWidths[3],
-                              child: Text(
-                                formatter.format(
-                                  ref.watch(metaDataProvider)[variable.name]
-                                          ?['unique']?[0] ??
-                                      0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          DataCell(
-                            Container(
-                              width: columnWidths[4],
-                              child: Text(
-                                formatter.format(
-                                  ref.watch(metaDataProvider)[variable.name]
-                                          ?['missing']?[0] ??
-                                      0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          DataCell(
-                            Container(
-                              width: columnWidths[5],
-                              child: SelectableText(
-                                _truncateContent(variable.details),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
                   ),
                 ),
+                DataColumn(
+                  label: SizedBox(
+                    width: columnWidths[1],
+                    child: const Text(
+                      'Role',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: SizedBox(
+                    width: columnWidths[2],
+                    child: const Text(
+                      'Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: SizedBox(
+                    width: columnWidths[3],
+                    child: const Text(
+                      'Unique',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  numeric: true,
+                ),
+                DataColumn(
+                  label: SizedBox(
+                    width: columnWidths[4],
+                    child: const Text(
+                      'Missing',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  numeric: true,
+                ),
+                DataColumn(
+                  label: SizedBox(
+                    width: columnWidths[5],
+                    child: const Text(
+                      'Sample',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+              rows: const [],
+            ),
+          ),
+
+          // 3) The scrollable body below the header.
+
+          Expanded(
+            child: SingleChildScrollView(
+              key: const Key('roles listView'),
+              scrollDirection: Axis.vertical,
+              child: DataTable(
+                columns: List.generate(columnWidths.length, (index) {
+                  return DataColumn(
+                    label: SizedBox(width: columnWidths[index]),
+                  );
+                }),
+                rows: vars.map((variable) {
+                  int rowIndex = vars.indexOf(variable);
+                  bool isSelected =
+                      ref.watch(selectedRowIndicesProvider).contains(rowIndex);
+                  final formatter = NumberFormat('#,###');
+
+                  return DataRow(
+                    selected: isSelected,
+                    onSelectChanged: (bool? selected) {
+                      setState(() {
+                        if (selected == true) {
+                          if (_isShiftPressed) {
+                            ref.read(selectedRowIndicesProvider).add(rowIndex);
+                          } else if (_isCtrlPressed &&
+                              ref.read(selectedRowIndicesProvider).isNotEmpty) {
+                            int first =
+                                ref.read(selectedRowIndicesProvider).first;
+                            int last = rowIndex;
+                            if (last < first) {
+                              int temp = first;
+                              first = last;
+                              last = temp;
+                            }
+                            for (int i = first; i <= last; i++) {
+                              ref.read(selectedRowIndicesProvider).add(i);
+                            }
+                          } else {
+                            ref.read(selectedRowIndicesProvider).clear();
+                            ref.read(selectedRowIndicesProvider).add(rowIndex);
+                          }
+                        } else {
+                          ref.read(selectedRowIndicesProvider).remove(rowIndex);
+                        }
+                      });
+                    },
+                    cells: [
+                      DataCell(
+                        SizedBox(
+                          width: columnWidths[0],
+                          child: Text(variable.name),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: columnWidths[1],
+                          child: _buildRoleChips(
+                            variable.name,
+                            ref.watch(rolesProvider),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: columnWidths[2],
+                          child: Text(variable.type),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: columnWidths[3],
+                          child: Text(
+                            formatter.format(
+                              ref.watch(metaDataProvider)[variable.name]
+                                      ?['unique']?[0] ??
+                                  0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: columnWidths[4],
+                          child: Text(
+                            formatter.format(
+                              ref.watch(metaDataProvider)[variable.name]
+                                      ?['missing']?[0] ??
+                                  0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: columnWidths[5],
+                          child: SelectableText(
+                            _truncateContent(variable.details),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
               ),
-            ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  // Initialize roles. Default to INPUT, identify TARGET, RISK, etc.
+  // Initialize roles.
 
-  void _initializeRoles(
-    List<VariableInfo> vars,
-    List<String> highVars,
-    Map<String, Role> currentRoles,
-  ) {
+  void _initializeRoles(List<VariableInfo> vars, List<String> highVars,
+      Map<String, Role> currentRoles) {
     if (currentRoles.isEmpty && vars.isNotEmpty) {
       for (var column in vars) {
         _setInitialRole(column, ref);
@@ -532,7 +501,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     if (name.startsWith('risk_')) role = Role.risk;
     if (name.startsWith('ignore_')) role = Role.ignore;
     if (name.startsWith('target_')) role = Role.target;
-
     ref.read(rolesProvider.notifier).state[column.name] = role;
     ref.read(typesProvider.notifier).state[column.name] =
         isNumeric(column.type) ? Type.numeric : Type.categoric;
@@ -555,7 +523,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     for (var id in getUniqueColumns(ref)) {
       ref.read(rolesProvider.notifier).state[id] = Role.ident;
     }
-    Map metaData = ref.read(metaDataProvider);
+    final metaData = ref.read(metaDataProvider);
     if (metaData.length == 2) {
       ref.read(rolesProvider.notifier).state[metaData.keys.first] = Role.ident;
       ref.read(rolesProvider.notifier).state[metaData.keys.last] = Role.target;
@@ -583,8 +551,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               pressElevation: 8.0,
               elevation: 2.0,
               selected: remap(currentRoles[columnName]!, choice),
-              onSelected: (bool selected) =>
-                  _handleRoleSelection(selected, choice, columnName, currentRoles),
+              onSelected: (bool selected) => _handleRoleSelection(
+                  selected, choice, columnName, currentRoles),
             );
           }).toList(),
         ),
@@ -602,7 +570,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   ) {
     setState(() {
       if (selected) {
-        if (choice == Role.target || choice == Role.risk || choice == Role.weight) {
+        if (choice == Role.target ||
+            choice == Role.risk ||
+            choice == Role.weight) {
           currentRoles.forEach((key, value) {
             if (value == choice) {
               ref.read(rolesProvider.notifier).state[key] = Role.input;
@@ -618,8 +588,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Truncate content for display.
 
   String _truncateContent(String content) {
-    int maxLength = 45;
-    String subStr = content.length > maxLength ? content.substring(0, maxLength) : content;
+    const maxLength = 45;
+    String subStr =
+        content.length > maxLength ? content.substring(0, maxLength) : content;
     int lastCommaIndex = subStr.lastIndexOf(',') + 1;
     return '${lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr} ...';
   }
