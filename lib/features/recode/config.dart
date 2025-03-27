@@ -30,6 +30,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
@@ -38,6 +39,7 @@ import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/enable_recode_categoric.dart';
 import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_under_construction.dart';
@@ -144,7 +146,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
   // BUILD button action.
 
-  void buildAction() {
+  void buildAction(bool isNumeric) {
     // Run the R scripts.
 
     switch (selectedTransform) {
@@ -164,7 +166,15 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         rSource(context, ref, ['transform_recode_join_categoric']);
         break;
       case 'As Categoric':
-        rSource(context, ref, ['transform_recode_as_categoric']);
+        rSource(
+          context,
+          ref,
+          [
+            isNumeric
+                ? 'transform_recode_as_categoric_numeric'
+                : 'transform_recode_as_categoric_character',
+          ],
+        );
         break;
       case 'As Numeric':
         rSource(context, ref, ['transform_recode_as_numeric']);
@@ -186,6 +196,8 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     if (selected != 'NULL') {
       isNumeric = ref.read(typesProvider)[selected] == Type.numeric;
     }
+
+    bool enableCategoric = enableRecodeCategoric(selected, ref);
 
     // TODO 20240819 gjw WHERE ARE THE TOOLTIPS?
 
@@ -227,7 +239,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
           options: asCategoricMethods,
           selectedOption: selectedTransform,
           tooltips: asCategoricMethodsTooltips,
-          enabled: isNumeric && selected != 'NULL',
+          enabled: (isNumeric && selected != 'NULL') || enableCategoric,
           onSelected: (String? selected) {
             setState(() {
               selectedTransform = selected ?? '';
@@ -354,7 +366,12 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
                     ref.read(selectedProvider.notifier).state = selected;
                     ref.read(selected2Provider.notifier).state = selected2;
-                    buildAction();
+
+                    bool varIsNumeric = ref.read(metaDataProvider)[selected]
+                            ['datatype'] ==
+                        ['numeric'];
+
+                    buildAction(varIsNumeric);
 
                     if (selectedTransform == 'Quantiles') {
                       await Future.delayed(const Duration(seconds: 1));

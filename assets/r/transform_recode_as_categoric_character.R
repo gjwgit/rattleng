@@ -1,11 +1,11 @@
-# Rattle Scripts: Data Transformation/Wrangling
+# Transform a `chr` into `fct`
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2024-08-19 08:47:08 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 05:35:38 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,23 +22,9 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Kevin Wang
+# Author: Graham Williams
 
+ds %<>% mutate(TFC_<SELECTED_VAR> = as.factor(<SELECTED_VAR>))
 
-
-
-# Remap variables. 
-
-# Transform into a factor.
-
-ds[["TFC_<SELECTED_VAR>"]] <- as.factor(ds[["<SELECTED_VAR>"]])
-
-ol - levels(ds[["<TFC_<SELECTED_VAR>"]])
-lol <- length(ol)
-nl <- c(sprintf("[%s,%s]", ol[1], ol[1]), sprintf("(%s,%s]", ol[-lol], ol[-1]))
-levels(ds[["TFC_<SELECTED_VAR>"]]) <- nl
-
-#=======================================================================
-#=======================================================================
 glimpse(ds)
 summary(ds)
