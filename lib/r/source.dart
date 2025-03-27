@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Wednesday 2025-03-19 08:47:45 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-03-28 08:20:41 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -244,7 +244,7 @@ Future<void> rSource(
 
   // EVALUATE
 
-  String chosenDataType = ref.read(datasetTypeProvider);
+  String datasetType = ref.read(datasetTypeProvider);
 
   // FOREST
 
@@ -609,7 +609,7 @@ Future<void> rSource(
 
   // EVALUATE
 
-  code = code.replaceAll('<DATASET_TYPE>', chosenDataType.toUpperCase());
+  code = code.replaceAll('<DATASET_TYPE>', datasetType.toUpperCase());
 
   ////////////////////////////////////////////////////////////////////////
   // FOREST
