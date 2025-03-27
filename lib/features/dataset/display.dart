@@ -26,12 +26,11 @@
 library;
 
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
@@ -51,6 +50,7 @@ import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
+import 'package:rattle/utils/save_dataset_button.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/update_meta_data.dart';
@@ -281,6 +281,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   ],
                 ),
               ),
+              SaveDatasetButton(),
+              configChooserGap,
               MarkdownTooltip(
                 message: '''
 
