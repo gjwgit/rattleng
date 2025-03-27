@@ -1,6 +1,6 @@
 /// WEATHER -> REGRESSION -> NEURALNET
 //
-// Time-stamp: <Thursday 2025-03-27 10:24:20 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-03-27 14:47:08 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -100,8 +100,8 @@ void main() {
       await tapChip(tester, 'neuralnet');
       await tapButton(tester, 'Build Neural Network');
       // We need quite a long delay here to have the model built. On Kadesh it
-      // required 6s delay but on ecosysl it required 16s! (gjw 20250323)
-      await addDelay(tester, 16);
+      // required 6s delay but on ecosysl it required 18s! (gjw 20250323)
+      await addDelay(tester, 18);
       await navigateToPage(
         tester,
         1,
