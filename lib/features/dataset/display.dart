@@ -228,67 +228,90 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             spacing: 8.0,
             runSpacing: 8.0,
             children: [
-              ...rolesOption.keys.map((roleKey) {
-                return ElevatedButton(
-                  onPressed: () {
-                    final selectedRows = ref.read(selectedRowIndicesProvider);
-                    if (selectedRows.isEmpty) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('No Row Selected'),
-                            content: const Text(
-                              'You have not selected a row to set the Role.',
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  configWidgetGap,
+
+                  // Left part: the ElevatedButtons for role options.
+
+                  Wrap(
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    children: rolesOption.keys.map((roleKey) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          final selectedRows =
+                              ref.read(selectedRowIndicesProvider);
+                          if (selectedRows.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('No Row Selected'),
+                                  content: const Text(
+                                    'You have not selected a row to set the Role.',
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            _updateRoleForSelectedRows(roleKey);
+                          }
                         },
+                        child: Text(roleKey),
                       );
-                    } else {
-                      _updateRoleForSelectedRows(roleKey);
-                    }
-                  },
-                  child: Text(roleKey),
-                );
-              }).toList(),
+                    }).toList(),
+                  ),
 
-              // The Save Dataset button.
+                  Spacer(),
 
-              SaveDatasetButton(),
+                  // Right part: the SaveDatasetButton and the Viewer button.
 
-              // The viewer button.
-
-              MarkdownTooltip(
-                message: '''
-
-                **Viewer.** Tap here to open a separate window to view the current dataset.
-                The default data viewer in R will be used, invoked as `View(ds)`.
-                
-                ''',
-                child: IconButton(
-                  icon: const Icon(Icons.table_view, color: Colors.blue),
-                  onPressed: () {
-                    final p = ref.read(pathProvider);
-                    if (p.isEmpty) {
-                      showOk(
-                        context: context,
-                        title: 'No Dataset Loaded',
-                        content: '''
-                        Please choose a dataset to load from the **Dataset** tab.
-                        There is not much we can do until we have loaded a dataset.
+                  Wrap(
+                    spacing: 8.0,
+                    children: [
+                      SaveDatasetButton(),
+                      MarkdownTooltip(
+                        message: '''
+              
+                        **Viewer.** Tap here to open a separate window to view the current dataset.
+                        The default data viewer in R will be used, invoked as `View(ds)`.
+              
                         ''',
-                      );
-                    } else {
-                      rExecute(ref, 'View(ds)\n');
-                    }
-                  },
-                ),
+                        child: IconButton(
+                          icon:
+                              const Icon(Icons.table_view, color: Colors.blue),
+                          onPressed: () {
+                            final p = ref.read(pathProvider);
+                            if (p.isEmpty) {
+                              showOk(
+                                context: context,
+                                title: 'No Dataset Loaded',
+                                content: '''
+                                
+                                Please choose a dataset to load from the **Dataset** tab.
+                                There is not much we can do until we have loaded a dataset.
+                                
+                                ''',
+                              );
+                            } else {
+                              rExecute(ref, 'View(ds)\n');
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
@@ -307,7 +330,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
                           To select or deselect all variables shift-click the
                           checkbox to the left here in the header row.
-                          
+
                           ''',
                       child: const Text(
                         'Variable',
