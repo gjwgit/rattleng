@@ -1,6 +1,6 @@
 /// Check for whether chr variable can be recoded as categoric.
 //
-// Time-stamp: <Sunday 2024-09-08 12:19:37 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-03-27 07:24:40 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -27,29 +27,21 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/cleanse.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/providers/meta_data.dart';
 
-/// Determines if a variable can be decoded as categorical based on its type.
+/// Determines if a variable can be recoded as categorical based on its type.
 ///
-/// Takes a [key] representing the variable name and a [ref] for state management.
-/// Returns true if the variable is of type 'chr' and cleansing is not enabled.
+/// Is [var] of type 'chr' and so can be recoded as categoric?
 
-bool enableDecodeCategoric(String key, WidgetRef ref) {
-  final cleanse = ref.watch(cleanseProvider);
+bool enableRecodeCategoric(String vname, WidgetRef ref) {
+  Map meta = ref.watch(metaDataProvider);
 
-  String stdout = ref.watch(stdoutProvider);
-
-  List<VariableInfo> vars = extractVariables(stdout);
-
-  if (!cleanse) {
-    for (var variableInfo in vars) {
-      if (variableInfo.name == key &&
-          (variableInfo.type == 'chr' || variableInfo.type == 'ord')) {
-        return true;
-      }
-    }
+  if (meta.containsKey(vname) &&
+      meta[vname] is Map &&
+      (meta[vname] as Map).containsKey('datatype') &&
+      (meta[vname]['datatype'] is List) &&
+      (meta[vname]['datatype'] as List).contains('character')) {
+    return true;
   }
 
   return false;
