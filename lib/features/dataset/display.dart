@@ -318,7 +318,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ),
 
           // Main ListView for displaying data table.
-          
+
           Padding(
             padding: const EdgeInsets.only(top: 56.0),
             child: _buildDataTable(vars),
@@ -430,124 +430,120 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         the left here in the header row.
         
         ''',
-        child: DataTable2(
-          columns: [
-            DataColumn(
-              label: Text(
-                'Variable',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            DataColumn(
-              label: SizedBox(
-                width: 400.0,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: const Text(
-                    'Role',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: 1200,
+            child: DataTable2(
+              columns: [
+                DataColumn2(
+                  label: Text('Variable',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  size: ColumnSize.M,
                 ),
-              ),
-            ),
-            DataColumn(
-              label:
-                  Text('Type', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            DataColumn(
-              label:
-                  Text('Unique', style: TextStyle(fontWeight: FontWeight.bold)),
-              numeric: true,
-            ),
-            DataColumn(
-              label: Text(
-                'Missing',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              numeric: true,
-            ),
-            DataColumn(
-              label: Text(
-                'Sample',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-          rows: vars.map((variable) {
-            int rowIndex = vars.indexOf(variable);
-            bool isSelected = selectedRows.contains(rowIndex);
-
-            return DataRow(
-              selected: isSelected,
-              onSelectChanged: (bool? selected) {
-                setState(() {
-                  if (selected == true) {
-                    if (_isShiftPressed) {
-                      // Shift-click: Add multiple selections from the last selected row.
-
-                      selectedRows.add(rowIndex);
-                    } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
-                      // Ctrl-click: Auto-select range between the first selected row and this row.
-
-                      int firstSelectedRow = selectedRows.first;
-                      int lastSelectedRow = rowIndex;
-
-                      // Ensure that we have a start and end point correctly ordered.
-
-                      if (lastSelectedRow < firstSelectedRow) {
-                        int temp = firstSelectedRow;
-                        firstSelectedRow = lastSelectedRow;
-                        lastSelectedRow = temp;
-                      }
-
-                      // Select all rows in the range between first and last selected rows.
-
-                      for (int i = firstSelectedRow;
-                          i <= lastSelectedRow;
-                          i++) {
-                        selectedRows.add(i);
-                      }
-                    } else {
-                      // Single click: Clear previous selection and select only the current row.
-
-                      selectedRows.clear();
-                      selectedRows.add(rowIndex);
-                    }
-                  } else {
-                    // Deselect the row if it was previously selected.
-
-                    selectedRows.remove(rowIndex);
-                  }
-                });
-              },
-              cells: [
-                DataCell(Text(variable.name)),
-                DataCell(
-                  _buildRoleChips(variable.name, currentRoles),
+                DataColumn2(
+                  label:
+                      Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
+                  fixedWidth: 500.0,
                 ),
-                DataCell(Text(variable.type)),
-                DataCell(
-                  Text(
-                    formatter.format(
-                      ref.watch(metaDataProvider)[variable.name]?['unique']
-                              ?[0] ??
-                          0,
-                    ),
-                  ),
+                DataColumn2(
+                  label:
+                      Text('Type', style: TextStyle(fontWeight: FontWeight.bold)),
+                  size: ColumnSize.S,
                 ),
-                DataCell(
-                  Text(
-                    formatter.format(
-                      ref.watch(metaDataProvider)[variable.name]?['missing']
-                              ?[0] ??
-                          0,
-                    ),
-                  ),
+                DataColumn2(
+                  label: Text('Unique',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  size: ColumnSize.S,
                 ),
-                DataCell(SelectableText(_truncateContent(variable.details))),
+                DataColumn2(
+                  label: Text('Missing',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  size: ColumnSize.S,
+                ),
+                DataColumn2(
+                  label: Text('Sample',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  size: ColumnSize.M,
+                ),
               ],
-            );
-          }).toList(),
+              rows: vars.map((variable) {
+                int rowIndex = vars.indexOf(variable);
+                bool isSelected = selectedRows.contains(rowIndex);
+            
+                return DataRow(
+                  selected: isSelected,
+                  onSelectChanged: (bool? selected) {
+                    setState(() {
+                      if (selected == true) {
+                        if (_isShiftPressed) {
+                          // Shift-click: Add multiple selections from the last selected row.
+            
+                          selectedRows.add(rowIndex);
+                        } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
+                          // Ctrl-click: Auto-select range between the first selected row and this row.
+            
+                          int firstSelectedRow = selectedRows.first;
+                          int lastSelectedRow = rowIndex;
+            
+                          // Ensure that we have a start and end point correctly ordered.
+            
+                          if (lastSelectedRow < firstSelectedRow) {
+                            int temp = firstSelectedRow;
+                            firstSelectedRow = lastSelectedRow;
+                            lastSelectedRow = temp;
+                          }
+            
+                          // Select all rows in the range between first and last selected rows.
+            
+                          for (int i = firstSelectedRow;
+                              i <= lastSelectedRow;
+                              i++) {
+                            selectedRows.add(i);
+                          }
+                        } else {
+                          // Single click: Clear previous selection and select only the current row.
+            
+                          selectedRows.clear();
+                          selectedRows.add(rowIndex);
+                        }
+                      } else {
+                        // Deselect the row if it was previously selected.
+            
+                        selectedRows.remove(rowIndex);
+                      }
+                    });
+                  },
+                  cells: [
+                    DataCell(Text(variable.name)),
+                    DataCell(
+                      _buildRoleChips(variable.name, currentRoles),
+                    ),
+                    DataCell(Text(variable.type)),
+                    DataCell(
+                      Text(
+                        formatter.format(
+                          ref.watch(metaDataProvider)[variable.name]?['unique']
+                                  ?[0] ??
+                              0,
+                        ),
+                      ),
+                    ),
+                    DataCell(
+                      Text(
+                        formatter.format(
+                          ref.watch(metaDataProvider)[variable.name]?['missing']
+                                  ?[0] ??
+                              0,
+                        ),
+                      ),
+                    ),
+                    DataCell(SelectableText(_truncateContent(variable.details))),
+                  ],
+                );
+              }).toList(),
+            ),
+          ),
         ),
       ),
     );
@@ -556,36 +552,29 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Build role choice chips.
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
-    return Center(
+    return Wrap(
       key: Key('role-${columnName}'),
-      // Set width to fit 5 ChoiceChips in a row.
-
-      child: SizedBox(
-        width: choiceChipRowWidth,
-        child: Wrap(
-          spacing: 5.0,
-          runSpacing: choiceChipRowSpace,
-          children: choices.map((choice) {
-            return ChoiceChip(
-              label: Text(choice.displayString),
-              disabledColor: Colors.grey,
-              selectedColor: Colors.lightBlue[200],
-              backgroundColor: Colors.lightBlue[50],
-              showCheckmark: false,
-              shadowColor: Colors.grey,
-              pressElevation: 8.0,
-              elevation: 2.0,
-              selected: remap(currentRoles[columnName]!, choice),
-              onSelected: (bool selected) => _handleRoleSelection(
-                selected,
-                choice,
-                columnName,
-                currentRoles,
-              ),
-            );
-          }).toList(),
-        ),
-      ),
+      spacing: 5.0,
+      runSpacing: choiceChipRowSpace,
+      children: choices.map((choice) {
+        return ChoiceChip(
+          label: Text(choice.displayString),
+          disabledColor: Colors.grey,
+          selectedColor: Colors.lightBlue[200],
+          backgroundColor: Colors.lightBlue[50],
+          showCheckmark: false,
+          shadowColor: Colors.grey,
+          pressElevation: 8.0,
+          elevation: 2.0,
+          selected: remap(currentRoles[columnName]!, choice),
+          onSelected: (bool selected) => _handleRoleSelection(
+            selected,
+            choice,
+            columnName,
+            currentRoles,
+          ),
+        );
+      }).toList(),
     );
   }
 
