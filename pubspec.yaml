@@ -39,6 +39,7 @@ dependencies:
       ref: main
 
   catppuccin_flutter: ^1.0.0
+  data_table_2: ^2.6.0
   file_picker: ^9.0.2
   file_selector: ^1.0.3
   flutter_markdown: ^0.7.1
