@@ -453,7 +453,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             scrollDirection: Axis.horizontal,
             controller: _horizontalScrollController,
             child: SizedBox(
-              width: 1300, // Set the width to avoid truncated.
+              width: 1300, // Set the width to avoid truncated label.
               child: DataTable2(
                 dataRowHeight: 60.0,
                 checkboxAlignment: Alignment.centerLeft,
