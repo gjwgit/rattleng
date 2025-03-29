@@ -341,6 +341,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       }
       _setTargetRole(vars, ref);
       _setIdentRole(ref);
+
+      // 20241213 gjw Let's turn off the IGNORE heursitic for now. Leave it to a
+      // user to decide. For the PROTEIN dataset we want COUNTRY to be IDENT r
+      // TARGET rather than IGNORE.
+
+      // _setIgnoreRoleForHighVars(highVars, ref);
     }
   }
 
@@ -362,7 +368,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         isNumeric(column.type) ? Type.numeric : Type.categoric;
   }
 
-  // By default treat the last variable as TARGET if none is set.
+  // Treat the last variable as a TARGET by default. We will eventually
+  // implement Rattle heuristics to identify the TARGET if the final
+  // variable has more than 5 levels. If so we'll check if the first
+  // variable looks like a TARGET (another common practise) and if not
+  // then no TARGET will be identified by default.
 
   void _setTargetRole(List<VariableInfo> vars, WidgetRef ref) {
     String target = getTarget(ref);
@@ -432,6 +442,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         the left here in the header row.
         
         ''',
+
+        // Use [_horizontalScrollController] twice to ensure that
+        // the Scrollbar is properly linked to a ScrollPosition.
+
         child: Scrollbar(
           controller: _horizontalScrollController,
           thumbVisibility: true,
@@ -450,14 +464,22 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                     ),
                     size: ColumnSize.L,
                   ),
+
+                  // ColumnSize.L is not enough for long variable names.
+                  // Set fixed width for the Role variable.
+
                   DataColumn2(
-                    label: Text('Role',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    label: Text(
+                      'Role',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     fixedWidth: 500.0,
                   ),
                   DataColumn2(
-                    label: Text('Type',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    label: Text(
+                      'Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     size: ColumnSize.S,
                   ),
                   DataColumn2(
@@ -555,7 +577,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                         ),
                       ),
                       DataCell(
-                          SelectableText(_truncateContent(variable.details)),),
+                        SelectableText(_truncateContent(variable.details)),
+                      ),
                     ],
                   );
                 }).toList(),
