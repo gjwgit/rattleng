@@ -453,21 +453,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             scrollDirection: Axis.horizontal,
             controller: _horizontalScrollController,
             child: SizedBox(
-              width: 1300,
+              width: 1300, // Set the width to avoid truncated label.
               child: DataTable2(
                 dataRowHeight: 60.0,
+                checkboxAlignment: Alignment.centerLeft,
                 columns: [
                   DataColumn2(
                     label: Text(
                       'Variable',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    fixedWidth: 150.0,
+                    size: ColumnSize.M,
                   ),
-
-                  // ColumnSize.L is not enough for long variable names.
-                  // Set fixed width for the Role variable.
-
                   DataColumn2(
                     label: Text(
                       'Role',
@@ -480,28 +477,28 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       'Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    fixedWidth: 100.0,
+                    size: ColumnSize.S,
                   ),
                   DataColumn2(
                     label: Text(
                       'Unique',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    fixedWidth: 120.0,
+                    size: ColumnSize.S,
                   ),
                   DataColumn2(
                     label: Text(
                       'Missing',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    fixedWidth: 120.0,
+                    size: ColumnSize.S,
                   ),
                   DataColumn2(
                     label: Text(
                       'Sample',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    fixedWidth: 250.0,
+                    size: ColumnSize.L,
                   ),
                 ],
                 rows: vars.map((variable) {
