@@ -453,16 +453,16 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             scrollDirection: Axis.horizontal,
             controller: _horizontalScrollController,
             child: SizedBox(
-              width: 1200,
+              width: 1300,
               child: DataTable2(
-                dataRowHeight: 70.0,
+                dataRowHeight: 60.0,
                 columns: [
                   DataColumn2(
                     label: Text(
                       'Variable',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.L,
+                    fixedWidth: 150.0,
                   ),
 
                   // ColumnSize.L is not enough for long variable names.
@@ -473,35 +473,35 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       'Role',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    fixedWidth: 500.0,
+                    fixedWidth: 450.0,
                   ),
                   DataColumn2(
                     label: Text(
                       'Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.M,
+                    fixedWidth: 100.0,
                   ),
                   DataColumn2(
                     label: Text(
                       'Unique',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.M,
+                    fixedWidth: 120.0,
                   ),
                   DataColumn2(
                     label: Text(
                       'Missing',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.M,
+                    fixedWidth: 120.0,
                   ),
                   DataColumn2(
                     label: Text(
                       'Sample',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.L,
+                    fixedWidth: 250.0,
                   ),
                 ],
                 rows: vars.map((variable) {
