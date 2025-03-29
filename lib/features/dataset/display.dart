@@ -455,7 +455,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             child: SizedBox(
               width: 1200,
               child: DataTable2(
-                dataRowHeight: 60.0,
+                dataRowHeight: 70.0,
                 columns: [
                   DataColumn2(
                     label: Text(
@@ -480,21 +480,21 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       'Type',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.S,
+                    size: ColumnSize.M,
                   ),
                   DataColumn2(
                     label: Text(
                       'Unique',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.S,
+                    size: ColumnSize.M,
                   ),
                   DataColumn2(
                     label: Text(
                       'Missing',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.S,
+                    size: ColumnSize.M,
                   ),
                   DataColumn2(
                     label: Text(
