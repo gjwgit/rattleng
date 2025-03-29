@@ -13,7 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
-+ RECODE: Support recoding CHAR to FACTOR [6.4.52 20250327 gjw]
++ DATASET: Fix the header row to not scroll [6.4.53 20250329 zy]
++ RECODE: Support recoding CHAR to FACTOR [6.4.52 20250327 zy]
 + STATUS BAR: Add Target: [6.4.51 20250327 zy]
 + SETTINGS: Add max factors converting chr to fct [6.4.50 20250325 zy]
 + SCRIPT: Support search [6.4.49 20250325 zy]
