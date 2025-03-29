@@ -38,6 +38,7 @@ import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/get_obs_missing.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
@@ -71,6 +72,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
       **Obs with Missing:** Choose this chip to remove from the dataset all rows
       (observations) that have any missing values.
+
+      ''',
+    'Obs with Missing Target': '''
+
+      **Obs with Missing Target:** Choose this chip to remove from the dataset target 
+      row that have any missing values.
 
       ''',
     'Ignored': '''
@@ -125,6 +132,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         deleted. Continue?
 
         ''',
+      'Obs with Missing Target' => '''
+
+        The target ${getTarget(ref)} row with missing values that will be
+        deleted. Continue?
+
+        ''',
       _ => '''
 
         This shouldn't happen in warningText
@@ -139,6 +152,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       'Variable' => 'transform_clean_delete_selected',
       'Vars with Missing' => 'transform_clean_delete_vars_missing',
       'Obs with Missing' => 'transform_clean_delete_obs_missing',
+      'Obs with Missing Target' => 'transform_clean_delete_obs_missing_target',
       _ => '',
     };
   }
@@ -157,7 +171,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       case 'Vars with Missing':
         varsToDelete.addAll(getMissing(ref));
       case 'Obs with Missing':
-        // variables won't be deleted so return directly
+        // variables won't be deleted so return directly.
+        
+        return;
+      case 'Obs with Missing Target':
+        // variables won't be deleted so return directly.
+
         return;
       default:
         showUnderConstruction(context);
