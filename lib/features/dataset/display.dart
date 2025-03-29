@@ -448,7 +448,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       'Variable',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.M,
+                    size: ColumnSize.L,
                   ),
                   DataColumn2(
                     label: Text('Role',
