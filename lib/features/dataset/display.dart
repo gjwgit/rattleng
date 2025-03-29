@@ -289,7 +289,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 current dataset. The default and quite simple data viewer in R
                 will be used. It is invoked as `View(ds)`.
 
-              ''',
+                ''',
                 child: IconButton(
                   icon: const Icon(
                     Icons.table_view,
@@ -435,10 +435,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           child: SizedBox(
             width: 1200,
             child: DataTable2(
+              dataRowHeight: 60.0,
               columns: [
                 DataColumn2(
                   label: Text('Variable',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style: TextStyle(fontWeight: FontWeight.bold),),
                   size: ColumnSize.M,
                 ),
                 DataColumn2(
@@ -453,18 +454,18 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                 ),
                 DataColumn2(
                   label: Text('Unique',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style: TextStyle(fontWeight: FontWeight.bold),),
                   size: ColumnSize.S,
                 ),
                 DataColumn2(
                   label: Text('Missing',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style: TextStyle(fontWeight: FontWeight.bold),),
                   size: ColumnSize.S,
                 ),
                 DataColumn2(
                   label: Text('Sample',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  size: ColumnSize.M,
+                      style: TextStyle(fontWeight: FontWeight.bold),),
+                  size: ColumnSize.L,
                 ),
               ],
               rows: vars.map((variable) {
