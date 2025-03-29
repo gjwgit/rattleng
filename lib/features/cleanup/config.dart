@@ -77,7 +77,8 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     'Obs with Missing Target': '''
 
       **Obs with Missing Target:** Choose this chip to remove from the dataset target 
-      row that have any missing values.
+      row that have any missing values. The chip will be disabled if the target is not 
+      set or has no missing observations.
 
       ''',
     'Ignored': '''
@@ -172,7 +173,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         varsToDelete.addAll(getMissing(ref));
       case 'Obs with Missing':
         // variables won't be deleted so return directly.
-        
+
         return;
       case 'Obs with Missing Target':
         // variables won't be deleted so return directly.
@@ -314,6 +315,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   }
                 });
               },
+              // TODO: 
+
+              isOptionDisabled: (option) => option == multiMethods.keys.toList()[2],
             ),
 
             ChoiceChipTip<String>(
