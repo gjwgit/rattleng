@@ -61,7 +61,8 @@ class ChoiceChipTip<T> extends StatelessWidget {
         final label = getLabel(option);
         // Chip is disabled if the entire widget is disabled or the specific option is disabled,
 
-        final isChipDisabled = !enabled || (isOptionDisabled?.call(option) ?? false);
+        final isChipDisabled =
+            !enabled || (isOptionDisabled?.call(option) ?? false);
 
         return MarkdownTooltip(
           message: tooltips == null ? '' : tooltips![option] ?? '',

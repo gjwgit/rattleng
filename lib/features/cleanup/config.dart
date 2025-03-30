@@ -315,9 +315,10 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   }
                 });
               },
-              // TODO: 
+              // TODO:
 
-              isOptionDisabled: (option) => option == multiMethods.keys.toList()[2],
+              isOptionDisabled: (option) =>
+                  option == multiMethods.keys.toList()[2],
             ),
 
             ChoiceChipTip<String>(
