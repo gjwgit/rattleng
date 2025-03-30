@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-03-25 14:27:34 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 11:45:43 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,8 +30,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/keys.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/tabs/script/save_button.dart';
 

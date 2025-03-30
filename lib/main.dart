@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Monday 2025-01-13 14:01:10 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-03-30 07:25:54 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -29,13 +29,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:rattle/utils/show_error.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/app.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
 

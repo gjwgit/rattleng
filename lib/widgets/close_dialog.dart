@@ -1,6 +1,6 @@
 /// A dialog to prompte user on closing app with SAVE and CANCEL options
 ///
-/// Time-stamp: <Thursday 2025-03-27 13:37:18 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-03-30 07:51:28 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -32,15 +32,15 @@ import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/settings.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/script.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/debug_text.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 const double widthSpace = 10;
 

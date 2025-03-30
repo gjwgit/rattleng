@@ -75,8 +75,9 @@ dev_dependencies:
     sdk: flutter
 
   build_runner: ^2.4.6
+  # 0.6.0 for now since import_order_lint depends on 0.6.10
   custom_lint: ^0.7.0
-  dependency_validator: ^4.1.1
+  # dependency_validator: ^4.1.1
   flutter_gen: ^5.3.1
   flutter_launcher_icons: ^0.14.2
 
@@ -103,6 +104,11 @@ dev_dependencies:
     git:
       url: https://github.com/anusii/dart-code-metrics.git
       ref: dev
+
+  import_order_lint:
+    git:
+      url: https://github.com/anusii/import-order-lint.git
+      ref: main
 
 dependency_overrides:
   collection: ^1.19.0  # Required for dart-code-metrics.
