@@ -12,6 +12,9 @@
 analyzer:
   plugins:
     - custom_lint
+  custom_lint:
+    rules:
+      - import-order_lint
   exclude:
     - ignore/**
 
@@ -55,7 +58,7 @@ linter:
   # A lint rule can be suppressed for a single line of code or a
   # specific dart file by using the `// ignore: name_of_lint` and `//
   # ignore_for_file: name_of_lint`
-  
+
   rules:
     avoid_print: true
     prefer_single_quotes: true
