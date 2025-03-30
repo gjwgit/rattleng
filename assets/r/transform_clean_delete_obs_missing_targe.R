@@ -1,6 +1,6 @@
 # Removes rows with any NA values.
 
-ds <- ds[complete.cases(ds),]
+ds %<>% filter(!is.na(!!sym(target)))
 
 glimpse(ds)
 summary(ds)
