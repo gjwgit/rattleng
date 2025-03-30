@@ -1,6 +1,6 @@
 /// Chip choice widget used across the app.
 //
-// Time-stamp: <Tuesday 2024-10-15 08:30:49 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 08:09:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,8 +27,9 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:rattle/constants/spacing.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+
+import 'package:rattle/constants/spacing.dart';
 
 class ChoiceChipTip<T> extends StatelessWidget {
   final List<T> options;

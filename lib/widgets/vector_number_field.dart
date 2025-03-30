@@ -1,6 +1,6 @@
 /// An integer vector input field.
 //
-// Time-stamp: <Wednesday 2024-10-16 09:54:03 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 07:31:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,9 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/style.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class VectorNumberField extends ConsumerStatefulWidget {
   final String label;

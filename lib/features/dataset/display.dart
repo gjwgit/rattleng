@@ -453,27 +453,24 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             scrollDirection: Axis.horizontal,
             controller: _horizontalScrollController,
             child: SizedBox(
-              width: 1200,
+              width: 1300, // Set the width to avoid truncated label.
               child: DataTable2(
                 dataRowHeight: 60.0,
+                checkboxAlignment: Alignment.centerLeft,
                 columns: [
                   DataColumn2(
                     label: Text(
                       'Variable',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    size: ColumnSize.L,
+                    size: ColumnSize.M,
                   ),
-
-                  // ColumnSize.L is not enough for long variable names.
-                  // Set fixed width for the Role variable.
-
                   DataColumn2(
                     label: Text(
                       'Role',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    fixedWidth: 500.0,
+                    fixedWidth: 450.0,
                   ),
                   DataColumn2(
                     label: Text(

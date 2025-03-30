@@ -1,6 +1,6 @@
 /// Build text field to input numeric input.
 //
-// Time-stamp: <Friday 2024-10-25 08:27:46 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 09:39:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -25,9 +25,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+
 import 'package:rattle/providers/forest.dart';
 
 /// Creates a custom text input field with tooltip.

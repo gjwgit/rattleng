@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Wednesday 2025-01-08 20:25:19 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 07:34:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,17 +30,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:file_picker/file_picker.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class TextPage extends StatelessWidget {
   final String title;

@@ -1,6 +1,6 @@
 /// A text widget showing the stdout from the R process.
 ///
-/// Time-stamp: <Thursday 2024-09-26 08:32:35 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2025-03-30 11:48:42 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -29,8 +29,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/constants/style.dart';
+import 'package:rattle/providers/stdout.dart';
 
 /// Create a stdout text viewer that can scroll the text of stdout.
 ///

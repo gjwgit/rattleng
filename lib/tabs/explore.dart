@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Saturday 2024-11-23 17:15:47 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 11:47:29 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -30,13 +30,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/features/explore/panel.dart';
-import 'package:rattle/features/summary/panel.dart';
-import 'package:rattle/features/visual/panel.dart';
-import 'package:rattle/features/missing/panel.dart';
 import 'package:rattle/features/correlation/panel.dart';
-import 'package:rattle/features/tests/panel.dart';
+import 'package:rattle/features/explore/panel.dart';
 import 'package:rattle/features/interactive/panel.dart';
+import 'package:rattle/features/missing/panel.dart';
+import 'package:rattle/features/summary/panel.dart';
+import 'package:rattle/features/tests/panel.dart';
+import 'package:rattle/features/visual/panel.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/explore.dart';
 import 'package:rattle/providers/reset.dart';

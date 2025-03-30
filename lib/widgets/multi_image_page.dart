@@ -1,6 +1,6 @@
 /// Widget for multiple images across the page.
 //
-// Time-stamp: <Wednesday 2025-03-12 08:41:48 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 07:44:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -25,8 +25,8 @@
 
 library;
 
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
@@ -41,8 +41,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:rattle/providers/settings.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
