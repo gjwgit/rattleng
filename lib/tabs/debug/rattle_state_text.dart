@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Wednesday 2025-02-05 08:48:34 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-03-30 11:49:40 +1100 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -39,7 +39,6 @@ import 'package:rattle/providers/model.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
-import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
@@ -47,6 +46,7 @@ import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/status.dart';
 import 'package:rattle/providers/stderr.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/utils/count_lines.dart';
 import 'package:rattle/utils/get_ignored.dart';

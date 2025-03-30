@@ -1,6 +1,6 @@
-/// <DESCRIPTION>
+/// Get missing observations
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 09:11:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,12 +21,12 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors:
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 

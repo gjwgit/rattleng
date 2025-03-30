@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2025-03-10 09:31:59 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 11:47:06 +1100 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -29,17 +29,17 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/constants/app.dart';
 
-import 'package:rattle/features/model/panel.dart';
-import 'package:rattle/features/cluster/panel.dart';
-import 'package:rattle/features/forest/panel.dart';
-import 'package:rattle/features/tree/panel.dart';
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/association/panel.dart';
 import 'package:rattle/features/boost/panel.dart';
-import 'package:rattle/features/svm/panel.dart';
+import 'package:rattle/features/cluster/panel.dart';
+import 'package:rattle/features/forest/panel.dart';
 import 'package:rattle/features/linear/panel.dart';
+import 'package:rattle/features/model/panel.dart';
 import 'package:rattle/features/neural/panel.dart';
+import 'package:rattle/features/svm/panel.dart';
+import 'package:rattle/features/tree/panel.dart';
 import 'package:rattle/features/wordcloud/panel.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/model.dart';

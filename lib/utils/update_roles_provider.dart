@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Wednesday 2025-03-19 05:32:06 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 08:10:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,12 +26,13 @@
 library;
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
-import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';

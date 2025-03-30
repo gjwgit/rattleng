@@ -1,6 +1,6 @@
 /// A page navigation widget.
 //
-// Time-stamp: <Thursday 2024-10-17 14:01:05 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-03-30 07:38:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter/material.dart';
+
 import 'package:rattle/widgets/page_indicator.dart';
 
 class PageViewer extends StatefulWidget {
