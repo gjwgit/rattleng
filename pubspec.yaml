@@ -112,6 +112,7 @@ dev_dependencies:
 
 dependency_overrides:
   collection: ^1.19.0  # Required for dart-code-metrics.
+  analyzer: ^6.8.0     # Override to resolve conflict between dart_code_metrics and import_order_lint.
 
 flutter:
   uses-material-design: true

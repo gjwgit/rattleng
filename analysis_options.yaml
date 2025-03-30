@@ -12,11 +12,14 @@
 analyzer:
   plugins:
     - custom_lint
-  custom_lint:
-    rules:
-      - import-order_lint
   exclude:
     - ignore/**
+
+# Custom lint configuration
+
+custom_lint:
+  rules:
+    - import-order_lint
 
 dart_code_metrics:
 #  anti-patterns:
