@@ -1,4 +1,4 @@
-# Removes rows with any NA values for the target variable.
+# Removes rows with the target variable having NA values.
 
 ds %<>% filter(!is.na(!!sym(target)))
 
