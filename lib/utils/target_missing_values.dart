@@ -59,6 +59,7 @@ bool hasTargetMissingValues(WidgetRef ref) {
     // The missing value is stored as a list with a single value.
 
     final missingCount = metaData[target]!['missing'][0];
+
     return missingCount > 0;
   }
 
