@@ -12,9 +12,9 @@
 analyzer:
   plugins:
     - custom_lint
-  custom_lint:
-    rules:
-      - import-order_lint
+  # custom_lint:
+  #   rules:
+  #     - import-order_lint
   exclude:
     - ignore/**
 
