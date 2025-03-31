@@ -105,10 +105,10 @@ dev_dependencies:
       url: https://github.com/anusii/dart-code-metrics.git
       ref: main
 
-  import_order_lint:
-    git:
-      url: https://github.com/anusii/import-order-lint.git
-      ref: main
+  # import_order_lint:
+  #   git:
+  #     url: https://github.com/anusii/import-order-lint.git
+  #     ref: main
 
 dependency_overrides:
   collection: ^1.19.0  # Required for dart-code-metrics.
