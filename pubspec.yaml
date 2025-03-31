@@ -103,7 +103,7 @@ dev_dependencies:
   dart_code_metrics:
     git:
       url: https://github.com/anusii/dart-code-metrics.git
-      ref: main
+      ref: zy/46_update_main
 
   import_order_lint:
     git:
