@@ -32,10 +32,12 @@ dependencies:
   # error: call to undeclared function 'waitpid'; ISO C99 and later do
   # not support implicit function declarations
   # [-Wimplicit-function-declaration]
-  #
+
   flutter_pty:
     git:
       url: https://github.com/Lutra-Fs/flutter_pty.git
+      # Migrate to locally managed updates
+      # url: https://github.com/anusii/flutter_pty.git
       ref: main
 
   catppuccin_flutter: ^1.0.0
@@ -48,8 +50,9 @@ dependencies:
   gap: ^3.0.1
   intl: ^0.20.1
   markdown_tooltip: ^0.0.6
-# markdown_tooltip:
-#   path: markdown_tooltip
+  # Local alternative for testing.
+  # markdown_tooltip:
+  #   path: markdown_tooltip
   package_info_plus: ^8.0.0
   path: ^1.8.3
   path_provider: ^2.1.3
@@ -75,9 +78,7 @@ dev_dependencies:
     sdk: flutter
 
   build_runner: ^2.4.6
-  # 0.6.0 for now since import_order_lint depends on 0.6.10
-  custom_lint: ^0.7.0
-  # dependency_validator: ^4.1.1
+  custom_lint:
   flutter_gen: ^5.3.1
   flutter_launcher_icons: ^0.14.2
 
@@ -88,30 +89,17 @@ dev_dependencies:
   # deactivating specific lint rules and activating additional ones.
 
   flutter_lints: ^5.0.0
+
+  # Use out local lint until uploaded to pub.dev
+
+  import_order_lint:
+    git:
+      url: https://github.com/anusii/import-order-lint.git
+      ref: main
+
   msix: ^3.16.2
   riverpod_generator: ^2.3.5
-
-  # TODO 20240604 gjw FOR NOW REMOVE riverpod_lint AS IT HAS
-  # DEPENDENCY CONFLICTS WITH dart_code_metrics.
-
-  # riverpod_lint: ^2.3.2
-
-  # The original `dart-code-metrics` is end of live and has migrated to
-  # a paid service. This fork maintains it's compatibility with the
-  # latest flutter.
-
-  dart_code_metrics:
-    git:
-      url: https://github.com/anusii/dart-code-metrics.git
-      ref: dev
-
-  # import_order_lint:
-  #   git:
-  #     url: https://github.com/anusii/import-order-lint.git
-  #     ref: main
-
-dependency_overrides:
-  collection: ^1.19.0  # Required for dart-code-metrics.
+  riverpod_lint: ^2.3.2
 
 flutter:
   uses-material-design: true
@@ -133,31 +121,22 @@ flutter:
     - assets/r/
     - assets/svg/
 
-  # Use a fixed width Ubuntu font for the Log tab.
-
   fonts:
+    # A fixed width Ubuntu font for the Log tab.
     - family: UbuntuMono
       fonts:
         - asset: assets/fonts/UbuntuMono-R.ttf
-      # Google font family https://fonts.google.com/
+    # Google font family https://fonts.google.com/
     - family: RobotoMono
       fonts:
         - asset: assets/fonts/RobotoMono-Regular.ttf
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Regular.ttf
-    # - family: NotoSans
-    #   fonts:
-    #     - asset: assets/fonts/NotoSans-Regular.ttf
-    #
-    # A fullback font supporting unicode block characters used in skimr.
+    # Fullback font supporting unicode block characters used in skimr.
     - family: DejaVuSans
       fonts:
         - asset: assets/fonts/DejaVuSans.ttf
-
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
 
 # Settings for creating .msix file, that can be installed in a windows
 # machine This can be customized, see

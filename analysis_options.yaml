@@ -12,13 +12,10 @@
 analyzer:
   plugins:
     - custom_lint
-  # custom_lint:
-  #   rules:
-  #     - import-order_lint
   exclude:
     - ignore/**
 
-dart_code_metrics:
+#  dart_code_metrics:
 #  anti-patterns:
 #    - long-method
 #    - long-parameter-list
