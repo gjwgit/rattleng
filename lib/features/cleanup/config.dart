@@ -41,6 +41,7 @@ import 'package:rattle/utils/get_obs_missing.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/target_missing_values.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -290,77 +291,81 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     return Column(
       spacing: configRowSpace,
       children: [
-        configTopGap,
-        Row(
-          spacing: configWidgetSpace,
-          children: [
-            configLeftGap,
-            ActivityButton(
-              onPressed: () {
-                ref.read(selectedProvider.notifier).state = selected;
-                takeAction(method);
-              },
-              child: const Text('Delete from Dataset'),
-            ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            spacing: configWidgetSpace,
+            children: [
+              ActivityButton(
+                onPressed: () {
+                  ref.read(selectedProvider.notifier).state = selected;
+                  takeAction(method);
+                },
+                child: const Text('Delete from Dataset'),
+              ),
 
-            ChoiceChipTip<String>(
-              options: multiMethods.keys.toList(),
-              selectedOption: method,
-              tooltips: multiMethods,
-              onSelected: (chosen) {
-                setState(() {
-                  if (chosen != null) {
-                    method = chosen;
-                    ref.read(cleanUpMethodProvider.notifier).state = chosen;
-                  }
-                });
-              },
-              // TODO:
-
-              isOptionDisabled: (option) =>
-                  option == multiMethods.keys.toList()[2],
-            ),
-
-            ChoiceChipTip<String>(
-              options: specificMethods.keys.toList(),
-              selectedOption: method,
-              tooltips: specificMethods,
-              onSelected: (chosen) {
-                setState(() {
-                  if (chosen != null) {
-                    method = chosen;
-                    ref.read(cleanUpMethodProvider.notifier).state = chosen;
-                  }
-                });
-              },
-            ),
-
-            // Use the variableChooser with enabled parameter.
-
-            variableChooser(
-              'Variable',
-              inputs,
-              selected,
-              ref,
-              selectedProvider,
-              tooltip: '''
-
-              Select the variable to be deleted from the dataset.
-              ${method != 'Variable' ? 'Choose the Variable chip to enable this option.' : ''}
-
-              ''',
-              // Enable only when method is 'Variable'.
-              enabled: method == 'Variable',
-              onChanged: (value) {
-                if (value != null && method != 'Variable') {
+              ChoiceChipTip<String>(
+                options: multiMethods.keys.toList(),
+                selectedOption: method,
+                tooltips: multiMethods,
+                onSelected: (chosen) {
                   setState(() {
-                    method = 'Variable';
-                    ref.read(cleanUpMethodProvider.notifier).state = 'Variable';
+                    if (chosen != null) {
+                      method = chosen;
+                      ref.read(cleanUpMethodProvider.notifier).state = chosen;
+                    }
                   });
-                }
-              },
-            ),
-          ],
+                },
+                // Check if the target variable has missing values.
+                // The check only applies to the "Obs with Missing Target" option.
+
+                isOptionDisabled: (option) =>
+                    option == multiMethods.keys.toList()[2] &&
+                    !hasTargetMissingValues(ref),
+              ),
+
+              ChoiceChipTip<String>(
+                options: specificMethods.keys.toList(),
+                selectedOption: method,
+                tooltips: specificMethods,
+                onSelected: (chosen) {
+                  setState(() {
+                    if (chosen != null) {
+                      method = chosen;
+                      ref.read(cleanUpMethodProvider.notifier).state = chosen;
+                    }
+                  });
+                },
+              ),
+
+              // Use the variableChooser with enabled parameter.
+
+              variableChooser(
+                'Variable',
+                inputs,
+                selected,
+                ref,
+                selectedProvider,
+                tooltip: '''
+
+                Select the variable to be deleted from the dataset.
+                ${method != 'Variable' ? 'Choose the Variable chip to enable this option.' : ''}
+
+                ''',
+                // Enable only when method is 'Variable'.
+                enabled: method == 'Variable',
+                onChanged: (value) {
+                  if (value != null && method != 'Variable') {
+                    setState(() {
+                      method = 'Variable';
+                      ref.read(cleanUpMethodProvider.notifier).state =
+                          'Variable';
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
