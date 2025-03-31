@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-03-20 16:52:31 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-01 05:33:42 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -78,9 +78,14 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       ''',
     'Obs with Missing Target': '''
 
-      **Obs with Missing Target:** Choose this chip to remove from the dataset target 
-      row that have any missing values. The chip will be disabled if the target is not 
-      set or has no missing observations.
+      **Obs with Missing Target:** Choose this chip to remove from the dataset
+      all rows that have a missing value for the target vairiable. Some
+      algorithms do not handle missing targets and so this option can be useful
+      if that's the case. Or an algorithm may treat a missing target value as an
+      additionl class for categoric targets, which may be jsut fine, or else
+      perhaps not appropriate for your task, so you can remove them here. The
+      chip will be disabled if the target is not set or has no missing
+      observations.
 
       ''',
     'Ignored': '''
@@ -137,8 +142,8 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         ''',
       'Obs with Missing Target' => '''
 
-        The target ${getTarget(ref)} row with missing values that will be
-        deleted. Continue?
+        There are NNN rows with a missing value for the target variable
+        "${getTarget(ref)}" that will be deleted. Continue?
 
         ''',
       _ => '''
