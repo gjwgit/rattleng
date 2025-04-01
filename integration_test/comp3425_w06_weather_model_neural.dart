@@ -31,17 +31,17 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/enter_text.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/load_demo_dataset.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/set_partition.dart';
 import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/tap_popup.dart';
-import 'utils/verify_role.dart';
 import 'utils/verify_popup.dart';
+import 'utils/verify_role.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 

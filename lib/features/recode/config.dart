@@ -34,8 +34,6 @@ import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
-// TODO 20240819 gjw RENAME SELECTED2 TO SECONDARY
-
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/source.dart';
@@ -47,6 +45,8 @@ import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/number_field.dart';
+
+// TODO 20240819 gjw RENAME SELECTED2 TO SECONDARY
 
 // TODO 20240819 gjw REQUIRES A COMPREHENSIVE CLEANUP/STRUCTURE
 

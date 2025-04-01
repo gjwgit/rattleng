@@ -25,7 +25,6 @@
 library;
 
 import 'package:rattle/r/extract.dart';
-
 import 'package:rattle/utils/clean_string.dart';
 
 String rExtractSummary(String txt) {

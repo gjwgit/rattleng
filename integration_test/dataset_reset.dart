@@ -28,10 +28,10 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'utils/delays.dart';
 import 'package:rattle/features/dataset/button.dart';
 import 'package:rattle/main.dart' as app;
 
+import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/verify_selectable_text.dart';

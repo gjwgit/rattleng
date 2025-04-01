@@ -36,13 +36,13 @@ import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/tap_button.dart';
 import 'utils/scroll_down.dart';
+import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
-import 'utils/verify_role.dart';
 import 'utils/verify_page.dart';
+import 'utils/verify_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {

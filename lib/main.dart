@@ -29,15 +29,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
-import 'package:rattle/utils/show_error.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/app.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
+import 'package:rattle/utils/show_error.dart';
 
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
@@ -73,13 +73,14 @@ Future<void> main() async {
 
   if (!isRInstalled) {
     runApp(
-      MaterialApp(
-        home: Builder(
-          builder: (context) {
-            Future.delayed(
-              Duration.zero,
-              () => showError(
-                content: '''
+      ProviderScope(
+        child: MaterialApp(
+          home: Builder(
+            builder: (context) {
+              Future.delayed(
+                Duration.zero,
+                () => showError(
+                  content: '''
 
                 R is **not installed** or it was not found in the **PATH** environment variable.
 
@@ -92,16 +93,17 @@ Future<void> main() async {
                 for details.
 
                 ''',
-                context: context,
-                title: 'R Installation Error',
-                onOkPressed: () {
-                  exit(0);
-                },
-              ),
-            );
+                  context: context,
+                  title: 'R Installation Error',
+                  onOkPressed: () {
+                    exit(0);
+                  },
+                ),
+              );
 
-            return Scaffold();
-          },
+              return Scaffold();
+            },
+          ),
         ),
       ),
     );
