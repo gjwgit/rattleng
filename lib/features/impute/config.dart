@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/imputed.dart';
@@ -40,7 +41,6 @@ import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// A [StatefulWidget] (rather than [Stateless]) to pass `ref` across to
 /// `rSource()` as well as to monitor the SELECTED variable to transform.

@@ -30,7 +30,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/spacing.dart';
-
 import 'package:rattle/features/visual/config.dart';
 import 'package:rattle/features/visual/display.dart';
 
