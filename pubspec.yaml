@@ -65,7 +65,6 @@ dependencies:
   window_manager: ^0.4.3
   xterm: ^4.0.0
   git: ^2.3.0
-  import_sorter: ^4.6.0
 
 
   http: any
@@ -167,6 +166,3 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: 'assets/icons/icon.png'
-
-import_sorter:
-    comments: false # Optional, defaults to true
