@@ -34,9 +34,9 @@ import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/number_field.dart';
 
 import 'utils/delays.dart';
+import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/load_dataset_by_path.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

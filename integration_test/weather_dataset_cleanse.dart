@@ -31,11 +31,10 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/cleanse_off.dart';
+import 'utils/cleanse_on.dart';
 import 'utils/load_demo_dataset.dart';
-
 import 'utils/verify_selectable_text.dart';
 import 'utils/verify_text.dart';
-import 'utils/cleanse_on.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

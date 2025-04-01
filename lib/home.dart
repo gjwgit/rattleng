@@ -28,25 +28,19 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-// Dart imports
-
 import 'dart:io';
-
-// Flutter imports
 
 import 'package:flutter/material.dart';
 
-// Package imports
-import 'package:http/http.dart' as http;
-import 'package:yaml/yaml.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/providers/reset.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yaml/yaml.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
@@ -58,6 +52,7 @@ import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/partition.dart';
+import 'package:rattle/providers/reset.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/r/console.dart';
 import 'package:rattle/r/source.dart';

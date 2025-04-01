@@ -27,25 +27,20 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
-// import 'package:rattle/features/dataset/select_package.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
-// import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
-// import 'package:rattle/providers/stdout.dart';
-// import 'package:rattle/r/extract.dart';
-// import 'package:rattle/r/extract_package.dart';
 import 'package:rattle/r/load_dataset.dart';
-import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
+import 'package:rattle/utils/set_status.dart';
 
 void datasetLoadedUpdate(WidgetRef ref) {
   ref.read(datasetLoaded.notifier).state = true;
