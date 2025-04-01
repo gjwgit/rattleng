@@ -42,11 +42,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-// TODO 20240618 gjw DO WE NEED ALL OF `app.dart`?
-//
-// I think it is just `rattleHomeKey`. Can that go into a constants file instead
-// which we import here and into app.dart?
-
 import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
@@ -73,6 +68,12 @@ import 'package:rattle/providers/wordcloud/stopword.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/timestamp.dart';
+
+// TODO 20240618 gjw DO WE NEED ALL OF `app.dart`?
+//
+// I think it is just `rattleHomeKey`. Can that go into a constants file instead
+// which we import here and into app.dart?
+
 
 Future<void> reset(BuildContext context, WidgetRef ref) async {
   debugText('  RESET');

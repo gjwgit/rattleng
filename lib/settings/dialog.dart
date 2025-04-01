@@ -25,23 +25,23 @@
 
 library;
 
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/settings/sections/script.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:rattle/settings/sections/dataset_toggles.dart';
-import 'package:rattle/settings/sections/graphic_theme.dart';
-import 'package:rattle/settings/sections/session.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/settings/sections/dataset_toggles.dart';
+import 'package:rattle/settings/sections/graphic_theme.dart';
+import 'package:rattle/settings/sections/script.dart';
+import 'package:rattle/settings/sections/session.dart';
 import 'package:rattle/settings/utils/handle_cancel_button.dart';
 
 class SettingsDialog extends ConsumerStatefulWidget {

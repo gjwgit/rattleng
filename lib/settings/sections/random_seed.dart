@@ -22,9 +22,10 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

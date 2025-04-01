@@ -35,9 +35,9 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract_cluster.dart';
 import 'package:rattle/utils/image_exists.dart';
-import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// Cluster R package prefix URL.
