@@ -47,7 +47,7 @@ jobs:
       - run: markdownlint --disable MD036 -- assets/markdown
         # -p .markdownlintignore -c .markdownlint.yaml
 
-  lint:
+  custom_lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
