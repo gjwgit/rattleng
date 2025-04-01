@@ -24,9 +24,9 @@
 /// Authors: Kevin Wang, Graham Williams
 
 library;
+import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
 
 Future<void> tapButtonByKey(
   WidgetTester tester,
