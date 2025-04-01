@@ -32,10 +32,10 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/enter_text.dart';
 import 'utils/goto_next_page.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/load_demo_dataset.dart';
 import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_checkbox.dart';

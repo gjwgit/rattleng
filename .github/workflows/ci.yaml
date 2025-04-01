@@ -47,22 +47,7 @@ jobs:
       - run: markdownlint --disable MD036 -- assets/markdown
         # -p .markdownlintignore -c .markdownlint.yaml
 
-  dcm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-      - name: Install DCM
-        uses: CQLabs/setup-dcm@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: dcm calculate-metrics lib
-      - run: dcm analyze --fatal-style lib
-      # See web site - run: dcm analyze --help
-      # Total fail   - run: dcm check-unused-files lib
-      # Total fail   - run: dcm check-unused-code lib
-
-  siidcm:
+  custom_lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -71,12 +56,7 @@ jobs:
           channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
       - run: flutter pub get
-      # 20241025 gjw Remove these for now until we resolve them all
-      #
-      #- run: dart run dart_code_metrics:metrics check-unnecessary-nullable --disable-sunset-warning lib
-      #- run: dart run dart_code_metrics:metrics check-unused-code --disable-sunset-warning lib
-      #- run: dart run dart_code_metrics:metrics check-unused-files --disable-sunset-warning lib
-      - run: dart run dart_code_metrics:metrics analyze --disable-sunset-warning --fatal-style lib --reporter=console
+      - run: dart run custom_lint
       - run: find lib -type f -name '*.dart' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
 
   build:
