@@ -32,17 +32,13 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
+import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/load_dataset_by_path.dart';
-import 'utils/tap_chip.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
-// import 'utils/check_missing_variable.dart';
-// import 'utils/check_variable_not_missing.dart';
-// import 'utils/init_app.dart';
-// import 'utils/verify_imputed_variable.dart';
 
 void main() {
   // Ensure that the integration test bindings are initialized before running tests.

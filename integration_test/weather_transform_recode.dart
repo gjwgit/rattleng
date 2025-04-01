@@ -32,19 +32,19 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
+import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/load_demo_dataset.dart';
-import 'utils/set_selected_variable.dart';
-import 'utils/tap_chip.dart';
-import 'utils/verify_rescale_tap_chip.dart';
 import 'utils/scroll_down.dart';
+import 'utils/scroll_until_find_key.dart';
+import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
+import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
-import 'utils/verify_selectable_text.dart';
-import 'utils/scroll_until_find_key.dart';
 import 'utils/verify_page.dart';
+import 'utils/verify_rescale_tap_chip.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
