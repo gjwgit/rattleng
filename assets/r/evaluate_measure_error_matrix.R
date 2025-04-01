@@ -51,29 +51,27 @@ actual_va <- factor(actual_va,    levels = all_levels)
 predicted <- factor(predicted, levels = all_levels)
 
 em_count <- rattle::errorMatrix(actual_va, predicted, count=TRUE)
-##
-## 20241229 zy Capture the output of the error matrix and print it to
-## the console.  The print line includes '> ` for the dart script to
-## identify the error matrix. 20250106 gjw Use `rat()` rather than
-## `cat()` to avoid exposing the command to the user's exported
-## script.
-##
-rat(paste('> ', mtype, "_<DATASET_TYPE>_COUNT ", sep=""))
-em_count
+
+# Capture the count error matrix as a string.
+
+em_count_str <- capture.output(print(em_count))
+
+# Combine the prefix with the captured output and print in one statement.
+
+cat(paste0('> ', mtype, "_<DATASET_TYPE>_COUNT\n", paste(em_count_str, collapse="\n")), "\n")
 
 # Generate a confusion matrix with proportions (relative frequencies)
 # rather than counts.
 
 em_prop <- rattle::errorMatrix(actual_va, predicted)
-##
-## 20241229 zy Capture the output of the error matrix and print it to
-## the console.  The print line includes '> ` for the dart script to
-## identify the error matrix. 20250106 gjw Use `rat()` rather than
-## `cat()` to avoid exposing the command to the user's exported
-## script.
-##
-rat(paste('> ', mtype, "_<DATASET_TYPE>_PROP ", sep = ""))
-em_prop
+
+# Capture the proportional error matrix as a string.
+
+em_prop_str <- capture.output(print(em_prop))
+
+# Combine the prefix with the captured output and print in one statement.
+
+cat(paste0('> ', mtype, "_<DATASET_TYPE>_PROP\n", paste(em_prop_str, collapse="\n")), "\n")
 
 # Exclude the "Error" column in the confusion matrix if it exists
 # Assuming the confusion matrix is a data frame with the last column as "Error".
