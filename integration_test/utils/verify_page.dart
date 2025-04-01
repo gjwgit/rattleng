@@ -25,9 +25,11 @@
 
 library;
 
-import 'package:flutter_test/flutter_test.dart';
-import 'package:rattle/widgets/image_page.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:rattle/widgets/image_page.dart';
 
 /// Check that the expected title for the page is found and optionally some text
 /// value on the page can be found.
