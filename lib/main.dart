@@ -73,13 +73,14 @@ Future<void> main() async {
 
   if (!isRInstalled) {
     runApp(
-      MaterialApp(
-        home: Builder(
-          builder: (context) {
-            Future.delayed(
-              Duration.zero,
-              () => showError(
-                content: '''
+      ProviderScope(
+        child: MaterialApp(
+          home: Builder(
+            builder: (context) {
+              Future.delayed(
+                Duration.zero,
+                () => showError(
+                  content: '''
 
                 R is **not installed** or it was not found in the **PATH** environment variable.
 
@@ -92,16 +93,17 @@ Future<void> main() async {
                 for details.
 
                 ''',
-                context: context,
-                title: 'R Installation Error',
-                onOkPressed: () {
-                  exit(0);
-                },
-              ),
-            );
+                  context: context,
+                  title: 'R Installation Error',
+                  onOkPressed: () {
+                    exit(0);
+                  },
+                ),
+              );
 
-            return Scaffold();
-          },
+              return Scaffold();
+            },
+          ),
         ),
       ),
     );
