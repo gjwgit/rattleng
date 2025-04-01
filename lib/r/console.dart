@@ -27,16 +27,15 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rattle/providers/checked_r.dart';
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/utils/show_ok.dart';
-
-import 'package:xterm/xterm.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xterm/xterm.dart';
 
+import 'package:rattle/providers/checked_r.dart';
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/terminal.dart';
+import 'package:rattle/utils/show_ok.dart';
 
 /// Widget to accept R commands and show results.
 

@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/first_start.dart';
@@ -34,7 +35,6 @@ import 'package:rattle/providers/keep_in_sync.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // This has to be a stateful widget otherwise the buttons don't visually toggle
 // i.e., the widget does not seem to get updated even though the values get

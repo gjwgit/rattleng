@@ -32,9 +32,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rattle/providers/dataset.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:universal_io/io.dart' show Platform;
 
 import 'package:rattle/constants/temp_dir.dart';
@@ -42,16 +40,17 @@ import 'package:rattle/providers/association.dart';
 import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
+import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/imputed.dart';
 import 'package:rattle/providers/interval.dart';
-import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/linear.dart';
 import 'package:rattle/providers/neural.dart';
-import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/normalise.dart';
+import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';

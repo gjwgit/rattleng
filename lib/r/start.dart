@@ -35,13 +35,8 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-//import 'package:package_info_plus/package_info_plus.dart';
 
-//import 'package:rattle/providers/pty.dart';
 import 'package:rattle/r/source.dart';
-//import 'package:rattle/r/strip_comments.dart';
-//import 'package:rattle/utils/debug_text.dart';
-//import 'package:rattle/utils/update_script.dart';
 
 /// Start up the R sub-process and set up the capture of stderr and stdout.
 
