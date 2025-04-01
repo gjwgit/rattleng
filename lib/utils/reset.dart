@@ -74,7 +74,6 @@ import 'package:rattle/utils/timestamp.dart';
 // I think it is just `rattleHomeKey`. Can that go into a constants file instead
 // which we import here and into app.dart?
 
-
 Future<void> reset(BuildContext context, WidgetRef ref) async {
   debugText('  RESET');
 

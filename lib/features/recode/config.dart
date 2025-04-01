@@ -48,7 +48,6 @@ import 'package:rattle/widgets/number_field.dart';
 
 // TODO 20240819 gjw RENAME SELECTED2 TO SECONDARY
 
-
 // TODO 20240819 gjw REQUIRES A COMPREHENSIVE CLEANUP/STRUCTURE
 
 /// A StatefulWidget to pass the ref across to the rSource as well as to monitor
