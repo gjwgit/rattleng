@@ -142,8 +142,8 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         ''',
       'Obs with Missing Target' => '''
 
-        There are NNN rows with a missing value for the target variable
-        "${getTarget(ref)}" that will be deleted. Continue?
+        There are ${targetMissingNumbeCount(ref)} rows with a missing value 
+        for the target variable "${getTarget(ref)}" that will be deleted. Continue?
 
         ''',
       _ => '''
@@ -297,6 +297,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     return Column(
       spacing: configRowSpace,
       children: [
+        configLabelGap,
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
