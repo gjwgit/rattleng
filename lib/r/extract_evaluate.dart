@@ -24,6 +24,7 @@
 
 library;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/evaluate.dart';
@@ -105,11 +106,6 @@ String _basicTemplate(
 
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
-
-  // We begin by removing spurious text that can appear int he log that we need
-  // to fix before hunting for the required out (gjw 20250314).
-
-  log = rCleanLog(log);
 
   String crc = rExtract(
     log,
