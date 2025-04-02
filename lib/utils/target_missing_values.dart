@@ -1,4 +1,4 @@
-/// Check if the target variable has missing values.
+/// Utilities to check for and count missing values in the target variable.
 //
 // Time-stamp: <Thursday 2024-07-18 16:48:49 +1000 Graham Williams>
 //
@@ -64,4 +64,41 @@ bool hasTargetMissingValues(WidgetRef ref) {
   }
 
   return false;
+}
+
+/// Retrieves the count of missing values for the target variable.
+///
+/// Returns the number of missing values as a string.
+/// Returns "0" if no target is set, the target is not found in metadata,
+/// or the missing value information is not available.
+
+String targetMissingNumbeCount(WidgetRef ref) {
+  // Get the target variable name.
+
+  final target = getTarget(ref);
+
+  // If there's no target set, return "0".
+
+  if (target == 'NULL' || target.isEmpty) {
+    return '0';
+  }
+
+  // Get the metadata for all variables.
+
+  final metaData = ref.read(metaDataProvider);
+
+  // Check if the target exists in metadata and has missing values information.
+
+  if (metaData.containsKey(target) &&
+      metaData[target]!.containsKey('missing') &&
+      metaData[target]!['missing'] != null &&
+      metaData[target]!['missing'].isNotEmpty) {
+    // The missing value is stored as a list with a single numeric value.
+
+    final missingCount = metaData[target]!['missing'][0];
+
+    return missingCount.toString();
+  }
+
+  return '0';
 }

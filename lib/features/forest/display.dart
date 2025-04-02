@@ -38,9 +38,9 @@ import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_forest.dart';
 import 'package:rattle/utils/image_exists.dart';
-import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 /// The Forest panel displays the instructions and then the model build output

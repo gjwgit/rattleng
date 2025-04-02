@@ -21,6 +21,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> saveImageViewerApp(String value) async {

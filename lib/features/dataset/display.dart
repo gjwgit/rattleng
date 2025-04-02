@@ -25,13 +25,14 @@
 
 library;
 
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
@@ -41,24 +42,23 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/roles_table_rebuild.dart';
 import 'package:rattle/providers/selected_row.dart';
-import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
+import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/save_dataset_button.dart';
-import 'package:rattle/utils/show_ok.dart';
-import 'package:rattle/utils/update_roles_provider.dart';
-import 'package:rattle/utils/update_meta_data.dart';
-import 'package:rattle/utils/debug_text.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
+import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/utils/update_meta_data.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
+import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
 const smallSpace = Gap(10);

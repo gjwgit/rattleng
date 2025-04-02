@@ -26,9 +26,9 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/providers/path.dart';
-import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 class DatasetClearTextField extends ConsumerWidget {
   const DatasetClearTextField({super.key});

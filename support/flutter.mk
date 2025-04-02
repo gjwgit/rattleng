@@ -33,11 +33,6 @@ flutter:
 
   fix             Run `dart fix --apply`.
   format          Run `dart format`.
-  dcm             Run dart code metrics
-    nullable	  Check NULLs from dart_code_metrics.
-    unused_code   Check unused code from dart_code_metrics.
-    unused_files  Check unused files from dart_code_metrics.
-    metrics	  Run analyze from dart_code_metrics.
   analyze         Run flutter analyze.
   ignore          Look for usage of ignore directives.
   license	  Look for missing top license in source code.
@@ -123,7 +118,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix format dcm ignore license todo
+prep: analyze fix format ignore license todo
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -156,33 +151,6 @@ bakfix:
 
 .PHONY: tests
 tests:: test qtest
-
-.PHONY: dcm
-dcm: nullable unused_code unused_files metrics
-
-.PHONY: nullable
-nullable:
-	@echo "Dart Code Metrics: NULLABLE"
-	-dart run dart_code_metrics:metrics check-unnecessary-nullable --disable-sunset-warning lib
-	@echo $(SEPARATOR)
-
-.PHONY: unused_code
-unused_code:
-	@echo "Dart Code Metrics: UNUSED CODE"
-	-dart run dart_code_metrics:metrics check-unused-code --disable-sunset-warning lib
-	@echo $(SEPARATOR)
-
-.PHONY: unused_files
-unused_files:
-	@echo "Dart Code Metrics: UNUSED FILES"
-	-dart run dart_code_metrics:metrics check-unused-files --disable-sunset-warning lib
-	@echo $(SEPARATOR)
-
-.PHONY: metrics
-metrics:
-	@echo "Dart Code Metrics: METRICS"
-	-dart run dart_code_metrics:metrics analyze --disable-sunset-warning lib --reporter=console
-	@echo $(SEPARATOR)
 
 .PHONY: analyze
 analyze:
