@@ -75,8 +75,9 @@ FutureBuilder showMarkdownFile2(
                             final Uri url = Uri.parse(href ?? '');
                             launchUrl(url);
                           },
-                          imageBuilder: (uri, title, alt) {
-                            return Image.asset('$assetsPath/${uri.toString()}');
+                          sizedImageBuilder: (config) {
+                            return Image.asset(
+                                '$assetsPath/${config.uri.toString()}',);
                           },
                         ),
                       ),
@@ -95,8 +96,9 @@ FutureBuilder showMarkdownFile2(
                             final Uri url = Uri.parse(href ?? '');
                             launchUrl(url);
                           },
-                          imageBuilder: (uri, title, alt) {
-                            return Image.asset('$assetsPath/${uri.toString()}');
+                          sizedImageBuilder: (config) {
+                            return Image.asset(
+                                '$assetsPath/${config.uri.toString()}',);
                           },
                         ),
                       ),
