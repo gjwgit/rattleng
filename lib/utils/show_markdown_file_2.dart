@@ -77,7 +77,8 @@ FutureBuilder showMarkdownFile2(
                           },
                           sizedImageBuilder: (config) {
                             return Image.asset(
-                                '$assetsPath/${config.uri.toString()}',);
+                              '$assetsPath/${config.uri.toString()}',
+                            );
                           },
                         ),
                       ),
@@ -98,7 +99,8 @@ FutureBuilder showMarkdownFile2(
                           },
                           sizedImageBuilder: (config) {
                             return Image.asset(
-                                '$assetsPath/${config.uri.toString()}',);
+                              '$assetsPath/${config.uri.toString()}',
+                            );
                           },
                         ),
                       ),
