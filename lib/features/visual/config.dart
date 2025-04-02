@@ -27,10 +27,10 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/providers/group_by.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/group_by.dart';
 import 'package:rattle/providers/ignore_missing_group_by.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
@@ -38,11 +38,11 @@ import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/providers/visualise.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_catergoric.dart';
-import 'package:rattle/utils/update_roles_provider.dart';
-import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/utils/update_roles_provider.dart';
+import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
 
 /// The VISUAL tab config currently consists of just a BUILD button.

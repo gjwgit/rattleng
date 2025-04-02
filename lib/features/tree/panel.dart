@@ -30,8 +30,8 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/features/tree/display.dart';
 import 'package:rattle/features/tree/config.dart';
+import 'package:rattle/features/tree/display.dart';
 
 /// The TREE tab supports building decision tree models.
 // final GlobalKey<PagesState> treePagesKey = GlobalKey<PagesState>();

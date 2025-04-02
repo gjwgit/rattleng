@@ -27,8 +27,8 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rattle/constants/spacing.dart';
 
+import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/utils/show_under_construction.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
