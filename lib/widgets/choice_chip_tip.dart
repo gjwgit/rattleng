@@ -38,6 +38,8 @@ class ChoiceChipTip<T> extends StatelessWidget {
   final ValueChanged<T?> onSelected;
   final Map? tooltips;
   final bool enabled;
+  final bool Function(T)? isOptionDisabled;
+
   const ChoiceChipTip({
     super.key,
     required this.options,
@@ -46,6 +48,7 @@ class ChoiceChipTip<T> extends StatelessWidget {
     this.tooltips,
     this.enabled = true,
     String Function(T)? getLabel,
+    this.isOptionDisabled,
   }) : getLabel = getLabel ?? _defaultGetLabel;
 
   static String _defaultGetLabel(option) => option.toString();
@@ -57,6 +60,10 @@ class ChoiceChipTip<T> extends StatelessWidget {
       runSpacing: choiceChipRowSpace,
       children: options.map((option) {
         final label = getLabel(option);
+        // Chip is disabled if the entire widget is disabled or the specific option is disabled,
+
+        final isChipDisabled =
+            !enabled || (isOptionDisabled?.call(option) ?? false);
 
         return MarkdownTooltip(
           message: tooltips == null ? '' : tooltips![option] ?? '',
@@ -65,16 +72,17 @@ class ChoiceChipTip<T> extends StatelessWidget {
             showCheckmark: false,
             selectedColor: Colors.lightBlue[200],
             backgroundColor: Colors.lightBlue[50],
+            disabledColor: Colors.grey[300],
             shadowColor: Colors.grey,
             pressElevation: 8.0,
             elevation: 2.0,
             selected: selectedOption == option,
-            onSelected: enabled
-                ? (bool selected) {
+            onSelected: isChipDisabled
+                ? null // Disable interaction
+                : (bool selected) {
                     onSelected(selected ? option : null);
-                  }
-                : null,
-            // Selected chip to also have a black border.
+                  },
+            // Uncomment if you want a black border on selected chips
             // side: const BorderSide(
             //   color: Colors.black,
             //   width: 0.5,
