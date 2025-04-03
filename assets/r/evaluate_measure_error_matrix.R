@@ -71,7 +71,14 @@ em_prop_str <- capture.output(print(em_prop))
 
 # Combine the prefix with the captured output and print in one statement.
 
-cat(paste0('> ', mtype, "_<DATASET_TYPE>_PROP\n", paste(em_prop_str, collapse="\n")), "\n")
+# Windows and Unix console have different output formats.
+
+if (.Platform$OS.type == "windows") {
+  cat(paste0('> ', mtype, "_<DATASET_TYPE>_PROP\n", paste(em_prop_str, collapse="\n")))
+  cat("\n")
+} else {
+  cat(paste0('> ', mtype, "_<DATASET_TYPE>_PROP\n", paste(em_prop_str, collapse="\n")), "\n")
+}
 
 # Exclude the "Error" column in the confusion matrix if it exists
 # Assuming the confusion matrix is a data frame with the last column as "Error".
