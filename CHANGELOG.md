@@ -13,7 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
-+ CLEANUP: Add option to remove rows with null target [6.4.54 zy]
++ CORRELATION: Bug fix when no TARGET identified [6.4.55 20250403 gjw
++ CLEANUP: Option to remove rows with null target values [6.4.54 20250403 zy]
 + DATASET: Fix the header row to not scroll [6.4.53 20250329 zy]
 + RECODE: Support recoding CHAR to FACTOR [6.4.52 20250327 zy]
 + STATUS BAR: Add Target: [6.4.51 20250327 zy]
