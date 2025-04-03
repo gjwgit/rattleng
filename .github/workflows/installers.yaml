@@ -119,7 +119,8 @@ jobs:
           echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Compile .ISS to .EXE Installer
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
+        uses: gjwgit/Inno-Setup-Action@v1.2.5
+        # uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
         with:
           path: installers/rattle-windows.iss
           options: /O+
